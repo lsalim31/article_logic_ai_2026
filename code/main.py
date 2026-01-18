@@ -32,7 +32,7 @@ from interface_with_user.refine import refine_query
 ACTIVE_STRUCTURE_PATH = "outputs/logified/active.json"
 
 
-def logify(text_path):
+def from_text_to_logic(text_path):
     """
     Create a new logified structure from a text file.
 
