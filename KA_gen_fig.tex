@@ -1,0 +1,75 @@
+
+\begin{tikzpicture}[
+    % Global styles for consistency
+    font=\sffamily\bfseries,
+    box/.style={
+        draw, 
+        line width=1pt, 
+        align=center, 
+        inner sep=8pt, 
+        rounded corners=3pt,
+        fill=white
+    },
+    arrow/.style={
+        ->, 
+        >=Stealth, 
+        line width=1pt, 
+        rounded corners
+    },
+    label/.style={
+        font=\sffamily\bfseries
+    }
+]
+
+    % --- Nodes ---
+
+    % Top Left: Text T (simulating a document icon)
+    \node[box, minimum height=1.5cm,  minimum width=1cm] (text) {Text\\T};
+    % Manually adding the folded corner effect
+    \draw[line width=1pt, fill=white] ($(text.north east)-(0.4,0)$) -- ($(text.north east)-(0.4,0.4)$) -- ($(text.north east)-(0,0.4)$);
+
+    % Text Label: Extraction Step
+    \node[label, right=0.3cm of text] (extraction_lbl) {Extraction Step};
+
+    % Top Right: Propositions and Constraints
+    \node[box, right=1.5cm of extraction_lbl, anchor=west, yshift=0.8cm] (props) {Propositions\\$P(T)$};
+    \node[box, below=0.5cm of props] (constraints) {Constraints\\$K(T)$};
+
+    % Middle Label: Generation Step
+    % Positioned below the extraction area, roughly centered relative to bottom boxes
+    \node[label, below=2cm of extraction_lbl, xshift=1.5cm] (generation_lbl) {Generation Step};
+
+    % Bottom Layer: Three outcome boxes
+    \node[box, below=1.5cm of generation_lbl] (set_constraints) {Set of all\\constraints\\$K(T)$};
+    \node[box, left=0.5cm of set_constraints] (pot_props) {All potential\\propositions\\$R(T)$};
+    \node[box, right=0.5cm of set_constraints] (cons_readings) {Consistent\\readings\\$\vartheta(T)$};
+
+    % --- Connections ---
+
+    % 1. Arrow from Text to Extraction Step
+    \draw[arrow] (text) -- (extraction_lbl);
+
+    % 2. Branching arrows from Extraction Step to Props/Constraints
+    \draw[arrow] (extraction_lbl.east) -- (props.west);
+    \draw[arrow] (extraction_lbl.east) -- (constraints.west);
+
+    % 3. Generation Step Distribution Line
+    % Create a main distribution point below the label
+    \coordinate (dist_point) at ($(generation_lbl.south) + (0,-0.3)$);
+    
+    % Draw the horizontal bar
+    \draw[line width=1pt] (dist_point -| pot_props.north) -- (dist_point -| cons_readings.north);
+    
+    % Draw arrows down to the three boxes
+    \draw[arrow] (dist_point -| pot_props.north) -- (pot_props.north);
+    \draw[arrow] (dist_point -| set_constraints.north) -- (set_constraints.north);
+    \draw[arrow] (dist_point -| cons_readings.north) -- (cons_readings.north);
+
+    % 4. Inputs into Generation Step
+    % Arrow from Propositions (looping from right)
+    \draw[arrow] (props.east) -- ++(0.5,0) |- (dist_point -| cons_readings.north);
+    
+    % Arrow from Constraints (going down)
+    \draw[arrow] (constraints.south) -- (dist_point -| constraints.south);
+
+\end{tikzpicture}

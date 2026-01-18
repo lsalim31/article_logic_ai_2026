@@ -1,0 +1,354 @@
+\begin{abstract}
+We propose a logic-aware framework for extracting logical knowledge from natural-language text. Given a text $T$, a pipeline $\Pi$ produces indivisible (atomic) propositions together with two kinds of logical constraints: hard constraints that must hold (e.g., explicit negations, definitions) and soft constraints that express defeasible tendencies (e.g., ``allows'' or ``typically'') with associated confidences. The rigid constraints define a space of logical globally consistent \emph{readings} of the text, while the soft constraints weight and rank these readings rather than ruling them out. This representation supports consistency checking, consequence and query evaluation, and quantitative measures of underdetermination with respect to $\Pi$. 
+A key methodological point is representation dependence: atomization choices in $\Pi$ and the constraint-extraction layer jointly determine the induced semantics; thus, ambiguity and consistency claims must be stated relative to $(T,\Pi)$.
+\end{abstract}
+
+\section{Introduction}
+Knowledge extraction from natural-language text is a central problem in machine learning and natural-language processing, with applications ranging from information retrieval and question answering to decision support and scientific discovery. A persistent challenge is that extracted facts are rarely isolated: they interact through logical dependencies (e.g., implications, mutual exclusions, typing constraints), and downstream systems need mechanisms to check consistency, derive consequences, and quantify what the text does \emph{not} determine.
+
+Our core idea is to treat a text $T$ as inducing a \emph{finite logical theory over extracted atoms} and to study downstream reasoning in an algebraic setting. Concretely, we define a pipeline $\Pi$ (see Definition~\ref{def:pipeline}) that (i) extracts a finite set of atomic propositions $P_1,\dots,P_n$ from the text, (ii) generates logical constraints among these propositions (e.g., implications, mutual exclusions), and (iii) represents both propositions and constraints as formulas over the extracted $P_i$. A Boolean ring associated to $(T,\Pi)$ then serves as a compact representation of the admissible ``readings'' of $T$, supporting entailment checking, inconsistency detection, and quantitative measures of underdetermination via (weighted) model counting. 
+
+\subsection{Previous work}
+\label{sec:previous_work}
+Our framework builds on established work in algebraic proof systems, Boolean Gr\"obner computation, and multi-context constraint maintenance. On the proof-theoretic side, algebraic methods can yield certificates of propositional unsatisfiability; see, e.g., \cite{CleggEdmondsImpagliazzo1996}. On the computational side, there are dedicated tools for Gr\"obner-basis computations in Boolean polynomial rings, such as the PolyBoRi framework \cite{brickenstein2009polybori}. From the ``many readings'' perspective, de Kleer's assumption-based truth maintenance system (ATMS) is a classic mechanism for compactly representing and updating multiple consistent contexts under evolving constraints, conceptually parallel to interpreting homomorphisms $\mathcal{R}(T)\to \mathbb{F}_2$ as consistent readings \cite{deKleer1986}. Finally, if we relax hard constraints or attach confidences to extracted assertions, Algebraic Model Counting (AMC) generalizes (weighted) model counting to commutative semirings, providing a principled route to weighted ambiguity and soft reasoning over the same compiled logical structure \cite{KimmigVanDenBroeckDeRaedt2012,KimmigVanDenBroeckDeRaedt2017}.
+
+\begin{figure}[h!]
+\vskip 0.2in
+\begin{center}
+\resizebox{\columnwidth}{!}{%
+\input{KA_gen_fig}
+}
+
+%\centerline{\includegraphics[width=\columnwidth]{KAgenerator.png}}
+\caption{KA\_generator pipeline}
+\label{fig:KA_generator}
+\end{center}
+\vskip -0.2in
+\end{figure}
+
+
+
+\section{Theoretical framework}
+
+Next, we describe our construction. We adopt the convention that for a reading $\varphi$, $\varphi(q)=1$ is interpreted as $q$ being True and $\varphi(q)=0$ as False.
+
+\subsection{Extraction pipeline}
+Here, we extract the atomic propositions and the logical constraints that determine our interpretation of the text.
+\begin{definition}[Pipeline]\label{def:pipeline}
+A \emph{pipeline} $\Pi$ consists of:
+\begin{itemize}
+\item[(i)] a proposition extraction map
+\( 
+\Pi_{\mathrm{prop}}:\ T \mapsto \mathcal{P}(T),
+\)
+where
+\[
+\mathcal{P}(T)
+:=\{ P_i \mid P_i \text{ is a proposition extracted from } T\};
+\]
+\item[(ii)] a hard constraint generator
+\( 
+\Pi_{\mathrm{con}}:\ T \mapsto \mathcal{C}(T),
+\)
+where $\mathcal{C}(T)$ is a set of hard constraints expressed at the logical level
+over $\mathcal{P}(T)$, e.g., implications, exclusions, typing constraints; and
+\item[(iii)] a soft constraint generator
+\( 
+\Pi_{\mathrm{soft}}:\ T \mapsto \mathcal{S}(T),
+\)
+where $\mathcal{S}(T)$ is a set of logical constraints for which the text does not fully determine the truth value, e.g., capability/intent language such as ``allows'' or ``typically''; and
+\item[(iv)] a grounding map $\Pi_{\mathrm{form}}$ that rewrites any proposition or constraint $Q$ into a Boolean formula $\Pi_{\mathrm{form}}(Q)$ over the atoms in $\mathcal{P}(T)$.
+\end{itemize}
+\end{definition}
+Next, we discuss the details of each step.
+
+\subsubsection{Propositional extraction}
+Given a text $T$, we extract a set of subject-predicate-object (SPO) triples from a Knowledge graph algorithm.  We then use a large language model LLM to produce normalized propositions—statements that admit an unambiguous truth value—from each SPO triple. This finite set of normalized propositions $P_i$ is denoted as $\mathcal{P}(T)$. 
+
+\subsubsection{Constraint extraction}
+From the meaning of the text, we obtain two types of logical constraints among the propositions $P_i$. 
+\begin{itemize}
+    \item The set of hard constraints $\mathcal{C}(T)$ records propositions or relational constraints for which the text completely determines the truth value. For example, an explicit negation, definitions, etc.
+    \item The set of soft constraints 
+    $\mathcal{S}(T)$ records whenever the text expresses capability. For example, goal/intent, or causal language such as ``allows" or ``typically." 
+\end{itemize} 
+To each soft constraint $C_I$, we associate a weight $ w(C_I)$ with $ 0 < w(C_I) < 1$, where a higher value means that we have more confidence that  $C_I$ is being held.
+
+
+\subsection{Generation step}
+
+Given the outcome of the extraction pipeline, we have three algebraic objects that record the logic of our text as recorded by $\Pi$:
+\begin{itemize}
+    \item An algebra of all the statements constructed with $P_i$ and compatible with the text $T$
+    \item An ideal of all constraints generated for the set $\mathcal{C}(T)$
+    \item A finite set, the Stone space, of consistent reading of the text $T$
+\end{itemize}
+The free Boolean algebra generated by the propositions $P_i$ contains all formal logical expressions constructed from the $P_i$ using conjunction $\wedge$, disjunction $\vee$, negation $\neg$, and implication $\Rightarrow$. Algebraically, this Boolean algebra is presented as the Boolean ring
+\[
+\mathcal{R}_{\mathrm{free}}(T):=
+\frac{\mathbb{F}_2[P_i \; | \;
+P_i \in \mathcal{P}(T) ] }
+{\langle P_i^2 + P_i, \;
+P_i \in \mathcal{P}(T)
+\rangle}
+\]
+where the ideal $\langle P_i^2 + P_i \rangle$ ensures the algebraic structure behaves as a Boolean ring.
+Every element of this ring represents a formal proposition, regardless of whether it is compatible with the meaning of the text.
+
+The hard constraints in $\mathcal{C}(T)$ are encoded as polynomial equations over $\mathbb{F}_2$. 
+Let $\mathcal{IC}(T)$ be the ideal generated by the polynomial encodings of the hard constraints (e.g., $P \rightarrow Q$ becomes $P(1+Q)$). 
+
+
+
+
+\begin{definition}
+Given a text and a pipeline, 
+  we then define the associated Boolean ring
+\[
+\mathcal{R}(T) := 
+\frac{\mathcal{R}_{\mathrm{free}}(T)}
+{\mathcal{IC}(T)}
+\]
+and call it the \emph{knowledge algebra of $T$ (relative to $\Pi$)}.  
+\end{definition}
+A reading of the text is a morphism $\varphi:\mathcal{R}(T) \rightarrow \mathbb{F}_2$,
+equivalently, an ultrafilter on the underlying Boolean algebra.
+
+%HERE
+To incorporate the soft constraints, we adopt a ``satisfaction'' perspective. We map each soft constraint $C_k \in \mathcal{S}(T)$ to a \emph{confidence polynomial} $c_k \in \mathbb{F}_2[P_i]$ that represents the condition we expect to be True.
+\begin{itemize}
+    \item If the text suggests proposition $P$ holds, we set $c_k = P$.
+    \item If the text suggests $P$ does \emph{not} hold, we set $c_k = 1+P$.
+\end{itemize}
+Let $w_k \in (0,1)$ be the confidence associated with constraint $C_k$. We define the contribution of each constraint to a reading $\varphi$ based on whether the polynomial evaluates to 1 (True) or 0 (False):
+\[
+\lambda_k(\varphi)=
+\begin{cases}
+w_c & \text{if } \varphi(c_k) = 1 \quad (\text{Constraint Satisfied}),\\
+1-w_c & \text{if } \varphi(c_k) = 0 \quad (\text{Constraint Violated}).
+\end{cases}
+\]
+The unnormalized weight of a reading is the product of these contributions:
+\[
+W(\varphi)=\prod_{k} \lambda_k(\varphi).
+\]
+We highlight that the product formulation of $W(\varphi)$ treats soft constraints as statistically independent conditional on the hard constraints. While linguistic features may exhibit correlations, this formulation provides a tractable algebraic baseline for ranking readings.
+
+To interpret these weights as a probability distribution over the space of consistent readings (i.e., the Stone space), we define the \emph{partition function} $Z$ (normalizing constant):
+\[
+Z = \sum_{\varphi \in \text{Hom}(\mathcal{R}(T), \mathbb{F}_2)} W(\varphi).
+\]
+The probability of a specific reading $\varphi$ is then given by:
+\[
+\mathrm{Prob}(\varphi) = \frac{1}{Z} W(\varphi).
+\]
+This probabilistic formulation allows us to utilize techniques from Weighted Model Counting (WMC) to evaluate the likelihood of query propositions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Example: START and Jump-START triage}
+
+We illustrate our constructions  on the following text $T$:
+
+\emph{``The START triage system is widely used in the United States;
+it is utilized for patients above age $8$; it is intended that triage status can be computed in under $60$ seconds.
+For children, a commonly used algorithm is Jump-START, which is based on START but accounts for pediatric respiratory failure risk
+and difficulty following verbal commands. Triage is a dynamic process, and a patient can change triage status over time."}
+
+\subsection{Extraction pipeline}
+We fix an LLM pipeline $\Pi$, see Appendix A.1, and extract the following atomic propositions
+\(
+\mathcal{P}(T)=\{P_1,\dots,P_9\},
+\)
+where:
+\begin{itemize}
+\item $P_1$: ``The START system is (one of) the most common triage systems in the United States.''
+\item $P_2$: ``START is utilized for patients above the age of $8$ years.''
+\item $P_3$: ``Using START, triage status is intended to be calculated in less than $60$ seconds.''
+\item $P_4$: ``For children, Jump-START is a commonly used triage algorithm.''
+\item $P_5$: ``Jump-START is based on START.''
+\item $P_6$: ``Jump-START accounts for increased pediatric risk of respiratory failure.''
+\item $P_7$: ``Children may be unable to follow verbal commands.'' 
+\item $P_8$: ``Triage is a dynamic process.''
+\item $P_9$: ``A patient can change triage status over time.''
+\end{itemize}
+We obtain a set of hard constraints $\mathcal{C}(T)=\{C_1,C_2,C_3,C_4\},$ intended to capture structural claims of the text.  There are given by 
+\begin{enumerate}
+\item[$C_1$:]
+$P_8 \rightarrow P_9$ 
+which means ``dynamic'' implies change over time is possible."
+\item[$C_2$:] $P_4 \rightarrow P_5$ which means ``Jump-START for children $\Rightarrow$ based on START"
+\item[$C_3$:] $P_4 \rightarrow P_6$ which means ``Jump-START for children $\Rightarrow$ accounts for respiratory failure risk"
+\item[$C_4$:] $P_4 \rightarrow P_7$ which means ``Jump-START for children $\Rightarrow$ inability to follow commands relevant"
+\end{enumerate}
+We also specify the set $\mathcal{IS}(T)$  of polynomials
+associated to the soft constraints are given by
+ $=\{S_1:=P_1,S_2:=P_2,s_3:=P_3\}$ with confidence weights
+$w(P_1)=0.75,\ w(P_2)=0.60,\ w(P_3)=0.85$.
+\subsection{Generation pipeline}
+Let $\mathcal{R}(T)$ denote the Boolean ring associated to $(T,\Pi)$ and obtained by enforcing the hard constraints in $\mathcal{C}(T)$, then 
+\begin{align*}
+\mathcal{R}(T) = 
+\frac{
+\mathbb{F}_2[P_i \, | 1 \leq i \leq 9]
+}
+{
+\langle
+P_i^2 + P_i,
+ \, 
+1 \leq i \leq 9
+\rangle
++
+\mathcal{IC}(T)
+}
+\end{align*}
+where 
+\[
+\mathcal{IC}(T)
+=
+\langle
+P_8(1+P_9),
+P_4(1+P_5),  P_4(1+P_6), P_4(1+P_7)
+\rangle
+\]
+Notice,  we can decide the membership with respect to $\mathcal{R}(T)$ by using software such as PolyBori,
+\cite{brickenstein2009polybori}.
+
+A \emph{reading} is a morphism $\varphi:\mathcal{R}(T)\to\mathbb{F}_2$.
+We weight readings using the polynomial encodings $\mathcal{IS}(T)=\{P_1,\ P_2,\, P_3\}$.
+Since $w(C)$ represents confidence that $C$ should hold, define
+\[
+\lambda_C(\varphi)=
+\begin{cases}
+w(C) & \text{if } \varphi(C) = 1,\\
+1-w(C) & \text{if } \varphi(C) = 0,
+\end{cases}
+\]
+which induces the weight 
+\[
+W(\varphi)=\prod_{C\in\mathcal{IS}(T)} \lambda_C(\varphi).
+\]
+
+
+Finally, we exhibit two admissible readings (both satisfy all hard constraints), but they have different weights.
+Assume $\varphi_A$ satisfies $P_1,P_2,P_3,P_4,P_8$. 
+The constraints $C_i$ of the problem also imply $P_5,P_6,P_7,P_9$.
+Since $\varphi_A$ satisfies all soft constraints ($P_1=1, P_2=1, P_3=1$), its weight is:
+\[
+W(\varphi_A)=(0.75)(0.60)(0.85)=0.3825.
+\]
+On the other hand, assume $\varphi_B$ satisfies $P_4,P_8$, and consequently $P_5,P_6,P_7,P_9$, but $\varphi_B$ does \emph{not} satisfy $P_1$ and $P_3$ (treating them as false), while still satisfying $P_2$.
+The contributions are:
+\begin{itemize}
+    \item $P_1$: Violated $\to (1-0.75) = 0.25$
+    \item $P_2$: Satisfied $\to 0.60$
+    \item $P_3$: Violated $\to (1-0.85) = 0.15$
+\end{itemize}
+Then
+\[
+W(\varphi_B)=(0.25)(0.60)(0.15)=0.0225.
+\]
+Thus, both readings are admissible under the hard constraints, but Reading A is significantly preferred by the soft-constraint weighting.
+
+\section{Applications}
+\label{sec:applications}
+
+In this section, we describe three basic applications of the construction: (i) testing whether a query proposition is forced true or forced false by the hard constraints extracted from the text, (ii) testing whether two propositions can be simultaneously true, and (iii) enumerating (and counting) self-consistent readings to quantify underdetermination. Throughout, we work relative to a fixed text $T$ and pipeline $\Pi$, and we write $\mathcal{R}(T)$ for the associated Boolean ring and $\mathcal{IC}(T)$ for the hard-constraint ideal as defined earlier. 
+
+\subsection{Testing consequence and inconsistency}
+Let $Q$ be a query proposition and let $q:=\Pi_{\mathrm{form}}(Q)\in \mathcal{R}(T)$ denote its grounded Boolean formula, encoded as an element of the Boolean ring with the convention that $q$ evaluates to \emph{True} or \emph{False} under a reading.
+
+\begin{proposition}
+\label{prop:consequence_inconsistency}
+Let $q:=\Pi_{\mathrm{form}}(Q)\in \mathcal{R}(T)$ encode a query proposition $Q$.
+\begin{enumerate}
+\item $Q$ is a \emph{$\Pi$-consequence} of $T$ (i.e., $Q$ is True under every reading) if and only if
+\[
+1+q \in \mathcal{IC}(T).
+\]
+\item $Q$ is \emph{$\Pi$-inconsistent} with $T$ (i.e., $Q$ is False under every reading) if and only if
+\[
+q \in \mathcal{IC}(T).
+\]
+\end{enumerate}
+\end{proposition}
+
+\paragraph{Example 1:}
+Let $Q_1$ denote the proposition \emph{``If triage is dynamic then a patient can change triage status over time,''} i.e.
+\[
+Q_1 := P_8 \rightarrow P_9.
+\]
+In our Boolean ring encoding, $Q_1$ is represented by
+\[
+q_1=\Pi_{\mathrm{form}}(Q_1)= 1 + P_8(1+P_9).
+\]
+Since $C_1$ is a hard constraint, the polynomial $P_8(1+P_9)$ lies in $\mathcal{IC}(T)$, hence $1+q_1=P_8(1+P_9)\in\mathcal{IC}(T)$.
+By Proposition~\ref{prop:consequence_inconsistency}, $Q_1$ is a $\Pi$-consequence of $T$.
+
+\subsection{Testing relative compatibility}
+Given two propositions $S$ and $R$, we may test whether they can be simultaneously True under the hard constraints imposed by $(T,\Pi)$.
+
+\begin{proposition}
+\label{prop:compatibility}
+Let $s:=\Pi_{\mathrm{form}}(S)$ and $r:=\Pi_{\mathrm{form}}(R)$ be the Boolean-ring encodings of two propositions.
+Then $S$ and $R$ are \emph{mutually $\Pi$-incompatible} with respect to $T$ (i.e., there is no reading under which both are True) if and only if
+\[
+sr \in \mathcal{IC}(T).
+\]
+\end{proposition}
+
+\paragraph{Example 2.}
+Let $S:=P_8$ (``triage is dynamic'') and $R:=\neg P_9$ (``a patient cannot change status over time'').
+Then
+\[
+sr = P_8(1+P_9).
+\]
+Because $P_8\rightarrow P_9$ is a hard constraint,
+the polynomial $P_8(1+P_9)$ lies in $\mathcal{IC}(T)$, hence $sr\in\mathcal{IC}(T)$.
+By Proposition~\ref{prop:compatibility}, the propositions $P_8$ and $\neg P_9$ cannot be simultaneously True in any admissible reading.
+
+\subsection{Self-consistent readings and underdetermination}
+
+A \emph{reading} is a morphism $\varphi:\mathcal{R}(T)\to\mathbb{F}_2$, which corresponds to a valid solution to the hard constraints (equivalently, an ultrafilter on the underlying Boolean algebra).
+The set of readings can be enumerated (and counted) by standard satisfiability/model-counting methods, or algebraically via ideal computations.
+
+\begin{definition}[Underdetermination]
+\label{def:underdetermination}
+Given a text $T$ and a pipeline $\Pi$, let $N(T)$ be the number of readings, i.e.
+\[
+N(T):=\bigl|\mathrm{Hom}(\mathcal{R}(T),\mathbb{F}_2)\bigr|.
+\]
+We define the \emph{underdetermination ratio} by
+\[
+\mathrm{Und}(T,\Pi):=\frac{\log_2 N(T)}{n},
+\qquad 0\le \mathrm{Und}(T,\Pi)\le 1.
+\]
+where $n$ is the number of extracted atoms.
+\end{definition}
+
+\paragraph{Example 3}
+Consider the reduced proposition set
+\[
+\mathcal{P}(T)=\{P_3,P_4,P_5,P_8,P_9\}
+\qquad (n=5),
+\]
+and assume the hard constraints are exactly
+\[
+P_8\rightarrow P_9,
+\qquad
+P_4\rightarrow P_5.
+\]
+Each implication forbids exactly one assignment on its pair of variables (the case True$\wedge$False), hence each contributes $3$ satisfying assignments out of $4$.
+Therefore the number of readings for this reduced instance is
+\[
+N(T)= 3\cdot 3\cdot 2 = 18,
+\]
+where the final factor $2$ comes from the unconstrained variable $P_3$.
+Thus
+\[
+\mathrm{Und}(T,\Pi)=\frac{\log_2(18)}{5}\approx 0.834.
+\]
+This value reflects that the hard constraints eliminate some combinations of propositions, but still leave substantial freedom.
+
+We remark that 
+soft constraints $\mathcal{S}(T)$ with confidences $w(C)\in(0,1)$ do not change the admissible readings determined by $\mathcal{IC}(T)$; instead they define a weight $W(\varphi)$ that ranks readings by plausibility. This supports \emph{weighted} variants of underdetermination (e.g., effective model count or entropy) without turning defeasible statements such as ``intended $<60$ seconds'' into hard logical necessities. 
+
