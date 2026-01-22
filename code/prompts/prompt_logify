@@ -5,7 +5,7 @@ INTENDED TASK
 Given a (usually very large) natural language text T, extract:
 
 1. Atomic, primitive propositions denoted P_1, P_2, . . . , P_n for some large enough number n.
-Each of these primitive propositional variables should be independent and equipped with their natural language meaning along with short evidence from the text.
+Each of these primitive propositional variables should be independent, contain no logical connectives, and be equipped with their natural language meaning along with short evidence from the text.
 You should decide which propositions to make atomic after internalizing steps 2 and 3 from the task.
 
 2. Hard constraints which are zeroth-order propositional formulas over the variables P_1, P_2, ..., P_n that must hold.
@@ -43,7 +43,8 @@ STEP 3: Extract Soft Constraints
 
 GUIDELINES:
 - Make sure the expressions are written in zeroth-order logic.
-- Even if the text resembles first-order logic, break it down into zeroth-order logic by including more propositional primitives.
+- Even if the text resembles first-order logic, break it down into zeroth-order logic by flattening the exppression into atomic primitives. 
+  E.g. if it is a predicate like Study(Alice, Tuesday), then convert that into a single, specific atomic proposition "Alice studies on Tuesday".
 - Be as faithful to the spirit of the text as possible, and do not add artificial primitives or constraints if they are not necessary to the logical structure of the text.
 - All weight values are rational numbers in the interval (0,1) with at most four-decimals.
 
