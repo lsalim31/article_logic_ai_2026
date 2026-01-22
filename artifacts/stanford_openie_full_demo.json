@@ -1,0 +1,280 @@
+{
+  "demo_note": "Stanford OpenIE + Enhanced LLM Pipeline Demo",
+  "original_text": "Alice is a student who loves mathematics. If Alice studies hard, she will pass the exam. Alice usually studies hard, but sometimes she gets distracted by social media. When Alice is focused, she always completes her homework. Alice's professor recommends that students attend office hours if they want to excel. Alice prefers studying in the library because it is quiet there.",
+  "openie_triples_count": 24,
+  "extracted_triples": [
+    {
+      "subject": "Alice",
+      "predicate": "is",
+      "object": "student",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice studies",
+      "predicate": "will pass",
+      "object": "exam",
+      "confidence": 1.0
+    },
+    {
+      "subject": "she",
+      "predicate": "will pass",
+      "object": "exam",
+      "confidence": 1.0
+    },
+    {
+      "subject": "she",
+      "predicate": "completes",
+      "object": "her homework",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "is",
+      "object": "focused",
+      "confidence": 1.0
+    },
+    {
+      "subject": "she",
+      "predicate": "always completes",
+      "object": "her homework",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "is",
+      "object": "When focused",
+      "confidence": 1.0
+    },
+    {
+      "subject": "students",
+      "predicate": "attend office hours",
+      "object": "they want",
+      "confidence": 1.0
+    },
+    {
+      "subject": "they",
+      "predicate": "want",
+      "object": "excel",
+      "confidence": 1.0
+    },
+    {
+      "subject": "students",
+      "predicate": "attend office hours",
+      "object": "if they want",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "has",
+      "object": "professor",
+      "confidence": 1.0
+    },
+    {
+      "subject": "they",
+      "predicate": "want",
+      "object": "to excel",
+      "confidence": 1.0
+    },
+    {
+      "subject": "students",
+      "predicate": "attend",
+      "object": "office hours",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "because quiet there",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "quiet",
+      "confidence": 1.0
+    },
+    {
+      "subject": "it",
+      "predicate": "is",
+      "object": "quiet",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "quiet there",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "studying in",
+      "object": "library",
+      "confidence": 1.0
+    },
+    {
+      "subject": "it",
+      "predicate": "is",
+      "object": "because quiet",
+      "confidence": 1.0
+    },
+    {
+      "subject": "it",
+      "predicate": "is",
+      "object": "quiet there",
+      "confidence": 1.0
+    },
+    {
+      "subject": "it",
+      "predicate": "is",
+      "object": "because quiet there",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "because quiet",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "studying in library",
+      "confidence": 1.0
+    },
+    {
+      "subject": "Alice",
+      "predicate": "prefers",
+      "object": "studying",
+      "confidence": 1.0
+    }
+  ],
+  "formatted_input": "ORIGINAL TEXT:\n<<<\nAlice is a student who loves mathematics. If Alice studies hard, she will pass the exam. Alice usually studies hard, but sometimes she gets distracted by social media. When Alice is focused, she always completes her homework. Alice's professor recommends that students attend office hours if they want to excel. Alice prefers studying in the library because it is quiet there.\n>>>\n\nOPENIE TRIPLES:\n<<<\nAlice\tis\tstudent\t1.0000\nAlice studies\twill pass\texam\t1.0000\nshe\twill pass\texam\t1.0000\nshe\tcompletes\ther homework\t1.0000\nAlice\tis\tfocused\t1.0000\nshe\talways completes\ther homework\t1.0000\nAlice\tis\tWhen focused\t1.0000\nstudents\tattend office hours\tthey want\t1.0000\nthey\twant\texcel\t1.0000\nstudents\tattend office hours\tif they want\t1.0000\nAlice\thas\tprofessor\t1.0000\nthey\twant\tto excel\t1.0000\nstudents\tattend\toffice hours\t1.0000\nAlice\tprefers\tbecause quiet there\t1.0000\nAlice\tprefers\tquiet\t1.0000\nit\tis\tquiet\t1.0000\nAlice\tprefers\tquiet there\t1.0000\nAlice\tstudying in\tlibrary\t1.0000\nit\tis\tbecause quiet\t1.0000\nit\tis\tquiet there\t1.0000\nit\tis\tbecause quiet there\t1.0000\nAlice\tprefers\tbecause quiet\t1.0000\nAlice\tprefers\tstudying in library\t1.0000\nAlice\tprefers\tstudying\t1.0000\n>>>",
+  "simulated_logic_structure": {
+    "primitive_props": [
+      {
+        "id": "P_1",
+        "translation": "Alice is a student",
+        "evidence": "First sentence: 'Alice is a student'",
+        "explanation": "Basic identity statement about Alice",
+        "stanford_openie_support": "('Alice'; 'is'; 'student') - directly extracted"
+      },
+      {
+        "id": "P_2",
+        "translation": "Alice loves mathematics",
+        "evidence": "First sentence: 'who loves mathematics'",
+        "explanation": "Alice's preference for mathematics from relative clause",
+        "stanford_openie_support": "Inferred from relative clause structure"
+      },
+      {
+        "id": "P_3",
+        "translation": "Alice studies hard",
+        "evidence": "Multiple mentions of studying behavior",
+        "explanation": "Core study behavior proposition",
+        "stanford_openie_support": "Referenced in conditional triples about studying"
+      },
+      {
+        "id": "P_4",
+        "translation": "Alice passes the exam",
+        "evidence": "Conditional statement outcome",
+        "explanation": "Exam outcome proposition",
+        "stanford_openie_support": "Multiple triples: [{'subject': 'Alice studies', 'predicate': 'will pass', 'object': 'exam', 'confidence': 1.0}, {'subject': 'she', 'predicate': 'will pass', 'object': 'exam', 'confidence': 1.0}]"
+      },
+      {
+        "id": "P_5",
+        "translation": "Alice completes her homework",
+        "evidence": "When focused statement",
+        "explanation": "Homework completion behavior",
+        "stanford_openie_support": "Direct extraction: [{'subject': 'she', 'predicate': 'completes', 'object': 'her homework', 'confidence': 1.0}, {'subject': 'she', 'predicate': 'always completes', 'object': 'her homework', 'confidence': 1.0}]"
+      },
+      {
+        "id": "P_6",
+        "translation": "Alice is focused",
+        "evidence": "Conditional context",
+        "explanation": "Mental state proposition",
+        "stanford_openie_support": "Direct extraction: [{'subject': 'Alice', 'predicate': 'is', 'object': 'focused', 'confidence': 1.0}, {'subject': 'Alice', 'predicate': 'is', 'object': 'When focused', 'confidence': 1.0}]"
+      },
+      {
+        "id": "P_7",
+        "translation": "Students attend office hours",
+        "evidence": "Professor recommendation",
+        "explanation": "General student behavior",
+        "stanford_openie_support": "Multiple office hours triples: 1"
+      },
+      {
+        "id": "P_8",
+        "translation": "Alice prefers studying in the library",
+        "evidence": "Last sentence preference statement",
+        "explanation": "Location preference for studying",
+        "stanford_openie_support": "Direct extraction: [{'subject': 'Alice', 'predicate': 'studying in', 'object': 'library', 'confidence': 1.0}]"
+      },
+      {
+        "id": "P_9",
+        "translation": "The library is quiet",
+        "evidence": "Causal explanation for preference",
+        "explanation": "Environmental characteristic",
+        "stanford_openie_support": "Direct extraction: [{'subject': 'Alice', 'predicate': 'prefers', 'object': 'because quiet there', 'confidence': 1.0}, {'subject': 'Alice', 'predicate': 'prefers', 'object': 'quiet', 'confidence': 1.0}, {'subject': 'it', 'predicate': 'is', 'object': 'quiet', 'confidence': 1.0}, {'subject': 'Alice', 'predicate': 'prefers', 'object': 'quiet there', 'confidence': 1.0}, {'subject': 'it', 'predicate': 'is', 'object': 'because quiet', 'confidence': 1.0}, {'subject': 'it', 'predicate': 'is', 'object': 'quiet there', 'confidence': 1.0}, {'subject': 'it', 'predicate': 'is', 'object': 'because quiet there', 'confidence': 1.0}, {'subject': 'Alice', 'predicate': 'prefers', 'object': 'because quiet', 'confidence': 1.0}]"
+      }
+    ],
+    "hard_constraints": [
+      {
+        "id": "H_1",
+        "formula": "P_3 ⟹ P_4",
+        "translation": "If Alice studies hard, then she passes the exam",
+        "evidence": "Explicit conditional statement",
+        "reasoning": "Direct conditional with 'if...then' structure",
+        "stanford_openie_support": "Conditional triples: [{'subject': 'Alice studies', 'predicate': 'will pass', 'object': 'exam', 'confidence': 1.0}, {'subject': 'she', 'predicate': 'will pass', 'object': 'exam', 'confidence': 1.0}]"
+      },
+      {
+        "id": "H_2",
+        "formula": "P_6 ⟹ P_5",
+        "translation": "When Alice is focused, she always completes homework",
+        "evidence": "Universal quantifier 'always'",
+        "reasoning": "Strong conditional with 'always' indicator",
+        "stanford_openie_support": "Focus-homework triples: [{'subject': 'she', 'predicate': 'always completes', 'object': 'her homework', 'confidence': 1.0}]"
+      },
+      {
+        "id": "H_3",
+        "formula": "P_8 ⟹ P_9",
+        "translation": "Alice prefers library because it is quiet",
+        "evidence": "Causal 'because' relationship",
+        "reasoning": "Explicit causal connection",
+        "stanford_openie_support": "Preference-quiet triples: 10"
+      }
+    ],
+    "soft_constraints": [
+      {
+        "id": "S_1",
+        "formula": "P_3",
+        "translation": "Alice usually studies hard",
+        "evidence": "Frequency adverb 'usually'",
+        "reasoning": "High probability indicated by 'usually'",
+        "weight": 0.8,
+        "stanford_openie_support": "Frequency qualifier in original text"
+      },
+      {
+        "id": "S_2",
+        "formula": "¬P_6",
+        "translation": "Alice sometimes gets distracted",
+        "evidence": "Frequency adverb 'sometimes'",
+        "reasoning": "Moderate probability of distraction",
+        "weight": 0.3,
+        "stanford_openie_support": "Implicit from study behavior patterns"
+      },
+      {
+        "id": "S_3",
+        "formula": "P_7",
+        "translation": "Students should attend office hours",
+        "evidence": "Professor recommendation",
+        "reasoning": "Recommendation implies desirable behavior",
+        "weight": 0.7,
+        "stanford_openie_support": "Office hours triples: [{'subject': 'students', 'predicate': 'attend', 'object': 'office hours', 'confidence': 1.0}]"
+      }
+    ],
+    "stanford_openie_stats": {
+      "total_triples": 24,
+      "alice_specific_triples": 12,
+      "conditional_triples": 2,
+      "location_triples": 2
+    }
+  }
+}
