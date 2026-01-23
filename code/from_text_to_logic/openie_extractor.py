@@ -113,7 +113,10 @@ class OpenIEExtractor:
         Extract triples from dependency parse for sentences where OpenIE fails.
 
         This is a fallback mechanism to capture relations that OpenIE misses,
-        particularly for intransitive verbs and certain sentence structures.
+        particularly for:
+        - Intransitive verbs with adverbs (e.g., "studies hard")
+        - Sentences where POS tagger misclassifies verbs as nouns
+        - Certain sentence structures that OpenIE doesn't handle
 
         Args:
             sentence: CoreNLP sentence object
@@ -124,20 +127,26 @@ class OpenIEExtractor:
             List of extracted triples
         """
         triples = []
+
+        # Build token lookup by index
         tokens = {token.tokenEndIndex: token for token in sentence.token}
 
         # Build dependency graph
-        deps = {}
+        # In CoreNLP, edges go from HEAD (source) to DEPENDENT (target)
+        # e.g., "reads" --[nsubj]--> "Bob" means "reads" is head, "Bob" is dependent
+        deps_from_head = {}  # head_idx -> list of (dependent_idx, dep_type)
         for edge in sentence.basicDependencies.edge:
-            target_idx = edge.target
-            if target_idx not in deps:
-                deps[target_idx] = []
-            deps[target_idx].append({
-                'source': edge.source,
+            head_idx = edge.source
+            dependent_idx = edge.target
+
+            if head_idx not in deps_from_head:
+                deps_from_head[head_idx] = []
+            deps_from_head[head_idx].append({
+                'dependent': dependent_idx,
                 'dep': edge.dep
             })
 
-        # Find the root (main verb)
+        # Find the root
         root_idx = sentence.basicDependencies.root[0] if sentence.basicDependencies.root else None
         if root_idx is None:
             return triples
@@ -146,41 +155,75 @@ class OpenIEExtractor:
         if root_token is None:
             return triples
 
-        # Only process if this is a verb
-        if not root_token.pos.startswith('VB'):
-            return triples
+        # Determine if root is a verb or verb-like
+        root_pos = root_token.pos
+        root_lemma = root_token.lemma if hasattr(root_token, 'lemma') else root_token.word
 
-        verb = root_token.word
+        is_verb = root_pos.startswith('VB')
+        # Handle cases where POS tagger misclassifies verbs as nouns (e.g., "studies" as NNS)
+        # If lemma differs from word, it might be a verb form
+        is_potential_verb = root_pos in ['NNS', 'NN'] and root_lemma != root_token.word.lower()
+
+        # Check dependencies from root to find subject, object, advmod
+        has_subject = False
+        has_advmod = False
         subject = None
         obj = None
         advmod = None
+        compound_subject = None
 
-        # Find subject and object from dependencies
-        for dep_info in deps.get(root_idx, []):
+        for dep_info in deps_from_head.get(root_idx, []):
             dep_type = dep_info['dep']
-            source_token = tokens.get(dep_info['source'])
-            if source_token is None:
+            dependent_token = tokens.get(dep_info['dependent'])
+            if dependent_token is None:
                 continue
 
-            if dep_type in ['nsubj', 'nsubjpass']:
-                subject = source_token.word
-            elif dep_type in ['dobj', 'obj', 'iobj']:
-                obj = source_token.word
+            if dep_type in ['nsubj', 'nsubj:pass']:
+                subject = dependent_token.word
+                has_subject = True
+            elif dep_type in ['obj', 'dobj', 'iobj']:
+                obj = dependent_token.word
             elif dep_type == 'advmod':
-                advmod = source_token.word
+                advmod = dependent_token.word
+                has_advmod = True
+            elif dep_type == 'compound':
+                # "Alice" in "Alice studies" might be tagged as compound if "studies" is NNS
+                compound_subject = dependent_token.word
+
+        # If we have a compound and advmod but no subject, the compound might be the subject
+        # This handles "Alice studies hard" where "studies"(NNS) --[compound]--> "Alice"
+        if compound_subject and not subject and has_advmod:
+            subject = compound_subject
+            has_subject = True
+
+        # Decide if we should extract a triple
+        should_extract = False
+        predicate = root_token.word
+
+        if is_verb and has_subject:
+            should_extract = True
+        elif is_potential_verb and has_subject and has_advmod:
+            # Likely a misclassified verb like "studies" tagged as NNS
+            should_extract = True
+        elif has_subject and has_advmod and root_pos in ['NNS', 'NN', 'VB', 'VBZ', 'VBP', 'VBD', 'VBG', 'VBN']:
+            # Be more permissive - if we have subject + advmod, likely a verb
+            should_extract = True
+
+        if not should_extract:
+            return triples
 
         # Skip if we already have this subject from OpenIE
         if subject and subject.lower() in {s.lower() for s in existing_subjects}:
             return triples
 
-        # Create triple if we have subject and (object or adverb modifier)
+        # Create triple
         if subject:
             if obj:
                 triples.append({
                     'subject': subject,
-                    'predicate': verb,
+                    'predicate': predicate,
                     'object': obj,
-                    'confidence': 0.8,  # Lower confidence for fallback
+                    'confidence': 0.8,
                     'sentence_index': sentence_idx,
                     'source': 'depparse_fallback'
                 })
@@ -188,9 +231,9 @@ class OpenIEExtractor:
                 # For intransitive verbs with adverbs like "studies hard"
                 triples.append({
                     'subject': subject,
-                    'predicate': f'{verb}',
+                    'predicate': predicate,
                     'object': advmod,
-                    'confidence': 0.7,  # Even lower for adverb-based triples
+                    'confidence': 0.7,
                     'sentence_index': sentence_idx,
                     'source': 'depparse_fallback_advmod'
                 })
