@@ -1,0 +1,116 @@
+EXAMPLE INPUT TEXT
+<<<
+The hospital's emergency triage protocol requires immediate attention for patients presenting with chest pain, unless the pain is clearly musculoskeletal in origin and the patient is under 40 years old. Dr. Martinez, who has been working double shifts this week, believes that patients over 65 should always receive an ECG regardless of symptoms, although Dr. Yang only sometimes believes this. The official guidelines only mandate this when cardiac history is documented.
+>>>
+
+EXAMPLE OUTPUT JSON
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The patient requires immediate attention under the hospital's emergency triage protocol",
+      "evidence": "In Sentence 1, the text says 'The hospital's emergency triage protocol requires immediate attention for patients presenting with chest pain'. This is not an atomic statement but built from atomics. One of the atomics is P_1",
+      "explanation": "It cannot further be broken down; it is an unambiguous, complete, and specific statement which is true/false evaluable. From the context, it is clear patients require immediate attention, so the translation is modified for clarity"
+    },
+    {
+      "id": "P_2",
+      "translation": "The patient presents with chest pain that is not clearly musculoskeletal in origin",
+      "evidence": "In Sentence 1, the text says 'The hospital's emergency triage protocol requires immediate attention for patients presenting with chest pain'. This is a compound statement built from atomics including P_2",
+      "explanation": "Note, 'not' coming before 'clearly' is important. Also note, an initial guess would be 'The patient presents with chest pain'. We choose this proposition instead because it is more specific and is independent from P_3. The initial guess is captured by P_2 ∨ P_3"
+    },
+    {
+      "id": "P_3",
+      "translation": "The patient presents with chest pain that is clearly musculoskeletal in origin",
+      "evidence": "In Sentence 1, the text says 'unless the pain is clearly musculoskeletal in origin'",
+      "explanation": "A specific statement that is independent of the other P_i. The alternative 'The chest pain is clearly musculoskeletal in origin' is not a good candidate because chest pain is associated with a patient, so it is important to include the patient for specificity"
+    },
+    {
+      "id": "P_4",
+      "translation": "The patient is under 40 years old",
+      "evidence": "In Sentence 1, the text ends with '...the patient is under 40 years old'",
+      "explanation": "A specific statement that cannot be further broken down or made more specific based on the text"
+    },
+    {
+      "id": "P_5",
+      "translation": "Dr. Martinez works double shifts this week",
+      "evidence": "In Sentence 2, the text says 'Dr. Martinez, who has been working double shifts this week'. The 'who' is in reference to Dr. Martinez",
+      "explanation": "A factual statement about Dr. Martinez's work schedule. It is atomic because it describes a single, verifiable fact about a specific person and time period"
+    },
+    {
+      "id": "P_6",
+      "translation": "The patient is over 65 years old",
+      "evidence": "In Sentence 2, the text says 'patients over 65 should always receive an ECG'",
+      "explanation": "A specific age-related statement that is independent and cannot be further decomposed. Note that P_4 and P_6 are not mutually exclusive by the text alone, though common sense suggests they are"
+    },
+    {
+      "id": "P_7",
+      "translation": "Dr. Martinez makes sure the patient receives an ECG",
+      "evidence": "In Sentence 2, the text says 'Dr. Martinez...believes that patients over 65 should always receive an ECG'. This implies an action by Dr. Martinez",
+      "explanation": "An action-oriented atomic proposition. We attribute the action to Dr. Martinez specifically because the belief is his. The verb 'makes sure' captures the intentional nature implied by 'should always'"
+    },
+    {
+      "id": "P_8",
+      "translation": "Dr. Martinez follows the official guidelines",
+      "evidence": "In Sentence 3, the text says 'The official guidelines only mandate this...'. This suggests a constraint related to this atomic",
+      "explanation": "We infer from common-sense that doctors follow guidelines. Because of the constraint H_4 which we anticipate, we need to include the doctors to make the atomics specific, independent, and exhaustive"
+    },
+    {
+      "id": "P_9",
+      "translation": "Dr. Yang follows the official guidelines",
+      "evidence": "In Sentence 2, Dr. Yang is mentioned, and Sentence 3 refers to 'official guidelines'. This atomic captures whether Dr. Yang adheres to those guidelines",
+      "explanation": "Similar to P_8, this is needed to flatten the first-order logic statement about guidelines into propositional logic for each doctor mentioned in the text"
+    },
+    {
+      "id": "P_10",
+      "translation": "Dr. Yang makes sure the patient receives an ECG",
+      "evidence": "In Sentence 2, the text says 'although Dr. Yang only sometimes believes this', where 'this' refers to patients over 65 receiving an ECG",
+      "explanation": "Parallel to P_7 but for Dr. Yang. This atomic is needed to express how Dr. Yang's belief translates into action regarding ECG administration"
+    },
+    {
+      "id": "P_11",
+      "translation": "The patient has a documented cardiac history",
+      "evidence": "In Sentence 3, the text says '...when cardiac history is documented' which is an assumption for some constraint",
+      "explanation": "To keep the primitive proposition specific, it is important to specify that patients have a documented cardiac history. The word 'documented' is crucial as it distinguishes from merely having cardiac history"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "id": "H_1",
+      "formula": "((P_2 ∨ P_3) ∧ ¬(P_3 ∧ P_4)) ⟹ P_1",
+      "translation": "If the patient presents with chest pain (of either type) and it is not true that both the pain is clearly musculoskeletal in origin and the patient is under 40 years old, then the patient requires immediate attention under the hospital's emergency triage protocol",
+      "evidence": "In Sentence 1, within 'The hospital's emergency triage protocol requires immediate attention for patients presenting with chest pain, unless the pain is clearly musculoskeletal in origin and the patient is under 40 years old'",
+      "reasoning": "The word 'unless' suggests an exception, namely ¬(P_3 ∧ P_4). The antecedent requires chest pain (P_2 ∨ P_3) since presenting with chest pain is the trigger. To keep it faithful to the text, we prefer not to write this as the classical equivalent ¬P_3 ∨ ¬P_4"
+    },
+    {
+      "id": "H_2",
+      "formula": "P_5",
+      "translation": "Dr. Martinez works double shifts this week",
+      "evidence": "In Sentence 2, the text states as fact 'Dr. Martinez, who has been working double shifts this week'",
+      "reasoning": "This is presented as a factual assertion in the text, not as a conditional or hypothetical. The text treats it as a true statement about the current state of affairs"
+    },
+    {
+      "id": "H_3",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If the patient is over 65 years old, then Dr. Martinez makes sure the patient receives an ECG",
+      "evidence": "In Sentence 2, in 'Dr. Martinez...believes that patients over 65 should always receive an ECG regardless of symptoms'",
+      "reasoning": "Although it is a statement of belief, the text seems to intend to speak about how Dr. Martinez acts. The word 'always' indicates this is a hard constraint with no exceptions from Dr. Martinez's perspective"
+    },
+    {
+      "id": "H_4",
+      "formula": "((P_8 ∧ P_11) ⟹ P_7) ∧ ((P_9 ∧ P_11) ⟹ P_10)",
+      "translation": "If Dr. Martinez follows the guidelines and the patient has a documented cardiac history, then Dr. Martinez makes sure the patient receives an ECG. And if Dr. Yang follows the guidelines and the patient has a documented cardiac history, then Dr. Yang makes sure the patient receives an ECG",
+      "evidence": "In Sentence 3, 'The official guidelines only mandate this when cardiac history is documented', where 'this' refers to making sure the patient receives an ECG",
+      "reasoning": "Because this constraint is true for all doctors, we have to flatten the logic to obtain the constraint in propositional logic. It is instantiated for Dr. Martinez and Dr. Yang, the two doctors mentioned in the text"
+    }
+  ],
+  "soft_constraints": [
+    {
+      "id": "S_1",
+      "formula": "P_6 ⟹ P_10",
+      "translation": "If the patient is over 65 years old, then Dr. Yang makes sure the patient receives an ECG",
+      "evidence": "In Sentence 2, from '...although Dr. Yang only sometimes believes this'",
+      "reasoning": "Although it is a statement of belief, the text seems to intend to speak about how Dr. Yang acts. The word 'sometimes' indicates this is a soft constraint, not a hard rule. The weight reflects that Dr. Yang does not always follow this practice",
+      "weight": 0.5
+    }
+  ]
+}
