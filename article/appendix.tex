@@ -432,3 +432,204 @@ This example illustrates several important aspects of the extraction process:
 
     \item \textbf{No weights in output}: Soft constraints are identified but do not include weight values. Weights are assigned separately by the evidence-based pipeline (Appendix~\ref{sec:weights}).
 \end{enumerate}
+
+
+\subsection{Worked Example: START and Jump-START Triage}
+\label{sec:start_example}
+
+We illustrate our constructions on the following text $T$:
+
+\begin{quote}
+\emph{``The START triage system is widely used in the United States;
+it is utilized for patients above age $8$; it is intended that triage status can be computed in under $60$ seconds.
+For children, a commonly used algorithm is Jump-START, which is based on START but accounts for pediatric respiratory failure risk
+and difficulty following verbal commands. Triage is a dynamic process, and a patient can change triage status over time.''}
+\end{quote}
+
+\subsubsection{Extraction Pipeline}
+
+We fix an LLM pipeline $\Pi$ and extract the following atomic propositions
+$\mathcal{P}(T)=\{P_1,\dots,P_9\}$, where:
+\begin{itemize}
+\item $P_1$: ``The START system is (one of) the most common triage systems in the United States.''
+\item $P_2$: ``START is utilized for patients above the age of $8$ years.''
+\item $P_3$: ``Using START, triage status is intended to be calculated in less than $60$ seconds.''
+\item $P_4$: ``For children, Jump-START is a commonly used triage algorithm.''
+\item $P_5$: ``Jump-START is based on START.''
+\item $P_6$: ``Jump-START accounts for increased pediatric risk of respiratory failure.''
+\item $P_7$: ``Children may be unable to follow verbal commands.''
+\item $P_8$: ``Triage is a dynamic process.''
+\item $P_9$: ``A patient can change triage status over time.''
+\end{itemize}
+
+We obtain a set of hard constraints $\mathcal{C}(T)=\{C_1,C_2,C_3,C_4\}$, intended to capture structural claims of the text:
+\begin{enumerate}
+\item[$C_1$:] $P_8 \rightarrow P_9$ — ``dynamic'' implies change over time is possible.
+\item[$C_2$:] $P_4 \rightarrow P_5$ — Jump-START for children $\Rightarrow$ based on START.
+\item[$C_3$:] $P_4 \rightarrow P_6$ — Jump-START for children $\Rightarrow$ accounts for respiratory failure risk.
+\item[$C_4$:] $P_4 \rightarrow P_7$ — Jump-START for children $\Rightarrow$ inability to follow commands relevant.
+\end{enumerate}
+
+We also specify soft constraints $\mathcal{S}(T) = \{S_1, S_2, S_3\}$ with confidence weights:
+\begin{itemize}
+\item $S_1 := P_1$ with $w(S_1) = 0.75$ (``widely used'' suggests high but not certain confidence)
+\item $S_2 := P_2$ with $w(S_2) = 0.60$ (age threshold stated but not absolute)
+\item $S_3 := P_3$ with $w(S_3) = 0.85$ (``intended'' is strong but not guaranteed)
+\end{itemize}
+
+\subsubsection{Knowledge Algebra Construction}
+
+Let $\mathcal{R}(T)$ denote the Boolean ring associated to $(T,\Pi)$, obtained by enforcing the hard constraints in $\mathcal{C}(T)$:
+\begin{align*}
+\mathcal{R}(T) =
+\frac{
+\mathbb{F}_2[P_i \mid 1 \leq i \leq 9]
+}
+{
+\langle
+P_i^2 + P_i \mid 1 \leq i \leq 9
+\rangle
++
+\mathcal{I}_{\mathcal{C}}(T)
+}
+\end{align*}
+where
+\[
+\mathcal{I}_{\mathcal{C}}(T)
+=
+\langle
+P_8(1+P_9),\;
+P_4(1+P_5),\;
+P_4(1+P_6),\;
+P_4(1+P_7)
+\rangle.
+\]
+
+A \emph{reading} is a morphism $\varphi:\mathcal{R}(T)\to\mathbb{F}_2$.
+We weight readings using the soft constraint polynomials. For each soft constraint $C$ with weight $w(C)$, define:
+\[
+\lambda_C(\varphi)=
+\begin{cases}
+w(C) & \text{if } \varphi(C) = 1,\\
+1-w(C) & \text{if } \varphi(C) = 0,
+\end{cases}
+\]
+which induces the unnormalized weight:
+\[
+W(\varphi)=\prod_{C\in\mathcal{S}(T)} \lambda_C(\varphi).
+\]
+
+\subsubsection{Comparing Two Readings}
+
+We exhibit two admissible readings (both satisfy all hard constraints) with different weights.
+
+\paragraph{Reading A.} Assume $\varphi_A$ satisfies $P_1, P_2, P_3, P_4, P_8$. The hard constraints also imply $P_5, P_6, P_7, P_9$.
+Since $\varphi_A$ satisfies all soft constraints ($P_1=1, P_2=1, P_3=1$), its weight is:
+\[
+W(\varphi_A) = (0.75)(0.60)(0.85) = 0.3825.
+\]
+
+\paragraph{Reading B.} Assume $\varphi_B$ satisfies $P_4, P_8$ (and consequently $P_5, P_6, P_7, P_9$), but $\varphi_B$ does \emph{not} satisfy $P_1$ and $P_3$ (treating them as false), while still satisfying $P_2$.
+The contributions are:
+\begin{itemize}
+    \item $P_1$: Violated $\to (1-0.75) = 0.25$
+    \item $P_2$: Satisfied $\to 0.60$
+    \item $P_3$: Violated $\to (1-0.85) = 0.15$
+\end{itemize}
+Then:
+\[
+W(\varphi_B) = (0.25)(0.60)(0.15) = 0.0225.
+\]
+
+Thus, both readings are admissible under the hard constraints, but Reading A is significantly preferred by the soft-constraint weighting ($W(\varphi_A) / W(\varphi_B) = 17$).
+
+
+\subsection{Algebraic Reasoning: Consequence and Compatibility}
+\label{sec:algebraic_reasoning}
+
+In this section, we describe algebraic tests for consequence, inconsistency, and compatibility. Throughout, we work relative to a fixed text $T$ and pipeline $\Pi$, writing $\mathcal{R}(T)$ for the knowledge algebra and $\mathcal{I}_{\mathcal{C}}(T)$ for the hard-constraint ideal.
+
+\subsubsection{Testing Consequence and Inconsistency}
+
+Let $Q$ be a query proposition and let $q := \Pi_{\mathrm{form}}(Q) \in \mathcal{R}(T)$ denote its grounded Boolean formula.
+
+\begin{proposition}
+\label{prop:consequence_inconsistency}
+Let $q := \Pi_{\mathrm{form}}(Q) \in \mathcal{R}(T)$ encode a query proposition $Q$.
+\begin{enumerate}
+\item $Q$ is a \emph{$\Pi$-consequence} of $T$ (i.e., $Q$ is True under every reading) if and only if
+\[
+1+q \in \mathcal{I}_{\mathcal{C}}(T).
+\]
+\item $Q$ is \emph{$\Pi$-inconsistent} with $T$ (i.e., $Q$ is False under every reading) if and only if
+\[
+q \in \mathcal{I}_{\mathcal{C}}(T).
+\]
+\end{enumerate}
+\end{proposition}
+
+\paragraph{Example.}
+Let $Q_1$ denote the proposition \emph{``If triage is dynamic then a patient can change triage status over time,''} i.e., $Q_1 := P_8 \rightarrow P_9$.
+In our Boolean ring encoding:
+\[
+q_1 = \Pi_{\mathrm{form}}(Q_1) = 1 + P_8(1+P_9).
+\]
+Since $C_1$ is a hard constraint, the polynomial $P_8(1+P_9)$ lies in $\mathcal{I}_{\mathcal{C}}(T)$, hence $1+q_1 = P_8(1+P_9) \in \mathcal{I}_{\mathcal{C}}(T)$.
+By Proposition~\ref{prop:consequence_inconsistency}, $Q_1$ is a $\Pi$-consequence of $T$.
+
+\subsubsection{Testing Relative Compatibility}
+
+Given two propositions $S$ and $R$, we may test whether they can be simultaneously True under the hard constraints.
+
+\begin{proposition}
+\label{prop:compatibility}
+Let $s := \Pi_{\mathrm{form}}(S)$ and $r := \Pi_{\mathrm{form}}(R)$ be the Boolean-ring encodings of two propositions.
+Then $S$ and $R$ are \emph{mutually $\Pi$-incompatible} with respect to $T$ (i.e., there is no reading under which both are True) if and only if
+\[
+sr \in \mathcal{I}_{\mathcal{C}}(T).
+\]
+\end{proposition}
+
+\paragraph{Example.}
+Let $S := P_8$ (``triage is dynamic'') and $R := \neg P_9$ (``a patient cannot change status over time'').
+Then:
+\[
+sr = P_8(1+P_9).
+\]
+Because $P_8 \rightarrow P_9$ is a hard constraint, the polynomial $P_8(1+P_9)$ lies in $\mathcal{I}_{\mathcal{C}}(T)$, hence $sr \in \mathcal{I}_{\mathcal{C}}(T)$.
+By Proposition~\ref{prop:compatibility}, the propositions $P_8$ and $\neg P_9$ cannot be simultaneously True in any admissible reading.
+
+\subsubsection{Underdetermination}
+
+A \emph{reading} is a morphism $\varphi: \mathcal{R}(T) \to \mathbb{F}_2$, corresponding to a satisfying assignment to the hard constraints. The number of readings quantifies how much the text leaves undetermined.
+
+\begin{definition}[Underdetermination]
+\label{def:underdetermination}
+Given a text $T$ and a pipeline $\Pi$, let $N(T)$ be the number of readings:
+\[
+N(T) := \bigl|\mathrm{Hom}(\mathcal{R}(T), \mathbb{F}_2)\bigr|.
+\]
+We define the \emph{underdetermination ratio} by:
+\[
+\mathrm{Und}(T,\Pi) := \frac{\log_2 N(T)}{n},
+\qquad 0 \leq \mathrm{Und}(T,\Pi) \leq 1,
+\]
+where $n$ is the number of extracted atoms.
+\end{definition}
+
+\paragraph{Example.}
+Consider a reduced proposition set $\mathcal{P}(T) = \{P_3, P_4, P_5, P_8, P_9\}$ ($n=5$), with hard constraints $P_8 \rightarrow P_9$ and $P_4 \rightarrow P_5$.
+Each implication forbids exactly one assignment on its pair of variables (True $\land$ False), hence each contributes $3$ satisfying assignments out of $4$.
+The number of readings is:
+\[
+N(T) = 3 \cdot 3 \cdot 2 = 18,
+\]
+where the final factor $2$ comes from the unconstrained variable $P_3$.
+Thus:
+\[
+\mathrm{Und}(T,\Pi) = \frac{\log_2(18)}{5} \approx 0.834.
+\]
+This value reflects that the hard constraints eliminate some combinations but still leave substantial freedom.
+
+\paragraph{Remark.}
+Soft constraints $\mathcal{S}(T)$ with confidences $w(C) \in (0,1)$ do not change the admissible readings determined by $\mathcal{I}_{\mathcal{C}}(T)$; instead they define a weight $W(\varphi)$ that ranks readings by plausibility. This supports \emph{weighted} variants of underdetermination (e.g., effective model count or entropy) without turning defeasible statements into hard logical necessities
