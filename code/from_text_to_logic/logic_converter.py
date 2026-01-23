@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""
+logic_converter.py - LLM-Based Logic Structure Extractor
+
+This module handles Stage 2 of the text-to-logic pipeline:
+converting natural language text (augmented with OpenIE triples) into
+structured propositional logic using an LLM.
+"""
+
+import json
+from typing import Dict, Any
+from openai import OpenAI
+
+
+class LogicConverter:
+    """Converts text + OpenIE triples to structured propositional logic using LLM."""
+
+    def __init__(self, api_key: str, model: str = "gpt-4"):
+        """
+        Initialize the logic converter with API key and model.
+
+        Args:
+            api_key (str): OpenAI API key
+            model (str): Model to use (default: gpt-4)
+        """
+        self.client = OpenAI(api_key=api_key)
+        self.model = model
+        self.system_prompt = self._load_system_prompt()
+
+    def _load_system_prompt(self) -> str:
+        """Load the system prompt from the prompt file."""
+        prompt_path = "/workspace/repo/code/prompts/prompt_logify2"
+        try:
+            with open(prompt_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                # Extract only the SYSTEM part (remove the INPUT FORMAT section)
+                if "INPUT FORMAT" in content:
+                    content = content.split("INPUT FORMAT")[0].strip()
+                # Remove the "SYSTEM" header if present
+                if content.startswith("SYSTEM"):
+                    content = content[6:].strip()
+                return content
+        except FileNotFoundError:
+            raise FileNotFoundError(f"System prompt file not found at {prompt_path}")
+
+    def convert(self, text: str, formatted_triples: str) -> Dict[str, Any]:
+        """
+        Convert input text to structured logic using OpenIE triples and LLM.
+
+        Args:
+            text (str): Original natural language text
+            formatted_triples (str): Pre-formatted OpenIE triples (tab-separated)
+
+        Returns:
+            Dict[str, Any]: JSON structure with primitive props, hard/soft constraints
+        """
+        try:
+            # Format the combined input for the LLM
+            combined_input = f"""ORIGINAL TEXT:
+<<<
+{text}
+>>>
+
+OPENIE TRIPLES:
+<<<
+{formatted_triples}
+>>>"""
+
+            print("Sending to LLM for logical structure extraction...")
+
+            # Send to LLM with the enhanced prompt
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": self.system_prompt},
+                    {"role": "user", "content": combined_input}
+                ],
+                temperature=0.1,  # Low temperature for consistency
+                max_tokens=4000   # Sufficient for complex logic structures
+            )
+
+            response_text = response.choices[0].message.content.strip()
+
+            # Parse the JSON response
+            try:
+                logic_structure = json.loads(response_text)
+                return logic_structure
+            except json.JSONDecodeError as e:
+                # If JSON parsing fails, try to extract JSON from response
+                if "{" in response_text and "}" in response_text:
+                    json_start = response_text.find("{")
+                    json_end = response_text.rfind("}") + 1
+                    json_text = response_text[json_start:json_end]
+                    logic_structure = json.loads(json_text)
+                    return logic_structure
+                else:
+                    raise ValueError(f"Failed to parse JSON response: {e}")
+
+        except Exception as e:
+            raise RuntimeError(f"Error in LLM conversion: {e}")
+
+    def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified2.JSON"):
+        """
+        Save the logic structure to a JSON file.
+
+        Args:
+            logic_structure (Dict[str, Any]): The converted logic structure
+            output_path (str): Path to save the JSON file
+        """
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(logic_structure, f, indent=2, ensure_ascii=False)
+        print(f"Output saved to {output_path}")

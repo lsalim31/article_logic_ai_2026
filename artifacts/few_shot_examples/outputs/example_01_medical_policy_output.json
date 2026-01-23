@@ -1,0 +1,85 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Patients present with chest pain.",
+      "evidence": "First sentence of the text.",
+      "explanation": "This is a basic observation that can occur in the hospital."
+    },
+    {
+      "id": "P_2",
+      "translation": "The chest pain is clearly musculoskeletal in origin.",
+      "evidence": "First sentence of the text.",
+      "explanation": "This is a specific type of chest pain that can be identified."
+    },
+    {
+      "id": "P_3",
+      "translation": "The patient is under 40 years old.",
+      "evidence": "First sentence of the text.",
+      "explanation": "This is a basic fact about the patient that can be determined."
+    },
+    {
+      "id": "P_4",
+      "translation": "Patients are over 65 years old.",
+      "evidence": "Second sentence of the text.",
+      "explanation": "This is another basic fact about the patient that can be determined."
+    },
+    {
+      "id": "P_5",
+      "translation": "Cardiac history is documented for the patient.",
+      "evidence": "Second sentence of the text.",
+      "explanation": "This is a fact that can be checked in the patient's medical records."
+    },
+    {
+      "id": "P_6",
+      "translation": "Mr. Chen's symptoms resolve within 30 minutes without intervention.",
+      "evidence": "Second last paragraph of the text.",
+      "explanation": "This is a specific event that can be observed."
+    },
+    {
+      "id": "P_7",
+      "translation": "Mr. Chen reports radiating pain to his left arm.",
+      "evidence": "Last sentence of the text.",
+      "explanation": "This is a specific symptom that Mr. Chen might report."
+    },
+    {
+      "id": "P_8",
+      "translation": "Mr. Chen continues to sweat.",
+      "evidence": "Last sentence of the text.",
+      "explanation": "This is a specific symptom that can be observed in Mr. Chen."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "id": "H_1",
+      "formula": "P_1 ⟹ ¬(P_2 ∧ P_3)",
+      "translation": "Immediate attention is required for patients presenting with chest pain, unless the pain is clearly musculoskeletal in origin and the patient is under 40 years old.",
+      "evidence": "First sentence of the text.",
+      "reasoning": "This is a hard rule stated in the hospital's emergency triage protocol."
+    },
+    {
+      "id": "H_2",
+      "formula": "P_4 ∨ P_5",
+      "translation": "Patients over 65 should always receive an ECG regardless of symptoms, or when cardiac history is documented.",
+      "evidence": "Second sentence of the text.",
+      "reasoning": "This is a hard rule stated by Dr. Martinez and the official guidelines."
+    },
+    {
+      "id": "H_3",
+      "formula": "P_6 ⟹ ¬(P_7 ∨ P_8)",
+      "translation": "If Mr. Chen's symptoms resolve within 30 minutes without intervention, he will not report any radiating pain to his left arm or continue to sweat.",
+      "evidence": "Second last paragraph and last sentence of the text.",
+      "reasoning": "This is a hard rule stated in the hospital's protocol."
+    }
+  ],
+  "soft_constraints": [
+    {
+      "id": "S_1",
+      "formula": "P_7 ∨ P_8",
+      "translation": "Mr. Chen might report radiating pain to his left arm or continue to sweat.",
+      "evidence": "Last sentence of the text.",
+      "reasoning": "These are potential symptoms that Mr. Chen might exhibit, but it's not certain.",
+      "weight": "0.5"
+    }
+  ]
+}
