@@ -633,3 +633,24 @@ This value reflects that the hard constraints eliminate some combinations but st
 
 \paragraph{Remark.}
 Soft constraints $\mathcal{S}(T)$ with confidences $w(C) \in (0,1)$ do not change the admissible readings determined by $\mathcal{I}_{\mathcal{C}}(T)$; instead they define a weight $W(\varphi)$ that ranks readings by plausibility. This supports \emph{weighted} variants of underdetermination (e.g., effective model count or entropy) without turning defeasible statements into hard logical necessities
+
+\subsection{Baseline Choices}
+
+We establish a comprehensive set of baselines to evaluate our framework across different document lengths and reasoning paradigms.
+
+\paragraph{Short-form reasoning tasks (FOLIO, ProofWriter).}
+For datasets with concise premises that fit within context windows, we compare against:
+\begin{itemize}
+    \item \textbf{Logic-LM} \cite{pan2023logiclm}: The most directly comparable neuro-symbolic system. Logic-LM translates problems into symbolic formulations per query, allowing us to isolate the value of our ``logify once, query many'' paradigm.
+    \item \textbf{Reasoning LLM}: A modern reasoning-capable model (e.g., o1-mini) with chain-of-thought. This tests whether improved native reasoning eliminates the need for symbolic delegation.
+\end{itemize}
+
+\paragraph{Long-form document reasoning (ContractNLI).}
+For documents exceeding typical context limits, direct application of Logic-LM is infeasible. We therefore evaluate:
+\begin{itemize}
+    \item \textbf{Logic-LM + RAG}: Logic-LM applied to retrieved passages only. This hybrid baseline tests whether per-query formalization over retrieved context can match our full-document logification.
+    \item \textbf{Reasoning LLM + RAG}: State-of-the-art reasoning models with retrieval augmentation. This establishes whether symbolic reasoning provides value beyond advanced retrieval and native reasoning chains.
+\end{itemize}
+
+\paragraph{Objectives.}
+This baseline design allows us to answer three critical questions: (1) Does logifying once outperform per-query formalization when both are feasible? (2) Does full-document logification overcome retrieval gaps in long documents? (3) Is symbolic reasoning necessary given modern reasoning-capable LLMs?
