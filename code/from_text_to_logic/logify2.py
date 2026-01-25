@@ -5,15 +5,82 @@ logify2.py - Text to Logic Pipeline Orchestrator
 This module orchestrates the two-stage text-to-logic pipeline:
   Stage 1: Extract relation triples using OpenIE (openie_extractor.py)
   Stage 2: Convert text + triples to logic using LLM (logic_converter.py)
+
+Supports multiple document formats: PDF, DOCX, TXT, and plain text input.
 """
 
 import json
 import os
 import argparse
-from typing import Dict, Any
+from pathlib import Path
+from typing import Dict, Any, Optional
 
 from openie_extractor import OpenIEExtractor
 from logic_converter import LogicConverter
+
+
+def extract_text_from_document(file_path: str) -> str:
+    """
+    Extract text from various document formats.
+
+    Args:
+        file_path: Path to document file (PDF, DOCX, TXT)
+
+    Returns:
+        Extracted text content
+
+    Raises:
+        ValueError: If file format is not supported
+        FileNotFoundError: If file does not exist
+    """
+    path = Path(file_path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"File not found: {file_path}")
+
+    suffix = path.suffix.lower()
+
+    # Plain text file
+    if suffix in ['.txt', '.text']:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+
+    # PDF file
+    elif suffix == '.pdf':
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            raise ImportError(
+                "PyMuPDF is required for PDF support. "
+                "Install with: pip install PyMuPDF"
+            )
+
+        doc = fitz.open(file_path)
+        text_parts = []
+        for page in doc:
+            text_parts.append(page.get_text())
+        doc.close()
+        return "\n".join(text_parts)
+
+    # DOCX file
+    elif suffix in ['.docx', '.doc']:
+        try:
+            from docx import Document
+        except ImportError:
+            raise ImportError(
+                "python-docx is required for DOCX support. "
+                "Install with: pip install python-docx"
+            )
+
+        doc = Document(file_path)
+        text_parts = [para.text for para in doc.paragraphs]
+        return "\n".join(text_parts)
+
+    else:
+        raise ValueError(
+            f"Unsupported file format: {suffix}. "
+            f"Supported formats: .txt, .pdf, .docx"
+        )
 
 
 class LogifyConverter2:
@@ -74,42 +141,69 @@ class LogifyConverter2:
 
 def main():
     """Main function to handle command line usage."""
-    parser = argparse.ArgumentParser(description="Convert text to structured propositional logic using OpenIE + LLM")
-    parser.add_argument("input_text", help="Input text to convert (or path to text file)")
+    parser = argparse.ArgumentParser(
+        description="Convert documents/text to structured propositional logic using OpenIE + LLM",
+        epilog="Supported formats: PDF (.pdf), Word (.docx), Text (.txt), or raw text string"
+    )
+    parser.add_argument(
+        "input",
+        help="Path to document file (PDF/DOCX/TXT) or raw text string"
+    )
     parser.add_argument("--api-key", required=True, help="OpenAI API key")
     parser.add_argument("--model", default="gpt-5.2", help="Model to use (default: gpt-5.2)")
-    parser.add_argument("--reasoning-effort", default="high", help="Reasoning effort for GPT-5.2/o3 models: none, low, medium, high, xhigh (default: high)")
+    parser.add_argument(
+        "--reasoning-effort",
+        default="high",
+        choices=["none", "low", "medium", "high", "xhigh"],
+        help="Reasoning effort for GPT-5.2/o3 models (default: high)"
+    )
     parser.add_argument("--output", default="logified2.JSON", help="Output JSON file path")
-    parser.add_argument("--file", action="store_true", help="Treat input_text as file path")
 
     args = parser.parse_args()
 
-    # Get input text
-    if args.file:
-        if not os.path.exists(args.input_text):
-            print(f"Error: Input file '{args.input_text}' not found")
-            return 1
-        with open(args.input_text, 'r', encoding='utf-8') as f:
-            text = f.read()
-    else:
-        text = args.input_text
-
     try:
+        # Determine if input is a file path or raw text
+        # If it's a valid file path, extract text from document
+        # Otherwise, treat as raw text string
+        if os.path.exists(args.input):
+            print(f"Reading document: {args.input}")
+            text = extract_text_from_document(args.input)
+            print(f"  ✓ Extracted {len(text)} characters")
+        else:
+            # Treat as raw text input
+            text = args.input
+            print(f"Using raw text input ({len(text)} characters)")
+
         # Initialize converter
-        converter = LogifyConverter2(api_key=args.api_key, model=args.model, reasoning_effort=args.reasoning_effort)
+        converter = LogifyConverter2(
+            api_key=args.api_key,
+            model=args.model,
+            reasoning_effort=args.reasoning_effort
+        )
 
         # Convert text to logic
-        print(f"Converting text using model: {args.model} (reasoning effort: {args.reasoning_effort})")
+        print(f"\nConverting to logic structure...")
+        print(f"  Model: {args.model}")
+        print(f"  Reasoning effort: {args.reasoning_effort}")
         logic_structure = converter.convert_text_to_logic(text)
 
         # Save output
         converter.save_output(logic_structure, args.output)
 
-        print("Conversion completed successfully!")
+        print(f"\n✓ Conversion completed successfully!")
+        print(f"  Output saved to: {args.output}")
         return 0
 
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        return 1
+    except ImportError as e:
+        print(f"Error: Missing dependency - {e}")
+        return 1
     except Exception as e:
         print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
         return 1
 
 
