@@ -23,7 +23,9 @@ def construct_prompt(query, retrieved_chunks, prompt_template):
     Returns:
         Formatted prompt string ready for LLM
     """
-    pass
+    formatted_chunks = format_chunks(retrieved_chunks)
+    prompt = prompt_template.format(query=query, retrieved_chunks=formatted_chunks)
+    return prompt
 
 
 def format_chunks(retrieved_chunks):
@@ -36,7 +38,10 @@ def format_chunks(retrieved_chunks):
     Returns:
         Formatted string concatenating all chunk texts with separators
     """
-    pass
+    formatted = []
+    for i, chunk in enumerate(retrieved_chunks):
+        formatted.append(f"[Chunk {i+1}]\n{chunk['text']}")
+    return "\n\n".join(formatted)
 
 
 def call_llm(prompt, model_name, temperature=0):
@@ -51,7 +56,15 @@ def call_llm(prompt, model_name, temperature=0):
     Returns:
         Raw string response from the LLM
     """
-    pass
+    import openai
+
+    response = openai.ChatCompletion.create(
+        model=model_name,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=temperature
+    )
+
+    return response.choices[0].message.content
 
 
 def parse_response(response):
@@ -67,7 +80,22 @@ def parse_response(response):
                        ['Entailed', 'Contradicted', 'NotMentioned']
             - 'reasoning': Chain-of-thought reasoning steps (if extractable)
     """
-    pass
+    import re
+
+    answer = None
+    reasoning = response
+
+    response_lower = response.lower()
+
+    for label in ['true', 'false', 'unknown', 'entailed', 'contradicted', 'notmentioned']:
+        if label in response_lower:
+            answer = label.capitalize()
+            break
+
+    if answer is None:
+        answer = 'Unknown'
+
+    return {'answer': answer, 'reasoning': reasoning}
 
 
 def reason_with_cot(query, retrieved_chunks, model_name, prompt_template, temperature=0):
@@ -90,4 +118,12 @@ def reason_with_cot(query, retrieved_chunks, model_name, prompt_template, temper
             - 'reasoning': Reasoning steps
             - 'raw_response': Full LLM response
     """
-    pass
+    prompt = construct_prompt(query, retrieved_chunks, prompt_template)
+    raw_response = call_llm(prompt, model_name, temperature)
+    parsed = parse_response(raw_response)
+
+    return {
+        'answer': parsed['answer'],
+        'reasoning': parsed['reasoning'],
+        'raw_response': raw_response
+    }
