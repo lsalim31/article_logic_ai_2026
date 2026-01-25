@@ -41,3 +41,34 @@ CoreNLP client closed.
 --------------------------------------------------------------------------------
 Initializing OpenIE Extractor with native Stanza...
 Initializing native Stanza coreference pipeline...
+  ✓ Native Stanza coref initialized
+Initializing Stanza dependency parse pipeline...
+  ✓ Stanza depparse initialized
+Initializing CoreNLP client for OpenIE...
+  ✓ CoreNLP OpenIE client initialized
+
+Initialization complete:
+  - Native Stanza coref: True
+  - Stanza depparse fallback: True
+  - CoreNLP port: 9007
+Coref pipeline initialized: True
+Extracting relation triples with native Stanza...
+  ✓ Extracted 2 relation triples
+    - OpenIE: 2
+    - Stanza fallback: 0
+
+  Sample triples:
+    1. (Dr. Smith ; is ; cardiologist) [openie]
+    2. (She ; treats ; patients) [openie]
+
+Input: Dr. Smith is a cardiologist. She treats patients.
+Output: 2 triples
+  1. (Dr. Smith) --[is]--> (cardiologist)
+  2. (She) --[treats]--> (patients)
+CoreNLP client closed.
+
+================================================================================
+VERIFICATION COMPLETE
+Both tests executed successfully
+Coreference pipeline confirmed working
+================================================================================
