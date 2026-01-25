@@ -16,7 +16,7 @@ def main():
     print()
 
     # Load the Alice example
-    with open('/workspace/repo/artifacts/code/logify2_full_demo.json', 'r') as f:
+    with open('../artifacts/code/logify2_full_demo.json', 'r') as f:
         logified = json.load(f)
 
     # Show available propositions
