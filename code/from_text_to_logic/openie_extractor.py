@@ -536,6 +536,35 @@ class OpenIEExtractor:
 
         return "\n".join(lines)
 
+    def format_triples_json(self, triples: List[Dict[str, Any]], indent: int = 2) -> str:
+        """
+        Format OpenIE triples as JSON without source metadata.
+
+        Args:
+            triples: List of relation triples
+            indent: JSON indentation (0 for compact, 2 for readable)
+
+        Returns:
+            JSON string of triples with subject, predicate, object, and sentence_index only
+        """
+        import json
+
+        if not triples:
+            return "[]"
+
+        # Remove 'source' and 'pos' fields, keep only core triple data
+        clean_triples = []
+        for triple in triples:
+            clean_triple = {
+                'subject': triple['subject'],
+                'predicate': triple['predicate'],
+                'object': triple['object'],
+                'sentence_index': triple['sentence_index']
+            }
+            clean_triples.append(clean_triple)
+
+        return json.dumps(clean_triples, indent=indent, ensure_ascii=False)
+
     def close(self):
         """Clean up Stanza pipelines and CoreNLP resources."""
         # Close CoreNLP client
