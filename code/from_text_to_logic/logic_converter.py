@@ -15,16 +15,20 @@ from openai import OpenAI
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-4"):
+    def __init__(self, api_key: str, model: str = "gpt-4", temperature: float = 0.1, max_tokens: int = 4000):
         """
         Initialize the logic converter with API key and model.
 
         Args:
             api_key (str): OpenAI API key
             model (str): Model to use (default: gpt-4)
+            temperature (float): Sampling temperature for LLM (default: 0.1)
+            max_tokens (int): Maximum tokens in response (default: 4000)
         """
         self.client = OpenAI(api_key=api_key)
         self.model = model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
         self.system_prompt = self._load_system_prompt()
 
     def _load_system_prompt(self) -> str:
@@ -75,8 +79,8 @@ OPENIE TRIPLES:
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": combined_input}
                 ],
-                temperature=0.1,  # Low temperature for consistency
-                max_tokens=4000   # Sufficient for complex logic structures
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
             )
 
             response_text = response.choices[0].message.content.strip()
