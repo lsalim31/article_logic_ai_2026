@@ -23,7 +23,7 @@ from reasoner import reason_with_cot
 from evaluator import evaluate, format_results
 
 
-def load_dataset(dataset_name, split='test'):
+def load_dataset(dataset_name, split='validation'):
     """
     Load benchmark dataset for evaluation.
 
