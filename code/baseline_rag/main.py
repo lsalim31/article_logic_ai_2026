@@ -41,7 +41,7 @@ def load_dataset(dataset_name, split='test'):
     from datasets import load_dataset as hf_load_dataset
 
     if dataset_name == 'folio':
-        dataset = hf_load_dataset('yafu/FOLIO', split=split)
+        dataset = hf_load_dataset('yale-nlp/FOLIO', split=split)
         examples = []
         for i, item in enumerate(dataset):
             examples.append({
