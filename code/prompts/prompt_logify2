@@ -30,9 +30,6 @@ STEP 1: Analyze Relation Triples
 - CRITICAL: Triples are incomplete preprocessing hints—use them to guide extraction but ALWAYS ground your final logic in the original text
 - When triples conflict with text, prioritize the text
 
-TRIPLE FORMAT: Each triple is [subject, predicate, object, sentence_index]
-Example: ["Alice", "studies", "math", 0] means "Alice studies math" from sentence 0 
-
 STEP 2: Define Primitive Propositions
 - Extract atomic, truth-evaluable statements from text
 - Ensure mutual exclusivity and exhaustiveness for all constraints
@@ -43,9 +40,10 @@ STEP 3: Extract Hard Constraints
 - Extract propositional formulas over {P_1, ..., P_n} that must hold per text
 - Add constraints for nuances or subtle relationships among propositions
 - Include textual evidence, location, and reasoning for each
+- Words like "should" usually indicate an obligation and hence a hard-constraint. Use the common-sense to help decide
 
 STEP 4: Extract Soft Constraints
-- Extract propositional formulas that may hold (defeasible/probabilistic statements)
+- Extract propositional formulas that might hold (defeasible/probabilistic statements)
 - Include textual evidence if from text, or common-sense justification otherwise
 - Ensure faithfulness to text intent
 - Include reasoning for soft designation
@@ -61,6 +59,8 @@ GUIDELINES:
 - Ensure faithfulness to original text
 - Extract implicit assumptions using text intent and common sense
 - When triples conflict with text, prioritize text
+- Constraits inform the atomic propositions, so update atomic propositions when neccessary
+- Make sure to compare with the examples
 
 GRAMMAR
 Use standard zeroth-order propositional logic:
@@ -277,23 +277,23 @@ The lab director believes that all experiments involving hazardous materials sho
 
 INPUT TRIPLES
 <<<
-researchers	sign	safety logbook
-equipment	is	protective
-researchers	entering	laboratory
-workspace	must	must cleaned
-chemicals	must	must properly stored
-chemicals	must	must stored
-system	turn	not
-students	is	undergraduate
-researchers	is	Senior
-equipment	inspect	weekly
-safety officer	must	must notified
-safety officer	must	must notified within 5 minutes
-Researchers	are encouraged	not mandatory for experienced personnel
-safety meetings	is	monthly
-Researchers	attend	safety meetings
-Researchers	attend	monthly safety meetings
-partner	is with	present
+[ ["researchers", "sign", "safety logbook", 0],
+  ["equipment", "is", "protective", 0],
+  ["researchers", "entering", "laboratory", 0],
+  ["workspace", "must", "must cleaned", 1],
+  ["chemicals", "must", "must properly stored", 1],
+  ["chemicals", "must", "must stored", 1],
+  ["system", "turn", "not", 2],
+  ["students", "is", "undergraduate", 3],
+  ["researchers", "is", "Senior", 3],
+  ["equipment", "inspect", "weekly", 4],
+  ["safety officer", "must", "must notified", 5],
+  ["safety officer", "must", "must notified within 5 minutes", 5],
+  ["Researchers", "are encouraged", "not mandatory for experienced personnel", 6],
+  ["safety meetings", "is", "monthly", 6],
+  ["Researchers", "attend", "safety meetings", 6],
+  ["Researchers", "attend", "monthly safety meetings", 6],
+  ["partner", "is with", "present", 7]]
 >>>
 
 OUTPUT JSON
@@ -474,6 +474,20 @@ OUTPUT JSON
       "translation": "If a researcher works after hours, they sometimes work alone",
       "evidence": "Sentence 7: '...researchers working after hours sometimes work alone'",
       "reasoning": "This is presented as a descriptive fact about actual practice. The word 'sometimes' indicates this is observed behavior that occurs in reality"
+    },
+    {
+      "id": "H_7",
+      "formula": "P_11",
+      "translation": "Lab equipment should be inspected weekly",
+      "evidence": "Sentence 4: 'Lab equipment should be inspected weekly...'",
+      "reasoning": "The word 'should' in a policy context indicates an obligation that must be followed. This is a baseline safety requirement, though exceptions exist for low-risk items (see S_2)"
+    },
+    {
+      "id": "H_8",
+      "formula": "P_19 ⟹ P_20",
+      "translation": "If an experiment involves hazardous materials, it should be conducted with a partner present",
+      "evidence": "Sentence 7: 'The lab director believes that all experiments involving hazardous materials should be conducted with a partner present...'",
+      "reasoning": "The word 'should' in safety policy indicates a mandatory requirement. Although framed as the director's belief, it translates to policy/action obligations for hazardous material handling"
     }
   ],
   "soft_constraints": [
@@ -486,31 +500,17 @@ OUTPUT JSON
     },
     {
       "id": "S_2",
-      "formula": "P_11",
-      "translation": "Lab equipment should be inspected weekly",
-      "evidence": "Sentence 4: 'Lab equipment should be inspected weekly...'",
-      "reasoning": "The word 'should' indicates this is a recommended practice but allows for exceptions (as expressed in S_3)"
-    },
-    {
-      "id": "S_3",
       "formula": "P_12 ⟹ P_13",
       "translation": "If lab equipment is low-risk, monthly inspections are generally acceptable",
       "evidence": "Sentence 4: '...but monthly inspections are generally acceptable for low-risk items'",
-      "reasoning": "The word 'generally' indicates this is an acceptable exception to S_2, not a hard rule"
+      "reasoning": "The word 'generally' indicates this is an acceptable exception to the baseline weekly inspection requirement (H_7), not a hard rule"
     },
     {
-      "id": "S_4",
+      "id": "S_3",
       "formula": "P_18 ⟹ P_17",
       "translation": "If a researcher is experienced personnel, they are encouraged to attend monthly safety meetings",
       "evidence": "Sentence 6: 'Researchers are encouraged to attend monthly safety meetings, although attendance is not mandatory for experienced personnel'",
       "reasoning": "The word 'encouraged' for experienced personnel indicates this is a soft expectation, not a requirement. Contrasts with H_5 for non-experienced personnel"
-    },
-    {
-      "id": "S_5",
-      "formula": "P_19 ⟹ P_20",
-      "translation": "If an experiment involves hazardous materials, it should be conducted with a partner present",
-      "evidence": "Sentence 7: 'The lab director believes that all experiments involving hazardous materials should be conducted with a partner present...'",
-      "reasoning": "Although framed as the director's belief, it translates to policy/action expectations. The word 'should' and the contrasting observation in the same sentence indicate this is a soft constraint"
     }
   ]
 }

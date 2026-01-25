@@ -242,3 +242,91 @@ The artifacts folder now has a clean, maintainable structure with clear separati
 - Deprecated files
 
 All changes documented in `README.md` and `CLEANUP_SUMMARY.md`.
+
+---
+
+## Latest Update - 2026-01-25 (Session 2)
+
+### Task: Fix EXEMPLAR 2 Triple Format and "Should" Classifications
+
+#### Part 1: Updated INPUT TRIPLES Format ✅
+
+**Changed**: EXEMPLAR 2 INPUT TRIPLES from tab-separated to JSON array format
+
+**Before**:
+```
+researchers	sign	safety logbook
+equipment	is	protective
+...
+```
+
+**After**:
+```json
+[ ["researchers", "sign", "safety logbook", 0],
+  ["equipment", "is", "protective", 0],
+  ...
+]
+```
+
+**Source**: `artifacts/logify2_testing/lab_safety_triples.json` (actual OpenIE extraction output)
+
+**Rationale**: Consistency with Exemplar 1 and prompt specification (line 117-118)
+
+---
+
+#### Part 2: Fixed "Should" Constraint Classifications ✅
+
+**User Guidance**: "The word 'should' is usually a HARD constraint, not a soft constraint. It depends on the context though, but when a policy says should then it is an obligation to be followed."
+
+**Changes Made**:
+
+1. **S_2 → H_7**: "Lab equipment should be inspected weekly"
+   - Context: Policy obligation (baseline requirement)
+   - Classification: HARD (institutional requirement)
+
+2. **S_5 → H_8**: "Experiments with hazardous materials should be conducted with a partner"
+   - Context: Safety policy for hazardous materials
+   - Classification: HARD (safety obligation)
+
+3. **Renumbered remaining soft constraints**: S_3 → S_2, S_4 → S_3
+
+**Final Counts (EXEMPLAR 2)**:
+- Hard Constraints: 8 (was 6)
+- Soft Constraints: 3 (was 5)
+- Net change: +2 hard constraints
+
+**Key Insight**: "Should" in policy/safety contexts = obligation (HARD), unless explicitly weakened by hedges like "typically", "not always enforced", or "encouraged but not mandatory".
+
+---
+
+### Documentation Created
+
+1. **`documentation/EXEMPLAR2_TRIPLE_FORMAT_AND_SHOULD_FIX.md`**
+   - Complete analysis of changes
+   - Linguistic analysis of "should" in context
+   - Comparison with Exemplar 1
+   - Impact on LLM behavior
+
+2. **`documentation/PROMPT_LOGIFY2_CHANGELOG.md`**
+   - Version history of prompt changes
+   - Key design principles
+   - Future considerations
+
+---
+
+### Files Modified
+
+- **`code/prompts/prompt_logify2`**
+  - Lines 278-297: INPUT TRIPLES updated to array format
+  - Lines 478-491: Added H_7 and H_8 (moved from soft)
+  - Lines 493-515: Updated soft constraints (removed old S_2, S_5; renumbered)
+
+---
+
+### Status: All Tasks Complete ✅
+
+1. ✅ Found OpenIE extraction output
+2. ✅ Updated INPUT TRIPLES to JSON array format
+3. ✅ Reclassified "should" constraints based on context
+4. ✅ Updated constraint numbering
+5. ✅ Created comprehensive documentation
