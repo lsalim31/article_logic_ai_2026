@@ -81,10 +81,11 @@ class OpenIEExtractor:
         if enable_coref:
             print("Initializing native Stanza coreference pipeline...")
             try:
+                # Allow downloading HuggingFace models needed by coref
+                # Use default download_method to enable transformer model downloads
                 self.coref_pipeline = stanza.Pipeline(
                     language,
                     processors='tokenize,coref',
-                    download_method=None,  # Don't auto-download
                     verbose=False
                 )
                 print("  ✓ Native Stanza coref initialized")
