@@ -30,9 +30,6 @@ STEP 1: Analyze Relation Triples
 - CRITICAL: Triples are incomplete preprocessing hints—use them to guide extraction but ALWAYS ground your final logic in the original text
 - When triples conflict with text, prioritize the text
 
-TRIPLE FORMAT: Each triple is [subject, predicate, object, sentence_index]
-Example: ["Alice", "studies", "math", 0] means "Alice studies math" from sentence 0 
-
 STEP 2: Define Primitive Propositions
 - Extract atomic, truth-evaluable statements from text
 - Ensure mutual exclusivity and exhaustiveness for all constraints
@@ -43,9 +40,10 @@ STEP 3: Extract Hard Constraints
 - Extract propositional formulas over {P_1, ..., P_n} that must hold per text
 - Add constraints for nuances or subtle relationships among propositions
 - Include textual evidence, location, and reasoning for each
+- Words like "should" usually indicate an obligation and hence a hard-constraint. Use the common-sense to help decide
 
 STEP 4: Extract Soft Constraints
-- Extract propositional formulas that may hold (defeasible/probabilistic statements)
+- Extract propositional formulas that might hold (defeasible/probabilistic statements)
 - Include textual evidence if from text, or common-sense justification otherwise
 - Ensure faithfulness to text intent
 - Include reasoning for soft designation
@@ -61,6 +59,8 @@ GUIDELINES:
 - Ensure faithfulness to original text
 - Extract implicit assumptions using text intent and common sense
 - When triples conflict with text, prioritize text
+- Constraits inform the atomic propositions, so update atomic propositions when neccessary
+- Make sure to compare with the examples
 
 GRAMMAR
 Use standard zeroth-order propositional logic:
