@@ -105,7 +105,16 @@ OPENIE TRIPLES:
             # Send to LLM with the enhanced prompt
             response = self.client.chat.completions.create(**api_params)
 
-            response_text = response.choices[0].message.content.strip()
+            # Debug: print the raw response
+            print(f"  Response received. Parsing...")
+
+            response_text = response.choices[0].message.content
+            if response_text is None:
+                print(f"  WARNING: Response content is None. Full response: {response}")
+                raise ValueError("LLM returned empty response")
+
+            response_text = response_text.strip()
+            print(f"  Response length: {len(response_text)} characters")
 
             # Parse the JSON response
             try:
