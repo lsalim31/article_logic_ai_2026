@@ -112,9 +112,9 @@ class OpenIEExtractor:
         print("Initializing CoreNLP client for OpenIE...")
         self.openie_annotators = ['tokenize', 'ssplit', 'pos', 'lemma', 'depparse', 'natlog', 'openie']
         self.openie_properties = {
-            'openie.triple.strict': 'false',
+            'openie.triple.strict': 'true',
             'openie.triple.all_nominals': 'true',
-            'openie.max_entailments_per_clause': '500',
+            'openie.max_entailments_per_clause': '3',
             'openie.affinity_probability_cap': '0.33',
         }
 
