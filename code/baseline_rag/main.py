@@ -23,7 +23,7 @@ from reasoner import reason_with_cot
 from evaluator import evaluate, format_results
 
 
-def load_dataset(dataset_name, split='test'):
+def load_dataset(dataset_name, split='validation'):
     """
     Load benchmark dataset for evaluation.
 
@@ -41,7 +41,7 @@ def load_dataset(dataset_name, split='test'):
     from datasets import load_dataset as hf_load_dataset
 
     if dataset_name == 'folio':
-        dataset = hf_load_dataset('yafu/FOLIO', split=split)
+        dataset = hf_load_dataset('yale-nlp/FOLIO', split=split)
         examples = []
         for i, item in enumerate(dataset):
             examples.append({

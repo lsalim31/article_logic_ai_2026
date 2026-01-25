@@ -57,8 +57,12 @@ def call_llm(prompt, model_name, temperature=0):
         Raw string response from the LLM
     """
     from openai import OpenAI
+    import os
 
-    client = OpenAI()
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.environ.get("OPENROUTER_API_KEY")
+    )
     response = client.chat.completions.create(
         model=model_name,
         messages=[{"role": "user", "content": prompt}],
