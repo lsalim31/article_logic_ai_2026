@@ -525,17 +525,14 @@ Students must complete either the written exam or the oral presentation, but not
 
 INPUT TRIPLES
 <<<
-[
-  ["exam", "is", "written", 0],
-  ["presentation", "is", "oral", 0],
-  ["they", "attend", "at least 80 % of lectures", 1],
-  ["student", "passes", "course", 1],
-  ["they", "attend", "at least 80 %", 1],
-  ["circumstances", "is", "extenuating", 2],
-  ["Students", "may request", "deadline extensions", 2],
-  ["approval", "requires", "circumstances", 2],
-  ["circumstances", "is", "documented", 2]
-]
+[["Students", "complete", "written exam", 0],
+ ["Students", "complete", "oral presentation", 0],
+ ["student", "passes", "course", 1],
+ ["student", "satisfy", "assessment requirement", 1],
+ ["student", "attend", "at least 80% of lectures", 1],
+ ["Students", "request", "deadline extensions", 2],
+ ["approval", "requires", "documented extenuating circumstances", 2],
+ ["circumstances", "is", "extenuating", 2]]
 >>>
 
 OUTPUT JSON
@@ -543,77 +540,90 @@ OUTPUT JSON
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "A student completes the written exam.",
-      "evidence": "Sentence 1: \"Students must complete either the written exam ...\"",
-      "explanation": "This is an atomic action/outcome (completed vs not completed) with no internal logical connectives."
+      "translation": "The student completes the written exam",
+      "evidence": "Sentence 0: 'Students must complete either the written exam or the oral presentation'",
+      "explanation": "An atomic action representing one form of assessment completion. It is independent of other propositions and truth-evaluable"
     },
     {
       "id": "P_2",
-      "translation": "A student completes the oral presentation.",
-      "evidence": "Sentence 1: \"... or the oral presentation ...\"",
-      "explanation": "This is an atomic action/outcome (completed vs not completed) with no internal logical connectives."
+      "translation": "The student completes the oral presentation",
+      "evidence": "Sentence 0: '...either the written exam or the oral presentation'",
+      "explanation": "An atomic action representing the alternative form of assessment. Independent of P_1"
     },
     {
       "id": "P_3",
-      "translation": "A student satisfies the assessment requirement.",
-      "evidence": "Sentence 1: \"... to satisfy the assessment requirement.\"",
-      "explanation": "This is treated as a single evaluative status (satisfied vs not satisfied)."
+      "translation": "The student satisfies the assessment requirement",
+      "evidence": "Sentence 0: '...to satisfy the assessment requirement'",
+      "explanation": "An atomic state that results from completing exactly one assessment. This is distinct from P_1 and P_2 themselves"
     },
     {
       "id": "P_4",
-      "translation": "A student attends at least 80% of lectures.",
-      "evidence": "Sentence 2: \"... attend at least 80% of lectures.\"",
-      "explanation": "This is an atomic attendance condition expressed as a threshold (met vs not met)."
+      "translation": "The student passes the course",
+      "evidence": "Sentence 1: 'A student passes the course if and only if...'",
+      "explanation": "An atomic outcome statement. Cannot be further decomposed into more primitive components"
     },
     {
       "id": "P_5",
-      "translation": "A student passes the course.",
-      "evidence": "Sentence 2: \"A student passes the course if and only if ...\"",
-      "explanation": "This is an atomic course outcome (passes vs does not pass)."
+      "translation": "The student attends at least 80% of lectures",
+      "evidence": "Sentence 1: '...attend at least 80% of lectures'",
+      "explanation": "A specific measurable condition. The threshold (80%) makes it an atomic, truth-evaluable proposition"
     },
     {
       "id": "P_6",
-      "translation": "A student requests a deadline extension.",
-      "evidence": "Sentence 3: \"Students may request deadline extensions ...\"",
-      "explanation": "This is an atomic event/action (request made vs not made)."
+      "translation": "The student requests a deadline extension",
+      "evidence": "Sentence 2: 'Students may request deadline extensions'",
+      "explanation": "An atomic action representing a student's request. Independent of approval"
     },
     {
       "id": "P_7",
-      "translation": "A student's deadline extension request is approved.",
-      "evidence": "Sentence 3: \"... approval requires documented extenuating circumstances.\"",
-      "explanation": "This is an atomic outcome (approved vs not approved)."
+      "translation": "The student has documented extenuating circumstances",
+      "evidence": "Sentence 2: '...documented extenuating circumstances'",
+      "explanation": "An atomic condition that can be verified. The word 'documented' makes this specific and truth-evaluable"
     },
     {
       "id": "P_8",
-      "translation": "A student has documented extenuating circumstances.",
-      "evidence": "Sentence 3: \"... requires documented extenuating circumstances.\"",
-      "explanation": "This is an atomic condition/status (has documented extenuating circumstances vs does not)."
+      "translation": "The deadline extension is approved",
+      "evidence": "Sentence 2: '...though approval requires documented extenuating circumstances'",
+      "explanation": "An atomic outcome that is independent of the request itself. Can be true or false regardless of P_6"
     }
   ],
   "hard_constraints": [
     {
       "id": "H_1",
-      "formula": "P_3 ⟺ ((P_1 ∨ P_2) ∧ ¬(P_1 ∧ P_2))",
-      "translation": "A student satisfies the assessment requirement exactly when they complete either the written exam or the oral presentation, but not both.",
-      "evidence": "Sentence 1: \"... must complete either the written exam or the oral presentation, but not both, to satisfy the assessment requirement.\"",
-      "reasoning": "The text states the satisfaction condition for the assessment requirement as an exclusive-or over the two completion options."
+      "formula": "(P_1 ∨ P_2) ∧ ¬(P_1 ∧ P_2) ⟺ P_3",
+      "translation": "A student satisfies the assessment requirement if and only if they complete either the written exam or the oral presentation, but not both",
+      "evidence": "Sentence 0: 'Students must complete either the written exam or the oral presentation, but not both, to satisfy the assessment requirement'",
+      "reasoning": "The phrase 'must complete either...but not both' indicates an exclusive-or (XOR) relationship. The 'to satisfy' indicates this is the definition of satisfying the assessment requirement, captured by the biconditional"
     },
     {
       "id": "H_2",
-      "formula": "P_5 ⟺ (P_3 ∧ P_4)",
-      "translation": "A student passes the course iff they satisfy the assessment requirement and attend at least 80% of lectures.",
-      "evidence": "Sentence 2: \"A student passes the course if and only if they satisfy the assessment requirement and attend at least 80% of lectures.\"",
-      "reasoning": "Explicit biconditional ('if and only if') defines passing precisely in terms of these two conditions."
+      "formula": "P_4 ⟺ (P_3 ∧ P_5)",
+      "translation": "A student passes the course if and only if they satisfy the assessment requirement and attend at least 80% of lectures",
+      "evidence": "Sentence 1: 'A student passes the course if and only if they satisfy the assessment requirement and attend at least 80% of lectures'",
+      "reasoning": "The phrase 'if and only if' explicitly establishes a biconditional relationship. Both conditions (P_3 and P_5) must be met for the student to pass"
     },
     {
       "id": "H_3",
-      "formula": "P_7 ⟺ (P_6 ∧ P_8)",
-      "translation": "A deadline extension is approved if and only if a student requests it and has documented extenuating circumstances.",
-      "evidence": "Sentence 3: \"Students may request deadline extensions, though approval requires documented extenuating circumstances.\"",
-      "reasoning": "This makes explicit the full biconditional: approval requires both a request and documented circumstances. The original text states approval requires documented circumstances (necessity), and logically approval also requires a request to exist in the first place. Together these form a complete definition of when approval occurs."
+      "formula": "P_8 ⟹ P_7",
+      "translation": "If the deadline extension is approved, then the student has documented extenuating circumstances",
+      "evidence": "Sentence 2: '...approval requires documented extenuating circumstances'",
+      "reasoning": "The word 'requires' indicates a necessary condition. Approval cannot happen without documented circumstances. Note this doesn't mean P_7 always leads to P_8, only that P_8 requires P_7"
     }
   ],
-  "soft_constraints": []
+  "soft_constraints": [
+    {
+      "id": "S_1",
+      "formula": "P_6 ⟹ P_8",
+      "translation": "If a student requests a deadline extension, it may be approved",
+      "evidence": "Sentence 2: 'Students may request deadline extensions, though approval requires...'",
+      "reasoning": "The word 'may' indicates this is a possibility, not a certainty. The request can be made, and approval is possible but not guaranteed. This is a soft constraint because approval depends on additional factors"
+    },
+    {
+      "id": "S_2",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If a student has documented extenuating circumstances, their deadline extension is likely to be approved",
+      "evidence": "Sentence 2: 'approval requires documented extenuating circumstances'",
+      "reasoning": "While H_3 establishes that approval requires documented circumstances, this soft constraint captures the expectation that having documented circumstances typically leads to approval, though it's not absolutely guaranteed (discretion may still apply)"
+    }
+  ]
 }
-
-

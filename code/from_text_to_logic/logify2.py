@@ -46,7 +46,7 @@ class LogifyConverter2:
         """
         # Stage 1: Extract OpenIE triples
         openie_triples = self.extractor.extract_triples(text)
-        formatted_triples = self.extractor.format_triples(openie_triples)
+        formatted_triples = self.extractor.format_triples_json(openie_triples, indent=-1)
 
         # Stage 2: Convert to logic using LLM
         logic_structure = self.converter.convert(text, formatted_triples)

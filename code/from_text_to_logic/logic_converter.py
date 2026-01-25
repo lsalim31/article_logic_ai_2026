@@ -20,13 +20,20 @@ class LogicConverter:
         Initialize the logic converter with API key and model.
 
         Args:
-            api_key (str): OpenAI API key
+            api_key (str): OpenAI API key (or OpenRouter key starting with sk-or-)
             model (str): Model to use (default: gpt-5.2)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
             max_tokens (int): Maximum tokens in response (default: 4000)
             reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: high
         """
-        self.client = OpenAI(api_key=api_key)
+        # Detect OpenRouter keys and use appropriate base URL
+        if api_key.startswith('sk-or-'):
+            self.client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
+            # Prefix model with openai/ for OpenRouter
+            if not model.startswith('openai/'):
+                model = f'openai/{model}'
+        else:
+            self.client = OpenAI(api_key=api_key)
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -67,7 +74,7 @@ class LogicConverter:
 {text}
 >>>
 
-OPENIE TRIPLES:
+RELATION TRIPLES:
 <<<
 {formatted_triples}
 >>>"""

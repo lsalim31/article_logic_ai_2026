@@ -542,11 +542,15 @@ class OpenIEExtractor:
 
         Args:
             triples: List of relation triples
-            indent: JSON indentation (0 for compact, 2 for readable)
+            indent: JSON indentation (0 for compact, 2 for readable, -1 for prompt format)
 
         Returns:
             JSON string of triples as arrays: [subject, predicate, object, sentence_index]
             Format optimized to minimize token usage by avoiding repeated field names.
+
+            When indent=-1, uses prompt-compatible format:
+            [ ["subject", "predicate", "object", 0],
+              ["subject2", "predicate2", "object2", 1]]
         """
         import json
 
@@ -563,6 +567,17 @@ class OpenIEExtractor:
                 triple['sentence_index']
             ]
             array_triples.append(array_triple)
+
+        # Special prompt-compatible format: each triple on one line
+        if indent == -1:
+            lines = ["["]
+            for i, triple in enumerate(array_triples):
+                triple_str = json.dumps(triple, ensure_ascii=False)
+                if i < len(array_triples) - 1:
+                    lines.append(f"  {triple_str},")
+                else:
+                    lines.append(f"  {triple_str}]")
+            return "\n".join(lines)
 
         return json.dumps(array_triples, indent=indent, ensure_ascii=False)
 

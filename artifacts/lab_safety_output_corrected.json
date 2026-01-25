@@ -1,0 +1,236 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A researcher is entering (about to enter) the laboratory.",
+      "evidence": "Sentence 0: \"Before entering the laboratory...\"",
+      "explanation": "This is a single situational condition (entering the lab) used as a trigger for requirements; it contains no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "The researcher wears protective equipment before entering the laboratory.",
+      "evidence": "Sentence 0: \"...all researchers must wear protective equipment...\"",
+      "explanation": "This is one concrete action/state (wearing protective equipment) with temporal context relevant from the text."
+    },
+    {
+      "id": "P_3",
+      "translation": "The researcher signs the safety logbook before entering the laboratory.",
+      "evidence": "Sentence 0: \"...and sign the safety logbook.\"",
+      "explanation": "This is a single action (signing) with a specific object (the safety logbook) and temporal context."
+    },
+    {
+      "id": "P_4",
+      "translation": "An experiment has been completed.",
+      "evidence": "Sentence 1: \"After completing an experiment...\"",
+      "explanation": "This is a single completion event used as a trigger condition, not a conjunction."
+    },
+    {
+      "id": "P_5",
+      "translation": "The workspace is cleaned after completing an experiment.",
+      "evidence": "Sentence 1: \"...the workspace must be cleaned...\"",
+      "explanation": "This is one required post-condition (cleaned workspace) with temporal context from the text."
+    },
+    {
+      "id": "P_6",
+      "translation": "All chemicals are properly stored after completing an experiment.",
+      "evidence": "Sentence 1: \"...and all chemicals must be properly stored.\"",
+      "explanation": "This is one required post-condition (proper storage of chemicals) with temporal context from the text."
+    },
+    {
+      "id": "P_7",
+      "translation": "The fume hood is running.",
+      "evidence": "Sentence 2: \"While the fume hood is running...\"",
+      "explanation": "This is a single operational condition (fume hood running)."
+    },
+    {
+      "id": "P_8",
+      "translation": "The ventilation system is turned off.",
+      "evidence": "Sentence 2: \"...the ventilation system cannot be turned off.\"",
+      "explanation": "This is a single system state (ventilation off), which can be negated in constraints."
+    },
+    {
+      "id": "P_9",
+      "translation": "An undergraduate student is in their first month in the lab.",
+      "evidence": "Sentence 3: \"...undergraduate students during their first month...\"",
+      "explanation": "This is an atomic temporal condition (first month status) that can trigger supervision requirements. Decomposed from the original compound proposition for mutual exclusivity and independence."
+    },
+    {
+      "id": "P_10",
+      "translation": "A senior researcher supervises the undergraduate student.",
+      "evidence": "Sentence 3: \"Senior researchers typically supervise undergraduate students...\"",
+      "explanation": "This is an atomic supervision action, independent of the temporal condition. Decomposed from the original compound proposition to allow separate treatment of the supervision relationship."
+    },
+    {
+      "id": "P_11",
+      "translation": "The practice of senior researchers supervising undergraduates during their first month is always enforced.",
+      "evidence": "Sentence 3: \"...though this is not always enforced.\"",
+      "explanation": "This is a single meta-policy/enforcement status claim that can be asserted or negated."
+    },
+    {
+      "id": "P_12",
+      "translation": "Lab equipment is inspected weekly.",
+      "evidence": "Sentence 4: \"Lab equipment should be inspected weekly...\"",
+      "explanation": "This is one recommended inspection frequency statement (weekly) treated as atomic."
+    },
+    {
+      "id": "P_13",
+      "translation": "An item of lab equipment is low-risk.",
+      "evidence": "Sentence 4: \"...acceptable for low-risk items.\"",
+      "explanation": "This is a single classification property (low-risk) used to condition other guidance."
+    },
+    {
+      "id": "P_14",
+      "translation": "Monthly inspections are acceptable for low-risk items.",
+      "evidence": "Sentence 4: \"...monthly inspections are generally acceptable for low-risk items.\"",
+      "explanation": "This is one acceptability/judgment statement about monthly inspections for low-risk items."
+    },
+    {
+      "id": "P_15",
+      "translation": "A chemical spill occurs.",
+      "evidence": "Sentence 5: \"If a chemical spill occurs...\"",
+      "explanation": "This is a single event condition (spill occurs) that triggers required responses."
+    },
+    {
+      "id": "P_16",
+      "translation": "The area is evacuated immediately.",
+      "evidence": "Sentence 5: \"...the area must be evacuated immediately...\"",
+      "explanation": "This is one required response action (immediate evacuation) stated as a single predicate."
+    },
+    {
+      "id": "P_17",
+      "translation": "The safety officer is notified within 5 minutes.",
+      "evidence": "Sentence 5: \"...and the safety officer must be notified within 5 minutes.\"",
+      "explanation": "This is one required notification action with a specific time bound, treated atomically."
+    },
+    {
+      "id": "P_18",
+      "translation": "Researchers attend monthly safety meetings.",
+      "evidence": "Sentence 6: \"Researchers are encouraged to attend monthly safety meetings...\"",
+      "explanation": "This is one attendance behavior (attend monthly safety meetings) without further logical structure."
+    },
+    {
+      "id": "P_19",
+      "translation": "Attendance at monthly safety meetings is mandatory for experienced personnel.",
+      "evidence": "Sentence 6: \"...attendance is not mandatory for experienced personnel.\"",
+      "explanation": "This is a single obligation-status statement (mandatory vs not) that can be negated."
+    },
+    {
+      "id": "P_20",
+      "translation": "An experiment involves hazardous materials.",
+      "evidence": "Sentence 7: \"...all experiments involving hazardous materials...\"",
+      "explanation": "This is one experiment-type condition (involves hazardous materials)."
+    },
+    {
+      "id": "P_21",
+      "translation": "A partner is present during the experiment.",
+      "evidence": "Sentence 7: \"...conducted with a partner present...\"",
+      "explanation": "This is a single condition about presence of a partner during the experiment."
+    },
+    {
+      "id": "P_22",
+      "translation": "The lab director believes that hazardous-material experiments should be conducted with a partner present.",
+      "evidence": "Sentence 7: \"The lab director believes that...\"",
+      "explanation": "This is one belief/attitude attribution to the lab director, expressed as a single claim. The belief impacts policy enforcement."
+    },
+    {
+      "id": "P_23",
+      "translation": "Researchers work after hours.",
+      "evidence": "Sentence 7: \"...researchers working after hours...\"",
+      "explanation": "This is a single work-timing condition (after hours), used to contextualize another claim."
+    },
+    {
+      "id": "P_24",
+      "translation": "Researchers working after hours sometimes work alone.",
+      "evidence": "Sentence 7: \"...sometimes work alone.\"",
+      "explanation": "This is one descriptive frequency claim (sometimes) about being alone after hours, treated as atomic."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "id": "H_1",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
+      "translation": "Before entering the laboratory, researchers must wear protective equipment and sign the safety logbook.",
+      "evidence": "Sentence 0: \"Before entering the laboratory, all researchers must wear protective equipment and sign the safety logbook.\"",
+      "reasoning": "The phrase \"must\" indicates a mandatory requirement triggered by entering the lab."
+    },
+    {
+      "id": "H_2",
+      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
+      "translation": "After completing an experiment, the workspace must be cleaned and all chemicals must be properly stored.",
+      "evidence": "Sentence 1: \"After completing an experiment, the workspace must be cleaned and all chemicals must be properly stored.\"",
+      "reasoning": "Both duties are stated with \"must\" as compulsory post-experiment actions."
+    },
+    {
+      "id": "H_3",
+      "formula": "P_7 ⟹ ¬P_8",
+      "translation": "While the fume hood is running, the ventilation system cannot be turned off.",
+      "evidence": "Sentence 2: \"While the fume hood is running, the ventilation system cannot be turned off.\"",
+      "reasoning": "\"Cannot\" expresses a prohibition: if the hood is running, ventilation being off is disallowed."
+    },
+    {
+      "id": "H_4",
+      "formula": "P_15 ⟹ (P_16 ∧ P_17)",
+      "translation": "If a chemical spill occurs, evacuate immediately and notify the safety officer within 5 minutes.",
+      "evidence": "Sentence 5: \"If a chemical spill occurs, the area must be evacuated immediately and the safety officer must be notified within 5 minutes.\"",
+      "reasoning": "Both responses are explicitly mandatory (\"must\") under the spill condition."
+    },
+    {
+      "id": "H_5",
+      "formula": "¬P_11",
+      "translation": "The supervision practice is not always enforced.",
+      "evidence": "Sentence 3: \"...though this is not always enforced.\"",
+      "reasoning": "The text explicitly denies universal enforcement, so the proposition 'always enforced' must be false."
+    },
+    {
+      "id": "H_6",
+      "formula": "¬P_19",
+      "translation": "Attendance at monthly safety meetings is not mandatory for experienced personnel.",
+      "evidence": "Sentence 6: \"...attendance is not mandatory for experienced personnel.\"",
+      "reasoning": "This is an explicit negation of a requirement; it should be treated as a hard constraint."
+    },
+    {
+      "id": "H_7",
+      "formula": "P_22 ⟹ (P_20 ⟹ P_21)",
+      "translation": "Given the lab director believes hazardous experiments should have a partner present, this belief translates to policy: if an experiment involves hazardous materials, a partner should be present.",
+      "evidence": "Sentence 7: \"The lab director believes that all experiments involving hazardous materials should be conducted with a partner present...\"",
+      "reasoning": "The director's belief impacts policy. This is a hard constraint representing the policy derived from the stated belief."
+    },
+    {
+      "id": "H_8",
+      "formula": "P_24",
+      "translation": "Researchers working after hours sometimes work alone.",
+      "evidence": "Sentence 7: \"...but researchers working after hours sometimes work alone.\"",
+      "reasoning": "This is presented as a descriptive fact in the text (not a recommendation), so it must be included as holding in the described scenario."
+    }
+  ],
+  "soft_constraints": [
+    {
+      "id": "S_1",
+      "formula": "P_9 ⟹ P_10",
+      "translation": "If an undergraduate student is in their first month, a senior researcher typically supervises them.",
+      "evidence": "Sentence 3: \"Senior researchers typically supervise undergraduate students during their first month...\"",
+      "reasoning": "\"Typically\" indicates a usual practice rather than a strict requirement, and the text adds it is not always enforced. Decomposed from compound proposition to properly express the conditional relationship."
+    },
+    {
+      "id": "S_2",
+      "formula": "P_12",
+      "translation": "Lab equipment should be inspected weekly.",
+      "evidence": "Sentence 4: \"Lab equipment should be inspected weekly...\"",
+      "reasoning": "\"Should\" signals a recommendation rather than a mandatory rule."
+    },
+    {
+      "id": "S_3",
+      "formula": "P_13 ⟹ P_14",
+      "translation": "If an item is low-risk, monthly inspections are generally acceptable.",
+      "evidence": "Sentence 4: \"...monthly inspections are generally acceptable for low-risk items.\"",
+      "reasoning": "\"Generally acceptable\" is permissive/defeasible guidance, not a strict must-condition."
+    },
+    {
+      "id": "S_4",
+      "formula": "P_18",
+      "translation": "Researchers are encouraged to attend monthly safety meetings.",
+      "evidence": "Sentence 6: \"Researchers are encouraged to attend monthly safety meetings...\"",
+      "reasoning": "\"Encouraged\" implies a preference/recommendation, especially since attendance is explicitly not mandatory for experienced personnel."
+    }
+  ]
+}
