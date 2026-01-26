@@ -15,7 +15,7 @@ from openai import OpenAI
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 32000, reasoning_effort: str = "medium"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 64000, reasoning_effort: str = "medium"):
         """
         Initialize the logic converter with API key and model.
 
@@ -23,7 +23,7 @@ class LogicConverter:
             api_key (str): OpenAI API key (or OpenRouter key starting with sk-or-)
             model (str): Model to use (default: gpt-5.2)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
-            max_tokens (int): Maximum tokens in response (default: 4000)
+            max_tokens (int): Maximum tokens in response (default: 64000)
             reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: medium
         """
         # Detect OpenRouter keys and use appropriate base URL
@@ -46,7 +46,7 @@ class LogicConverter:
         """Load the system prompt from the prompt file."""
         import os
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        prompt_path = os.path.join(script_dir, "..", "prompts", "prompt_logify2")
+        prompt_path = os.path.join(script_dir, "..", "prompts", "prompt_logify")
         try:
             with open(prompt_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -191,7 +191,7 @@ RELATION TRIPLES:
         except Exception as e:
             raise RuntimeError(f"Error in LLM conversion: {e}")
 
-    def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified2.JSON"):
+    def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
         Save the logic structure to a JSON file.
 

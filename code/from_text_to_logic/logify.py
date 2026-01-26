@@ -122,7 +122,7 @@ class LogifyConverter:
 
         return logic_structure
 
-    def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified2.JSON"):
+    def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
         Save the logic structure to a JSON file.
 
@@ -167,9 +167,15 @@ def main():
         "--reasoning-effort",
         default="medium",
         choices=["none", "low", "medium", "high", "xhigh"],
-        help="Reasoning effort for gpt-5.2/o1/o3 models (default: xhigh)"
+        help="Reasoning effort for gpt-5.2/o1/o3 models (default: medium)"
     )
-    parser.add_argument("--output", default="logified2.JSON", help="Output JSON file path")
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=64000,
+        help="Maximum tokens in response (default: 64000)"
+    )
+    parser.add_argument("--output", default="logified.JSON", help="Output JSON file path")
 
     args = parser.parse_args()
 
@@ -187,11 +193,12 @@ def main():
             print(f"Using raw text input ({len(text)} characters)")
 
         # Initialize converter
-        converter = LogifyConverter2(
+        converter = LogifyConverter(
             api_key=args.api_key,
             model=args.model,
             temperature=args.temperature,
-            reasoning_effort=args.reasoning_effort
+            reasoning_effort=args.reasoning_effort,
+            max_tokens=args.max_tokens
         )
 
         # Convert text to logic
@@ -199,6 +206,7 @@ def main():
         print(f"  Model: {args.model}")
         print(f"  Temperature: {args.temperature}")
         print(f"  Reasoning effort: {args.reasoning_effort}")
+        print(f"  Max tokens: {args.max_tokens}")
         logic_structure = converter.convert_text_to_logic(text)
 
         # Save output
