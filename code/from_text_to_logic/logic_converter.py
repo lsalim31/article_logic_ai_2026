@@ -91,19 +91,21 @@ RELATION TRIPLES:
             # Build API call parameters based on model type
             if is_reasoning_model:
                 # Reasoning models use different parameters
-                # OpenRouter uses nested 'reasoning' object, OpenAI uses top-level 'reasoning_effort'
+                # OpenRouter uses nested 'reasoning' object via extra_body, OpenAI uses top-level 'reasoning_effort'
                 if self.api_key.startswith('sk-or-v1-') or self.api_key.startswith('sk-or-'):
-                    # OpenRouter format
+                    # OpenRouter format - use extra_body for custom parameters
                     api_params = {
                         "model": self.model,
                         "messages": [
                             {"role": "user", "content": self.system_prompt + "\n\n" + combined_input}  # Combine system + user for OpenRouter
                         ],
-                        "reasoning": {
-                            "effort": self.reasoning_effort,
-                            "enabled": True
-                        },
-                        "max_tokens": self.max_tokens
+                        "max_tokens": self.max_tokens,
+                        "extra_body": {
+                            "reasoning": {
+                                "effort": self.reasoning_effort,
+                                "enabled": True
+                            }
+                        }
                     }
                 else:
                     # Direct OpenAI API format
