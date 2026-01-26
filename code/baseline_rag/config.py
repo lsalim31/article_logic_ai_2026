@@ -26,7 +26,7 @@ CHUNK_SIZE = 512
 OVERLAP = 50
 
 # LLM Configuration
-DEFAULT_MODEL = "gpt-4"
+DEFAULT_MODEL = "openai/gpt-5-nano"
 TEMPERATURE = 0
 
 # Chain-of-Thought Prompt Template (Fixed)
