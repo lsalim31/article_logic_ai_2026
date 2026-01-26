@@ -86,7 +86,7 @@ def extract_text_from_document(file_path: str) -> str:
 class LogifyConverter2:
     """Orchestrates the two-stage text-to-logic conversion pipeline."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "medium"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "medium", max_tokens: int = 32000):
         """
         Initialize the pipeline with both stages.
 
@@ -100,7 +100,7 @@ class LogifyConverter2:
         self.extractor = OpenIEExtractor()
 
         # Stage 2: LLM-based logic conversion
-        self.converter = LogicConverter(api_key=api_key, model=model, temperature=temperature, reasoning_effort=reasoning_effort)
+        self.converter = LogicConverter(api_key=api_key, model=model, temperature=temperature, reasoning_effort=reasoning_effort, max_tokens = max_tokens)
 
     def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
         """
