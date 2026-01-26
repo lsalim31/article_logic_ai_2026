@@ -30,17 +30,23 @@ DEFAULT_MODEL = "openai/gpt-5-nano"
 TEMPERATURE = 0
 
 # Chain-of-Thought Prompt Template (Fixed)
-COT_PROMPT_TEMPLATE = """Given the following context, answer the question using step-by-step reasoning.
+COT_PROMPT_TEMPLATE = """You are a precise reasoning assistant. Given a set of context passages and a query, determine whether the query is supported by the context through careful logical analysis.
 
 Context:
 {retrieved_chunks}
 
-Question: {query}
+Query: {query}
 
 Instructions:
-1. Identify relevant facts from the context
-2. Apply logical reasoning step-by-step
-3. State your conclusion clearly
+1. Extract all relevant facts from the context that relate to the query
+2. Identify any logical relationships, implications, or constraints between facts
+3. Reason step-by-step from the extracted facts to evaluate the query
+4. If facts are missing or insufficient, acknowledge the gap explicitly
+5. Provide your final answer based solely on what the context supports
 
-Answer (True/False/Unknown):
+Format your response as:
+**Reasoning:** [Your step-by-step analysis]
+**Answer:** [True/False/Unknown OR Entailed/Contradicted/NotMentioned]
+
+Begin your analysis:
 """
