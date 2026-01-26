@@ -31,7 +31,7 @@ def main():
     print("="*60)
     print(f"PDF: {pdf_path}")
     print(f"Output: {output_path}")
-    print(f"Model: gpt-5.2 (temperature: 0.1, reasoning_effort: xhigh)")
+    print(f"Model: gpt-5.2 (temperature: 0.1, max_tokens: 64000, reasoning_effort: high)")
     print("="*60 + "\n")
 
     try:
@@ -42,9 +42,15 @@ def main():
         text = extract_text_from_document(str(pdf_path))
         print(f"  ✓ Extracted {len(text)} characters\n")
 
-        # Initialize converter (using defaults: gpt-5.2, temp=0.1, reasoning_effort=xhigh)
+        # Initialize converter with custom parameters for enhanced reasoning and larger output budget
         print("Step 2: Initializing logify2 pipeline...")
-        converter = LogifyConverter2(api_key=api_key)
+        converter = LogifyConverter2(
+            api_key=api_key,
+            model="gpt-5.2",
+            temperature=0.1,
+            max_tokens=64000,        # Doubled output budget for complex documents
+            reasoning_effort="high"  # Enhanced reasoning quality
+        )
         print("  ✓ Pipeline initialized\n")
 
         # Convert to logic

@@ -5,7 +5,7 @@ INTENDED TASK
 Given natural language text T and its Stanford OpenIE relation triples, extract:
 
 1. ATOMIC PROPOSITIONS (P_1, P_2, ..., P_n)
-   - Mutually exclusive, primitive statements with no logical connectives
+   - Mutually exclusive, primitive statements importantly with no logical connectives 
    - Include natural language meaning and textual evidence
    - Propositions must be specific, complete, and exhaustive for all constraints
 
@@ -27,12 +27,12 @@ STEP 0: Review Exemplars
 
 STEP 1: Analyze Relation Triples
 - Review triples to understand extracted entities and relationships
-- CRITICAL: Triples are incomplete preprocessing hints—use them to guide extraction but ALWAYS ground your final logic in the original text
+- CRITICAL: Triples are incomplete preprocessing hints---use them to guide extraction but ALWAYS ground your final logic in the original text
 - When triples conflict with text, prioritize the text
 
 STEP 2: Define Primitive Propositions
-- Extract atomic, truth-evaluable statements from text
-- Ensure mutual exclusivity and exhaustiveness for all constraints
+- Extract atomic, truth-evaluable statements from text that cannot further be broken down
+- Ensure mutual exclusivity of atomics and that they exhaust all constraints
 - Break down to genuinely atomic statements (no hidden logical connectives)
 - Include textual evidence, location, and brief atomicity reasoning
 
@@ -44,12 +44,14 @@ STEP 3: Extract Hard Constraints
 
 STEP 4: Extract Soft Constraints
 - Extract propositional formulas that might hold (defeasible/probabilistic statements)
+- These formulas might not be explicitly stated in the text, but are relevant to the structural logic and can be obtained from common-sense
 - Include textual evidence if from text, or common-sense justification otherwise
-- Ensure faithfulness to text intent
+- Ensure faithfulness to text intent to settle ambiguities; e.g. if the word "should" refers to an obligation or requirement then it suggests a hard constraint; but if it used to suggest that it doesn't have to hold, based off other parts of the text, then it can be a soft constraint
 - Include reasoning for soft designation
 
 STEP 5: Double Check
-- Revise propositions for specificity, mutual exclusivity, and exhaustiveness
+- Revise atomic propositions for specificity, mutual exclusivity, and exhaustiveness
+- Ensure that the translations of atomic propositions are not formed by connectives such as "whenever", "only if", "unless", etc. If an atomic propositions can be further broken down, then break it down to finer atomics and include a constraint. 
 - Verify all constraints are present and logically accurate
 - Iterate if needed 
 
@@ -520,7 +522,7 @@ EXEMPLAR 3
 
 INPUT TEXT
 <<<
-Students must complete either the written exam or the oral presentation, but not both, to satisfy the assessment requirement. A student passes the course if and only if they satisfy the assessment requirement and attend at least 80% of lectures. Students may request deadline extensions, though approval requires documented extenuating circumstances.
+Students must complete either the written exam or the oral presentation, but not both, to satisfy the assessment requirement. A student passes the course precisely when they satisfy the assessment requirement and attend at least 80% of lectures. Students may request deadline extensions, though approval requires documented extenuating circumstances.
 >>>
 
 INPUT TRIPLES
@@ -602,7 +604,7 @@ OUTPUT JSON
       "id": "H_2",
       "formula": "P_5 ⟺ (P_3 ∧ P_4)",
       "translation": "A student passes the course iff they satisfy the assessment requirement and attend at least 80% of lectures.",
-      "evidence": "Sentence 2: \"A student passes the course if and only if they satisfy the assessment requirement and attend at least 80% of lectures.\"",
+      "evidence": "Sentence 2: \"A student passes the course precisely when they satisfy the assessment requirement and attend at least 80% of lectures.\"",
       "reasoning": "Explicit biconditional ('if and only if') defines passing precisely in terms of these two conditions."
     },
     {
