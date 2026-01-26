@@ -18,6 +18,7 @@ repo/
 │   ├── from_text_to_logic/    # Text → Logified Structure (Stage 1)
 │   │   ├── openie_extractor.py     # Stanford CoreNLP OpenIE extraction
 │   │   ├── logic_converter.py      # LLM-based NL → propositional logic
+|   |   ├── logify.py               # Integrates two-stage pipeline (openie_extractor + logic_converter) Converts document to propositional logic
 │   │   ├── propositions.py         # Atomic proposition management
 │   │   ├── constraints.py          # Hard/soft constraint handling
 │   │   ├── weights.py              # SBERT + NLI weight assignment
