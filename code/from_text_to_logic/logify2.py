@@ -164,7 +164,7 @@ def main():
     )
     parser.add_argument(
         "--reasoning-effort",
-        default="xhigh",
+        default="medium",
         choices=["none", "low", "medium", "high", "xhigh"],
         help="Reasoning effort for gpt-5.2/o1/o3 models (default: xhigh)"
     )
