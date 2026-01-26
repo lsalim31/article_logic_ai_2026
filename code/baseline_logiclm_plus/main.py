@@ -563,7 +563,8 @@ if __name__ == '__main__':
                        help='Maximum refinement iterations')
     parser.add_argument('--solver', type=str, default='z3', choices=['z3', 'prover9'],
                        help='Solver to use')
-    parser.add_argument('--output-dir', type=str, help='Output directory for results')
+    parser.add_argument('--output', type=str, help='Output file path for results')
+    parser.add_argument('--output-dir', type=str, help='Output directory for results (deprecated, use --output)')
     parser.add_argument('--data-dir', type=str, default='data', help='Data directory')
 
     args = parser.parse_args()
@@ -574,13 +575,17 @@ if __name__ == '__main__':
         examples = load_dataset(args.dataset, args.data_dir)
         print(f"Loaded {len(examples)} examples")
 
+        # Determine output directory (--output takes precedence)
+        output_dir = args.output if args.output else args.output_dir
+        if not output_dir:
+            output_dir = f'results_{args.dataset}'
+
         print(f"Running Logic-LM++ on {args.dataset}...")
         result = run_batch(
             examples=examples,
             model_name=args.model,
-            max_iterations=args.iterations,
-            solver=args.solver,
-            output_dir=args.output_dir
+            config={'max_iterations': args.iterations, 'solver': args.solver},
+            output_dir=output_dir
         )
 
         print("\n=== Results ===")
