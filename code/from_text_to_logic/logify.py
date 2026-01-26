@@ -175,7 +175,7 @@ def main():
         default=64000,
         help="Maximum tokens in response (default: 64000)"
     )
-    parser.add_argument("--output", default="logified.JSON", help="Output JSON file path")
+    parser.add_argument("--output", default=None, help="Output JSON file path (default: auto-generated based on input file)")
 
     args = parser.parse_args()
 
@@ -183,7 +183,8 @@ def main():
         # Determine if input is a file path or raw text
         # If it's a valid file path, extract text from document
         # Otherwise, treat as raw text string
-        if os.path.exists(args.input):
+        input_is_file = os.path.exists(args.input)
+        if input_is_file:
             print(f"Reading document: {args.input}")
             text = extract_text_from_document(args.input)
             print(f"  ✓ Extracted {len(text)} characters")
