@@ -129,14 +129,27 @@ RELATION TRIPLES:
                 return logic_structure
             except json.JSONDecodeError as e:
                 # If JSON parsing fails, try to extract JSON from response
+                print(f"  WARNING: JSON parse failed: {e}")
+                print(f"  Attempting to extract and repair JSON...")
+
+                # Save raw response for debugging
+                debug_file = "debug_llm_response.txt"
+                with open(debug_file, 'w', encoding='utf-8') as f:
+                    f.write(response_text)
+                print(f"  Raw response saved to: {debug_file}")
+
                 if "{" in response_text and "}" in response_text:
                     json_start = response_text.find("{")
                     json_end = response_text.rfind("}") + 1
                     json_text = response_text[json_start:json_end]
-                    logic_structure = json.loads(json_text)
-                    return logic_structure
+                    try:
+                        logic_structure = json.loads(json_text)
+                        return logic_structure
+                    except json.JSONDecodeError as e2:
+                        print(f"  Failed to extract valid JSON: {e2}")
+                        raise ValueError(f"Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
                 else:
-                    raise ValueError(f"Failed to parse JSON response: {e}")
+                    raise ValueError(f"Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
 
         except Exception as e:
             raise RuntimeError(f"Error in LLM conversion: {e}")
