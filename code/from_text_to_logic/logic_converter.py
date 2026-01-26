@@ -15,7 +15,7 @@ from openai import OpenAI
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 4000, reasoning_effort: str = "xhigh"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 32000, reasoning_effort: str = "xhigh"):
         """
         Initialize the logic converter with API key and model.
 
