@@ -1,4 +1,4 @@
-u#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 logic_converter.py - LLM-Based Logic Structure Extractor
 
