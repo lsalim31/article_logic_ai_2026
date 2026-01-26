@@ -15,7 +15,7 @@ from openai import OpenAI
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 4000, reasoning_effort: str = "high"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 4000, reasoning_effort: str = "xhigh"):
         """
         Initialize the logic converter with API key and model.
 
@@ -24,7 +24,7 @@ class LogicConverter:
             model (str): Model to use (default: gpt-5.2)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
             max_tokens (int): Maximum tokens in response (default: 4000)
-            reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: high
+            reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: xhigh
         """
         # Detect OpenRouter keys and use appropriate base URL
         if api_key.startswith('sk-or-'):

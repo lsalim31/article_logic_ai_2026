@@ -86,20 +86,21 @@ def extract_text_from_document(file_path: str) -> str:
 class LogifyConverter2:
     """Orchestrates the two-stage text-to-logic conversion pipeline."""
 
-    def __init__(self, api_key: str, model: str = "o1", reasoning_effort: str = "high"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "xhigh"):
         """
         Initialize the pipeline with both stages.
 
         Args:
             api_key (str): OpenAI API key
-            model (str): Model to use (default: o1 with extended thinking)
-            reasoning_effort (str): Reasoning effort for o1/o3 models (default: high)
+            model (str): Model to use (default: gpt-5.2 with extended thinking)
+            temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
+            reasoning_effort (str): Reasoning effort for gpt-5.2/o1/o3 models (default: xhigh)
         """
         # Stage 1: OpenIE extraction
         self.extractor = OpenIEExtractor()
 
         # Stage 2: LLM-based logic conversion
-        self.converter = LogicConverter(api_key=api_key, model=model, reasoning_effort=reasoning_effort)
+        self.converter = LogicConverter(api_key=api_key, model=model, temperature=temperature, reasoning_effort=reasoning_effort)
 
     def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
         """
@@ -152,14 +153,20 @@ def main():
     parser.add_argument("--api-key", required=True, help="OpenAI API key")
     parser.add_argument(
         "--model",
-        default="o1",
-        help="Model to use (default: o1). Options: o1, gpt-4o, gpt-4-turbo, etc."
+        default="gpt-5.2",
+        help="Model to use (default: gpt-5.2). Options: gpt-5.2, o1, gpt-4o, gpt-4-turbo, etc."
+    )
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=0.1,
+        help="Sampling temperature for LLM (default: 0.1, ignored for reasoning models)"
     )
     parser.add_argument(
         "--reasoning-effort",
-        default="high",
-        choices=["none", "low", "medium", "high"],
-        help="Reasoning effort for o1/o3 models (default: high)"
+        default="xhigh",
+        choices=["none", "low", "medium", "high", "xhigh"],
+        help="Reasoning effort for gpt-5.2/o1/o3 models (default: xhigh)"
     )
     parser.add_argument("--output", default="logified2.JSON", help="Output JSON file path")
 
@@ -182,12 +189,14 @@ def main():
         converter = LogifyConverter2(
             api_key=args.api_key,
             model=args.model,
+            temperature=args.temperature,
             reasoning_effort=args.reasoning_effort
         )
 
         # Convert text to logic
         print(f"\nConverting to logic structure...")
         print(f"  Model: {args.model}")
+        print(f"  Temperature: {args.temperature}")
         print(f"  Reasoning effort: {args.reasoning_effort}")
         logic_structure = converter.convert_text_to_logic(text)
 

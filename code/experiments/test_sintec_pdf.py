@@ -31,7 +31,7 @@ def main():
     print("="*60)
     print(f"PDF: {pdf_path}")
     print(f"Output: {output_path}")
-    print(f"Model: o1 (reasoning_effort: high)")
+    print(f"Model: gpt-5.2 (temperature: 0.1, reasoning_effort: xhigh)")
     print("="*60 + "\n")
 
     try:
