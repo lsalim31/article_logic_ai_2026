@@ -33,7 +33,13 @@ fol_vs_boolean/
 Run the single-file experiment with LogicBench dataset:
 
 ```bash
-pip install datasets  # Install HuggingFace datasets library
+# Install dependencies
+pip install datasets
+
+# Set your OpenAI API key (required for propositional extraction)
+export OPENAI_API_KEY='your-key-here'
+
+# Run the experiment
 python run_logicbench_experiment.py
 ```
 

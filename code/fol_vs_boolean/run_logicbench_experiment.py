@@ -24,8 +24,26 @@ from collections import Counter
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'from_text_to_logic'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'baseline_logiclm_plus'))
 
-from logify import logify_text
+from logify import LogifyConverter
 from formalizer import formalize_to_fol
+
+# Initialize the propositional logic converter (needs API key)
+# We'll initialize it lazily in the extraction function
+_logify_converter = None
+
+def get_logify_converter():
+    """Get or create the LogifyConverter instance."""
+    global _logify_converter
+    if _logify_converter is None:
+        # Get API key from environment
+        api_key = os.environ.get('OPENAI_API_KEY')
+        if not api_key:
+            raise ValueError(
+                "OPENAI_API_KEY environment variable not set.\n"
+                "Set it with: export OPENAI_API_KEY='your-key-here'"
+            )
+        _logify_converter = LogifyConverter(api_key=api_key)
+    return _logify_converter
 
 
 # ============================================================================
@@ -44,10 +62,11 @@ def extract_propositional(text, query=None):
         dict with: extraction_mode, extraction, raw_response, success, error_message
     """
     try:
-        result = logify_text(text)
+        converter = get_logify_converter()
+        result = converter.convert_text_to_logic(text)
         success = True
         error_message = None
-        raw_response = result.get('raw_response', '')
+        raw_response = ''  # LogifyConverter doesn't expose raw response
     except Exception as e:
         result = {}
         success = False
