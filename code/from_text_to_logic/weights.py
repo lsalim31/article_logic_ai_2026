@@ -161,7 +161,9 @@ def build_verification_prompt(chunks: List[Dict], constraint: str) -> str:
 {constraint}
 
 [QUESTION]
-Does the text endorse this constraint as a general, necessary rule? Answer "YES" or "NO" with no other words."""
+Does this document excerpt provide clear evidence supporting this claim?
+- "YES" = The text explicitly states this or strongly implies it
+- "NO" = The text does not support this, contradicts it, or is silent"""
 
     return prompt
 
