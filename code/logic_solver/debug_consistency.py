@@ -2,6 +2,12 @@
 """Debug consistency check."""
 
 import json
+import sys
+import os
+
+# Add parent directory to path to import logic_solver as a package
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from logic_solver import LogicSolver
 from pysat.solvers import Solver
 

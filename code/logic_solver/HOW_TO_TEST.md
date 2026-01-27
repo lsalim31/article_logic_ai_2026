@@ -4,7 +4,7 @@
 
 ### 1. Install Dependencies
 ```bash
-cd /workspace/repo/code
+cd /workspace/repo/code/logic_solver
 pip install python-sat
 ```
 
@@ -226,7 +226,7 @@ Error during solving: Invalid proposition ID: &
 ## Getting Help
 
 ### Documentation
-- `logic_solver/README.md` - Full API documentation
+- `README.md` - Full API documentation
 - `LOGIC_SOLVER_IMPLEMENTATION.md` - Implementation details
 - `TEST_RESULTS.md` - Test results and coverage
 - `INTEGRATION_STATUS.md` - What's done and what's left

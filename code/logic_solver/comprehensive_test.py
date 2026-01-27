@@ -6,8 +6,12 @@ Tests all components: encoding, parsing, SAT solving, and edge cases.
 
 import json
 import sys
+import os
 import traceback
 from typing import Dict, Any
+
+# Add parent directory to path to import logic_solver as a package
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def test_import():
