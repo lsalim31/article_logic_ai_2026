@@ -402,8 +402,10 @@ def assign_weights(
         if verbose:
             print(f"  [{i+1}/{len(soft_constraints)}] {constraint_id}: {constraint_text[:60]}...")
 
-        # Verify this constraint
-        result = verify_single_constraint(
+        # Verify original constraint
+        if verbose:
+            print(f"      Verifying original...")
+        result_original = verify_single_constraint(
             constraint_text=constraint_text,
             chunks=chunks,
             chunk_embeddings=chunk_embeddings,
@@ -415,17 +417,41 @@ def assign_weights(
             k=k
         )
 
-        # Add weight field to constraint
-        constraint['weight'] = [
-            result['logit_yes'],
-            result['logit_no'],
-            result['prob_yes'],
-            result['prob_no']
-        ]
+        if verbose:
+            print(f"      → logit_yes={result_original['logit_yes']:.4f}, logit_no={result_original['logit_no']:.4f}, "
+                  f"P(YES)={result_original['prob_yes']:.4f}, P(NO)={result_original['prob_no']:.4f}")
+
+        # Verify negated constraint
+        negated_constraint_text = f"It is false that {constraint_text}"
+        if verbose:
+            print(f"      Verifying negation: {negated_constraint_text[:60]}...")
+        result_negated = verify_single_constraint(
+            constraint_text=negated_constraint_text,
+            chunks=chunks,
+            chunk_embeddings=chunk_embeddings,
+            sbert_model=sbert_model,
+            client=client,
+            model=model,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            k=k
+        )
 
         if verbose:
-            print(f"      → logit_yes={result['logit_yes']:.4f}, logit_no={result['logit_no']:.4f}, "
-                  f"P(YES)={result['prob_yes']:.4f}, P(NO)={result['prob_no']:.4f}")
+            print(f"      → neg_logit_yes={result_negated['logit_yes']:.4f}, neg_logit_no={result_negated['logit_no']:.4f}, "
+                  f"neg_P(YES)={result_negated['prob_yes']:.4f}, neg_P(NO)={result_negated['prob_no']:.4f}")
+
+        # Add weight field to constraint (8 values: original + negated)
+        constraint['weight'] = [
+            result_original['logit_yes'],
+            result_original['logit_no'],
+            result_original['prob_yes'],
+            result_original['prob_no'],
+            result_negated['logit_yes'],
+            result_negated['logit_no'],
+            result_negated['prob_yes'],
+            result_negated['prob_no']
+        ]
 
     # Step 7: Save output
     json_path_obj = Path(json_path)
