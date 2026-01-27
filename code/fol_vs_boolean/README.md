@@ -28,7 +28,28 @@ fol_vs_boolean/
 
 ## Usage
 
-### Step 1: Prepare Data
+### Quick Start: LogicBench Experiment (Recommended)
+
+Run the single-file experiment with LogicBench dataset:
+
+```bash
+pip install datasets  # Install HuggingFace datasets library
+python run_logicbench_experiment.py
+```
+
+This will:
+- Load LogicBench dataset from HuggingFace (50 examples by default)
+- Run both propositional and FOL extraction on same examples
+- Analyze and compare error rates
+- Save results to `data/logicbench_results/`
+
+**Advantages**: No manual data preparation, uses standardized benchmark, all-in-one script.
+
+### Alternative: Custom Data Pipeline
+
+For custom datasets, use the modular pipeline:
+
+#### Step 1: Prepare Data
 
 Create `data/raw/source_examples.jsonl` with format:
 
@@ -37,7 +58,7 @@ Create `data/raw/source_examples.jsonl` with format:
 {"id": "002", "text": "Bob teaches math. All teachers work hard.", "query": "Does Bob work hard?"}
 ```
 
-### Step 2: Run Dual Extraction
+#### Step 2: Run Dual Extraction
 
 ```bash
 python run_dual_extraction.py
@@ -49,7 +70,7 @@ This will:
 - Extract FOL for each example
 - Save results to `data/extractions/`
 
-### Step 3: Analyze Errors
+#### Step 3: Analyze Errors
 
 ```bash
 python analyze_errors.py
@@ -101,10 +122,15 @@ This will:
 
 ## Data Sources
 
-Recommended sources for `source_examples.jsonl`:
+**Primary (Recommended)**:
+- **LogicBench** (ACL 2024) - Use `run_logicbench_experiment.py`
+  - Systematic reasoning benchmark with both PL and FOL subsets
+  - Automatically loaded from HuggingFace
+
+**Alternative** (for custom pipeline):
 - FOLIO test set (50 examples)
 - ProofWriter depth-5 (50 examples)
-- Custom examples
+- Custom examples in JSONL format
 
 ## Timeline
 
