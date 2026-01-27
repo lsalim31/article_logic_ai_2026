@@ -8,11 +8,17 @@ This module contains:
 - Prompt templates for formalization, refinement, and pairwise comparison
 
 Design decisions (from Logic-LM++ paper, ACL 2024):
-- First-order logic (FOL) formalization (FOLIO, ProofWriter, AR-LSAT require FOL)
+- First-order logic (FOL) formalization for FOLIO, AR-LSAT
+- Propositional logic formalization for LogicBench propositional tasks
 - JSON-structured LLM outputs for reliable parsing
 - Variable iterations (tested 0-4 in paper, Figure 3)
 - Early stopping via backtracking agent (prevents semantic degradation)
 - Context-rich refinement prompts (no few-shots, include problem statement)
+
+Note on logic types:
+- Propositional logic uses ground atoms (P, Q, R) without quantifiers
+- FOL uses predicates with arguments and quantifiers (∀x, ∃x)
+- The choice affects both formalization prompts and solver behavior
 """
 
 # Model configuration
@@ -139,3 +145,73 @@ Consider:
 Answer: IMPROVED or REVERT
 
 If REVERT, the system will backtrack to the previous formulation."""
+
+# =============================================================================
+# PROPOSITIONAL LOGIC PROMPTS (for LogicBench propositional_logic tasks)
+# =============================================================================
+# These prompts enforce ground propositional formulas WITHOUT quantifiers,
+# which the Z3 solver can handle correctly. This aligns with the Logify paper's
+# design choice to use propositional logic for reliability.
+
+PROPOSITIONAL_FORMALIZATION_PROMPT = """You are a formal logician. Convert the following natural language text and query into PROPOSITIONAL LOGIC (not first-order logic).
+
+TEXT:
+{text}
+
+QUERY:
+{query}
+
+CRITICAL INSTRUCTIONS:
+1. Use ONLY ground propositional variables (e.g., P, Q, R, FinishedWorkEarly, OrderedPizza)
+2. DO NOT use quantifiers (∀, ∃) or predicate arguments like P(x)
+3. Each proposition must be a simple TRUE/FALSE statement about specific entities
+4. Use logical connectives: ∧ (and), ∨ (or), → (implies), ¬ (not), ↔ (iff)
+
+CORRECT EXAMPLE:
+- Text: "If Liam finished work early, he orders pizza. Liam did not order pizza."
+- Propositions: P = "Liam finished work early", Q = "Liam ordered pizza"
+- Premises: ["P → Q", "¬Q"]
+- Conclusion (for "Did Liam finish work early?"): "P" (test if P is true)
+- Conclusion (for "Did Liam NOT finish work early?"): "¬P" (test if ¬P is true)
+
+WRONG (DO NOT DO THIS):
+- "∀x (FinishedWorkEarly(x) → OrdersPizza(x))" -- NO quantifiers!
+- "OrdersPizza(Liam)" -- NO predicate arguments!
+
+Output format (JSON):
+{{
+    "predicates": {{"P": "Liam finished work early", "Q": "Liam ordered pizza", ...}},
+    "premises": ["P → Q", "¬Q", ...],
+    "conclusion": "¬P"
+}}
+
+The conclusion should be the formula to TEST. If the query asks "Does X imply Y?", test whether Y follows from the premises."""
+
+PROPOSITIONAL_REFINEMENT_PROMPT = """You previously formalized a propositional logic problem. The current formulation has issues.
+
+ORIGINAL PROBLEM STATEMENT:
+{text}
+
+ORIGINAL QUESTION:
+{query}
+
+YOUR CURRENT FORMULATION:
+{current_formulation}
+
+SOLVER FEEDBACK:
+{error_feedback}
+
+INSTRUCTIONS:
+1. Use ONLY ground propositional variables (P, Q, R, or descriptive names like FinishedWork)
+2. DO NOT use quantifiers (∀, ∃) or predicate arguments
+3. Check if the conclusion correctly captures what the query is asking
+4. Ensure all relevant facts from the text are captured as premises
+
+Common errors:
+- Using FOL syntax (∀x, P(x)) instead of propositional (P, Q)
+- Wrong conclusion (testing P when should test ¬P, or vice versa)
+- Missing premises that connect the propositions
+
+Generate {num_candidates} alternative formulations. Each must use ONLY propositional logic.
+
+Output {num_candidates} JSON objects, one per line."""

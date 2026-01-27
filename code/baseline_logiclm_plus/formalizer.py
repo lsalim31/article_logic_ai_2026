@@ -2,45 +2,57 @@
 Natural language to symbolic formalization module.
 
 This module handles the initial translation from natural language text + query
-into first-order logic (FOL) formulation for Logic-LM++.
+into logical formulations for Logic-LM++.
+
+Supports two logic types:
+1. Propositional logic: Ground atoms (P, Q, R) without quantifiers
+2. First-order logic (FOL): Predicates with arguments and quantifiers
 
 Core responsibilities:
-1. Call LLM with formalization prompt
+1. Call LLM with appropriate formalization prompt (propositional or FOL)
 2. Parse JSON response into structured format
 3. Validate output structure (syntax and well-formedness)
 4. Handle malformed outputs (count as formalization failure)
 
 Key functions:
-- formalize_to_fol(text, query, model_name, temperature=0) -> dict
-  Main entry point for NL → FOL translation
+- formalize(text, query, logic_type='propositional', ...) -> dict
+  Main entry point supporting both propositional and FOL
+
+- formalize_to_fol(text, query, ...) -> dict
+  Legacy FOL-only entry point (for backward compatibility)
 
 - parse_formalization_response(raw_response) -> dict
   Parse LLM JSON output, handle malformed responses
 
 - validate_formalization(formalization) -> bool
-  Check if formalization structure is valid (has required fields, valid FOL syntax)
+  Check if formalization structure is valid
 
 Output format:
 {
-    'predicates': Dict[str, str],       # e.g., {'Student(x)': 'x is a student', 'Human(x)': '...'}
-    'premises': List[str],              # FOL premises: ['∀x (Student(x) → Human(x))', '¬∃x (Young(x) ∧ Teach(x))', ...]
-    'conclusion': str,                  # FOL conclusion: 'Human(rose) ∨ Manager(jerry)'
+    'predicates': Dict[str, str],       # e.g., {'P': 'Liam finished work early', ...}
+    'premises': List[str],              # e.g., ['P → Q', '¬Q', ...]
+    'conclusion': str,                  # e.g., '¬P'
     'raw_response': str,                # Full LLM output for debugging
     'formalization_error': str | None   # Error message if formalization failed
 }
 
-Design decisions (from Logic-LM++ paper):
-- First-order logic (FOL) formalization (FOLIO, ProofWriter, AR-LSAT require FOL)
+Design decisions:
+- Propositional logic for LogicBench propositional tasks (better Z3 compatibility)
+- FOL for FOLIO, AR-LSAT (requires Prover9 or proper FOL handling)
 - JSON output from LLM (reliable parsing)
 - Malformed outputs → formalization failure, no retry
-- FOL syntax compatible with Prover9/Z3
-- Syntactic validation only at this stage (semantic correctness checked by solver + refinement)
 """
 
 import json
 import os
 from openai import OpenAI
-from config import FORMALIZATION_PROMPT, MODEL_NAME, TEMPERATURE, MAX_TOKENS
+from config import (
+    FORMALIZATION_PROMPT,
+    PROPOSITIONAL_FORMALIZATION_PROMPT,
+    MODEL_NAME,
+    TEMPERATURE,
+    MAX_TOKENS
+)
 
 
 def formalize_to_fol(text, query, model_name=MODEL_NAME, temperature=TEMPERATURE):
