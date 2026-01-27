@@ -4,6 +4,10 @@ Single-file Logic-LM++ experiment runner for LogicBench-v1.0 dataset.
 This script loads the LogicBench dataset from HuggingFace and runs Logic-LM++
 experiments on all three logic types (propositional, first-order, non-monotonic).
 
+Key improvement: Uses PROPOSITIONAL formalization for propositional_logic tasks,
+which produces ground boolean formulas (P, Q, R) instead of FOL with quantifiers.
+This aligns with the Logify paper's design philosophy and improves Z3 compatibility.
+
 Usage:
     python run_logicbench_experiment.py --logic_type propositional_logic --task_type BQA --output results_prop_bqa.json
     python run_logicbench_experiment.py --logic_type first_order_logic --task_type MCQA --output results_fol_mcqa.json
@@ -289,12 +293,17 @@ def run_experiment(logic_type, task_type, output_path, max_samples=None,
         ground_truth_raw = example['answer']
         ground_truth = normalize_answer(ground_truth_raw)
 
+        # Determine formalization type based on logic_type
+        # Use propositional for propositional_logic, FOL for others
+        formalization_logic_type = 'propositional' if logic_type == 'propositional_logic' else 'fol'
+
         # Run Logic-LM++
         config = {
             'max_iterations': max_iterations,
             'solver': solver,
             'num_candidates': 2,
-            'max_consecutive_backtracks': 2
+            'max_consecutive_backtracks': 2,
+            'logic_type': formalization_logic_type  # Key: use appropriate formalization
         }
 
         try:

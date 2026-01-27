@@ -326,63 +326,159 @@ def test_entailment_z3(premises, conclusion, timeout=SOLVER_TIMEOUT):
                 # Now parse the instantiated formula
                 return parse_fol_to_z3(instantiated)
 
-            # Replace predicate calls with Z3 expressions
-            for pred_name in list(predicate_decls.keys()):
-                if len(pred_name) == 1:
-                    # Single letter propositional variable - already declared
-                    continue
-
-                # Find all occurrences of Pred(args)
-                pattern = f'{pred_name}\\(([^)]*)\\)'
-                matches_list = list(re.finditer(pattern, z3_formula_str))
-
-                # Replace from right to left to avoid index issues
-                for match in reversed(matches_list):
-                    full_match = match.group(0)
-                    args_str = match.group(1)
-                    args = [a.strip() for a in args_str.split(',') if a.strip()]
-
-                    if len(args) == 0:
-                        # Nullary predicate
-                        replacement = pred_name
-                    else:
-                        # Create Z3 function call
-                        z3_args = []
-                        for arg in args:
-                            if arg.isdigit():
-                                z3_args.append(str(arg))
-                            else:
-                                # Variable or constant name
-                                if arg not in context:
-                                    context[arg] = Int(arg)
-                                z3_args.append(arg)
-
-                        replacement = f"{pred_name}({', '.join(z3_args)})"
-
-                    # Replace this occurrence
-                    start, end = match.span()
-                    z3_formula_str = z3_formula_str[:start] + replacement + z3_formula_str[end:]
-
-            # Replace >> with Implies
-            # Do this carefully to handle operator precedence
+            # Handle implication operator >>
+            # Convert to Z3 Implies with proper precedence
             if '>>' in z3_formula_str:
-                # Parse implications manually to get precedence right
+                # Parse implications - need to handle precedence carefully
+                # A >> B becomes Implies(A, B)
+                # Split by >> and build nested Implies (right-associative)
                 parts = z3_formula_str.split('>>')
-                if len(parts) == 2:
-                    z3_formula_str = f"Implies(({parts[0].strip()}), ({parts[1].strip()}))"
-                elif len(parts) > 2:
-                    # Right-associative: A >> B >> C == A >> (B >> C)
-                    result = parts[-1].strip()
-                    for part in reversed(parts[:-1]):
-                        result = f"Implies(({part.strip()}), ({result}))"
-                    z3_formula_str = result
+                if len(parts) >= 2:
+                    # Build from right to left (right-associative)
+                    # A >> B >> C means A >> (B >> C)
+                    result_parts = [p.strip() for p in parts]
+                    z3_formula_str = result_parts[-1]
+                    for part in reversed(result_parts[:-1]):
+                        z3_formula_str = f"Implies(({part}), ({z3_formula_str}))"
 
-            # Try to evaluate the formula
+            # Try to evaluate the formula using Z3 operators
             try:
-                z3_expr = eval(z3_formula_str, context)
-                return z3_expr
+                # Create a safe evaluation context
+                safe_context = dict(predicate_decls)
+                safe_context.update({
+                    'Implies': Implies,
+                    'And': And,
+                    'Or': Or,
+                    'Not': Not,
+                })
+
+                # Replace Python bitwise operators with Z3 functions
+                # This handles & | ~ from our earlier substitution
+                eval_str = z3_formula_str
+
+                # First, try direct eval (works for simple cases)
+                try:
+                    z3_expr = eval(eval_str, {"__builtins__": {}}, safe_context)
+                    return z3_expr
+                except:
+                    pass
+
+                # If that fails, do manual parsing for boolean operations
+                # Handle ~ (not), & (and), | (or)
+                def parse_expr(expr_str):
+                    expr_str = expr_str.strip()
+
+                    # Remove outer parentheses if balanced
+                    while expr_str.startswith('(') and expr_str.endswith(')'):
+                        # Check if these parens match
+                        depth = 0
+                        balanced = True
+                        for i, c in enumerate(expr_str):
+                            if c == '(':
+                                depth += 1
+                            elif c == ')':
+                                depth -= 1
+                            if depth == 0 and i < len(expr_str) - 1:
+                                balanced = False
+                                break
+                        if balanced:
+                            expr_str = expr_str[1:-1].strip()
+                        else:
+                            break
+
+                    # Check for Implies(...) pattern
+                    if expr_str.startswith('Implies('):
+                        # Find matching parentheses
+                        depth = 0
+                        start = expr_str.index('(')
+                        for i, c in enumerate(expr_str[start:], start):
+                            if c == '(':
+                                depth += 1
+                            elif c == ')':
+                                depth -= 1
+                            if depth == 0:
+                                inner = expr_str[start+1:i]
+                                # Split by comma at depth 0
+                                comma_pos = None
+                                d = 0
+                                for j, ch in enumerate(inner):
+                                    if ch == '(':
+                                        d += 1
+                                    elif ch == ')':
+                                        d -= 1
+                                    elif ch == ',' and d == 0:
+                                        comma_pos = j
+                                        break
+                                if comma_pos:
+                                    left = inner[:comma_pos].strip()
+                                    right = inner[comma_pos+1:].strip()
+                                    return Implies(parse_expr(left), parse_expr(right))
+                                break
+
+                    # Handle negation ~
+                    if expr_str.startswith('~'):
+                        return Not(parse_expr(expr_str[1:]))
+
+                    # Handle binary operators (lowest precedence first)
+                    # Split by | (or) at depth 0
+                    depth = 0
+                    for i in range(len(expr_str) - 1, -1, -1):
+                        c = expr_str[i]
+                        if c == ')':
+                            depth += 1
+                        elif c == '(':
+                            depth -= 1
+                        elif c == '|' and depth == 0:
+                            left = expr_str[:i].strip()
+                            right = expr_str[i+1:].strip()
+                            if left and right:
+                                return Or(parse_expr(left), parse_expr(right))
+
+                    # Split by & (and) at depth 0
+                    depth = 0
+                    for i in range(len(expr_str) - 1, -1, -1):
+                        c = expr_str[i]
+                        if c == ')':
+                            depth += 1
+                        elif c == '(':
+                            depth -= 1
+                        elif c == '&' and depth == 0:
+                            left = expr_str[:i].strip()
+                            right = expr_str[i+1:].strip()
+                            if left and right:
+                                return And(parse_expr(left), parse_expr(right))
+
+                    # Split by == (iff) at depth 0
+                    depth = 0
+                    for i in range(len(expr_str) - 2, -1, -1):
+                        c = expr_str[i:i+2]
+                        if expr_str[i] == ')':
+                            depth += 1
+                        elif expr_str[i] == '(':
+                            depth -= 1
+                        elif c == '==' and depth == 0:
+                            left = expr_str[:i].strip()
+                            right = expr_str[i+2:].strip()
+                            if left and right:
+                                l = parse_expr(left)
+                                r = parse_expr(right)
+                                return And(Implies(l, r), Implies(r, l))
+
+                    # Base case: should be a variable name
+                    var_name = expr_str.strip()
+                    if var_name in safe_context:
+                        return safe_context[var_name]
+                    else:
+                        # Create new boolean variable
+                        new_var = Bool(var_name)
+                        safe_context[var_name] = new_var
+                        predicate_decls[var_name] = new_var
+                        return new_var
+
+                return parse_expr(z3_formula_str)
+
             except Exception as e:
-                # If parsing fails, return a fresh boolean variable
+                # If all parsing fails, return a fresh boolean variable
                 # This allows the solver to continue rather than crash
                 return Bool(f'unparsed_{abs(hash(formula_str)) % 10000}')
 
