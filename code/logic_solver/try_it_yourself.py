@@ -8,9 +8,16 @@ This lets you test queries against the Alice example.
 import json
 import sys
 import os
+from pathlib import Path
 
 # Add parent directory to path to import logic_solver as a package
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Compute paths relative to script location
+SCRIPT_DIR = Path(__file__).resolve().parent
+CODE_DIR = SCRIPT_DIR.parent
+REPO_DIR = CODE_DIR.parent
+ARTIFACTS_DIR = REPO_DIR / \"artifacts\" / \"code\"
 
 from logic_solver import LogicSolver
 
@@ -22,7 +29,7 @@ def main():
     print()
 
     # Load the Alice example
-    with open('/workspace/repo/artifacts/code/logify2_full_demo.json', 'r') as f:
+    with open(ARTIFACTS_DIR / "logify2_full_demo.json", 'r') as f:
         logified = json.load(f)
 
     # Show available propositions
