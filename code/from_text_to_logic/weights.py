@@ -253,6 +253,19 @@ def verify_single_constraint(
     # Build prompt
     prompt = build_verification_prompt(retrieved_chunks, constraint_text)
 
+    # Debug output: show chunks and prompt
+    print("\n" + "=" * 60)
+    print("DEBUG: Retrieved Chunks")
+    print("=" * 60)
+    for j, chunk in enumerate(retrieved_chunks):
+        print(f"\n--- Chunk {j+1} (similarity: {chunk['similarity']:.4f}) ---")
+        print(chunk['text'][:500] + ("..." if len(chunk['text']) > 500 else ""))
+    print("\n" + "=" * 60)
+    print("DEBUG: Full Prompt to LLM")
+    print("=" * 60)
+    print(prompt)
+    print("=" * 60 + "\n")
+
     # Call LLM with logprobs
     response = client.chat.completions.create(
         model=model,
