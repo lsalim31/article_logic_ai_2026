@@ -24,11 +24,22 @@ Input:
 Output:
     - Same structure with 'weight' field added to each constraint
 
-Usage:
+Usage (CLI):
+    python weights.py <document_path> <logified_json_path>
+
+    # Example:
+    python weights.py ../experiments/SINTEC.pdf ../experiments/SINTEC-output.json
+    # Output: ../experiments/SINTEC-output_weighted.json
+
+Usage (Python):
     from from_text_to_logic.weights import assign_weights
 
     weighted_structure = assign_weights(logified_structure, document_text)
 """
+
+import json
+import argparse
+from pathlib import Path
 
 import numpy as np
 from typing import Dict, List, Any
@@ -485,31 +496,86 @@ def assign_weights(logified_structure: Dict[str, Any],
 
 
 # ============================================================================
-# Command-line interface (for standalone usage)
+# Document text extraction (reused from logify.py)
+# ============================================================================
+
+def extract_text_from_document(file_path: str) -> str:
+    """
+    Extract text from various document formats.
+
+    Args:
+        file_path: Path to document file (PDF, DOCX, TXT)
+
+    Returns:
+        Extracted text content
+    """
+    path = Path(file_path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"File not found: {file_path}")
+
+    suffix = path.suffix.lower()
+
+    # Plain text file
+    if suffix in ['.txt', '.text']:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+
+    # PDF file
+    elif suffix == '.pdf':
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            raise ImportError(
+                "PyMuPDF is required for PDF support. "
+                "Install with: pip install PyMuPDF"
+            )
+
+        doc = fitz.open(file_path)
+        text_parts = []
+        for page in doc:
+            text_parts.append(page.get_text())
+        doc.close()
+        return "\n".join(text_parts)
+
+    # DOCX file
+    elif suffix in ['.docx', '.doc']:
+        try:
+            from docx import Document
+        except ImportError:
+            raise ImportError(
+                "python-docx is required for DOCX support. "
+                "Install with: pip install python-docx"
+            )
+
+        doc = Document(file_path)
+        text_parts = [para.text for para in doc.paragraphs]
+        return "\n".join(text_parts)
+
+    else:
+        raise ValueError(
+            f"Unsupported file format: {suffix}. "
+            f"Supported formats: .txt, .pdf, .docx"
+        )
+
+
+# ============================================================================
+# Command-line interface
 # ============================================================================
 
 def main():
     """Command-line interface for weight assignment."""
-    import argparse
-    import json
-
     parser = argparse.ArgumentParser(
         description="Assign evidence-based weights to constraints (Appendix A.1.1)",
-        epilog="Example: python weights.py --logified output.json --text input.txt"
+        epilog="Example: python weights.py document.pdf logified.json"
     )
     parser.add_argument(
-        "--logified",
-        required=True,
+        "document",
+        help="Path to document file (PDF, DOCX, or TXT)"
+    )
+    parser.add_argument(
+        "logified",
         help="Path to logified JSON file (from logify.py)"
-    )
-    parser.add_argument(
-        "--text",
-        required=True,
-        help="Path to original document text file"
-    )
-    parser.add_argument(
-        "--output",
-        help="Output path (default: overwrites input)"
     )
     parser.add_argument(
         "--quiet",
@@ -519,15 +585,27 @@ def main():
 
     args = parser.parse_args()
 
+    # Validate paths
+    doc_path = Path(args.document)
+    json_path = Path(args.logified)
+
+    if not doc_path.exists():
+        print(f"Error: Document not found: {args.document}")
+        return 1
+
+    if not json_path.exists():
+        print(f"Error: JSON file not found: {args.logified}")
+        return 1
+
+    # Extract text from document
+    print(f"Reading document: {args.document}")
+    text = extract_text_from_document(args.document)
+    print(f"  ✓ Extracted {len(text)} characters")
+
     # Load logified structure
     print(f"Loading logified structure from {args.logified}...")
     with open(args.logified, 'r') as f:
         logified = json.load(f)
-
-    # Load document text
-    print(f"Loading document text from {args.text}...")
-    with open(args.text, 'r') as f:
-        text = f.read()
 
     # Assign weights
     logified_with_weights = assign_weights(
@@ -536,13 +614,16 @@ def main():
         verbose=not args.quiet
     )
 
-    # Save output
-    output_path = args.output or args.logified
+    # Generate output path: same folder as JSON, with _weighted.json suffix
+    output_path = json_path.parent / (json_path.stem + "_weighted.json")
+
     with open(output_path, 'w') as f:
         json.dump(logified_with_weights, f, indent=2)
 
     print(f"\n✓ Weights assigned! Output saved to: {output_path}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    sys.exit(main())
