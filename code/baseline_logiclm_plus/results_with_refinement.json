@@ -1,0 +1,1479 @@
+{
+  "metadata": {
+    "dataset": "LogicBench-v1.0",
+    "logic_type": "propositional_logic",
+    "task_type": "BQA",
+    "model": "gpt-4",
+    "min_refinements": 1,
+    "max_iterations": 4,
+    "solver": "z3",
+    "timestamp": "2026-01-27T23:54:53.274113",
+    "total_examples": 20,
+    "experiment_type": "forced_refinement"
+  },
+  "metrics": {
+    "overall_accuracy": 0.5,
+    "execution_rate_Er": 1.0,
+    "execution_accuracy_Ea": 0.5,
+    "correct_count": 10,
+    "execution_success_count": 20,
+    "avg_refinement_iterations": 0.0,
+    "backtracking_rate": 0,
+    "avg_time_per_query": 10.943050944805146,
+    "avg_llm_calls_per_query": 2.0,
+    "per_rule_accuracy": {
+      "propositional_logic": {
+        "accuracy": 0.5,
+        "count": 20,
+        "correct": 10
+      }
+    }
+  },
+  "results": [
+    {
+      "answer": "Unknown",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Liam finished work early",
+          "Q": "Liam ordered pizza",
+          "R": "Liam decided against ordering pizza"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "R"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\", \"R\": \"Liam decided against ordering pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Liam finished work early",
+          "Q": "Liam ordered pizza",
+          "R": "Liam decided against ordering pizza"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "R"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\", \"R\": \"Liam decided against ordering pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 12.136003732681274,
+      "time_breakdown": {
+        "formalization": 3.0970466136932373,
+        "refinement": 9.036673069000244,
+        "backtracking": 0,
+        "solving": 0.0022771358489990234
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Liam finished work early",
+            "Q": "Liam ordered pizza",
+            "R": "Liam decided against ordering pizza"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "R"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\", \"R\": \"Liam decided against ordering pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_1",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Liam had finished his work early for the day, which meant that he would typically have ordered pizza for dinner. However, on this particular day, he decided against ordering pizza and opted for something else instead.",
+      "question": "Does this imply that liam didn't finish his work early?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Liam finished work early",
+          "Q": "Liam ordered pizza"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Liam finished work early",
+          "Q": "Liam ordered pizza"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.17357349395752,
+      "time_breakdown": {
+        "formalization": 1.6789860725402832,
+        "refinement": 8.493177890777588,
+        "backtracking": 0,
+        "solving": 0.0014047622680664062
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Liam finished work early",
+            "Q": "Liam ordered pizza"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Liam finished work early\", \"Q\": \"Liam ordered pizza\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_1",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Liam had finished his work early for the day, which meant that he would typically have ordered pizza for dinner. However, on this particular day, he decided against ordering pizza and opted for something else instead.",
+      "question": "Does this entail that liam finished his work early?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Isabella finished her project on time",
+          "Q": "Isabella receives a bonus"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Isabella finished her project on time\", \"Q\": \"Isabella receives a bonus\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Isabella finished her project on time",
+          "Q": "Isabella receives a bonus"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Isabella finished her project on time\", \"Q\": \"Isabella receives a bonus\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 8.976614952087402,
+      "time_breakdown": {
+        "formalization": 1.8242084980010986,
+        "refinement": 7.150937557220459,
+        "backtracking": 0,
+        "solving": 0.0014653205871582031
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Isabella finished her project on time",
+            "Q": "Isabella receives a bonus"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Isabella finished her project on time\", \"Q\": \"Isabella receives a bonus\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_2",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella had been working hard on her project, knowing that if she finished it on time, she would receive a bonus from her company. However, despite her efforts, Isabella realized that she wouldn't be receiving a bonus as she had hoped.",
+      "question": "Does this entail that isabella didn't finish her project on time?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Isabella finished her project on time",
+          "Q": "Isabella would receive a bonus"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella finished her project on time\", \n        \"Q\": \"Isabella would receive a bonus\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Isabella finished her project on time",
+          "Q": "Isabella would receive a bonus"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella finished her project on time\", \n        \"Q\": \"Isabella would receive a bonus\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 9.795164585113525,
+      "time_breakdown": {
+        "formalization": 1.8013880252838135,
+        "refinement": 7.992345333099365,
+        "backtracking": 0,
+        "solving": 0.0014281272888183594
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Isabella finished her project on time",
+            "Q": "Isabella would receive a bonus"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella finished her project on time\", \n        \"Q\": \"Isabella would receive a bonus\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_2",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella had been working hard on her project, knowing that if she finished it on time, she would receive a bonus from her company. However, despite her efforts, Isabella realized that she wouldn't be receiving a bonus as she had hoped.",
+      "question": "Does this infer that isabella finished her project on time?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Mason decides to leave his job",
+          "Q": "Mason receives his salary"
+        },
+        "premises": [
+          "P \u2192 \u00acQ",
+          "Q"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Mason decides to leave his job",
+          "Q": "Mason receives his salary"
+        },
+        "premises": [
+          "P \u2192 \u00acQ",
+          "Q"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 6.2864089012146,
+      "time_breakdown": {
+        "formalization": 1.6178786754608154,
+        "refinement": 4.667043209075928,
+        "backtracking": 0,
+        "solving": 0.0014820098876953125
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Mason decides to leave his job",
+            "Q": "Mason receives his salary"
+          },
+          "premises": [
+            "P \u2192 \u00acQ",
+            "Q"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_3",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Mason decides to leave his job, he will not receive any salary. However, against all odds, Mason still receives his salary. He finds himself receiving his regular paycheck.",
+      "question": "Does this infer that mason didn't leave his job?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Mason decides to leave his job",
+          "Q": "Mason receives his salary"
+        },
+        "premises": [
+          "P \u2192 \u00acQ",
+          "Q"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Mason decides to leave his job",
+          "Q": "Mason receives his salary"
+        },
+        "premises": [
+          "P \u2192 \u00acQ",
+          "Q"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.684464931488037,
+      "time_breakdown": {
+        "formalization": 2.1855149269104004,
+        "refinement": 8.497588872909546,
+        "backtracking": 0,
+        "solving": 0.0013566017150878906
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Mason decides to leave his job",
+            "Q": "Mason receives his salary"
+          },
+          "premises": [
+            "P \u2192 \u00acQ",
+            "Q"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Mason decides to leave his job\", \"Q\": \"Mason receives his salary\"},\n    \"premises\": [\"P \u2192 \u00acQ\", \"Q\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_3",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Mason decides to leave his job, he will not receive any salary. However, against all odds, Mason still receives his salary. He finds himself receiving his regular paycheck.",
+      "question": "Does this infer that mason left his job?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Jack won the lottery",
+          "Q": "Jack bought a house"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Jack won the lottery",
+          "Q": "Jack bought a house"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.89703106880188,
+      "time_breakdown": {
+        "formalization": 2.0562686920166016,
+        "refinement": 8.839431047439575,
+        "backtracking": 0,
+        "solving": 0.0013277530670166016
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Jack won the lottery",
+            "Q": "Jack bought a house"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_4",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Jack had always dreamed of winning the lottery, envisioning a future where he would be able to buy a beautiful house. If Jack had won the lottery, he would have bought a house. But he won't be purchasing any house for now.",
+      "question": "Does this imply that jack didn't win the lottery?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Jack won the lottery",
+          "Q": "Jack bought a house"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Jack won the lottery",
+          "Q": "Jack bought a house"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 11.838119745254517,
+      "time_breakdown": {
+        "formalization": 1.8410358428955078,
+        "refinement": 9.995677947998047,
+        "backtracking": 0,
+        "solving": 0.0014019012451171875
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Jack won the lottery",
+            "Q": "Jack bought a house"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Jack won the lottery\", \"Q\": \"Jack bought a house\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_4",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Jack had always dreamed of winning the lottery, envisioning a future where he would be able to buy a beautiful house. If Jack had won the lottery, he would have bought a house. But he won't be purchasing any house for now.",
+      "question": "Does this infer that jack won the lottery?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Sophia has the highest score in the test",
+          "Q": "Sophia will be awarded a medal for her outstanding performance"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acP"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Sophia has the highest score in the test",
+          "Q": "Sophia will be awarded a medal for her outstanding performance"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acP"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 12.382845401763916,
+      "time_breakdown": {
+        "formalization": 2.8828554153442383,
+        "refinement": 9.498873710632324,
+        "backtracking": 0,
+        "solving": 0.0011119842529296875
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Sophia has the highest score in the test",
+            "Q": "Sophia will be awarded a medal for her outstanding performance"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acP"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_5",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance. However, unfortunately, Sophia didn't achieve the highest score in the test.",
+      "question": "Does this entail that sophia doesn't have the highest score in the test?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Disproved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Sophia has the highest score in the test",
+          "Q": "Sophia will be awarded a medal for her outstanding performance"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acP"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Sophia has the highest score in the test",
+          "Q": "Sophia will be awarded a medal for her outstanding performance"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acP"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.829480409622192,
+      "time_breakdown": {
+        "formalization": 2.427211284637451,
+        "refinement": 8.400203943252563,
+        "backtracking": 0,
+        "solving": 0.0020613670349121094
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Sophia has the highest score in the test",
+            "Q": "Sophia will be awarded a medal for her outstanding performance"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acP"
+          ],
+          "conclusion": "P",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Sophia has the highest score in the test\", \"Q\": \"Sophia will be awarded a medal for her outstanding performance\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acP\"],\n    \"conclusion\": \"P\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_5",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance. However, unfortunately, Sophia didn't achieve the highest score in the test.",
+      "question": "Does this imply that sophia has the highest score in the test?",
+      "ground_truth": "no",
+      "converted_answer": "no",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "James forgets to wear a sweater",
+          "Q": "James catches a cold"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "James forgets to wear a sweater",
+          "Q": "James catches a cold"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 11.556966304779053,
+      "time_breakdown": {
+        "formalization": 2.311701536178589,
+        "refinement": 9.24312710762024,
+        "backtracking": 0,
+        "solving": 0.0021331310272216797
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "James forgets to wear a sweater",
+            "Q": "James catches a cold"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_6",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "James had always been forgetful, especially when it came to wearing a sweater. His mother had repeatedly told him, 'If he forgets to wear a sweater, then he will catch a cold.' Throughout the day, he went about his activities, oblivious to the dropping temperature. Hours later, he returned home, but James didn't catch a cold.",
+      "question": "Does this infer that james didn't forget to wear a sweater?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "James forgets to wear a sweater",
+          "Q": "James catches a cold"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "James forgets to wear a sweater",
+          "Q": "James catches a cold"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.92868947982788,
+      "time_breakdown": {
+        "formalization": 1.8879501819610596,
+        "refinement": 9.039301872253418,
+        "backtracking": 0,
+        "solving": 0.0014333724975585938
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "James forgets to wear a sweater",
+            "Q": "James catches a cold"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"James forgets to wear a sweater\", \"Q\": \"James catches a cold\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_6",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "James had always been forgetful, especially when it came to wearing a sweater. His mother had repeatedly told him, 'If he forgets to wear a sweater, then he will catch a cold.' Throughout the day, he went about his activities, oblivious to the dropping temperature. Hours later, he returned home, but James didn't catch a cold.",
+      "question": "Does this imply that james forgot to wear a sweater?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Isabella decided to have a sandwich for her lunch",
+          "Q": "Isabella feels completely satisfied",
+          "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+        },
+        "premises": [
+          "P",
+          "Q",
+          "P \u2192 \u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Isabella decided to have a sandwich for her lunch",
+          "Q": "Isabella feels completely satisfied",
+          "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+        },
+        "premises": [
+          "P",
+          "Q",
+          "P \u2192 \u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.215847730636597,
+      "time_breakdown": {
+        "formalization": 2.2701897621154785,
+        "refinement": 7.9442949295043945,
+        "backtracking": 0,
+        "solving": 0.001359701156616211
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Isabella decided to have a sandwich for her lunch",
+            "Q": "Isabella feels completely satisfied",
+            "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+          },
+          "premises": [
+            "P",
+            "Q",
+            "P \u2192 \u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_7",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella decided to have a sandwich for her lunch. As she took a bite, she couldn't help but feel completely satisfied. This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.",
+      "question": "Does this imply that isabella didn't eat a sandwich for lunch?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Isabella decided to have a sandwich for her lunch",
+          "Q": "Isabella feels completely satisfied",
+          "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+        },
+        "premises": [
+          "P",
+          "Q",
+          "P \u2192 \u00acQ"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Isabella decided to have a sandwich for her lunch",
+          "Q": "Isabella feels completely satisfied",
+          "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+        },
+        "premises": [
+          "P",
+          "Q",
+          "P \u2192 \u00acQ"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 14.626155853271484,
+      "time_breakdown": {
+        "formalization": 2.4166698455810547,
+        "refinement": 12.208347082138062,
+        "backtracking": 0,
+        "solving": 0.001134634017944336
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Isabella decided to have a sandwich for her lunch",
+            "Q": "Isabella feels completely satisfied",
+            "R": "If Isabella ate a sandwich for lunch, she would not feel satisfied"
+          },
+          "premises": [
+            "P",
+            "Q",
+            "P \u2192 \u00acQ"
+          ],
+          "conclusion": "P",
+          "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Isabella decided to have a sandwich for her lunch\", \n        \"Q\": \"Isabella feels completely satisfied\", \n        \"R\": \"If Isabella ate a sandwich for lunch, she would not feel satisfied\"\n    },\n    \"premises\": [\"P\", \"Q\", \"P \u2192 \u00acQ\"],\n    \"conclusion\": \"P\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_7",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella decided to have a sandwich for her lunch. As she took a bite, she couldn't help but feel completely satisfied. This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.",
+      "question": "Does this infer that isabella ate a sandwich for lunch?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Daniel forgot his umbrella",
+          "Q": "Daniel gets wet in the rain",
+          "R": "Daniel stayed dry"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ",
+          "R"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel forgot his umbrella\", \n        \"Q\": \"Daniel gets wet in the rain\", \n        \"R\": \"Daniel stayed dry\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Daniel forgot his umbrella",
+          "Q": "Daniel gets wet in the rain",
+          "R": "Daniel stayed dry"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ",
+          "R"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel forgot his umbrella\", \n        \"Q\": \"Daniel gets wet in the rain\", \n        \"R\": \"Daniel stayed dry\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 11.125166654586792,
+      "time_breakdown": {
+        "formalization": 2.576719045639038,
+        "refinement": 8.546924114227295,
+        "backtracking": 0,
+        "solving": 0.0015187263488769531
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Daniel forgot his umbrella",
+            "Q": "Daniel gets wet in the rain",
+            "R": "Daniel stayed dry"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ",
+            "R"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel forgot his umbrella\", \n        \"Q\": \"Daniel gets wet in the rain\", \n        \"R\": \"Daniel stayed dry\"\n    },\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\", \"R\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_8",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Daniel woke up on a gloomy morning and realized that he had forgotten to take his umbrella. Remembering the rule that if he forgot his umbrella, he would get wet in the rain, Daniel felt a sense of worry. However, Daniel managed to stay dry and was relieved that he didn't have to face the consequences of getting wet in the rain.",
+      "question": "Does this imply that daniel didn't forget to take his umbrella?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Disproved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Daniel woke up on a gloomy morning",
+          "Q": "Daniel forgot to take his umbrella",
+          "R": "Daniel gets wet in the rain",
+          "S": "Daniel felt a sense of worry",
+          "T": "Daniel managed to stay dry",
+          "U": "Daniel was relieved"
+        },
+        "premises": [
+          "P",
+          "Q \u2192 R",
+          "R \u2192 S",
+          "\u00acR \u2227 T \u2227 U"
+        ],
+        "conclusion": "Q",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel woke up on a gloomy morning\",\n        \"Q\": \"Daniel forgot to take his umbrella\",\n        \"R\": \"Daniel gets wet in the rain\",\n        \"S\": \"Daniel felt a sense of worry\",\n        \"T\": \"Daniel managed to stay dry\",\n        \"U\": \"Daniel was relieved\"\n    },\n    \"premises\": [\"P\", \"Q \u2192 R\", \"R \u2192 S\", \"\u00acR \u2227 T \u2227 U\"],\n    \"conclusion\": \"Q\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Daniel woke up on a gloomy morning",
+          "Q": "Daniel forgot to take his umbrella",
+          "R": "Daniel gets wet in the rain",
+          "S": "Daniel felt a sense of worry",
+          "T": "Daniel managed to stay dry",
+          "U": "Daniel was relieved"
+        },
+        "premises": [
+          "P",
+          "Q \u2192 R",
+          "R \u2192 S",
+          "\u00acR \u2227 T \u2227 U"
+        ],
+        "conclusion": "Q",
+        "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel woke up on a gloomy morning\",\n        \"Q\": \"Daniel forgot to take his umbrella\",\n        \"R\": \"Daniel gets wet in the rain\",\n        \"S\": \"Daniel felt a sense of worry\",\n        \"T\": \"Daniel managed to stay dry\",\n        \"U\": \"Daniel was relieved\"\n    },\n    \"premises\": [\"P\", \"Q \u2192 R\", \"R \u2192 S\", \"\u00acR \u2227 T \u2227 U\"],\n    \"conclusion\": \"Q\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 18.813162088394165,
+      "time_breakdown": {
+        "formalization": 3.437917947769165,
+        "refinement": 15.370585441589355,
+        "backtracking": 0,
+        "solving": 0.004653453826904297
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Daniel woke up on a gloomy morning",
+            "Q": "Daniel forgot to take his umbrella",
+            "R": "Daniel gets wet in the rain",
+            "S": "Daniel felt a sense of worry",
+            "T": "Daniel managed to stay dry",
+            "U": "Daniel was relieved"
+          },
+          "premises": [
+            "P",
+            "Q \u2192 R",
+            "R \u2192 S",
+            "\u00acR \u2227 T \u2227 U"
+          ],
+          "conclusion": "Q",
+          "raw_response": "{\n    \"predicates\": {\n        \"P\": \"Daniel woke up on a gloomy morning\",\n        \"Q\": \"Daniel forgot to take his umbrella\",\n        \"R\": \"Daniel gets wet in the rain\",\n        \"S\": \"Daniel felt a sense of worry\",\n        \"T\": \"Daniel managed to stay dry\",\n        \"U\": \"Daniel was relieved\"\n    },\n    \"premises\": [\"P\", \"Q \u2192 R\", \"R \u2192 S\", \"\u00acR \u2227 T \u2227 U\"],\n    \"conclusion\": \"Q\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_8",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Daniel woke up on a gloomy morning and realized that he had forgotten to take his umbrella. Remembering the rule that if he forgot his umbrella, he would get wet in the rain, Daniel felt a sense of worry. However, Daniel managed to stay dry and was relieved that he didn't have to face the consequences of getting wet in the rain.",
+      "question": "Does this infer that daniel forgot to take his umbrella?",
+      "ground_truth": "no",
+      "converted_answer": "no",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Theodore has a pet dog",
+          "Q": "Theodore takes his dog out for a walk"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Theodore has a pet dog",
+          "Q": "Theodore takes his dog out for a walk"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 4.913654565811157,
+      "time_breakdown": {
+        "formalization": 1.6202523708343506,
+        "refinement": 3.2918612957000732,
+        "backtracking": 0,
+        "solving": 0.0015363693237304688
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Theodore has a pet dog",
+            "Q": "Theodore takes his dog out for a walk"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_9",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Theodore has a pet dog, he will take it out for a walk. However, he would not take his dog out for a walk.",
+      "question": "Does this imply that theodore doesn't have a pet dog?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Proved",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Theodore has a pet dog",
+          "Q": "Theodore takes his dog out for a walk"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Theodore has a pet dog",
+          "Q": "Theodore takes his dog out for a walk"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acQ"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 11.131182193756104,
+      "time_breakdown": {
+        "formalization": 2.1703643798828125,
+        "refinement": 8.9593505859375,
+        "backtracking": 0,
+        "solving": 0.0014622211456298828
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Theodore has a pet dog",
+            "Q": "Theodore takes his dog out for a walk"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acQ"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Theodore has a pet dog\", \"Q\": \"Theodore takes his dog out for a walk\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acQ\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_9",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Theodore has a pet dog, he will take it out for a walk. However, he would not take his dog out for a walk.",
+      "question": "Does this entail that theodore has a pet dog?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Elijah has a new job",
+          "Q": "Elijah will get a raise",
+          "R": "Elijah is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acR"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Elijah has a new job",
+          "Q": "Elijah will get a raise",
+          "R": "Elijah is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acR"
+        ],
+        "conclusion": "\u00acP",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"\u00acP\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 10.298448085784912,
+      "time_breakdown": {
+        "formalization": 2.2904374599456787,
+        "refinement": 8.005646467208862,
+        "backtracking": 0,
+        "solving": 0.002360105514526367
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Elijah has a new job",
+            "Q": "Elijah will get a raise",
+            "R": "Elijah is receiving the raise he had anticipated"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acR"
+          ],
+          "conclusion": "\u00acP",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"\u00acP\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_10",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Elijah has a new job, then he will get a raise. However, he would not be receiving the raise he had anticipated.",
+      "question": "Does this infer that elijah doesn't have a new job?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": null,
+      "final_formulation": {
+        "predicates": {
+          "P": "Elijah has a new job",
+          "Q": "Elijah will get a raise",
+          "R": "Elijah is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acR"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "P": "Elijah has a new job",
+          "Q": "Elijah will get a raise",
+          "R": "Elijah is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "P \u2192 Q",
+          "\u00acR"
+        ],
+        "conclusion": "P",
+        "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"P\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [
+        "REVERT"
+      ],
+      "num_backtracks": 1,
+      "early_stop_reason": null,
+      "total_llm_calls": 2,
+      "total_time": 11.252038717269897,
+      "time_breakdown": {
+        "formalization": 1.8741230964660645,
+        "refinement": 9.375318765640259,
+        "backtracking": 0,
+        "solving": 0.0025925636291503906
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "formulation_history": [
+        {
+          "predicates": {
+            "P": "Elijah has a new job",
+            "Q": "Elijah will get a raise",
+            "R": "Elijah is receiving the raise he had anticipated"
+          },
+          "premises": [
+            "P \u2192 Q",
+            "\u00acR"
+          ],
+          "conclusion": "P",
+          "raw_response": "{\n    \"predicates\": {\"P\": \"Elijah has a new job\", \"Q\": \"Elijah will get a raise\", \"R\": \"Elijah is receiving the raise he had anticipated\"},\n    \"premises\": [\"P \u2192 Q\", \"\u00acR\"],\n    \"conclusion\": \"P\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_10",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Elijah has a new job, then he will get a raise. However, he would not be receiving the raise he had anticipated.",
+      "question": "Does this infer that elijah has a new job?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    }
+  ]
+}
