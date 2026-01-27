@@ -134,7 +134,8 @@ class WeightAssigner:
     def assign_weights_to_structure(self,
                                    logified_structure: Dict[str, Any],
                                    document_text: str,
-                                   verbose: bool = True) -> Dict[str, Any]:
+                                   verbose: bool = True,
+                                   debug: bool = False) -> Dict[str, Any]:
         """
         Main entry point: Assign weights to all constraints.
 
