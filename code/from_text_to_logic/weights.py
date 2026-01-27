@@ -396,16 +396,40 @@ class WeightAssigner:
             print(f"      Hypothesis: {hypotheses[0][:80]}...")
             print(f"      Number of premises (chunks): {len(premises)}")
             print(f"      Raw NLI scores shape: {nli_scores.shape}")
-            print("\n      Top 5 premise-hypothesis pairs by entailment score:")
-            # Sort by entailment score (index 2)
-            sorted_indices = np.argsort(nli_scores[:, 2])[::-1][:5]
-            for rank, idx in enumerate(sorted_indices):
-                p_idx = idx // len(hypotheses)
-                h_idx = idx % len(hypotheses)
-                scores = nli_scores[idx]
-                print(f"        [{rank+1}] Premise {p_idx} (chunk preview: '{premises[p_idx][:50]}...')")
-                print(f"            contradiction={scores[0]:.4f}, neutral={scores[1]:.4f}, entailment={scores[2]:.4f}")
-                print(f"            d = z_ent - z_con = {scores[2]:.4f} - {scores[0]:.4f} = {scores[2] - scores[0]:.4f}")
+
+            # Convert logits to probabilities using softmax
+            def softmax(logits):
+                exp_logits = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
+                return exp_logits / exp_logits.sum(axis=-1, keepdims=True)
+
+            nli_probs = softmax(nli_scores)  # Shape: [len(pairs), 3]
+
+            print("\n      NLI Probabilities for ALL chunks:")
+            print("      " + "-" * 80)
+            for idx in range(len(premises)):
+                logits = nli_scores[idx]
+                probs = nli_probs[idx]
+                d_val = logits[2] - logits[0]  # entailment - contradiction
+                print(f"        Chunk {idx}: '{premises[idx][:60]}...'")
+                print(f"            Logits:  con={logits[0]:.2f}, neu={logits[1]:.2f}, ent={logits[2]:.2f}")
+                print(f"            Probs:   con={probs[0]*100:.1f}%, neu={probs[1]*100:.1f}%, ent={probs[2]*100:.1f}%")
+                print(f"            d = ent - con = {d_val:.2f}")
+                # Interpretation
+                if probs[2] > 0.5:
+                    interp = "✓ GROUNDED (entailment)"
+                elif probs[0] > 0.5:
+                    interp = "✗ CONTRADICTED"
+                else:
+                    interp = "? NEUTRAL/UNCERTAIN"
+                print(f"            → {interp}")
+            print("      " + "-" * 80)
+
+            # Summary statistics
+            avg_ent = np.mean(nli_probs[:, 2]) * 100
+            avg_con = np.mean(nli_probs[:, 0]) * 100
+            avg_neu = np.mean(nli_probs[:, 1]) * 100
+            max_ent = np.max(nli_probs[:, 2]) * 100
+            print(f"\n      Summary: avg_ent={avg_ent:.1f}%, avg_con={avg_con:.1f}%, avg_neu={avg_neu:.1f}%, max_ent={max_ent:.1f}%")
         # ========================================================
 
         # Reshape to [num_premises, num_hypotheses, 3]
