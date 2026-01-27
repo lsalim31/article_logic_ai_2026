@@ -1,0 +1,2142 @@
+sudubudu@Sudhirs-MacBook-Pro article_logic_ai_2026 % python3 code/from_text_to_logic/weights.py \
+  code/experiments/SINTEC-UK-LTD-Non-disclosure-agreement-2017.pdf \
+  code/experiments/SINTEC-output.json --debug
+Reading document: code/experiments/SINTEC-UK-LTD-Non-disclosure-agreement-2017.pdf
+  ✓ Extracted 8347 characters
+Loading logified structure from code/experiments/SINTEC-output.json...
+Loading SBERT model for retrieval...
+Loading NLI cross-encoder for evidence scoring...
+✓ Weight assigner initialized
+
+Assigning weights to 49 constraints...
+  Hard constraints: 46
+  Soft constraints: 3
+
+  Step 1: Segmenting document and computing embeddings...
+    ✓ Created 3 overlapping chunks
+
+  Step 2a: Processing hard constraints...
+    [1/46] H_1: The Receiving Party gives SINTEC an irrevocable undertaking....
+
+      [DEBUG] Constraint: H_1
+      [DEBUG] Hypothesis: The Receiving Party gives SINTEC an irrevocable undertaking.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party gives SINTEC an irrevocable undertaking....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.0837, neutral=0.9204, entailment=3.5373
+            d = z_ent - z_con = 3.5373 - -5.0837 = 8.6210
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.7989, neutral=-0.2707, entailment=2.8452
+            d = z_ent - z_con = 2.8452 - -2.7989 = 5.6440
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4666, neutral=-4.2949, entailment=-0.3598
+            d = z_ent - z_con = -0.3598 - 5.4666 = -5.8264
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.8264, max=8.6210, mean=2.8129
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.8264, max=8.6210, mean=2.8129
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6210
+      Input d values: min=-5.8264, max=8.6210, mean=2.8129
+      D (pooled score) = 8.0730
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.0730
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [2/46] H_2: SINTEC accepts the undertaking....
+
+      [DEBUG] Constraint: H_2
+      [DEBUG] Hypothesis: SINTEC accepts the undertaking.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: SINTEC accepts the undertaking....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.7023, neutral=-0.0012, entailment=4.1967
+            d = z_ent - z_con = 4.1967 - -4.7023 = 8.8991
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.0297, neutral=-1.0942, entailment=3.9186
+            d = z_ent - z_con = 3.9186 - -3.0297 = 6.9483
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5557, neutral=-4.3956, entailment=-0.3181
+            d = z_ent - z_con = -0.3181 - 5.5557 = -5.8738
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.8738, max=8.8991, mean=3.3245
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.8738, max=8.8991, mean=3.3245
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.8991
+      Input d values: min=-5.8738, max=8.8991, mean=3.3245
+      D (pooled score) = 8.3598
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3598
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [3/46] H_3: The Receiving Party shall treat SINTEC information as strict...
+
+      [DEBUG] Constraint: H_3
+      [DEBUG] Hypothesis: The Receiving Party shall treat SINTEC information as strictly confidential.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party shall treat SINTEC information as strictly confidential....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1367, neutral=-1.1153, entailment=4.0488
+            d = z_ent - z_con = 4.0488 - -3.1367 = 7.1854
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.9060, neutral=1.2468, entailment=2.9613
+            d = z_ent - z_con = 2.9613 - -4.9060 = 7.8673
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4033, neutral=-4.4165, entailment=-0.1172
+            d = z_ent - z_con = -0.1172 - 5.4033 = -5.5204
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.5204, max=7.8673, mean=3.1774
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.5204, max=7.8673, mean=3.1774
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 7.8673
+      Input d values: min=-5.5204, max=7.8673, mean=3.1774
+      D (pooled score) = 7.4319
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.4319
+      Output σ(D) = 0.9994
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.999
+    [4/46] H_4: Any disclosure to third parties requires SINTEC’s prior writ...
+
+      [DEBUG] Constraint: H_4
+      [DEBUG] Hypothesis: Any disclosure to third parties requires SINTEC’s prior written consent.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Any disclosure to third parties requires SINTEC’s prior written consent....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1283, neutral=-1.5532, entailment=4.5329
+            d = z_ent - z_con = 4.5329 - -3.1283 = 7.6612
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.0901, neutral=0.5678, entailment=3.9317
+            d = z_ent - z_con = 3.9317 - -5.0901 = 9.0218
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5678, neutral=-4.3156, entailment=-0.4540
+            d = z_ent - z_con = -0.4540 - 5.5678 = -6.0218
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.0218, max=9.0218, mean=3.5537
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.0218, max=9.0218, mean=3.5537
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.0218
+      Input d values: min=-6.0218, max=9.0218, mean=3.5537
+      D (pooled score) = 8.5043
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5043
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [5/46] H_5: Any own-business use requires SINTEC’s prior written consent...
+
+      [DEBUG] Constraint: H_5
+      [DEBUG] Hypothesis: Any own-business use requires SINTEC’s prior written consent.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Any own-business use requires SINTEC’s prior written consent....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1266, neutral=-1.5317, entailment=4.5001
+            d = z_ent - z_con = 4.5001 - -3.1266 = 7.6267
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.0538, neutral=0.3975, entailment=4.0884
+            d = z_ent - z_con = 4.0884 - -5.0538 = 9.1422
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5290, neutral=-4.2974, entailment=-0.4307
+            d = z_ent - z_con = -0.4307 - 5.5290 = -5.9598
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9598, max=9.1422, mean=3.6031
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9598, max=9.1422, mean=3.6031
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1422
+      Input d values: min=-5.9598, max=9.1422, mean=3.6031
+      D (pooled score) = 8.6165
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.6165
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [6/46] H_6: Any use for other customers requires SINTEC’s prior written ...
+
+      [DEBUG] Constraint: H_6
+      [DEBUG] Hypothesis: Any use for other customers requires SINTEC’s prior written consent.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Any use for other customers requires SINTEC’s prior written consent....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.2046, neutral=-1.5213, entailment=4.5600
+            d = z_ent - z_con = 4.5600 - -3.2046 = 7.7646
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.2302, neutral=0.5719, entailment=4.0628
+            d = z_ent - z_con = 4.0628 - -5.2302 = 9.2930
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5291, neutral=-4.3056, entailment=-0.4107
+            d = z_ent - z_con = -0.4107 - 5.5291 = -5.9398
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9398, max=9.2930, mean=3.7059
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9398, max=9.2930, mean=3.7059
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.2930
+      Input d values: min=-5.9398, max=9.2930, mean=3.7059
+      D (pooled score) = 8.7667
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.7667
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [7/46] H_7: The Receiving Party shall use the information only for SINTE...
+
+      [DEBUG] Constraint: H_7
+      [DEBUG] Hypothesis: The Receiving Party shall use the information only for SINTEC’s specified/authorized purposes.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party shall use the information only for SINTEC’s specified/author...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9034, neutral=-1.6579, entailment=4.4379
+            d = z_ent - z_con = 4.4379 - -2.9034 = 7.3414
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.4467, neutral=0.6902, entailment=3.2390
+            d = z_ent - z_con = 3.2390 - -4.4467 = 7.6856
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.0681, neutral=-4.3365, entailment=0.1493
+            d = z_ent - z_con = 0.1493 - 5.0681 = -4.9188
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-4.9188, max=7.6856, mean=3.3694
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-4.9188, max=7.6856, mean=3.3694
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 7.6856
+      Input d values: min=-4.9188, max=7.6856, mean=3.3694
+      D (pooled score) = 7.3398
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.3398
+      Output σ(D) = 0.9994
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.999
+    [8/46] H_8: The Receiving Party may not disclose SINTEC information to n...
+
+      [DEBUG] Constraint: H_8
+      [DEBUG] Hypothesis: The Receiving Party may not disclose SINTEC information to non-selected staff.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party may not disclose SINTEC information to non-selected staff....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9611, neutral=-1.8392, entailment=4.7110
+            d = z_ent - z_con = 4.7110 - -2.9611 = 7.6721
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.2822, neutral=1.0167, entailment=3.6118
+            d = z_ent - z_con = 3.6118 - -5.2822 = 8.8940
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4273, neutral=-4.3613, entailment=-0.2209
+            d = z_ent - z_con = -0.2209 - 5.4273 = -5.6482
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.6482, max=8.8940, mean=3.6393
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.6482, max=8.8940, mean=3.6393
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.8940
+      Input d values: min=-5.6482, max=8.8940, mean=3.6393
+      D (pooled score) = 8.3864
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3864
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [9/46] H_9: The Receiving Party may not disclose SINTEC information to s...
+
+      [DEBUG] Constraint: H_9
+      [DEBUG] Hypothesis: The Receiving Party may not disclose SINTEC information to staff beyond what is absolutely necessary.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party may not disclose SINTEC information to staff beyond what is ...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.0697, neutral=-1.7752, entailment=4.7408
+            d = z_ent - z_con = 4.7408 - -3.0697 = 7.8104
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.8304, neutral=2.2590, entailment=1.7787
+            d = z_ent - z_con = 1.7787 - -4.8304 = 6.6091
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.3501, neutral=-4.3696, entailment=-0.1198
+            d = z_ent - z_con = -0.1198 - 5.3501 = -5.4698
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.4698, max=7.8104, mean=2.9832
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.4698, max=7.8104, mean=2.9832
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 7.8104
+      Input d values: min=-5.4698, max=7.8104, mean=2.9832
+      D (pooled score) = 7.3044
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.3044
+      Output σ(D) = 0.9993
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.999
+    [10/46] H_10: If the Receiving Party discloses to staff, it must ensure th...
+
+      [DEBUG] Constraint: H_10
+      [DEBUG] Hypothesis: If the Receiving Party discloses to staff, it must ensure those employees are bound to confidentiality during employment (to the extent permitted by law).
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party discloses to staff, it must ensure those employees are bo...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.8679, neutral=-1.5732, entailment=4.3585
+            d = z_ent - z_con = 4.3585 - -2.8679 = 7.2264
+        [2] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.3601, neutral=-4.4828, entailment=0.0190
+            d = z_ent - z_con = 0.0190 - 5.3601 = -5.3411
+        [3] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.7789, neutral=4.0746, entailment=-0.6234
+            d = z_ent - z_con = -0.6234 - -4.7789 = 4.1555
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.3411, max=7.2264, mean=2.0136
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.3411, max=7.2264, mean=2.0136
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 7.2264
+      Input d values: min=-5.3411, max=7.2264, mean=2.0136
+      D (pooled score) = 6.6782
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 6.6782
+      Output σ(D) = 0.9987
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.999
+    [11/46] H_11: If the Receiving Party discloses to staff, the employees’ co...
+
+      [DEBUG] Constraint: H_11
+      [DEBUG] Hypothesis: If the Receiving Party discloses to staff, the employees’ confidentiality duty must survive employment termination/expiration.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party discloses to staff, the employees’ confidentiality duty m...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9936, neutral=-1.0869, entailment=3.9393
+            d = z_ent - z_con = 3.9393 - -2.9936 = 6.9329
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-3.6013, neutral=0.7119, entailment=2.4059
+            d = z_ent - z_con = 2.4059 - -3.6013 = 6.0072
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4256, neutral=-4.4164, entailment=-0.1399
+            d = z_ent - z_con = -0.1399 - 5.4256 = -5.5655
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.5655, max=6.9329, mean=2.4582
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.5655, max=6.9329, mean=2.4582
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 6.9329
+      Input d values: min=-5.5655, max=6.9329, mean=2.4582
+      D (pooled score) = 6.4566
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 6.4566
+      Output σ(D) = 0.9984
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.998
+    [12/46] H_12: If the Receiving Party invokes an exception, it bears the bu...
+
+      [DEBUG] Constraint: H_12
+      [DEBUG] Hypothesis: If the Receiving Party invokes an exception, it bears the burden of proof (must be able to show the exception applies).
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party invokes an exception, it bears the burden of proof (must ...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.3389, neutral=-1.3551, entailment=4.4931
+            d = z_ent - z_con = 4.4931 - -3.3389 = 7.8320
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.5755, neutral=0.1534, entailment=3.8868
+            d = z_ent - z_con = 3.8868 - -4.5755 = 8.4623
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.3838, neutral=-4.4267, entailment=-0.0767
+            d = z_ent - z_con = -0.0767 - 5.3838 = -5.4605
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.4605, max=8.4623, mean=3.6113
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.4605, max=8.4623, mean=3.6113
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.4623
+      Input d values: min=-5.4605, max=8.4623, mean=3.6113
+      D (pooled score) = 8.0378
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.0378
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [13/46] H_13: If proven that the information was already public at disclos...
+
+      [DEBUG] Constraint: H_13
+      [DEBUG] Hypothesis: If proven that the information was already public at disclosure, confidentiality duty does not apply (to that extent).
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If proven that the information was already public at disclosure, confidentiality...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.8856, neutral=-0.9383, entailment=3.6469
+            d = z_ent - z_con = 3.6469 - -2.8856 = 6.5325
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-6.3798, neutral=3.8381, entailment=1.2431
+            d = z_ent - z_con = 1.2431 - -6.3798 = 7.6229
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6779, neutral=-4.5024, entailment=-0.2908
+            d = z_ent - z_con = -0.2908 - 5.6779 = -5.9688
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9688, max=7.6229, mean=2.7289
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9688, max=7.6229, mean=2.7289
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 7.6229
+      Input d values: min=-5.9688, max=7.6229, mean=2.7289
+      D (pooled score) = 7.1271
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.1271
+      Output σ(D) = 0.9992
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.999
+    [14/46] H_14: If proven that the information became public after disclosur...
+
+      [DEBUG] Constraint: H_14
+      [DEBUG] Hypothesis: If proven that the information became public after disclosure through no fault of the Receiving Party, confidentiality duty does not apply (to that extent).
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If proven that the information became public after disclosure through no fault o...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.3370, neutral=0.6184, entailment=4.1059
+            d = z_ent - z_con = 4.1059 - -5.3370 = 9.4429
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9324, neutral=-1.0122, entailment=3.7796
+            d = z_ent - z_con = 3.7796 - -2.9324 = 6.7120
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6615, neutral=-4.5436, entailment=-0.2157
+            d = z_ent - z_con = -0.2157 - 5.6615 = -5.8772
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.8772, max=9.4429, mean=3.4259
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.8772, max=9.4429, mean=3.4259
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.4429
+      Input d values: min=-5.8772, max=9.4429, mean=3.4259
+      D (pooled score) = 8.8957
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.8957
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [15/46] H_15: If proven that the information was lawfully published by thi...
+
+      [DEBUG] Constraint: H_15
+      [DEBUG] Hypothesis: If proven that the information was lawfully published by third parties without restrictions, confidentiality duty does not apply (to that extent).
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If proven that the information was lawfully published by third parties without r...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.7119, neutral=-1.0719, entailment=3.6504
+            d = z_ent - z_con = 3.6504 - -2.7119 = 6.3623
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-6.1051, neutral=2.9374, entailment=2.0994
+            d = z_ent - z_con = 2.0994 - -6.1051 = 8.2044
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6324, neutral=-4.4934, entailment=-0.2561
+            d = z_ent - z_con = -0.2561 - 5.6324 = -5.8885
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.8885, max=8.2044, mean=2.8927
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.8885, max=8.2044, mean=2.8927
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.2044
+      Input d values: min=-5.8885, max=8.2044, mean=2.8927
+      D (pooled score) = 7.6675
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.6675
+      Output σ(D) = 0.9995
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [16/46] H_16: Unless a listed exception is proven, the duty of confidentia...
+
+      [DEBUG] Constraint: H_16
+      [DEBUG] Hypothesis: Unless a listed exception is proven, the duty of confidentiality applies.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Unless a listed exception is proven, the duty of confidentiality applies....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.2097, neutral=1.2966, entailment=2.1301
+            d = z_ent - z_con = 2.1301 - -4.2097 = 6.3399
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-4.1076, neutral=2.1701, entailment=1.0821
+            d = z_ent - z_con = 1.0821 - -4.1076 = 5.1897
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.3730, neutral=-4.4885, entailment=0.0275
+            d = z_ent - z_con = 0.0275 - 5.3730 = -5.3456
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.3456, max=6.3399, mean=2.0613
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.3456, max=6.3399, mean=2.0613
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 6.3399
+      Input d values: min=-5.3456, max=6.3399, mean=2.0613
+      D (pooled score) = 5.8383
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 5.8383
+      Output σ(D) = 0.9971
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 0.997
+    [17/46] H_17: All SINTEC-disclosed information remains SINTEC’s property....
+
+      [DEBUG] Constraint: H_17
+      [DEBUG] Hypothesis: All SINTEC-disclosed information remains SINTEC’s property.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: All SINTEC-disclosed information remains SINTEC’s property....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1903, neutral=-1.4433, entailment=4.4653
+            d = z_ent - z_con = 4.4653 - -3.1903 = 7.6556
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-3.9904, neutral=-0.7036, entailment=4.3365
+            d = z_ent - z_con = 4.3365 - -3.9904 = 8.3270
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5184, neutral=-4.2581, entailment=-0.4772
+            d = z_ent - z_con = -0.4772 - 5.5184 = -5.9957
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9957, max=8.3270, mean=3.3290
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9957, max=8.3270, mean=3.3290
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.3270
+      Input d values: min=-5.9957, max=8.3270, mean=3.3290
+      D (pooled score) = 7.8937
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.8937
+      Output σ(D) = 0.9996
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [18/46] H_18: If SINTEC requests return, SINTEC chooses return or destruct...
+
+      [DEBUG] Constraint: H_18
+      [DEBUG] Hypothesis: If SINTEC requests return, SINTEC chooses return or destruction as its option.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests return, SINTEC chooses return or destruction as its option....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6811, neutral=-0.2421, entailment=4.4618
+            d = z_ent - z_con = 4.4618 - -4.6811 = 9.1429
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.2249, neutral=-1.3747, entailment=4.4126
+            d = z_ent - z_con = 4.4126 - -3.2249 = 7.6375
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.3593, neutral=-4.3951, entailment=-0.0989
+            d = z_ent - z_con = -0.0989 - 5.3593 = -5.4582
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.4582, max=9.1429, mean=3.7741
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.4582, max=9.1429, mean=3.7741
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1429
+      Input d values: min=-5.4582, max=9.1429, mean=3.7741
+      D (pooled score) = 8.6176
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.6176
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [19/46] H_19: SINTEC cannot simultaneously instruct both 'return' and 'des...
+
+      [DEBUG] Constraint: H_19
+      [DEBUG] Hypothesis: SINTEC cannot simultaneously instruct both 'return' and 'destroy' as the option.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: SINTEC cannot simultaneously instruct both 'return' and 'destroy' as the option....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.5867, neutral=-0.1805, entailment=4.3070
+            d = z_ent - z_con = 4.3070 - -4.5867 = 8.8936
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-1.8507, neutral=-1.9310, entailment=3.8602
+            d = z_ent - z_con = 3.8602 - -1.8507 = 5.7109
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.0392, neutral=-4.2096, entailment=0.0041
+            d = z_ent - z_con = 0.0041 - 5.0392 = -5.0352
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.0352, max=8.8936, mean=3.1898
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.0352, max=8.8936, mean=3.1898
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.8936
+      Input d values: min=-5.0352, max=8.8936, mean=3.1898
+      D (pooled score) = 8.3452
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3452
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [20/46] H_20: If SINTEC requests return and chooses the return option, the...
+
+      [DEBUG] Constraint: H_20
+      [DEBUG] Hypothesis: If SINTEC requests return and chooses the return option, the Receiving Party must return the information promptly and at no charge.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests return and chooses the return option, the Receiving Party mus...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1998, neutral=-1.5065, entailment=4.5263
+            d = z_ent - z_con = 4.5263 - -3.1998 = 7.7261
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6141, neutral=-0.3182, entailment=4.4891
+            d = z_ent - z_con = 4.4891 - -4.6141 = 9.1033
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.1284, neutral=-4.4752, entailment=0.2654
+            d = z_ent - z_con = 0.2654 - 5.1284 = -4.8630
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-4.8630, max=9.1033, mean=3.9888
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-4.8630, max=9.1033, mean=3.9888
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1033
+      Input d values: min=-4.8630, max=9.1033, mean=3.9888
+      D (pooled score) = 8.5848
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5848
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [21/46] H_21: If SINTEC requests return and chooses the destruction option...
+
+      [DEBUG] Constraint: H_21
+      [DEBUG] Hypothesis: If SINTEC requests return and chooses the destruction option, the Receiving Party must destroy the information.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests return and chooses the destruction option, the Receiving Part...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9005, neutral=-1.7247, entailment=4.5136
+            d = z_ent - z_con = 4.5136 - -2.9005 = 7.4141
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6168, neutral=-0.2069, entailment=4.3514
+            d = z_ent - z_con = 4.3514 - -4.6168 = 8.9681
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.1512, neutral=-4.3487, entailment=0.0751
+            d = z_ent - z_con = 0.0751 - 5.1512 = -5.0761
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.0761, max=8.9681, mean=3.7687
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.0761, max=8.9681, mean=3.7687
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.9681
+      Input d values: min=-5.0761, max=8.9681, mean=3.7687
+      D (pooled score) = 8.4407
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.4407
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [22/46] H_22: If the Receiving Party destroys the information, it must not...
+
+      [DEBUG] Constraint: H_22
+      [DEBUG] Hypothesis: If the Receiving Party destroys the information, it must not retain any copies or records.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party destroys the information, it must not retain any copies o...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.4437, neutral=-0.6588, entailment=4.7220
+            d = z_ent - z_con = 4.7220 - -4.4437 = 9.1657
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1485, neutral=-1.4654, entailment=4.4253
+            d = z_ent - z_con = 4.4253 - -3.1485 = 7.5738
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.2999, neutral=-4.4811, entailment=0.0943
+            d = z_ent - z_con = 0.0943 - 5.2999 = -5.2057
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.2057, max=9.1657, mean=3.8446
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.2057, max=9.1657, mean=3.8446
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1657
+      Input d values: min=-5.2057, max=9.1657, mean=3.8446
+      D (pooled score) = 8.6367
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.6367
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [23/46] H_23: Reproductions may be made only with prior express written co...
+
+      [DEBUG] Constraint: H_23
+      [DEBUG] Hypothesis: Reproductions may be made only with prior express written consent from SINTEC.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Reproductions may be made only with prior express written consent from SINTEC....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9319, neutral=-1.6573, entailment=4.4737
+            d = z_ent - z_con = 4.4737 - -2.9319 = 7.4056
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-5.2801, neutral=0.4953, entailment=4.1965
+            d = z_ent - z_con = 4.1965 - -5.2801 = 9.4766
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5928, neutral=-4.3818, entailment=-0.3722
+            d = z_ent - z_con = -0.3722 - 5.5928 = -5.9649
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9649, max=9.4766, mean=3.6391
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9649, max=9.4766, mean=3.6391
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.4766
+      Input d values: min=-5.9649, max=9.4766, mean=3.6391
+      D (pooled score) = 8.9352
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.9352
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [24/46] H_24: If SINTEC requests return of reproductions, the Receiving Pa...
+
+      [DEBUG] Constraint: H_24
+      [DEBUG] Hypothesis: If SINTEC requests return of reproductions, the Receiving Party must return the reproductions.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests return of reproductions, the Receiving Party must return the ...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.6890, neutral=-1.9278, entailment=4.5764
+            d = z_ent - z_con = 4.5764 - -2.6890 = 7.2654
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.7945, neutral=-0.1086, entailment=4.3994
+            d = z_ent - z_con = 4.3994 - -4.7945 = 9.1939
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.1093, neutral=-4.3406, entailment=0.1006
+            d = z_ent - z_con = 0.1006 - 5.1093 = -5.0087
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.0087, max=9.1939, mean=3.8169
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.0087, max=9.1939, mean=3.8169
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1939
+      Input d values: min=-5.0087, max=9.1939, mean=3.8169
+      D (pooled score) = 8.6550
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.6550
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [25/46] H_25: If SINTEC requests destruction of reproductions, the Receivi...
+
+      [DEBUG] Constraint: H_25
+      [DEBUG] Hypothesis: If SINTEC requests destruction of reproductions, the Receiving Party must destroy the reproductions.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests destruction of reproductions, the Receiving Party must destro...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.7765, neutral=-1.8838, entailment=4.5942
+            d = z_ent - z_con = 4.5942 - -2.7765 = 7.3708
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.5530, neutral=-0.3074, entailment=4.3934
+            d = z_ent - z_con = 4.3934 - -4.5530 = 8.9464
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=4.9252, neutral=-4.2571, entailment=0.2139
+            d = z_ent - z_con = 0.2139 - 4.9252 = -4.7113
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-4.7113, max=8.9464, mean=3.8686
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-4.7113, max=8.9464, mean=3.8686
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.9464
+      Input d values: min=-4.7113, max=8.9464, mean=3.8686
+      D (pooled score) = 8.4181
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.4181
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [26/46] H_26: Upon termination/expiration of the business relationship, th...
+
+      [DEBUG] Constraint: H_26
+      [DEBUG] Hypothesis: Upon termination/expiration of the business relationship, the Receiving Party must automatically return all SINTEC information and all copies.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Upon termination/expiration of the business relationship, the Receiving Party mu...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.0308, neutral=-0.9180, entailment=4.6171
+            d = z_ent - z_con = 4.6171 - -4.0308 = 8.6479
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.8960, neutral=-1.7582, entailment=4.5614
+            d = z_ent - z_con = 4.5614 - -2.8960 = 7.4573
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4651, neutral=-4.4697, entailment=-0.1116
+            d = z_ent - z_con = -0.1116 - 5.4651 = -5.5767
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.5767, max=8.6479, mean=3.5095
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.5767, max=8.6479, mean=3.5095
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6479
+      Input d values: min=-5.5767, max=8.6479, mean=3.5095
+      D (pooled score) = 8.1428
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.1428
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [27/46] H_27: If the Agreement is signed by both parties, it applies for t...
+
+      [DEBUG] Constraint: H_27
+      [DEBUG] Hypothesis: If the Agreement is signed by both parties, it applies for three years from that date.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Agreement is signed by both parties, it applies for three years from that...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.5790, neutral=-0.5361, entailment=4.7226
+            d = z_ent - z_con = 4.7226 - -4.5790 = 9.3016
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.7155, neutral=-0.7830, entailment=4.2126
+            d = z_ent - z_con = 4.2126 - -3.7155 = 7.9281
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.1475, neutral=-4.7467, entailment=0.6436
+            d = z_ent - z_con = 0.6436 - 5.1475 = -4.5038
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-4.5038, max=9.3016, mean=4.2420
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-4.5038, max=9.3016, mean=4.2420
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3016
+      Input d values: min=-4.5038, max=9.3016, mean=4.2420
+      D (pooled score) = 8.7834
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.7834
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [28/46] H_28: If terminated in writing with 18 months’ notice, the Agreeme...
+
+      [DEBUG] Constraint: H_28
+      [DEBUG] Hypothesis: If terminated in writing with 18 months’ notice, the Agreement does not renew for the two-year renewal term.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If terminated in writing with 18 months’ notice, the Agreement does not renew fo...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6200, neutral=-0.4313, entailment=4.6172
+            d = z_ent - z_con = 4.6172 - -4.6200 = 9.2372
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.1404, neutral=-1.5586, entailment=4.5421
+            d = z_ent - z_con = 4.5421 - -3.1404 = 7.6825
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6281, neutral=-4.3844, entailment=-0.4173
+            d = z_ent - z_con = -0.4173 - 5.6281 = -6.0454
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.0454, max=9.2372, mean=3.6248
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.0454, max=9.2372, mean=3.6248
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.2372
+      Input d values: min=-6.0454, max=9.2372, mean=3.6248
+      D (pooled score) = 8.7097
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.7097
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [29/46] H_29: If there is no qualifying written termination with 18 months...
+
+      [DEBUG] Constraint: H_29
+      [DEBUG] Hypothesis: If there is no qualifying written termination with 18 months’ notice, the Agreement renews for two years.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If there is no qualifying written termination with 18 months’ notice, the Agreem...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.3443, neutral=-1.3650, entailment=4.5052
+            d = z_ent - z_con = 4.5052 - -3.3443 = 7.8495
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.4045, neutral=-0.4458, entailment=4.4309
+            d = z_ent - z_con = 4.4309 - -4.4045 = 8.8354
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6470, neutral=-4.4050, entailment=-0.4081
+            d = z_ent - z_con = -0.4081 - 5.6470 = -6.0550
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.0550, max=8.8354, mean=3.5433
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.0550, max=8.8354, mean=3.5433
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.8354
+      Input d values: min=-6.0550, max=8.8354, mean=3.5433
+      D (pooled score) = 8.3513
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3513
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [30/46] H_30: Confidentiality duties survive termination/expiration of the...
+
+      [DEBUG] Constraint: H_30
+      [DEBUG] Hypothesis: Confidentiality duties survive termination/expiration of the NDA for three years.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Confidentiality duties survive termination/expiration of the NDA for three years...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.1855, neutral=-0.8396, entailment=4.6970
+            d = z_ent - z_con = 4.6970 - -4.1855 = 8.8825
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.3392, neutral=-0.5295, entailment=3.5743
+            d = z_ent - z_con = 3.5743 - -3.3392 = 6.9135
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4851, neutral=-4.5682, entailment=0.0318
+            d = z_ent - z_con = 0.0318 - 5.4851 = -5.4533
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.4533, max=8.8825, mean=3.4476
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.4533, max=8.8825, mean=3.4476
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.8825
+      Input d values: min=-5.4533, max=8.8825, mean=3.4476
+      D (pooled score) = 8.3429
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3429
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [31/46] H_31: If SINTEC discloses info containing patentable inventions, S...
+
+      [DEBUG] Constraint: H_31
+      [DEBUG] Hypothesis: If SINTEC discloses info containing patentable inventions, SINTEC reserves the associated patent/design-patent rights.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC discloses info containing patentable inventions, SINTEC reserves the a...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.8269, neutral=-1.0453, entailment=4.6013
+            d = z_ent - z_con = 4.6013 - -3.8269 = 8.4282
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.4465, neutral=-0.4644, entailment=4.4917
+            d = z_ent - z_con = 4.4917 - -4.4465 = 8.9382
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.8780, neutral=-4.2196, entailment=-0.9371
+            d = z_ent - z_con = -0.9371 - 5.8780 = -6.8151
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.8151, max=8.9382, mean=3.5171
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.8151, max=8.9382, mean=3.5171
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.9382
+      Input d values: min=-6.8151, max=8.9382, mean=3.5171
+      D (pooled score) = 8.5428
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5428
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [32/46] H_32: If new patentable findings are made, SINTEC has the sole rig...
+
+      [DEBUG] Constraint: H_32
+      [DEBUG] Hypothesis: If new patentable findings are made, SINTEC has the sole right to apply for patent protection and to commercially exploit them.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If new patentable findings are made, SINTEC has the sole right to apply for pate...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.1510, neutral=-0.7523, entailment=4.5451
+            d = z_ent - z_con = 4.5451 - -4.1510 = 8.6960
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.9432, neutral=-0.8848, entailment=4.5225
+            d = z_ent - z_con = 4.5225 - -3.9432 = 8.4656
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.7497, neutral=-4.2273, entailment=-0.7457
+            d = z_ent - z_con = -0.7457 - 5.7497 = -6.4955
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.4955, max=8.6960, mean=3.5554
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.4955, max=8.6960, mean=3.5554
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6960
+      Input d values: min=-6.4955, max=8.6960, mean=3.5554
+      D (pooled score) = 8.3913
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.3913
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [33/46] H_33: The Receiving Party waives any prior-use rights against pate...
+
+      [DEBUG] Constraint: H_33
+      [DEBUG] Hypothesis: The Receiving Party waives any prior-use rights against patents filed for such findings.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party waives any prior-use rights against patents filed for such f...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.1021, neutral=-0.8402, entailment=4.5979
+            d = z_ent - z_con = 4.5979 - -4.1021 = 8.6999
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-4.0457, neutral=-0.7913, entailment=4.5125
+            d = z_ent - z_con = 4.5125 - -4.0457 = 8.5582
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.8508, neutral=-4.3195, entailment=-0.7554
+            d = z_ent - z_con = -0.7554 - 5.8508 = -6.6062
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.6062, max=8.6999, mean=3.5506
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.6062, max=8.6999, mean=3.5506
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6999
+      Input d values: min=-6.6062, max=8.6999, mean=3.5506
+      D (pooled score) = 8.4313
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.4313
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [34/46] H_34: If the Receiving Party waives prior-use rights, it does not ...
+
+      [DEBUG] Constraint: H_34
+      [DEBUG] Hypothesis: If the Receiving Party waives prior-use rights, it does not assert those rights against such patents.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party waives prior-use rights, it does not assert those rights ...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.8585, neutral=-0.1237, entailment=4.4880
+            d = z_ent - z_con = 4.4880 - -4.8585 = 9.3465
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-4.0794, neutral=-0.5625, entailment=4.2638
+            d = z_ent - z_con = 4.2638 - -4.0794 = 8.3431
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.8707, neutral=-4.3827, entailment=-0.6852
+            d = z_ent - z_con = -0.6852 - 5.8707 = -6.5559
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.5559, max=9.3465, mean=3.7112
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.5559, max=9.3465, mean=3.7112
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3465
+      Input d values: min=-6.5559, max=9.3465, mean=3.7112
+      D (pooled score) = 8.8603
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.8603
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [35/46] H_35: If the Receiving Party uses the inventions/findings outside ...
+
+      [DEBUG] Constraint: H_35
+      [DEBUG] Hypothesis: If the Receiving Party uses the inventions/findings outside the listed fields, SINTEC will not assert its patent rights against the Receiving Party.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party uses the inventions/findings outside the listed fields, S...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.3859, neutral=-1.3281, entailment=4.5240
+            d = z_ent - z_con = 4.5240 - -3.3859 = 7.9098
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.8764, neutral=-0.1279, entailment=4.5126
+            d = z_ent - z_con = 4.5126 - -4.8764 = 9.3890
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.6494, neutral=-4.1524, entailment=-0.7651
+            d = z_ent - z_con = -0.7651 - 5.6494 = -6.4145
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.4145, max=9.3890, mean=3.6281
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.4145, max=9.3890, mean=3.6281
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3890
+      Input d values: min=-6.4145, max=9.3890, mean=3.6281
+      D (pooled score) = 8.8650
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.8650
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [36/46] H_36: Section 8 survives the term of the Agreement....
+
+      [DEBUG] Constraint: H_36
+      [DEBUG] Hypothesis: Section 8 survives the term of the Agreement.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Section 8 survives the term of the Agreement....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6342, neutral=-0.2882, entailment=4.4818
+            d = z_ent - z_con = 4.4818 - -4.6342 = 9.1160
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9716, neutral=-1.3611, entailment=4.1911
+            d = z_ent - z_con = 4.1911 - -2.9716 = 7.1626
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5513, neutral=-4.3381, entailment=-0.3919
+            d = z_ent - z_con = -0.3919 - 5.5513 = -5.9432
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.9432, max=9.1160, mean=3.4451
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.9432, max=9.1160, mean=3.4451
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1160
+      Input d values: min=-5.9432, max=9.1160, mean=3.4451
+      D (pooled score) = 8.5767
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5767
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [37/46] H_37: If the Receiving Party breaches and SINTEC suffers losses ar...
+
+      [DEBUG] Constraint: H_37
+      [DEBUG] Hypothesis: If the Receiving Party breaches and SINTEC suffers losses arising from the breach/representatives, the Receiving Party must indemnify SINTEC.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party breaches and SINTEC suffers losses arising from the breac...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.0712, neutral=-1.7990, entailment=4.7701
+            d = z_ent - z_con = 4.7701 - -3.0712 = 7.8413
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.4612, neutral=-0.5498, entailment=4.6049
+            d = z_ent - z_con = 4.6049 - -4.4612 = 9.0661
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.5045, neutral=-4.3899, entailment=-0.2560
+            d = z_ent - z_con = -0.2560 - 5.5045 = -5.7605
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.7605, max=9.0661, mean=3.7156
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.7605, max=9.0661, mean=3.7156
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.0661
+      Input d values: min=-5.7605, max=9.0661, mean=3.7156
+      D (pooled score) = 8.5582
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5582
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [38/46] H_38: Governing law is England and Wales; conflicts-of-law rules a...
+
+      [DEBUG] Constraint: H_38
+      [DEBUG] Hypothesis: Governing law is England and Wales; conflicts-of-law rules and CISG are excluded.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Governing law is England and Wales; conflicts-of-law rules and CISG are excluded...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.2754, neutral=-1.0942, entailment=5.0999
+            d = z_ent - z_con = 5.0999 - -4.2754 = 9.3754
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.0827, neutral=-1.7063, entailment=4.6753
+            d = z_ent - z_con = 4.6753 - -3.0827 = 7.7580
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=3.9160, neutral=-3.4897, entailment=0.2914
+            d = z_ent - z_con = 0.2914 - 3.9160 = -3.6246
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-3.6246, max=9.3754, mean=4.5029
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-3.6246, max=9.3754, mean=4.5029
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3754
+      Input d values: min=-3.6246, max=9.3754, mean=4.5029
+      D (pooled score) = 8.8454
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.8454
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [39/46] H_39: If a dispute arises, it is finally settled by LCIA arbitrati...
+
+      [DEBUG] Constraint: H_39
+      [DEBUG] Hypothesis: If a dispute arises, it is finally settled by LCIA arbitration (no ordinary courts), seated in London, with three arbitrators, in English.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If a dispute arises, it is finally settled by LCIA arbitration (no ordinary cour...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9840, neutral=-1.7627, entailment=4.6459
+            d = z_ent - z_con = 4.6459 - -2.9840 = 7.6299
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.9502, neutral=0.0741, entailment=4.3530
+            d = z_ent - z_con = 4.3530 - -4.9502 = 9.3032
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=4.7050, neutral=-3.6587, entailment=-0.4847
+            d = z_ent - z_con = -0.4847 - 4.7050 = -5.1898
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.1898, max=9.3032, mean=3.9144
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.1898, max=9.3032, mean=3.9144
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3032
+      Input d values: min=-5.1898, max=9.3032, mean=3.9144
+      D (pooled score) = 8.7712
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.7712
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [40/46] H_40: If a provision is invalid, the remaining provisions remain v...
+
+      [DEBUG] Constraint: H_40
+      [DEBUG] Hypothesis: If a provision is invalid, the remaining provisions remain valid.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If a provision is invalid, the remaining provisions remain valid....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.6668, neutral=-1.9431, entailment=4.5451
+            d = z_ent - z_con = 4.5451 - -2.6668 = 7.2118
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.2464, neutral=-0.5552, entailment=4.3921
+            d = z_ent - z_con = 4.3921 - -4.2464 = 8.6384
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.2650, neutral=-3.6333, entailment=-1.1531
+            d = z_ent - z_con = -1.1531 - 5.2650 = -6.4181
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-6.4181, max=8.6384, mean=3.1441
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-6.4181, max=8.6384, mean=3.1441
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6384
+      Input d values: min=-6.4181, max=8.6384, mean=3.1441
+      D (pooled score) = 8.1171
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.1171
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [41/46] H_41: SINTEC may replace an invalid provision with a valid one ref...
+
+      [DEBUG] Constraint: H_41
+      [DEBUG] Hypothesis: SINTEC may replace an invalid provision with a valid one reflecting economic intent.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: SINTEC may replace an invalid provision with a valid one reflecting economic int...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.5045, neutral=-2.1307, entailment=4.6323
+            d = z_ent - z_con = 4.6323 - -2.5045 = 7.1367
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.2455, neutral=-0.5928, entailment=4.4477
+            d = z_ent - z_con = 4.4477 - -4.2455 = 8.6931
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=4.8257, neutral=-3.9638, entailment=-0.1523
+            d = z_ent - z_con = -0.1523 - 4.8257 = -4.9780
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-4.9780, max=8.6931, mean=3.6173
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-4.9780, max=8.6931, mean=3.6173
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6931
+      Input d values: min=-4.9780, max=8.6931, mean=3.6173
+      D (pooled score) = 8.1656
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.1656
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [42/46] H_42: Any amendments or supplements must be executed in writing....
+
+      [DEBUG] Constraint: H_42
+      [DEBUG] Hypothesis: Any amendments or supplements must be executed in writing.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Any amendments or supplements must be executed in writing....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.8979, neutral=-2.1012, entailment=4.9398
+            d = z_ent - z_con = 4.9398 - -2.8979 = 7.8377
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.7903, neutral=-0.2631, entailment=4.5971
+            d = z_ent - z_con = 4.5971 - -4.7903 = 9.3874
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=3.8196, neutral=-4.3124, entailment=1.4238
+            d = z_ent - z_con = 1.4238 - 3.8196 = -2.3958
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-2.3958, max=9.3874, mean=4.9431
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-2.3958, max=9.3874, mean=4.9431
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.3874
+      Input d values: min=-2.3958, max=9.3874, mean=4.9431
+      D (pooled score) = 8.8602
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.8602
+      Output σ(D) = 0.9999
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [43/46] H_43: Any potential cooperation’s nature and scope must be stipula...
+
+      [DEBUG] Constraint: H_43
+      [DEBUG] Hypothesis: Any potential cooperation’s nature and scope must be stipulated by separate agreement.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: Any potential cooperation’s nature and scope must be stipulated by separate agre...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9756, neutral=-1.8300, entailment=4.7149
+            d = z_ent - z_con = 4.7149 - -2.9756 = 7.6905
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.6276, neutral=-0.2291, entailment=4.3951
+            d = z_ent - z_con = 4.3951 - -4.6276 = 9.0227
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.0762, neutral=-4.2888, entailment=0.0369
+            d = z_ent - z_con = 0.0369 - 5.0762 = -5.0392
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.0392, max=9.0227, mean=3.8913
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.0392, max=9.0227, mean=3.8913
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.0227
+      Input d values: min=-5.0392, max=9.0227, mean=3.8913
+      D (pooled score) = 8.5071
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.5071
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [44/46] H_44: No rights exist to the execution of any cooperation agreemen...
+
+      [DEBUG] Constraint: H_44
+      [DEBUG] Hypothesis: No rights exist to the execution of any cooperation agreement.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: No rights exist to the execution of any cooperation agreement....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.1515, neutral=-0.5373, entailment=4.2923
+            d = z_ent - z_con = 4.2923 - -4.1515 = 8.4438
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-0.8592, neutral=-2.8444, entailment=4.0967
+            d = z_ent - z_con = 4.0967 - -0.8592 = 4.9559
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=-0.8563, neutral=-2.6222, entailment=3.8414
+            d = z_ent - z_con = 3.8414 - -0.8563 = 4.6977
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=4.6977, max=8.4438, mean=6.0325
+      Distribution: <-0.5: 0, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 3
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=4.6977, max=8.4438, mean=6.0325
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.4438
+      Input d values: min=4.6977, max=8.4438, mean=6.0325
+      D (pooled score) = 7.8952
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.8952
+      Output σ(D) = 0.9996
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [45/46] H_45: NDA obligations apply whether or not a cooperation agreement...
+
+      [DEBUG] Constraint: H_45
+      [DEBUG] Hypothesis: NDA obligations apply whether or not a cooperation agreement is entered into.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: NDA obligations apply whether or not a cooperation agreement is entered into....
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9543, neutral=-1.6424, entailment=4.4843
+            d = z_ent - z_con = 4.4843 - -2.9543 = 7.4387
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.3736, neutral=-0.3755, entailment=4.3212
+            d = z_ent - z_con = 4.3212 - -4.3736 = 8.6948
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=1.1483, neutral=-4.3548, entailment=4.1623
+            d = z_ent - z_con = 4.1623 - 1.1483 = 3.0140
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=3.0140, max=8.6948, mean=6.3825
+      Distribution: <-0.5: 0, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 3
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=3.0140, max=8.6948, mean=6.3825
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.6948
+      Input d values: min=3.0140, max=8.6948, mean=6.3825
+      D (pooled score) = 8.1845
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.1845
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [46/46] H_46: SINTEC may grant reproduction consent only exceptionally and...
+
+      [DEBUG] Constraint: H_46
+      [DEBUG] Hypothesis: SINTEC may grant reproduction consent only exceptionally and such consent is revocable at any time.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: SINTEC may grant reproduction consent only exceptionally and such consent is rev...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.7398, neutral=-0.9238, entailment=4.3503
+            d = z_ent - z_con = 4.3503 - -3.7398 = 8.0901
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-3.4307, neutral=-0.9038, entailment=4.0184
+            d = z_ent - z_con = 4.0184 - -3.4307 = 7.4491
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4100, neutral=-4.4318, entailment=-0.0712
+            d = z_ent - z_con = -0.0712 - 5.4100 = -5.4812
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.4812, max=8.0901, mean=3.3527
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.4812, max=8.0901, mean=3.3527
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.0901
+      Input d values: min=-5.4812, max=8.0901, mean=3.3527
+      D (pooled score) = 7.6632
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 7.6632
+      Output σ(D) = 0.9995
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+
+  Step 2b: Processing soft constraints...
+    [1/3] S_1: If SINTEC requests return and chooses return, the Receiving ...
+
+      [DEBUG] Constraint: S_1
+      [DEBUG] Hypothesis: If SINTEC requests return and chooses return, the Receiving Party should not keep copies/records after returning.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If SINTEC requests return and chooses return, the Receiving Party should not kee...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.7684, neutral=-0.1956, entailment=4.4947
+            d = z_ent - z_con = 4.4947 - -4.7684 = 9.2631
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.9168, neutral=-0.8456, entailment=4.4271
+            d = z_ent - z_con = 4.4271 - -3.9168 = 8.3439
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.1711, neutral=-4.2828, entailment=-0.0449
+            d = z_ent - z_con = -0.0449 - 5.1711 = -5.2160
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.2160, max=9.2631, mean=4.1303
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.2160, max=9.2631, mean=4.1303
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.2631
+      Input d values: min=-5.2160, max=9.2631, mean=4.1303
+      D (pooled score) = 8.7876
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.7876
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [2/3] S_2: The Receiving Party generally will not use SINTEC informatio...
+
+      [DEBUG] Constraint: S_2
+      [DEBUG] Hypothesis: The Receiving Party generally will not use SINTEC information for its own business purposes or for other customers.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: The Receiving Party generally will not use SINTEC information for its own busine...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-2.9049, neutral=-1.8039, entailment=4.5984
+            d = z_ent - z_con = 4.5984 - -2.9049 = 7.5033
+        [2] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-4.8164, neutral=-0.0097, entailment=4.3264
+            d = z_ent - z_con = 4.3264 - -4.8164 = 9.1429
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4897, neutral=-4.3764, entailment=-0.2570
+            d = z_ent - z_con = -0.2570 - 5.4897 = -5.7467
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.7467, max=9.1429, mean=3.6331
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.7467, max=9.1429, mean=3.6331
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 9.1429
+      Input d values: min=-5.7467, max=9.1429, mean=3.6331
+      D (pooled score) = 8.6121
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.6121
+      Output σ(D) = 0.9998
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+    [3/3] S_3: If the Receiving Party treats the information as strictly co...
+
+      [DEBUG] Constraint: S_3
+      [DEBUG] Hypothesis: If the Receiving Party treats the information as strictly confidential, it should implement reasonable security measures to protect it.
+      [DEBUG] Retrieved 3 chunks for NLI scoring
+
+      [DEBUG] NLI Scoring Details:
+      Hypothesis: If the Receiving Party treats the information as strictly confidential, it shoul...
+      Number of premises (chunks): 3
+      Raw NLI scores shape: (3, 3)
+
+      Top 5 premise-hypothesis pairs by entailment score:
+        [1] Premise 0 (chunk preview: 'SINTEC UK LIMITED Non-disclosure Agreement – 2017 ...')
+            contradiction=-3.8932, neutral=-1.2662, entailment=4.9006
+            d = z_ent - z_con = 4.9006 - -3.8932 = 8.7938
+        [2] Premise 1 (chunk preview: 'the Receiving Party to the extent it invokes them....')
+            contradiction=-3.2395, neutral=-1.2219, entailment=4.2801
+            d = z_ent - z_con = 4.2801 - -3.2395 = 7.5196
+        [3] Premise 2 (chunk preview: 'indirect or consequential losses, loss of profit, ...')
+            contradiction=5.4967, neutral=-4.3844, entailment=-0.2691
+            d = z_ent - z_con = -0.2691 - 5.4967 = -5.7658
+
+      [DEBUG] Evidence Difference Matrix (d = z_ent - z_con):
+      d_matrix shape: (3, 1)
+      d_matrix stats: min=-5.7658, max=8.7938, mean=3.5159
+      Distribution: <-0.5: 1, [-0.5,0]: 0, [0,0.5]: 0, >=0.5: 2
+
+      [DEBUG] After max over hypotheses:
+      d_values shape: (3,)
+      d_values stats: min=-5.7658, max=8.7938, mean=3.5159
+
+      [DEBUG] Log-Sum-Exp Pooling:
+      τ (temperature) = 2.0
+      K (num evidence scores) = 3
+      max(d) = 8.7938
+      Input d values: min=-5.7658, max=8.7938, mean=3.5159
+      D (pooled score) = 8.2821
+
+      [DEBUG] Sigmoid Transform:
+      Input D = 8.2821
+      Output σ(D) = 0.9997
+      (Reference: σ(0)=0.5, σ(2)=0.88, σ(4)=0.98, σ(-2)=0.12)
+      → weight = 1.000
+
+  ✓ Weight assignment complete!
+
+  Hard Constraint Weights:
+    Mean: 1.000 ± 0.000
+    Range: [0.997, 1.000]
+    Median: 1.000
+
+  Soft Constraint Weights:
+    Mean: 1.000 ± 0.000
+    Range: [1.000, 1.000]
+    Median: 1.000
+
+✓ Weights assigned! Output saved to: code/experiments/SINTEC-output_weighted.json
+sudubudu@Sudhirs-MacBook-Pro article_logic_ai_2026 % 
