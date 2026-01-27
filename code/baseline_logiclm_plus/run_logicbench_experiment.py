@@ -20,51 +20,105 @@ Arguments:
 
 import json
 import os
+import sys
 import argparse
 from datetime import datetime
 from main import run_logiclm_plus
 from config import MODEL_NAME
 
+# Import the shared loader from fol_vs_boolean
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'fol_vs_boolean'))
+from load_logicbench import load_logicbench as load_from_github
 
-def load_logicbench_from_huggingface(logic_type, task_type='BQA'):
+
+def load_logicbench_from_github(logic_type, task_type='BQA', max_examples=None):
     """
-    Load LogicBench dataset from HuggingFace.
+    Load LogicBench dataset directly from GitHub raw files.
 
     Args:
         logic_type: 'propositional_logic', 'first_order_logic', or 'nm_logic'
-        task_type: 'BQA' or 'MCQA'
+        task_type: 'BQA' or 'MCQA' (currently only BQA supported)
+        max_examples: int, maximum total examples to load
 
     Returns:
-        List[dict] with keys: context, question, answer, id, rule_type
+        List[dict] with keys: context, question, answer, id, rule_type, axiom
     """
-    try:
-        from datasets import load_dataset
+    import urllib.request
+    import urllib.error
 
-        print(f"Loading LogicBench from HuggingFace: {logic_type}/{task_type}")
+    print(f"Loading LogicBench from GitHub: {logic_type}/{task_type}")
 
-        # Try to load the dataset
-        dataset = load_dataset("cogint/LogicBench-v1.0")
+    # Define pattern lists
+    pattern_lists = {
+        'propositional_logic': [
+            'modus_tollens', 'disjunctive_syllogism', 'hypothetical_syllogism',
+            'constructive_dilemma', 'destructive_dilemma', 'bidirectional_dilemma',
+            'commutation', 'material_implication'
+        ],
+        'first_order_logic': [
+            'universal_instantiation', 'existential_generalization',
+            'modus_ponens', 'modus_tollens', 'disjunctive_syllogism',
+            'hypothetical_syllogism', 'constructive_dilemma', 'destructive_dilemma',
+            'bidirectional_dilemma'
+        ],
+        'nm_logic': [
+            'default_reasoning_default', 'default_reasoning_irr',
+            'default_reasoning_open', 'default_reasoning_several',
+            'reasoning_about_exceptions_1', 'reasoning_about_exceptions_2',
+            'reasoning_about_exceptions_3', 'reasoning_about_priority'
+        ]
+    }
 
-        # Extract examples based on logic type and task type
-        examples = []
+    patterns = pattern_lists.get(logic_type, [])
+    base_url = f"https://raw.githubusercontent.com/Mihir3009/LogicBench/main/data/LogicBench(Eval)/{task_type}/{logic_type}"
 
-        # Note: The actual structure may differ, this is based on documentation
-        # We may need to iterate through the dataset structure
-        for item in dataset:
-            examples.append({
-                'context': item.get('context', ''),
-                'question': item.get('question', ''),
-                'answer': item.get('answer', ''),
-                'id': item.get('id', 0),
-                'rule_type': item.get('type', '')
-            })
+    examples = []
+    for pattern in patterns:
+        url = f"{base_url}/{pattern}/data_instances.json"
+        print(f"  Loading pattern: {pattern}")
 
-        return examples
+        try:
+            with urllib.request.urlopen(url) as response:
+                data = json.loads(response.read().decode())
 
-    except Exception as e:
-        print(f"Error loading from HuggingFace: {e}")
-        print("Falling back to local file loading...")
-        return load_logicbench_from_local(logic_type, task_type)
+            rule_type = data.get('type', '')
+            axiom = data.get('axiom', '')
+
+            # Extract samples
+            for sample in data.get('samples', []):
+                context = sample.get('context', '')
+                sample_id = sample.get('id', 0)
+
+                # Extract QA pairs
+                for qa_pair in sample.get('qa_pairs', []):
+                    question = qa_pair.get('question', '')
+                    answer = qa_pair.get('answer', '')
+
+                    examples.append({
+                        'context': context,
+                        'question': question,
+                        'answer': answer,
+                        'id': f"{pattern}_{sample_id}",
+                        'rule_type': rule_type,
+                        'axiom': axiom
+                    })
+
+                    if max_examples and len(examples) >= max_examples:
+                        print(f"  Reached max_examples limit: {max_examples}")
+                        return examples
+
+            print(f"    Loaded {len([e for e in examples if e['axiom'] == axiom])} examples")
+
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                print(f"    Pattern not found (skipping): {pattern}")
+            else:
+                print(f"    Error loading {pattern}: {e}")
+        except Exception as e:
+            print(f"    Error processing {pattern}: {e}")
+
+    print(f"Total loaded: {len(examples)} examples")
+    return examples
 
 
 def load_logicbench_from_local(logic_type, task_type='BQA'):
@@ -208,7 +262,13 @@ def run_experiment(logic_type, task_type, output_path, max_samples=None,
 
     # Load dataset
     print("\nLoading dataset...")
-    examples = load_logicbench_from_local(logic_type, task_type)
+    try:
+        # Try loading from GitHub first (no local files needed)
+        examples = load_logicbench_from_github(logic_type, task_type, max_examples=max_samples)
+    except Exception as e:
+        print(f"GitHub loading failed: {e}")
+        print("Falling back to local files...")
+        examples = load_logicbench_from_local(logic_type, task_type)
 
     if max_samples is not None:
         examples = examples[:max_samples]
