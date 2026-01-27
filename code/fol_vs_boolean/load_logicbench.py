@@ -80,61 +80,47 @@ def load_logicbench(logic_type='propositional_logic', reasoning_patterns=None, m
     for pattern in reasoning_patterns:
         print(f"  Loading pattern: {pattern}")
 
-        # Try loading numbered JSON files (1.json, 2.json, etc.)
-        file_idx = 1
+        # LogicBench uses data_instances.json (not numbered files)
+        url = f"{base_url}/{logic_type}/{pattern}/data_instances.json"
         pattern_examples = 0
 
-        while True:
-            if max_examples_per_pattern and pattern_examples >= max_examples_per_pattern:
-                break
+        try:
+            with urllib.request.urlopen(url) as response:
+                data = json.loads(response.read().decode())
 
-            url = f"{base_url}/{logic_type}/{pattern}/{file_idx}.json"
+                # Extract samples from LogicBench format
+                for sample in data.get('samples', []):
+                    if max_examples_per_pattern and pattern_examples >= max_examples_per_pattern:
+                        break
 
-            try:
-                with urllib.request.urlopen(url) as response:
-                    data = json.loads(response.read().decode())
+                    sample_id = sample.get('id', f"{pattern}_{len(examples)}")
+                    context = sample.get('context', '')
 
-                    # Extract samples from LogicBench format
-                    for sample in data.get('samples', []):
-                        if max_examples_per_pattern and pattern_examples >= max_examples_per_pattern:
-                            break
+                    # LogicBench has qa_pairs (question-answer pairs)
+                    qa_pairs = sample.get('qa_pairs', [])
+                    if qa_pairs:
+                        # Use first QA pair
+                        qa = qa_pairs[0]
+                        query = qa.get('question', '')
+                        ground_truth = qa.get('answer', None)
+                    else:
+                        query = ''
+                        ground_truth = None
 
-                        sample_id = sample.get('id', f"{pattern}_{file_idx}_{len(examples)}")
-                        context = sample.get('context', '')
+                    examples.append({
+                        'id': sample_id,
+                        'text': context,
+                        'query': query,
+                        'ground_truth': ground_truth,
+                        'pattern': pattern,
+                        'logic_type': logic_type
+                    })
+                    pattern_examples += 1
 
-                        # LogicBench has qa_pairs (question-answer pairs)
-                        qa_pairs = sample.get('qa_pairs', [])
-                        if qa_pairs:
-                            # Use first QA pair
-                            qa = qa_pairs[0]
-                            query = qa.get('question', '')
-                            ground_truth = qa.get('answer', None)
-                        else:
-                            query = ''
-                            ground_truth = None
-
-                        examples.append({
-                            'id': sample_id,
-                            'text': context,
-                            'query': query,
-                            'ground_truth': ground_truth,
-                            'pattern': pattern,
-                            'logic_type': logic_type
-                        })
-                        pattern_examples += 1
-
-                file_idx += 1
-
-            except urllib.error.HTTPError as e:
-                if e.code == 404:
-                    # No more files for this pattern
-                    break
-                else:
-                    print(f"    Error loading {url}: {e}")
-                    break
-            except Exception as e:
-                print(f"    Error processing {url}: {e}")
-                break
+        except urllib.error.HTTPError as e:
+            print(f"    Error loading {url}: HTTP {e.code}")
+        except Exception as e:
+            print(f"    Error processing {url}: {e}")
 
         print(f"    Loaded {pattern_examples} examples from {pattern}")
 
