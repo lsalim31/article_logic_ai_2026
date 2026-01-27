@@ -35,8 +35,9 @@ fol_vs_boolean/
 Run the single-file experiment with LogicBench dataset:
 
 ```bash
-# Set your OpenAI API key (required for propositional extraction)
-export OPENAI_API_KEY='your-key-here'
+# Set your API key (required for propositional extraction)
+# Use OPENROUTER_API_KEY or OPENAI_API_KEY
+export OPENROUTER_API_KEY='your-key-here'
 
 # Run the experiment (no additional dependencies needed - loads from GitHub)
 python run_logicbench_experiment.py

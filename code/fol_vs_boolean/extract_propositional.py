@@ -18,12 +18,12 @@ def get_logify_converter():
     """Get or create the LogifyConverter instance."""
     global _logify_converter
     if _logify_converter is None:
-        # Get API key from environment
-        api_key = os.environ.get('OPENAI_API_KEY')
+        # Get API key from environment (try OPENROUTER_API_KEY first, then OPENAI_API_KEY)
+        api_key = os.environ.get('OPENROUTER_API_KEY') or os.environ.get('OPENAI_API_KEY')
         if not api_key:
             raise ValueError(
-                "OPENAI_API_KEY environment variable not set.\n"
-                "Set it with: export OPENAI_API_KEY='your-key-here'"
+                "OPENROUTER_API_KEY or OPENAI_API_KEY environment variable not set.\n"
+                "Set it with: export OPENROUTER_API_KEY='your-key-here'"
             )
         _logify_converter = LogifyConverter(api_key=api_key)
     return _logify_converter

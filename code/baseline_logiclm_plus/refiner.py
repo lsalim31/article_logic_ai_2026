@@ -76,6 +76,7 @@ Design decisions (from Logic-LM++ paper):
 """
 
 import json
+import os
 from openai import OpenAI
 from config import (
     REFINEMENT_PROMPT,
@@ -87,6 +88,24 @@ from config import (
     MAX_TOKENS
 )
 from solver_interface import solve_fol
+
+
+def _get_openai_client():
+    """
+    Get OpenAI client with auto-detection of OpenRouter or OpenAI.
+
+    Returns:
+        OpenAI client configured for OpenRouter or OpenAI
+    """
+    api_key = os.environ.get('OPENROUTER_API_KEY') or os.environ.get('OPENAI_API_KEY')
+    base_url = None
+
+    if os.environ.get('OPENROUTER_API_KEY'):
+        base_url = "https://openrouter.ai/api/v1"
+    elif os.environ.get('OPENAI_BASE_URL'):
+        base_url = os.environ.get('OPENAI_BASE_URL')
+
+    return OpenAI(api_key=api_key, base_url=base_url)
 
 
 def generate_refinements(current_formulation, error_feedback, original_text,
@@ -120,7 +139,7 @@ def generate_refinements(current_formulation, error_feedback, original_text,
     )
 
     # Call LLM
-    client = OpenAI()
+    client = _get_openai_client()
     try:
         response = client.chat.completions.create(
             model=model_name,
@@ -192,7 +211,7 @@ def pairwise_compare(formulation_a, formulation_b, original_text, original_query
     )
 
     # Call LLM
-    client = OpenAI()
+    client = _get_openai_client()
     try:
         response = client.chat.completions.create(
             model=model_name,
@@ -244,7 +263,7 @@ def backtracking_decision(previous_formulation, refined_formulation, original_te
     )
 
     # Call LLM
-    client = OpenAI()
+    client = _get_openai_client()
     try:
         response = client.chat.completions.create(
             model=model_name,
