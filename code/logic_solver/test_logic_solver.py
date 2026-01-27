@@ -8,9 +8,16 @@ This script tests the logic solver with the example logified structure.
 import json
 import sys
 import os
+from pathlib import Path
 
 # Add parent directory to path to import logic_solver as a package
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Compute paths relative to script location
+SCRIPT_DIR = Path(__file__).resolve().parent
+CODE_DIR = SCRIPT_DIR.parent
+REPO_DIR = CODE_DIR.parent
+ARTIFACTS_DIR = REPO_DIR / "artifacts" / "code"
 
 from logic_solver import LogicSolver, solve_query
 
@@ -19,7 +26,8 @@ def test_basic_queries():
     """Test basic queries with the Alice example."""
 
     # Load the example logified structure
-    with open('/workspace/repo/artifacts/code/logify2_full_demo.json', 'r') as f:
+    demo_file = ARTIFACTS_DIR / "logify2_full_demo.json"
+    with open(demo_file, 'r') as f:
         logified = json.load(f)
 
     print("=" * 80)

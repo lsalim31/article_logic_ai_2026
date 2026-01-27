@@ -85,14 +85,23 @@ def parse_response(response):
                        ['Entailed', 'Contradicted', 'NotMentioned']
             - 'reasoning': Chain-of-thought reasoning steps (if extractable)
     """
+    import re
+
     answer = None
     reasoning = response
 
-    response_lower = response.lower()
+    answer_section = response
+    answer_marker = re.search(r'\*\*Answer:\*\*', response, re.IGNORECASE)
+    if answer_marker:
+        answer_section = response[answer_marker.end():]
+
+    answer_section_lower = answer_section.lower()
 
     for label in ['true', 'false', 'unknown', 'entailed', 'contradicted', 'notmentioned']:
-        if label in response_lower:
+        if re.search(r'\b' + label + r'\b', answer_section_lower):
             answer = label.capitalize()
+            if label == 'notmentioned':
+                answer = 'NotMentioned'
             break
 
     if answer is None:

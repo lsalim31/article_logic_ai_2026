@@ -10,6 +10,30 @@ Metrics include accuracy, precision, recall, F1-score, and confusion matrices.
 """
 
 
+def normalize_label(label):
+    """
+    Normalize label to canonical form.
+
+    Args:
+        label: Raw label string
+
+    Returns:
+        Normalized label string with consistent casing
+    """
+    label_lower = label.strip().lower()
+    canonical = {
+        'true': 'True',
+        'false': 'False',
+        'unknown': 'Unknown',
+        'entailed': 'Entailed',
+        'contradicted': 'Contradicted',
+        'notmentioned': 'NotMentioned',
+        'not_mentioned': 'NotMentioned',
+        'not mentioned': 'NotMentioned',
+    }
+    return canonical.get(label_lower, label.strip().title())
+
+
 def evaluate(predictions, ground_truth, label_set=None):
     """
     Compute evaluation metrics for predictions against ground truth.
@@ -28,6 +52,9 @@ def evaluate(predictions, ground_truth, label_set=None):
             - 'confusion_matrix': Dict mapping (true_label, pred_label) -> count
             - 'per_class_metrics': Dict mapping label -> {'precision', 'recall', 'f1'}
     """
+    predictions = [normalize_label(p) for p in predictions]
+    ground_truth = [normalize_label(g) for g in ground_truth]
+
     if label_set is None:
         label_set = sorted(set(predictions + ground_truth))
 

@@ -26,6 +26,9 @@ def chunk_document(text, chunk_size=512, overlap=50):
             - 'end_pos': ending character position in original document
             - 'chunk_id': sequential chunk identifier
     """
+    if overlap >= chunk_size:
+        raise ValueError(f"overlap ({overlap}) must be less than chunk_size ({chunk_size})")
+
     tokens = tokenize(text)
     chunks = []
     chunk_id = 0
@@ -36,9 +39,10 @@ def chunk_document(text, chunk_size=512, overlap=50):
         chunk_tokens = tokens[start_idx:end_idx]
         chunk_text = detokenize(chunk_tokens)
 
-        char_start = len(detokenize(tokens[:start_idx]))
-        if start_idx > 0:
-            char_start += 1
+        if start_idx == 0:
+            char_start = 0
+        else:
+            char_start = len(detokenize(tokens[:start_idx])) + 1
         char_end = char_start + len(chunk_text)
 
         chunks.append({

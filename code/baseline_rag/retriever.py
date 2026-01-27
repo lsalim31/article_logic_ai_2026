@@ -94,6 +94,6 @@ def compute_cosine_similarity(query_embedding, chunk_embeddings):
     chunk_norms = np.linalg.norm(chunk_embeddings, axis=1)
 
     dot_products = np.dot(chunk_embeddings, query_embedding)
-    similarities = dot_products / (chunk_norms * query_norm)
+    similarities = dot_products / (chunk_norms * query_norm + 1e-9)
 
     return similarities
