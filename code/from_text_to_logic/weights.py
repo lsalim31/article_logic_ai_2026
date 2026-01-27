@@ -350,11 +350,26 @@ def assign_weights(
     if verbose:
         print(f"  Computed embeddings for {len(chunks)} chunks")
 
-    # Step 5: Initialize OpenAI client
-    client = OpenAI(api_key=api_key)
+    # Step 5: Initialize OpenAI client (with OpenRouter support)
+    is_openrouter = api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-')
+
+    if is_openrouter:
+        # OpenRouter API
+        client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
+        # Prefix model with openai/ for OpenRouter if not already prefixed
+        if not model.startswith('openai/') and '/' not in model:
+            model = f'openai/{model}'
+        if verbose:
+            print(f"  Using OpenRouter API with model: {model}")
+    else:
+        # Direct OpenAI API
+        client = OpenAI(api_key=api_key)
+        if verbose:
+            print(f"  Using OpenAI API with model: {model}")
 
     # Check if this is a reasoning model
-    is_reasoning_model = any(model.startswith(prefix) for prefix in ["gpt-5", "o1", "o3"])
+    base_model = model.replace('openai/', '')
+    is_reasoning_model = any(base_model.startswith(prefix) for prefix in ["gpt-5", "o1", "o3"])
     if is_reasoning_model:
         print(f"  WARNING: Model {model} may not support logprobs. Consider using gpt-4o.")
 
