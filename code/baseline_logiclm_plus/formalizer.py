@@ -38,6 +38,7 @@ Design decisions (from Logic-LM++ paper):
 """
 
 import json
+import os
 from openai import OpenAI
 from config import FORMALIZATION_PROMPT, MODEL_NAME, TEMPERATURE, MAX_TOKENS
 
@@ -58,8 +59,17 @@ def formalize_to_fol(text, query, model_name=MODEL_NAME, temperature=TEMPERATURE
     # Format the prompt with text and query
     prompt = FORMALIZATION_PROMPT.format(text=text, query=query)
 
-    # Call LLM
-    client = OpenAI()
+    # Call LLM - auto-detect OpenRouter or OpenAI
+    # If OPENROUTER_API_KEY is set, use it; otherwise use OPENAI_API_KEY
+    api_key = os.environ.get('OPENROUTER_API_KEY') or os.environ.get('OPENAI_API_KEY')
+    base_url = None
+
+    if os.environ.get('OPENROUTER_API_KEY'):
+        base_url = "https://openrouter.ai/api/v1"
+    elif os.environ.get('OPENAI_BASE_URL'):
+        base_url = os.environ.get('OPENAI_BASE_URL')
+
+    client = OpenAI(api_key=api_key, base_url=base_url)
     try:
         response = client.chat.completions.create(
             model=model_name,
