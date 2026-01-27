@@ -183,7 +183,7 @@ class WeightAssigner:
                 print(f"    [{i}/{len(hard_constraints)}] {constraint['id']}: {constraint['translation'][:60]}...")
 
             weight = self._assign_weight_to_constraint(
-                constraint, chunks, chunk_embeddings
+                constraint, chunks, chunk_embeddings, verbose_debug=debug
             )
 
             constraint['weight'] = float(weight)
@@ -200,7 +200,7 @@ class WeightAssigner:
                 print(f"    [{i}/{len(soft_constraints)}] {constraint['id']}: {constraint['translation'][:60]}...")
 
             weight = self._assign_weight_to_constraint(
-                constraint, chunks, chunk_embeddings
+                constraint, chunks, chunk_embeddings, verbose_debug=debug
             )
 
             constraint['weight'] = float(weight)
