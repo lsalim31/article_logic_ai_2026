@@ -121,7 +121,7 @@ from config import (
     SOLVER_TIMEOUT,
     MAX_CONSECUTIVE_BACKTRACKS
 )
-from formalizer import formalize_to_fol
+from formalizer import formalize_to_fol, formalize
 from refiner import refine_loop
 from solver_interface import solve_fol
 
@@ -143,6 +143,7 @@ def run_logiclm_plus(text, query, model_name=MODEL_NAME, ground_truth=None,
                 - temperature: float, sampling temperature
                 - num_candidates: int, number of refinement candidates per iteration
                 - max_consecutive_backtracks: int, early stop threshold
+                - logic_type: str, 'propositional' or 'fol' (default: 'fol' for backward compatibility)
         **kwargs: individual parameters (override config if both provided)
 
     Returns:
@@ -164,6 +165,7 @@ def run_logiclm_plus(text, query, model_name=MODEL_NAME, ground_truth=None,
     max_consecutive_backtracks = kwargs.get('max_consecutive_backtracks',
                                            config.get('max_consecutive_backtracks',
                                                      MAX_CONSECUTIVE_BACKTRACKS))
+    logic_type = kwargs.get('logic_type', config.get('logic_type', 'fol'))
 
     start_time = time.time()
     time_breakdown = {
@@ -173,9 +175,9 @@ def run_logiclm_plus(text, query, model_name=MODEL_NAME, ground_truth=None,
         'solving': 0
     }
 
-    # Step 1: Initial formalization
+    # Step 1: Initial formalization (use appropriate prompt based on logic_type)
     formalization_start = time.time()
-    initial_formulation = formalize_to_fol(text, query, model_name, temperature)
+    initial_formulation = formalize(text, query, logic_type, model_name, temperature)
     time_breakdown['formalization'] = time.time() - formalization_start
 
     # Check formalization success

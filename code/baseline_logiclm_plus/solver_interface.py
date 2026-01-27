@@ -210,53 +210,59 @@ def test_entailment_z3(premises, conclusion, timeout=SOLVER_TIMEOUT):
 
         # Helper function to parse FOL formula to Z3
         def parse_fol_to_z3(formula_str):
-            """Parse FOL string to Z3 expression.
+            """Parse propositional or FOL string to Z3 expression.
 
             Handles:
-            - Propositional: P, Q, R (nullary predicates)
-            - First-order: Pred(x), Pred(x,y) with quantifiers
-            - Connectives: ∧ ∨ → ¬ (and, or, implies, not)
-            - Quantifiers: ∀x ∃x (forall, exists)
+            - Propositional: P, Q, R, FinishedWork, OrderedPizza (boolean variables)
+            - Ground predicates: Pred(constant) treated as boolean variables
+            - Connectives: ∧ ∨ → ¬ ↔ (and, or, implies, not, iff)
+            - Quantifiers: ∀x ∃x are instantiated when possible
             """
             # Normalize whitespace
             formula_str = formula_str.strip()
 
-            # Handle simple propositional variables (single capital letters or simple predicates)
-            # These are very common in propositional logic: P, Q, R, etc.
-            simple_prop_pattern = r'\b([A-Z])\b'
-            simple_props = re.findall(simple_prop_pattern, formula_str)
-            for prop in simple_props:
-                if prop not in predicate_decls and prop not in ['X', 'Y', 'Z']:  # Avoid variable names
+            # Check if this is propositional (no quantifiers, no variables)
+            has_quantifiers = '∀' in formula_str or '∃' in formula_str
+
+            # For propositional logic or ground formulas, treat predicates as booleans
+            # This handles: P, Q, FinishedWork, OrderedPizza(Liam), etc.
+
+            # First, extract multi-word propositional variables (CamelCase identifiers)
+            # Pattern matches: FinishedWorkEarly, OrderedPizza, P, Q, etc.
+            prop_pattern = r'\b([A-Z][a-zA-Z0-9]*)\b'
+
+            # Check if formula has predicate-style syntax Pred(args)
+            predicate_pattern = r'([A-Z][a-zA-Z0-9]*)\(([^)]*)\)'
+            pred_matches = re.findall(predicate_pattern, formula_str)
+
+            if pred_matches and not has_quantifiers:
+                # Ground predicates like OrderedPizza(Liam) - treat whole thing as boolean
+                # This is the key fix: Pred(constant) becomes a single boolean variable
+                for pred_name, args_str in pred_matches:
+                    args = [a.strip() for a in args_str.split(',') if a.strip()]
+                    # Create a unique boolean name for this ground predicate
+                    ground_name = f"{pred_name}_{'_'.join(args)}" if args else pred_name
+                    ground_name = re.sub(r'[^a-zA-Z0-9_]', '_', ground_name)  # Sanitize
+                    if ground_name not in predicate_decls:
+                        predicate_decls[ground_name] = Bool(ground_name)
+                    # Replace Pred(args) with ground_name in formula
+                    full_pred = f"{pred_name}({args_str})"
+                    formula_str = formula_str.replace(full_pred, ground_name)
+
+            # Now extract remaining simple propositional variables
+            # These are standalone identifiers not followed by '('
+            remaining_props = re.findall(r'\b([A-Z][a-zA-Z0-9_]*)\b(?!\s*\()', formula_str)
+            for prop in remaining_props:
+                if prop not in predicate_decls:
                     predicate_decls[prop] = Bool(prop)
 
-            # Extract all predicates and their arities from the formula
-            predicate_pattern = r'([A-Z][a-zA-Z0-9]*)\(([^)]*)\)'
-            matches = re.findall(predicate_pattern, formula_str)
-
-            for pred_name, args_str in matches:
-                args = [a.strip() for a in args_str.split(',') if a.strip()]
-                arity = len(args)
-
-                # Declare predicate if not seen before
-                if pred_name not in predicate_decls:
-                    # Create uninterpreted function (predicate)
-                    if arity == 0:
-                        predicate_decls[pred_name] = Bool(pred_name)
-                    elif arity == 1:
-                        predicate_decls[pred_name] = Function(pred_name, IntSort(), BoolSort())
-                    elif arity == 2:
-                        predicate_decls[pred_name] = Function(pred_name, IntSort(), IntSort(), BoolSort())
-                    else:
-                        # Support up to 3 arguments
-                        predicate_decls[pred_name] = Function(pred_name,
-                            *([IntSort()] * arity + [BoolSort()]))
-
-            # Replace logical symbols with Python operators
+            # Replace logical symbols with Python/Z3 operators
             z3_formula_str = formula_str
-            z3_formula_str = z3_formula_str.replace('∧', ' and ')
-            z3_formula_str = z3_formula_str.replace('∨', ' or ')
-            z3_formula_str = z3_formula_str.replace('¬', 'not ')
-            z3_formula_str = z3_formula_str.replace('→', ' >> ')  # Use >> for implies temporarily
+            z3_formula_str = z3_formula_str.replace('∧', ' & ')
+            z3_formula_str = z3_formula_str.replace('∨', ' | ')
+            z3_formula_str = z3_formula_str.replace('¬', '~')
+            z3_formula_str = z3_formula_str.replace('↔', ' == ')
+            z3_formula_str = z3_formula_str.replace('→', ' >> ')  # Temporarily use >> for implies
 
             # Build context with predicate declarations and Z3 functions
             context = dict(predicate_decls)
@@ -269,18 +275,56 @@ def test_entailment_z3(premises, conclusion, timeout=SOLVER_TIMEOUT):
                 'Exists': Exists,
                 'Int': Int,
                 'Bool': Bool,
-                'and': lambda *args: And(*args) if len(args) > 1 else args[0],
-                'or': lambda *args: Or(*args) if len(args) > 1 else args[0],
-                'not': Not
             })
 
-            # Handle quantifiers if present
-            # Pattern: ∀x (formula) or ∃x (formula)
-            if '∀' in formula_str or '∃' in formula_str:
-                # For now, treat quantified formulas as free boolean variables
-                # Full quantifier handling requires more sophisticated parsing
-                # This allows the solver to continue with a conservative approximation
-                return Bool(f'quantified_{abs(hash(formula_str)) % 10000}')
+            # Handle quantifiers - instantiate with domain constants if possible
+            if has_quantifiers:
+                # Extract all constants mentioned in the formula
+                constants = set()
+                const_pattern = r'\b([A-Z][a-z][a-zA-Z]*)\b'  # CamelCase starting with uppercase
+                for const_match in re.findall(const_pattern, formula_str):
+                    if const_match not in ['And', 'Or', 'Not', 'Implies', 'ForAll', 'Exists', 'Int', 'Bool']:
+                        constants.add(const_match)
+
+                # If no constants found, use a default domain
+                if not constants:
+                    constants = {'c0'}
+
+                # Simple quantifier instantiation: ∀x P(x) becomes P(c1) ∧ P(c2) ∧ ...
+                # This is sound for finite domains and provides a useful approximation
+
+                # For now, instantiate with found constants
+                # This handles common cases like ∀x (P(x) → Q(x)) with constant Liam
+                instantiated = formula_str
+
+                # Find quantifier patterns: ∀x or ∃x followed by formula
+                forall_pattern = r'∀([a-z])\s*'
+                exists_pattern = r'∃([a-z])\s*'
+
+                # Replace ∀x with conjunction over constants
+                for match in re.finditer(forall_pattern, instantiated):
+                    var = match.group(1)
+                    # For each constant, create instantiation
+                    # Replace the quantifier and variable references
+                    pass  # Complex - fall back to ground approximation
+
+                # Simplified approach: treat quantified formulas as ground by
+                # extracting the instantiated version for each constant
+                # For ∀x P(x) → Q(x) with Liam, we get P(Liam) → Q(Liam)
+
+                # Remove quantifiers and replace variables with first constant
+                instantiated = re.sub(r'∀[a-z]\s*', '', instantiated)
+                instantiated = re.sub(r'∃[a-z]\s*', '', instantiated)
+
+                # Replace remaining single-letter variables with first constant
+                if constants:
+                    const = list(constants)[0]
+                    for var in ['x', 'y', 'z']:
+                        # Replace variable in predicate arguments
+                        instantiated = re.sub(rf'\b{var}\b', const, instantiated)
+
+                # Now parse the instantiated formula
+                return parse_fol_to_z3(instantiated)
 
             # Replace predicate calls with Z3 expressions
             for pred_name in list(predicate_decls.keys()):

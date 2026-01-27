@@ -55,9 +55,73 @@ from config import (
 )
 
 
+def formalize(text, query, logic_type='propositional', model_name=MODEL_NAME, temperature=TEMPERATURE):
+    """
+    Main entry point for NL → logic translation.
+
+    Args:
+        text: Natural language text (premises)
+        query: Natural language query (conclusion to test)
+        logic_type: 'propositional' or 'fol' (first-order logic)
+        model_name: LLM model to use
+        temperature: Sampling temperature
+
+    Returns:
+        dict with keys: predicates, premises, conclusion, raw_response, formalization_error
+    """
+    # Select prompt based on logic type
+    if logic_type == 'propositional':
+        prompt = PROPOSITIONAL_FORMALIZATION_PROMPT.format(text=text, query=query)
+    else:
+        prompt = FORMALIZATION_PROMPT.format(text=text, query=query)
+
+    # Call LLM - auto-detect OpenRouter or OpenAI
+    api_key = os.environ.get('OPENROUTER_API_KEY') or os.environ.get('OPENAI_API_KEY')
+    base_url = None
+
+    if os.environ.get('OPENROUTER_API_KEY'):
+        base_url = "https://openrouter.ai/api/v1"
+    elif os.environ.get('OPENAI_BASE_URL'):
+        base_url = os.environ.get('OPENAI_BASE_URL')
+
+    client = OpenAI(api_key=api_key, base_url=base_url)
+    try:
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": "You are a formal logician specializing in propositional and first-order logic."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=temperature,
+            max_tokens=MAX_TOKENS
+        )
+
+        raw_response = response.choices[0].message.content
+
+    except Exception as e:
+        return {
+            'predicates': {},
+            'premises': [],
+            'conclusion': '',
+            'raw_response': '',
+            'formalization_error': f"LLM call failed: {str(e)}"
+        }
+
+    # Parse the response
+    formalization = parse_formalization_response(raw_response)
+
+    # Validate the formalization
+    if validate_formalization(formalization):
+        formalization['formalization_error'] = None
+    else:
+        formalization['formalization_error'] = "Validation failed: missing required fields or invalid structure"
+
+    return formalization
+
+
 def formalize_to_fol(text, query, model_name=MODEL_NAME, temperature=TEMPERATURE):
     """
-    Main entry point for NL → FOL translation.
+    Legacy entry point for NL → FOL translation (backward compatibility).
 
     Args:
         text: Natural language text (premises)
