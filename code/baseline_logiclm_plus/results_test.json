@@ -1,0 +1,1577 @@
+{
+  "metadata": {
+    "dataset": "LogicBench-v1.0",
+    "logic_type": "propositional_logic",
+    "task_type": "BQA",
+    "model": "gpt-4",
+    "max_iterations": 4,
+    "solver": "z3",
+    "timestamp": "2026-01-27T21:45:55.019725",
+    "total_examples": 20
+  },
+  "metrics": {
+    "overall_accuracy": 0.05,
+    "execution_rate_Er": 1.0,
+    "execution_accuracy_Ea": 0.05,
+    "correct_count": 1,
+    "execution_success_count": 20,
+    "avg_refinement_iterations": 0.0,
+    "backtracking_rate": 0,
+    "avg_time_per_query": 3.760402512550354,
+    "avg_llm_calls_per_query": 1.0,
+    "per_rule_accuracy": {
+      "propositional_logic": {
+        "accuracy": 0.05,
+        "count": 20,
+        "correct": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "FinishedWorkEarly(x)": "x finished his work early",
+          "OrdersPizza(x)": "x orders pizza",
+          "OrderedPizza(x)": "x ordered pizza",
+          "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+        },
+        "premises": [
+          "\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))",
+          "FinishedWorkEarly(Liam)",
+          "\u00acOrderedPizza(Liam)",
+          "DecidedAgainstPizza(Liam)"
+        ],
+        "conclusion": "\u00acFinishedWorkEarly(Liam)",
+        "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"OrdersPizza(x)\": \"x orders pizza\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"\u00acOrderedPizza(Liam)\",\n        \"DecidedAgainstPizza(Liam)\"\n    ],\n    \"conclusion\": \"\u00acFinishedWorkEarly(Liam)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "FinishedWorkEarly(x)": "x finished his work early",
+          "OrdersPizza(x)": "x orders pizza",
+          "OrderedPizza(x)": "x ordered pizza",
+          "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+        },
+        "premises": [
+          "\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))",
+          "FinishedWorkEarly(Liam)",
+          "\u00acOrderedPizza(Liam)",
+          "DecidedAgainstPizza(Liam)"
+        ],
+        "conclusion": "\u00acFinishedWorkEarly(Liam)",
+        "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"OrdersPizza(x)\": \"x orders pizza\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"\u00acOrderedPizza(Liam)\",\n        \"DecidedAgainstPizza(Liam)\"\n    ],\n    \"conclusion\": \"\u00acFinishedWorkEarly(Liam)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.794147491455078,
+      "time_breakdown": {
+        "formalization": 3.6139273643493652,
+        "refinement": 0.17647743225097656,
+        "backtracking": 0,
+        "solving": 0.0037322044372558594
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "FinishedWorkEarly(x)": "x finished his work early",
+            "OrdersPizza(x)": "x orders pizza",
+            "OrderedPizza(x)": "x ordered pizza",
+            "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+          },
+          "premises": [
+            "\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))",
+            "FinishedWorkEarly(Liam)",
+            "\u00acOrderedPizza(Liam)",
+            "DecidedAgainstPizza(Liam)"
+          ],
+          "conclusion": "\u00acFinishedWorkEarly(Liam)",
+          "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"OrdersPizza(x)\": \"x orders pizza\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 OrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"\u00acOrderedPizza(Liam)\",\n        \"DecidedAgainstPizza(Liam)\"\n    ],\n    \"conclusion\": \"\u00acFinishedWorkEarly(Liam)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_1",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Liam had finished his work early for the day, which meant that he would typically have ordered pizza for dinner. However, on this particular day, he decided against ordering pizza and opted for something else instead.",
+      "question": "Does this imply that liam didn't finish his work early?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "FinishedWorkEarly(x)": "x finished his work early",
+          "TypicallyOrdersPizza(x)": "x typically orders pizza when he finishes work early",
+          "OrderedPizza(x)": "x ordered pizza",
+          "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+        },
+        "premises": [
+          "\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))",
+          "FinishedWorkEarly(Liam)",
+          "DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)"
+        ],
+        "conclusion": "FinishedWorkEarly(Liam)",
+        "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"TypicallyOrdersPizza(x)\": \"x typically orders pizza when he finishes work early\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)\"\n    ],\n    \"conclusion\": \"FinishedWorkEarly(Liam)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "FinishedWorkEarly(x)": "x finished his work early",
+          "TypicallyOrdersPizza(x)": "x typically orders pizza when he finishes work early",
+          "OrderedPizza(x)": "x ordered pizza",
+          "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+        },
+        "premises": [
+          "\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))",
+          "FinishedWorkEarly(Liam)",
+          "DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)"
+        ],
+        "conclusion": "FinishedWorkEarly(Liam)",
+        "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"TypicallyOrdersPizza(x)\": \"x typically orders pizza when he finishes work early\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)\"\n    ],\n    \"conclusion\": \"FinishedWorkEarly(Liam)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.1444928646087646,
+      "time_breakdown": {
+        "formalization": 3.140864610671997,
+        "refinement": 0.0022230148315429688,
+        "backtracking": 0,
+        "solving": 0.0013990402221679688
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "FinishedWorkEarly(x)": "x finished his work early",
+            "TypicallyOrdersPizza(x)": "x typically orders pizza when he finishes work early",
+            "OrderedPizza(x)": "x ordered pizza",
+            "DecidedAgainstPizza(x)": "x decided against ordering pizza"
+          },
+          "premises": [
+            "\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))",
+            "FinishedWorkEarly(Liam)",
+            "DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)"
+          ],
+          "conclusion": "FinishedWorkEarly(Liam)",
+          "raw_response": "{\n    \"predicates\": {\n        \"FinishedWorkEarly(x)\": \"x finished his work early\",\n        \"TypicallyOrdersPizza(x)\": \"x typically orders pizza when he finishes work early\",\n        \"OrderedPizza(x)\": \"x ordered pizza\",\n        \"DecidedAgainstPizza(x)\": \"x decided against ordering pizza\"\n    },\n    \"premises\": [\n        \"\u2200x (FinishedWorkEarly(x) \u2192 TypicallyOrdersPizza(x))\",\n        \"FinishedWorkEarly(Liam)\",\n        \"DecidedAgainstPizza(Liam) \u2192 \u00acOrderedPizza(Liam)\"\n    ],\n    \"conclusion\": \"FinishedWorkEarly(Liam)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_1",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Liam had finished his work early for the day, which meant that he would typically have ordered pizza for dinner. However, on this particular day, he decided against ordering pizza and opted for something else instead.",
+      "question": "Does this entail that liam finished his work early?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "WorkingHardOnProject(x)": "x is working hard on her project",
+          "FinishedOnTime(x)": "x finished her project on time",
+          "ReceiveBonus(x)": "x would receive a bonus from her company",
+          "NotReceiveBonus(x)": "x would not receive a bonus from her company"
+        },
+        "premises": [
+          "WorkingHardOnProject(Isabella)",
+          "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+          "NotReceiveBonus(Isabella)"
+        ],
+        "conclusion": "\u00acFinishedOnTime(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"NotReceiveBonus(x)\": \"x would not receive a bonus from her company\"\n    },\n    \"premises\": [\n        \"WorkingHardOnProject(Isabella)\",\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"NotReceiveBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "WorkingHardOnProject(x)": "x is working hard on her project",
+          "FinishedOnTime(x)": "x finished her project on time",
+          "ReceiveBonus(x)": "x would receive a bonus from her company",
+          "NotReceiveBonus(x)": "x would not receive a bonus from her company"
+        },
+        "premises": [
+          "WorkingHardOnProject(Isabella)",
+          "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+          "NotReceiveBonus(Isabella)"
+        ],
+        "conclusion": "\u00acFinishedOnTime(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"NotReceiveBonus(x)\": \"x would not receive a bonus from her company\"\n    },\n    \"premises\": [\n        \"WorkingHardOnProject(Isabella)\",\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"NotReceiveBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.946489095687866,
+      "time_breakdown": {
+        "formalization": 3.9379465579986572,
+        "refinement": 0.005240678787231445,
+        "backtracking": 0,
+        "solving": 0.003293275833129883
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "WorkingHardOnProject(x)": "x is working hard on her project",
+            "FinishedOnTime(x)": "x finished her project on time",
+            "ReceiveBonus(x)": "x would receive a bonus from her company",
+            "NotReceiveBonus(x)": "x would not receive a bonus from her company"
+          },
+          "premises": [
+            "WorkingHardOnProject(Isabella)",
+            "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+            "NotReceiveBonus(Isabella)"
+          ],
+          "conclusion": "\u00acFinishedOnTime(Isabella)",
+          "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"NotReceiveBonus(x)\": \"x would not receive a bonus from her company\"\n    },\n    \"premises\": [\n        \"WorkingHardOnProject(Isabella)\",\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"NotReceiveBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_2",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella had been working hard on her project, knowing that if she finished it on time, she would receive a bonus from her company. However, despite her efforts, Isabella realized that she wouldn't be receiving a bonus as she had hoped.",
+      "question": "Does this entail that isabella didn't finish her project on time?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "WorkingHardOnProject(x)": "x is working hard on her project",
+          "FinishedOnTime(x)": "x finished her project on time",
+          "ReceiveBonus(x)": "x would receive a bonus from her company",
+          "RealizedNotReceivingBonus(x)": "x realized that she wouldn't be receiving a bonus"
+        },
+        "premises": [
+          "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+          "WorkingHardOnProject(Isabella)",
+          "RealizedNotReceivingBonus(Isabella)"
+        ],
+        "conclusion": "\u00acFinishedOnTime(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"RealizedNotReceivingBonus(x)\": \"x realized that she wouldn't be receiving a bonus\"\n    },\n    \"premises\": [\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"WorkingHardOnProject(Isabella)\",\n        \"RealizedNotReceivingBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "WorkingHardOnProject(x)": "x is working hard on her project",
+          "FinishedOnTime(x)": "x finished her project on time",
+          "ReceiveBonus(x)": "x would receive a bonus from her company",
+          "RealizedNotReceivingBonus(x)": "x realized that she wouldn't be receiving a bonus"
+        },
+        "premises": [
+          "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+          "WorkingHardOnProject(Isabella)",
+          "RealizedNotReceivingBonus(Isabella)"
+        ],
+        "conclusion": "\u00acFinishedOnTime(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"RealizedNotReceivingBonus(x)\": \"x realized that she wouldn't be receiving a bonus\"\n    },\n    \"premises\": [\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"WorkingHardOnProject(Isabella)\",\n        \"RealizedNotReceivingBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.9601709842681885,
+      "time_breakdown": {
+        "formalization": 3.951801061630249,
+        "refinement": 0.004930734634399414,
+        "backtracking": 0,
+        "solving": 0.003432035446166992
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "WorkingHardOnProject(x)": "x is working hard on her project",
+            "FinishedOnTime(x)": "x finished her project on time",
+            "ReceiveBonus(x)": "x would receive a bonus from her company",
+            "RealizedNotReceivingBonus(x)": "x realized that she wouldn't be receiving a bonus"
+          },
+          "premises": [
+            "\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))",
+            "WorkingHardOnProject(Isabella)",
+            "RealizedNotReceivingBonus(Isabella)"
+          ],
+          "conclusion": "\u00acFinishedOnTime(Isabella)",
+          "raw_response": "{\n    \"predicates\": {\n        \"WorkingHardOnProject(x)\": \"x is working hard on her project\",\n        \"FinishedOnTime(x)\": \"x finished her project on time\",\n        \"ReceiveBonus(x)\": \"x would receive a bonus from her company\",\n        \"RealizedNotReceivingBonus(x)\": \"x realized that she wouldn't be receiving a bonus\"\n    },\n    \"premises\": [\n        \"\u2200x (WorkingHardOnProject(x) \u2192 (FinishedOnTime(x) \u2192 ReceiveBonus(x)))\",\n        \"WorkingHardOnProject(Isabella)\",\n        \"RealizedNotReceivingBonus(Isabella)\"\n    ],\n    \"conclusion\": \"\u00acFinishedOnTime(Isabella)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_2",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella had been working hard on her project, knowing that if she finished it on time, she would receive a bonus from her company. However, despite her efforts, Isabella realized that she wouldn't be receiving a bonus as she had hoped.",
+      "question": "Does this infer that isabella finished her project on time?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "LeavesJob(x)": "x leaves his job",
+          "ReceivesSalary(x)": "x receives his salary"
+        },
+        "premises": [
+          "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+          "ReceivesSalary(Mason)"
+        ],
+        "conclusion": "\u00acLeavesJob(Mason)",
+        "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x leaves his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "LeavesJob(x)": "x leaves his job",
+          "ReceivesSalary(x)": "x receives his salary"
+        },
+        "premises": [
+          "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+          "ReceivesSalary(Mason)"
+        ],
+        "conclusion": "\u00acLeavesJob(Mason)",
+        "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x leaves his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.1583945751190186,
+      "time_breakdown": {
+        "formalization": 2.1510121822357178,
+        "refinement": 0.004128456115722656,
+        "backtracking": 0,
+        "solving": 0.003246784210205078
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "LeavesJob(x)": "x leaves his job",
+            "ReceivesSalary(x)": "x receives his salary"
+          },
+          "premises": [
+            "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+            "ReceivesSalary(Mason)"
+          ],
+          "conclusion": "\u00acLeavesJob(Mason)",
+          "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x leaves his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_3",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Mason decides to leave his job, he will not receive any salary. However, against all odds, Mason still receives his salary. He finds himself receiving his regular paycheck.",
+      "question": "Does this infer that mason didn't leave his job?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "LeavesJob(x)": "x decides to leave his job",
+          "ReceivesSalary(x)": "x receives his salary"
+        },
+        "premises": [
+          "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+          "ReceivesSalary(Mason)"
+        ],
+        "conclusion": "\u00acLeavesJob(Mason)",
+        "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x decides to leave his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "LeavesJob(x)": "x decides to leave his job",
+          "ReceivesSalary(x)": "x receives his salary"
+        },
+        "premises": [
+          "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+          "ReceivesSalary(Mason)"
+        ],
+        "conclusion": "\u00acLeavesJob(Mason)",
+        "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x decides to leave his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.1481997966766357,
+      "time_breakdown": {
+        "formalization": 2.140594244003296,
+        "refinement": 0.004090547561645508,
+        "backtracking": 0,
+        "solving": 0.0035085678100585938
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "LeavesJob(x)": "x decides to leave his job",
+            "ReceivesSalary(x)": "x receives his salary"
+          },
+          "premises": [
+            "\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))",
+            "ReceivesSalary(Mason)"
+          ],
+          "conclusion": "\u00acLeavesJob(Mason)",
+          "raw_response": "{\n    \"predicates\": {\"LeavesJob(x)\": \"x decides to leave his job\", \"ReceivesSalary(x)\": \"x receives his salary\"},\n    \"premises\": [\"\u2200x (LeavesJob(x) \u2192 \u00acReceivesSalary(x))\", \"ReceivesSalary(Mason)\"],\n    \"conclusion\": \"\u00acLeavesJob(Mason)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_3",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Mason decides to leave his job, he will not receive any salary. However, against all odds, Mason still receives his salary. He finds himself receiving his regular paycheck.",
+      "question": "Does this infer that mason left his job?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+          "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+          "WonLottery(x)": "x won the lottery",
+          "BoughtHouse(x)": "x bought a house",
+          "NotPurchasingHouse(x)": "x is not purchasing a house"
+        },
+        "premises": [
+          "DreamedOfWinningLottery(Jack)",
+          "EnvisionedFutureWithHouse(Jack)",
+          "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+          "NotPurchasingHouse(Jack)"
+        ],
+        "conclusion": "\u00acWonLottery(Jack)",
+        "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"NotPurchasingHouse(x)\": \"x is not purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"NotPurchasingHouse(Jack)\"],\n    \"conclusion\": \"\u00acWonLottery(Jack)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+          "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+          "WonLottery(x)": "x won the lottery",
+          "BoughtHouse(x)": "x bought a house",
+          "NotPurchasingHouse(x)": "x is not purchasing a house"
+        },
+        "premises": [
+          "DreamedOfWinningLottery(Jack)",
+          "EnvisionedFutureWithHouse(Jack)",
+          "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+          "NotPurchasingHouse(Jack)"
+        ],
+        "conclusion": "\u00acWonLottery(Jack)",
+        "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"NotPurchasingHouse(x)\": \"x is not purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"NotPurchasingHouse(Jack)\"],\n    \"conclusion\": \"\u00acWonLottery(Jack)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 4.486638069152832,
+      "time_breakdown": {
+        "formalization": 4.475279092788696,
+        "refinement": 0.007408857345581055,
+        "backtracking": 0,
+        "solving": 0.003942728042602539
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+            "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+            "WonLottery(x)": "x won the lottery",
+            "BoughtHouse(x)": "x bought a house",
+            "NotPurchasingHouse(x)": "x is not purchasing a house"
+          },
+          "premises": [
+            "DreamedOfWinningLottery(Jack)",
+            "EnvisionedFutureWithHouse(Jack)",
+            "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+            "NotPurchasingHouse(Jack)"
+          ],
+          "conclusion": "\u00acWonLottery(Jack)",
+          "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"NotPurchasingHouse(x)\": \"x is not purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"NotPurchasingHouse(Jack)\"],\n    \"conclusion\": \"\u00acWonLottery(Jack)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_4",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Jack had always dreamed of winning the lottery, envisioning a future where he would be able to buy a beautiful house. If Jack had won the lottery, he would have bought a house. But he won't be purchasing any house for now.",
+      "question": "Does this imply that jack didn't win the lottery?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+          "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+          "WonLottery(x)": "x won the lottery",
+          "BoughtHouse(x)": "x bought a house",
+          "PurchasingHouse(x)": "x is purchasing a house"
+        },
+        "premises": [
+          "DreamedOfWinningLottery(Jack)",
+          "EnvisionedFutureWithHouse(Jack)",
+          "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+          "\u00acPurchasingHouse(Jack)"
+        ],
+        "conclusion": "WonLottery(Jack)",
+        "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"PurchasingHouse(x)\": \"x is purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"\u00acPurchasingHouse(Jack)\"],\n    \"conclusion\": \"WonLottery(Jack)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+          "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+          "WonLottery(x)": "x won the lottery",
+          "BoughtHouse(x)": "x bought a house",
+          "PurchasingHouse(x)": "x is purchasing a house"
+        },
+        "premises": [
+          "DreamedOfWinningLottery(Jack)",
+          "EnvisionedFutureWithHouse(Jack)",
+          "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+          "\u00acPurchasingHouse(Jack)"
+        ],
+        "conclusion": "WonLottery(Jack)",
+        "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"PurchasingHouse(x)\": \"x is purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"\u00acPurchasingHouse(Jack)\"],\n    \"conclusion\": \"WonLottery(Jack)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 4.556026935577393,
+      "time_breakdown": {
+        "formalization": 4.546059608459473,
+        "refinement": 0.005747318267822266,
+        "backtracking": 0,
+        "solving": 0.004213094711303711
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "DreamedOfWinningLottery(x)": "x has dreamed of winning the lottery",
+            "EnvisionedFutureWithHouse(x)": "x envisioned a future with a house",
+            "WonLottery(x)": "x won the lottery",
+            "BoughtHouse(x)": "x bought a house",
+            "PurchasingHouse(x)": "x is purchasing a house"
+          },
+          "premises": [
+            "DreamedOfWinningLottery(Jack)",
+            "EnvisionedFutureWithHouse(Jack)",
+            "WonLottery(Jack) \u2192 BoughtHouse(Jack)",
+            "\u00acPurchasingHouse(Jack)"
+          ],
+          "conclusion": "WonLottery(Jack)",
+          "raw_response": "{\n    \"predicates\": {\"DreamedOfWinningLottery(x)\": \"x has dreamed of winning the lottery\", \"EnvisionedFutureWithHouse(x)\": \"x envisioned a future with a house\", \"WonLottery(x)\": \"x won the lottery\", \"BoughtHouse(x)\": \"x bought a house\", \"PurchasingHouse(x)\": \"x is purchasing a house\"},\n    \"premises\": [\"DreamedOfWinningLottery(Jack)\", \"EnvisionedFutureWithHouse(Jack)\", \"WonLottery(Jack) \u2192 BoughtHouse(Jack)\", \"\u00acPurchasingHouse(Jack)\"],\n    \"conclusion\": \"WonLottery(Jack)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_4",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Jack had always dreamed of winning the lottery, envisioning a future where he would be able to buy a beautiful house. If Jack had won the lottery, he would have bought a house. But he won't be purchasing any house for now.",
+      "question": "Does this infer that jack won the lottery?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "HighestScore(x)": "x has the highest score in the test",
+          "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+        },
+        "premises": [
+          "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+          "\u00acHighestScore(Sophia)"
+        ],
+        "conclusion": "\u00acHighestScore(Sophia)",
+        "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore(Sophia)\"\n    ],\n    \"conclusion\": \"\u00acHighestScore(Sophia)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "HighestScore(x)": "x has the highest score in the test",
+          "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+        },
+        "premises": [
+          "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+          "\u00acHighestScore(Sophia)"
+        ],
+        "conclusion": "\u00acHighestScore(Sophia)",
+        "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore(Sophia)\"\n    ],\n    \"conclusion\": \"\u00acHighestScore(Sophia)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.59124755859375,
+      "time_breakdown": {
+        "formalization": 3.587932825088501,
+        "refinement": 0.002101898193359375,
+        "backtracking": 0,
+        "solving": 0.001207590103149414
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "HighestScore(x)": "x has the highest score in the test",
+            "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+          },
+          "premises": [
+            "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+            "\u00acHighestScore(Sophia)"
+          ],
+          "conclusion": "\u00acHighestScore(Sophia)",
+          "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore(Sophia)\"\n    ],\n    \"conclusion\": \"\u00acHighestScore(Sophia)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_5",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance. However, unfortunately, Sophia didn't achieve the highest score in the test.",
+      "question": "Does this entail that sophia doesn't have the highest score in the test?",
+      "ground_truth": "yes",
+      "converted_answer": "yes",
+      "is_correct": true
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "HighestScore(x)": "x has the highest score in the test",
+          "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+        },
+        "premises": [
+          "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+          "\u00acHighestScore('Sophia')"
+        ],
+        "conclusion": "HighestScore('Sophia')",
+        "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore('Sophia')\"\n    ],\n    \"conclusion\": \"HighestScore('Sophia')\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "HighestScore(x)": "x has the highest score in the test",
+          "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+        },
+        "premises": [
+          "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+          "\u00acHighestScore('Sophia')"
+        ],
+        "conclusion": "HighestScore('Sophia')",
+        "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore('Sophia')\"\n    ],\n    \"conclusion\": \"HighestScore('Sophia')\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.1996591091156006,
+      "time_breakdown": {
+        "formalization": 3.182201623916626,
+        "refinement": 0.014641761779785156,
+        "backtracking": 0,
+        "solving": 0.002809286117553711
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "HighestScore(x)": "x has the highest score in the test",
+            "AwardedMedal(x)": "x is awarded a medal for outstanding performance"
+          },
+          "premises": [
+            "\u2200x (HighestScore(x) \u2192 AwardedMedal(x))",
+            "\u00acHighestScore('Sophia')"
+          ],
+          "conclusion": "HighestScore('Sophia')",
+          "raw_response": "{\n    \"predicates\": {\n        \"HighestScore(x)\": \"x has the highest score in the test\",\n        \"AwardedMedal(x)\": \"x is awarded a medal for outstanding performance\"\n    },\n    \"premises\": [\n        \"\u2200x (HighestScore(x) \u2192 AwardedMedal(x))\",\n        \"\u00acHighestScore('Sophia')\"\n    ],\n    \"conclusion\": \"HighestScore('Sophia')\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_5",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance. However, unfortunately, Sophia didn't achieve the highest score in the test.",
+      "question": "Does this imply that sophia has the highest score in the test?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "Forgetful(x)": "x is forgetful",
+          "WearsSweater(x)": "x wears a sweater",
+          "CatchesCold(x)": "x catches a cold"
+        },
+        "premises": [
+          "Forgetful(James)",
+          "\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))",
+          "\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))",
+          "\u00acCatchesCold(James)"
+        ],
+        "conclusion": "WearsSweater(James)",
+        "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearsSweater(x)\": \"x wears a sweater\",\n        \"CatchesCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))\",\n        \"\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))\",\n        \"\u00acCatchesCold(James)\"\n    ],\n    \"conclusion\": \"WearsSweater(James)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "Forgetful(x)": "x is forgetful",
+          "WearsSweater(x)": "x wears a sweater",
+          "CatchesCold(x)": "x catches a cold"
+        },
+        "premises": [
+          "Forgetful(James)",
+          "\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))",
+          "\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))",
+          "\u00acCatchesCold(James)"
+        ],
+        "conclusion": "WearsSweater(James)",
+        "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearsSweater(x)\": \"x wears a sweater\",\n        \"CatchesCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))\",\n        \"\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))\",\n        \"\u00acCatchesCold(James)\"\n    ],\n    \"conclusion\": \"WearsSweater(James)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 4.094802379608154,
+      "time_breakdown": {
+        "formalization": 4.086894512176514,
+        "refinement": 0.004578828811645508,
+        "backtracking": 0,
+        "solving": 0.003322124481201172
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "Forgetful(x)": "x is forgetful",
+            "WearsSweater(x)": "x wears a sweater",
+            "CatchesCold(x)": "x catches a cold"
+          },
+          "premises": [
+            "Forgetful(James)",
+            "\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))",
+            "\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))",
+            "\u00acCatchesCold(James)"
+          ],
+          "conclusion": "WearsSweater(James)",
+          "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearsSweater(x)\": \"x wears a sweater\",\n        \"CatchesCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearsSweater(x))\",\n        \"\u2200x ((\u00acWearsSweater(x)) \u2192 CatchesCold(x))\",\n        \"\u00acCatchesCold(James)\"\n    ],\n    \"conclusion\": \"WearsSweater(James)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_6",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "James had always been forgetful, especially when it came to wearing a sweater. His mother had repeatedly told him, 'If he forgets to wear a sweater, then he will catch a cold.' Throughout the day, he went about his activities, oblivious to the dropping temperature. Hours later, he returned home, but James didn't catch a cold.",
+      "question": "Does this infer that james didn't forget to wear a sweater?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "Forgetful(x)": "x is forgetful",
+          "WearSweater(x)": "x wears a sweater",
+          "CatchCold(x)": "x catches a cold"
+        },
+        "premises": [
+          "Forgetful(James)",
+          "\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))",
+          "\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))",
+          "\u00acCatchCold(James)"
+        ],
+        "conclusion": "WearSweater(James)",
+        "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearSweater(x)\": \"x wears a sweater\",\n        \"CatchCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))\",\n        \"\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))\",\n        \"\u00acCatchCold(James)\"\n    ],\n    \"conclusion\": \"WearSweater(James)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "Forgetful(x)": "x is forgetful",
+          "WearSweater(x)": "x wears a sweater",
+          "CatchCold(x)": "x catches a cold"
+        },
+        "premises": [
+          "Forgetful(James)",
+          "\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))",
+          "\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))",
+          "\u00acCatchCold(James)"
+        ],
+        "conclusion": "WearSweater(James)",
+        "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearSweater(x)\": \"x wears a sweater\",\n        \"CatchCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))\",\n        \"\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))\",\n        \"\u00acCatchCold(James)\"\n    ],\n    \"conclusion\": \"WearSweater(James)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.9062142372131348,
+      "time_breakdown": {
+        "formalization": 3.8982038497924805,
+        "refinement": 0.0048253536224365234,
+        "backtracking": 0,
+        "solving": 0.003177642822265625
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "Forgetful(x)": "x is forgetful",
+            "WearSweater(x)": "x wears a sweater",
+            "CatchCold(x)": "x catches a cold"
+          },
+          "premises": [
+            "Forgetful(James)",
+            "\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))",
+            "\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))",
+            "\u00acCatchCold(James)"
+          ],
+          "conclusion": "WearSweater(James)",
+          "raw_response": "{\n    \"predicates\": {\n        \"Forgetful(x)\": \"x is forgetful\",\n        \"WearSweater(x)\": \"x wears a sweater\",\n        \"CatchCold(x)\": \"x catches a cold\"\n    },\n    \"premises\": [\n        \"Forgetful(James)\",\n        \"\u2200x (Forgetful(x) \u2192 \u00acWearSweater(x))\",\n        \"\u2200x ((\u00acWearSweater(x)) \u2192 CatchCold(x))\",\n        \"\u00acCatchCold(James)\"\n    ],\n    \"conclusion\": \"WearSweater(James)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_6",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "James had always been forgetful, especially when it came to wearing a sweater. His mother had repeatedly told him, 'If he forgets to wear a sweater, then he will catch a cold.' Throughout the day, he went about his activities, oblivious to the dropping temperature. Hours later, he returned home, but James didn't catch a cold.",
+      "question": "Does this imply that james forgot to wear a sweater?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+          "FeelsSatisfied(x)": "x feels satisfied",
+          "Rule(x)": "The rule that if x ate a sandwich for lunch, x would not feel satisfied"
+        },
+        "premises": [
+          "AteSandwichForLunch(Isabella)",
+          "FeelsSatisfied(Isabella)",
+          "\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))"
+        ],
+        "conclusion": "\u00acAteSandwichForLunch(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule that if x ate a sandwich for lunch, x would not feel satisfied\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))\"\n    ],\n    \"conclusion\": \"\u00acAteSandwichForLunch(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+          "FeelsSatisfied(x)": "x feels satisfied",
+          "Rule(x)": "The rule that if x ate a sandwich for lunch, x would not feel satisfied"
+        },
+        "premises": [
+          "AteSandwichForLunch(Isabella)",
+          "FeelsSatisfied(Isabella)",
+          "\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))"
+        ],
+        "conclusion": "\u00acAteSandwichForLunch(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule that if x ate a sandwich for lunch, x would not feel satisfied\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))\"\n    ],\n    \"conclusion\": \"\u00acAteSandwichForLunch(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 4.1363914012908936,
+      "time_breakdown": {
+        "formalization": 4.1276044845581055,
+        "refinement": 0.005287885665893555,
+        "backtracking": 0,
+        "solving": 0.0034918785095214844
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+            "FeelsSatisfied(x)": "x feels satisfied",
+            "Rule(x)": "The rule that if x ate a sandwich for lunch, x would not feel satisfied"
+          },
+          "premises": [
+            "AteSandwichForLunch(Isabella)",
+            "FeelsSatisfied(Isabella)",
+            "\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))"
+          ],
+          "conclusion": "\u00acAteSandwichForLunch(Isabella)",
+          "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule that if x ate a sandwich for lunch, x would not feel satisfied\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x))\"\n    ],\n    \"conclusion\": \"\u00acAteSandwichForLunch(Isabella)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_7",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella decided to have a sandwich for her lunch. As she took a bite, she couldn't help but feel completely satisfied. This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.",
+      "question": "Does this imply that isabella didn't eat a sandwich for lunch?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Proved",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+          "FeelsSatisfied(x)": "x feels satisfied",
+          "Rule(x)": "The rule applies to x"
+        },
+        "premises": [
+          "AteSandwichForLunch(Isabella)",
+          "FeelsSatisfied(Isabella)",
+          "\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))",
+          "Rule(Isabella)"
+        ],
+        "conclusion": "AteSandwichForLunch(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule applies to x\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))\",\n        \"Rule(Isabella)\"\n    ],\n    \"conclusion\": \"AteSandwichForLunch(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+          "FeelsSatisfied(x)": "x feels satisfied",
+          "Rule(x)": "The rule applies to x"
+        },
+        "premises": [
+          "AteSandwichForLunch(Isabella)",
+          "FeelsSatisfied(Isabella)",
+          "\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))",
+          "Rule(Isabella)"
+        ],
+        "conclusion": "AteSandwichForLunch(Isabella)",
+        "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule applies to x\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))\",\n        \"Rule(Isabella)\"\n    ],\n    \"conclusion\": \"AteSandwichForLunch(Isabella)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 3.7629361152648926,
+      "time_breakdown": {
+        "formalization": 3.7592079639434814,
+        "refinement": 0.00225067138671875,
+        "backtracking": 0,
+        "solving": 0.001470804214477539
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "AteSandwichForLunch(x)": "x ate a sandwich for lunch",
+            "FeelsSatisfied(x)": "x feels satisfied",
+            "Rule(x)": "The rule applies to x"
+          },
+          "premises": [
+            "AteSandwichForLunch(Isabella)",
+            "FeelsSatisfied(Isabella)",
+            "\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))",
+            "Rule(Isabella)"
+          ],
+          "conclusion": "AteSandwichForLunch(Isabella)",
+          "raw_response": "{\n    \"predicates\": {\n        \"AteSandwichForLunch(x)\": \"x ate a sandwich for lunch\",\n        \"FeelsSatisfied(x)\": \"x feels satisfied\",\n        \"Rule(x)\": \"The rule applies to x\"\n    },\n    \"premises\": [\n        \"AteSandwichForLunch(Isabella)\",\n        \"FeelsSatisfied(Isabella)\",\n        \"\u2200x (Rule(x) \u2192 (AteSandwichForLunch(x) \u2192 \u00acFeelsSatisfied(x)))\",\n        \"Rule(Isabella)\"\n    ],\n    \"conclusion\": \"AteSandwichForLunch(Isabella)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_7",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Isabella decided to have a sandwich for her lunch. As she took a bite, she couldn't help but feel completely satisfied. This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.",
+      "question": "Does this infer that isabella ate a sandwich for lunch?",
+      "ground_truth": "no",
+      "converted_answer": "yes",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "WokeUp(x)": "x woke up",
+          "GloomyMorning(x)": "x experienced a gloomy morning",
+          "ForgotUmbrella(x)": "x forgot his umbrella",
+          "GetWet(x)": "x would get wet in the rain",
+          "Worried(x)": "x felt a sense of worry",
+          "StayDry(x)": "x managed to stay dry",
+          "Relieved(x)": "x was relieved",
+          "Consequences(x)": "x faced the consequences of getting wet in the rain"
+        },
+        "premises": [
+          "WokeUp(Daniel) \u2227 GloomyMorning(Daniel)",
+          "ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)",
+          "ForgotUmbrella(Daniel) \u2192 Worried(Daniel)",
+          "StayDry(Daniel) \u2227 \u00acConsequences(Daniel)",
+          "Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))"
+        ],
+        "conclusion": "\u00acForgotUmbrella(Daniel)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x experienced a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWet(x)\": \"x would get wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"Consequences(x)\": \"x faced the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"WokeUp(Daniel) \u2227 GloomyMorning(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 Worried(Daniel)\",\n        \"StayDry(Daniel) \u2227 \u00acConsequences(Daniel)\",\n        \"Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))\"\n    ],\n    \"conclusion\": \"\u00acForgotUmbrella(Daniel)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "WokeUp(x)": "x woke up",
+          "GloomyMorning(x)": "x experienced a gloomy morning",
+          "ForgotUmbrella(x)": "x forgot his umbrella",
+          "GetWet(x)": "x would get wet in the rain",
+          "Worried(x)": "x felt a sense of worry",
+          "StayDry(x)": "x managed to stay dry",
+          "Relieved(x)": "x was relieved",
+          "Consequences(x)": "x faced the consequences of getting wet in the rain"
+        },
+        "premises": [
+          "WokeUp(Daniel) \u2227 GloomyMorning(Daniel)",
+          "ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)",
+          "ForgotUmbrella(Daniel) \u2192 Worried(Daniel)",
+          "StayDry(Daniel) \u2227 \u00acConsequences(Daniel)",
+          "Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))"
+        ],
+        "conclusion": "\u00acForgotUmbrella(Daniel)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x experienced a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWet(x)\": \"x would get wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"Consequences(x)\": \"x faced the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"WokeUp(Daniel) \u2227 GloomyMorning(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 Worried(Daniel)\",\n        \"StayDry(Daniel) \u2227 \u00acConsequences(Daniel)\",\n        \"Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))\"\n    ],\n    \"conclusion\": \"\u00acForgotUmbrella(Daniel)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 5.812506675720215,
+      "time_breakdown": {
+        "formalization": 5.801975250244141,
+        "refinement": 0.006281375885009766,
+        "backtracking": 0,
+        "solving": 0.0042438507080078125
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "WokeUp(x)": "x woke up",
+            "GloomyMorning(x)": "x experienced a gloomy morning",
+            "ForgotUmbrella(x)": "x forgot his umbrella",
+            "GetWet(x)": "x would get wet in the rain",
+            "Worried(x)": "x felt a sense of worry",
+            "StayDry(x)": "x managed to stay dry",
+            "Relieved(x)": "x was relieved",
+            "Consequences(x)": "x faced the consequences of getting wet in the rain"
+          },
+          "premises": [
+            "WokeUp(Daniel) \u2227 GloomyMorning(Daniel)",
+            "ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)",
+            "ForgotUmbrella(Daniel) \u2192 Worried(Daniel)",
+            "StayDry(Daniel) \u2227 \u00acConsequences(Daniel)",
+            "Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))"
+          ],
+          "conclusion": "\u00acForgotUmbrella(Daniel)",
+          "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x experienced a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWet(x)\": \"x would get wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"Consequences(x)\": \"x faced the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"WokeUp(Daniel) \u2227 GloomyMorning(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 GetWet(Daniel)\",\n        \"ForgotUmbrella(Daniel) \u2192 Worried(Daniel)\",\n        \"StayDry(Daniel) \u2227 \u00acConsequences(Daniel)\",\n        \"Relieved(Daniel) \u2192 (StayDry(Daniel) \u2227 \u00acGetWet(Daniel))\"\n    ],\n    \"conclusion\": \"\u00acForgotUmbrella(Daniel)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_8",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Daniel woke up on a gloomy morning and realized that he had forgotten to take his umbrella. Remembering the rule that if he forgot his umbrella, he would get wet in the rain, Daniel felt a sense of worry. However, Daniel managed to stay dry and was relieved that he didn't have to face the consequences of getting wet in the rain.",
+      "question": "Does this imply that daniel didn't forget to take his umbrella?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "WokeUp(x)": "x woke up",
+          "GloomyMorning(x)": "x is a gloomy morning",
+          "ForgotUmbrella(x)": "x forgot his umbrella",
+          "GetWetInRain(x)": "x gets wet in the rain",
+          "Worried(x)": "x felt a sense of worry",
+          "StayDry(x)": "x managed to stay dry",
+          "Relieved(x)": "x was relieved",
+          "FaceConsequences(x)": "x had to face the consequences of getting wet in the rain"
+        },
+        "premises": [
+          "\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))",
+          "\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))",
+          "\u2200x (ForgotUmbrella(x) \u2192 Worried(x))",
+          "\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))",
+          "\u2200x (StayDry(x) \u2192 Relieved(x))",
+          "\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))"
+        ],
+        "conclusion": "ForgotUmbrella(Daniel)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x is a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWetInRain(x)\": \"x gets wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"FaceConsequences(x)\": \"x had to face the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 Worried(x))\",\n        \"\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))\",\n        \"\u2200x (StayDry(x) \u2192 Relieved(x))\",\n        \"\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))\"\n    ],\n    \"conclusion\": \"ForgotUmbrella(Daniel)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "WokeUp(x)": "x woke up",
+          "GloomyMorning(x)": "x is a gloomy morning",
+          "ForgotUmbrella(x)": "x forgot his umbrella",
+          "GetWetInRain(x)": "x gets wet in the rain",
+          "Worried(x)": "x felt a sense of worry",
+          "StayDry(x)": "x managed to stay dry",
+          "Relieved(x)": "x was relieved",
+          "FaceConsequences(x)": "x had to face the consequences of getting wet in the rain"
+        },
+        "premises": [
+          "\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))",
+          "\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))",
+          "\u2200x (ForgotUmbrella(x) \u2192 Worried(x))",
+          "\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))",
+          "\u2200x (StayDry(x) \u2192 Relieved(x))",
+          "\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))"
+        ],
+        "conclusion": "ForgotUmbrella(Daniel)",
+        "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x is a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWetInRain(x)\": \"x gets wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"FaceConsequences(x)\": \"x had to face the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 Worried(x))\",\n        \"\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))\",\n        \"\u2200x (StayDry(x) \u2192 Relieved(x))\",\n        \"\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))\"\n    ],\n    \"conclusion\": \"ForgotUmbrella(Daniel)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 7.985707759857178,
+      "time_breakdown": {
+        "formalization": 7.978034973144531,
+        "refinement": 0.004439353942871094,
+        "backtracking": 0,
+        "solving": 0.00322723388671875
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "WokeUp(x)": "x woke up",
+            "GloomyMorning(x)": "x is a gloomy morning",
+            "ForgotUmbrella(x)": "x forgot his umbrella",
+            "GetWetInRain(x)": "x gets wet in the rain",
+            "Worried(x)": "x felt a sense of worry",
+            "StayDry(x)": "x managed to stay dry",
+            "Relieved(x)": "x was relieved",
+            "FaceConsequences(x)": "x had to face the consequences of getting wet in the rain"
+          },
+          "premises": [
+            "\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))",
+            "\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))",
+            "\u2200x (ForgotUmbrella(x) \u2192 Worried(x))",
+            "\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))",
+            "\u2200x (StayDry(x) \u2192 Relieved(x))",
+            "\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))"
+          ],
+          "conclusion": "ForgotUmbrella(Daniel)",
+          "raw_response": "{\n    \"predicates\": {\n        \"WokeUp(x)\": \"x woke up\",\n        \"GloomyMorning(x)\": \"x is a gloomy morning\",\n        \"ForgotUmbrella(x)\": \"x forgot his umbrella\",\n        \"GetWetInRain(x)\": \"x gets wet in the rain\",\n        \"Worried(x)\": \"x felt a sense of worry\",\n        \"StayDry(x)\": \"x managed to stay dry\",\n        \"Relieved(x)\": \"x was relieved\",\n        \"FaceConsequences(x)\": \"x had to face the consequences of getting wet in the rain\"\n    },\n    \"premises\": [\n        \"\u2200x (WokeUp(x) \u2227 GloomyMorning(x) \u2192 ForgotUmbrella(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 GetWetInRain(x))\",\n        \"\u2200x (ForgotUmbrella(x) \u2192 Worried(x))\",\n        \"\u2200x (StayDry(x) \u2192 \u00acGetWetInRain(x))\",\n        \"\u2200x (StayDry(x) \u2192 Relieved(x))\",\n        \"\u2200x (Relieved(x) \u2192 \u00acFaceConsequences(x))\"\n    ],\n    \"conclusion\": \"ForgotUmbrella(Daniel)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_8",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "Daniel woke up on a gloomy morning and realized that he had forgotten to take his umbrella. Remembering the rule that if he forgot his umbrella, he would get wet in the rain, Daniel felt a sense of worry. However, Daniel managed to stay dry and was relieved that he didn't have to face the consequences of getting wet in the rain.",
+      "question": "Does this infer that daniel forgot to take his umbrella?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "HasPetDog(x)": "x has a pet dog",
+          "TakesDogForWalk(x)": "x takes his dog for a walk"
+        },
+        "premises": [
+          "\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))",
+          "\u00acTakesDogForWalk(Theodore)"
+        ],
+        "conclusion": "\u00acHasPetDog(Theodore)",
+        "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogForWalk(x)\": \"x takes his dog for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))\", \"\u00acTakesDogForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "HasPetDog(x)": "x has a pet dog",
+          "TakesDogForWalk(x)": "x takes his dog for a walk"
+        },
+        "premises": [
+          "\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))",
+          "\u00acTakesDogForWalk(Theodore)"
+        ],
+        "conclusion": "\u00acHasPetDog(Theodore)",
+        "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogForWalk(x)\": \"x takes his dog for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))\", \"\u00acTakesDogForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.5953571796417236,
+      "time_breakdown": {
+        "formalization": 2.588533639907837,
+        "refinement": 0.00393986701965332,
+        "backtracking": 0,
+        "solving": 0.002876758575439453
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "HasPetDog(x)": "x has a pet dog",
+            "TakesDogForWalk(x)": "x takes his dog for a walk"
+          },
+          "premises": [
+            "\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))",
+            "\u00acTakesDogForWalk(Theodore)"
+          ],
+          "conclusion": "\u00acHasPetDog(Theodore)",
+          "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogForWalk(x)\": \"x takes his dog for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogForWalk(x))\", \"\u00acTakesDogForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_9",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Theodore has a pet dog, he will take it out for a walk. However, he would not take his dog out for a walk.",
+      "question": "Does this imply that theodore doesn't have a pet dog?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "HasPetDog(x)": "x has a pet dog",
+          "TakesDogOutForWalk(x)": "x takes his dog out for a walk"
+        },
+        "premises": [
+          "\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))",
+          "\u00acTakesDogOutForWalk(Theodore)"
+        ],
+        "conclusion": "\u00acHasPetDog(Theodore)",
+        "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogOutForWalk(x)\": \"x takes his dog out for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))\", \"\u00acTakesDogOutForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "HasPetDog(x)": "x has a pet dog",
+          "TakesDogOutForWalk(x)": "x takes his dog out for a walk"
+        },
+        "premises": [
+          "\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))",
+          "\u00acTakesDogOutForWalk(Theodore)"
+        ],
+        "conclusion": "\u00acHasPetDog(Theodore)",
+        "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogOutForWalk(x)\": \"x takes his dog out for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))\", \"\u00acTakesDogOutForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.629077434539795,
+      "time_breakdown": {
+        "formalization": 2.622690200805664,
+        "refinement": 0.0037147998809814453,
+        "backtracking": 0,
+        "solving": 0.002664804458618164
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "HasPetDog(x)": "x has a pet dog",
+            "TakesDogOutForWalk(x)": "x takes his dog out for a walk"
+          },
+          "premises": [
+            "\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))",
+            "\u00acTakesDogOutForWalk(Theodore)"
+          ],
+          "conclusion": "\u00acHasPetDog(Theodore)",
+          "raw_response": "{\n    \"predicates\": {\"HasPetDog(x)\": \"x has a pet dog\", \"TakesDogOutForWalk(x)\": \"x takes his dog out for a walk\"},\n    \"premises\": [\"\u2200x (HasPetDog(x) \u2192 TakesDogOutForWalk(x))\", \"\u00acTakesDogOutForWalk(Theodore)\"],\n    \"conclusion\": \"\u00acHasPetDog(Theodore)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_9",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Theodore has a pet dog, he will take it out for a walk. However, he would not take his dog out for a walk.",
+      "question": "Does this entail that theodore has a pet dog?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "NewJob(x)": "x has a new job",
+          "GetRaise(x)": "x will get a raise",
+          "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+          "\u00acAnticipatedRaise(Elijah)"
+        ],
+        "conclusion": "\u00acNewJob(Elijah)",
+        "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"\u00acNewJob(Elijah)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "NewJob(x)": "x has a new job",
+          "GetRaise(x)": "x will get a raise",
+          "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+          "\u00acAnticipatedRaise(Elijah)"
+        ],
+        "conclusion": "\u00acNewJob(Elijah)",
+        "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"\u00acNewJob(Elijah)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.576125383377075,
+      "time_breakdown": {
+        "formalization": 2.569678544998169,
+        "refinement": 0.0037376880645751953,
+        "backtracking": 0,
+        "solving": 0.0027017593383789062
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "NewJob(x)": "x has a new job",
+            "GetRaise(x)": "x will get a raise",
+            "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+          },
+          "premises": [
+            "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+            "\u00acAnticipatedRaise(Elijah)"
+          ],
+          "conclusion": "\u00acNewJob(Elijah)",
+          "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"\u00acNewJob(Elijah)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_10",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Elijah has a new job, then he will get a raise. However, he would not be receiving the raise he had anticipated.",
+      "question": "Does this infer that elijah doesn't have a new job?",
+      "ground_truth": "yes",
+      "converted_answer": "unknown",
+      "is_correct": false
+    },
+    {
+      "answer": "Unknown",
+      "correct": false,
+      "final_formulation": {
+        "predicates": {
+          "NewJob(x)": "x has a new job",
+          "GetRaise(x)": "x will get a raise",
+          "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+          "\u00acAnticipatedRaise(Elijah)"
+        ],
+        "conclusion": "NewJob(Elijah)",
+        "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"NewJob(Elijah)\"\n}",
+        "formalization_error": null
+      },
+      "initial_formulation": {
+        "predicates": {
+          "NewJob(x)": "x has a new job",
+          "GetRaise(x)": "x will get a raise",
+          "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+        },
+        "premises": [
+          "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+          "\u00acAnticipatedRaise(Elijah)"
+        ],
+        "conclusion": "NewJob(Elijah)",
+        "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"NewJob(Elijah)\"\n}",
+        "formalization_error": null
+      },
+      "num_refinement_iterations": 0,
+      "backtracking_history": [],
+      "num_backtracks": 0,
+      "early_stop_reason": "solver_success",
+      "total_llm_calls": 1,
+      "total_time": 2.7234652042388916,
+      "time_breakdown": {
+        "formalization": 2.716362237930298,
+        "refinement": 0.004076480865478516,
+        "backtracking": 0,
+        "solving": 0.003019571304321289
+      },
+      "formalization_success": true,
+      "execution_success": true,
+      "execution_accuracy": false,
+      "formulation_history": [
+        {
+          "predicates": {
+            "NewJob(x)": "x has a new job",
+            "GetRaise(x)": "x will get a raise",
+            "AnticipatedRaise(x)": "x is receiving the raise he had anticipated"
+          },
+          "premises": [
+            "\u2200x (NewJob(x) \u2192 GetRaise(x))",
+            "\u00acAnticipatedRaise(Elijah)"
+          ],
+          "conclusion": "NewJob(Elijah)",
+          "raw_response": "{\n    \"predicates\": {\"NewJob(x)\": \"x has a new job\", \"GetRaise(x)\": \"x will get a raise\", \"AnticipatedRaise(x)\": \"x is receiving the raise he had anticipated\"},\n    \"premises\": [\"\u2200x (NewJob(x) \u2192 GetRaise(x))\", \"\u00acAnticipatedRaise(Elijah)\"],\n    \"conclusion\": \"NewJob(Elijah)\"\n}",
+          "formalization_error": null
+        }
+      ],
+      "error": null,
+      "example_id": "modus_tollens_10",
+      "rule_type": "propositional_logic",
+      "axiom": "modus_tollens",
+      "context": "If Elijah has a new job, then he will get a raise. However, he would not be receiving the raise he had anticipated.",
+      "question": "Does this infer that elijah has a new job?",
+      "ground_truth": "no",
+      "converted_answer": "unknown",
+      "is_correct": false
+    }
+  ]
+}
