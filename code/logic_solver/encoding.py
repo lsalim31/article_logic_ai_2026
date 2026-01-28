@@ -4,10 +4,6 @@ encoding.py - Convert logified structure to SAT encoding
 
 This module converts the logified JSON structure (propositions, hard/soft constraints)
 into a format suitable for PySAT's RC2 MaxSAT solver.
-
-Soft constraints are encoded using selector literals (indicator variables) to ensure
-each constraint contributes exactly its weight when violated.
-Reference: Ignatiev et al. "RC2: an Efficient MaxSAT Solver" (JSAT 2019)
 """
 
 import re
@@ -94,7 +90,7 @@ class FormulaParser:
         left, tokens = self._parse_implies(tokens)
 
         while tokens and tokens[0] == '<=>':
-            tokens = tokens[1:]  # consume '<=>'
+            tokens = tokens[1:]  # consume '<='
             right, tokens = self._parse_implies(tokens)
             # A <=> B is (A => B) & (B => A)
             left = ('&', ('=>', left, right), ('=>', right, left))
@@ -277,7 +273,6 @@ class LogicEncoder:
         self.prop_to_var: Dict[str, int] = {}  # P_1 -> 1, P_2 -> 2, etc.
         self.var_to_prop: Dict[int, str] = {}  # Reverse mapping
         self.wcnf = WCNF()
-        self._next_var = 1  # Track next available variable for selector literals
 
         # Build proposition mapping
         self._build_prop_mapping()
@@ -291,15 +286,10 @@ class LogicEncoder:
             prop_id = prop['id']
             self.prop_to_var[prop_id] = i
             self.var_to_prop[i] = prop_id
-        # Set next available variable after all propositions
-        self._next_var = len(self.prop_to_var) + 1
 
     def encode(self) -> WCNF:
         """
         Encode the logified structure as WCNF.
-
-        Uses selector literals for soft constraints to ensure each constraint
-        contributes exactly its weight when violated.
 
         Returns:
             WCNF object with hard and soft constraints
@@ -311,15 +301,7 @@ class LogicEncoder:
             for clause in clauses:
                 self.wcnf.append(clause)  # Hard clause (no weight = infinite)
 
-        # Encode soft constraints using selector literals
-        # Reference: Ignatiev et al. "RC2: an Efficient MaxSAT Solver" (JSAT 2019)
-        #
-        # Each soft constraint gets a selector variable r_i, with:
-        #   - Hard clauses: r_i => phi (i.e., -r_i \/ clause for each clause in phi)
-        #   - Soft clause: [r_i] with the constraint's weight
-        #
-        # This ensures each constraint contributes exactly its weight when violated,
-        # regardless of how many CNF clauses the formula expands to.
+        # Encode soft constraints (weighted)
         for constraint in self.structure.get('soft_constraints', []):
             formula = constraint['formula']
             weight_raw = constraint.get('weight', 0.5)  # Default weight if not provided
@@ -346,19 +328,8 @@ class LogicEncoder:
                 int_weight = max(1, int(log_odds * 1000))
 
             clauses = self.parser.parse(formula)
-
-            # Create selector variable for this constraint
-            selector = self._next_var
-            self._next_var += 1
-
-            # Add hard clauses: selector => clause (i.e., -selector \/ clause)
-            # If selector is true, all clauses must be satisfied
             for clause in clauses:
-                self.wcnf.append([-selector] + clause)
-
-            # Add single soft clause: prefer selector = true
-            # The solver pays int_weight cost to set selector = false (violate constraint)
-            self.wcnf.append([selector], weight=int_weight)
+                self.wcnf.append(clause, weight=int_weight)
 
         return self.wcnf
 
