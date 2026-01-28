@@ -10,6 +10,8 @@ This directory contains the implementation of the Logify framework for convertin
 cd code
 pip install -r requirements.txt
 pip install -e .  # Install in development mode
+python -c "import stanza; stanza.install_corenlp()"
+python -c "import stanza; stanza.download('en', processors='pos', package='combined_charlm')"
 ```
 
 ### Basic Usage
