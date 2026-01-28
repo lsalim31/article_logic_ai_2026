@@ -304,7 +304,17 @@ class LogicEncoder:
         # Encode soft constraints (weighted)
         for constraint in self.structure.get('soft_constraints', []):
             formula = constraint['formula']
-            weight = constraint.get('weight', 0.5)  # Default weight if not provided
+            weight_raw = constraint.get('weight', 0.5)  # Default weight if not provided
+
+            # Handle weight array from weights.py: [prob_yes_orig, prob_yes_neg, confidence]
+            # Extract the third element (confidence) if it's an array
+            if isinstance(weight_raw, list):
+                if len(weight_raw) >= 3:
+                    weight = weight_raw[2]  # Use confidence (third element)
+                else:
+                    weight = 0.5  # Fallback if array is too short
+            else:
+                weight = weight_raw  # Use as-is if it's already a float
 
             # Convert weight to integer weight for MaxSAT
             # We use log-odds: w / (1-w) and scale by 1000
