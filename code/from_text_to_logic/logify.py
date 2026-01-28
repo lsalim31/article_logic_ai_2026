@@ -101,7 +101,7 @@ def extract_text_from_document(file_path: str) -> str:
 class LogifyConverter:
     """Orchestrates the two-stage text-to-logic conversion pipeline."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "medium", max_tokens: int = 64000):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "medium", max_tokens: int = 128000):
         """
         Initialize the pipeline with both stages.
 
@@ -110,7 +110,7 @@ class LogifyConverter:
             model (str): Model to use (default: gpt-5.2 with extended thinking)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
             reasoning_effort (str): Reasoning effort for gpt-5.2/o1/o3 models (default: medium)
-            max_tokens (int): Maximum tokens in response (default: 64000)
+            max_tokens (int): Maximum tokens in response (default: 128000)
         """
         # Stage 1: OpenIE extraction
         self.extractor = OpenIEExtractor()
@@ -187,8 +187,8 @@ def main():
     parser.add_argument(
         "--max-tokens",
         type=int,
-        default=64000,
-        help="Maximum tokens in response (default: 64000)"
+        default=128000,
+        help="Maximum tokens in response (default: 128000)"
     )
     parser.add_argument("--output", default=None, help="Output JSON file path (default: auto-generated based on input file)")
 
