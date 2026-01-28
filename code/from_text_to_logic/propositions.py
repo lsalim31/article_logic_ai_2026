@@ -1,1 +1,0 @@
-# Extract propositions from text
