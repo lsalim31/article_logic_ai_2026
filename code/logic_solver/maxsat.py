@@ -391,8 +391,11 @@ class LogicSolver:
         satisfied_weight = 0.0
 
         for constraint in self.structure.get('soft_constraints', []):
-            weight = constraint.get('weight', 0.5)
+            # Weight is [prob_yes_orig, prob_yes_neg, confidence] - use third element
+            weight_raw = constraint.get('weight', [0.5, 0.5, 0.5])
+            weight = weight_raw[2]
             formula = constraint['formula']
+
 
             try:
                 # Check if this soft constraint is satisfied by the model
