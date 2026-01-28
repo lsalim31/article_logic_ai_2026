@@ -22,7 +22,9 @@ Note on logic types:
 """
 
 # Model configuration
-MODEL_NAME = "gpt-4"  # Fixed: removed "openai/" prefix for API compatibility
+# WARNING: DO NOT CHANGE THIS MODEL. EVER.
+# The baseline results are calibrated to gpt-5-nano and changing this will invalidate all comparisons.
+MODEL_NAME = "gpt-5-nano"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 

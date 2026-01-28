@@ -257,9 +257,9 @@ def main():
     """
     # Configuration
     LOGIC_TYPE = 'propositional_logic'  # or 'first_order_logic'
-    PATTERNS = ['modus_tollens', 'disjunctive_syllogism']  # Specific patterns to test
-    MAX_EXAMPLES_PER_PATTERN = 10  # Limit examples per pattern
-    OUTPUT_DIR = 'data/logicbench_results'
+    PATTERNS = ['modus_tollens', 'disjunctive_syllogism', 'hypothetical_syllogism', 'constructive_dilemma', 'destructive_dilemma', 'bidirectional_dilemma', 'commutation', 'material_implication']  # All propositional patterns
+    MAX_EXAMPLES_PER_PATTERN = None  # Load all available examples
+    OUTPUT_DIR = 'data/logicbench_all_prop_results'
 
     print("="*60)
     print("LogicBench FOL vs Propositional Extraction Experiment")
