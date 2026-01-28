@@ -287,45 +287,86 @@ class LogicEncoder:
             self.prop_to_var[prop_id] = i
             self.var_to_prop[i] = prop_id
 
+    def _extract_weight(self, constraint: Dict[str, Any], default: float = 0.5) -> float:
+        """
+        Extract weight from constraint, handling both float and array formats.
+
+        Args:
+            constraint: Constraint dict with optional 'weight' field
+            default: Default weight if not provided
+
+        Returns:
+            Weight as float
+        """
+        weight_raw = constraint.get('weight', default)
+
+        # Handle weight array from weights.py: [prob_yes_orig, prob_yes_neg, confidence]
+        # Extract the third element (confidence) if it's an array
+        if isinstance(weight_raw, list):
+            if len(weight_raw) >= 3:
+                return weight_raw[2]  # Use confidence (third element)
+            else:
+                return default  # Fallback if array is too short
+        else:
+            return weight_raw  # Use as-is if it's already a float
+
+    def _weight_to_int(self, weight: float) -> int:
+        """
+        Convert probability weight to integer weight for MaxSAT.
+
+        Uses log-odds scaling: w / (1-w) * 1000
+
+        Args:
+            weight: Probability weight in [0, 1]
+
+        Returns:
+            Integer weight for MaxSAT
+        """
+        if weight >= 1.0:
+            return 10000  # Very high weight
+        elif weight <= 0.0:
+            return 1  # Very low weight
+        else:
+            # Log-odds ratio scaled to integer
+            log_odds = weight / (1 - weight)
+            return max(1, int(log_odds * 1000))
+
     def encode(self) -> WCNF:
         """
         Encode the logified structure as WCNF.
 
+        Hard constraints with weights are encoded as soft constraints with high weight.
+        Hard constraints without weights are encoded as hard clauses (infinite weight).
+
         Returns:
             WCNF object with hard and soft constraints
         """
-        # Encode hard constraints (infinite weight)
+        # Encode hard constraints
         for constraint in self.structure.get('hard_constraints', []):
             formula = constraint['formula']
             clauses = self.parser.parse(formula)
-            for clause in clauses:
-                self.wcnf.append(clause)  # Hard clause (no weight = infinite)
+
+            # Check if hard constraint has a weight (from weights.py)
+            if 'weight' in constraint:
+                # Encode as soft constraint with very high base weight
+                # Hard constraints should have higher weight than soft constraints
+                weight = self._extract_weight(constraint, default=0.99)
+                int_weight = self._weight_to_int(weight)
+                # Scale up hard constraint weights by 10x to maintain higher priority
+                int_weight = min(int_weight * 10, 100000)
+
+                for clause in clauses:
+                    self.wcnf.append(clause, weight=int_weight)
+            else:
+                # No weight: encode as hard clause (infinite weight)
+                for clause in clauses:
+                    self.wcnf.append(clause)  # Hard clause
 
         # Encode soft constraints (weighted)
         for constraint in self.structure.get('soft_constraints', []):
             formula = constraint['formula']
-            weight_raw = constraint.get('weight', 0.5)  # Default weight if not provided
-
-            # Handle weight array from weights.py: [prob_yes_orig, prob_yes_neg, confidence]
-            # Extract the third element (confidence) if it's an array
-            if isinstance(weight_raw, list):
-                if len(weight_raw) >= 3:
-                    weight = weight_raw[2]  # Use confidence (third element)
-                else:
-                    weight = 0.5  # Fallback if array is too short
-            else:
-                weight = weight_raw  # Use as-is if it's already a float
-
-            # Convert weight to integer weight for MaxSAT
-            # We use log-odds: w / (1-w) and scale by 1000
-            if weight >= 1.0:
-                int_weight = 10000  # Very high weight
-            elif weight <= 0.0:
-                int_weight = 1  # Very low weight
-            else:
-                # Log-odds ratio scaled to integer
-                log_odds = weight / (1 - weight)
-                int_weight = max(1, int(log_odds * 1000))
+            weight = self._extract_weight(constraint, default=0.5)
+            int_weight = self._weight_to_int(weight)
 
             clauses = self.parser.parse(formula)
             for clause in clauses:

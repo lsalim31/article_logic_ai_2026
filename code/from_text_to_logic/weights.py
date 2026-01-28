@@ -299,10 +299,11 @@ def assign_weights(
     chunk_size: int = 512,
     chunk_overlap: int = 50,
     sbert_model_name: str = "all-MiniLM-L6-v2",
-    verbose: bool = True
+    verbose: bool = True,
+    weight_hard_constraints: bool = True
 ) -> Dict[str, Any]:
     """
-    Assign weights to all soft constraints in a logified JSON file.
+    Assign weights to all constraints in a logified JSON file.
 
     Args:
         pathfile: Path to document file (PDF, DOCX, TXT)
@@ -317,9 +318,10 @@ def assign_weights(
         chunk_overlap: Overlapping tokens between chunks (default: 50)
         sbert_model_name: SBERT model for retrieval (default: all-MiniLM-L6-v2)
         verbose: Print progress messages (default: True)
+        weight_hard_constraints: Also assign weights to hard constraints (default: True)
 
     Returns:
-        The logified structure with weights added to soft constraints
+        The logified structure with weights added to constraints
     """
     # Step 1: Load logified JSON
     if verbose:
@@ -329,14 +331,20 @@ def assign_weights(
         logified = json.load(f)
 
     soft_constraints = logified.get('soft_constraints', [])
+    hard_constraints = logified.get('hard_constraints', [])
 
-    if not soft_constraints:
+    total_constraints = len(soft_constraints) + (len(hard_constraints) if weight_hard_constraints else 0)
+
+    if total_constraints == 0:
         if verbose:
-            print("No soft constraints found. Nothing to weight.")
+            print("No constraints found. Nothing to weight.")
         return logified
 
     if verbose:
         print(f"  Found {len(soft_constraints)} soft constraints")
+        print(f"  Found {len(hard_constraints)} hard constraints")
+        if weight_hard_constraints:
+            print(f"  Will weight all {total_constraints} constraints")
 
     # Step 2: Extract text from document
     if verbose:
@@ -393,21 +401,20 @@ def assign_weights(
     if is_reasoning_model:
         print(f"  WARNING: Model {model} may not support logprobs. Consider using gpt-4o.")
 
-    # Step 6: Process each soft constraint
-    if verbose:
-        print(f"\nProcessing {len(soft_constraints)} soft constraints...")
-
-    for i, constraint in enumerate(soft_constraints):
-        constraint_id = constraint.get('id', f'S_{i+1}')
+    # Helper function to process a single constraint
+    def process_constraint(constraint, constraint_idx, constraint_type, total_count):
+        """Process a single constraint and assign weight."""
+        prefix = 'S' if constraint_type == 'soft' else 'H'
+        constraint_id = constraint.get('id', f'{prefix}_{constraint_idx+1}')
         constraint_text = constraint.get('translation', '')
 
         if not constraint_text:
             if verbose:
-                print(f"  [{i+1}/{len(soft_constraints)}] {constraint_id}: SKIPPED (no translation)")
-            continue
+                print(f"  [{constraint_idx+1}/{total_count}] {constraint_id}: SKIPPED (no translation)")
+            return
 
         if verbose:
-            print(f"  [{i+1}/{len(soft_constraints)}] {constraint_id}: {constraint_text[:60]}...")
+            print(f"  [{constraint_idx+1}/{total_count}] {constraint_id} ({constraint_type}): {constraint_text[:60]}...")
 
         # Verify original constraint
         if verbose:
@@ -464,6 +471,25 @@ def assign_weights(
             result_negated['prob_yes'],
             confidence
         ]
+
+    # Step 6: Process hard constraints first (if enabled)
+    processed_count = 0
+    if weight_hard_constraints and hard_constraints:
+        if verbose:
+            print(f"\nProcessing {len(hard_constraints)} hard constraints...")
+
+        for i, constraint in enumerate(hard_constraints):
+            process_constraint(constraint, processed_count, 'hard', total_constraints)
+            processed_count += 1
+
+    # Step 7: Process soft constraints
+    if soft_constraints:
+        if verbose:
+            print(f"\nProcessing {len(soft_constraints)} soft constraints...")
+
+        for i, constraint in enumerate(soft_constraints):
+            process_constraint(constraint, processed_count, 'soft', total_constraints)
+            processed_count += 1
 
     # Step 7: Save output
     json_path_obj = Path(json_path)
@@ -543,6 +569,11 @@ def main():
         action="store_true",
         help="Suppress progress messages"
     )
+    parser.add_argument(
+        "--no-weight-hard",
+        action="store_true",
+        help="Skip weighting hard constraints (only weight soft constraints)"
+    )
 
     args = parser.parse_args()
 
@@ -567,7 +598,8 @@ def main():
             k=args.k,
             chunk_size=args.chunk_size,
             chunk_overlap=args.chunk_overlap,
-            verbose=not args.quiet
+            verbose=not args.quiet,
+            weight_hard_constraints=not args.no_weight_hard
         )
         return 0
 
