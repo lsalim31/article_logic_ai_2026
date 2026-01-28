@@ -37,7 +37,7 @@ This document summarizes the complete implementation of the `logic_solver` modul
 **Features:**
 - ✅ Proposition-to-variable mapping (P_1 → 1, P_2 → 2, etc.)
 - ✅ Hard constraint encoding (infinite weight = mandatory)
-- ✅ Soft constraint encoding with weight conversion
+- ✅ Soft constraint encoding using selector literals
 - ✅ Log-odds weight transformation for MaxSAT
 - ✅ Query encoding with optional negation
 
@@ -167,7 +167,25 @@ All tests pass successfully! ✅
 - Supports incremental solving
 - Well-maintained and widely used
 
-### 2. Weight Conversion Strategy
+### 2. Soft Constraint Encoding with Selector Literals
+
+Soft constraints are encoded using **selector literals** (indicator variables) following the standard technique from RC2 and other MaxSAT solvers.
+
+**Problem:** When a soft constraint formula (e.g., `P_1 ∧ P_2`) expands to multiple CNF clauses, naively assigning the full weight to each clause causes over-penalization.
+
+**Solution:** For each soft constraint with formula φ and weight w:
+1. Create a fresh selector variable `r`
+2. Add hard clauses: `¬r ∨ clause` for each clause in CNF(φ)
+3. Add single soft clause: `[r]` with weight w
+
+**Semantics:**
+- If `r = true`: all clauses of φ must be satisfied (hard implications)
+- If `r = false`: the solver pays cost w (single soft clause violated)
+- The solver chooses `r = false` (pay w) only when satisfying φ is too costly
+
+**Reference:** Ignatiev, A., Morgado, A., & Marques-Silva, J. (2019). "RC2: an Efficient MaxSAT Solver". JSAT, 11(1), 53-64.
+
+### 3. Weight Conversion Strategy
 Soft constraint weights (probabilities) are converted using **log-odds**:
 ```
 w ∈ [0, 1] → log_odds = w / (1-w) → int_weight = log_odds * 1000
@@ -178,7 +196,7 @@ w ∈ [0, 1] → log_odds = w / (1-w) → int_weight = log_odds * 1000
 - Higher weight → exponentially higher cost to violate
 - Scaling by 1000 provides sufficient precision
 
-### 3. Confidence Computation
+### 4. Confidence Computation
 For UNCERTAIN queries, we compute confidence by comparing MaxSAT costs:
 
 ```python
@@ -192,7 +210,7 @@ confidence = cost_with_not_q / (cost_with_q + cost_with_not_q)
 - If Q has high cost → ¬Q is more plausible → low confidence
 - Equal costs → maximum uncertainty (0.5)
 
-### 4. WCNF Copying
+### 5. WCNF Copying
 PySAT's `WCNF.extend()` doesn't work as expected. We implemented manual copying:
 
 ```python

@@ -70,6 +70,18 @@ encoder = LogicEncoder(logified)
 wcnf = encoder.encode()  # Returns WCNF with hard and soft clauses
 ```
 
+**Soft Constraint Encoding (Selector Literals):**
+
+Soft constraints are encoded using **selector literals** (indicator variables) to ensure each constraint contributes exactly its weight when violated, regardless of how many CNF clauses the formula expands to.
+
+For each soft constraint with formula φ and weight w:
+1. Create a fresh selector variable `r`
+2. Add hard clauses: `¬r ∨ clause` for each clause in CNF(φ)
+3. Add single soft clause: `[r]` with weight w
+
+This is the standard technique used by RC2 and other MaxSAT solvers.
+Reference: Ignatiev et al. "RC2: an Efficient MaxSAT Solver" (JSAT 2019)
+
 **Weight Conversion:**
 Soft constraint weights (probabilities in [0,1]) are converted to integer weights for MaxSAT:
 - Log-odds transformation: `weight / (1 - weight)`
@@ -181,7 +193,7 @@ for query in queries:
 
 ### SAT Encoding
 - Hard constraints → mandatory clauses (infinite weight)
-- Soft constraints → weighted clauses (finite weight)
+- Soft constraints → selector literal encoding (one soft clause per constraint)
 - Query → additional hard clauses added temporarily
 
 ### Solvers Used
@@ -213,5 +225,6 @@ Potential improvements:
 
 - PySAT: https://pysathq.github.io/
 - RC2 MaxSAT solver: https://pysathq.github.io/docs/html/api/examples.html#module-examples.rc2
+- Ignatiev, A., Morgado, A., & Marques-Silva, J. (2019). "RC2: an Efficient MaxSAT Solver". JSAT, 11(1), 53-64. DOI: 10.3233/SAT190116
 - Boolean satisfiability: https://en.wikipedia.org/wiki/Boolean_satisfiability_problem
 - Maximum satisfiability: https://en.wikipedia.org/wiki/Maximum_satisfiability_problem
