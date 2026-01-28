@@ -252,6 +252,112 @@ The actual Python function implementations follow the documented architecture. S
 
 ---
 
+## Structural Fixes Applied
+
+The initial implementation had several structural incompatibilities that were fixed. This section documents the key fixes for maintainability.
+
+### Fix 1: OpenAI API Version (CRITICAL)
+**File:** `refiner.py`
+
+The original code used the deprecated OpenAI v0.x API which caused immediate runtime crashes:
+```python
+# OLD (broken):
+import openai
+response = openai.ChatCompletion.create(...)
+
+# NEW (fixed):
+from openai import OpenAI
+client = OpenAI()
+response = client.chat.completions.create(...)
+```
+
+All 3 LLM calls in `refiner.py` were updated: `generate_refinements()`, `pairwise_compare()`, and `backtracking_decision()`.
+
+### Fix 2: Model Name Format
+**File:** `config.py`
+
+Changed from OpenRouter format to standard OpenAI format:
+```python
+# OLD: MODEL_NAME = "openai/gpt-4"  # Incompatible
+# NEW: MODEL_NAME = "gpt-4"          # Standard format
+```
+
+### Fix 3-4: Config Dict Support
+**File:** `main.py`
+
+Updated `run_logiclm_plus()` and `run_batch()` to accept a `config` dict parameter for flexible parameter passing:
+```python
+def run_logiclm_plus(text, query, model_name=MODEL_NAME, ground_truth=None,
+                     config=None, **kwargs):
+    # Merge config dict with defaults and kwargs
+```
+
+This enables both individual parameters and config dict usage for API flexibility.
+
+### Fix 5: CLI Parameter Support
+**File:** `main.py`
+
+Added both `--output` and `--output-dir` CLI parameters for backwards compatibility.
+
+### Fix 6: HuggingFace Dataset Integration
+**File:** `main.py`
+
+Completely rewrote `load_dataset()` function (~100 lines) to:
+- Integrate HuggingFace `datasets` library
+- Map dataset names: `'folio'` → `'yale-nlp/FOLIO'`, etc.
+- Normalize field names across different datasets
+- Provide graceful fallback to local files
+
+### Fix 7: Evaluator Tests
+**File:** `test_logiclm.py`
+
+Added 5 new test functions for complete test coverage:
+1. `test_accuracy_metrics()` - Standard classification metrics
+2. `test_execution_rate_Er()` - Execution rate calculation
+3. `test_execution_accuracy_Ea()` - Execution accuracy (correct / executed)
+4. `test_backtracking_stats()` - Figure 4 statistics
+5. `test_efficiency_metrics()` - Time and LLM call tracking
+
+### Summary of Changes
+
+| File | Lines Changed | Description |
+|------|---------------|-------------|
+| `refiner.py` | +11, -10 | OpenAI v1.x API |
+| `config.py` | +1, -1 | Model name format |
+| `main.py` | +139, -30 | Config dict + HuggingFace |
+| `test_logiclm.py` | +146, -0 | Evaluator tests |
+
+### Verification
+
+To verify all fixes work correctly:
+```bash
+cd /workspace/repo/code/baseline_logiclm_plus
+
+# Check OpenAI v1.x imports
+python -c "from refiner import refine_loop; from openai import OpenAI; print('✓ OpenAI v1.x API')"
+
+# Check model name
+python -c "from config import MODEL_NAME; assert 'openai/' not in MODEL_NAME; print('✓ Model name fixed')"
+
+# Check config dict support
+python -c "import inspect; from main import run_logiclm_plus; sig = inspect.signature(run_logiclm_plus); assert 'config' in sig.parameters; print('✓ Config dict supported')"
+
+# Run tests
+python test_logiclm.py
+```
+
+### Root Cause Analysis
+
+The original issues arose from:
+1. **Parallel development** without API contracts between modules
+2. **Mixed OpenAI SDK versions** (v0.x vs v1.x knowledge)
+3. **Documentation written before implementation** was complete
+4. **No integration testing** between modules
+
+All backwards compatibility is maintained - existing code will continue to function.
+
+---
+
 ## References
 
 **Primary Paper**:

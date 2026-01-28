@@ -444,10 +444,20 @@ def assign_weights(
             print(f"      → neg_logit_yes={result_negated['logit_yes']:.4f}, neg_logit_no={result_negated['logit_no']:.4f}, "
                   f"neg_P(YES)={result_negated['prob_yes']:.4f}, neg_P(NO)={result_negated['prob_no']:.4f}")
 
-        # Add weight field to constraint (2 values: prob_yes for original and negated)
+        # Compute binary softmax confidence: P(orig) / (P(orig) + P(neg))
+        # This is the standard NLI approach for converting entailment/contradiction to binary confidence
+        prob_orig = result_original['prob_yes']
+        prob_neg = result_negated['prob_yes']
+        confidence = prob_orig / (prob_orig + prob_neg + 1e-9)
+
+        if verbose:
+            print(f"      → confidence (binary softmax) = {confidence:.4f}")
+
+        # Add weight field to constraint (3 values: prob_yes original, prob_yes negated, confidence)
         constraint['weight'] = [
             result_original['prob_yes'],
-            result_negated['prob_yes']
+            result_negated['prob_yes'],
+            confidence
         ]
 
     # Step 7: Save output

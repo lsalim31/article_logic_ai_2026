@@ -133,6 +133,36 @@ prob_no  = exp(logit_no)  = P(NO | prompt)
 - There are other possible tokens (e.g., "Maybe", "Possibly", punctuation)
 - We only extract probabilities for YES and NO specifically
 
+### Step 7: Negation Verification
+
+For calibration, we also verify the **negated** version of each constraint:
+
+```
+Negated constraint: "It is not the case that {original constraint}"
+```
+
+This produces a second set of probabilities (`prob_yes_negated`, `prob_no_negated`).
+
+### Step 8: Binary Softmax Confidence
+
+We compute a final confidence score using the standard NLI approach:
+
+```
+confidence = P(YES|original) / (P(YES|original) + P(YES|negated))
+```
+
+This is equivalent to applying softmax over the entailment (original) and contradiction (negated) probabilities, dropping the "neutral" case.
+
+**Interpretation:**
+- `confidence > 0.6`: Document supports the constraint
+- `confidence ≈ 0.5`: Ambiguous/uncertain
+- `confidence < 0.4`: Document likely contradicts the constraint
+
+**Why this works:**
+- If both P(YES|original) and P(YES|negated) are high, confidence ≈ 0.5 (ambiguous)
+- If P(YES|original) >> P(YES|negated), confidence → 1.0 (strong support)
+- If P(YES|original) << P(YES|negated), confidence → 0.0 (contradiction)
+
 ---
 
 ## Mathematical Details
@@ -201,17 +231,20 @@ python weights.py document.pdf \
 
 ## Output Format
 
+Each soft constraint in the output JSON receives a `weight` array with 3 values:
+
 ```python
-{
-    "logit_yes": -0.0234,    # Log probability of YES
-    "logit_no": -3.8721,     # Log probability of NO
-    "prob_yes": 0.9769,      # P(YES) = exp(logit_yes)
-    "prob_no": 0.0208,       # P(NO) = exp(logit_no)
-    "constraint": "...",     # The input constraint
-    "num_chunks": 45,        # Total chunks in document
-    "chunks_used": 10        # Top-k chunks sent to LLM
-}
+"weight": [
+    0.9998,   # P(YES|original) - probability document supports original constraint
+    0.8176,   # P(YES|negated) - probability document supports negated constraint
+    0.5501    # confidence - binary softmax: P(orig) / (P(orig) + P(neg))
+]
 ```
+
+**Interpretation:**
+- `weight[0]`: Raw probability the document supports the constraint
+- `weight[1]`: Raw probability the document supports the negation
+- `weight[2]`: Calibrated confidence score (use this for downstream analysis)
 
 ---
 

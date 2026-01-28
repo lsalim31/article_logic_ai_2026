@@ -34,7 +34,7 @@ STEP 2: Define Primitive Propositions
 - Extract atomic, truth-evaluable statements from text that cannot further be broken down
 - Ensure mutual exclusivity of atomics and that they exhaust all constraints
 - Break down to genuinely atomic statements (no hidden logical connectives)
-- Remove hedge words (usually, typically, sometimes, generally, often, mostly, encouraged) from atomic proposition translations. Atomic propositions must be pure, definitive statements without uncertainty.
+- Remove hedge words that indicate uncertainty (such as: usually, typically, sometimes, generally, often, mostly, encouraged) from atomic proposition translations. Atomic propositions must be pure, definitive statements without uncertainty.
 - Include textual evidence, location, and brief atomicity reasoning
 
 STEP 3: Extract Hard Constraints
@@ -48,7 +48,7 @@ STEP 4: Extract Soft Constraints
 - These formulas might not be explicitly stated in the text, but are relevant to the structural logic and can be obtained from common-sense
 - Include textual evidence if from text, or common-sense justification otherwise
 - Ensure faithfulness to text intent to settle ambiguities; e.g. if the word "should" refers to an obligation or requirement then it suggests a hard constraint; but if it used to suggest that it doesn't have to hold, based off other parts of the text, then it can be a soft constraint
-- The presence of a hedge word (usually, typically, sometimes, generally, often, mostly, encouraged) automatically suggests a soft constraint. Remove the hedge word from the translation to produce a pure, definitive statement without uncertainty. Note the hedge word in the reasoning field to explain why it is soft.
+- The presence of a hedge word that indicates uncertainty (such as: usually, typically, sometimes, generally, often, mostly, encouraged) automatically suggests a soft constraint. Remove the hedge word from the translation to produce a pure, definitive statement without uncertainty. Note the hedge word in the reasoning field to explain why it is soft.
 - Note: "should" is usually a definitive word indicating a hard constraint, but use context to determine if it is used as a soft constraint.
 - Include reasoning for soft designation
 
