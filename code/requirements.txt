@@ -1,24 +1,36 @@
-# Core dependencies for the logic-aware extraction system
+# Core dependencies for the Logify Neuro-Symbolic Reasoning System
 # Install with: pip install -r requirements.txt
 
-# SAT/MaxSAT solving
+# ============================================================
+# CORE SYSTEM
+# ============================================================
+
+# SAT/MaxSAT solving (PySAT with RC2 solver)
 python-sat>=0.1.8.dev0
 
 # Text processing and NLP
-stanza>=1.7.0
-openai>=1.0.0
+stanza>=1.7.0              # OpenIE triple extraction
+openai>=1.0.0              # LLM API client (OpenAI/OpenRouter)
 
 # Data handling
 numpy>=1.24.0
 
-# Semantic retrieval (for weights.py and baseline_rag)
+# Semantic retrieval (SBERT for weights.py and query translation)
 sentence-transformers>=2.2.0
 
-# Document processing (for logify.py PDF/DOCX support)
-PyMuPDF>=1.23.0
-python-docx>=0.8.11
+# Document processing
+PyMuPDF>=1.23.0            # PDF reading (import as fitz)
+python-docx>=0.8.11        # DOCX reading
 
-# Optional: For experiments (uncomment if needed)
+# ============================================================
+# OPTIONAL: For experiments and development
+# ============================================================
+
+# Uncomment if running LogicBench experiments
 # datasets>=2.14.0
+
+# Uncomment if using FOL experiments (baseline_logiclm_plus)
 # z3-solver>=4.12.0
+
+# Uncomment for running tests
 # pytest>=7.4.0
