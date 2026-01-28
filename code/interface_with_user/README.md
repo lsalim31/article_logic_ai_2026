@@ -11,8 +11,6 @@ Bridges natural language and propositional logic.
 | File | Purpose | Status |
 |------|---------|--------|
 | `translate.py` | Query → formula translation | ✅ Implemented |
-| `interpret.py` | Result → NL interpretation | 🚧 Stub |
-| `refine.py` | Query refinement | 🚧 Stub |
 
 ## Main Module: `translate.py`
 
