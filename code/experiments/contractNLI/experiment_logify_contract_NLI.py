@@ -7,8 +7,11 @@ Experiment: Evaluate Logify on ContractNLI dataset.
 See DESCRIPTION_EXPERIMENT_CONTRACTNLI_LOGIFY.md for details.
 
 Usage:
-    python experiment_logify_contract_NLI.py --api-key sk-... --dataset-path /path/to/contractnli.json
-    python experiment_logify_contract_NLI.py --api-key sk-... --dataset-path /path/to/contractnli.json --num-docs 5
+    python experiment_logify_contract_NLI.py --dataset-path /path/to/contractnli.json
+    python experiment_logify_contract_NLI.py --dataset-path /path/to/contractnli.json --num-docs 5
+
+Environment:
+    OPENROUTER_API_KEY: API key (used if --api-key not provided)
 """
 
 import sys
@@ -454,8 +457,8 @@ def main():
     )
     parser.add_argument(
         "--api-key",
-        required=True,
-        help="API key for LLM calls"
+        default=os.environ.get("OPENROUTER_API_KEY"),
+        help="API key for LLM calls (default: OPENROUTER_API_KEY env var)"
     )
     parser.add_argument(
         "--model",
@@ -511,6 +514,11 @@ def main():
     )
 
     args = parser.parse_args()
+
+    # Validate API key
+    if not args.api_key:
+        print("Error: No API key provided. Set OPENROUTER_API_KEY or use --api-key")
+        return 1
 
     # Validate dataset path
     if not Path(args.dataset_path).exists():
