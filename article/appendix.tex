@@ -1,87 +1,55 @@
 
 \section{Appendix}
 
-\subsection{Weights for soft constrains}
+\subsection{Weights for soft constraints}
 \label{sec:weights}
 
-Next, we describe a method for assigning weights to soft constraints $Q$ using SBERT Retrieval and  Natural Language Inference (NLI) Reranking. The weight \(w(Q)\in(0,1)\) that reflects how strongly the document supports \(Q\) versus contradicts \(Q\). It uses the following tools:
+We describe a method for assigning weights to soft constraints $Q$ using SBERT retrieval and LLM-based verification. The weight \(w(Q)\in(0,1)\) reflects how strongly the document supports \(Q\) versus contradicts \(Q\). The pipeline uses the following components:
 \begin{itemize}
-\item \textbf {A bi-encoder} sentence embedding model (e.g., SBERT) for fast retrieval of relevant segments.
-\item \textbf{An NLI cross-encoder} (Natural Language Inference) to score entailment vs contradiction on only a small set of retrieved segments.
-\item \textbf{Log-sum-exp pooling} to aggregate evidence robustly (less brittle than max pooling).
-\item \textbf{A final sigmoid} transform to map pooled evidence to a probability-like weight.
+\item \textbf{A bi-encoder} sentence embedding model (e.g., SBERT) for fast retrieval of relevant segments.
+\item \textbf{LLM logprob extraction}: We prompt an LLM with retrieved segments and extract logprobs for YES/NO responses regarding whether the text supports $Q$.
+\item \textbf{Softmax normalization} to convert logprob differences to confidence scores.
 \end{itemize}
-The resulting weight is an evidence score, not a statistically calibrated probability. It is obtained from the following algorithm
+The resulting weight is an evidence score, not a statistically calibrated probability. It is obtained from the following algorithm:
 \begin{itemize}
     \item[1.]
-    Given a soft constraint $Q$ from  a natural-language hypothesis sentence $h$.
-We can generate a small set of paraphrases (phrases with the same meaning)
-\[
-\mathcal{H}(Q) = \{h_1,\dots,h_r\},
-\]
-where $r\in[1,10]$. These paraphrases improve recall; and they are optional.
+    Given a soft constraint $Q$ expressed as a natural-language hypothesis sentence $h$.
 \item[2.] Let $e(\cdot)$ be the SBERT embedding function. We precompute embeddings for all segments:
 \[
 v_i = e(s_i)\quad\text{for } i=1,\dots,m.
 \]
 
-For each hypothesis $h_j$, compute its embedding $u_j = e(h_j)$ and retrieve the top-$K$ segments by cosine similarity:
+Compute the embedding $u = e(h)$ and retrieve the top-$K$ segments by cosine similarity:
 \[
-E_j = \text{TopK}_{s_i\in S(T)} \cos(u_j, v_i).
+E = \text{TopK}_{s_i\in S(T)} \cos(u, v_i),
 \]
-Then form the union of retrieved candidates and deduplicate:
+optionally truncating to a maximum total budget $K_{\text{total}}$ (e.g., 20) by keeping the highest-similarity unique segments.
+\item[3.] For each candidate premise segment $p \in E$, construct a verification prompt asking the LLM: ``Based on the following text, is the statement `$h$' supported? Answer YES or NO.'' We request logprobs with \texttt{top\_logprobs=20} to capture the probability distribution over responses.
+\item[4.] Extract the logprobs for YES and NO tokens:
 \[
-E = \bigcup_{j=1}^r E_j,
+(\ell_{\text{yes}}(p), \ell_{\text{no}}(p)) \in \mathbb{R}^2.
 \]
-optionally truncating to a maximum total budget $K_{\text{total}}$ (e.g., 50) by keeping the highest-similarity unique segments.
-\item For each candidate premise segment $p \in E$ and hypothesis $h_j \in \mathcal{H}(Q)$, run an NLI cross-encoder:
+Compute the evidence score via softmax:
 \[
-(z_{\text{ent}}(p,h_j), z_{\text{con}}(p,h_j), z_{\text{neu}}(p,h_j)) \in \mathbb{R}^3.
+d(p) := \frac{\exp(\ell_{\text{yes}}(p))}{\exp(\ell_{\text{yes}}(p)) + \exp(\ell_{\text{no}}(p))}.
 \]
-
-Here: $z_{\text{ent}}$ is the entailment logit score.  $z_{\text{con}}$ is the contradiction logit score.  $z_{\text{neu}}$ is the neutral logit score.
-\item We reduce the 3-way output to a single scalar \textbf{evidence difference}:
+This yields $d(p) \in (0,1)$ where $d(p) > 0.5$ indicates supporting evidence.
+\item[5.] Aggregate evidence across retrieved segments. We take the maximum confidence across segments:
 \[
-d(p,h_j) := z_{\text{ent}}(p,h_j) - z_{\text{con}}(p,h_j).
+w(Q) := \max_{p \in E} d(p).
 \]
-This last choice improve stability of the results, and it has the  interpretation:
-\begin{itemize}
-    \item $d(p,h_j) > 0$: this segment supports the constraint.
-    \item $d(p,h_j) < 0$: this segment contradicts the constraint.
-    \item $|d|$: strength of evidence.
 \end{itemize}
-For each premise segment $p$, keep the best paraphrase match:
-\[
-d(p) := \max_{h_j \in \mathcal{H}(Q)} d(p,h_j).
-\]
-This yields a set of evidence scores $\{d(p): p\in E\}$.
-\item A naive max over $d(p)$ is brittle (one spurious segment can dominate). We instead use \textbf{log-sum-exp pooling}, which is a smooth approximation of max.
-Let $E=\{p_1,\dots,p_K\}$ after deduplication/truncation. Define:
-\[
-D(Q;T) \;:=\; \frac{1}{\tau}\log\left(\frac{1}{K}\sum_{i=1}^{K} \exp(\tau\, d(p_i))\right),
-\]
-where $\tau>0$ is a temperature parameter controlling how ``max-like'' the pooling is:
-\begin{itemize}
-    \item small $\tau \to$ closer to an average,
-    \item large $\tau \to$ closer to a max.
-\end{itemize}
-The recommended default is $\tau \in [1,5]$, e.g., $\tau=2$.
-\item Convert pooled evidence $D(Q;T)$ into a probability-like weight with a sigmoid:
-\[
-w(Q) \;:=\; \sigma(D(Q;T)) \;=\; \frac{1}{1+\exp(-D(Q;T))}.
-\]
 
 Interpretation:
 \begin{itemize}
-    \item $w(Q)\approx 1$: strong supporting evidence exists and dominates.
-    \item $w(Q)\approx 0$: strong contradictory evidence exists and dominates.
+    \item $w(Q)\approx 1$: strong supporting evidence exists.
+    \item $w(Q)\approx 0$: strong contradictory evidence exists.
     \item $w(Q)\approx 0.5$: overall neutral / mixed / insufficient evidence.
-\end{itemize}
 \end{itemize}
 This $w(Q)$ is used as the soft constraint weight in downstream reasoning (e.g., in a likelihood factor $\lambda(\varphi)$ that prefers readings satisfying $Q$).
 
 \paragraph{Algorithm Summary:}
-We complete the following steps
+We complete the following steps:
 \\
 \textbf{Step 1:} Preprocessing (once per document)
 
@@ -94,20 +62,15 @@ We complete the following steps
 \textbf{Step 2:} Per soft constraint $Q$
 
 \begin{enumerate}
-    \item Create hypothesis set $\mathcal{H}(Q)=\{h_1,\dots,h_r\}$ (optionally $r>1$ via paraphrases).
-    \item For each $h_j$, retrieve top-$K$ segments $E_j$ by SBERT similarity.
-    \item Form $E = \cup_j E_j$, deduplicate, and cap to $K_{\text{total}}$.
-    \item For each $p\in E$, compute NLI logits against each $h_j$ and set
+    \item Retrieve top-$K$ segments $E$ by SBERT similarity to the constraint's natural language form.
+    \item For each $p\in E$, prompt the LLM with the segment and constraint, requesting logprobs.
+    \item Extract YES/NO logprobs and compute softmax confidence:
     \[
-    d(p) = \max_{h_j} (z_{\text{ent}}(p,h_j) - z_{\text{con}}(p,h_j)).
-    \]
-    \item Aggregate with log-sum-exp pooling:
-    \[
-    D = \frac{1}{\tau}\log\left(\frac{1}{|E|}\sum_{p\in E} \exp(\tau d(p))\right).
+    d(p) = \frac{\exp(\ell_{\text{yes}}(p))}{\exp(\ell_{\text{yes}}(p)) + \exp(\ell_{\text{no}}(p))}.
     \]
     \item Output weight:
     \[
-    w(Q)=\sigma(D).
+    w(Q) = \max_{p \in E} d(p).
     \]
 \end{enumerate}
 
@@ -115,11 +78,9 @@ We complete the following steps
 
 \begin{itemize}
     \item Segments: short paragraphs (1–5 sentences).
-    \item Paraphrases: $r=5$ (or $r=1$ if cost-sensitive).
-    \item SBERT retrieval: $K=20$ per paraphrase.
-    \item Deduplicated budget: $K_{\text{total}}=50$.
-    \item NLI model: any 3-way entailment/contradiction/neutral cross-encoder (e.g., \texttt{cross-encoder/nli-deberta-v3-base} \cite{he2021deberta}).
-    \item Temperature: $\tau = 2$.
+    \item SBERT retrieval: $K=20$.
+    \item LLM: GPT-4o or similar model supporting logprob extraction.
+    \item Logprob setting: \texttt{logprobs=True, top\_logprobs=20}.
 \end{itemize}
 
 
@@ -147,19 +108,20 @@ FOLIO (FOL) & 85.8 & 91.2 \\
 The system supports two primary modes:
 
 \paragraph{Logify mode.}
-Create a new logified structure from text:
+Create a new logified structure from a document:
 \begin{verbatim}
-python main.py from_text_to_logic --text "document.txt"
+python main.py logify --fpath "document.pdf"
+python main.py logify --fpath "document.txt" --opath "output.json"
 \end{verbatim}
 
 \paragraph{Query mode.}
-Ask questions, optionally adding new text:
+Ask questions over a logified document:
 \begin{verbatim}
-python main.py query --query "Is X true?"
-python main.py query --query "Is X true?" --text "additional_text.txt"
+python main.py query --fpath "document.pdf" --query "Is X true?"
+python main.py query --fpath "doc.pdf" --query "Is X true?" --k 20
 \end{verbatim}
 
-In query mode with additional text, the system first updates the logified structure (Section~\ref{sec:from_text_to_logic}), then processes the query.
+In query mode, the system loads or creates the logified structure, translates the query to a formal constraint, and invokes the MaxSAT solver to determine the answer.
 
 
 \subsection{OpenIE Extraction with Stanford CoreNLP}
@@ -175,9 +137,7 @@ Our OpenIE extraction pipeline is configured with the following annotators, appl
     \item \texttt{ssplit}: Sentence splitting
     \item \texttt{pos}: Part-of-speech tagging
     \item \texttt{lemma}: Lemmatization
-    \item \texttt{ner}: Named entity recognition
     \item \texttt{depparse}: Dependency parsing
-    \item \texttt{coref}: Coreference resolution
     \item \texttt{natlog}: Natural logic annotations
     \item \texttt{openie}: Open information extraction
 \end{enumerate}
@@ -211,7 +171,7 @@ To address this, we implement a dependency parse fallback mechanism. When OpenIE
 \begin{center}
 \texttt{(Alice; studies; hard)}
 \end{center}
-These fallback triples are marked with lower confidence (0.7--0.8) compared to OpenIE triples (typically 0.9--1.0).
+Fallback triples are marked with \texttt{source='stanza\_depparse'} for provenance tracking.
 
 \subsubsection{Output Format}
 

@@ -81,7 +81,7 @@ as consistent readings.
 \paragraph{Weighted reasoning and model counting.}
 When soft constraints carry confidences, we connect to weighted Max-SAT 
 \cite{heras2007minimaxsat} and Algebraic Model Counting (AMC) 
-\cite{KimmigVanDenBroeckDeRaedt2012, KimmigVanDenBroeckDeRaedt2017}, which 
+\cite{KimmigVanDenBroeckDeRaedt2017}, which 
 generalizes weighted model counting to commutative semirings. This provides a 
 principled route to ranking readings by plausibility and quantifying underdetermination.
 
@@ -286,7 +286,7 @@ This module implements the extraction pipeline $\Pi$ (Definition~\ref{def:pipeli
 We use Stanford CoreNLP's OpenIE system \cite{angeli2015openie} via the Stanza Python interface \cite{qi2020stanza} to extract subject-predicate-object triples from the text. This provides structured relational information that guides proposition identification. Critically, we enable coreference resolution to handle pronominal references, ensuring that triples consistently refer to canonical entities rather than pronouns. Implementation details are provided in Appendix~\ref{sec:openie}.
 
 \paragraph{Stage 2: LLM-Based Logic Conversion.}
-The original text $T$ and the extracted triples are jointly provided to a large language model (GPT-4), which performs the semantic analysis required to identify atomic propositions $\mathcal{P}(T)$, hard constraints $\mathcal{C}(T)$, and soft constraints $\mathcal{S}(T)$. The OpenIE triples serve as structural scaffolding, helping the LLM identify key entities and relationships while ensuring faithful grounding in the source text. The prompt includes few-shot examples demonstrating the expected extraction format (Appendices~\ref{sec:prompt} and \ref{sec:exemplar}).
+The original text $T$ and the extracted triples are jointly provided to a large language model (e.g., GPT-4, GPT-5, or o3-mini), which performs the semantic analysis required to identify atomic propositions $\mathcal{P}(T)$, hard constraints $\mathcal{C}(T)$, and soft constraints $\mathcal{S}(T)$. The OpenIE triples serve as structural scaffolding, helping the LLM identify key entities and relationships while ensuring faithful grounding in the source text. The prompt includes few-shot examples demonstrating the expected extraction format (Appendices~\ref{sec:prompt} and \ref{sec:exemplar}).
 
 \subsubsection{Proposition Extraction}
 Given text $T$, we extract atomic propositions $\mathcal{P}(T) = \{P_1, \ldots, P_n\}$. Each proposition is paired with its natural language meaning, forming a \emph{schema}:
@@ -304,11 +304,11 @@ From the text, we extract:
 The classification into hard versus soft is based on linguistic cues: definite language (``is,'' ``must,'' ``always'') yields hard constraints; hedged language (``typically,'' ``may,'' ``is intended to'') yields soft constraints.
 
 \subsubsection{Weight Assignment}
-Soft constraints are extracted \emph{without} weights during the initial logification. Weight assignment is performed as a separate stage using an evidence-based retrieval and inference pipeline. Specifically, for each soft constraint $Q$, we:
+Soft constraints are extracted \emph{without} weights during the initial logification. Weight assignment is performed as a separate stage using an evidence-based retrieval and LLM verification pipeline. Specifically, for each soft constraint $Q$, we:
 \begin{enumerate}
     \item Retrieve relevant text segments using SBERT embeddings \cite{reimers2019sbert}
-    \item Score each segment using an NLI cross-encoder for entailment vs.\ contradiction
-    \item Aggregate evidence using log-sum-exp pooling and apply a sigmoid transform
+    \item Prompt an LLM with the retrieved segments and extract logprobs for YES/NO responses regarding whether the text supports $Q$
+    \item Convert the logprob difference to a confidence score via softmax normalization
 \end{enumerate}
 This produces a weight $w(Q) \in (0,1)$ reflecting how strongly the document supports $Q$. The full algorithm is detailed in Appendix~\ref{sec:weights}. This separation is deliberate: the LLM identifies \emph{which} constraints are defeasible based on linguistic cues (e.g., ``sometimes,'' ``typically''), while the weight assignment module quantifies \emph{how strongly} the text supports each constraint.
 
@@ -370,13 +370,13 @@ Given a user query $Q$ (translated to a formal constraint), the solver supports:
 \end{itemize}
 
 \subsubsection{Solver Interface}
-We interface with off-the-shelf Max-SAT solvers (e.g., RC2, MaxHS, or Open-WBO). The module:
+We use PySAT's RC2 solver \cite{ignatiev2019rc2}, a state-of-the-art core-guided MaxSAT algorithm. The module:
 \begin{enumerate}
     \item Converts the logified structure to WCNF format
     \item Invokes the solver with the query-augmented formula
     \item Parses the solver output (satisfying assignment or UNSAT)
 \end{enumerate}
-For weighted model counting, we use tools such as c2d or D4.
+For confidence computation on uncertain queries, we compare MaxSAT costs between $Q$ and $\neg Q$ to derive normalized confidence scores.
 
 
 \subsection{Interface with User}
@@ -392,7 +392,7 @@ Given a natural language query and the schema, the LLM translates the query into
 For example:
 \begin{itemize}
     \item NL: ``Is the START system used for children?''
-    \item Schema: $\{P_1: \text{``START is used not for eveyone''}\}$
+    \item Schema: $\{P_1: \text{``START is used not for everyone''}\}$
     \item Formal: $\neg P_1$ (or a new proposition if not in schema)
 \end{itemize}
 
@@ -439,7 +439,7 @@ We evaluate our system on three types of benchmarks: (1) standard logical reason
 \subsection{Datasets}
 
 \paragraph{Logical Reasoning.}
-We use FOLIO \cite{han2022folio}, a human-annotated dataset for FOL reasoning (1,430 examples), and ProofWriter \cite{tafjord2021proofwriter}, a synthetic deductive reasoning dataset (depth-5 subset, 600 examples). Both require determining whether a conclusion is \textit{True}, \textit{False}, or \textit{Unknown} given premises.
+We use FOLIO \cite{han2024folio}, a human-annotated dataset for FOL reasoning (1,430 examples), and ProofWriter \cite{tafjord2021proofwriter}, a synthetic deductive reasoning dataset (depth-5 subset, 600 examples). Both require determining whether a conclusion is \textit{True}, \textit{False}, or \textit{Unknown} given premises.
 
 \paragraph{Document-Level NLI.}
 We use ContractNLI \cite{koreeda2021contractnli}, which contains 607 non-disclosure agreements with 17 hypothesis types. The task is to classify each hypothesis as \textit{Entailed}, \textit{Contradicted}, or \textit{NotMentioned} by the contract. This tests reasoning over long documents with scattered evidence.
