@@ -767,3 +767,19 @@ The correctness of the \texttt{logic\_solver} module depends on two factors:
 The system provides \emph{conditional correctness}: if the logified structure $(\mathcal{P}(T), \mathcal{C}(T), \mathcal{S}(T))$ faithfully represents the text $T$, then all solver outputs are logically sound. Errors in the logification pipeline (e.g., missing constraints, incorrect weights) propagate to downstream reasoning, but the solver itself introduces no additional errors.
 
 This separation of concerns---extraction vs.\ reasoning---enables systematic debugging and quality control: extraction errors can be corrected by improving the LLM prompt or adding self-refinement loops, while reasoning correctness is guaranteed by the symbolic solver.
+
+\subsection{Logic-LM++ Baseline Configuration}
+
+We evaluate the Logic-LM++ baseline on the LogicBench-v1.0 propositional logic subset, specifically targeting \emph{modus tollens} reasoning tasks. The experiment uses GPT-4 as the underlying language model with temperature $T=0$ for deterministic outputs.
+
+\paragraph{Formalization Strategy.}
+A key design choice is the use of \textbf{propositional logic formalization} rather than first-order logic (FOL). The original Logic-LM framework employs FOL with quantifiers (e.g., $\forall x\, P(x) \rightarrow Q(x)$), which introduces parsing complexity when interfacing with the Z3 SMT solver. For propositional reasoning tasks, we instead prompt the LLM to produce ground propositional formulas using atomic variables (e.g., $P, Q, R$) connected by standard connectives ($\land, \lor, \rightarrow, \neg, \leftrightarrow$). This approach aligns with the Logify framework's design philosophy of using propositional logic for improved solver compatibility and eliminates quantifier instantiation errors.
+
+\paragraph{Refinement Configuration.}
+The refinement loop is configured with a minimum of 1 iteration (\texttt{min\_refinements=1}) and a maximum of 4 iterations (\texttt{max\_iterations=4}). At each iteration, the system generates $N=2$ candidate refinements, selects the best via pairwise LLM comparison, and applies the \textbf{backtracking agent}---the key Logic-LM++ innovation---to compare the selected refinement against the previous formulation. If no semantic improvement is detected, the system reverts to the previous version, preventing degradation. Early stopping occurs after 2 consecutive backtracks (\texttt{max\_consecutive\_backtracks=2}).
+
+\paragraph{Solver Configuration.}
+We use Z3 as the theorem prover with a 30-second timeout. The solver interface parses propositional formulas by: (1) extracting boolean variables from CamelCase identifiers, (2) replacing logical symbols ($\rightarrow, \land, \lor, \neg, \leftrightarrow$) with Z3 operators, and (3) constructing a satisfiability query to determine if the premises entail the conclusion.
+
+\paragraph{Results Summary.}
+On 20 modus tollens examples, the baseline achieves 50\% accuracy (10/20 correct) with 100\% execution rate ($E_r = 1.0$). Notably, all 20 examples triggered the backtracking agent with a \texttt{REVERT} decision, indicating that the generated refinements did not improve semantic fidelity over the initial formalization. The average query time is 10.9 seconds with 2 LLM calls per example (formalization + refinement attempt). The primary failure mode is incorrect predicate alignment---for instance, introducing a redundant variable $R$ (``decided against ordering pizza'') instead of recognizing it as $\neg Q$ (``did not order pizza'')---which breaks the logical chain required for modus tollens inference.
