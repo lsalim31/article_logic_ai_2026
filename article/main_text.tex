@@ -4,46 +4,50 @@ We propose a neuro-symbolic framework for logical reasoning over long-form docum
 
 \section{Introduction}
 
-Reasoning over natural-language text is a fundamental challenge in AI. Given a 
-document—a medical guideline, a legal contract, a technical specification—users 
-need to ask questions, check consistency, and understand what follows from what. 
-Large language models (LLMs) offer fluent natural-language interfaces, but they 
-struggle with logical reasoning: they hallucinate facts, miss distant dependencies, 
-and cannot guarantee faithful inference \cite{pan2023logiclm}.
+Given a long document—a medical guideline, a legal contract, a technical
+specification—users need to ask questions, check consistency, and understand
+what follows from what. Large language models (LLMs) offer fluent interfaces
+but struggle with such reasoning: they hallucinate facts \cite{ji2023hallucination},
+miss information in long contexts \cite{liu2024lost}, and cannot guarantee
+faithful inference \cite{pan2023logiclm}.
 
-A common approach is retrieval-augmented generation (RAG), where relevant passages 
-are retrieved and fed to an LLM at query time. But when logical constraints are 
-\emph{scattered} across a long document, retrieval may miss critical pieces, and 
-the LLM must reason over incomplete or inconsistent context. The result is 
-unreliable answers with no formal guarantees.
+A common mitigation is retrieval-augmented generation (RAG), where relevant
+passages are retrieved and fed to an LLM at query time. But when logical
+constraints are \emph{scattered} across a long document, retrieval may miss
+critical pieces, and the LLM must reason over incomplete or inconsistent
+context. The result is unreliable answers with no formal guarantees.
 
-We propose a different approach: \emph{logify} the text once, then reason 
-symbolically over the resulting structure. Given a text $T$, a pipeline $\Pi$ 
-extracts atomic propositions $P_1, \ldots, P_n$ and two kinds of constraints:
+We propose a different paradigm: \emph{logify} the document once, then reason
+symbolically over the resulting structure. Our pipeline extracts atomic
+propositions (statements that can be true or false) and two kinds of constraints:
 \begin{itemize}
     \item \textbf{Hard constraints}: must hold (e.g., definitions, explicit negations)
-    \item \textbf{Soft constraints}: defeasible tendencies with confidence weights 
-    (e.g., ``typically,'' ``is intended to'')
+    \item \textbf{Soft constraints}: defeasible tendencies with confidence weights
+    (e.g., ``typically,'' ``may'')
 \end{itemize}
-The hard constraints define a Boolean algebra of consistent \emph{readings}; the 
-soft constraints induce a probability distribution over readings via weighted 
-model counting. This structure supports faithful reasoning: entailment, 
-inconsistency detection, and quantification of underdetermination—all with 
-formal guarantees.
+The hard constraints define consistent \emph{readings} of the document; the
+soft constraints rank readings by plausibility. This structure supports faithful
+reasoning—entailment, inconsistency detection, quantification of uncertainty—via
+a weighted Max-SAT solver. The LLM serves only as a natural-language interface;
+all reasoning is delegated to the solver. This separation ensures \emph{conditional}
+faithfulness: given a correct logification, the answers are provably correct.
+The extraction step remains LLM-based and thus fallible, but errors are localized
+to extraction rather than reasoning.
 
-Our system answers queries by translating them into constraints, invoking a 
-weighted Max-SAT solver, and interpreting the results. The LLM serves only as 
-a natural-language interface; all reasoning is delegated to the solver. This 
-separation ensures faithfulness: if the logification is correct, the answers 
-are provably correct.
+On ContractNLI, Logify outperforms Logic-LM by 12.5\%, with the largest gains on
+long documents where constraints are scattered. On ProofWriter, it maintains
+consistent accuracy even at reasoning depth 5, where chain-of-thought degrades
+sharply.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-    \item An algebraic framework for representing text as a finite logical theory 
+    \item An algebraic framework for representing text as a finite logical theory
     with hard and soft constraints (Section~\ref{sec:framework}).
-    \item A system architecture that logifies text once and supports repeated 
+    \item A system architecture that logifies text once and supports repeated
     querying via weighted Max-SAT (Section~\ref{sec:system}).
-    \item Experiments demonstrating [TBD: main results] (Section~\ref{sec:experiments}).
+    \item Experiments on logical reasoning and document-level NLI benchmarks,
+    demonstrating consistent gains over RAG and neuro-symbolic baselines, with
+    the largest improvements on long documents (Section~\ref{sec:experiments}).
 \end{enumerate}
 
 \subsection{Related Work}
