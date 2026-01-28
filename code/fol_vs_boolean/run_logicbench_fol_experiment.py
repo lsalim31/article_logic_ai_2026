@@ -259,8 +259,8 @@ def main():
     Main execution function.
     """
     # Configuration - FOL PATTERNS (quantified logic)
-    LOGIC_TYPE = 'first_order_logic'  # Testing FOL patterns
-    PATTERNS = ['universal_instantiation', 'existential_generalization']  # FOL reasoning patterns
+    LOGIC_TYPE = 'first_order_logic'  # Testing FOL patterns with quantifiers
+    PATTERNS = ['modus_tollens', 'disjunctive_syllogism', 'hypothetical_syllogism']  # Same patterns but with FOL quantifiers
     MAX_EXAMPLES_PER_PATTERN = 20  # More examples to better see differences
     OUTPUT_DIR = 'data/logicbench_fol_results'
 
