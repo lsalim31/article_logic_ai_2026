@@ -235,14 +235,12 @@ def main():
                 input_dir = input_path.parent
                 input_stem = input_path.stem  # filename without extension
 
-                # Create descriptive suffix with model and key parameters
-                model_name = args.model.replace('/', '_').replace('.', '_')
-                suffix = f"_logified_{model_name}_effort-{args.reasoning_effort}_tokens-{args.max_tokens}.JSON"
-                output_filename = input_stem + suffix
+                # Output JSON file has the same name as input, just with .json extension
+                output_filename = input_stem + ".json"
                 output_path = input_dir / output_filename
             else:
                 # For raw text input, use default name
-                output_path = "logified.JSON"
+                output_path = "logified.json"
         else:
             output_path = args.output
 
