@@ -7,16 +7,31 @@ This module orchestrates the two-stage text-to-logic pipeline:
   Stage 2: Convert text + triples to logic using LLM (logic_converter.py)
 
 Supports multiple document formats: PDF, DOCX, TXT, and plain text input.
+
+Usage (from repo root):
+    python code/from_text_to_logic/logify.py document.txt --api-key sk-...
+
+Usage (from code directory):
+    python from_text_to_logic/logify.py document.txt --api-key sk-...
 """
 
 import json
 import os
+import sys
 import argparse
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-from openie_extractor import OpenIEExtractor
-from logic_converter import LogicConverter
+# Add code directory to Python path for imports to work from any location
+_script_dir = Path(__file__).resolve().parent
+_code_dir = _script_dir.parent
+if str(_code_dir) not in sys.path:
+    sys.path.insert(0, str(_code_dir))
+if str(_script_dir) not in sys.path:
+    sys.path.insert(0, str(_script_dir))
+
+from from_text_to_logic.openie_extractor import OpenIEExtractor
+from from_text_to_logic.logic_converter import LogicConverter
 
 
 def extract_text_from_document(file_path: str) -> str:
