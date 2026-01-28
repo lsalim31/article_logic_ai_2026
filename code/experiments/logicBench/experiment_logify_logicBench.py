@@ -432,14 +432,43 @@ def run_experiment(
     return results
 
 
+def get_api_key(args_key: Optional[str] = None) -> str:
+    """
+    Get API key from arguments or environment variables.
+
+    Priority:
+      1. --api_key argument
+      2. OPENROUTER_API_KEY environment variable
+      3. OPENAI_API_KEY environment variable
+
+    Returns:
+        API key string
+
+    Raises:
+        ValueError: If no API key found
+    """
+    if args_key:
+        return args_key
+
+    key = os.environ.get('OPENROUTER_API_KEY') or os.environ.get('OPENAI_API_KEY')
+
+    if not key:
+        raise ValueError(
+            "No API key provided. Use --api_key argument or set "
+            "OPENROUTER_API_KEY or OPENAI_API_KEY environment variable."
+        )
+
+    return key
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Evaluate Logify on LogicBench (BQA)"
     )
     parser.add_argument(
         "--api_key",
-        required=True,
-        help="OpenAI API key"
+        default=None,
+        help="API key (default: OPENROUTER_API_KEY or OPENAI_API_KEY env var)"
     )
     parser.add_argument(
         "--logic_type",
@@ -471,13 +500,20 @@ def main():
 
     args = parser.parse_args()
 
+    # Get API key
+    try:
+        api_key = get_api_key(args.api_key)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return 1
+
     patterns = args.patterns.split(",") if args.patterns else None
 
     run_experiment(
         logic_type=args.logic_type,
         patterns=patterns,
         max_samples_per_pattern=args.max_samples,
-        api_key=args.api_key,
+        api_key=api_key,
         model=args.model,
         verbose=not args.quiet
     )
