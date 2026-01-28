@@ -140,6 +140,161 @@ def retrieve_top_k_propositions(
     return retrieved
 
 
+def is_yes_no_question(query: str) -> bool:
+    """
+    Detect if a query is a Yes/No question.
+
+    Args:
+        query: User query string
+
+    Returns:
+        True if it's likely a Yes/No question, False otherwise
+    """
+    query_lower = query.lower().strip()
+
+    # Check for common Yes/No question patterns
+    yes_no_starters = [
+        'is ', 'are ', 'was ', 'were ', 'will ', 'would ', 'should ', 'could ',
+        'can ', 'may ', 'might ', 'must ', 'has ', 'have ', 'had ', 'does ',
+        'do ', 'did '
+    ]
+
+    for starter in yes_no_starters:
+        if query_lower.startswith(starter):
+            return True
+
+    return False
+
+
+def convert_yes_no_to_statement(
+    query: str,
+    api_key: str,
+    model: str = "gpt-5.2",
+    temperature: float = 0.1,
+    reasoning_effort: str = "medium",
+    max_tokens: int = 1000
+) -> str:
+    """
+    Convert a Yes/No question to a declarative statement using an LLM.
+
+    Args:
+        query: Yes/No question to convert
+        api_key: OpenRouter API key
+        model: LLM model (default: gpt-5.2)
+        temperature: Sampling temperature (default: 0.1)
+        reasoning_effort: For reasoning models (default: medium)
+        max_tokens: Max response tokens (default: 1000)
+
+    Returns:
+        Converted statement string
+    """
+    prompt = f"""Convert the following Yes/No question into a declarative statement that expresses what the question is asking about.
+
+EXAMPLES:
+Question: "Can the receiving party share information with third parties?"
+Statement: "The receiving party can share information with third parties"
+
+Question: "Is Alice a student?"
+Statement: "Alice is a student"
+
+Question: "Does the policy allow data retention?"
+Statement: "The policy allows data retention"
+
+Question: "Will the contract expire in 2025?"
+Statement: "The contract will expire in 2025"
+
+Question: "Should employees wear safety equipment?"
+Statement: "Employees should wear safety equipment"
+
+Now convert this question:
+Question: "{query}"
+
+OUTPUT FORMAT (JSON only, no other text):
+{{
+    "statement": "<declarative statement>",
+    "reasoning": "<1 sentence explanation>"
+}}"""
+
+    # Detect OpenRouter keys and use appropriate base URL
+    if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
+        client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
+        # Prefix model with openai/ for OpenRouter
+        if not model.startswith('openai/'):
+            model = f'openai/{model}'
+    else:
+        client = OpenAI(api_key=api_key)
+
+    # Determine if this is a reasoning model
+    base_model = model.replace("openai/", "")
+    is_reasoning_model = base_model.startswith("gpt-5") or base_model.startswith("o1") or base_model.startswith("o3")
+
+    # Build API call parameters based on model type
+    if is_reasoning_model:
+        if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
+            # OpenRouter format
+            api_params = {
+                "model": model,
+                "messages": [
+                    {"role": "user", "content": prompt}
+                ],
+                "max_tokens": max_tokens,
+                "extra_body": {
+                    "reasoning": {
+                        "effort": reasoning_effort,
+                        "enabled": True
+                    }
+                }
+            }
+        else:
+            # Direct OpenAI API format
+            api_params = {
+                "model": model,
+                "messages": [
+                    {"role": "developer", "content": "You are a precise question-to-statement converter."},
+                    {"role": "user", "content": prompt}
+                ],
+                "reasoning_effort": reasoning_effort,
+                "max_completion_tokens": max_tokens
+            }
+    else:
+        # Standard models (gpt-4o, gpt-4-turbo, etc.)
+        api_params = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": "You are a precise question-to-statement converter."},
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": temperature,
+            "max_tokens": max_tokens
+        }
+
+    # Call the API
+    response = client.chat.completions.create(**api_params)
+
+    response_text = response.choices[0].message.content
+    if response_text is None:
+        raise ValueError("LLM returned empty response")
+
+    response_text = response_text.strip()
+
+    # Parse JSON response
+    try:
+        result = json.loads(response_text)
+        return result['statement']
+    except (json.JSONDecodeError, KeyError) as e:
+        # Try to extract JSON from response
+        if "{" in response_text and "}" in response_text:
+            json_start = response_text.find("{")
+            json_end = response_text.rfind("}") + 1
+            json_text = response_text[json_start:json_end]
+            try:
+                result = json.loads(json_text)
+                return result['statement']
+            except (json.JSONDecodeError, KeyError):
+                pass
+        raise ValueError(f"Failed to parse LLM response: {e}\nResponse: {response_text}")
+
+
 def build_prompt(query: str, retrieved_chunks: List[Dict]) -> str:
     """
     Build the LLM prompt for translating query to propositional formula.
@@ -309,6 +464,9 @@ def translate_query(
     """
     Main function: Translate a natural language query to a propositional formula.
 
+    Handles Yes/No questions by first converting them to statements, then proceeds
+    with normal translation.
+
     Args:
         query: User query in natural language
         json_path: Path to logified JSON file with primitive_props
@@ -322,11 +480,37 @@ def translate_query(
         verbose: Print progress messages (default: True)
 
     Returns:
-        Dict with formula, translation, query, explanation
+        Dict with formula, translation, query, explanation, original_query (if converted)
     """
+    original_query = query
+
+    # Step 1: Check if this is a Yes/No question and convert to statement
+    if is_yes_no_question(query):
+        if verbose:
+            print(f"Detected Yes/No question: '{query}'")
+            print("Converting to declarative statement...")
+
+        try:
+            query = convert_yes_no_to_statement(
+                query=query,
+                api_key=api_key,
+                model=model,
+                temperature=temperature,
+                reasoning_effort=reasoning_effort,
+                max_tokens=1000
+            )
+
+            if verbose:
+                print(f"  → Converted to: '{query}'")
+        except Exception as e:
+            if verbose:
+                print(f"  Warning: Could not convert question to statement: {e}")
+                print("  Proceeding with original query...")
+            query = original_query
+
     # Load JSON file
     if verbose:
-        print(f"Loading logified JSON from: {json_path}")
+        print(f"\nLoading logified JSON from: {json_path}")
 
     with open(json_path, 'r', encoding='utf-8') as f:
         logified_structure = json.load(f)
@@ -367,7 +551,7 @@ def translate_query(
 
     # Call LLM
     if verbose:
-        print(f"Calling LLM ({model}) to translate query...")
+        print(f"\nCalling LLM ({model}) to translate query...")
 
     result = call_llm(
         prompt=prompt,
@@ -378,8 +562,16 @@ def translate_query(
         max_tokens=max_tokens
     )
 
+    # Add original query if it was converted
+    if original_query != query:
+        result['original_query'] = original_query
+        result['query'] = query  # Update to show the converted statement
+
     if verbose:
         print("\nResult:")
+        if 'original_query' in result:
+            print(f"  Original Query: {result['original_query']}")
+            print(f"  Converted Query: {result['query']}")
         print(f"  Formula: {result.get('formula', 'N/A')}")
         print(f"  Translation: {result.get('translation', 'N/A')}")
         print(f"  Explanation: {result.get('explanation', 'N/A')}")
