@@ -276,6 +276,7 @@ def run_experiment(
             "num_hypotheses": len(labels),
             "num_pairs": len(documents) * len(labels)
         },
+        "document_metrics": [],
         "results": []
     }
 
@@ -294,6 +295,11 @@ def run_experiment(
 
         print(f"\n[{doc_idx + 1}/{len(documents)}] Processing document {doc_id}")
         print(f"  Text length: {len(doc_text)} chars")
+
+        # Skip empty documents
+        if not doc_text or not doc_text.strip():
+            print(f"  [SKIP] Empty document text")
+            continue
 
         # Logify document
         try:
@@ -395,6 +401,20 @@ def run_experiment(
         print(f"  Document accuracy: {doc_correct}/{doc_total} = {doc_accuracy:.2%}")
         print(f"  Logify latency: {logify_latency:.2f}s (cached: {logify_cached})")
         print(f"  Query latency total: {query_latency_total:.2f}s")
+
+        # Store document-level metrics
+        doc_metrics = {
+            "doc_id": doc_id,
+            "text_length": len(doc_text),
+            "logify_latency_sec": logify_latency,
+            "logify_cached": logify_cached,
+            "logify_error": logify_error,
+            "query_latency_total_sec": query_latency_total,
+            "doc_correct": doc_correct,
+            "doc_total": doc_total,
+            "doc_accuracy": doc_accuracy
+        }
+        results["document_metrics"].append(doc_metrics)
 
         # Save intermediate results
         with open(output_path, 'w', encoding='utf-8') as f:
