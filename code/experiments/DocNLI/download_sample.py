@@ -2,26 +2,31 @@
 """
 download_sample.py
 
-Download and filter 100 examples from DocNLI test set.
+Download and sample premises from DocNLI test set with ALL their hypotheses.
+
+This script groups examples by premise (document), filters by word count,
+and samples N unique premises with all their associated hypotheses.
 
 Filtering criteria:
 - Premise length: 200-500 words
-- Balanced: 50 entailment, 50 not-entailment
+- Sample N unique premises (default: 10)
 
 Output:
-- doc-nli/sample_100.json
+- doc-nli/sample_100.json (contains premises list and flattened examples)
 
 Usage:
     pip install datasets
     python download_sample.py
-    python download_sample.py --output doc-nli/sample_100.json
+    python download_sample.py --num-premises 10
+    python download_sample.py --num-premises 20 --output doc-nli/sample_20_premises.json
 """
 
 import json
 import random
 from pathlib import Path
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
+from collections import defaultdict
 
 # Try HuggingFace datasets
 try:
@@ -43,8 +48,7 @@ DEFAULT_OUTPUT_PATH = _script_dir / "doc-nli" / "sample_100.json"
 # Filtering criteria
 MIN_PREMISE_WORDS = 200
 MAX_PREMISE_WORDS = 500
-NUM_ENTAILMENT = 50
-NUM_NOT_ENTAILMENT = 50
+DEFAULT_NUM_PREMISES = 10
 
 
 def count_words(text: str) -> int:
@@ -52,78 +56,148 @@ def count_words(text: str) -> int:
     return len(text.split())
 
 
-def filter_by_word_count(examples: List[Dict], min_words: int, max_words: int) -> List[Dict]:
-    """Filter examples by premise word count."""
+def download_and_group_by_premise() -> Dict[str, Dict[str, Any]]:
+    """
+    Download DocNLI test set and group examples by premise.
+
+    Returns:
+        Dict mapping premise_text -> {
+            "hypotheses": [{"hypothesis": str, "label": str, "original_idx": int}, ...],
+            "first_original_idx": int
+        }
+    """
+    print("Loading DocNLI test set from HuggingFace Datasets...")
+
+    dataset = load_dataset("saattrupdan/doc-nli", split="test")
+
+    # Group by premise text
+    premises_dict = defaultdict(lambda: {"hypotheses": [], "first_original_idx": None})
+
+    for idx, example in enumerate(dataset):
+        premise_text = example["premise"]
+
+        if premises_dict[premise_text]["first_original_idx"] is None:
+            premises_dict[premise_text]["first_original_idx"] = idx
+
+        premises_dict[premise_text]["hypotheses"].append({
+            "hypothesis": example["hypothesis"],
+            "label": example["label"],  # "entailment" or "not_entailment"
+            "original_idx": idx
+        })
+
+    print(f"  Loaded {len(dataset)} examples from test set")
+    print(f"  Found {len(premises_dict)} unique premises")
+
+    return dict(premises_dict)
+
+
+def filter_premises(
+    premises_dict: Dict[str, Dict[str, Any]],
+    min_words: int,
+    max_words: int
+) -> List[Tuple[str, Dict[str, Any], int]]:
+    """
+    Filter premises by word count.
+
+    Returns:
+        List of (premise_text, premise_data, word_count) tuples
+    """
     filtered = []
-    for ex in examples:
-        word_count = count_words(ex["premise"])
+    for premise_text, premise_data in premises_dict.items():
+        word_count = count_words(premise_text)
         if min_words <= word_count <= max_words:
-            ex["premise_word_count"] = word_count
-            filtered.append(ex)
+            filtered.append((premise_text, premise_data, word_count))
+
     return filtered
 
 
-def download_with_hf() -> List[Dict[str, Any]]:
-    """Download DocNLI test set using HuggingFace Datasets."""
-    print("Loading DocNLI test set from HuggingFace Datasets...")
+def sample_premises(
+    filtered_premises: List[Tuple[str, Dict[str, Any], int]],
+    num_premises: int,
+    seed: int = 42
+) -> List[Dict[str, Any]]:
+    """
+    Sample N premises with all their hypotheses.
 
-    # Load test split
-    dataset = load_dataset("saattrupdan/doc-nli", split="test")
+    Returns:
+        List of premise dicts with structure:
+        {
+            "premise_id": int,
+            "premise": str,
+            "premise_word_count": int,
+            "first_original_idx": int,
+            "hypotheses": [{"hypothesis": str, "label": str, "original_idx": int}, ...]
+        }
+    """
+    random.seed(seed)
 
-    examples = []
-    for idx, example in enumerate(dataset):
-        examples.append({
-            "original_idx": idx,
-            "premise": example["premise"],
-            "hypothesis": example["hypothesis"],
-            "label": example["label"]  # Already a string: "entailment" or "not_entailment"
+    if len(filtered_premises) < num_premises:
+        print(f"  Warning: Only {len(filtered_premises)} premises available, using all")
+        num_premises = len(filtered_premises)
+
+    sampled = random.sample(filtered_premises, num_premises)
+
+    # Build output structure
+    premises_list = []
+    for i, (premise_text, premise_data, word_count) in enumerate(sampled):
+        premises_list.append({
+            "premise_id": i,
+            "premise": premise_text,
+            "premise_word_count": word_count,
+            "first_original_idx": premise_data["first_original_idx"],
+            "hypotheses": premise_data["hypotheses"]
         })
 
-    print(f"  Loaded {len(examples)} examples from test set")
+    return premises_list
+
+
+def flatten_to_examples(premises_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Flatten premises to individual examples for compatibility.
+
+    Returns:
+        List of example dicts with structure:
+        {
+            "example_id": int,
+            "premise_id": int,
+            "original_idx": int,
+            "premise": str,
+            "hypothesis": str,
+            "label": str
+        }
+    """
+    examples = []
+    example_id = 0
+
+    for premise_data in premises_list:
+        for hyp in premise_data["hypotheses"]:
+            examples.append({
+                "example_id": example_id,
+                "premise_id": premise_data["premise_id"],
+                "original_idx": hyp["original_idx"],
+                "premise": premise_data["premise"],
+                "premise_word_count": premise_data["premise_word_count"],
+                "hypothesis": hyp["hypothesis"],
+                "label": hyp["label"]
+            })
+            example_id += 1
+
     return examples
 
 
-def sample_balanced(
-    examples: List[Dict],
-    num_entailment: int,
-    num_not_entailment: int,
-    seed: int = 42
-) -> List[Dict]:
-    """Sample balanced examples from filtered pool."""
-    random.seed(seed)
-
-    # Separate by label
-    entailment = [ex for ex in examples if ex["label"] == "entailment"]
-    not_entailment = [ex for ex in examples if ex["label"] == "not_entailment"]
-
-    print(f"  Filtered pool: {len(entailment)} entailment, {len(not_entailment)} not_entailment")
-
-    # Check if we have enough
-    if len(entailment) < num_entailment:
-        print(f"  Warning: Only {len(entailment)} entailment examples available")
-        num_entailment = len(entailment)
-    if len(not_entailment) < num_not_entailment:
-        print(f"  Warning: Only {len(not_entailment)} not_entailment examples available")
-        num_not_entailment = len(not_entailment)
-
-    # Sample
-    sampled_entailment = random.sample(entailment, num_entailment)
-    sampled_not_entailment = random.sample(not_entailment, num_not_entailment)
-
-    # Combine and shuffle
-    sampled = sampled_entailment + sampled_not_entailment
-    random.shuffle(sampled)
-
-    # Assign example_id
-    for i, ex in enumerate(sampled):
-        ex["example_id"] = i
-
-    return sampled
-
-
-def save_sample(examples: List[Dict], output_path: Path) -> None:
-    """Save sampled examples to JSON."""
+def save_sample(
+    premises_list: List[Dict[str, Any]],
+    examples: List[Dict[str, Any]],
+    output_path: Path,
+    num_premises: int
+) -> None:
+    """Save sampled premises and examples to JSON."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Count label distribution
+    label_counts = {"entailment": 0, "not_entailment": 0}
+    for ex in examples:
+        label_counts[ex["label"]] = label_counts.get(ex["label"], 0) + 1
 
     data = {
         "metadata": {
@@ -131,26 +205,35 @@ def save_sample(examples: List[Dict], output_path: Path) -> None:
             "filter_criteria": {
                 "min_premise_words": MIN_PREMISE_WORDS,
                 "max_premise_words": MAX_PREMISE_WORDS,
-                "num_entailment": NUM_ENTAILMENT,
-                "num_not_entailment": NUM_NOT_ENTAILMENT
+                "num_premises_requested": num_premises
             },
             "download_timestamp": datetime.now().isoformat(),
-            "num_examples": len(examples)
+            "num_premises": len(premises_list),
+            "num_examples": len(examples),
+            "label_distribution": label_counts,
+            "avg_hypotheses_per_premise": len(examples) / len(premises_list) if premises_list else 0
         },
+        "premises": premises_list,
         "examples": examples
     }
 
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-    print(f"  Saved {len(examples)} examples to {output_path}")
+    print(f"  Saved {len(premises_list)} premises with {len(examples)} total examples to {output_path}")
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Download and filter 100 examples from DocNLI test set"
+        description="Download and sample premises from DocNLI test set with all hypotheses"
+    )
+    parser.add_argument(
+        "--num-premises",
+        type=int,
+        default=DEFAULT_NUM_PREMISES,
+        help=f"Number of unique premises to sample (default: {DEFAULT_NUM_PREMISES})"
     )
     parser.add_argument(
         "--output",
@@ -173,21 +256,32 @@ def main():
         print("Install with: pip install datasets")
         return 1
 
-    # Download
-    examples = download_with_hf()
+    # Download and group by premise
+    premises_dict = download_and_group_by_premise()
 
     # Filter by word count
     print(f"Filtering by premise word count ({MIN_PREMISE_WORDS}-{MAX_PREMISE_WORDS})...")
-    filtered = filter_by_word_count(examples, MIN_PREMISE_WORDS, MAX_PREMISE_WORDS)
-    print(f"  {len(filtered)} examples match word count criteria")
+    filtered = filter_premises(premises_dict, MIN_PREMISE_WORDS, MAX_PREMISE_WORDS)
+    print(f"  {len(filtered)} premises match word count criteria")
 
-    # Sample balanced
-    print(f"Sampling {NUM_ENTAILMENT} entailment + {NUM_NOT_ENTAILMENT} not_entailment...")
-    sampled = sample_balanced(filtered, NUM_ENTAILMENT, NUM_NOT_ENTAILMENT, seed=args.seed)
+    # Calculate avg hypotheses per premise
+    total_hyps = sum(len(p[1]["hypotheses"]) for p in filtered)
+    avg_hyps = total_hyps / len(filtered) if filtered else 0
+    print(f"  Average hypotheses per premise: {avg_hyps:.1f}")
+
+    # Sample premises
+    print(f"Sampling {args.num_premises} premises with all their hypotheses...")
+    premises_list = sample_premises(filtered, args.num_premises, seed=args.seed)
+
+    # Flatten to examples
+    examples = flatten_to_examples(premises_list)
+
+    # Report
+    print(f"  Sampled {len(premises_list)} premises with {len(examples)} total hypotheses")
 
     # Save
     print(f"Saving to {args.output}...")
-    save_sample(sampled, args.output)
+    save_sample(premises_list, examples, args.output, args.num_premises)
 
     print("Done!")
     return 0
