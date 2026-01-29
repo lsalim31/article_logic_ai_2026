@@ -342,7 +342,7 @@ OUTPUT FORMAT (JSON only, no other text):
     "query": "{query}",
     "explanation": "<1-2 sentence reasoning for the formula chosen>"
 }}"""
-    prompt = """ 
+    prompt = f""" 
     You are a logic translator for Natural Language Inference (NLI). Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula that can be checked for ENTAILMENT.
 
 AVAILABLE PROPOSITIONS:
