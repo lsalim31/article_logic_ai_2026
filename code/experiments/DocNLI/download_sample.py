@@ -7,12 +7,12 @@ Download and filter 100 examples from DocNLI test set.
 Filtering criteria:
 - Premise length: 200-500 words
 - Balanced: 50 entailment, 50 not-entailment
-- Priority: FEVER/SQuAD sources if metadata available
 
 Output:
 - doc-nli/sample_100.json
 
 Usage:
+    pip install datasets
     python download_sample.py
     python download_sample.py --output doc-nli/sample_100.json
 """
@@ -23,16 +23,17 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any
 
-# Try tensorflow_datasets, fall back to manual instructions
+# Try HuggingFace datasets
 try:
-    import tensorflow_datasets as tfds
-    HAS_TFDS = True
+    from datasets import load_dataset
+    HAS_DATASETS = True
+    DATASETS_ERROR = None
 except ImportError as e:
-    HAS_TFDS = False
-    TFDS_ERROR = str(e)
+    HAS_DATASETS = False
+    DATASETS_ERROR = str(e)
 except Exception as e:
-    HAS_TFDS = False
-    TFDS_ERROR = str(e)
+    HAS_DATASETS = False
+    DATASETS_ERROR = str(e)
 
 
 # Paths
@@ -62,20 +63,20 @@ def filter_by_word_count(examples: List[Dict], min_words: int, max_words: int) -
     return filtered
 
 
-def download_with_tfds() -> List[Dict[str, Any]]:
-    """Download DocNLI test set using TensorFlow Datasets."""
-    print("Loading DocNLI test set from TensorFlow Datasets...")
+def download_with_hf() -> List[Dict[str, Any]]:
+    """Download DocNLI test set using HuggingFace Datasets."""
+    print("Loading DocNLI test set from HuggingFace Datasets...")
 
     # Load test split
-    dataset = tfds.load("doc_nli", split="test")
+    dataset = load_dataset("saattrupdan/doc-nli", split="test")
 
     examples = []
     for idx, example in enumerate(dataset):
         examples.append({
             "original_idx": idx,
-            "premise": example["premise"].numpy().decode("utf-8"),
-            "hypothesis": example["hypothesis"].numpy().decode("utf-8"),
-            "label": "entailment" if example["label"].numpy() == 1 else "not_entailment"
+            "premise": example["premise"],
+            "hypothesis": example["hypothesis"],
+            "label": "entailment" if example["label"] == 1 else "not_entailment"
         })
 
     print(f"  Loaded {len(examples)} examples from test set")
@@ -126,7 +127,7 @@ def save_sample(examples: List[Dict], output_path: Path) -> None:
 
     data = {
         "metadata": {
-            "source": "DocNLI test split (TensorFlow Datasets)",
+            "source": "DocNLI test split (HuggingFace: saattrupdan/doc-nli)",
             "filter_criteria": {
                 "min_premise_words": MIN_PREMISE_WORDS,
                 "max_premise_words": MAX_PREMISE_WORDS,
@@ -166,14 +167,14 @@ def main():
 
     args = parser.parse_args()
 
-    if not HAS_TFDS:
-        print("Error: tensorflow_datasets import failed.")
-        print(f"Error details: {TFDS_ERROR}")
-        print("Install with: pip install tensorflow_datasets tensorflow")
+    if not HAS_DATASETS:
+        print("Error: datasets library import failed.")
+        print(f"Error details: {DATASETS_ERROR}")
+        print("Install with: pip install datasets")
         return 1
 
     # Download
-    examples = download_with_tfds()
+    examples = download_with_hf()
 
     # Filter by word count
     print(f"Filtering by premise word count ({MIN_PREMISE_WORDS}-{MAX_PREMISE_WORDS})...")
