@@ -273,7 +273,7 @@ def run_experiment(
     results = {
         "metadata": {
             "timestamp": timestamp,
-            "model": model,
+            "query_model": query_model,
             "weights_model": weights_model,
             "temperature": temperature,
             "reasoning_effort": reasoning_effort,
@@ -281,6 +281,7 @@ def run_experiment(
             "query_max_tokens": query_max_tokens,
             "k_weights": k_weights,
             "k_query": k_query,
+            "doc_ids": doc_ids,
             "num_documents": len(documents),
             "num_hypotheses": len(labels),
             "num_pairs": len(documents) * len(labels)
@@ -514,10 +515,10 @@ def main():
         help="Top-k propositions for query (default: 20)"
     )
     parser.add_argument(
-        "--num-docs",
-        type=int,
-        default=20,
-        help="Number of documents to process (default: 20)"
+        "--doc-ids",
+        type=str,
+        default=None,
+        help="Comma-separated list of document IDs to process (default: predefined list of 20 docs)"
     )
 
     args = parser.parse_args()
@@ -532,6 +533,11 @@ def main():
         print(f"Error: Dataset not found: {args.dataset_path}")
         return 1
 
+    # Parse doc_ids if provided
+    doc_ids = None
+    if args.doc_ids:
+        doc_ids = [int(x.strip()) for x in args.doc_ids.split(",")]
+
     try:
         run_experiment(
             dataset_path=args.dataset_path,
@@ -544,7 +550,7 @@ def main():
             query_max_tokens=args.query_max_tokens,
             k_weights=args.k_weights,
             k_query=args.k_query,
-            num_docs=args.num_docs
+            doc_ids=doc_ids
         )
         return 0
     except Exception as e:
