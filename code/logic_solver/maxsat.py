@@ -469,16 +469,19 @@ class LogicSolver:
         return True
 
 
-def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> SolverResult:
+def solve_query(logified_structure: Dict[str, Any], query_formula: str,
+                use_confidence_thresholds: bool = True) -> SolverResult:
     """
     Convenience function to solve a query against a logified structure.
 
     Args:
         logified_structure: JSON structure with propositions and constraints
         query_formula: Propositional formula to check
+        use_confidence_thresholds: Whether to apply confidence thresholds to
+                                   convert high/low confidence UNCERTAIN to TRUE/FALSE
 
     Returns:
         SolverResult with answer and confidence
     """
-    solver = LogicSolver(logified_structure)
+    solver = LogicSolver(logified_structure, use_confidence_thresholds=use_confidence_thresholds)
     return solver.query(query_formula)

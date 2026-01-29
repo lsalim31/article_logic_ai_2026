@@ -24,13 +24,24 @@ COMMITMENT_PATTERNS = [
     r'\b(should|ought to|supposed to)\b',
 ]
 
-# Patterns for negation equivalences
+# Patterns for negation equivalences (pattern1, pattern2) where P1 ⟺ ¬P2
 NEGATION_PATTERNS = [
-    (r'\bnot prone to\b', 'susceptible to'),
-    (r'\bnot susceptible to\b', 'prone to'),
-    (r'\bimmune to\b', 'affected by'),
-    (r'\bunable to\b', 'able to'),
-    (r'\bincapable of\b', 'capable of'),
+    (r'\bnot prone to\b', r'\bsusceptible to\b'),
+    (r'\bnot susceptible to\b', r'\bprone to\b'),
+    (r'\bimmune to\b', r'\baffected by\b'),
+    (r'\bunable to\b', r'\bable to\b'),
+    (r'\bincapable of\b', r'\bcapable of\b'),
+    (r'\bnot prone to\b', r'\bmore susceptible to\b'),
+    (r'\bnot prone to\b', r'\bbecome.* susceptible to\b'),
+]
+
+# Antonym pairs for detecting opposite concepts that cannot both be true
+# Only include truly mutually exclusive pairs
+ANTONYM_PAIRS = [
+    ('healthy', 'ill'),
+    ('healthy', 'sick'),
+    ('prone to', 'immune to'),
+    ('susceptible to', 'resistant to'),
 ]
 
 # Minimum similarity threshold for semantic bridging
@@ -174,6 +185,7 @@ def detect_negation_equivalences(propositions: List[Dict]) -> List[Tuple[str, st
     for i, p1 in enumerate(propositions):
         t1 = p1.get('translation', '').lower()
 
+        # Check explicit negation patterns
         for neg_pattern, pos_pattern in NEGATION_PATTERNS:
             if re.search(neg_pattern, t1):
                 # Look for the positive equivalent
@@ -183,18 +195,44 @@ def detect_negation_equivalences(propositions: List[Dict]) -> List[Tuple[str, st
 
                     t2 = p2.get('translation', '').lower()
 
-                    if pos_pattern in t2:
+                    if re.search(pos_pattern, t2):
                         # Check if the rest of the text is similar
                         t1_clean = re.sub(neg_pattern, '', t1).strip()
-                        t2_clean = t2.replace(pos_pattern, '').strip()
+                        t2_clean = re.sub(pos_pattern, '', t2).strip()
 
-                        if compute_text_similarity(t1_clean, t2_clean) > 0.5:
+                        if compute_text_similarity(t1_clean, t2_clean) > 0.3:
                             pairs.append((
                                 p1['id'],
                                 p2['id'],
                                 '⟺',
                                 f"'{p1.get('translation', '')}' is equivalent to ¬'{p2.get('translation', '')}'"
                             ))
+
+    # Check antonym pairs
+    for i, p1 in enumerate(propositions):
+        t1 = p1.get('translation', '').lower()
+
+        for j, p2 in enumerate(propositions):
+            if i >= j:  # Avoid duplicates
+                continue
+
+            t2 = p2.get('translation', '').lower()
+
+            for ant1, ant2 in ANTONYM_PAIRS:
+                # Check if one proposition has ant1 and other has ant2
+                has_ant1_in_t1 = re.search(ant1, t1) is not None
+                has_ant2_in_t2 = re.search(ant2, t2) is not None
+                has_ant1_in_t2 = re.search(ant1, t2) is not None
+                has_ant2_in_t1 = re.search(ant2, t1) is not None
+
+                if (has_ant1_in_t1 and has_ant2_in_t2) or (has_ant2_in_t1 and has_ant1_in_t2):
+                    # These are likely antonyms - add mutual exclusion constraint
+                    pairs.append((
+                        p1['id'],
+                        p2['id'],
+                        'MUTEX',  # Special marker for mutual exclusion
+                        f"'{p1.get('translation', '')}' and '{p2.get('translation', '')}' are antonyms (cannot both be true)"
+                    ))
 
     return pairs
 
@@ -279,24 +317,41 @@ def add_semantic_bridges(structure: Dict[str, Any],
             if verbose:
                 print(f"  Added commitment bridge: {formula}")
 
-    # 2. Detect negation equivalences
+    # 2. Detect negation equivalences and antonym pairs
     negation_pairs = detect_negation_equivalences(props)
     for id1, id2, operator, reasoning in negation_pairs:
-        # "not prone to X" ⟺ ¬"susceptible to X"
-        formula = f"{id1} ⟺ ¬{id2}"
-        if formula not in existing_formulas:
-            new_constraints.append({
-                "id": f"BRIDGE_{bridge_id_counter}",
-                "formula": formula,
-                "translation": f"Negation equivalence",
-                "evidence": "Semantic bridging: negation equivalence detected",
-                "reasoning": reasoning
-            })
-            existing_formulas.add(formula)
-            bridge_id_counter += 1
+        if operator == 'MUTEX':
+            # Mutual exclusion: ¬(P1 ∧ P2) - cannot both be true
+            formula = f"¬({id1} ∧ {id2})"
+            if formula not in existing_formulas:
+                new_constraints.append({
+                    "id": f"BRIDGE_{bridge_id_counter}",
+                    "formula": formula,
+                    "translation": f"Mutual exclusion (antonyms)",
+                    "evidence": "Semantic bridging: antonym pair detected",
+                    "reasoning": reasoning
+                })
+                existing_formulas.add(formula)
+                bridge_id_counter += 1
 
-            if verbose:
-                print(f"  Added negation bridge: {formula}")
+                if verbose:
+                    print(f"  Added mutex bridge: {formula}")
+        else:
+            # "not prone to X" ⟺ ¬"susceptible to X"
+            formula = f"{id1} ⟺ ¬{id2}"
+            if formula not in existing_formulas:
+                new_constraints.append({
+                    "id": f"BRIDGE_{bridge_id_counter}",
+                    "formula": formula,
+                    "translation": f"Negation equivalence",
+                    "evidence": "Semantic bridging: negation equivalence detected",
+                    "reasoning": reasoning
+                })
+                existing_formulas.add(formula)
+                bridge_id_counter += 1
+
+                if verbose:
+                    print(f"  Added negation bridge: {formula}")
 
     # 3. Detect highly similar propositions
     similar_pairs = detect_similar_propositions(props, similarity_threshold)
