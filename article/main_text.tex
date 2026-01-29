@@ -86,20 +86,13 @@ This module implements the extraction of natural language text into the weighted
 \subsubsection{Three-Stage Extraction Pipeline}
 
 \paragraph{Stage 1: Relation Triple Extraction.}
-We use Stanford CoreNLP's OpenIE system \cite{angeli2015openie} via the Stanza Python interface \cite{qi2020stanza} to extract subject-predicate-object triples from the text. This provides structured relational information that can help guide proposition identification. We first apply native Stanza coreference resolution to handle pronominal references (e.g. replacing "They" with "Alice"), to ensure that triples consistently refer to canonical entities rather than pronouns. As a fallback, we use Stanza's dependency parse for sentences where OpenIE fails to extract triples (e.g., intransitive verbs with adverbs). Triples are formatted as \texttt{[subject, predicate, object]}. Implementation details are provided in Appendix~\ref{sec:openie}.
+We use Stanford CoreNLP's OpenIE system \cite{angeli2015openie} via the Stanza Python interface \cite{qi2020stanza} to extract subject-predicate-object triples from the text. This provides structured relational information that can help guide proposition identification. We first apply native Stanza coreference resolution to handle pronominal references (e.g. replacing "They" with "Alice"), to ensure that triples consistently refer to canonical entities rather than pronouns. As a fallback, we use Stanza's dependency parse for sentences where OpenIE fails to extract triples (e.g., intransitive verbs with adverbs). Triples are formatted as \texttt{[subject, predicate, object]}.
 
 \paragraph{Stage 2: LLM-Based Logic Conversion.}
-The original text $T$  and the extracted triples are jointly provided to a large language model (e.g., GPT-4o, GPT-5.2, or o3-mini). For reasoning models (GPT-5.x, o1, o3), we configure the reasoning effort level (low/medium/high) and use the \texttt{developer} role for system instructions; for standard models, we use \texttt{system} role with temperature control. The LLM performs semantic analysis to identify atomic propositions $\mathcal{P}(T)$, hard constraints $\mathcal{C}(T)$, and soft constraints $\mathcal{S}(T)$---crucially, soft constraints are extracted \emph{without} weights at this stage. The prompt includes few-shot examples demonstrating the expected extraction format (Appendices~\ref{sec:prompt} and \ref{sec:exemplar}).
+The original text $T$  and the extracted triples are jointly provided to a large language model (e.g., GPT-4o, GPT-5.2, or o3-mini). For reasoning models (GPT-5.x, o1, o3), we configure the reasoning effort level (low/medium/high) and use the \texttt{developer} role for system instructions; for standard models, we use \texttt{system} role with temperature control. The LLM performs semantic analysis to identify atomic propositions $\mathcal{P}(T)$, hard constraints $\mathcal{C}(T)$, and soft constraints $\mathcal{S}(T)$---crucially, soft constraints are extracted \emph{without} weights at this stage.
 
 \paragraph{Stage 3: Weight Assignment.}
-The final stage assigns confidence weights to all constraints using an evidence-based retrieval and LLM verification pipeline. For each constraint $Q$, we: (1) chunk the original document and pre-compute SBERT embeddings \cite{reimers2019sbert} (model: \texttt{all-MiniLM-L6-v2}); (2) retrieve the top-$k$ chunks most similar to the constraint's natural language translation ($k=10$ by default); (3) prompt an LLM with the retrieved chunks, asking a YES/NO verification question: ``Does this document excerpt provide clear evidence supporting this claim?''; (4) extract logprobs for YES and NO tokens from the response; (5) repeat for the \emph{negated} constraint: ``It is not the case that [Q]''; and (6) compute confidence via binary softmax: $w(Q) = P(\text{YES} \mid Q) / (P(\text{YES} \mid Q) + P(\text{YES} \mid \neg Q) + \epsilon)$, where $\epsilon$ is a small constant for numerical stability. This produces a weight $w(Q) \in (0,1)$ reflecting how strongly the document supports $Q$. The separation is deliberate: the LLM identifies \emph{which} constraints are defeasible based on linguistic cues, while the weight assignment module quantifies \emph{how strongly} the text supports each constraint. Implementation details are provided in Appendix~\ref{sec:weights}.
-
-\subsubsection{Proposition Extraction}
-Given text $T$, we extract atomic propositions $\mathcal{P}(T) = \{P_1, \ldots, P_n\}$. Each proposition is paired with its natural language meaning, forming a \emph{schema}:
-\[
-\texttt{schema} = \{P_i \mapsto \text{``natural language description of } P_i\text{''}\}
-\]
-This schema serves as the interface between the symbolic solver and the LLM: the solver operates over $P_i$; the LLM uses the schema to translate between natural language and formal queries.
+The final stage assigns confidence weights to all constraints using an evidence-based retrieval and LLM verification pipeline. For each constraint $Q$, we: (1) chunk the original document and pre-compute SBERT embeddings \cite{reimers2019sbert} (model: \texttt{all-MiniLM-L6-v2}); (2) retrieve the top-$k$ chunks most similar to the constraint's natural language translation ($k=10$ by default); (3) prompt an LLM with the retrieved chunks, asking a YES/NO verification question: ``Does this document excerpt provide clear evidence supporting this claim?''; (4) extract logprobs for YES and NO tokens from the response; (5) repeat for the \emph{negated} constraint: ``It is not the case that [Q]''; and (6) compute confidence via binary softmax: $w(Q) = P(\text{YES} \mid Q) / (P(\text{YES} \mid Q) + P(\text{YES} \mid \neg Q) + \epsilon)$, where $\epsilon$ is a small constant for numerical stability. This produces a weight $w(Q) \in (0,1)$ reflecting how strongly the document supports $Q$. The separation is deliberate: the LLM identifies \emph{which} constraints are defeasible based on linguistic cues, while the weight assignment module quantifies \emph{how strongly} the text supports each constraint.
 
 \subsubsection{Constraint Extraction}
 From the text, we extract:
@@ -121,24 +114,13 @@ The module outputs a JSON structure with rich provenance metadata. After Stage 3
  "hard_constraints": [
    {"id": "H_1", "formula": "P_1 -> P_2",
     "translation": "...", "evidence": "...",
-    "reasoning": "...",
-    "weight": [0.95, 0.12, 0.89]}],
+    "reasoning": "...", "weight": [0.95, 0.12, 0.89]}],
  "soft_constraints": [
    {"id": "S_1", "formula": "P_3 -> P_4",
     "translation": "...", "evidence": "...",
-    "reasoning": "...",
-    "weight": [0.82, 0.45, 0.65]}]}
+    "reasoning": "...", "weight": [0.82, 0.45, 0.65]}]}
 \end{verbatim}
-The \texttt{weight} field contains $[\text{prob\_yes\_orig}, \text{prob\_yes\_neg}, \text{confidence}]$ as described above. The full extraction prompt and a worked example are provided in Appendices~\ref{sec:prompt} and \ref{sec:exemplar}.
-
-\subsubsection{Incremental Updates}
-The module supports incremental updates via an \texttt{update} function. Given new text $T'$ or user-provided constraints, the system:
-\begin{enumerate}
-    \item Extracts new propositions and adds them to $\mathcal{P}(T)$
-    \item Extracts new constraints and adds them to $\mathcal{C}(T)$ or $\mathcal{S}(T)$
-    \item Updates the schema with new proposition meanings
-\end{enumerate}
-Algebraically, this corresponds to extending the knowledge algebra (Section~\ref{sec:updates}).
+The \texttt{weight} field contains $[\text{prob\_yes\_orig}, \text{prob\_yes\_neg}, \text{confidence}]$ as described above. See Appendix~\ref{sec:implementation} for specific details on implementation.
 
 
 \subsection{Logic Solver}
