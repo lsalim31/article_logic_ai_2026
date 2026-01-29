@@ -71,19 +71,20 @@ DOCNLI_COT_PROMPT = """You are a document analyst specializing in natural langua
 **Instructions:**
 1. Carefully read the document excerpts provided above
 2. Determine if the hypothesis is:
-   - TRUE: The document clearly states or logically entails this hypothesis (entailment)
-   - FALSE: The document clearly contradicts this hypothesis (not entailment)
-   - UNCERTAIN: The document does not provide sufficient information to determine if the hypothesis is true or false (not entailment)
+   - TRUE (entailment): The document provides sufficient evidence to support the hypothesis as true
+   - FALSE (not_entailment): The document does NOT provide sufficient evidence to support the hypothesis - either because it contradicts the hypothesis OR because it simply doesn't contain enough information to confirm it
 3. Provide your confidence level as a number between 0.0 and 1.0:
-   - 1.0 = Absolutely certain (explicit statement in document)
-   - 0.7-0.9 = High confidence (strong implication)
+   - 1.0 = Absolutely certain
+   - 0.7-0.9 = High confidence (strong evidence)
    - 0.4-0.6 = Moderate confidence (some evidence but not conclusive)
    - 0.1-0.3 = Low confidence (weak or indirect evidence)
    - 0.0 = No support for this conclusion
 
+**Important:** For a TRUE answer, the document must clearly support the hypothesis. If you cannot find clear evidence supporting the hypothesis in the excerpts, answer FALSE.
+
 **Format your response exactly as follows:**
 **Reasoning:** [Your step-by-step analysis of the document excerpts]
-**Answer:** [TRUE or FALSE or UNCERTAIN]
+**Answer:** [TRUE or FALSE]
 **Confidence:** [A number between 0.0 and 1.0]
 
 Begin your analysis:"""
@@ -109,15 +110,15 @@ def load_sample_data(data_path: Path = SAMPLE_DATA_PATH) -> Dict[str, Any]:
 
 def map_prediction_to_binary(prediction: Optional[str]) -> Optional[str]:
     """
-    Map 3-way prediction to DocNLI binary label.
+    Map LLM prediction to DocNLI binary label.
 
-    Mapping (consistent with Logify experiment):
-        TRUE -> entailment
-        FALSE -> not_entailment
-        UNCERTAIN -> not_entailment
+    Mapping:
+        TRUE -> entailment (document supports the hypothesis)
+        FALSE -> not_entailment (document doesn't support the hypothesis)
+        UNCERTAIN -> not_entailment (fallback if LLM outputs this)
 
     Args:
-        prediction: 3-way prediction (TRUE, FALSE, or UNCERTAIN)
+        prediction: LLM prediction (TRUE or FALSE, with UNCERTAIN as fallback)
 
     Returns:
         Binary label (entailment or not_entailment)
@@ -127,7 +128,7 @@ def map_prediction_to_binary(prediction: Optional[str]) -> Optional[str]:
     mapping = {
         "TRUE": "entailment",
         "FALSE": "not_entailment",
-        "UNCERTAIN": "not_entailment"
+        "UNCERTAIN": "not_entailment"  # Fallback if LLM still outputs this
     }
     return mapping.get(prediction, "not_entailment")
 
@@ -141,7 +142,7 @@ def parse_rag_response(response: str) -> Dict[str, Any]:
     Parse LLM response to extract answer and confidence.
 
     Extracts:
-        - Answer: TRUE, FALSE, or UNCERTAIN
+        - Answer: TRUE or FALSE (UNCERTAIN handled as fallback)
         - Confidence: float between 0 and 1 (default 0.5 if not found)
 
     Args:

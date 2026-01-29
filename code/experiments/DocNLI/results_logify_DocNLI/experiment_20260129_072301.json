@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-29T07:23:01.159624",
+    "logify_model": "openai/gpt-5.2",
+    "query_model": "openai/gpt-5-nano",
+    "weights_model": "gpt-4o",
+    "temperature": 0.1,
+    "reasoning_effort": "medium",
+    "max_tokens": 128000,
+    "query_max_tokens": 64000,
+    "k_weights": 10,
+    "k_query": 20,
+    "num_premises": 1,
+    "num_examples": 5,
+    "data_source": "/home/logify/article_logic_ai_2026/code/experiments/DocNLI/doc-nli/sample_100.json",
+    "data_metadata": {
+      "source": "DocNLI test split (HuggingFace: saattrupdan/doc-nli)",
+      "filter_criteria": {
+        "min_premise_words": 200,
+        "max_premise_words": 500,
+        "num_premises_requested": 10
+      },
+      "download_timestamp": "2026-01-29T07:21:54.551457",
+      "num_premises": 10,
+      "num_examples": 62,
+      "label_distribution": {
+        "entailment": 10,
+        "not_entailment": 52
+      },
+      "avg_hypotheses_per_premise": 6.2
+    },
+    "total_correct": 4,
+    "total_evaluated": 5,
+    "overall_accuracy": 0.8
+  },
+  "premise_metrics": [
+    {
+      "premise_id": 0,
+      "premise_length": 1793,
+      "premise_word_count": 327,
+      "num_hypotheses": 5,
+      "logify_latency_sec": 0.0,
+      "logify_cached": true,
+      "logify_error": null,
+      "query_latency_total_sec": 757.6088013648987,
+      "premise_correct": 4,
+      "premise_total": 5,
+      "premise_accuracy": 0.8
+    }
+  ],
+  "results": [
+    {
+      "premise_id": 0,
+      "original_idx": 71757,
+      "hypothesis_text": "Airline passengers left behind almost $ 675,000 in spare change in 2013 . TSA can keep the money to spend on improving civil aviation security . The figure is $ 107,00 more than 2012 and double that collected in 2008 .",
+      "prediction": "UNCERTAIN",
+      "prediction_binary": "not_entailment",
+      "confidence": 0.5,
+      "ground_truth": "entailment",
+      "formula": "UNMAPPED_HYPOTHESIS",
+      "error": null
+    },
+    {
+      "premise_id": 0,
+      "original_idx": 71758,
+      "hypothesis_text": "Airline passengers left behind 107,00 in spare change in 2013 . TSA can keep the money to spend on improving civil aviation security . The figure is $ almost $ 675,000 more than 2012 and double that collected in 2008 .",
+      "prediction": "UNCERTAIN",
+      "prediction_binary": "not_entailment",
+      "confidence": 0.5,
+      "ground_truth": "not_entailment",
+      "formula": "UNDETERMINED",
+      "error": null
+    },
+    {
+      "premise_id": 0,
+      "original_idx": 71759,
+      "hypothesis_text": "Airline passengers left behind almost $ 675,000 in spare change in 2008 . TSA can keep the money to spend on improving civil aviation security . The figure is $ 107,00 more than 2012 and double that collected in 2013 .",
+      "prediction": "UNCERTAIN",
+      "prediction_binary": "not_entailment",
+      "confidence": 0.5,
+      "ground_truth": "not_entailment",
+      "formula": "P_8",
+      "error": null
+    },
+    {
+      "premise_id": 0,
+      "original_idx": 71760,
+      "hypothesis_text": "airline passengers left behind almost $ 675,000 in spare change in 2013 . TSA airlines keep the money to spend on improving civil aviation security . The figure is $ 300 more than 2012 and double that figure in 2008 .",
+      "prediction": "UNCERTAIN",
+      "prediction_binary": "not_entailment",
+      "confidence": 0.5,
+      "ground_truth": "not_entailment",
+      "formula": "P_15",
+      "error": null
+    },
+    {
+      "premise_id": 0,
+      "original_idx": 71761,
+      "hypothesis_text": "Airline passengers left behind almost $ 675,000 in spare change in 2013 . Comment: The figure is $ 107,00 more than 2012 and double that collected in 2008 .",
+      "prediction": "UNCERTAIN",
+      "prediction_binary": "not_entailment",
+      "confidence": 0.5,
+      "ground_truth": "not_entailment",
+      "formula": "P_1",
+      "error": null
+    }
+  ]
+}
