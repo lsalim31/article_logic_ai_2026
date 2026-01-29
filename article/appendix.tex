@@ -1,6 +1,512 @@
 
 \section{Appendix}
 
+\subsection{Detailed Implementation: From Text to Logic}
+\label{sec:implementation}
+
+This section provides a comprehensive description of our implementation pipeline for converting natural language documents into logified structures. The implementation is organized into three main modules that orchestrate the pipeline described in Section~\ref{sec:from_text_to_logic}: (1) \texttt{logify.py} orchestrates the overall conversion, (2) \texttt{openie\_extractor.py} performs relation triple extraction, (3) \texttt{logic\_converter.py} performs LLM-based logic conversion, and (4) \texttt{weights.py} assigns confidence weights to constraints. Additionally, the \texttt{interface\_with\_user} module handles query-time translation via \texttt{translate.py}.
+
+\subsubsection{Pipeline Architecture Overview}
+
+The complete pipeline is implemented in Python and follows a modular design with clear separation of concerns. Figure~\ref{fig:implementation_flow} shows the data flow between modules.
+
+\begin{verbatim}
+Document (PDF/DOCX/TXT)
+    |
+    v
+[logify.py: LogifyConverter]
+    |
+    +---> [openie_extractor.py: OpenIEExtractor]
+    |         - Coreference resolution (native Stanza)
+    |         - OpenIE triple extraction (CoreNLP)
+    |         - Dependency parse fallback (Stanza)
+    |         --> Relation triples (JSON arrays)
+    |
+    +---> [logic_converter.py: LogicConverter]
+    |         - LLM-based conversion (GPT-5.2)
+    |         - System prompt with few-shot examples
+    |         --> Propositions + constraints (JSON)
+    |
+    +---> [weights.py: assign_weights]
+              - SBERT retrieval
+              - LLM logprob extraction
+              --> Weighted constraints (JSON)
+
+Query (Natural Language)
+    |
+    v
+[translate.py: translate_query]
+    - Yes/No question detection
+    - SBERT proposition retrieval
+    - LLM formula translation
+    --> Propositional formula
+    |
+    v
+[logic_solver: LogicSolver]
+    - MaxSAT encoding (RC2)
+    - Entailment/consistency checking
+    --> TRUE / FALSE / UNCERTAIN + confidence
+\end{verbatim}
+
+\subsubsection{Module: LogifyConverter (logify.py)}
+
+The \texttt{LogifyConverter} class serves as the main orchestrator for the text-to-logic pipeline. It coordinates the three stages of logification:
+
+\begin{verbatim}
+class LogifyConverter:
+    def __init__(self, api_key, model="gpt-5.2",
+                 temperature=0.1, reasoning_effort="medium",
+                 max_tokens=128000):
+        # Stage 1: OpenIE extraction
+        self.extractor = OpenIEExtractor()
+
+        # Stage 2: LLM-based logic conversion
+        self.converter = LogicConverter(
+            api_key=api_key, model=model,
+            temperature=temperature,
+            reasoning_effort=reasoning_effort,
+            max_tokens=max_tokens
+        )
+
+    def convert_text_to_logic(self, text):
+        # Stage 1: Extract OpenIE triples
+        openie_triples = self.extractor.extract_triples(text)
+        formatted_triples = self.extractor.format_triples_json(
+            openie_triples, indent=-1
+        )
+
+        # Stage 2: Convert to logic using LLM
+        logic_structure = self.converter.convert(
+            text, formatted_triples
+        )
+
+        return logic_structure
+\end{verbatim}
+
+The converter supports multiple document formats through the \texttt{extract\_text\_from\_document} helper function, which handles PDF extraction via PyMuPDF, DOCX via python-docx, and plain text files. This enables direct processing of legal contracts, medical guidelines, and other real-world documents without manual preprocessing.
+
+\subsubsection{Module: OpenIEExtractor (openie\_extractor.py)}
+
+The \texttt{OpenIEExtractor} class implements Stage 1 of the pipeline, extracting relation triples from natural language text. It combines three components:
+
+\paragraph{1. Native Stanza Coreference Resolution.}
+We use Stanza's native Python-based coreference model (not the Java CoreNLP version) for pronoun resolution. This is critical for ensuring that extracted triples refer to canonical entity mentions rather than pronouns:
+
+\begin{verbatim}
+def _resolve_coreferences(self, text):
+    """Replace pronouns with their antecedents."""
+    doc = self.coref_pipeline(text)
+
+    # Build replacement list from coref chains
+    replacements = []
+    for chain in doc.coref_chains:
+        representative = chain.representative_text
+        for mention in chain:
+            if not mention.is_representative:
+                replacements.append({
+                    'start': mention.start_char,
+                    'end': mention.end_char,
+                    'replacement': representative
+                })
+
+    # Apply replacements (reverse order to preserve positions)
+    replacements.sort(key=lambda x: x['start'], reverse=True)
+    resolved_text = text
+    for repl in replacements:
+        resolved_text = (
+            resolved_text[:repl['start']] +
+            repl['replacement'] +
+            resolved_text[repl['end']:]
+        )
+
+    return resolved_text, coref_chains
+\end{verbatim}
+
+\paragraph{2. CoreNLP OpenIE Extraction.}
+After coreference resolution, we use Stanford CoreNLP's OpenIE system via the Stanza Python interface. The CoreNLP annotator pipeline is configured as:
+
+\begin{verbatim}
+self.openie_annotators = [
+    'tokenize', 'ssplit', 'pos', 'lemma',
+    'depparse', 'natlog', 'openie'
+]
+
+self.openie_properties = {
+    'openie.triple.strict': 'true',
+    'openie.triple.all_nominals': 'true',
+    'openie.max_entailments_per_clause': '3',
+    'openie.affinity_probability_cap': '0.33',
+}
+\end{verbatim}
+
+\paragraph{3. Dependency Parse Fallback.}
+For sentences where OpenIE fails to extract triples (e.g., intransitive verbs with adverbs like ``Alice studies hard''), we implement a fallback using Stanza's Universal Dependencies parser:
+
+\begin{verbatim}
+def _extract_stanza_depparse_triples(self, sentence_text,
+                                      sentence_idx,
+                                      existing_subjects):
+    """Extract triples from dependency parse when OpenIE fails."""
+    doc = self.depparse_pipeline(sentence_text)
+
+    for sent in doc.sentences:
+        # Find root verb and its arguments
+        for word in sent.words:
+            if word.head == 0:  # Root
+                root_word = word
+                break
+
+        # Check if root is a verb using UPOS
+        is_verb = root_word.upos == 'VERB'
+
+        # Extract subject, object, adverb from dependencies
+        subject, obj, advmod = None, None, None
+        for word in sent.words:
+            if word.deprel in ['nsubj', 'nsubj:pass']:
+                subject = word.text
+            elif word.deprel in ['obj', 'iobj']:
+                obj = word.text
+            elif word.deprel == 'advmod':
+                advmod = word.text
+
+        # Create triple if we have sufficient arguments
+        if subject and (obj or advmod):
+            triples.append({
+                'subject': subject,
+                'predicate': root_word.lemma,
+                'object': obj or advmod,
+                'source': 'stanza_depparse'
+            })
+
+    return triples
+\end{verbatim}
+
+The output format uses compact JSON arrays to minimize token usage when passed to the LLM:
+\begin{verbatim}
+[["Dr. Martinez", "reviewed", "patient's chart", 0],
+ ["Dr. Martinez", "noted", "elevated blood pressure", 0]]
+\end{verbatim}
+
+\subsubsection{Module: LogicConverter (logic\_converter.py)}
+
+The \texttt{LogicConverter} class implements Stage 2, using an LLM to convert text and triples into structured propositional logic. The key design decisions are:
+
+\paragraph{1. Reasoning Model Integration.}
+We use GPT-5.2 (or similar reasoning models like o1/o3) with configurable reasoning effort. The API call adapts based on whether OpenRouter or direct OpenAI endpoints are used:
+
+\begin{verbatim}
+# Detect reasoning models
+base_model = model.replace("openai/", "")
+is_reasoning_model = (
+    base_model.startswith("gpt-5") or
+    base_model.startswith("o1") or
+    base_model.startswith("o3")
+)
+
+if is_reasoning_model:
+    api_params = {
+        "model": model,
+        "messages": [
+            {"role": "developer", "content": system_prompt},
+            {"role": "user", "content": combined_input}
+        ],
+        "reasoning_effort": reasoning_effort,
+        "max_completion_tokens": max_tokens
+    }
+else:
+    api_params = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": combined_input}
+        ],
+        "temperature": temperature,
+        "max_tokens": max_tokens
+    }
+\end{verbatim}
+
+\paragraph{2. System Prompt Structure.}
+The system prompt (stored in \texttt{prompts/prompt\_logify}) follows a structured format with explicit methodology:
+
+\begin{itemize}
+    \item \textbf{Role definition}: Expert logician specializing in NL-to-logic translation
+    \item \textbf{Task specification}: Extract atomic propositions, hard constraints, soft constraints
+    \item \textbf{Step-by-step methodology}: Analyze triples → Define propositions → Extract hard constraints → Extract soft constraints → Double-check
+    \item \textbf{Guidelines}: Propositional logic only, flatten FOL, faithfulness to text, prioritize text over triples
+    \item \textbf{Grammar specification}: Formal definition of well-formed propositional formulas
+    \item \textbf{Output format}: JSON schema with provenance fields
+    \item \textbf{Few-shot exemplars}: Three complete worked examples (see Appendix~\ref{sec:exemplar})
+\end{itemize}
+
+\paragraph{3. Input Format.}
+The LLM receives both the original text and the OpenIE triples:
+
+\begin{verbatim}
+ORIGINAL TEXT:
+<<<
+{text}
+>>>
+
+RELATION TRIPLES:
+<<<
+{formatted_triples}
+>>>
+\end{verbatim}
+
+\paragraph{4. JSON Parsing with Fallback.}
+Since LLMs may produce malformed JSON, we implement robust parsing with multiple fallback strategies:
+
+\begin{verbatim}
+try:
+    logic_structure = json.loads(response_text)
+except json.JSONDecodeError:
+    # Try to extract JSON from markdown code blocks
+    if "{" in response_text and "}" in response_text:
+        json_start = response_text.find("{")
+        json_end = response_text.rfind("}") + 1
+        json_text = response_text[json_start:json_end]
+        logic_structure = json.loads(json_text)
+\end{verbatim}
+
+\subsubsection{Module: Weight Assignment (weights.py)}
+
+The \texttt{assign\_weights} function implements Stage 3, assigning confidence weights to both hard and soft constraints using SBERT retrieval and LLM logprob extraction:
+
+\begin{verbatim}
+def assign_weights(pathfile, json_path, api_key,
+                   model="gpt-4o", k=10):
+    # Load document and logified structure
+    document_text = extract_text_from_document(pathfile)
+    with open(json_path) as f:
+        logified = json.load(f)
+
+    # Chunk document for retrieval
+    chunks = chunk_document(document_text,
+                            chunk_size=512, overlap=50)
+
+    # Pre-compute SBERT embeddings (once)
+    sbert_model = load_sbert_model("all-MiniLM-L6-v2")
+    chunk_embeddings = encode_chunks(chunks, sbert_model)
+
+    # Process each constraint
+    for constraint in logified['soft_constraints']:
+        constraint_text = constraint['translation']
+
+        # Retrieve top-k chunks
+        retrieved = retrieve_top_k_chunks(
+            constraint_text, chunks,
+            chunk_embeddings, sbert_model, k=k
+        )
+
+        # Verify original constraint
+        result_orig = verify_constraint(
+            constraint_text, retrieved, client, model
+        )
+
+        # Verify negated constraint
+        negated = f"It is not the case that {constraint_text}"
+        result_neg = verify_constraint(
+            negated, retrieved, client, model
+        )
+
+        # Compute binary softmax confidence
+        prob_orig = result_orig['prob_yes']
+        prob_neg = result_neg['prob_yes']
+        confidence = prob_orig / (prob_orig + prob_neg + 1e-9)
+
+        # Store as [prob_yes_orig, prob_yes_neg, confidence]
+        constraint['weight'] = [
+            prob_orig, prob_neg, confidence
+        ]
+
+    return logified
+\end{verbatim}
+
+The verification prompt asks the LLM a simple YES/NO question and extracts logprobs:
+
+\begin{verbatim}
+def build_verification_prompt(chunks, constraint):
+    chunk_texts = "\n\n".join([c['text'] for c in chunks])
+
+    return f"""Answer with exactly one token: "YES" or "NO".
+
+[TEXT]
+{chunk_texts}
+
+[CONSTRAINT]
+{constraint}
+
+[QUESTION]
+Does this document excerpt provide clear evidence
+supporting this claim?
+- "YES" = Text explicitly states or strongly implies this
+- "NO" = Text does not support, contradicts, or is silent"""
+\end{verbatim}
+
+\subsubsection{Module: Query Translation (translate.py)}
+
+At query time, the \texttt{translate\_query} function converts natural language questions into propositional formulas over the extracted propositions:
+
+\paragraph{1. Yes/No Question Detection and Conversion.}
+We detect Yes/No questions (starting with ``Is'', ``Can'', ``Does'', etc.) and convert them to declarative statements:
+
+\begin{verbatim}
+def is_yes_no_question(query):
+    starters = ['is ', 'are ', 'can ', 'may ', 'does ', ...]
+    return any(query.lower().startswith(s) for s in starters)
+
+def convert_yes_no_to_statement(query, api_key, model):
+    """Use LLM to convert question to statement."""
+    # "Can X share info?" -> "X can share info"
+    prompt = f"""Convert this Yes/No question to a statement:
+    Question: "{query}"
+    Output JSON: {{"statement": "...", "reasoning": "..."}}"""
+
+    response = client.chat.completions.create(...)
+    return json.loads(response)['statement']
+\end{verbatim}
+
+\paragraph{2. SBERT-based Proposition Retrieval.}
+We retrieve the top-$k$ most relevant propositions using SBERT similarity:
+
+\begin{verbatim}
+def retrieve_top_k_propositions(query, chunks,
+                                 sbert_model, k=20):
+    # Encode all proposition translations
+    chunk_embeddings = encode_chunks(chunks, sbert_model)
+
+    # Encode query
+    query_embedding = encode_query(query, sbert_model)
+
+    # Compute similarities and get top-k
+    similarities = compute_cosine_similarity(
+        query_embedding, chunk_embeddings
+    )
+    top_k_indices = np.argsort(similarities)[::-1][:k]
+
+    return [chunks[i] for i in top_k_indices]
+\end{verbatim}
+
+\paragraph{3. LLM Formula Translation.}
+The retrieved propositions are provided to the LLM with NLI-style guidelines:
+
+\begin{verbatim}
+prompt = f"""Given these propositions from a document:
+{props_text}
+
+Translate this hypothesis into a propositional formula:
+"{query}"
+
+Guidelines:
+- "Shall"/"Must" obligations -> Use proposition directly
+- "Shall not" prohibitions -> Proposition captures negation
+- "If A then B" -> Use implication: P_a => P_b
+- Choose the SIMPLEST formula
+
+Output JSON: {{"formula": "P_3", "translation": "...",
+               "reasoning": "..."}}"""
+\end{verbatim}
+
+\paragraph{4. Formula Validation and Fallback.}
+If the LLM fails to return valid JSON, we attempt regex-based formula extraction:
+
+\begin{verbatim}
+def extract_formula_from_text(response_text):
+    """Fallback: extract formula via regex."""
+    # Match patterns like P_1, P_1 & P_2, ~P_3, P_1 => P_2
+    pattern = r'[~!]?\s*P_\d+(?:\s*[&|=>]+\s*[~!]?\s*P_\d+)*'
+    matches = re.findall(pattern, response_text)
+    return max(matches, key=len) if matches else None
+\end{verbatim}
+
+\subsubsection{Integration in Experiments}
+
+The complete pipeline is used in experiments via the following pattern (from \texttt{experiment\_logify\_contract\_NLI.py}):
+
+\begin{verbatim}
+# Stage 1-2: Logify document (with caching)
+converter = LogifyConverter(api_key=api_key, model="gpt-5.2")
+logic_structure = converter.convert_text_to_logic(doc_text)
+converter.save_output(logic_structure, cache_path)
+converter.close()
+
+# Stage 3: Assign weights
+assign_weights(
+    pathfile=doc_path,
+    json_path=cache_path,
+    api_key=api_key,
+    model="gpt-4o",  # Must support logprobs
+    k=10
+)
+
+# Query time: For each hypothesis
+translation_result = translate_query(
+    query=hypothesis_text,
+    json_path=weighted_cache_path,
+    api_key=api_key,
+    model="gpt-5-nano",  # Fast model for translation
+    k=20
+)
+
+formula = translation_result['formula']
+
+# Solve
+solver = LogicSolver(logified_structure)
+result = solver.query(formula)
+# result.answer: "TRUE" / "FALSE" / "UNCERTAIN"
+# result.confidence: float in [0, 1]
+\end{verbatim}
+
+\subsubsection{Configuration Defaults}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Parameter} & \textbf{Default} & \textbf{Description} \\
+\midrule
+\multicolumn{3}{l}{\textit{Logification (Stages 1-2)}} \\
+\texttt{model} & gpt-5.2 & Reasoning model for logic conversion \\
+\texttt{reasoning\_effort} & medium & Reasoning depth (low/medium/high) \\
+\texttt{max\_tokens} & 128000 & Maximum response tokens \\
+\texttt{temperature} & 0.1 & Sampling temperature (non-reasoning) \\
+\midrule
+\multicolumn{3}{l}{\textit{Weight Assignment (Stage 3)}} \\
+\texttt{weights\_model} & gpt-4o & Model for verification (needs logprobs) \\
+\texttt{k\_weights} & 10 & Top-k chunks for retrieval \\
+\texttt{chunk\_size} & 512 & Tokens per chunk \\
+\texttt{chunk\_overlap} & 50 & Overlapping tokens between chunks \\
+\texttt{sbert\_model} & all-MiniLM-L6-v2 & SBERT model for retrieval \\
+\midrule
+\multicolumn{3}{l}{\textit{Query Translation}} \\
+\texttt{query\_model} & gpt-5-nano & Fast model for translation \\
+\texttt{k\_query} & 20 & Top-k propositions for context \\
+\texttt{query\_max\_tokens} & 64000 & Maximum response tokens \\
+\bottomrule
+\end{tabular}
+\caption{Default configuration parameters for the Logify pipeline.}
+\label{tab:config_defaults}
+\end{table}
+
+\subsubsection{Error Handling and Robustness}
+
+The implementation includes several robustness mechanisms:
+
+\begin{itemize}
+    \item \textbf{Caching}: Logified structures are cached to avoid re-processing documents. The cache key includes the document hash and model version.
+
+    \item \textbf{Retry logic}: LLM calls include retry with exponential backoff and slight temperature increases on failure.
+
+    \item \textbf{Graceful degradation}: If coreference resolution fails, the pipeline continues with unresolved text. If OpenIE fails, dependency parse fallback is used.
+
+    \item \textbf{JSON repair}: Multiple strategies for extracting valid JSON from malformed LLM responses.
+
+    \item \textbf{Formula validation}: Extracted formulas are validated against the proposition schema before solving.
+\end{itemize}
+
+This modular architecture enables easy experimentation with different models, prompts, and retrieval strategies while maintaining a consistent interface for the symbolic reasoning component.
+
 \subsection{Weights for soft constraints}
 \label{sec:weights}
 
