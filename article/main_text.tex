@@ -5,38 +5,21 @@ We propose a neuro-symbolic framework for logical reasoning over long-form docum
 \section{Introduction}
 
 Reliable reasoning over text remains a core challenge in AI.
-Given a document---a contract, medical guideline, or technical specification---users need to determine whether a query is entailed, contradicted, or underdetermined by the text.
+Given a document---a contract, medical guideline, or technical specification---users need to determine whether a query is entailed, contradicted, or undetermined by the text.
 Large language models (LLMs) provide natural-language interfaces for such tasks, but they conflate two fundamentally different problems: \emph{language semantics} (extracting meaning from text) and \emph{logical reasoning} (deriving valid conclusions from premises stated in the text).
 This conflation is the source of their unreliability.
-LLMs hallucinate facts, preferring external knowledge to the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{wei2022chain}.
+While LLMs perform well for semantics, they have been shown to be poor for reasoning. 
+LLMs hallucinate facts, preferring external knowledge over the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{wei2022chain}.
 
-A common mitigation is retrieval-augmented generation (RAG), where relevant
-passages are retrieved and fed to an LLM at query time. But when logical
-constraints are \emph{scattered} across a long document, retrieval may miss
-critical pieces, and the LLM must reason over incomplete or inconsistent
-context. The result is unreliable answers with no formal guarantees.
+Neuro-symbolic methods distinguish between language semantics and logical reasoning. , see ~\citep{pan2023logiclm, olausson2023linc}, achieve the largest gains by translating natural language into formal representations and delegating reasoning to symbolic solvers. 
+However, these approaches reconstruct the formalization at each query and assume the input documents are relatively small.
+While retrieval-augmented generation (RAG) handles large documents it does not handle \emph{scattering}, when logical constraints may be scattered across a long document. 
+E.g. a non-disclosure clause on page 3 may interact with an exception on page 12.
+Neuro-symbolic methods are limited to short documents. 
 
-We propose a different paradigm: \emph{logify} the document once, then reason
-symbolically over the resulting structure. Our pipeline extracts atomic
-propositions (statements that can be true or false) and two kinds of constraints:
-\begin{itemize}
-    \item \textbf{Hard constraints}: must hold (e.g., definitions, explicit negations)
-    \item \textbf{Soft constraints}: defeasible tendencies with confidence weights
-    (e.g., ``typically,'' ``may'')
-\end{itemize}
-The hard constraints define consistent \emph{readings} of the document; the
-soft constraints rank readings by plausibility. This structure supports faithful
-reasoning—entailment, inconsistency detection, quantification of uncertainty—via
-a weighted Max-SAT solver. The LLM serves only as a natural-language interface;
-all reasoning is delegated to the solver. This separation ensures \emph{conditional}
-faithfulness: given a correct logification, the answers are provably correct.
-The extraction step remains LLM-based and thus fallible, but errors are localized
-to extraction rather than reasoning.
-
-On ContractNLI, Logify outperforms Logic-LM by 12.5\%, with the largest gains on
-long documents where constraints are scattered. On ProofWriter, it maintains
-consistent accuracy even at reasoning depth 5, where chain-of-thought degrades
-sharply.
+We propose a novel nuero-symbolic method: \emph{logify} the document once, then reason symbolically over the resulting structure. 
+Our pipeline extracts from the document, a propositional calculus consisting of: propositional letters corresponding to atomic statements, a set of hard constraints that must hold, and a set of soft constraints that may hold with confidence weights in the interval $(0,1)$. 
+This structure supports faithful reaonsing for queries about entailment,  satisfiability, and quantifies uncertainty via a weighted Max-SAT solver.
 
 \paragraph{Contributions.}
 \begin{enumerate}
