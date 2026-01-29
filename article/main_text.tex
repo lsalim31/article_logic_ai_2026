@@ -83,13 +83,13 @@ Our architecture follows a modular design with three components: (1) \texttt{fro
 
 This module implements the extraction of natural language text into the weighted logified structure in three stages.
 
-\paragraph{Stage 1: Relation Triple Extraction.}
+\subsubsection{Relation Triple Extraction}
 We use Stanford CoreNLP's OpenIE system \cite{angeli2015openie} via the Stanza Python interface \cite{qi2020stanza} to extract subject-predicate-object triples from the text. This provides structured relational information that can help guide proposition identification. We first apply native Stanza coreference resolution to handle pronominal references (e.g. replacing "They" with "Alice"), to ensure that triples consistently refer to canonical entities rather than pronouns. As a fallback, we use Stanza's dependency parse for sentences where OpenIE fails to extract triples (e.g., intransitive verbs with adverbs). Triples are formatted as \texttt{[subject, predicate, object]}.
 
-\paragraph{Stage 2: LLM-Based Logic Conversion.}
+\subsubsection{LLM-Based Logic Conversion}
 The original text $T$ and the extracted triples are jointly provided to a large language model (GPT-5.2 by default). The LLM performs semantic analysis to identify atomic propositions $\mathcal{P}(T)$, hard constraints $\mathcal{C}(T)$, and soft constraints $\mathcal{S}(T)$---crucially, soft constraints are extracted \emph{without} weights at this stage.
 
-\paragraph{Stage 3: Weight Assignment.}
+\subsubsection{Weight Assignment}
 The final stage assigns confidence weights to all constraints using an evidence-based retrieval and LLM verification pipeline. For each constraint $Q$, we: (1) chunk the original document and pre-compute SBERT embeddings \cite{reimers2019sbert} (model: \texttt{all-MiniLM-L6-v2}); (2) retrieve the top-$k$ chunks most similar to the constraint's natural language translation ($k=10$ by default); (3) prompt an LLM with the retrieved chunks, asking a YES/NO verification question: ``Does this document excerpt provide clear evidence supporting this claim?''; (4) extract logprobs for YES and NO tokens from the response; (5) repeat for the \emph{negated} constraint: ``It is not the case that [Q]''; and (6) compute confidence via binary softmax: $w(Q) = P(\text{YES} \mid Q) / (P(\text{YES} \mid Q) + P(\text{YES} \mid \neg Q) + \epsilon)$, where $\epsilon$ is a small constant for numerical stability. This produces a weight $w(Q) \in (0,1)$ reflecting how strongly the document supports $Q$. The separation is deliberate: the LLM identifies \emph{which} constraints are defeasible based on linguistic cues, while the weight assignment module quantifies \emph{how strongly} the text supports each constraint. The output is stored as a triplet $[\text{prob\_yes\_orig}, \text{prob\_yes\_neg}, \text{confidence}]$ for transparency, where $\text{confidence}$ is the calibrated score used for downstream reasoning.
 
 \subsubsection{Output: The Logified Structure}
