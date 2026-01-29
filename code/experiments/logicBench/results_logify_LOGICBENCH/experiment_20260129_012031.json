@@ -1,0 +1,342 @@
+[
+  {
+    "id": "propositional_logic_bidirectional_dilemma_1",
+    "text": "If I watch my diet, I will maintain good health. If I consume excessive junk food, I will become more susceptible to illnesses. We know that either I am committed to watching my diet or I am not prone to illnesses, but it is uncertain which of these statements is true. It is possible that I am only dedicated to maintaining a healthy diet, or alternatively, I may not be prone to illnesses, or even both statements could be true.",
+    "logic_type": "propositional_logic",
+    "pattern": "bidirectional_dilemma",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Can we say at least one of the following must always be true? (a) i will stay healthy and (b) i don't eat too much junk food",
+        "formula": "P_2 ∨ ¬P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 4.095534801483154,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) i won't stay healthy and (b) i eat too much junk food",
+        "formula": "¬P_2 ∨ P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.593430519104004,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) i will stay healthy and (b) i eat too much junk food",
+        "formula": "P_2 ∨ P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 5.001315355300903,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) i won't stay healthy and (b) i don't eat too much junk food",
+        "formula": "¬P_2 ∨ ¬P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 3.9268877506256104,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_commutation_1",
+    "text": "I am not sure if Jack studies hard for his exams or if he gets top grades in school, but one of those two things must be true. It is possible that Jack only studies hard for his exams and does not get top grades, or it could be the case that he gets top grades in school without putting in much effort. Perhaps, both scenarios are true, and Jack both studies hard for exams and gets top grades.",
+    "logic_type": "propositional_logic",
+    "pattern": "commutation",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he gets top grades in school or (b) he studies hard for his exams",
+        "formula": "P_1 ∨ P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.727482101850601,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 4.824803829193115,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he doesn't get top grades in school and (b) he studies hard for his exams",
+        "formula": "¬P_2 ∨ P_1",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.4805245690052549,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.271352529525757,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he gets top grades in school and (b) he doesn't study hard for his exams",
+        "formula": "P_2 ∨ ¬P_1",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5396972245584525,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.0328662395477295,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he doesn't get top grades in school and (b) he doesn't study hard for his exams",
+        "formula": "¬P_2 ∨ ¬P_1",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5194754309947451,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.956736326217651,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_constructive_dilemma_1",
+    "text": "Harry had two options for his day off: going to the park or going to the beach. If he decided to go to the park, it meant that he would have a lovely picnic with his family. On the other hand, if he chose the beach, he would be able to enjoy a refreshing swim in the ocean. The only thing that was certain was that either Harry would go to the park or he would go to the beach. It was unclear which option he would ultimately choose, as it could be that he would go to the park alone, go to the beach alone, or even do both activities.",
+    "logic_type": "propositional_logic",
+    "pattern": "constructive_dilemma",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he will have a picnic with his family and (b) he will swim in the ocean",
+        "formula": "P_3 ∨ P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 5.287752151489258,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he won't have a picnic with his family and (b) he will swim in the ocean",
+        "formula": "¬P_3 ∨ P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.703225135803223,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he will have a picnic with his family and (b) he won't swim in the ocean",
+        "formula": "P_3 ∨ ¬P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "no",
+        "query_latency_total_sec": 3.8528473377227783,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he won't have a picnic with his family and (b) he won't swim in the ocean",
+        "formula": "¬P_3 ∨ ¬P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.25,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.852606773376465,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_destructive_dilemma_1",
+    "text": "If John drives a car, then he will reach my destination on time. On the other hand, if he rides a bike, then he will save money on fuel. However, it is evident that he will not reach his destination on time or save money on fuel. It is unclear which of these scenarios is true. It could be that he won't reach his destination on time, or it could be that he won't save money on fuel, or it is possible that both situations are true.",
+    "logic_type": "propositional_logic",
+    "pattern": "destructive_dilemma",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he doesn't drive a car and (b) he doesn't ride a bike",
+        "formula": "¬P_1 ∨ ¬P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 4.487739086151123,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he drives a car and (b) he rides a bike",
+        "formula": "P_1 ∨ P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.25,
+        "ground_truth": "no",
+        "query_latency_total_sec": 3.912583827972412,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he doesn't drive a car and (b) he rides a bike",
+        "formula": "¬P_1 ∨ P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "no",
+        "query_latency_total_sec": 5.071909666061401,
+        "query_error": null
+      },
+      {
+        "query": "Can we say at least one of the following must always be true? (a) he drives a car and (b) he doesn't ride a bike",
+        "formula": "P_1 ∨ ¬P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.626872777938843,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_disjunctive_syllogism_1",
+    "text": "Either she is not making a cake for the party, or he is writing a report for his boss, or both. We don't know for sure which one is true. However, it turns out that she is indeed making a cake for the party.",
+    "logic_type": "propositional_logic",
+    "pattern": "disjunctive_syllogism",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Does this mean that he is writing a report for his boss?",
+        "formula": "P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 3.3277981281280518,
+        "query_error": null
+      },
+      {
+        "query": "Does this imply that he isn't writing a report for his boss?",
+        "formula": "P_1 ⟹ ¬P_2",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.25,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.201296091079712,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_hypothetical_syllogism_1",
+    "text": "If Jim cleans his room, he will receive a reward. And if he receives a reward, he will use it to buy a new toy. So, Jim decided to tidy up his room, hoping to earn a reward. He diligently gathered his clothes, organized his toys, and dusted every surface. After a few hours of hard work, Jim's room was spotless.",
+    "logic_type": "propositional_logic",
+    "pattern": "hypothetical_syllogism",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "If jim cleaned his room , does this imply that he will buy a new toy?",
+        "formula": "P_1 ⟹ P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 2.496943712234497,
+        "query_error": null
+      },
+      {
+        "query": "If jim didn't clean his room, does this entail that he won't buy a new toy?",
+        "formula": "¬P_1 ⟹ ¬P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 2.3704371452331543,
+        "query_error": null
+      },
+      {
+        "query": "If jim cleaned his room , does this imply that he won't buy a new toy?",
+        "formula": "P_1 ⟹ ¬P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 2.108649730682373,
+        "query_error": null
+      },
+      {
+        "query": "If jim didn't clean his room, does this imply that he will buy a new toy?",
+        "formula": "¬P_1 ⟹ P_3",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.991047620773315,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_material_implication_1",
+    "text": "Once upon a time, there was a guy named John who was very conscious about his weight. He knew that if he didn't eat healthy, he wouldn't be able to maintain his desired weight. John understood the condition that if he didn't eat healthy, he wouldn't be able to gain weight.",
+    "logic_type": "propositional_logic",
+    "pattern": "material_implication",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Based on context, can we say, at least one of the following must always be true? (a) he is eating healthy and (b) he will not gain weight",
+        "formula": "P_2 ∨ ¬P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.75,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 2.6338374614715576,
+        "query_error": null
+      },
+      {
+        "query": "Based on context, can we say, at least one of the following must always be true? (a) he is not eating healthy and (b) he will gain weight",
+        "formula": "¬P_2 ∨ P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 2.6542928218841553,
+        "query_error": null
+      },
+      {
+        "query": "Based on context, can we say, at least one of the following must always be true? (a) he is not eating healthy and (b) he will not gain weight",
+        "formula": "¬P_2 ∨ ¬P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 2.856616497039795,
+        "query_error": null
+      },
+      {
+        "query": "Based on context, can we say, at least one of the following must always be true? (a) he is eating healthy and (b) he will gain weight",
+        "formula": "P_2 ∨ P_4",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 27.15147089958191,
+        "query_error": null
+      }
+    ]
+  },
+  {
+    "id": "propositional_logic_modus_tollens_1",
+    "text": "Liam had finished his work early for the day, which meant that he would typically have ordered pizza for dinner. However, on this particular day, he decided against ordering pizza and opted for something else instead.",
+    "logic_type": "propositional_logic",
+    "pattern": "modus_tollens",
+    "logify_latency_sec": 0.0,
+    "logify_cached": true,
+    "logify_error": null,
+    "questions": [
+      {
+        "query": "Does this imply that liam didn't finish his work early?",
+        "formula": "¬P_1",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "yes",
+        "query_latency_total_sec": 3.393173933029175,
+        "query_error": null
+      },
+      {
+        "query": "Does this entail that liam finished his work early?",
+        "formula": "P_3 ⟹ P_1",
+        "predicted_answer": "UNCERTAIN",
+        "confidence": 0.5,
+        "ground_truth": "no",
+        "query_latency_total_sec": 4.2458319664001465,
+        "query_error": null
+      }
+    ]
+  }
+]
