@@ -8,9 +8,9 @@ Reliable reasoning over text remains a core challenge in AI.
 Given a document---a contract, medical guideline, or technical specification---users need to determine whether a query is entailed, contradicted, or underdetermined by the text.
 Large language models (LLMs) provide natural-language interfaces for such tasks, but they conflate two fundamentally different problems: \emph{language semantics} (extracting meaning from text) and \emph{logical reasoning} (deriving valid conclusions from premises stated in the text).
 This conflation is the source of their unreliability.
-LLMs hallucinate facts, preferring external knowledge to the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{wei2022chain}.
+LLMs hallucinate facts, preferring external knowledge to the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{huang2023reasoning}.
 
-A recent survey identifies neuro-symbolic methods, which separate language semantics from logical reasoning, as the most effective paradigm for improving reasoning in LLMs~\citep{yang2025neurosymbolic}. One class of neuro-symbolic methods translates natural language into formal representations, delegates inference to symbolic solvers, and translates results back---the LLM serves as a bridge between natural language and formal logic ~\citep{pan2023logiclm, olausson2023linc}. However, these approaches reconstruct the formalization at each query and assumes the input text is relatively small. Retrieval-augmented generation (RAG) handles document length but not \emph{scattering}, where logical constraints are scattered across a document.  For example a non-disclosure clause on page 3 may interact with an exception on page 12, and retrieval cannot guarantee all relevant pieces are brought into context.
+A recent survey identifies neuro-symbolic methods, which separate language semantics from logical reasoning, as the most effective paradigm for improving reasoning in LLMs~\citep{yang2025neurosymbolic}. One class of neuro-symbolic methods translates natural language into formal representations, delegates inference to symbolic solvers, and translates results back---the LLM serves as a bridge between natural language and formal logic. However, these approaches reconstruct the formalization at each query and have only been evaluated on short reasoning problems—the standard benchmarks (FOLIO, ProofWriter, PrOntoQA, AR-LSAT, LogicalDeduction, ReClor) contain examples of a few hundred tokens. Even if retrieval-augmented generation (RAG) is employed to handle longer documents, it may fail to capture logical constraints scattered across the text. For example, a non-disclosure clause on page 3 may interact with an exception on page 12, and retrieval cannot guarantee that all relevant pieces are brought into context.
 
 To handle large documents, we propose a different approach: \emph{logify} the document once, then reason symbolically over the resulting structure. Our pipeline extracts atomic propositions, hard constraints (definite statements that must hold), and soft constraints (defeasible statements with weights measuring uncertainty). This structure supports faithful reasoning---entailment, satisfiability, uncertainty quantification---via a weighted Max-SAT solver.
 
@@ -22,7 +22,7 @@ To handle large documents, we propose a different approach: \emph{logify} the do
     demonstrating consistent gains over RAG and neuro-symbolic baselines, with
     the largest improvements on long documents (Section~\ref{sec:experiments}).
     \item An algebraic framework for representing the finite logical theory
-    with hard and soft constraints as an algebreic structure (Section~\ref{sec:framework}).
+    with hard and soft constraints as an algebraic structure (Section~\ref{sec:framework}).
 \end{enumerate}
 
 \subsection{Related Work}
