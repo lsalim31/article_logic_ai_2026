@@ -97,15 +97,20 @@ The module outputs a JSON structure with rich provenance metadata. After Stage 3
 \begin{verbatim}
 {"primitive_props": [
    {"id": "P_1", "translation": "...",
-    "evidence": "...", "explanation": "..."}],
+    "evidence": "...",
+    "explanation": "..."}],
  "hard_constraints": [
    {"id": "H_1", "formula": "P_1 -> P_2",
-    "translation": "...", "evidence": "...",
-    "reasoning": "...", "weight": [0.95, 0.12, 0.89]}],
+    "translation": "...",
+    "evidence": "...",
+    "reasoning": "...",
+    "weight": [0.95, 0.12, 0.89]}],
  "soft_constraints": [
    {"id": "S_1", "formula": "P_3 -> P_4",
-    "translation": "...", "evidence": "...",
-    "reasoning": "...", "weight": [0.82, 0.45, 0.65]}]}
+    "translation": "...",
+    "evidence": "...",
+    "reasoning": "...",
+    "weight": [0.82, 0.45, 0.65]}]}
 \end{verbatim}
 The \texttt{weight} field contains $[\text{prob\_yes\_orig}, \text{prob\_yes\_neg}, \text{confidence}]$ as described above. See Appendix~\ref{sec:implementation} for specific details on implementation.
 
