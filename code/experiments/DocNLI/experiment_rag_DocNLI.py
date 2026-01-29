@@ -9,10 +9,10 @@ using the same data source, evaluation structure, and output format
 as the Logify experiment for fair comparison.
 
 Pipeline:
-    For each example in DocNLI sample:
+    For each premise in DocNLI sample:
         1. Chunk premise into overlapping segments
         2. Encode chunks using SBERT
-        3. For the hypothesis:
+        3. For each hypothesis associated with the premise:
             a. Retrieve top-k relevant chunks
             b. Perform Chain-of-Thought reasoning with LLM
             c. Parse response to extract prediction and confidence
@@ -101,7 +101,7 @@ def load_sample_data(data_path: Path = SAMPLE_DATA_PATH) -> Dict[str, Any]:
         data_path: Path to sample_100.json
 
     Returns:
-        Dictionary containing 'metadata' and 'examples' keys
+        Dictionary containing 'metadata', 'premises', and 'examples' keys
     """
     with open(data_path, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -384,7 +384,7 @@ def run_experiment(
         data_path: Path to sample_100.json
         model_name: LLM model name (default: from rag_config)
         temperature: Sampling temperature (default: 0)
-        limit: Limit number of examples to process (default: all)
+        limit: Limit number of premises to process (default: all)
 
     Returns:
         Experiment results dictionary matching Logify output format
@@ -399,16 +399,22 @@ def run_experiment(
     # Load sample data
     print(f"Loading sample data from {data_path}...")
     data = load_sample_data(data_path)
+    premises = data.get("premises", [])
     examples = data.get("examples", [])
-    data_metadata = data.get("metadata", {})
+    metadata = data.get("metadata", {})
 
-    print(f"  Loaded {len(examples)} examples")
-    print(f"  Filter criteria: {data_metadata.get('filter_criteria', {})}")
+    num_premises = len(premises)
+    num_examples = len(examples)
+    print(f"  Loaded {num_premises} premises with {num_examples} total hypotheses")
+    print(f"  Filter criteria: {metadata.get('filter_criteria', {})}")
 
-    # Apply limit if specified
+    # Apply limit to premises if specified
     if limit is not None:
-        examples = examples[:limit]
-        print(f"  Limited to {len(examples)} examples")
+        premises = premises[:limit]
+        # Filter examples to only those from limited premises
+        limited_premise_ids = {p["premise_id"] for p in premises}
+        examples = [ex for ex in examples if ex.get("premise_id") in limited_premise_ids]
+        print(f"  Limited to {len(premises)} premises with {len(examples)} hypotheses")
 
     # Load SBERT model
     print(f"Loading SBERT model: {rag_config.SBERT_MODEL}")
@@ -425,11 +431,12 @@ def run_experiment(
             "overlap": rag_config.OVERLAP,
             "top_k": rag_config.TOP_K,
             "sbert_model": rag_config.SBERT_MODEL,
+            "num_premises": len(premises),
             "num_examples": len(examples),
             "data_source": str(data_path),
-            "data_metadata": data_metadata
+            "data_metadata": metadata
         },
-        "document_metrics": [],
+        "premise_metrics": [],
         "results": []
     }
 
@@ -437,28 +444,24 @@ def run_experiment(
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_path = RESULTS_DIR / f"experiment_{timestamp_str}.json"
 
-    # Process examples
+    # Process premises
     total_evaluated = 0
     total_correct = 0
 
-    for ex in examples:
-        example_id = ex.get("example_id")
-        original_idx = ex.get("original_idx")
-        premise_text = ex.get("premise", "")
-        hypothesis_text = ex.get("hypothesis", "")
-        ground_truth = ex.get("label")  # "entailment" or "not_entailment"
-        premise_word_count = ex.get("premise_word_count", len(premise_text.split()))
+    for premise_idx, premise_data in enumerate(premises):
+        premise_id = premise_data.get("premise_id")
+        premise_text = premise_data.get("premise", "")
+        premise_word_count = premise_data.get("word_count", len(premise_text.split()))
+        hypotheses = premise_data.get("hypotheses", [])
 
-        print(f"\n[{example_id + 1}/{len(examples)}] Processing example {example_id} (original_idx: {original_idx})")
-        print(f"  Premise: {premise_word_count} words, {len(premise_text)} chars")
-        print(f"  Ground truth: {ground_truth}")
+        print(f"\n[Premise {premise_idx + 1}/{len(premises)}] ID={premise_id}, {premise_word_count} words, {len(hypotheses)} hypotheses")
 
         # Skip empty premises
         if not premise_text or not premise_text.strip():
             print(f"  [SKIP] Empty premise text")
             continue
 
-        # Process premise (chunk and encode)
+        # Process premise (chunk and encode) - done once for all hypotheses
         premise_start_time = time.time()
         try:
             chunks, chunk_embeddings = process_premise(premise_text, sbert_model)
@@ -472,66 +475,86 @@ def run_experiment(
             premise_process_latency = time.time() - premise_start_time
             premise_process_error = str(e)
 
-        # Query hypothesis
-        if chunks is not None and chunk_embeddings is not None:
-            query_result = process_single_hypothesis(
-                hypothesis_text=hypothesis_text,
-                chunk_embeddings=chunk_embeddings,
-                chunks=chunks,
-                sbert_model=sbert_model,
-                model_name=model_name,
-                temperature=temperature
-            )
-            prediction = query_result.get("prediction")
-            confidence = query_result.get("confidence")
-            query_latency = query_result.get("query_latency_sec", 0.0)
-            query_error = query_result.get("error")
-        else:
-            prediction = None
-            confidence = None
-            query_latency = 0.0
-            query_error = premise_process_error
+        # Track premise-level metrics
+        premise_correct = 0
+        premise_total = 0
+        query_latency_total = 0.0
 
-        # Map prediction to binary
-        prediction_binary = map_prediction_to_binary(prediction)
+        # Query each hypothesis
+        for hyp_idx, hyp in enumerate(hypotheses):
+            original_idx = hyp.get("original_idx")
+            hypothesis_text = hyp.get("hypothesis", "")
+            ground_truth = hyp.get("label")  # "entailment" or "not_entailment"
 
-        # Check correctness
-        is_correct = (prediction_binary == ground_truth) if prediction_binary else False
-        if prediction_binary:
-            total_evaluated += 1
-            if is_correct:
-                total_correct += 1
+            if chunks is not None and chunk_embeddings is not None:
+                query_result = process_single_hypothesis(
+                    hypothesis_text=hypothesis_text,
+                    chunk_embeddings=chunk_embeddings,
+                    chunks=chunks,
+                    sbert_model=sbert_model,
+                    model_name=model_name,
+                    temperature=temperature
+                )
+                prediction = query_result.get("prediction")
+                confidence = query_result.get("confidence")
+                query_latency = query_result.get("query_latency_sec", 0.0)
+                query_error = query_result.get("error")
+            else:
+                prediction = None
+                confidence = None
+                query_latency = 0.0
+                query_error = premise_process_error
 
-        # Store document metrics (matching Logify format)
-        doc_metrics = {
-            "example_id": example_id,
-            "original_idx": original_idx,
+            query_latency_total += query_latency
+
+            # Map prediction to binary
+            prediction_binary = map_prediction_to_binary(prediction)
+
+            # Check correctness
+            is_correct = (prediction_binary == ground_truth) if prediction_binary else False
+            if prediction_binary:
+                premise_total += 1
+                total_evaluated += 1
+                if is_correct:
+                    premise_correct += 1
+                    total_correct += 1
+
+            # Store result (matching Logify format)
+            result_entry = {
+                "premise_id": premise_id,
+                "original_idx": original_idx,
+                "hypothesis_text": hypothesis_text,
+                "prediction": prediction,
+                "prediction_binary": prediction_binary,
+                "confidence": confidence,
+                "ground_truth": ground_truth,
+                "error": query_error
+            }
+            results["results"].append(result_entry)
+
+            # Print progress
+            status = "✓" if is_correct else ("✗" if prediction_binary else "?")
+            print(f"    [{status}] hyp {hyp_idx + 1}: pred={prediction} ({prediction_binary}), gt={ground_truth}")
+
+        # Store premise-level metrics (matching Logify format)
+        premise_accuracy = premise_correct / premise_total if premise_total > 0 else 0.0
+        premise_metrics = {
+            "premise_id": premise_id,
             "premise_length": len(premise_text),
             "premise_word_count": premise_word_count,
+            "num_hypotheses": len(hypotheses),
             "num_chunks": len(chunks) if chunks else 0,
             "premise_process_latency_sec": premise_process_latency,
             "premise_process_error": premise_process_error,
-            "query_latency_sec": query_latency
+            "query_latency_total_sec": query_latency_total,
+            "premise_correct": premise_correct,
+            "premise_total": premise_total,
+            "premise_accuracy": premise_accuracy
         }
-        results["document_metrics"].append(doc_metrics)
+        results["premise_metrics"].append(premise_metrics)
 
-        # Store result (matching Logify format)
-        result_entry = {
-            "example_id": example_id,
-            "original_idx": original_idx,
-            "hypothesis_text": hypothesis_text,
-            "prediction": prediction,
-            "prediction_binary": prediction_binary,
-            "confidence": confidence,
-            "ground_truth": ground_truth,
-            "error": query_error
-        }
-        results["results"].append(result_entry)
-
-        # Print progress
-        status = "✓" if is_correct else ("✗" if prediction_binary else "?")
-        print(f"  [{status}] pred={prediction} ({prediction_binary}), gt={ground_truth}, conf={confidence}")
-        print(f"  Premise process: {premise_process_latency:.2f}s, Query: {query_latency:.2f}s")
+        print(f"  Premise accuracy: {premise_correct}/{premise_total} = {premise_accuracy:.2%}")
+        print(f"  Premise process: {premise_process_latency:.2f}s, Query total: {query_latency_total:.2f}s")
 
         # Save intermediate results
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -546,8 +569,8 @@ def run_experiment(
     print(f"\n{'='*60}")
     print(f"EXPERIMENT COMPLETE")
     print(f"{'='*60}")
-    print(f"Examples processed: {len(examples)}")
-    print(f"Examples evaluated: {total_evaluated}")
+    print(f"Premises processed: {len(premises)}")
+    print(f"Hypotheses evaluated: {total_evaluated}")
     print(f"Correct predictions: {total_correct}")
     print(f"Overall accuracy: {overall_accuracy:.2%}")
     print(f"Results saved to: {output_path}")
@@ -594,7 +617,7 @@ def main():
         "--limit",
         type=int,
         default=None,
-        help="Limit number of examples to process (default: all)"
+        help="Limit number of premises to process (default: all)"
     )
 
     args = parser.parse_args()
