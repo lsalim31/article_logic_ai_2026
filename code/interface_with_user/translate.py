@@ -106,16 +106,20 @@ def retrieve_top_k_propositions(
     query: str,
     chunks: List[Dict],
     sbert_model,
-    k: int = 20
+    k: int = 20,
+    use_reranking: bool = True
 ) -> List[Dict]:
     """
     Retrieve top-K most relevant propositions for the query using SBERT.
+
+    Optionally uses cross-encoder reranking for more accurate retrieval.
 
     Args:
         query: User query string
         chunks: List of proposition chunks (each with 'text' field)
         sbert_model: Loaded SBERT model
         k: Number of propositions to retrieve
+        use_reranking: Whether to use cross-encoder reranking (default: True)
 
     Returns:
         List of top-K chunks sorted by relevance (most relevant first)
@@ -129,7 +133,45 @@ def retrieve_top_k_propositions(
     # Compute similarities
     similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
 
-    # Get top-K indices
+    # Get top-2K candidates for potential reranking
+    candidate_k = min(k * 2, len(chunks))
+    top_candidate_indices = np.argsort(similarities)[::-1][:candidate_k]
+
+    # Try cross-encoder reranking if enabled
+    if use_reranking and len(top_candidate_indices) > k:
+        try:
+            from sentence_transformers import CrossEncoder
+            reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+            # Create pairs for reranking
+            candidates = [chunks[idx] for idx in top_candidate_indices]
+            pairs = [(query, c['text']) for c in candidates]
+
+            # Get reranking scores
+            rerank_scores = reranker.predict(pairs)
+
+            # Sort by rerank score and take top-K
+            sorted_indices = np.argsort(rerank_scores)[::-1][:k]
+
+            retrieved = []
+            for rank, idx in enumerate(sorted_indices):
+                chunk = candidates[idx].copy()
+                chunk['similarity'] = float(rerank_scores[idx])
+                chunk['original_similarity'] = float(similarities[top_candidate_indices[idx]])
+                chunk['reranked'] = True
+                retrieved.append(chunk)
+
+            return retrieved
+
+        except ImportError:
+            # Fall back to bi-encoder only if cross-encoder not available
+            pass
+        except Exception as e:
+            # Fall back on any reranking error
+            import sys
+            print(f"  Warning: Reranking failed ({e}), using bi-encoder only", file=sys.stderr)
+
+    # Standard bi-encoder retrieval (no reranking)
     top_k_indices = np.argsort(similarities)[::-1][:k]
 
     # Return top-K chunks with their similarity scores
@@ -137,6 +179,7 @@ def retrieve_top_k_propositions(
     for idx in top_k_indices:
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
+        chunk['reranked'] = False
         retrieved.append(chunk)
 
     return retrieved

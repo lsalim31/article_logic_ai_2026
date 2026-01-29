@@ -48,17 +48,25 @@ class SolverResult:
 class LogicSolver:
     """MaxSAT-based logic solver for entailment and consistency checking."""
 
-    def __init__(self, logified_structure: Dict[str, Any]):
+    # Confidence thresholds for categorical answers
+    HIGH_CONFIDENCE_THRESHOLD = 0.80  # Above this, UNCERTAIN becomes TRUE
+    LOW_CONFIDENCE_THRESHOLD = 0.20   # Below this, UNCERTAIN becomes FALSE
+
+    def __init__(self, logified_structure: Dict[str, Any],
+                 use_confidence_thresholds: bool = True):
         """
         Initialize solver with logified structure.
 
         Args:
             logified_structure: JSON structure with propositions and constraints
+            use_confidence_thresholds: Whether to apply confidence thresholds to
+                                       convert high/low confidence UNCERTAIN to TRUE/FALSE
         """
         self.structure = logified_structure
         self.encoder = LogicEncoder(logified_structure)
         self.base_wcnf = self.encoder.encode()
         self.prop_to_var, self.var_to_prop = self.encoder.get_prop_mapping()
+        self.use_confidence_thresholds = use_confidence_thresholds
 
     def check_entailment(self, query_formula: str) -> SolverResult:
         """
@@ -205,6 +213,8 @@ class LogicSolver:
         Main query interface: check if query follows from the knowledge base.
 
         This combines entailment and consistency checking to provide a comprehensive answer.
+        When use_confidence_thresholds is True, high/low confidence UNCERTAIN results
+        are converted to TRUE/FALSE respectively.
 
         Args:
             query_formula: Propositional formula
@@ -249,6 +259,22 @@ class LogicSolver:
                 # Query is consistent but not entailed
                 # Return uncertainty with confidence from soft constraints
                 avg_confidence = (entailment_result.confidence + consistency_result.confidence) / 2
+
+                # Apply confidence thresholds to convert high/low confidence UNCERTAIN
+                if self.use_confidence_thresholds:
+                    if avg_confidence >= self.HIGH_CONFIDENCE_THRESHOLD:
+                        return SolverResult(
+                            answer="TRUE",
+                            confidence=avg_confidence,
+                            explanation="Query is likely true based on soft constraint confidence (threshold-based)"
+                        )
+                    elif avg_confidence <= self.LOW_CONFIDENCE_THRESHOLD:
+                        return SolverResult(
+                            answer="FALSE",
+                            confidence=1.0 - avg_confidence,
+                            explanation="Query is likely false based on soft constraint confidence (threshold-based)"
+                        )
+
                 return SolverResult(
                     answer="UNCERTAIN",
                     confidence=avg_confidence,
