@@ -1,209 +1,166 @@
 
 \section{Appendix}
 
-\subsection{Weights for soft constraints}
-\label{sec:weights}
+\subsection{Detailed Implementation: From Text to Logic}
+\label{sec:implementation}
 
-We describe a method for assigning weights to soft constraints $Q$ using SBERT retrieval and LLM-based verification. The weight \(w(Q)\in(0,1)\) reflects how strongly the document supports \(Q\) versus contradicts \(Q\). The pipeline uses the following components:
+This section provides a comprehensive description of our implementation pipeline for converting natural language documents into logified structures. The implementation is organized into four main modules: (1) \texttt{logify.py} orchestrates the overall conversion, (2) \texttt{openie\_extractor.py} performs relation triple extraction, (3) \texttt{logic\_converter.py} performs LLM-based logic conversion, and (4) \texttt{weights.py} assigns confidence weights to constraints. Additionally, the \texttt{interface\_with\_user} module handles query-time translation via \texttt{translate.py}.
+
+\subsubsection{Pipeline Architecture Overview}
+
+The complete pipeline is implemented in Python and follows a modular design:
+
+\begin{verbatim}
+Document (PDF/DOCX/TXT)
+    |
+    v
+[LogifyConverter] ---> [OpenIEExtractor] ---> Relation triples
+    |                       - Coreference resolution
+    |                       - OpenIE extraction
+    |                       - Dependency parse fallback
+    |
+    +---> [LogicConverter] ---> Propositions + constraints (JSON)
+    |         - LLM-based conversion
+    |         - System prompt with few-shot examples
+    |
+    +---> [assign_weights] ---> Weighted constraints
+              - SBERT retrieval
+              - LLM logprob extraction
+
+Query (Natural Language)
+    |
+    v
+[translate_query] ---> Propositional formula
+    |
+    v
+[LogicSolver] ---> TRUE / FALSE / UNCERTAIN + confidence
+\end{verbatim}
+
+\subsubsection{Stage 1: OpenIE Extraction}
+
+The \texttt{OpenIEExtractor} class extracts relation triples using three components:
+
+\paragraph{Coreference Resolution.}
+We use Stanza's native coreference model to replace pronouns with canonical mentions:
+\begin{verbatim}
+def _resolve_coreferences(self, text):
+    doc = self.coref_pipeline(text)
+    for chain in doc.coref_chains:
+        representative = chain.representative_text
+        for mention in chain:
+            if not mention.is_representative:
+                # Replace mention with representative
+                ...
+    return resolved_text
+\end{verbatim}
+
+\paragraph{CoreNLP OpenIE.}
+After coreference resolution, we extract triples via Stanford CoreNLP:
+\begin{verbatim}
+self.openie_properties = {
+    'openie.triple.strict': 'true',
+    'openie.triple.all_nominals': 'true',
+    'openie.max_entailments_per_clause': '3',
+}
+\end{verbatim}
+
+\paragraph{Dependency Parse Fallback.}
+When OpenIE fails, we extract subject-verb-object triples from the dependency parse, marked with \texttt{source='stanza\_depparse'}.
+
+\subsubsection{Stage 2: LLM-based Logic Conversion}
+
+The \texttt{LogicConverter} class uses a reasoning model (GPT-5.2) with a structured system prompt. The complete prompt is provided in Appendix~\ref{sec:prompt}. Key design principles:
 \begin{itemize}
-\item \textbf{A bi-encoder} sentence embedding model (e.g., SBERT) for fast retrieval of relevant segments.
-\item \textbf{LLM logprob extraction}: We prompt an LLM with retrieved segments and extract logprobs for YES/NO responses regarding whether the text supports $Q$.
-\item \textbf{Softmax normalization} to convert logprob differences to confidence scores.
-\end{itemize}
-The resulting weight is an evidence score, not a statistically calibrated probability. It is obtained from the following algorithm:
-\begin{itemize}
-    \item[1.]
-    Given a soft constraint $Q$ expressed as a natural-language hypothesis sentence $h$.
-\item[2.] Let $e(\cdot)$ be the SBERT embedding function. We precompute embeddings for all segments:
-\[
-v_i = e(s_i)\quad\text{for } i=1,\dots,m.
-\]
-
-Compute the embedding $u = e(h)$ and retrieve the top-$K$ segments by cosine similarity:
-\[
-E = \text{TopK}_{s_i\in S(T)} \cos(u, v_i),
-\]
-optionally truncating to a maximum total budget $K_{\text{total}}$ (e.g., 20) by keeping the highest-similarity unique segments.
-\item[3.] For each candidate premise segment $p \in E$, construct a verification prompt asking the LLM: ``Based on the following text, is the statement `$h$' supported? Answer YES or NO.'' We request logprobs with \texttt{top\_logprobs=20} to capture the probability distribution over responses.
-\item[4.] Extract the logprobs for YES and NO tokens:
-\[
-(\ell_{\text{yes}}(p), \ell_{\text{no}}(p)) \in \mathbb{R}^2.
-\]
-Compute the evidence score via softmax:
-\[
-d(p) := \frac{\exp(\ell_{\text{yes}}(p))}{\exp(\ell_{\text{yes}}(p)) + \exp(\ell_{\text{no}}(p))}.
-\]
-This yields $d(p) \in (0,1)$ where $d(p) > 0.5$ indicates supporting evidence.
-\item[5.] Aggregate evidence across retrieved segments. We take the maximum confidence across segments:
-\[
-w(Q) := \max_{p \in E} d(p).
-\]
+    \item \textbf{Faithfulness}: Prioritize accurate representation over completeness
+    \item \textbf{Atomicity}: Propositions cannot be further decomposed
+    \item \textbf{Provenance}: Every element includes textual evidence
 \end{itemize}
 
-Interpretation:
-\begin{itemize}
-    \item $w(Q)\approx 1$: strong supporting evidence exists.
-    \item $w(Q)\approx 0$: strong contradictory evidence exists.
-    \item $w(Q)\approx 0.5$: overall neutral / mixed / insufficient evidence.
-\end{itemize}
-This $w(Q)$ is used as the soft constraint weight in downstream reasoning (e.g., in a likelihood factor $\lambda(\varphi)$ that prefers readings satisfying $Q$).
+The LLM receives both the original text and OpenIE triples:
+\begin{verbatim}
+ORIGINAL TEXT:
+<<<{text}>>>
 
-\paragraph{Algorithm Summary:}
-We complete the following steps:
-\\
-\textbf{Step 1:} Preprocessing (once per document)
+RELATION TRIPLES:
+<<<{formatted_triples}>>>
+\end{verbatim}
+
+\subsubsection{Stage 3: Weight Assignment}
+\label{sec:weight_assignment}
+
+The \texttt{assign\_weights} function assigns confidence weights $w(Q) \in (0,1)$ to constraints using SBERT retrieval and LLM logprob extraction:
 
 \begin{enumerate}
-    \item Segment the document $T$ into segments $S(T)=\{s_i\}$.
-    \item Compute SBERT embeddings $v_i = e(s_i)$ for all segments.
-    \item Build an ANN index for fast top-$K$ similarity search (optional but recommended).
+    \item Chunk document and compute SBERT embeddings
+    \item For each constraint $Q$, retrieve top-$k$ relevant chunks
+    \item Prompt LLM with chunks asking ``Does text support $Q$?''
+    \item Extract YES/NO logprobs: $(\ell_{\text{yes}}, \ell_{\text{no}})$
+    \item Compute softmax confidence: $d(p) = \frac{\exp(\ell_{\text{yes}})}{\exp(\ell_{\text{yes}}) + \exp(\ell_{\text{no}})}$
+    \item Also verify negated constraint; compute final weight via binary softmax
 \end{enumerate}
 
-\textbf{Step 2:} Per soft constraint $Q$
+Interpretation: $w(Q) \approx 1$ indicates strong support; $w(Q) \approx 0.5$ indicates neutral/mixed evidence.
+
+\subsubsection{Query Translation}
+
+At query time, \texttt{translate\_query} converts natural language to propositional formulas:
 
 \begin{enumerate}
-    \item Retrieve top-$K$ segments $E$ by SBERT similarity to the constraint's natural language form.
-    \item For each $p\in E$, prompt the LLM with the segment and constraint, requesting logprobs.
-    \item Extract YES/NO logprobs and compute softmax confidence:
-    \[
-    d(p) = \frac{\exp(\ell_{\text{yes}}(p))}{\exp(\ell_{\text{yes}}(p)) + \exp(\ell_{\text{no}}(p))}.
-    \]
-    \item Output weight:
-    \[
-    w(Q) = \max_{p \in E} d(p).
-    \]
+    \item Detect Yes/No questions and convert to declarative statements
+    \item Retrieve top-$k$ propositions via SBERT similarity
+    \item Prompt LLM to translate hypothesis to formula over retrieved propositions
+    \item Validate formula against proposition schema
 \end{enumerate}
 
-\textbf{Defaults:} We use the following settings.
+\subsubsection{Logic Solver}
+
+The \texttt{LogicSolver} class encodes the logified structure as Weighted CNF and uses PySAT's RC2 MaxSAT solver \cite{ignatiev2019rc2}:
 
 \begin{itemize}
-    \item Segments: short paragraphs (1–5 sentences).
-    \item SBERT retrieval: $K=20$.
-    \item LLM: GPT-4o or similar model supporting logprob extraction.
-    \item Logprob setting: \texttt{logprobs=True, top\_logprobs=20}.
+    \item \textbf{Entailment}: Check if $\text{KB} \land \neg q$ is UNSAT
+    \item \textbf{Consistency}: Check if $\text{KB} \land q$ is SAT
+    \item \textbf{Confidence}: Compare MaxSAT costs for $q$ vs $\neg q$
 \end{itemize}
 
+Soft constraints use log-odds weighting: $\text{weight}(C_k) = \frac{w_k}{1 - w_k} \times 1000$.
 
-\subsection{Comparing proposition versus FOL logic}
-
-
-\begin{table}[h!]
-\centering
-\small
-\begin{tabular}{lcc}
-\toprule
-\textbf{Dataset} & \textbf{Logic-LM Exec} & \textbf{Logify Exec} \\
-\midrule
-ProofWriter (prop-like) & 99.0 & 99.4 \\
-FOLIO (FOL) & 85.8 & 91.2 \\
-\bottomrule
-\end{tabular}
-\caption{Execution rates. Propositional-like tasks achieve near-perfect translation.}
-\label{tab:propositional_vs_FOL}
-\end{table}
-
-\subsection{Usage Modes}
+\subsubsection{Usage}
 \label{sec:usage}
 
-The system supports two primary modes:
-
-\paragraph{Logify mode.}
-Create a new logified structure from a document:
 \begin{verbatim}
+# Logify mode: create structure from document
 python main.py logify --fpath "document.pdf"
-python main.py logify --fpath "document.txt" --opath "output.json"
+
+# Query mode: ask questions
+python main.py query --fpath "doc.pdf" --query "Is X true?"
 \end{verbatim}
 
-\paragraph{Query mode.}
-Ask questions over a logified document:
-\begin{verbatim}
-python main.py query --fpath "document.pdf" --query "Is X true?"
-python main.py query --fpath "doc.pdf" --query "Is X true?" --k 20
-\end{verbatim}
+\subsubsection{Configuration Defaults}
 
-In query mode, the system loads or creates the logified structure, translates the query to a formal constraint, and invokes the MaxSAT solver to determine the answer.
-
-
-\subsection{OpenIE Extraction with Stanford CoreNLP}
-\label{sec:openie}
-
-The first stage of our extraction pipeline uses Stanford CoreNLP's Open Information Extraction (OpenIE) system \cite{angeli2015openie} to extract relation triples from natural language text. We access CoreNLP through the Stanza Python interface \cite{qi2020stanza}, which provides the official Python bindings maintained by the Stanford NLP Group.
-
-\subsubsection{Pipeline Configuration}
-
-Our OpenIE extraction pipeline is configured with the following annotators, applied in sequence:
-\begin{enumerate}
-    \item \texttt{tokenize}: Tokenization into words
-    \item \texttt{ssplit}: Sentence splitting
-    \item \texttt{pos}: Part-of-speech tagging
-    \item \texttt{lemma}: Lemmatization
-    \item \texttt{depparse}: Dependency parsing
-    \item \texttt{natlog}: Natural logic annotations
-    \item \texttt{openie}: Open information extraction
-\end{enumerate}
-
-\subsubsection{Coreference Resolution}
-
-A key feature of our pipeline is the integration of coreference resolution \cite{lee2017coref} \emph{before} OpenIE extraction. This ensures that relation triples refer to canonical entity mentions rather than pronouns. For example, given the text:
-\begin{quote}
-``Dr.\ Martinez reviewed the patient's chart. She noted elevated blood pressure.''
-\end{quote}
-Without coreference resolution, OpenIE might extract:
-\begin{center}
-\texttt{(She; noted; elevated blood pressure)}
-\end{center}
-With coreference resolution enabled (\texttt{openie.resolve\_coref=true}), the triple becomes:
-\begin{center}
-\texttt{(Dr.\ Martinez; noted; elevated blood pressure)}
-\end{center}
-This resolution is critical for downstream logic conversion, as it ensures propositions are grounded to specific entities.
-
-\subsubsection{Dependency Parse Fallback}
-
-OpenIE may fail to extract triples from certain sentence structures, particularly:
-\begin{itemize}
-    \item Intransitive verbs with adverbial modifiers (e.g., ``Alice studies hard'')
-    \item Sentences where the POS tagger misclassifies verbs as nouns
-    \item Complex subordinate clause structures
-\end{itemize}
-
-To address this, we implement a dependency parse fallback mechanism. When OpenIE produces no triples for a sentence, we analyze the dependency parse to extract subject-verb-object or subject-verb-adverb relations. For example, from the dependency structure of ``Alice studies hard,'' we extract:
-\begin{center}
-\texttt{(Alice; studies; hard)}
-\end{center}
-Fallback triples are marked with \texttt{source='stanza\_depparse'} for provenance tracking.
-
-\subsubsection{Output Format}
-
-The OpenIE stage outputs a list of relation triples in tab-separated format:
-\begin{verbatim}
-Subject    Predicate    Object    Confidence
-Dr. Martinez    reviewed    patient's chart    0.95
-Dr. Martinez    noted    elevated blood pressure    0.92
-\end{verbatim}
-
-These triples, along with the original text, are passed to Stage 2 (LLM-based logic conversion) as structured input.
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Parameter} & \textbf{Default} & \textbf{Description} \\
+\midrule
+\texttt{model} & gpt-5.2 & Reasoning model for logic conversion \\
+\texttt{reasoning\_effort} & medium & Reasoning depth \\
+\texttt{weights\_model} & gpt-4o & Model for verification (needs logprobs) \\
+\texttt{k\_weights} & 10 & Top-k chunks for weight assignment \\
+\texttt{k\_query} & 20 & Top-k propositions for query \\
+\texttt{sbert\_model} & all-MiniLM-L6-v2 & SBERT model for retrieval \\
+\bottomrule
+\end{tabular}
+\caption{Default configuration parameters.}
+\label{tab:config_defaults}
+\end{table}
 
 
-\subsection{Logic Conversion Prompt}
+\subsection{System Prompt for Logic Conversion}
 \label{sec:prompt}
 
-The second stage of our pipeline uses a large language model (GPT-4) to convert the original text and OpenIE triples into structured propositional logic. Below we provide the complete system prompt used for this conversion.
-
-\subsubsection{Design Principles}
-
-The prompt is designed with the following principles:
-\begin{enumerate}
-    \item \textbf{Faithfulness}: Prioritize accurate representation of the source text over completeness.
-    \item \textbf{Atomicity}: Ensure primitive propositions cannot be further decomposed.
-    \item \textbf{Independence}: Propositions should be logically independent (no redundancy).
-    \item \textbf{Provenance}: Every extracted element must include textual evidence.
-    \item \textbf{No weight extraction}: Soft constraints are identified but weights are assigned separately (Appendix~\ref{sec:weights}).
-\end{enumerate}
-
-\subsubsection{System Prompt}
-
-The following is the system prompt provided to the LLM:
+The following is the complete system prompt provided to the LLM for logic conversion:
 
 \begin{quote}
 \small
@@ -212,9 +169,9 @@ The following is the system prompt provided to the LLM:
 \textbf{TASK:} Given a natural language text $T$ and its corresponding OpenIE relation triples, extract:
 
 \begin{enumerate}
-    \item \textbf{Atomic, primitive propositions} denoted $P_1, P_2, \ldots, P_n$. Each primitive propositional variable should be independent, contain no logical connectives, and be equipped with its natural language meaning along with short evidence from the text. Leverage the OpenIE triples to identify key relations and entities, but ensure propositions are atomic.
+    \item \textbf{Atomic, primitive propositions} denoted $P_1, P_2, \ldots, P_n$. Each primitive propositional variable should be independent, contain no logical connectives, and be equipped with its natural language meaning along with short evidence from the text.
 
-    \item \textbf{Hard constraints} which are zeroth-order propositional formulas over the variables $P_1, P_2, \ldots, P_n$ that must hold. These should include their meaning from the text, and evidence for why it is a required constraint. Use the OpenIE triples to identify explicit relationships and logical dependencies.
+    \item \textbf{Hard constraints} which are zeroth-order propositional formulas over the variables $P_1, P_2, \ldots, P_n$ that must hold. These should include their meaning from the text, and evidence for why it is a required constraint.
 
     \item \textbf{Soft constraints} which are also zeroth-order propositional formulas over the variables $P_1, P_2, \ldots, P_n$ that might hold. These are equipped with their meaning and evidence for why it is a soft constraint. Soft constraints reflect hedged or probabilistic language in the text (e.g., ``typically,'' ``sometimes,'' ``may'').
 \end{enumerate}
@@ -241,9 +198,8 @@ The following is the system prompt provided to the LLM:
     \item If $p$ is a formula, then $\neg p$ is a formula.
     \item If $p$ and $q$ are formulas, then $p \land q$, $p \lor q$, $p \Rightarrow q$, and $p \Leftrightarrow q$ are formulas.
 \end{enumerate}
-Use parentheses for grouping. Standard precedence and right-associativity apply.
 
-\textbf{OUTPUT FORMAT:} Return valid JSON with the following structure:
+\textbf{OUTPUT FORMAT:} Return valid JSON:
 \begin{verbatim}
 {
   "primitive_props": [
@@ -264,38 +220,13 @@ Use parentheses for grouping. Standard precedence and right-associativity apply.
 \end{verbatim}
 \end{quote}
 
-\subsubsection{Input Format}
-
-The LLM receives input in the following format:
-\begin{verbatim}
-ORIGINAL TEXT:
-<<<
-[Natural language text T]
->>>
-
-OPENIE TRIPLES:
-<<<
-[Tab-separated triples: subject  predicate  object  confidence]
->>>
-\end{verbatim}
-
-\subsubsection{Few-Shot Examples}
-
-To improve extraction quality, the prompt includes few-shot examples demonstrating the expected input-output mapping. These examples illustrate:
-\begin{itemize}
-    \item How to identify atomic propositions from complex sentences
-    \item The distinction between hard constraints (definite language) and soft constraints (hedged language)
-    \item Proper use of logical connectives and formula structure
-    \item How to provide evidence and reasoning for each extracted element
-\end{itemize}
-
-A complete example is provided in Appendix~\ref{sec:exemplar}.
+A complete worked example demonstrating this prompt is provided in Appendix~\ref{sec:exemplar}.
 
 
 \subsection{Extraction Exemplar}
 \label{sec:exemplar}
 
-This section provides a complete worked example demonstrating the logic conversion process. This example is included in the few-shot prompt to guide the LLM.
+This section provides a complete worked example demonstrating the logic conversion process.
 
 \subsubsection{Input Text}
 
@@ -308,90 +239,67 @@ The hospital's emergency triage protocol requires immediate attention for patien
 \paragraph{Primitive Propositions:}
 
 \begin{itemize}
-    \item[$P_1$:] ``The patient requires immediate attention under the hospital's emergency triage protocol.'' \\
-    \textit{Evidence:} Sentence 1, ``The hospital's emergency triage protocol requires immediate attention for patients presenting with chest pain.'' \\
-    \textit{Explanation:} Cannot be further broken down; it is an unambiguous, complete, and specific statement which is true/false evaluable.
-
-    \item[$P_2$:] ``The patient presents with chest pain that is not clearly musculoskeletal in origin.'' \\
-    \textit{Evidence:} Sentence 1, compound statement involving chest pain presentation. \\
-    \textit{Explanation:} Note that ``not'' coming before ``clearly'' is important. This proposition is independent from $P_3$. The simpler ``The patient presents with chest pain'' is captured by $P_2 \lor P_3$.
-
-    \item[$P_3$:] ``The patient presents with chest pain that is clearly musculoskeletal in origin.'' \\
-    \textit{Evidence:} Sentence 1, ``unless the pain is clearly musculoskeletal in origin.'' \\
-    \textit{Explanation:} A specific statement that is independent of the other $P_i$.
-
-    \item[$P_4$:] ``The patient is under 40 years old.'' \\
-    \textit{Evidence:} Sentence 1, ``the patient is under 40 years old.'' \\
-    \textit{Explanation:} A specific statement that cannot be further broken down.
-
-    \item[$P_5$:] ``Dr.\ Martinez works double shifts this week.'' \\
-    \textit{Evidence:} Sentence 2, ``who has been working double shifts this week.''
-
-    \item[$P_6$:] ``The patient is over 65 years old.'' \\
-    \textit{Evidence:} Sentence 2, ``patients over 65.''
-
-    \item[$P_7$:] ``Dr.\ Martinez makes sure the patient receives an ECG.'' \\
-    \textit{Evidence:} Sentence 2, Dr.\ Martinez's belief about ECGs.
-
-    \item[$P_8$:] ``Dr.\ Martinez follows the official guidelines.'' \\
-    \textit{Evidence:} Sentence 3, ``The official guidelines only mandate this...'' \\
-    \textit{Explanation:} Inferred from common sense that doctors follow guidelines. Needed for the constraint $H_4$.
-
-    \item[$P_9$:] ``Dr.\ Yang follows the official guidelines.'' \\
-    \textit{Evidence:} Similar to $P_8$.
-
-    \item[$P_{10}$:] ``Dr.\ Yang makes sure the patient receives an ECG.'' \\
-    \textit{Evidence:} Sentence 2, Dr.\ Yang's belief about ECGs.
-
-    \item[$P_{11}$:] ``The patient has a documented cardiac history.'' \\
-    \textit{Evidence:} Sentence 3, ``when cardiac history is documented.''
+    \item[$P_1$:] ``The patient requires immediate attention under the hospital's emergency triage protocol.''
+    \item[$P_2$:] ``The patient presents with chest pain that is not clearly musculoskeletal in origin.''
+    \item[$P_3$:] ``The patient presents with chest pain that is clearly musculoskeletal in origin.''
+    \item[$P_4$:] ``The patient is under 40 years old.''
+    \item[$P_5$:] ``Dr.\ Martinez works double shifts this week.''
+    \item[$P_6$:] ``The patient is over 65 years old.''
+    \item[$P_7$:] ``Dr.\ Martinez makes sure the patient receives an ECG.''
+    \item[$P_8$:] ``Dr.\ Martinez follows the official guidelines.''
+    \item[$P_9$:] ``Dr.\ Yang follows the official guidelines.''
+    \item[$P_{10}$:] ``Dr.\ Yang makes sure the patient receives an ECG.''
+    \item[$P_{11}$:] ``The patient has a documented cardiac history.''
 \end{itemize}
 
 \paragraph{Hard Constraints:}
 
 \begin{itemize}
     \item[$H_1$:] $(P_2 \land \neg(P_3 \land P_4)) \Rightarrow P_1$ \\
-    \textit{Translation:} ``If the patient presents with chest pain and it is not true that both the pain is musculoskeletal in origin and the patient is under 40 years old, then the patient requires immediate attention.'' \\
-    \textit{Evidence:} Sentence 1. \\
-    \textit{Reasoning:} The word ``unless'' suggests an additional hypothesis, namely $\neg(P_3 \land P_4)$. We prefer not to rewrite this as $\neg P_3 \lor \neg P_4$ to remain faithful to the text structure.
+    \textit{Reasoning:} ``Unless'' indicates exception; the patient requires attention if chest pain is present and the exception doesn't apply.
 
     \item[$H_2$:] $P_5$ \\
-    \textit{Translation:} ``Dr.\ Martinez works double shifts this week.'' \\
     \textit{Reasoning:} Stated as fact in the text.
 
     \item[$H_3$:] $P_6 \Rightarrow P_7$ \\
-    \textit{Translation:} ``If the patient is over 65 years old, then Dr.\ Martinez makes sure the patient receives an ECG.'' \\
-    \textit{Evidence:} Sentence 2, ``believes that patients over 65 should always receive an ECG.'' \\
-    \textit{Reasoning:} Although stated as a belief, the text intends to describe Dr.\ Martinez's actions. The word ``always'' indicates this is a hard constraint.
+    \textit{Reasoning:} ``Always'' indicates hard constraint for Dr.\ Martinez's actions.
 
     \item[$H_4$:] $((P_8 \land P_{11}) \Rightarrow P_7) \land ((P_9 \land P_{11}) \Rightarrow P_{10})$ \\
-    \textit{Translation:} ``If Dr.\ Martinez follows the guidelines and the patient has documented cardiac history, then Dr.\ Martinez ensures an ECG. And similarly for Dr.\ Yang.'' \\
-    \textit{Evidence:} Sentence 3, ``The official guidelines only mandate this when cardiac history is documented.'' \\
-    \textit{Reasoning:} Because this constraint applies to all doctors, we flatten to propositional logic by instantiating for each doctor mentioned.
+    \textit{Reasoning:} Guidelines apply to all doctors; flattened to propositional logic by instantiating for each doctor.
 \end{itemize}
 
 \paragraph{Soft Constraints:}
 
 \begin{itemize}
     \item[$S_1$:] $P_6 \Rightarrow P_{10}$ \\
-    \textit{Translation:} ``If the patient is over 65 years old, then Dr.\ Yang makes sure the patient receives an ECG.'' \\
-    \textit{Evidence:} Sentence 2, ``although Dr.\ Yang only sometimes believes this.'' \\
-    \textit{Reasoning:} Although stated as a belief, the text intends to describe Dr.\ Yang's actions. The word ``sometimes'' indicates this is a soft constraint, not a hard constraint.
+    \textit{Reasoning:} ``Sometimes'' indicates soft constraint for Dr.\ Yang's actions.
 \end{itemize}
 
 \subsubsection{Key Observations}
 
-This example illustrates several important aspects of the extraction process:
-
 \begin{enumerate}
-    \item \textbf{Linguistic cues for hard vs.\ soft}: The word ``always'' (Dr.\ Martinez) yields a hard constraint, while ``sometimes'' (Dr.\ Yang) yields a soft constraint for the same logical structure.
-
-    \item \textbf{Flattening universal quantification}: The guideline ``applies to all doctors'' is flattened to propositional logic by creating separate propositions and constraints for each doctor mentioned in the text.
-
-    \item \textbf{Preserving text structure}: The ``unless'' clause is represented as $\neg(P_3 \land P_4)$ rather than the logically equivalent $\neg P_3 \lor \neg P_4$, maintaining fidelity to the source text.
-
-    \item \textbf{No weights in output}: Soft constraints are identified but do not include weight values. Weights are assigned separately by the evidence-based pipeline (Appendix~\ref{sec:weights}).
+    \item \textbf{Linguistic cues}: ``Always'' yields hard constraint; ``sometimes'' yields soft constraint for the same logical structure.
+    \item \textbf{Flattening quantification}: Universal guidelines are instantiated per-entity.
+    \item \textbf{Preserving structure}: ``Unless'' is represented as $\neg(P_3 \land P_4)$ rather than equivalent $\neg P_3 \lor \neg P_4$.
 \end{enumerate}
+
+
+\subsection{Propositional vs.\ First-Order Logic}
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dataset} & \textbf{Logic-LM Exec} & \textbf{Logify Exec} \\
+\midrule
+ProofWriter (prop-like) & 99.0 & 99.4 \\
+FOLIO (FOL) & 85.8 & 91.2 \\
+\bottomrule
+\end{tabular}
+\caption{Execution rates. Propositional-like tasks achieve near-perfect translation.}
+\label{tab:propositional_vs_FOL}
+\end{table}
 
 
 \subsection{Worked Example: START and Jump-START Triage}
@@ -406,434 +314,124 @@ For children, a commonly used algorithm is Jump-START, which is based on START b
 and difficulty following verbal commands. Triage is a dynamic process, and a patient can change triage status over time.''}
 \end{quote}
 
-\subsubsection{Extraction Pipeline}
+\subsubsection{Extraction}
 
-We fix an LLM pipeline $\Pi$ and extract the following atomic propositions
-$\mathcal{P}(T)=\{P_1,\dots,P_9\}$, where:
+Atomic propositions $\mathcal{P}(T)=\{P_1,\dots,P_9\}$:
 \begin{itemize}
-\item $P_1$: ``The START system is (one of) the most common triage systems in the United States.''
-\item $P_2$: ``START is utilized for patients above the age of $8$ years.''
-\item $P_3$: ``Using START, triage status is intended to be calculated in less than $60$ seconds.''
-\item $P_4$: ``For children, Jump-START is a commonly used triage algorithm.''
+\item $P_1$: ``START is widely used in the US.''
+\item $P_2$: ``START is for patients above age 8.''
+\item $P_3$: ``Triage status intended in under 60 seconds.''
+\item $P_4$: ``Jump-START is commonly used for children.''
 \item $P_5$: ``Jump-START is based on START.''
-\item $P_6$: ``Jump-START accounts for increased pediatric risk of respiratory failure.''
+\item $P_6$: ``Jump-START accounts for pediatric respiratory failure risk.''
 \item $P_7$: ``Children may be unable to follow verbal commands.''
 \item $P_8$: ``Triage is a dynamic process.''
 \item $P_9$: ``A patient can change triage status over time.''
 \end{itemize}
 
-We obtain a set of hard constraints $\mathcal{C}(T)=\{C_1,C_2,C_3,C_4\}$, intended to capture structural claims of the text:
-\begin{enumerate}
-\item[$C_1$:] $P_8 \rightarrow P_9$ — ``dynamic'' implies change over time is possible.
-\item[$C_2$:] $P_4 \rightarrow P_5$ — Jump-START for children $\Rightarrow$ based on START.
-\item[$C_3$:] $P_4 \rightarrow P_6$ — Jump-START for children $\Rightarrow$ accounts for respiratory failure risk.
-\item[$C_4$:] $P_4 \rightarrow P_7$ — Jump-START for children $\Rightarrow$ inability to follow commands relevant.
-\end{enumerate}
+Hard constraints $\mathcal{C}(T)$: $P_8 \rightarrow P_9$, $P_4 \rightarrow P_5$, $P_4 \rightarrow P_6$, $P_4 \rightarrow P_7$.
 
-We also specify soft constraints $\mathcal{S}(T) = \{S_1, S_2, S_3\}$ with confidence weights:
-\begin{itemize}
-\item $S_1 := P_1$ with $w(S_1) = 0.75$ (``widely used'' suggests high but not certain confidence)
-\item $S_2 := P_2$ with $w(S_2) = 0.60$ (age threshold stated but not absolute)
-\item $S_3 := P_3$ with $w(S_3) = 0.85$ (``intended'' is strong but not guaranteed)
-\end{itemize}
+Soft constraints with weights: $S_1 := P_1$ ($w=0.75$), $S_2 := P_2$ ($w=0.60$), $S_3 := P_3$ ($w=0.85$).
 
-\subsubsection{Knowledge Algebra Construction}
+\subsubsection{Knowledge Algebra}
 
-Let $\mathcal{R}(T)$ denote the Boolean ring associated to $(T,\Pi)$, obtained by enforcing the hard constraints in $\mathcal{C}(T)$:
-\begin{align*}
-\mathcal{R}(T) =
-\frac{
-\mathbb{F}_2[P_i \mid 1 \leq i \leq 9]
-}
-{
-\langle
-P_i^2 + P_i \mid 1 \leq i \leq 9
-\rangle
-+
-\mathcal{I}_{\mathcal{C}}(T)
-}
-\end{align*}
-where
+The Boolean ring $\mathcal{R}(T)$ enforces hard constraints via the ideal:
 \[
-\mathcal{I}_{\mathcal{C}}(T)
-=
-\langle
-P_8(1+P_9),\;
-P_4(1+P_5),\;
-P_4(1+P_6),\;
-P_4(1+P_7)
-\rangle.
+\mathcal{I}_{\mathcal{C}}(T) = \langle P_8(1+P_9), P_4(1+P_5), P_4(1+P_6), P_4(1+P_7) \rangle.
 \]
 
-A \emph{reading} is a morphism $\varphi:\mathcal{R}(T)\to\mathbb{F}_2$.
-We weight readings using the soft constraint polynomials. For each soft constraint $C$ with weight $w(C)$, define:
-\[
-\lambda_C(\varphi)=
-\begin{cases}
-w(C) & \text{if } \varphi(C) = 1,\\
-1-w(C) & \text{if } \varphi(C) = 0,
-\end{cases}
-\]
-which induces the unnormalized weight:
-\[
-W(\varphi)=\prod_{C\in\mathcal{S}(T)} \lambda_C(\varphi).
-\]
-
-\subsubsection{Comparing Two Readings}
-
-We exhibit two admissible readings (both satisfy all hard constraints) with different weights.
-
-\paragraph{Reading A.} Assume $\varphi_A$ satisfies $P_1, P_2, P_3, P_4, P_8$. The hard constraints also imply $P_5, P_6, P_7, P_9$.
-Since $\varphi_A$ satisfies all soft constraints ($P_1=1, P_2=1, P_3=1$), its weight is:
-\[
-W(\varphi_A) = (0.75)(0.60)(0.85) = 0.3825.
-\]
-
-\paragraph{Reading B.} Assume $\varphi_B$ satisfies $P_4, P_8$ (and consequently $P_5, P_6, P_7, P_9$), but $\varphi_B$ does \emph{not} satisfy $P_1$ and $P_3$ (treating them as false), while still satisfying $P_2$.
-The contributions are:
-\begin{itemize}
-    \item $P_1$: Violated $\to (1-0.75) = 0.25$
-    \item $P_2$: Satisfied $\to 0.60$
-    \item $P_3$: Violated $\to (1-0.85) = 0.15$
-\end{itemize}
-Then:
-\[
-W(\varphi_B) = (0.25)(0.60)(0.15) = 0.0225.
-\]
-
-Thus, both readings are admissible under the hard constraints, but Reading A is significantly preferred by the soft-constraint weighting ($W(\varphi_A) / W(\varphi_B) = 17$).
+Readings are weighted by soft constraints. For reading $\varphi_A$ satisfying all soft constraints:
+$W(\varphi_A) = (0.75)(0.60)(0.85) = 0.3825$.
+For reading $\varphi_B$ violating $P_1, P_3$:
+$W(\varphi_B) = (0.25)(0.60)(0.15) = 0.0225$.
+Reading A is preferred by factor $W(\varphi_A)/W(\varphi_B) = 17$.
 
 
 \subsection{Algebraic Reasoning: Consequence and Compatibility}
 \label{sec:algebraic_reasoning}
 
-In this section, we describe algebraic tests for consequence, inconsistency, and compatibility. Throughout, we work relative to a fixed text $T$ and pipeline $\Pi$, writing $\mathcal{R}(T)$ for the knowledge algebra and $\mathcal{I}_{\mathcal{C}}(T)$ for the hard-constraint ideal.
-
-\subsubsection{Testing Consequence and Inconsistency}
-
-Let $Q$ be a query proposition and let $q := \Pi_{\mathrm{form}}(Q) \in \mathcal{R}(T)$ denote its grounded Boolean formula.
-
-\begin{proposition}
+\begin{proposition}[Consequence and Inconsistency]
 \label{prop:consequence_inconsistency}
-Let $q := \Pi_{\mathrm{form}}(Q) \in \mathcal{R}(T)$ encode a query proposition $Q$.
+Let $q := \Pi_{\mathrm{form}}(Q) \in \mathcal{R}(T)$ encode a query $Q$.
 \begin{enumerate}
-\item $Q$ is a \emph{$\Pi$-consequence} of $T$ (i.e., $Q$ is True under every reading) if and only if
-\[
-1+q \in \mathcal{I}_{\mathcal{C}}(T).
-\]
-\item $Q$ is \emph{$\Pi$-inconsistent} with $T$ (i.e., $Q$ is False under every reading) if and only if
-\[
-q \in \mathcal{I}_{\mathcal{C}}(T).
-\]
+\item $Q$ is a \emph{$\Pi$-consequence} of $T$ iff $1+q \in \mathcal{I}_{\mathcal{C}}(T)$.
+\item $Q$ is \emph{$\Pi$-inconsistent} with $T$ iff $q \in \mathcal{I}_{\mathcal{C}}(T)$.
 \end{enumerate}
 \end{proposition}
 
-\paragraph{Example.}
-Let $Q_1$ denote the proposition \emph{``If triage is dynamic then a patient can change triage status over time,''} i.e., $Q_1 := P_8 \rightarrow P_9$.
-In our Boolean ring encoding:
-\[
-q_1 = \Pi_{\mathrm{form}}(Q_1) = 1 + P_8(1+P_9).
-\]
-Since $C_1$ is a hard constraint, the polynomial $P_8(1+P_9)$ lies in $\mathcal{I}_{\mathcal{C}}(T)$, hence $1+q_1 = P_8(1+P_9) \in \mathcal{I}_{\mathcal{C}}(T)$.
-By Proposition~\ref{prop:consequence_inconsistency}, $Q_1$ is a $\Pi$-consequence of $T$.
-
-\subsubsection{Testing Relative Compatibility}
-
-Given two propositions $S$ and $R$, we may test whether they can be simultaneously True under the hard constraints.
-
-\begin{proposition}
+\begin{proposition}[Compatibility]
 \label{prop:compatibility}
-Let $s := \Pi_{\mathrm{form}}(S)$ and $r := \Pi_{\mathrm{form}}(R)$ be the Boolean-ring encodings of two propositions.
-Then $S$ and $R$ are \emph{mutually $\Pi$-incompatible} with respect to $T$ (i.e., there is no reading under which both are True) if and only if
-\[
-sr \in \mathcal{I}_{\mathcal{C}}(T).
-\]
+Propositions $S$ and $R$ are \emph{mutually incompatible} iff $sr \in \mathcal{I}_{\mathcal{C}}(T)$.
 \end{proposition}
-
-\paragraph{Example.}
-Let $S := P_8$ (``triage is dynamic'') and $R := \neg P_9$ (``a patient cannot change status over time'').
-Then:
-\[
-sr = P_8(1+P_9).
-\]
-Because $P_8 \rightarrow P_9$ is a hard constraint, the polynomial $P_8(1+P_9)$ lies in $\mathcal{I}_{\mathcal{C}}(T)$, hence $sr \in \mathcal{I}_{\mathcal{C}}(T)$.
-By Proposition~\ref{prop:compatibility}, the propositions $P_8$ and $\neg P_9$ cannot be simultaneously True in any admissible reading.
-
-\subsubsection{Underdetermination}
-
-A \emph{reading} is a morphism $\varphi: \mathcal{R}(T) \to \mathbb{F}_2$, corresponding to a satisfying assignment to the hard constraints. The number of readings quantifies how much the text leaves undetermined.
 
 \begin{definition}[Underdetermination]
 \label{def:underdetermination}
-Given a text $T$ and a pipeline $\Pi$, let $N(T)$ be the number of readings:
-\[
-N(T) := \bigl|\mathrm{Hom}(\mathcal{R}(T), \mathbb{F}_2)\bigr|.
-\]
-We define the \emph{underdetermination ratio} by:
-\[
-\mathrm{Und}(T,\Pi) := \frac{\log_2 N(T)}{n},
-\qquad 0 \leq \mathrm{Und}(T,\Pi) \leq 1,
-\]
-where $n$ is the number of extracted atoms.
+The underdetermination ratio is $\mathrm{Und}(T,\Pi) := \frac{\log_2 N(T)}{n}$, where $N(T) = |\mathrm{Hom}(\mathcal{R}(T), \mathbb{F}_2)|$ is the number of readings and $n$ is the number of atoms.
 \end{definition}
 
-\paragraph{Example.}
-Consider a reduced proposition set $\mathcal{P}(T) = \{P_3, P_4, P_5, P_8, P_9\}$ ($n=5$), with hard constraints $P_8 \rightarrow P_9$ and $P_4 \rightarrow P_5$.
-Each implication forbids exactly one assignment on its pair of variables (True $\land$ False), hence each contributes $3$ satisfying assignments out of $4$.
-The number of readings is:
-\[
-N(T) = 3 \cdot 3 \cdot 2 = 18,
-\]
-where the final factor $2$ comes from the unconstrained variable $P_3$.
-Thus:
-\[
-\mathrm{Und}(T,\Pi) = \frac{\log_2(18)}{5} \approx 0.834.
-\]
-This value reflects that the hard constraints eliminate some combinations but still leave substantial freedom.
-
-\paragraph{Remark.}
-Soft constraints $\mathcal{S}(T)$ with confidences $w(C) \in (0,1)$ do not change the admissible readings determined by $\mathcal{I}_{\mathcal{C}}(T)$; instead they define a weight $W(\varphi)$ that ranks readings by plausibility. This supports \emph{weighted} variants of underdetermination (e.g., effective model count or entropy) without turning defeasible statements into hard logical necessities
 
 \subsection{Baseline Choices}
+\label{sec:baselines}
 
-We establish a comprehensive set of baselines to evaluate our framework across different document lengths and reasoning paradigms.
-
-\paragraph{Short-form reasoning tasks (FOLIO, ProofWriter).}
-For datasets with concise premises that fit within context windows, we compare against:
+\paragraph{Short-form tasks (FOLIO, ProofWriter).}
 \begin{itemize}
-    \item \textbf{Logic-LM} \cite{pan2023logiclm}: The most directly comparable neuro-symbolic system. Logic-LM translates problems into symbolic formulations per query, allowing us to isolate the value of our ``logify once, query many'' paradigm.
-    \item \textbf{Reasoning LLM}: A modern reasoning-capable model (e.g., o1-mini) with chain-of-thought. This tests whether improved native reasoning eliminates the need for symbolic delegation.
+    \item \textbf{Logic-LM} \cite{pan2023logiclm}: Per-query symbolic formalization
+    \item \textbf{Reasoning LLM}: Chain-of-thought without symbolic delegation
 \end{itemize}
 
-\paragraph{Long-form document reasoning (ContractNLI).}
-For documents exceeding typical context limits, direct application of Logic-LM is infeasible. We therefore evaluate:
+\paragraph{Long-form tasks (ContractNLI).}
 \begin{itemize}
-    \item \textbf{Logic-LM + RAG}: Logic-LM applied to retrieved passages only. This hybrid baseline tests whether per-query formalization over retrieved context can match our full-document logification.
-    \item \textbf{Reasoning LLM + RAG}: State-of-the-art reasoning models with retrieval augmentation. This establishes whether symbolic reasoning provides value beyond advanced retrieval and native reasoning chains.
+    \item \textbf{Logic-LM + RAG}: Per-query formalization over retrieved passages
+    \item \textbf{Reasoning LLM + RAG}: Retrieval-augmented reasoning
 \end{itemize}
 
-\paragraph{Objectives.}
-This baseline design allows us to answer three critical questions: (1) Does logifying once outperform per-query formalization when both are feasible? (2) Does full-document logification overcome retrieval gaps in long documents? (3) Is symbolic reasoning necessary given modern reasoning-capable LLMs?
-
-
-\subsection{Logic Solver Implementation Details}
-\label{sec:logic_solver_impl}
-
-This section describes the implementation of the \texttt{logic\_solver} module, which performs weighted MaxSAT reasoning over the logified structure. Our implementation uses PySAT's RC2 solver \cite{ignatiev2019rc2}, a state-of-the-art core-guided MaxSAT algorithm that ranked first in both weighted and unweighted complete categories of the MaxSAT Evaluations 2018 and 2019.
-
-\subsubsection{Weighted CNF Encoding}
-
-The \texttt{logic\_solver} module encodes the logified structure as a Weighted Conjunctive Normal Form (WCNF) formula compatible with MaxSAT solvers. The encoding process consists of three stages:
-
-\paragraph{Proposition Mapping.}
-Each extracted proposition $P_i \in \mathcal{P}(T)$ is mapped to a unique Boolean variable $x_i \in \{1, 2, \ldots, n\}$ for SAT solving. This mapping is maintained bidirectionally to support result interpretation.
-
-\paragraph{Hard Constraint Encoding.}
-Each hard constraint $C \in \mathcal{C}(T)$ is converted to CNF clauses using a recursive descent parser with the following transformations:
-\begin{itemize}
-    \item Formulas are parsed into abstract syntax trees respecting operator precedence: $\neg$ (NOT), $\land$ (AND), $\lor$ (OR), $\Rightarrow$ (IMPLIES), $\Leftrightarrow$ (IFF)
-    \item Negation Normal Form (NNF) is computed by pushing negations to literals using De Morgan's laws
-    \item CNF conversion applies the distributive law to NNF expressions
-\end{itemize}
-Hard constraint clauses are added to the WCNF with infinite weight, making them mandatory.
-
-\paragraph{Soft Constraint Encoding.}
-Each soft constraint $C_k \in \mathcal{S}(T)$ with confidence weight $w_k \in (0,1)$ is converted to CNF clauses and added to the WCNF with finite weight. Following the log-odds transformation described in Section~\ref{sec:maxsat}, we compute:
-\[
-\text{weight}(C_k) = \frac{w_k}{1 - w_k} \times 1000
-\]
-and round to the nearest integer. The scaling factor of 1000 provides sufficient precision for typical weight distributions while maintaining computational efficiency.
-
-\subsubsection{RC2 MaxSAT Solver}
-
-We use PySAT's implementation of the RC2 (Relaxable Cardinality Constraints) algorithm \cite{ignatiev2019rc2}, which is based on the OLLITI core-guided approach. RC2 has several advantages over earlier branch-and-bound solvers like MiniMaxSAT \cite{heras2007minimaxsat}:
-
-\begin{itemize}
-    \item \textbf{Core-guided search}: Instead of exhaustively exploring a branch-and-bound tree, RC2 iteratively extracts unsatisfiable cores and relaxes them via cardinality constraints. This approach scales better to large instances with many soft constraints.
-
-    \item \textbf{Incremental solving}: RC2 reuses learned information across iterations, making it efficient for repeated queries over the same knowledge base.
-
-    \item \textbf{Heuristic optimizations}: RC2 implements unsatisfiable core exhaustion, core reduction, and intrinsic AtMost1 constraint detection, which significantly improve performance on structured problems.
-\end{itemize}
-
-The solver interface supports any SAT backend provided by PySAT; we use Glucose 3 \cite{audemard2009glucose} as the default backend due to its strong performance on industrial instances.
-
-\subsubsection{Query Processing}
-
-Given a natural language query $Q$ translated to a formal constraint $q$, the solver performs the following reasoning tasks:
-
-\paragraph{Entailment Check.}
-To test whether $\mathcal{R}(T) \models q$, we:
-\begin{enumerate}
-    \item Create a copy of the base WCNF formula
-    \item Encode $\neg q$ as hard clauses and add them to the formula
-    \item Invoke the SAT solver to check satisfiability
-    \item If UNSAT, then $q$ is entailed (return TRUE with confidence 1.0)
-    \item If SAT, proceed to consistency check
-\end{enumerate}
-
-\paragraph{Consistency Check.}
-To test whether $\mathcal{R}(T) \land q$ is satisfiable, we:
-\begin{enumerate}
-    \item Create a copy of the base WCNF formula
-    \item Encode $q$ as hard clauses and add them to the formula
-    \item Invoke the SAT solver to check satisfiability
-    \item If UNSAT, then $q$ contradicts the knowledge base (return FALSE with confidence 1.0)
-    \item If SAT, proceed to confidence computation
-\end{enumerate}
-
-\paragraph{Confidence Computation.}
-For queries that are neither entailed nor contradicted (UNCERTAIN), we compute confidence by comparing MaxSAT costs:
-\begin{enumerate}
-    \item Solve MaxSAT for $\mathcal{R}(T) \land q$ to obtain cost $c_q$
-    \item Solve MaxSAT for $\mathcal{R}(T) \land \neg q$ to obtain cost $c_{\neg q}$
-    \item Compute normalized confidence: $\text{conf}(q) = \frac{c_{\neg q}}{c_q + c_{\neg q}}$
-\end{enumerate}
-This measures the relative weight of violated soft constraints: if $\neg q$ violates more soft constraints than $q$, then $q$ receives higher confidence.
-
-\subsubsection{Implementation Architecture}
-
-The \texttt{logic\_solver} module consists of three main components:
-
-\begin{itemize}
-    \item \textbf{FormulaParser} (\texttt{encoding.py}): Recursive descent parser for propositional logic formulas with CNF conversion
-    \item \textbf{LogicEncoder} (\texttt{encoding.py}): Converts logified JSON structures to WCNF format
-    \item \textbf{LogicSolver} (\texttt{maxsat.py}): High-level interface for entailment, consistency, and confidence queries
-\end{itemize}
-
-The module is designed to be independent of the logification pipeline, accepting any JSON structure that conforms to the schema described in Section~\ref{sec:from_text_to_logic}. This modularity allows the symbolic reasoning component to be reused across different extraction methods or domain-specific customizations.
-
-\subsubsection{Performance Characteristics}
-
-For typical logified structures with $n \in [10, 100]$ propositions and $m \in [20, 200]$ constraints, query latency is dominated by SAT solving time:
-\begin{itemize}
-    \item \textbf{Entailment queries}: 5--50ms (single UNSAT check)
-    \item \textbf{Consistency queries}: 5--50ms (single SAT check)
-    \item \textbf{Confidence queries}: 20--200ms (two MaxSAT optimizations)
-\end{itemize}
-
-These timings are measured on standard benchmark hardware (Intel i7, 16GB RAM) and reflect the efficiency of modern SAT/MaxSAT solvers for propositional reasoning. For larger structures ($n > 500$), we recommend preprocessing to eliminate redundant constraints or splitting the knowledge base into independent components.
-
-\subsubsection{Correctness Guarantees}
-
-The correctness of the \texttt{logic\_solver} module depends on two factors:
-\begin{enumerate}
-    \item \textbf{Encoding correctness}: The CNF transformation must preserve satisfiability. Our implementation uses standard Tseitin-style transformations with careful handling of operator precedence and associativity.
-
-    \item \textbf{Solver correctness}: RC2 is a complete and sound MaxSAT solver with formal correctness guarantees \cite{ignatiev2019rc2}. All entailment and consistency results are provably correct given the logified structure.
-\end{enumerate}
-
-\paragraph{Conditional Correctness.}
-The system provides \emph{conditional correctness}: if the logified structure $(\mathcal{P}(T), \mathcal{C}(T), \mathcal{S}(T))$ faithfully represents the text $T$, then all solver outputs are logically sound. Errors in the logification pipeline (e.g., missing constraints, incorrect weights) propagate to downstream reasoning, but the solver itself introduces no additional errors.
-
-This separation of concerns---extraction vs.\ reasoning---enables systematic debugging and quality control: extraction errors can be corrected by improving the LLM prompt or adding self-refinement loops, while reasoning correctness is guaranteed by the symbolic solver.
 
 \subsection{Logic-LM++ Baseline Configuration}
+\label{sec:logiclm_baseline}
 
-We evaluate the Logic-LM++ baseline on the LogicBench-v1.0 propositional logic subset, specifically targeting \emph{modus tollens} reasoning tasks. The experiment uses GPT-4 as the underlying language model with temperature $T=0$ for deterministic outputs.
+We evaluate Logic-LM++ on LogicBench-v1.0 modus tollens tasks using GPT-4 with propositional (not FOL) formalization.
 
-\paragraph{Formalization Strategy.}
-A key design choice is the use of \textbf{propositional logic formalization} rather than first-order logic (FOL). The original Logic-LM framework employs FOL with quantifiers (e.g., $\forall x\, P(x) \rightarrow Q(x)$), which introduces parsing complexity when interfacing with the Z3 SMT solver. For propositional reasoning tasks, we instead prompt the LLM to produce ground propositional formulas using atomic variables (e.g., $P, Q, R$) connected by standard connectives ($\land, \lor, \rightarrow, \neg, \leftrightarrow$). This approach aligns with the Logify framework's design philosophy of using propositional logic for improved solver compatibility and eliminates quantifier instantiation errors.
+\paragraph{Configuration.}
+Refinement: min 1, max 4 iterations with backtracking agent. Solver: Z3 with 30s timeout.
 
-\paragraph{Refinement Configuration.}
-The refinement loop is configured with a minimum of 1 iteration (\texttt{min\_refinements=1}) and a maximum of 4 iterations (\texttt{max\_iterations=4}). At each iteration, the system generates $N=2$ candidate refinements, selects the best via pairwise LLM comparison, and applies the \textbf{backtracking agent}---the key Logic-LM++ innovation---to compare the selected refinement against the previous formulation. If no semantic improvement is detected, the system reverts to the previous version, preventing degradation. Early stopping occurs after 2 consecutive backtracks (\texttt{max\_consecutive\_backtracks=2}).
+\paragraph{Results.}
+50\% accuracy (10/20), 100\% execution rate. All examples triggered REVERT decisions, indicating refinements did not improve over initial formalization.
 
-\paragraph{Solver Configuration.}
-We use Z3 as the theorem prover with a 30-second timeout. The solver interface parses propositional formulas by: (1) extracting boolean variables from CamelCase identifiers, (2) replacing logical symbols ($\rightarrow, \land, \lor, \neg, \leftrightarrow$) with Z3 operators, and (3) constructing a satisfiability query to determine if the premises entail the conclusion.
-
-\paragraph{Results Summary.}
-On 20 modus tollens examples, the baseline achieves 50\% accuracy (10/20 correct) with 100\% execution rate ($E_r = 1.0$). Notably, all 20 examples triggered the backtracking agent with a \texttt{REVERT} decision, indicating that the generated refinements did not improve semantic fidelity over the initial formalization. The average query time is 10.9 seconds with 2 LLM calls per example (formalization + refinement attempt). The primary failure mode is incorrect predicate alignment---for instance, introducing a redundant variable $R$ (``decided against ordering pizza'') instead of recognizing it as $\neg Q$ (``did not order pizza'')---which breaks the logical chain required for modus tollens inference.
-
-% Table: Logic-LM++ Baseline Summary Metrics
 \begin{table}[h]
 \centering
-\caption{Logic-LM++ Baseline Results on LogicBench-v1.0 Modus Tollens}
-\label{tab:logiclm-summary}
+\small
 \begin{tabular}{lc}
 \toprule
 \textbf{Metric} & \textbf{Value} \\
 \midrule
-Dataset & LogicBench-v1.0 \\
-Logic Type & Propositional \\
-Task Type & BQA (Boolean QA) \\
-Model & GPT-4 \\
-Total Examples & 20 \\
-\midrule
-Overall Accuracy & 50.0\% (10/20) \\
-Execution Rate ($E_r$) & 100.0\% (20/20) \\
-Execution Accuracy ($E_a$) & 50.0\% \\
-\midrule
-Avg. Time per Query & 10.94 s \\
-Avg. LLM Calls per Query & 2.0 \\
+Overall Accuracy & 50.0\% \\
+Execution Rate & 100.0\% \\
+Avg.\ Time per Query & 10.94 s \\
 Backtracking Rate & 100\% REVERT \\
 \bottomrule
 \end{tabular}
+\caption{Logic-LM++ results on modus tollens.}
+\label{tab:logiclm-summary}
 \end{table}
 
-% Table: Time Breakdown Analysis
 \begin{table}[h]
 \centering
-\caption{Logic-LM++ Time Breakdown by Pipeline Stage}
-\label{tab:logiclm-time}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Stage} & \textbf{Mean (s)} & \textbf{Min (s)} & \textbf{Max (s)} & \textbf{\% of Total} \\
-\midrule
-Formalization & 2.21 & 1.62 & 3.44 & 20.2\% \\
-Refinement & 8.73 & 3.29 & 15.37 & 79.8\% \\
-Solving & 0.002 & 0.001 & 0.005 & 0.02\% \\
-\midrule
-\textbf{Total} & \textbf{10.94} & \textbf{4.91} & \textbf{18.81} & \textbf{100\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-% Table: Accuracy by Question Polarity
-\begin{table}[h]
-\centering
-\caption{Logic-LM++ Accuracy by Question Polarity}
-\label{tab:logiclm-polarity}
+\small
 \begin{tabular}{lccc}
 \toprule
 \textbf{Question Type} & \textbf{Count} & \textbf{Correct} & \textbf{Accuracy} \\
 \midrule
-Positive query (``Does this entail $P$?'') & 10 & 2 & 20.0\% \\
-Negative query (``Does this entail $\neg P$?'') & 10 & 8 & 80.0\% \\
-\midrule
-\textbf{Total} & \textbf{20} & \textbf{10} & \textbf{50.0\%} \\
+Positive query & 10 & 2 & 20.0\% \\
+Negative query & 10 & 8 & 80.0\% \\
 \bottomrule
 \end{tabular}
+\caption{Accuracy by question polarity.}
+\label{tab:logiclm-polarity}
 \end{table}
 
-% Table: Formalization Quality Analysis
-\begin{table}[h]
-\centering
-\caption{Formalization Patterns in Logic-LM++ Results}
-\label{tab:logiclm-formalization}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Formalization Pattern} & \textbf{Count} & \textbf{Accuracy} \\
-\midrule
-Correct modus tollens: $P \to Q, \neg Q \vdash \neg P$ & 12 & 83.3\% (10/12) \\
-Predicate misalignment: introduces $R \neq \neg Q$ & 6 & 16.7\% (1/6) \\
-Variant: $P \to \neg Q, Q \vdash \neg P$ & 2 & 100\% (2/2) \\
-\midrule
-\textbf{Total} & \textbf{20} & \textbf{50.0\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
+\paragraph{Key Findings.}
+(1) Solving takes $<0.1\%$ of time; formalization is the bottleneck.
+(2) Negative queries achieve 80\% vs.\ 20\% for positive (modus tollens naturally concludes $\neg P$).
+(3) Primary failure: predicate misalignment (introducing $R$ instead of recognizing $\neg Q$).
+(4) The 50\% ceiling highlights limitations of per-query formalization that Logify's ``logify once'' paradigm addresses.
 
-\begin{remark}[Interpretation of Logic-LM++ Results]
-\label{rem:logiclm-interpretation}
-The tables above reveal several important insights about the Logic-LM++ baseline:
-
-\textbf{(1) Formalization is the bottleneck, not solving.} Table~\ref{tab:logiclm-time} shows that solving takes only 0.002 seconds on average ($<0.1\%$ of total time), while formalization and refinement dominate. This confirms that the symbolic reasoning component is efficient once the logical structure is correctly extracted---the challenge lies in accurate NL-to-logic translation.
-
-\textbf{(2) Question polarity strongly affects accuracy.} Table~\ref{tab:logiclm-polarity} reveals a striking asymmetry: negative queries (``Does this entail $\neg P$?'') achieve 80\% accuracy, while positive queries (``Does this entail $P$?'') achieve only 20\%. This occurs because modus tollens naturally concludes $\neg P$ from premises $P \to Q$ and $\neg Q$. When the system correctly formalizes the problem, it proves $\neg P$---answering negative queries correctly but incorrectly answering ``yes'' to positive queries (since the solver proves $\neg P$, not $P$).
-
-\textbf{(3) Predicate misalignment is the primary failure mode.} Table~\ref{tab:logiclm-formalization} shows that when the LLM correctly identifies the modus tollens structure ($P \to Q, \neg Q$), accuracy reaches 83.3\%. However, in 30\% of cases (6/20), the LLM introduces a redundant predicate $R$ (e.g., ``decided against pizza'') instead of recognizing it as $\neg Q$ (``did not order pizza''). This breaks the logical chain: with premises $\{P \to Q, R\}$, the conclusion $\neg P$ cannot be derived.
-
-\textbf{(4) The backtracking agent correctly prevents degradation.} All 20 examples triggered REVERT decisions, indicating that refinement candidates did not improve upon the initial formalization. This validates the backtracking agent's design: it successfully prevents accepting syntactically correct but semantically inferior refinements.
-
-\textbf{(5) Implications for Logify comparison.} The 50\% accuracy ceiling on modus tollens---a fundamental reasoning pattern---highlights the limitations of per-query formalization approaches. Logify's ``logify once, query many'' paradigm addresses this by constructing a reusable logical structure upfront, amortizing formalization errors across multiple queries and enabling self-refinement with richer context.
-\end{remark}
