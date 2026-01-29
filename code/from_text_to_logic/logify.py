@@ -32,6 +32,7 @@ if str(_script_dir) not in sys.path:
 
 from from_text_to_logic.openie_extractor import OpenIEExtractor
 from from_text_to_logic.logic_converter import LogicConverter
+from from_text_to_logic.semantic_bridging import add_semantic_bridges
 
 
 def extract_text_from_document(file_path: str) -> str:
@@ -118,12 +119,13 @@ class LogifyConverter:
         # Stage 2: LLM-based logic conversion
         self.converter = LogicConverter(api_key=api_key, model=model, temperature=temperature, reasoning_effort=reasoning_effort, max_tokens = max_tokens)
 
-    def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
+    def convert_text_to_logic(self, text: str, apply_semantic_bridging: bool = True) -> Dict[str, Any]:
         """
         Convert input text to structured logic using the two-stage pipeline.
 
         Args:
             text (str): Input text to convert
+            apply_semantic_bridging (bool): Whether to apply semantic bridging post-processing (default: True)
 
         Returns:
             Dict[str, Any]: JSON structure with primitive props, hard/soft constraints
@@ -134,6 +136,10 @@ class LogifyConverter:
 
         # Stage 2: Convert to logic using LLM
         logic_structure = self.converter.convert(text, formatted_triples)
+
+        # Stage 3: Post-process with semantic bridging
+        if apply_semantic_bridging:
+            logic_structure = add_semantic_bridges(logic_structure)
 
         return logic_structure
 
