@@ -497,6 +497,12 @@ def main():
         default=20,
         help="Top-k propositions for query (default: 20)"
     )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit number of examples to process (default: all)"
+    )
 
     args = parser.parse_args()
 
