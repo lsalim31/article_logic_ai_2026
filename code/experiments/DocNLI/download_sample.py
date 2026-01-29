@@ -76,7 +76,7 @@ def download_with_hf() -> List[Dict[str, Any]]:
             "original_idx": idx,
             "premise": example["premise"],
             "hypothesis": example["hypothesis"],
-            "label": "entailment" if example["label"] == 1 else "not_entailment"
+            "label": example["label"]  # Already a string: "entailment" or "not_entailment"
         })
 
     print(f"  Loaded {len(examples)} examples from test set")
