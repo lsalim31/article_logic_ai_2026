@@ -7,34 +7,29 @@ We propose a neuro-symbolic framework for logical reasoning over long-form docum
 Reliable reasoning over text remains a core challenge in AI.
 Given a document---a contract, medical guideline, or technical specification---users need to determine whether a query is entailed, contradicted, or undetermined by the text.
 Large language models (LLMs) provide natural-language interfaces for such tasks, but they conflate two fundamentally different problems: \emph{language semantics} (extracting meaning from text) and \emph{logical reasoning} (deriving valid conclusions from premises stated in the text).
-This conflation is the source of their unreliability. 
-LLMs hallucinate facts, preferring external knowledge over the input document ~\citep{ji2023hallucination}; they mess up with large contexts, prioiriziting the start and end while neglecting the middle; and produce plausible but logically unsound conclusions~\citep{pan2023logiclm}.
+This conflation is the source of their unreliability.
+While LLMs perform well for semantics, they have been shown to be poor for reasoning. 
+LLMs hallucinate facts, preferring external knowledge over the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{wei2022chain}.
 
-While recent work has improved LLM reasoning—chain-of-thought prompting elicits step-by-step inference~\citep{wei2022chain}, self-consistency aggregates over reasoning paths~\citep{wang2023selfconsistency}—neuro-symbolic methods achieve the largest gains by translating natural language into formal representations and delegating reasoning to symbolic solvers~\citep{pan2023logiclm, olausson2023linc}. However, these approaches formalize the problem anew at each query, assume the full context fits within the model's window, and offer no solution when logical constraints are \emph{scattered} across a long document—a non-disclosure clause on page 3 may interact with an exception on page 12. Retrieval-augmented generation (RAG) addresses length but not scattering: it cannot guarantee that all relevant pieces are surfaced, leaving the LLM to reason over incomplete fragments with no formal guarantees.
+Neuro-symbolic methods distinguish between language semantics and logical reasoning. , see ~\citep{pan2023logiclm, olausson2023linc}, achieve the largest gains by translating natural language into formal representations and delegating reasoning to symbolic solvers. 
+However, these approaches reconstruct the formalization at each query and assume the input documents are relatively small.
+While retrieval-augmented generation (RAG) handles large documents it does not handle \emph{scattering}, when logical constraints may be scattered across a long document. 
+E.g. a non-disclosure clause on page 3 may interact with an exception on page 12.
+Neuro-symbolic methods are limited to short documents. 
 
-
-We propose a different paradigm: \emph{separate} language understanding from logical reasoning entirely.
-Our framework \textbf{Logify} compiles a document \emph{once} into a \emph{knowledge algebra}---a finite set of atomic propositions with \emph{hard constraints} (which must hold) and weighted \emph{soft constraints} (which rank plausible interpretations).
-Queries are then answered by a symbolic solver operating over this structure; the LLM serves only as a natural-language interface for query translation and result interpretation.
-This ``logify once, query many'' architecture ensures that all reasoning is performed by the solver, whose outputs are \emph{provably correct} given the extracted theory.
-
-The key insight is that extraction and reasoning have different error profiles: extraction errors are \emph{local} (a misidentified constraint) and \emph{auditable} (they can be inspected and corrected), while reasoning errors in LLMs are \emph{global} (affecting arbitrary conclusions) and \emph{opaque} (hidden in model internals).
-By delegating reasoning to a solver, we achieve \emph{conditional faithfulness}: if the logified structure is correct, the answers are guaranteed correct.
-This is a weaker guarantee than unconditional correctness, but a stronger and more actionable one than the probabilistic outputs of end-to-end neural systems.
+We propose a novel nuero-symbolic method: \emph{logify} the document once, then reason symbolically over the resulting structure. 
+Our pipeline extracts from the document, a propositional calculus consisting of: propositional letters corresponding to atomic statements, a set of hard constraints that must hold, and a set of soft constraints that may hold with confidence weights in the interval $(0,1)$. 
+This structure supports faithful reaonsing for queries about entailment,  satisfiability, and quantifies uncertainty via a weighted Max-SAT solver.
 
 \paragraph{Contributions.}
-\begin{enumerate}[leftmargin=*, itemsep=2pt]
-    \item \textbf{A principled separation of language understanding and reasoning.} 
-    We formalize document interpretation as constructing a knowledge algebra $\mathcal{R}(T) = \mathcal{R}_{\mathrm{free}}(T) / \mathcal{I}_{\mathcal{C}}(T)$ over Boolean polynomial rings, deliberately restricting to propositional logic for extraction reliability.
-    Ring homomorphisms $\varphi: \mathcal{R}(T) \to \mathbb{F}_2$ correspond to consistent readings of the text (Section~\ref{sec:framework}).
-    
-    \item \textbf{A practical neuro-symbolic pipeline.}
-    We instantiate this framework with a two-stage extraction pipeline (OpenIE + LLM), a weighted Max-SAT solver for entailment and uncertainty quantification, and an LLM-based query interface with self-refinement (Section~\ref{sec:system}).
-    
-    \item \textbf{Empirical validation on long-document reasoning.}
-    On ContractNLI~\citep{koreeda2021contractnli}, Logify outperforms Logic-LM by 12.5\%, with gains increasing on longer documents where constraints are scattered.
-    On ProofWriter~\citep{tafjord2021proofwriter}, it maintains accuracy at reasoning depth 5 where chain-of-thought degrades sharply.
-    Soft constraints yield well-calibrated confidence scores (Section~\ref{sec:experiments}).
+\begin{enumerate}
+    \item An algebraic framework for representing text as a finite logical theory
+    with hard and soft constraints (Section~\ref{sec:framework}).
+    \item A system architecture that logifies text once and supports repeated
+    querying via weighted Max-SAT (Section~\ref{sec:system}).
+    \item Experiments on logical reasoning and document-level NLI benchmarks,
+    demonstrating consistent gains over RAG and neuro-symbolic baselines, with
+    the largest improvements on long documents (Section~\ref{sec:experiments}).
 \end{enumerate}
 
 \subsection{Related Work}
