@@ -451,7 +451,7 @@ def run_experiment(
     for premise_idx, premise_data in enumerate(premises):
         premise_id = premise_data.get("premise_id")
         premise_text = premise_data.get("premise", "")
-        premise_word_count = premise_data.get("word_count", len(premise_text.split()))
+        premise_word_count = premise_data.get("premise_word_count", len(premise_text.split()))
         hypotheses = premise_data.get("hypotheses", [])
 
         print(f"\n[Premise {premise_idx + 1}/{len(premises)}] ID={premise_id}, {premise_word_count} words, {len(hypotheses)} hypotheses")
