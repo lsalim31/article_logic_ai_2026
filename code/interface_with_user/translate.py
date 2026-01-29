@@ -295,13 +295,14 @@ OUTPUT FORMAT (JSON only, no other text):
         raise ValueError(f"Failed to parse LLM response: {e}\nResponse: {response_text}")
 
 
-def build_prompt(query: str, retrieved_chunks: List[Dict]) -> str:
+def build_prompt(query: str, retrieved_chunks: List[Dict], logified_structure: Dict = None) -> str:
     """
     Build the LLM prompt for translating query to propositional formula.
 
     Args:
         query: User query string
         retrieved_chunks: List of relevant proposition chunks
+        logified_structure: Optional logified structure containing constraints
 
     Returns:
         Formatted prompt string
@@ -313,6 +314,30 @@ def build_prompt(query: str, retrieved_chunks: List[Dict]) -> str:
 {chunk['id']}: {chunk['translation']}
   Evidence: {chunk['evidence']}
 """
+
+    # Format constraints if available
+    constraints_text = ""
+    if logified_structure:
+        hard_constraints = logified_structure.get("hard_constraints", [])
+        soft_constraints = logified_structure.get("soft_constraints", [])
+
+        if hard_constraints:
+            constraints_text += "HARD CONSTRAINTS (must hold):\n"
+            for c in hard_constraints:
+                formula = c.get("formula", "")
+                if formula:
+                    constraints_text += f"- {formula}\n"
+
+        if soft_constraints:
+            constraints_text += "\nSOFT CONSTRAINTS (likely hold):\n"
+            for c in soft_constraints:
+                formula = c.get("formula", "")
+                weight = c.get("weight", "")
+                if formula:
+                    if weight:
+                        constraints_text += f"- {formula} (weight: {weight})\n"
+                    else:
+                        constraints_text += f"- {formula}\n"
 
     prompt_old = f"""
     You are a logic translator. Given a natural language query and a set of atomic propositions, translate the query into a propositional formula.
@@ -342,12 +367,20 @@ OUTPUT FORMAT (JSON only, no other text):
     "query": "{query}",
     "explanation": "<1-2 sentence reasoning for the formula chosen>"
 }}"""
-    prompt = f""" 
-    You are a logic translator for Natural Language Inference (NLI). Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula that can be checked for ENTAILMENT.
+    # Build constraints section if available
+    constraints_section = ""
+    if constraints_text:
+        constraints_section = f"""
+ESTABLISHED CONSTRAINTS:
+{constraints_text}
+"""
+
+    prompt = f"""
+You are a logic translator for Natural Language Inference (NLI). Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula that can be checked for ENTAILMENT.
 
 AVAILABLE PROPOSITIONS:
 {props_text}
-
+{constraints_section}
 HYPOTHESIS TO CHECK:
 "{query}"
 
@@ -595,7 +628,7 @@ def translate_query(
             print(f"    {i+1}. {chunk['id']} (sim={chunk['similarity']:.3f}): {chunk['translation'][:60]}...")
 
     # Build prompt
-    prompt = build_prompt(query, retrieved)
+    prompt = build_prompt(query, retrieved, logified_structure)
 
     # Call LLM
     if verbose:
