@@ -522,7 +522,8 @@ def main():
             max_tokens=args.max_tokens,
             query_max_tokens=args.query_max_tokens,
             k_weights=args.k_weights,
-            k_query=args.k_query
+            k_query=args.k_query,
+            limit=args.limit
         )
         return 0
     except Exception as e:
