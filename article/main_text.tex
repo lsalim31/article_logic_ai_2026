@@ -67,7 +67,7 @@ principled route to ranking readings by plausibility and quantifying underdeterm
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.95\linewidth]{article/structure.jpeg}
-    \caption{The document is processed once through a three-stage pipeline: (1) we extract relational triples from Stanfrod OpenIE, (2) we pass the text and triples to an LLM (GPT-5.2) once to extract atomic propositions,  hard constraints, and soft constraints, and (3) we asign weights via SBERT retrieval and LLM verification. At query time, the user's question is translated to a propositional formula (using SBERT retrieval over the translations of the atomic propositions), and the MaxSAT solver determines entailment, contradiction, or uncertainty.}
+    \caption{The document is processed once through a three-stage pipeline: (1) we extract relational triples from Stanford OpenIE, (2) we pass the text and triples to an LLM (GPT-5.2) once to extract atomic propositions,  hard constraints, and soft constraints, and (3) we asign weights via SBERT retrieval and LLM verification. At query time, the user's question is translated to a propositional formula (using SBERT retrieval over the translations of the atomic propositions), and the MaxSAT solver determines entailment, contradiction, or uncertainty.}
     \label{fig:arch}
 \end{figure}
 
