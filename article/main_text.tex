@@ -40,11 +40,13 @@ repeated querying over long texts. Moreover, these systems treat all constraints
 we introduce soft constraints with confidence weights, enabling reasoning under uncertainty.
 
 \paragraph{Tool-augmented LLMs.}
-A broader line of work augments LLMs with external tools for faithful computation. 
-PAL \cite{gao2023pal} and Program-of-Thought \cite{chen2023pot} use code execution 
-for arithmetic reasoning. SatLM \cite{ye2023satlm} targets satisfiability problems. 
-Our work extends this paradigm to logical reasoning over natural-language text, 
-with a principled distinction between hard and soft constraints.
+A broader line of work augments LLMs with external tools for faithful computation.
+PAL \citep{gao2023pal} and Program-of-Thought \citep{chen2023pot} use code execution
+for arithmetic reasoning. SatLM \citep{ye2023satlm} targets satisfiability problems.
+Logic-of-Thought \citep{liu2024lot} injects propositional logic into prompts without
+an external solver, gaining +4.4\% on ReClor and +8\% on ProofWriter (depth-5).
+Our work extends this paradigm to document-level reasoning with a principled
+distinction between hard and soft constraints.
 
 \paragraph{Algebraic and proof-theoretic foundations.}
 Our framework builds on algebraic proof systems, where polynomial encodings yield 
