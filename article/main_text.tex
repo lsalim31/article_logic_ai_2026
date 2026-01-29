@@ -67,27 +67,21 @@ principled route to ranking readings by plausibility and quantifying underdeterm
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.95\linewidth]{article/structure.jpeg}
-    \caption{Logify system architecture. The document is processed once through a three-stage pipeline: (1) OpenIE triple extraction with coreference resolution, (2) LLM-based conversion to propositions and constraints, and (3) weight assignment via SBERT retrieval and LLM verification. At query time, the user's question is translated to a propositional formula (using SBERT retrieval over the schema), and the MaxSAT solver determines entailment, contradiction, or uncertainty.}
+    \caption{The document is processed once through a three-stage pipeline: (1) we extract relational triples from Stanfrod OpenIE, (2) we pass the text and triples to an LLM (GPT-5.2) once to extract atomic propositions,  hard constraints, and soft constraints, and (3) we asign weights via SBERT retrieval and LLM verification. At query time, the user's question is translated to a propositional formula (using SBERT retrieval over the translations of the atomic propositions), and the MaxSAT solver determines entailment, contradiction, or uncertainty.}
     \label{fig:placeholder}
 \end{figure}
 
 \section{System Architecture}
 \label{sec:system}
 
-We first describe the system architecture, deferring formal definitions to Section~\ref{sec:framework}. The architecture follows a modular design with three components: (1) \texttt{from\_text\_to\_logic}, which logifies text into propositions and constraints; (2) \texttt{logic\_solver}, which performs reasoning via weighted Max-SAT; and (3) \texttt{interface\_with\_user}, which handles natural language interaction. Figure~\ref{fig:architecture} illustrates the overall pipeline.
+Our architecture follows a modular design with three components: (1) \texttt{from\_text\_to\_logic}, which logifies text into propositions and constraints;  (2) \texttt{interface\_with\_user}, which handles natural language interaction for queries, and (3) \texttt{logic\_solver}, which performs reasoning via weighted Max-SAT. Figure~\ref{fig:architecture} illustrates the overall pipeline.
 
-\begin{figure}[t]
-\centering
-% TODO: Insert architecture diagram
-\caption{System architecture. The reference text is logified once into propositions and constraints. At query time, the LLM translates the user's question into a formal query, the solver reasons over the logified structure, and the result is interpreted back into natural language.}
-\label{fig:architecture}
-\end{figure}
 
 
 \subsection{From Text to Logic}
 \label{sec:from_text_to_logic}
 
-This module implements the extraction pipeline $\Pi$ (formalized in Definition~\ref{def:pipeline}), transforming natural language text into a logified structure. The pipeline operates in three stages.
+This module implements the extraction of natural language text into a weighted logified structure over three stages.
 
 \subsubsection{Three-Stage Extraction Pipeline}
 
