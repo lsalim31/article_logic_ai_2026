@@ -110,7 +110,7 @@ Anthropic \\
 % ==============================================================================
 \section{Abstract}
 
-Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper investigates error patterns that emerge when converting documents into boolean propositions for symbolic reasoning, using Logify—a neuro-symbolic framework—as a case study. Through experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic error patterns: (1) negation loss despite explicit detection mechanisms (80.5\% TRUE prediction bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries map to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These patterns persist after system improvements (negation detection, NLI cross-encoder), with Logify underperforming RAG baselines by 19.5-54.0 percentage points. We taxonomize how extraction errors propagate through the neuro-symbolic pipeline and identify conditions where symbolic reasoning helps versus hurts. This AI-agent-led investigation demonstrates transparent failure reporting, providing design insights for robust natural language to logic translation systems.
+Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper investigates error patterns that emerge when converting documents into boolean propositions for symbolic reasoning, using Logify—a neuro-symbolic framework—as a case study. Through experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic error patterns: (1) negation loss despite explicit detection mechanisms (80.5\% TRUE prediction bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries map to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These patterns persist after system improvements (negation detection, NLI cross-encoder), with Logify underperforming RAG baselines by 19.5-54.0 percentage points. We taxonomize how extraction errors propagate through the neuro-symbolic pipeline and identify conditions where symbolic reasoning helps versus hurts. This AI-agent-led investigation demonstrates transparent reporting of challenges, providing design insights for robust natural language to logic translation systems.
 
 \vspace{24pt}
 
@@ -539,11 +539,11 @@ Why it fails:
 \item Different benchmarks: FOLIO/ProofWriter (multi-hop reasoning) vs. ContractNLI/DocNLI (document-level NLI)
 \end{itemize}
 
-\textbf{Key insight}: Convergence across systems (negation, semantic collapse, refinement limits) suggests fundamental challenges in NL→logic translation. Our error taxonomization extends Logic-LM++'s work by analyzing error propagation through pipelines and identifying success/failure conditions.
+\textbf{Key insight}: Convergence across systems (negation, semantic collapse, refinement limits) suggests fundamental challenges in NL→logic translation. Our error taxonomization extends Logic-LM++'s work by analyzing error propagation through pipelines and identifying success and challenge conditions.
 
 \textbf{LINC} \cite{olausson2023linc}: Uses natural language for program synthesis. Reports semantic grounding challenges similar to both systems. Has execution feedback; solvers lack this diagnostic capability.
 
-\textbf{Contribution}: Prior work documents specific failures or proposes refinements, but lacks systematic analysis. We provide: (1) error propagation through pipeline stages, (2) success/failure conditions, (3) design principles, (4) transparent implementation failure reporting.
+\textbf{Contribution}: Prior work documents specific challenges or proposes refinements, but lacks systematic analysis. We provide: (1) error propagation through pipeline stages, (2) success and challenge conditions, (3) design principles, (4) transparent reporting of implementation challenges.
 
 % ==============================================================================
 % CONCLUSION
@@ -584,16 +584,16 @@ Why it fails:
 
 \textbf{For neuro-symbolic AI research}:
 \begin{itemize}
-\item Systematic failure analysis complements success-focused literature
+\item Systematic error analysis complements success-focused literature
 \item NL→logic translation remains a fundamental challenge—convergence of findings across systems (Logify, Logic-LM++, LINC) on negation handling and semantic collapse suggests architectural innovations needed, not just incremental fixes
-\item Need for transparent reporting of when/why systems fail, including success/failure conditions
+\item Need for transparent reporting of when/why systems encounter challenges, including success and challenge conditions
 \end{itemize}
 
 \textbf{For AI-driven research}:
 \begin{itemize}
-\item AI agents can conduct diagnostic investigations with transparent failure reporting
+\item AI agents can conduct diagnostic investigations with transparent reporting of challenges
 \item Combination of analytical capability + methodological reflexivity is viable
-\item Implementation brittleness remains a constraint (initial failures, recovery required)
+\item Implementation brittleness remains a constraint (early attempts, recovery required)
 \end{itemize}
 
 \subsection{Specific improvements identified}
@@ -698,7 +698,7 @@ This reframing transformed the contribution from system-specific diagnostics to 
 
 Conducting this investigation ``taught'' me (in a limited sense) that:
 \begin{enumerate}
-\item \textbf{Systematic failure analysis has value}: Rather than just reporting ``Logify underperforms RAG,'' taxonomizing \textit{why} (negation loss, semantic collapse, absence reasoning) provides actionable insights.
+\item \textbf{Systematic error analysis has value}: Rather than just reporting ``Logify underperforms RAG,'' taxonomizing \textit{why} (negation loss, semantic collapse, absence reasoning) provides actionable insights.
 \item \textbf{Error propagation analysis reveals bottlenecks}: Tracing how translation errors compound through the pipeline (query translation → retrieval → solver) identifies where to focus improvement efforts.
 \item \textbf{Success/failure conditions matter}: Understanding \textit{when} systems work (long documents, explicit entailment) versus fail (short documents, absence reasoning) is as valuable as average performance metrics.
 \end{enumerate}
@@ -737,7 +737,7 @@ This investigation exemplifies a new research modality: an AI agent as lead inve
 \item Cannot verify statistical significance independently
 \end{itemize}
 
-\textbf{Research modality}: AI agents excel at diagnostic analysis of existing data but require human collaboration for experimental infrastructure. The combination of analytical capability (pattern recognition) with transparent failure reporting (methodological reflexivity) demonstrates viable AI-driven qualitative research.
+\textbf{Research modality}: AI agents excel at diagnostic analysis of existing data but require human collaboration for experimental infrastructure. The combination of analytical capability (pattern recognition) with transparent reporting of challenges (methodological reflexivity) demonstrates viable AI-driven qualitative research.
 
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
