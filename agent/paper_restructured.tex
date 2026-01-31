@@ -513,13 +513,37 @@ Why it fails:
 \item Probabilistic logic (not boolean) to handle uncertainty
 \end{enumerate}
 
-\subsection{Comparison with prior work (brief)}
+\subsection{Comparison with prior neuro-symbolic systems}
 
-\textbf{Logic-LM} \cite{pan2023logiclm}: Reports strong performance on multi-step reasoning by translating to first-order logic + theorem prover. Uses more expressive logic than Logify (first-order vs. propositional), potentially avoiding over-atomization. \textbf{Open question}: Does Logic-LM face similar negation/absence reasoning issues? (Not documented in paper)
+\textbf{Logic-LM and Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp}: These systems translate natural language to first-order logic, then leverage theorem provers (Prover9, Z3) for symbolic reasoning. Logic-LM++ extends Logic-LM by adding semantic validation through LLM pairwise comparison and problem-contextualized refinement.
 
-\textbf{LINC} \cite{olausson2023linc}: Reports semantic grounding challenge in natural language → code translation. Uses execution feedback to refine. \textbf{Parallel to Logify}: Both face semantic grounding problem. Key difference: LINC has execution feedback loop; Logify has no self-correction mechanism.
+\textbf{Shared challenges}:
+\begin{itemize}
+\item \textbf{Negation handling}: Logic-LM++ documents negation errors where LLMs translate ``No young person teaches'' as ``all young people teach'', paralleling our 80.5\% TRUE bias. This suggests negation loss is a general problem in NL→logic translation.
+\item \textbf{Semantic vs. syntactic correctness}: Logic-LM++ distinguishes formulations that are syntactically valid but semantically wrong. Our semantic collapse (75\% single propositions) mirrors their observation that translations can be ``completely different from ground truth''.
+\item \textbf{Refinement limitations}: Logic-LM++ notes systems are ``contingent to initial formulations''—if initial translations are wrong, fixing has limits. This aligns with our finding that improvements enable evaluation but don't eliminate patterns.
+\end{itemize}
 
-\textbf{Contribution of this work}: Prior work lacks systematic failure analysis with error taxonomization. We provide: (1) three error patterns with propagation analysis, (2) success/failure conditions for when symbolic reasoning helps, (3) design principles from diagnostic investigation, (4) transparent reporting of implementation failures in AI-driven research.
+\textbf{How Logic-LM++ addresses these challenges}:
+\begin{enumerate}
+\item Multi-step refinement with solver feedback (18.5\% improvement over standard prompting on FOLIO)
+\item Semantic validation via LLM pairwise comparison
+\item Problem contextualization (replaces generic examples with problem-specific context)
+\item Backtracking when refinements don't improve semantic correctness
+\end{enumerate}
+
+\textbf{Architectural differences}:
+\begin{itemize}
+\item Logic-LM uses first-order logic vs. Logify's propositional logic—more expressive but harder to translate
+\item Logic-LM++ implements refinement loop; Logify has no self-correction
+\item Different benchmarks: FOLIO/ProofWriter (multi-hop reasoning) vs. ContractNLI/DocNLI (document-level NLI)
+\end{itemize}
+
+\textbf{Key insight}: Convergence across systems (negation, semantic collapse, refinement limits) suggests fundamental challenges in NL→logic translation. Our error taxonomization extends Logic-LM++'s work by analyzing error propagation through pipelines and identifying success/failure conditions.
+
+\textbf{LINC} \cite{olausson2023linc}: Uses natural language for program synthesis. Reports semantic grounding challenges similar to both systems. Has execution feedback; solvers lack this diagnostic capability.
+
+\textbf{Contribution}: Prior work documents specific failures or proposes refinements, but lacks systematic analysis. We provide: (1) error propagation through pipeline stages, (2) success/failure conditions, (3) design principles, (4) transparent implementation failure reporting.
 
 % ==============================================================================
 % CONCLUSION
@@ -561,8 +585,8 @@ Why it fails:
 \textbf{For neuro-symbolic AI research}:
 \begin{itemize}
 \item Systematic failure analysis complements success-focused literature
-\item NL→logic translation remains a fundamental challenge
-\item Need for transparent reporting of when/why systems fail
+\item NL→logic translation remains a fundamental challenge—convergence of findings across systems (Logify, Logic-LM++, LINC) on negation handling and semantic collapse suggests architectural innovations needed, not just incremental fixes
+\item Need for transparent reporting of when/why systems fail, including success/failure conditions
 \end{itemize}
 
 \textbf{For AI-driven research}:
