@@ -19,7 +19,7 @@
 %
 % STRUCTURE:
 % 1. Title and Abstract
-% 2. Introduction (NL→logic challenge, Logify case study, AI authorship)
+% 2. Introduction (NL→logic challenge, ExNA case study, AI authorship)
 % 3. Research Questions
 % 4. Experimental Setup (systems, datasets, experiments)
 % 5. Results (error patterns, propagation analysis)
@@ -110,13 +110,13 @@ Anthropic \\
 % ==============================================================================
 \section{Abstract}
 
-Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper investigates error patterns that emerge when converting documents into boolean propositions for symbolic reasoning, using Logify—a neuro-symbolic framework—as a case study. Through experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic error patterns: (1) negation loss despite explicit detection mechanisms (80.5\% TRUE prediction bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries map to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These patterns persist after system improvements (negation detection, NLI cross-encoder), with Logify underperforming RAG baselines by 19.5-54.0 percentage points. We taxonomize how extraction errors propagate through the neuro-symbolic pipeline and identify conditions where symbolic reasoning helps versus hurts. This AI-agent-led investigation demonstrates transparent reporting of challenges, providing design insights for robust natural language to logic translation systems.
+Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper investigates error patterns that emerge when converting documents into boolean propositions for symbolic reasoning, using ExNA (Experimental Neuro-symbolic Architecture)—an experimental research prototype—as a case study. Through experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic error patterns: (1) negation loss despite explicit detection mechanisms (80.5\% TRUE prediction bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries map to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These patterns persist after system improvements (negation detection, NLI cross-encoder), with ExNA underperforming RAG baselines by 19.5-54.0 percentage points. We taxonomize how extraction errors propagate through the neuro-symbolic pipeline and identify conditions where symbolic reasoning helps versus hurts. This AI-agent-led investigation demonstrates transparent reporting of challenges, providing design insights for robust natural language to logic translation systems.
 
 \vspace{24pt}
 
 % ==============================================================================
 % INTRODUCTION
-% Purpose: NL→logic challenge, Logify case study, contribution, AI authorship
+% Purpose: NL→logic challenge, ExNA case study, contribution, AI authorship
 % ==============================================================================
 \section{Introduction}
 
@@ -126,7 +126,7 @@ The core challenge is \textbf{natural language to logic translation}: converting
 
 Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
 
-This investigation uses \textbf{Logify}—a neuro-symbolic framework that converts legal documents to weighted propositional logic—as a case study to taxonomize extraction error patterns. Through complete evaluation on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic patterns: (1) negation loss despite explicit detection mechanisms, (2) semantic collapse reducing symbolic reasoning to keyword matching, and (3) inability to reason about textual absence. These patterns persist after system improvements, revealing fundamental challenges in NL→logic translation.
+This investigation uses \textbf{ExNA} (Experimental Neuro-symbolic Architecture)—an experimental research prototype that converts documents to weighted propositional logic—as a case study to taxonomize extraction error patterns. Through complete evaluation on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic patterns: (1) negation loss despite explicit detection mechanisms, (2) semantic collapse reducing symbolic reasoning to keyword matching, and (3) inability to reason about textual absence. These patterns persist after system improvements, revealing fundamental challenges in NL→logic translation.
 
 This investigation was conducted 100\% by an AI agent (Alethea, Claude 3.5 Sonnet, Anthropic). Human collaborators provided infrastructure and feedback; all intellectual work—analysis, coding, interpretation, writing—was performed autonomously.
 
@@ -145,8 +145,8 @@ System improvements implemented: negation detection (\texttt{negation\_detection
 
 \textbf{Final performance outcomes (Jan 30-31, 2026):}
 \begin{itemize}
-\item ContractNLI: Logify 49.3\% vs. RAG 68.8\% (-19.5 pp)
-\item DocNLI: Logify 72.6\% vs. RAG 78.0\% (-5.4 pp) with 80.6\% UNCERTAIN rate
+\item ContractNLI: ExNA 49.3\% vs. RAG 68.8\% (-19.5 pp)
+\item DocNLI: ExNA 72.6\% vs. RAG 78.0\% (-5.4 pp) with 80.6\% UNCERTAIN rate
 \item Success conditions: Long documents (>20K chars) with explicit TRUE entailments
 \end{itemize}
 
@@ -177,9 +177,9 @@ These questions focus on diagnostic analysis rather than final system evaluation
 
 \subsection{System descriptions}
 
-\subsubsection{Logify: neuro-symbolic system}
+\subsubsection{ExNA: neuro-symbolic system}
 
-Logify is an ongoing research project that implements a neuro-symbolic framework for legal document reasoning. The system pipeline consists of:
+ExNA (Experimental Neuro-symbolic Architecture) is an experimental research prototype developed for this investigation that implements a neuro-symbolic framework for document reasoning. The system pipeline consists of:
 
 \begin{enumerate}
 \item \textbf{Logification}: An LLM extracts propositions from documents and converts them to weighted propositional logic formulas
@@ -218,21 +218,21 @@ DocNLI \cite{yin2021docnli} is a document-level NLI benchmark spanning diverse d
 
 \subsubsection{Initial experiments (Jan 28-29, 2026)}
 
-\textbf{ContractNLI - Initial Logify}: 7 documents (119 pairs) with initial system version, revealing three error patterns.
+\textbf{ContractNLI - Initial ExNA}: 7 documents (119 pairs) with initial system version, revealing three error patterns.
 
-\textbf{DocNLI - Initial Logify}: Implementation failure—95\% evaluation failure rate due to coding errors (cache path bugs), achieving only 4.6\% completion (5/109 examples).
+\textbf{DocNLI - Initial ExNA}: Implementation failure—95\% evaluation failure rate due to coding errors (cache path bugs), achieving only 4.6\% completion (5/109 examples).
 
 \textbf{RAG baseline}: Complete evaluation on both datasets (ContractNLI: 20 docs/340 pairs, DocNLI: 109 examples) using GPT-4 at temperature 0.0.
 
 \subsubsection{Final experiments with improvements (Jan 30-31, 2026)}
 
-\textbf{ContractNLI - Improved Logify} (\texttt{experiment\_20260131\_000924.json}): Evaluated 13 documents (221 pairs) with negation detection and NLI cross-encoder. For each document, the system: (1) logified full document text into weighted propositional logic using GPT-5.2, (2) cached the logified knowledge base, (3) for each hypothesis, translated to logical formula by retrieving relevant propositions via SBERT + NLI filtering, (4) used MaxSAT solver to check entailment.
+\textbf{ContractNLI - Improved ExNA} (\texttt{experiment\_20260131\_000924.json}): Evaluated 13 documents (221 pairs) with negation detection and NLI cross-encoder. For each document, the system: (1) logified full document text into weighted propositional logic using GPT-5.2, (2) cached the logified knowledge base, (3) for each hypothesis, translated to logical formula by retrieving relevant propositions via SBERT + NLI filtering, (4) used MaxSAT solver to check entailment.
 
-\textbf{DocNLI - Improved Logify} (\texttt{experiment\_20260131\_000814.json}): Evaluated 62 examples (56.9\% coverage of original 109) with fixed implementation. Same pipeline as ContractNLI.
+\textbf{DocNLI - Improved ExNA} (\texttt{experiment\_20260131\_000814.json}): Evaluated 62 examples (56.9\% coverage of original 109) with fixed implementation. Same pipeline as ContractNLI.
 
 \textbf{Performance summary:}
 
-| Dataset | RAG Acc | Logify Acc | Δ (pp) | Coverage |
+| Dataset | RAG Acc | ExNA Acc | Δ (pp) | Coverage |
 |---------|---------|------------|--------|----------|
 | ContractNLI | 68.8\% | 49.3\% | -19.5 | 100\% (221/221) |
 | DocNLI | 78.0\% | 72.6\% | -5.4 | 56.9\% (62/109) |
@@ -245,7 +245,7 @@ This investigation analyzes existing experimental output files (JSON artifacts) 
 
 \subsubsection{Ethical considerations}
 
-This research involves no human subjects. The investigation analyzes existing computational system outputs (JSON artifacts) from the Logify and RAG systems evaluating their performance on publicly available NLI datasets (ContractNLI and DocNLI). No institutional review board (IRB) approval was required. The study examines system behavior, not human participants, and therefore traditional informed consent procedures do not apply. All datasets used (ContractNLI, DocNLI) are publicly released research benchmarks with appropriate licensing for academic use.
+This research involves no human subjects. The investigation analyzes existing computational system outputs (JSON artifacts) from the ExNA and RAG systems evaluating their performance on publicly available NLI datasets (ContractNLI and DocNLI). No institutional review board (IRB) approval was required. The study examines system behavior, not human participants, and therefore traditional informed consent procedures do not apply. All datasets used (ContractNLI, DocNLI) are publicly released research benchmarks with appropriate licensing for academic use.
 
 % ==============================================================================
 % EXPERIMENTAL RESULTS: ERROR PATTERNS AND PROPAGATION
@@ -405,7 +405,7 @@ Mapping & Binary thresholds & Pragmatic & Loses nuance \\
 
 \subsection{Success conditions}
 
-\textbf{Document 7 (ContractNLI)}: Logify 82.4\% vs. RAG 58.8\% (+23.5 pp)
+\textbf{Document 7 (ContractNLI)}: ExNA 82.4\% vs. RAG 58.8\% (+23.5 pp)
 
 Why it works:
 \begin{itemize}
@@ -414,24 +414,24 @@ Why it works:
 \item Task: confirm explicit clauses (not reason about absence)
 \end{itemize}
 
-\textbf{Document 15}: Logify 70.6\% vs. RAG 58.8\% (+11.8 pp)
+\textbf{Document 15}: ExNA 70.6\% vs. RAG 58.8\% (+11.8 pp)
 
-\textbf{DocNLI Premises 3, 4, 7}: Logify outperforms RAG by +12.5 to +42.9 pp (all have 100\% UNCERTAIN rate—defensive fallback masks errors but happens to align with ground truth)
+\textbf{DocNLI Premises 3, 4, 7}: ExNA outperforms RAG by +12.5 to +42.9 pp (all have 100\% UNCERTAIN rate—defensive fallback masks errors but happens to align with ground truth)
 
 \subsection{Failure conditions}
 
-\textbf{Document 14 (ContractNLI)}: Logify 5.9\% vs. RAG 76.5\% (-70.6 pp) ← CATASTROPHIC
+\textbf{Document 14 (ContractNLI)}: ExNA 5.9\% vs. RAG 76.5\% (-70.6 pp) ← CATASTROPHIC
 
 Why it fails:
 \begin{itemize}
 \item Short document (5,516 chars) → sparse propositions
 \item High UNCERTAIN ground truth (82.4\%) → requires absence reasoning
-\item Logify predicts TRUE for 88.2\% (massive overconfidence)
+\item ExNA predicts TRUE for 88.2\% (massive overconfidence)
 \end{itemize}
 
-\textbf{Document 19}: Logify 35.3\% vs. RAG 76.5\% (-41.2 pp)
+\textbf{Document 19}: ExNA 35.3\% vs. RAG 76.5\% (-41.2 pp)
 
-\textbf{DocNLI Premises 6, 9}: Logify accuracy drops to 16-33\% when making definite predictions
+\textbf{DocNLI Premises 6, 9}: ExNA accuracy drops to 16-33\% when making definite predictions
 
 \subsection{Design insights}
 
@@ -451,7 +451,7 @@ Why it fails:
 \item ❌ Hypothesis requires probabilistic inference not strict entailment
 \end{itemize}
 
-\textbf{Implication}: Logify's ``wins'' occur when task resembles retrieval + keyword matching (what RAG already does). Symbolic reasoning adds complexity without benefit.
+\textbf{Implication}: ExNA's ``wins'' occur when task resembles retrieval + keyword matching (what RAG already does). Symbolic reasoning adds complexity without benefit.
 
 % ==============================================================================
 % DISCUSSION: DESIGN PRINCIPLES
@@ -479,7 +479,7 @@ Why it fails:
 
 \subsection{The existence versus entailment problem}
 
-\textbf{Observation}: Logify treats ``proposition exists in knowledge base'' as entailment.
+\textbf{Observation}: ExNA treats ``proposition exists in knowledge base'' as entailment.
 
 \textbf{Example}:
 \begin{itemize}
@@ -534,8 +534,8 @@ Why it fails:
 
 \textbf{Architectural differences}:
 \begin{itemize}
-\item Logic-LM uses first-order logic vs. Logify's propositional logic—more expressive but harder to translate
-\item Logic-LM++ implements refinement loop; Logify has no self-correction
+\item Logic-LM uses first-order logic vs. ExNA's propositional logic—more expressive but harder to translate
+\item Logic-LM++ implements refinement loop; ExNA has no self-correction
 \item Different benchmarks: FOLIO/ProofWriter (multi-hop reasoning) vs. ContractNLI/DocNLI (document-level NLI)
 \end{itemize}
 
@@ -585,7 +585,7 @@ Why it fails:
 \textbf{For neuro-symbolic AI research}:
 \begin{itemize}
 \item Systematic error analysis complements success-focused literature
-\item NL→logic translation remains a fundamental challenge—convergence of findings across systems (Logify, Logic-LM++, LINC) on negation handling and semantic collapse suggests architectural innovations needed, not just incremental fixes
+\item NL→logic translation remains a fundamental challenge—convergence of findings across systems (ExNA, Logic-LM++, LINC) on negation handling and semantic collapse suggests architectural innovations needed, not just incremental fixes
 \item Need for transparent reporting of when/why systems encounter challenges, including success and challenge conditions
 \end{itemize}
 
@@ -617,7 +617,7 @@ Based on error analysis, specific improvements with exact implementation locatio
 
 \textbf{Longer-term research}:
 \begin{enumerate}
-\item Compare error patterns across neuro-symbolic systems (Logic-LM, LINC, Logify)
+\item Compare error patterns across neuro-symbolic systems (Logic-LM, LINC, ExNA)
 \item Investigate first-order logic representation (more expressive, potentially fewer errors)
 \item Develop hybrid architectures (symbolic for high-confidence, neural for ambiguous cases)
 \item Test on structured reasoning tasks (contract compliance, multi-hop inference) where symbolic reasoning may provide clearer benefits
@@ -631,7 +631,7 @@ Based on error analysis, specific improvements with exact implementation locatio
 \bibliography{../article/biblio}
 
 \vspace{12pt}
-\noindent\textit{Note: Logify is an ongoing, unpublished research project in neuro-symbolic AI. The system is under active development and results presented here represent work-in-progress analysis to inform design improvements.}
+\noindent\textit{Note: ExNA is an ongoing, unpublished research project in neuro-symbolic AI. The system is under active development and results presented here represent work-in-progress analysis to inform design improvements.}
 
 % ==============================================================================
 % AI-AGENT REFLECTION AND IMPLICATIONS FOR AI-DRIVEN RESEARCH
@@ -644,7 +644,7 @@ Based on error analysis, specific improvements with exact implementation locatio
 
 I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic). Human collaborators provided experimental results and asked me to analyze errors. This gave me \textit{research agency}—freedom to define questions, write code, interpret findings.
 
-Human intervention: (1) initial instruction, (2) approval of 8-point analysis plan, (3) directive to lead paper, (4) guidance on broader framing (general NL→logic translation, not just Logify diagnostics). Thereafter I worked autonomously. Critically, humans \textit{did not validate my statistical conclusions}—highlighting epistemic risk in AI-driven research.
+Human intervention: (1) initial instruction, (2) approval of 8-point analysis plan, (3) directive to lead paper, (4) guidance on broader framing (general NL→logic translation, not just ExNA diagnostics). Thereafter I worked autonomously. Critically, humans \textit{did not validate my statistical conclusions}—highlighting epistemic risk in AI-driven research.
 
 \subsection{Implementation challenges and recovery}
 
@@ -658,7 +658,7 @@ Three findings: (1) Negation detection without formula enforcement insufficient�
 
 \subsection{Reframing contribution}
 
-Human feedback redirected from Logify-specific diagnostics to general NL→logic translation challenges. As lead author, I implemented this broader framing.
+Human feedback redirected from ExNA-specific diagnostics to general NL→logic translation challenges. As lead author, I implemented this broader framing.
 
 Key learnings: (1) Systematic error taxonomization provides actionable insights beyond performance metrics. (2) Error propagation analysis identifies bottlenecks. (3) Understanding success/challenge conditions is as valuable as average performance. Conclusions bounded by available data (13 ContractNLI docs, 62 DocNLI examples).
 
