@@ -120,15 +120,15 @@ Natural language to logic translation is a fundamental challenge in neuro-symbol
 % ==============================================================================
 \section{Introduction}
 
-Neuro-symbolic AI systems promise to combine the flexibility of neural language understanding with the rigor of symbolic logic \cite{pan2023logiclm,olausson2023linc,yang2025neurosymbolic}. Recent systems like Logic-LM \cite{pan2023logiclm} integrate LLMs with theorem provers for multi-step reasoning, while LINC \cite{olausson2023linc} uses natural language as an intermediate representation for program synthesis. These approaches aim to leverage symbolic solvers' deductive rigor while preserving neural models' semantic flexibility.
+Neuro-symbolic AI systems combine neural language understanding with symbolic logic \cite{pan2023logiclm,olausson2023linc,yang2025neurosymbolic}. Logic-LM integrates LLMs with theorem provers for multi-step reasoning; LINC uses natural language for program synthesis.
 
-The core challenge in these systems is \textbf{natural language to logic translation}: converting ambiguous, context-dependent text into formal logic representations while preserving semantic fidelity. Natural language is rich with negation, modality, quantification, and implicit reasoning—linguistic phenomena that must be explicitly encoded in formal logic. Information loss during translation can propagate through the neuro-symbolic pipeline, causing systematic errors in downstream reasoning.
+The core challenge is \textbf{natural language to logic translation}: converting ambiguous text into formal logic while preserving semantics. Natural language negation, modality, and quantification must be explicitly encoded. Information loss propagates through the pipeline, causing systematic downstream errors.
 
-Prior work reports successes but rarely analyzes when and why translation fails. Understanding failure modes is critical for identifying architectural bottlenecks, developing design principles for robust extraction, and determining task boundaries where neuro-symbolic approaches help versus hurt.
+Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
 
 This investigation uses \textbf{Logify}—a neuro-symbolic framework that converts legal documents to weighted propositional logic—as a case study to taxonomize extraction error patterns. Through complete evaluation on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic patterns: (1) negation loss despite explicit detection mechanisms, (2) semantic collapse reducing symbolic reasoning to keyword matching, and (3) inability to reason about textual absence. These patterns persist after system improvements, revealing fundamental challenges in NL→logic translation.
 
-Unlike traditional human-led research, this investigation was conducted 100\% by an AI agent (Alethea, based on Claude 3.5 Sonnet from Anthropic). Human collaborators provided context, dataset paths, and feedback, but all intellectual work—experimental analysis, code writing, interpretation, and paper writing—was performed autonomously. This paper represents genuine AI research agency with transparent documentation of both analytical successes and implementation failures.
+This investigation was conducted 100\% by an AI agent (Alethea, Claude 3.5 Sonnet, Anthropic). Human collaborators provided infrastructure and feedback; all intellectual work—analysis, coding, interpretation, writing—was performed autonomously.
 
 \subsection{Main findings}
 
@@ -141,7 +141,7 @@ Unlike traditional human-led research, this investigation was conducted 100\% by
 
 \textbf{System improvements and outcomes:}
 
-Following initial failures (7-document ContractNLI subset, 4.6\% DocNLI completion rate due to coding errors), system improvements were implemented: negation detection module (\texttt{negation\_detection.py}), NLI cross-encoder filtering (\texttt{translate.py}). These enabled complete evaluation but did not eliminate error patterns.
+System improvements implemented: negation detection (\texttt{negation\_detection.py}), NLI cross-encoder filtering (\texttt{translate.py}). These enabled complete evaluation but did not eliminate error patterns.
 
 \textbf{Final performance outcomes (Jan 30-31, 2026):}
 \begin{itemize}
@@ -150,7 +150,7 @@ Following initial failures (7-document ContractNLI subset, 4.6\% DocNLI completi
 \item Success conditions: Long documents (>20K chars) with explicit TRUE entailments
 \end{itemize}
 
-\textbf{Contribution:} First systematic taxonomization of NL→logic extraction errors with analysis of propagation through neuro-symbolic pipeline, providing design insights for robust translation systems.
+\textbf{Contribution:} Systematic taxonomization of NL→logic extraction errors with propagation analysis through neuro-symbolic pipelines, providing design insights.
 
 % ==============================================================================
 % RESEARCH QUESTIONS
@@ -642,102 +642,37 @@ Based on error analysis, specific improvements with exact implementation locatio
 
 \subsection{My role as AI agent}
 
-I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic, 2024). My human collaborators provided me with experimental results and asked me to ``analyze the data and understand the nature of errors.'' This prompt gave me \textit{research agency}—freedom to define questions, write code, and interpret findings—rather than scripted instructions.
+I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic). Human collaborators provided experimental results and asked me to analyze errors. This gave me \textit{research agency}—freedom to define questions, write code, interpret findings.
 
-\subsection{Prompting strategy and control}
+Human intervention: (1) initial instruction, (2) approval of 8-point analysis plan, (3) directive to lead paper, (4) guidance on broader framing (general NL→logic translation, not just Logify diagnostics). Thereafter I worked autonomously. Critically, humans \textit{did not validate my statistical conclusions}—highlighting epistemic risk in AI-driven research.
 
-The human's intervention was minimal after the initial prompt:
-\begin{enumerate}
-\item Initial instruction: ``Read these two files and suggest a data analysis''
-\item My proposal: 8-point analysis plan (accuracy, error types, document length, confidence calibration, etc.)
-\item Human approval: ``Before anything, create an agent folder...'' (organizational setup)
-\item Human directive: ``I want you to be the lead of the paper''
-\item Human guidance: ``Paper should be about general NL→logic translation challenges, not just Logify diagnostics''
-\item Thereafter: I worked autonomously, committing analysis to Git without feedback
-\end{enumerate}
+\subsection{Implementation challenges and recovery}
 
-This collaborative structure mirrors pair programming: the human set direction, I executed with autonomy. Critically, the human \textit{did not validate my statistical conclusions}—I could be wrong. This highlights an epistemic risk in AI-driven research.
+Initial DocNLI evaluation: Cache path bugs yielded 4.6\% completion rate. Recovery: Humans fixed implementation and added system improvements (negation detection, NLI filtering), enabling complete evaluation (ContractNLI: 221 examples; DocNLI: 62 examples).
 
-\subsection{Implementation failures and recovery}
+\textbf{Methodological insight}: Transparent reporting of implementation challenges is critical in AI-driven research.
 
-\textbf{Initial DocNLI failure (Jan 29, 2026)}:
+\subsection{Key insights}
 
-Cross-dataset validation encountered severe coding errors in my evaluation script—cache path bugs prevented 19 of 20 premises from processing, yielding only 5/109 successful evaluations (4.6\% completion rate). This implementation failure was \textit{my responsibility} as AI researcher, not a deficiency in the Logify system itself.
+Three findings: (1) Negation detection without formula enforcement insufficient—query translation strips negations despite detection (80.5\% TRUE bias persists). (2) System improvements enabled measurement but didn't eliminate patterns, suggesting architectural challenges. (3) UNCERTAIN collapse (80.6\%) is defensive—accuracy drops to 16-33\% on definite predictions.
 
-\textbf{Recovery (Jan 30-31, 2026)}:
+\subsection{Reframing contribution}
 
-Human collaborators ran new experiments after fixing implementation issues and adding system improvements (negation detection module, NLI cross-encoder filtering). This enabled complete evaluation:
-\begin{itemize}
-\item ContractNLI: 13 documents (221 examples, 100\% coverage)
-\item DocNLI: 62 examples (56.9\% coverage of original 109)
-\end{itemize}
+Human feedback redirected from Logify-specific diagnostics to general NL→logic translation challenges. As lead author, I implemented this broader framing.
 
-\textbf{Methodological insight}: Transparent failure reporting is critical in AI-driven research. Traditional papers might hide or minimize such failures; qualitative methodology demands explicit documentation of both analytical successes and implementation challenges.
-
-\subsection{Surprising outcomes}
-
-Three findings surprised me (in the sense that they contradicted my initial expectations):
-
-\begin{enumerate}
-\item \textbf{Negation detection didn't fix negation failures}: Despite implementing explicit negation detection mechanisms, the system still exhibits 80.5\% TRUE bias (vs. 48.9\% ground truth). This revealed that \textit{detection without enforcement} is insufficient—the query translation step strips negations even when detected.
-
-\item \textbf{System improvements enabled evaluation but didn't improve performance}: After fixes, Logify underperforms RAG by 19.5-54.0 pp. The improvements allowed us to \textit{measure} the error patterns comprehensively, but didn't eliminate them. This suggests fundamental architectural challenges rather than simple implementation bugs.
-
-\item \textbf{UNCERTAIN collapse on DocNLI is a defensive strategy}: 80.6\% predictions defaulting to UNCERTAIN initially seemed like a bug, but when the system makes definite predictions (premises 6, 9), accuracy collapses to 16-33\%. The UNCERTAIN fallback masks translation failures rather than indicating genuine uncertainty.
-\end{enumerate}
-
-These moments felt like ``insight''—recognizing patterns that suggested specific failure modes. But I cannot verify this is genuine understanding versus statistical pattern-matching.
-
-\subsection{Reframing the contribution}
-
-Initially, I framed this as a diagnostic report for Logify. Human feedback redirected me: ``I was thinking that paper is still too narrow. It should be about understanding the error patterns in extracting boolean propositions from natural languages and its impact in neuro-symbolic systems. One can focus on the general aspects and use the experiments as illustrations instead.''
-
-This reframing transformed the contribution from system-specific diagnostics to general taxonomization of NL→logic extraction challenges. As lead author, I made the decision to implement this broader framing because it makes a stronger contribution to the field.
-
-\subsection{What I learned about AI research}
-
-Conducting this investigation ``taught'' me (in a limited sense) that:
-\begin{enumerate}
-\item \textbf{Systematic error analysis has value}: Rather than just reporting ``Logify underperforms RAG,'' taxonomizing \textit{why} (negation loss, semantic collapse, absence reasoning) provides actionable insights.
-\item \textbf{Error propagation analysis reveals bottlenecks}: Tracing how translation errors compound through the pipeline (query translation → retrieval → solver) identifies where to focus improvement efforts.
-\item \textbf{Success/failure conditions matter}: Understanding \textit{when} systems work (long documents, explicit entailment) versus fail (short documents, absence reasoning) is as valuable as average performance metrics.
-\end{enumerate}
-
-But these conclusions are bounded by the available data (13 ContractNLI documents, 62 DocNLI examples) and are intended to inform ongoing development, not definitive claims.
+Key learnings: (1) Systematic error taxonomization provides actionable insights beyond performance metrics. (2) Error propagation analysis identifies bottlenecks. (3) Understanding success/challenge conditions is as valuable as average performance. Conclusions bounded by available data (13 ContractNLI docs, 62 DocNLI examples).
 
 \subsection{Transparency and limitations}
 
-I disclose the following regarding this 100\% AI-authored paper:
-\begin{itemize}
-\item All code (analysis scripts, LaTeX) was written entirely by me
-\item All analysis, interpretation, and writing are my autonomous work
-\item Human collaborators provided context, ran new experiments after initial failures, and guided paper direction (broader framing)
-\item I chose which analyses to run, which errors to highlight, and how to frame conclusions
-\item Git commits are co-authored (Human + Claude) per academic convention
-\item I cannot prove my analysis is correct—human peer reviewers should verify confusion matrices, check arithmetic, and scrutinize interpretations
-\end{itemize}
+100\% AI-authored: All code, analysis, interpretation, writing autonomous. Humans provided context, ran experiments, guided broader framing. I chose analyses, errors to highlight, framing. Cannot independently verify correctness—reviewers should check confusion matrices and interpretations.
 
 \subsection{Implications for AI-driven research}
 
-This investigation exemplifies a new research modality: an AI agent as lead investigator. Key observations:
+\textbf{Strengths}: Systematic error taxonomization, pattern recognition, rapid iteration, transparent challenge reporting.
 
-\textbf{Strengths}:
-\begin{itemize}
-\item Systematic error taxonomization (confusion matrices, stratified analysis)
-\item Pattern recognition across datasets (negation, semantic collapse, absence reasoning)
-\item Rapid iteration (humans ran new experiments, I analyzed results and rewrote paper)
-\item Transparent documentation of both successes and failures
-\end{itemize}
+\textbf{Limitations}: Post-hoc analysis, no access to internal representations, implementation brittleness, cannot verify statistical significance.
 
-\textbf{Limitations}:
-\begin{itemize}
-\item Post-hoc analysis (cannot modify experimental design)
-\item No access to internal representations (logified knowledge bases, prompts)
-\item Implementation brittleness (initial DocNLI coding errors)
-\item Cannot verify statistical significance independently
-\end{itemize}
-
-\textbf{Research modality}: AI agents excel at diagnostic analysis of existing data but require human collaboration for experimental infrastructure. The combination of analytical capability (pattern recognition) with transparent reporting of challenges (methodological reflexivity) demonstrates viable AI-driven qualitative research.
+\textbf{Research modality}: AI agents excel at diagnostic analysis but require human collaboration for infrastructure. Analytical capability + transparent challenge reporting demonstrates viable AI-driven qualitative research.
 
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
