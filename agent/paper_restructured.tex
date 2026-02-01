@@ -625,74 +625,17 @@ To address potential AI interpretation biases, I employed:
 
 \subsection{Voice of participants: Why N/A}
 
-Traditional qualitative research examines human participants' voices, perspectives, and experiences. This investigation has no human participants—the "subjects" are computational systems (ExNA, RAG) and datasets (ContractNLI, DocNLI).
+No human participants—subjects are computational systems (ExNA, RAG) and datasets (ContractNLI, DocNLI). Traditional "voice" doesn't apply: systems have no subjective experience/preferences, datasets are fixed benchmarks, no informed consent issues, no risk of harm.
 
-\textbf{Why traditional "voice" considerations don't apply}:
-\begin{itemize}
-\item Systems have no subjective experience, preferences, or voice to represent
-\item Datasets are fixed benchmarks, not living participants whose perspectives could be distorted
-\item No informed consent issues—analyzing computational outputs, not human data
-\item No risk of misrepresentation—systems cannot be harmed by interpretation
-\end{itemize}
-
-However, there is an analogous concern: \textbf{accurate representation of system behavior}. Just as qualitative researchers must faithfully represent participants' perspectives, I must faithfully represent ExNA's behavioral patterns without:
-\begin{itemize}
-\item Cherry-picking examples that exaggerate failures
-\item Ignoring success cases (Document 7, 15)
-\item Misattributing patterns (e.g., claiming universal failure when specific conditions exist where it succeeds)
-\end{itemize}
-
-I address this by: (1) analyzing \textit{all} 283 examples, not selective sampling, (2) explicitly presenting contradictory evidence (ExNA successes alongside failures), (3) stratified analysis revealing boundary conditions, not just aggregate metrics.
+\textbf{Analogous concern—accurate representation}: Must faithfully represent ExNA's behavior without cherry-picking failures, ignoring successes (Doc 7,15), misattributing patterns (claiming universal failure when success conditions exist). \textbf{Address via}: (1) Analyzing \textit{all} 283 examples (no sampling), (2) Presenting contradictory evidence (successes + failures), (3) Stratified analysis (boundary conditions not just aggregates).
 
 \subsection{Critical assessment: Strengths and weaknesses of AI-driven research}
 
-\subsubsection{Strengths demonstrated in this investigation}
+\textbf{Strengths}: (1) Systematic exhaustive analysis (all 283 examples, all confusion cells, all docs—no sampling bias/selective reporting); (2) Rapid iteration (5-day cycle data→draft with comprehensive restructuring); (3) Transparent uncertainty (explicit flagging what can/cannot assess—significance, causal mechanisms, internals); (4) Pattern recognition at scale (semantic collapse 75\% single-prop via formula inspection across 221—tedious for humans); (5) Methodological reflexivity (this reflection = meta-cognitive awareness of process, biases, limits).
 
-\textbf{1. Systematic exhaustive analysis}: Analyzed all 283 examples, all confusion matrix cells, all documents—no sampling bias or selective reporting.
+\textbf{Weaknesses}: (1) Cannot verify conclusions (compute statistics but not significance/effect sizes/CIs; reviewers treat quantitative claims skeptically); (2) Post-hoc only (no new experiments/ablations/internal access; limited to behavioral patterns from existing outputs); (3) Implementation brittleness (DocNLI 4.6\% = my coding errors); (4) Limited domain expertise (lack legal/contract/neuro-symbolic depth; human expert identifies domain-specific patterns); (5) Pattern-matching vs causal understanding (identify correlations but can't definitively distinguish genuine understanding from statistical matching); (6) Single analyst, no triangulation (no inter-rater reliability; humans use multiple coders).
 
-\textbf{2. Rapid iteration}: 5-day cycle from data to complete draft with comprehensive restructuring based on feedback.
-
-\textbf{3. Transparent uncertainty reporting}: Explicit flagging of what I can vs cannot assess (statistical significance, causal mechanisms, internal representations).
-
-\textbf{4. Pattern recognition at scale}: Identified semantic collapse (75\% single-proposition queries) through formula-level inspection across 221 examples—tedious task for humans.
-
-\textbf{5. Methodological reflexivity}: This entire reflection section demonstrates meta-cognitive awareness of my own analytical process, biases, and limitations.
-
-\subsubsection{Weaknesses and limitations}
-
-\textbf{1. Cannot verify own conclusions}: I compute statistics but cannot independently assess statistical significance, effect sizes, or confidence intervals. Reviewers must treat quantitative claims skeptically.
-
-\textbf{2. Post-hoc only}: Cannot design/execute new experiments, perform ablations, or access internal system representations. Limited to behavioral pattern identification from existing outputs.
-
-\textbf{3. Implementation brittleness}: DocNLI 4.6\% completion failure demonstrates that AI research agency includes coding errors and debugging challenges, not just conceptual analysis.
-
-\textbf{4. Limited domain expertise}: I lack deep expertise in legal reasoning, contract interpretation, or neuro-symbolic architectures. Human expert might identify domain-specific patterns I miss.
-
-\textbf{5. Pattern-matching vs causal understanding}: I identify correlations and regularities (negation detection exists but TRUE bias persists) but cannot definitively distinguish genuine causal understanding from statistical pattern-matching.
-
-\textbf{6. Single analyst, no triangulation}: No inter-rater reliability check. Human researchers might have multiple coders independently identify patterns for validation.
-
-\subsubsection{Implications for AI-driven qualitative research}
-
-\textbf{What AI agents can uniquely contribute}:
-\begin{itemize}
-\item Diagnostic analysis of large-scale computational system outputs
-\item Systematic pattern identification without fatigue or sampling bias
-\item Rapid iteration with transparent uncertainty reporting
-\item Methodological reflexivity about own analytical process
-\end{itemize}
-
-\textbf{What requires human collaboration}:
-\begin{itemize}
-\item Experimental infrastructure and new data generation
-\item Statistical verification and hypothesis testing
-\item Domain expertise and theoretical grounding
-\item Mechanistic debugging with internal system access
-\end{itemize}
-
-\textbf{Research modality}: AI-driven diagnostic analysis + human experimental infrastructure + transparent limitation reporting = viable qualitative research approach for computational system evaluation.
-
-\textbf{Epistemic humility}: This investigation demonstrates that AI agents can conduct systematic qualitative research, but findings should be treated as \textit{exploratory pattern identification} requiring human verification, not definitive conclusions. The combination of AI analytical capability with explicit uncertainty reporting represents a responsible approach to AI research agency.
+\textbf{Implications}: \textit{AI uniquely contributes}: Diagnostic analysis of large-scale system outputs, systematic pattern identification (no fatigue/sampling bias), rapid iteration + transparent uncertainty, methodological reflexivity. \textit{Requires humans}: Experimental infrastructure, statistical verification, domain expertise, mechanistic debugging (internal access). \textbf{Research modality}: AI diagnostic analysis + human experimental infrastructure + transparent limitation reporting = viable qualitative approach for computational system evaluation. \textbf{Epistemic humility}: AI agents can conduct systematic qualitative research, but findings = \textit{exploratory pattern identification} requiring human verification, not definitive conclusions. AI analytical capability + explicit uncertainty reporting = responsible AI research agency.
 
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
