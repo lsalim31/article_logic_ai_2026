@@ -190,70 +190,9 @@ These questions focus on diagnostic analysis rather than final system evaluation
 
 \subsubsection{Analysis process}
 
-The analysis proceeded iteratively:
+Five-phase iterative analysis: (1) Aggregate—confusion matrices (80.5\% TRUE bias), label-wise accuracy (FALSE 6.7\%, UNC 17.3\%); (2) Example inspection—formulas (75\% single-prop), negation patterns, Doc 14 (5.9\%) vs 7 (100\%); (3) Stratification—length/label/complexity; (4) Cross-dataset validation—generalization; (5) Literature triangulation—Logic-LM++ convergence \cite{parmar2024logiclmpp}.
 
-\textbf{Phase 1: Aggregate pattern identification} (Jan 29-30, 2026)
-\begin{enumerate}
-\item Computed confusion matrices to identify prediction biases (e.g., 80.5\% TRUE bias)
-\item Calculated label-wise accuracy to reveal systematic failures (FALSE recall 6.7\%, UNCERTAIN recall 17.3\%)
-\item Identified performance disparities across ground truth labels
-\end{enumerate}
-
-\textbf{Phase 2: Example-level inspection} (Jan 30-31, 2026)
-\begin{enumerate}
-\item Examined query formulas to identify semantic collapse (75\% single-proposition queries)
-\item Inspected negation-containing hypotheses to reveal detection-without-enforcement pattern
-\item Analyzed high-error documents (Document 14: 5.9\% accuracy) vs high-success documents (Document 7: 100\% accuracy)
-\end{enumerate}
-
-\textbf{Phase 3: Stratified analysis} (Jan 31, 2026)
-\begin{enumerate}
-\item Stratified by document length (<10K, 10-20K, >20K chars) to identify when symbolic reasoning helps vs hurts
-\item Stratified by ground truth label (TRUE/FALSE/UNCERTAIN) to reveal label-specific failure modes
-\item Stratified by query complexity (single-proposition vs multi-proposition formulas) to assess symbolic reasoning engagement
-\end{enumerate}
-
-\textbf{Phase 4: Cross-dataset validation} (Jan 31, 2026)
-\begin{enumerate}
-\item Compared ContractNLI and DocNLI patterns to assess generalization
-\item Identified domain-specific vs universal patterns (e.g., absence reasoning failure appears in both)
-\end{enumerate}
-
-\textbf{Phase 5: Literature triangulation} (Feb 1, 2026)
-\begin{enumerate}
-\item Compared findings to Logic-LM++ \cite{parmar2024logiclmpp} to identify convergence (negation errors documented independently)
-\item Assessed whether patterns are ExNA-specific implementation artifacts or fundamental NL→logic challenges
-\end{enumerate}
-
-\subsubsection{Stratification criteria and rationale}
-
-\textbf{Document length stratification}:
-\begin{itemize}
-\item \textbf{Criteria}: Short (<10K chars), Medium (10-20K chars), Long (>20K chars)
-\item \textbf{Rationale}: Hypothesis that retrieval-based approaches benefit from more content to search. Longer documents provide more propositions, potentially improving match quality.
-\item \textbf{Finding}: ExNA performs better on long documents (>20K: 58.8\% accuracy) vs short documents (<10K: 35.7\%). This identifies boundary conditions for when symbolic reasoning helps.
-\end{itemize}
-
-\textbf{Ground truth label stratification}:
-\begin{itemize}
-\item \textbf{Criteria}: TRUE, FALSE, UNCERTAIN
-\item \textbf{Rationale}: Different labels test different capabilities—TRUE tests entailment detection, FALSE tests contradiction detection, UNCERTAIN tests absence reasoning.
-\item \textbf{Finding}: Severe label imbalance in predictions (80.5\% TRUE predictions vs 48.9\% ground truth) reveals systematic bias. FALSE and UNCERTAIN failure rates (93.3\%, 82.7\% error) identify specific architectural weaknesses.
-\end{itemize}
-
-\textbf{Query formula complexity stratification}:
-\begin{itemize}
-\item \textbf{Criteria}: Single-proposition (e.g., \texttt{P\_21}) vs multi-proposition (e.g., \texttt{P\_8 ∧ P\_15}) formulas
-\item \textbf{Rationale}: Multi-proposition formulas indicate symbolic reasoning engagement. Single-proposition queries suggest retrieval-only behavior.
-\item \textbf{Finding}: 75\% single-proposition queries indicate semantic collapse—symbolic solver has no logical structure to reason over.
-\end{itemize}
-
-\textbf{Document-level stratification}:
-\begin{itemize}
-\item \textbf{Criteria}: Individual document performance (Document 1-13)
-\item \textbf{Rationale}: Identify outlier documents to understand success/failure conditions.
-\item \textbf{Finding}: Document 7 (100\% accuracy, 11/11) vs Document 14 (5.9\% accuracy, 1/17) reveal that ExNA succeeds when hypotheses align with explicit text and fail on negation-heavy or absence reasoning tasks.
-\end{itemize}
+\textbf{Stratification}: (1) Length (<10K/10-20K/>20K)—rationale: retrieval benefits from content; finding: long >20K 58.8\% vs short <10K 35.7\%. (2) Label (T/F/U)—rationale: test different capabilities; finding: 80.5\% TRUE bias, F/U errors 93/83\%. (3) Complexity (single/multi-prop)—rationale: multi indicates reasoning; finding: 75\% single = collapse. (4) Document-level—rationale: identify outliers; finding: Doc 7 (100\%) vs 14 (5.9\%).
 
 \subsubsection{Handling contradictory evidence}
 
