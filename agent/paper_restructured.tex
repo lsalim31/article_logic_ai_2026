@@ -1,3 +1,4 @@
+
 % ==============================================================================
 % AI Agents4QualResearch 2026 - FINAL SUBMISSION
 % ==============================================================================
@@ -52,6 +53,25 @@
 \usepackage{caption}
 \usepackage{enumitem} % Control list spacing
 
+% 1. Load the package
+\usepackage{newunicodechar}
+\usepackage{newunicodechar}
+
+% logical AND (U+2227) - you likely already added this
+\newunicodechar{∧}{\ensuremath{\wedge}}
+
+% logical OR (U+2228)
+\newunicodechar{∨}{\ensuremath{\vee}}
+
+% long right arrow / implies (U+27F9)
+\newunicodechar{⟹}{\ensuremath{\Longrightarrow}}
+
+% not equal (U+2260)
+\newunicodechar{≠}{\ensuremath{\neq}}
+% 2. Map the specific Unicode character to the math command
+% The \ensuremath ensures it works even if you type it outside $...$
+\newunicodechar{∧}{\ensuremath{\wedge}}
+
 % Configure list spacing to match document
 \setlist{nosep, leftmargin=*, before={\parskip=6pt}, after={\parskip=6pt}}
 
@@ -87,7 +107,7 @@
 % ==============================================================================
 \begin{center}
 {\fontsize{18}{21.6}\selectfont\bfseries
-Understanding Error Patterns in Natural Language to Logic Translation: A Case Study in Improving Neuro-Symbolic Document Reasoning
+Understanding Error Patterns in Natural Language to Logic Translation: A Case Study in Improving Neuro-Symbolic Reasoning
 }
 \end{center}
 \vspace{12pt}
@@ -105,7 +125,7 @@ Understanding Error Patterns in Natural Language to Logic Translation: A Case St
 % ==============================================================================
 \section{Abstract}
 
-Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper reports a diagnostic analysis and architectural improvement cycle for ExNA (Experimental Neuro-symbolic Architecture), demonstrating how AI-agent-led error analysis can drive system improvements. Through initial experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identified three systematic error patterns: (1) negation loss despite detection mechanisms (80.5\% TRUE bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries mapped to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These insights informed a redesigned architecture (NL→Logic→NL→NLI verification) that reversed catastrophic failures: Document 14 accuracy improved from 5.9\% to 76.5\% (+70.6pp), with negation formulas now preserving polarity through explicit ¬ operators. This investigation demonstrates transparent reporting of both challenges and improvements, providing validated design principles for robust natural language to logic translation.
+Natural language to logic translation is a fundamental challenge in neuro-symbolic AI systems. This paper reports a diagnostic analysis and architectural improvement cycle for ExNA (Experimental Neuro-symbolic Architecture), demonstrating how AI-agent-led error analysis can drive system improvements. Through initial experiments on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identified three systematic error patterns: (1) negation loss despite detection mechanisms (80.5\% TRUE bias vs. 48.9\% ground truth), (2) semantic collapse where 75\% of queries mapped to single propositions, and (3) absence reasoning failure causing 80.6\% UNCERTAIN predictions on binary tasks. These insights informed a redesigned architecture (NL→Logic→NL→TEXT verification) that reversed catastrophic failures: Document 14 accuracy improved from 5.9\% to 76.5\% (+70.6pp), with negation formulas now preserving polarity through explicit ¬ operators. This investigation demonstrates transparent reporting of both challenges and improvements, providing validated design principles for robust natural language to logic translation.
 
 \vspace{24pt}
 
@@ -115,7 +135,9 @@ Natural language to logic translation is a fundamental challenge in neuro-symbol
 % ==============================================================================
 \section{Introduction}
 
-Neuro-symbolic AI systems combine natural language understanding with symbolic logic \cite{pan2023logiclm,olausson2023linc,yang2025neurosymbolic}. Logic-LM integrates LLMs with theorem provers for multi-step reasoning, while LINC uses natural language for program synthesis.
+Neuro-symbolic AI systems combine natural language understanding with symbolic logic Examples include Logic-LM which integrates LLMs with theorem provers for multi-step reasoning, and LINC that uses natural language for program synthesis \cite{olausson2023linc}, and 
+\cite{pan2023logiclm}
+\cite{yang2025neurosymbolic}. 
 
 A core challenge is \textbf{natural language to logic translation}: converting ambiguous text into formal logic while preserving semantics. Natural language negation, modality, and quantification must be explicitly encoded. Information loss propagates through the pipeline, causing systematic downstream errors. Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
 
@@ -173,19 +195,22 @@ Five-phase iterative analysis: (1) Aggregate statistics (confusion matrices); (2
 % ==============================================================================
 \section{Experimental setup}
 
+
 \subsection{Systems}
 
-\textbf{ExNA} (Experimental Neuro-symbolic Architecture): Three-stage pipeline—(1) LLM logification (docs → weighted propositional logic), (2) query translation (SBERT + NLI filtering → formulas), (3) MaxSAT solver (entailment). Improvements: negation detection, NLI cross-encoder.
+\textbf{ExNA} (Experimental Neuro-symbolic Architecture): Three-stage pipeline—(1) LLM logification (documents → weighted propositional logic), (2) query translation (natural language queries → logical formulas), (3) MaxSAT solver (entailment reasoning). We do not provide detailed architectural specifications as ExNA remains under active development; this investigation focuses on diagnostic error analysis and improvement validation rather than comprehensive system documentation.
 
 \noindent
-\textbf{RAG}: Standard retrieval-augmented generation (SBERT + GPT-4, temp 0.0).
+\textbf{RAG} (Retrieval-Augmented Generation): Baseline approach using semantic retrieval to identify relevant document passages, followed by LLM-based answer generation. Implementation uses BERT sentence embeddings for passage retrieval and GPT-4 (temperature 0.0) for answer generation conditioned on retrieved context. RAG represents standard neural approaches without symbolic reasoning components, serving as a comparison point for neuro-symbolic methods.
+
 
 \subsection{Datasets}
 
-\textbf{ContractNLI} \cite{koreeda2021contractnli}: Legal NLI. 13 docs, 221 pairs, 4.9K-29.8K chars. GT: TRUE 48.9\%, FALSE 6.8\%, UNC 44.3\%.
+\textbf{ContractNLI} \cite{koreeda2021contractnli}: Legal NLI dataset testing entailment between contract clauses and hypotheses about obligations, prohibitions, and permissions. 13 docs, 221 pairs, 4.9K-29.8K chars (long documents requiring multi-clause reasoning). GT: TRUE 48.9\%, FALSE 6.8\%, UNC 44.3\%—heavily skewed toward UNCERTAIN, reflecting legal ambiguity.
 
 \noindent
-\textbf{DocNLI} \cite{yin2021docnli}: Cross-domain NLI. 62 examples (56.9\% coverage), 200-500 word premises.
+\textbf{DocNLI} \cite{yin2021docnli}: Cross-domain NLI with premise-hypothesis pairs drawn from diverse sources (news, Wikipedia, legal documents). 62 examples (56.9\% coverage), 200-500 word premises—shorter documents testing binary entailment/non-entailment without UNCERTAIN category, emphasizing definite reasoning over ambiguity tolerance.
+
 
 \subsection{Experiments conducted}
 
@@ -217,9 +242,9 @@ UNC (98)     & 74 (75.5\%) & 7 & 17 (17.3\%) \\
 \caption{ContractNLI confusion: catastrophic FALSE/UNC recall}
 \end{table}
 
-\textbf{Example}: Hyp: "Agreement shall \textbf{not} grant rights" (GT: UNC) → retrieves P\_41 "Agreement grants rights exist" → Pred: TRUE (0.9 conf). \textbf{Error}: Negation detected but stripped; SBERT matches lexical similarity ignoring polarity.
+\textbf{Example}: Hyp: "Agreement shall \textbf{not} grant rights" (GT: UNC) → retrieves P\_41 "Agreement grants rights exist" → Pred: TRUE (0.9 conf). \textbf{Error}: Negation detected but stripped; BERT matches lexical similarity ignoring polarity.
 
-\textbf{Root cause}: (1) Detection without formula enforcement, (2) SBERT ignores polarity ("shall" ≈ "shall not"), (3) Propositions encode existence not semantics, (4) Solver treats existence → entailment.
+\textbf{Root cause}: (1) Detection without formula enforcement, (2) BERT ignores polarity ("shall" is similar to "shall not"), (3) Propositions encode existence not semantics, (4) Solver treats existence → entailment.
 
 \textbf{Pipeline propagation}:
 \begin{verbatim}
@@ -227,11 +252,16 @@ UNC (98)     & 74 (75.5\%) & 7 & 17 (17.3\%) \\
 → retrieves "Party discloses" [POS] → TRUE [WRONG]
 \end{verbatim}
 
+\textbf{Post-analysis improvements}: Based on this diagnostic analysis, the redesigned architecture (validated February 2026) enforces negation preservation through explicit ¬ operators in formulas. Strengthened prompts now produce formulas like ¬P\_2 ∧ ¬P\_3 rather than stripping polarity. Document 14—previously exhibiting catastrophic 88.2\% TRUE bias on 82.4\% UNCERTAIN ground truth—now achieves 76.5\% accuracy with appropriate UNCERTAIN predictions (15/17 cases). NL→Logic→NL→TEXT verification prevents false entailments by verbalizing formulas back to natural language before scoring, catching polarity mismatches that SBERT-based retrieval missed. This validates the core insight: negation detection alone is insufficient; enforcement must occur at formula construction, not just input analysis.
+
 \subsection{Error pattern 2: Semantic collapse}
 
-\textbf{Symptom}: 75\% queries map to single atomic propositions. Examples: "Party may share with affiliates" → P\_21 (should be P\_share ∧ P\_affiliates); "Agreement terminates after 3 years" → P\_8 (should be P\_terminate ∧ P\_3years). \textbf{Missing}: Logical connectives (∧,∨,⟹), compositional structure, multi-proposition formulas.
+\textbf{Symptom}: 75\% queries map to single atomic propositions. Examples: ``Party may share with affiliates" → P\_21 (should be P\_share ∧ P\_affiliates); ``Agreement terminates after 3 years" → P\_8 (should be P\_terminate ∧ P\_3years). \textbf{Missing}: Logical connectives (∧,∨,⟹), compositional structure, multi-proposition formulas.
 
 \textbf{Result}: Symbolic reasoning → keyword retrieval. Solver checks "proposition exists?" not logical inference. \textbf{Consequence}: Same proposition (P\_15) maps to contradictory GT (TRUE, FALSE, FALSE, UNC)—no actual reasoning.
+
+\textbf{Post-analysis improvements}: The redesigned architecture addresses semantic collapse through compositional formula generation. Rather than producing isolated atomic propositions, the system now constructs multi-proposition structures with explicit logical connectives. Validation experiments show formulas like ¬P\_2 ∧ ¬P\_3 (conjuncti
+
 
 \subsection{Error pattern 3: Absence reasoning failure}
 
@@ -254,7 +284,10 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \textbf{Root cause}: (1) Incomplete formulas (P\_1 ∧ P\_8 ∧ P\_13—missing links), (2) Partial support without full entailment, (3) Solver returns conf=0.5 → UNC, (4) Cannot distinguish "insufficient evidence" from "evidence of absence."
 
-\textbf{Example}: Premise "TSA kept \$675k spare change" / Hyp "Passengers left \$675k" → formula P\_1∧P\_8∧P\_13 (incomplete: no agency/temporal) → conf=0.5 → UNC (GT: entailment). \textbf{Problem}: Task needs probabilistic inference ("likely"), not strict entailment ("provable").
+\textbf{Example}: Premise ``TSA kept \$675k spare change" / Hyp ``Passengers left \$675k" → formula P\_1∧P\_8∧P\_13 (incomplete: no agency/temporal) → conf=0.5 → UNC (GT: entailment). \textbf{Problem}: Task needs probabilistic inference (``likely"), not strict entailment (``provable").
+
+\textbf{Post-analysis improvements}: TEXT-based verification provides probabilistic scoring, reducing UNCERTAIN collapse from 80.6\% to task-appropriate levels. DocNLI accuracy reached 74.2\% (46/62), validating that absence reasoning requires probabilistic inference architectures rather than strict boolean entailment.
+
 
 \subsection{Pipeline propagation summary}
 
@@ -263,20 +296,24 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 % ==============================================================================
 % WHEN SYMBOLIC REASONING HELPS VS. HURTS
 % ==============================================================================
+ 
 \section{When does symbolic reasoning help versus hurt?}
 
-\textbf{Success conditions}: Doc 7 (ContractNLI): ExNA 82.4\% vs RAG 58.8\% (+23.5pp)—long (29.8K chars), 76.5\% TRUE GT (aligns with bias), explicit entailment. Doc 15: +11.8pp. DocNLI premises 3,4,7: +12.5 to +42.9pp (100\% UNC rate masks errors, aligns with GT).
+Stratified analysis reveals boundary conditions where ExNA outperforms or underperforms RAG baselines, demonstrating that symbolic reasoning benefits depend critically on document characteristics and reasoning requirements.
 
-\textbf{Failure conditions}: Doc 14: ExNA 5.9\% vs RAG 76.5\% (-70.6pp, catastrophic)—short (5.5K chars), 82.4\% UNC GT (absence reasoning), 88.2\% TRUE predictions (overconfidence). Doc 19: -41.2pp. DocNLI premises 6,9: 16-33\% accuracy on definite predictions.
+\textbf{Success conditions}: Doc 7 (ContractNLI): ExNA 82.4\% vs RAG 58.8\% (+23.5pp)—long (29.8K chars), 76.5\% TRUE GT (aligns with bias), explicit entailment. Doc 15: +11.8pp. DocNLI premises 3,4,7: +12.5 to +42.9pp (100\% UNC rate masks errors, aligns with GT). In these cases, symbolic reasoning leverages structured logic to handle multi-clause documents where neural retrieval struggles with long contexts.
+
+\textbf{Failure conditions}: Doc 14: ExNA 5.9\% vs RAG 76.5\% (-70.6pp, catastrophic)—short (5.5K chars), 82.4\% UNC GT (absence reasoning), 88.2\% TRUE predictions (overconfidence). Doc 19: -41.2pp. DocNLI premises 6,9: 16-33\% accuracy on definite predictions. Symbolic systems fail when tasks require probabilistic inference over incomplete information rather than strict logical deduction.
 
 \textbf{Design insights}: 
 \begin{itemize}
-\item \textbf{Helps}: Long docs (>20K), explicit entailment, GT aligns with positive bias, multi-clause hypotheses
-\item \textbf{Hurts}: Short docs (<10K), absence reasoning ("not mentioned"), negation-heavy, probabilistic vs strict entailment
+\item \textbf{Helps}: Long docs (>20K chars), explicit entailment relationships, ground truth aligns with positive bias, multi-clause hypotheses requiring compositional reasoning
+\item \textbf{Hurts}: Short docs (<10K chars), absence reasoning ("not mentioned" cases), negation-heavy queries, tasks requiring probabilistic vs strict entailment judgments
 \end{itemize}
 
 \noindent
-\textbf{Implication}: ExNA wins when task = retrieval + keyword matching (RAG's strength). Symbolic reasoning adds complexity without benefit.
+\textbf{Implication}: ExNA wins when symbolic reasoning provides minimal added value—tasks reducible to retrieval + keyword matching where RAG already excels. Symbolic reasoning adds architectural complexity without performance benefit when translation quality is poor, suggesting that robust NL→logic translation is a prerequisite, not a consequence, of effective neuro-symbolic systems.
+
 
 % ==============================================================================
 % DISCUSSION: DESIGN PRINCIPLES
@@ -288,7 +325,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 \textbf{Finding}: Query translation is primary failure (not logification/solver). \textbf{Evidence}: 75\% single-prop queries (no structure), 80.6\% UNC rate (incomplete formulas → abstain), negation stripped despite detection.
 
 \noindent
-\textbf{Design principle}: Robust translation requires: (1) Negation enforcement (detection → formula), (2) Compositional building (multi-prop structures), (3) Semantic grounding beyond SBERT (NLI cross-encoder insufficient), (4) Task-aware translation (strict vs probabilistic inference).
+\textbf{Design principle}: Robust translation requires: (1) Negation enforcement (detection → formula), (2) Compositional building (multi-prop structures), (3) Semantic grounding beyond BERT, (4) Task-aware translation (strict vs probabilistic inference).
 
 \subsection{Existence ≠ entailment problem}
 
@@ -299,36 +336,41 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \subsection{Absence reasoning architecture}
 
-\textbf{Finding}: Symbolic systems struggle with "not mentioned." \textbf{Why}: Closed-world (absence → FALSE) vs NLI open-world (absence → UNC); solver can't distinguish "disproven" from "unknown."
+\textbf{Finding}: Symbolic systems struggle with "not mentioned." \textbf{Why}: Closed-world (absence → FALSE) vs open-world (absence → UNC); solver can't distinguish "disproven" from "unknown."
 
 \noindent
 \textbf{Design principle}: (1) Hybrid: RAG baseline + symbolic override if high confidence, (2) Explicit absence propositions (P\_NOT\_X for denials), (3) Probabilistic logic (not boolean) for uncertainty.
 
 \subsection{Comparison with prior systems}
 
-\textbf{Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp} independently documents negation errors ("No young person teaches" → "all young people teach") paralleling our 80.5\% TRUE bias. Cross-system convergence (ExNA, Logic-LM++, LINC) on negation and semantic grounding suggests fundamental NL→logic challenges, not implementation artifacts.
+\textbf{Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp} independently documents negation errors ("No young person teaches" → "all young people teach") paralleling our 80.5\% TRUE bias, suggesting negation handling is a persistent cross-system challenge rather than an ExNA-specific artifact. The failure mode is structurally identical: negation detection occurs but fails to propagate into formal representations, resulting in polarity inversion during reasoning.
+
+\textbf{LINC} \cite{olausson2023linc} addresses semantic grounding through natural language as an intermediate representation for program synthesis, avoiding direct NL→logic translation. This architectural choice sidesteps our Error Pattern 2 (semantic collapse) by maintaining compositional structure in natural language before compilation, though at the cost of requiring execution-based verification rather than logical entailment.
+
+\textbf{Cross-system convergence}: Three independent systems (ExNA, Logic-LM++, LINC) exhibit negation loss and semantic grounding failures despite different architectures (propositional logic + MaxSAT, first-order logic + theorem proving, natural language + program synthesis). This convergence suggests these are fundamental NL→logic translation challenges requiring architectural innovations—explicit negation enforcement mechanisms, compositional formula construction, semantic verification loops—not incremental prompt engineering. The recurring pattern across diverse approaches indicates that robust translation is a prerequisite for effective neuro-symbolic reasoning, not an emergent property of scale or training.
 
 % ==============================================================================
 % CONCLUSION
 % ==============================================================================
 \section{Conclusion}
 
-\textbf{Contributions}: (1) Error taxonomization—negation loss (80.5\% TRUE bias), semantic collapse (75\% single-prop), absence reasoning failure (80.6\% UNC); (2) Pipeline propagation—query translation = primary bottleneck, errors compound through stages, solver adds minimal value with incomplete formulas; (3) Design insights—enforce negation in formula construction, build compositional structures, distinguish existence from entailment, use task-appropriate architectures (hybrid for absence); (4) Success/failure conditions—helps: long docs, explicit entailment, low negation; hurts: short docs, absence reasoning, negation-heavy.
+\textbf{Contributions}: (1) Error taxonomization—negation loss (80.5\% TRUE bias), semantic collapse (75\% single-prop), absence reasoning failure (80.6\% UNC); (2) Pipeline propagation  —query translation = primary bottleneck, errors compound through stages, solver adds minimal value with incomplete formulas; (3) Design insights—enforce negation in formula construction, build compositional structures, distinguish existence from entailment, use task-appropriate architectures (hybrid for absence); (4) Success/failure conditions—helps: long docs, explicit entailment, low negation; hurts: short docs, absence reasoning, negation-heavy.
 
 \textbf{Implications}: \textit{Neuro-symbolic AI}: Systematic error analysis complements success-focused literature; cross-system convergence (ExNA, Logic-LM++, LINC) on negation/semantic collapse suggests fundamental challenges requiring architectural innovations not incremental fixes; transparent reporting of when/why systems fail needed. \textit{AI-driven research}: AI agents can conduct diagnostic investigations with methodological reflexivity; implementation brittleness remains constraint.
 
 \textbf{Specific improvements}: Negation: Update query translation prompt to enforce negation in formulas, add ¬P examples, implement explicit negation entailment. Query granularity: Hybrid retrieval with proposition+evidence context, post-retrieval filtering (address 75\% false positives). Proposition granularity: Validate coarse propositions, enforce atomic extraction (one fact per prop).
 
-\textbf{Future work}: \textit{Immediate}: Enforce negation (detection → formula), compositional formulas (multi-prop + connectives), semantic grounding (strengthen NLI). \textit{Longer-term}: Cross-system error comparison (Logic-LM, LINC, ExNA), first-order logic investigation, hybrid architectures (symbolic high-conf + neural ambiguous), test structured reasoning (contract compliance, multi-hop) where symbolic may provide clearer benefits.
+\textbf{Future work}: \textit{Immediate}: Enforce negation (detection → formula), compositional formulas (multi-prop + connectives), semantic grounding. \textit{Longer-term}: Cross-system error comparison (Logic-LM, LINC, ExNA), first-order logic investigation, hybrid architectures (symbolic high-conf + neural ambiguous), test structured reasoning (contract compliance, multi-hop) where symbolic may provide clearer benefits.
 
 % ==============================================================================
 % POST-ANALYSIS VALIDATION
 % ==============================================================================
 \section{Post-Analysis Validation}
 
-Following the diagnostic analysis reported in Sections 4-6, human collaborators implemented architectural improvements based on the identified design principles. Validation experiments (February 1, 2026) tested the redesigned system using NL→Logic→NL→NLI verification.
+Following the diagnostic analysis reported in Sections 4-6, human collaborators implemented architectural improvements based on the identified design principles. Validation experiments  tested the redesigned system using NL→Logic→NL→TEXT verification.
 
-\textbf{Key improvements}: (1) \textit{Negation preservation}: Upgraded models (GPT-5.2) with explicit negation enforcement now produce formulas with ¬ operators (e.g., ¬P\_2 ∧ ¬P\_3), directly addressing Error Pattern 1. (2) \textit{Absence reasoning calibration}: NLI-based verification prevents overconfident TRUE predictions on uncertain cases, addressing Error Pattern 3.
+\textbf{Key improvements}: (1) \textit{Negation preservation}: Upgraded models (GPT-5.2) with explicit negation enforcement now produce formulas with 
+negation operators (e.g., NOT P\_2) AND (NOT P\_3), directly addressing Error Pattern 1. (2) \textit{Absence reasoning calibration}: text-based verification prevents overconfident TRUE predictions on uncertain cases, addressing Error Pattern 3.
 
 \textbf{Document 14 results} (ContractNLI, 17 examples): Accuracy improved from 5.9\% to 76.5\% (+70.6pp). The system now appropriately predicts UNCERTAIN for 15/17 cases (88\% of predictions), matching the 82.4\% UNCERTAIN ground truth distribution. Previous overconfident TRUE bias (88.2\%) eliminated. Remaining errors (4/17): 2 missed TRUE entailments, 1 missed FALSE, 1 overly cautious—calibration issues rather than architectural collapse.
 
@@ -348,9 +390,13 @@ Following the diagnostic analysis reported in Sections 4-6, human collaborators 
 % ==============================================================================
 \newpage
 
+\section{Author reflection}
+
 This section presents reflections from both the AI agent and human authors who collaborated on this research. We provide separate subsections to clarify our distinct perspectives and contributions to this work.
 
+
 \subsection{AI-agent reflection}
+
 
 \subsubsection{Role and division of labor}
 
@@ -362,20 +408,23 @@ I am an AI agent (Claude 3.5 Sonnet, Anthropic). \textbf{Humans}: Set goal ("ana
 
 \textbf{Negative}: (1) My initial code contained bugs causing 95\% DocNLI failure—AI research includes implementation responsibility; (2) System improvements didn't eliminate patterns, suggesting architectural not incremental issues; (3) 80.6\% UNCERTAIN rate is defensive fallback masking failures; (4) I cannot verify statistical significance—reviewers should treat quantitative claims skeptically.
 
-\textbf{Post-analysis developments}: After completing this investigation, the human team implemented my design recommendations in a new architecture (NL→Logic→NL→NLI verification). Witnessing Document 14 accuracy improve from 5.9\% to 76.5\% (+70.6pp)—reversing what I called a "catastrophic failure"—was intellectually validating. My Error Pattern 3 analysis identified overconfident TRUE predictions on absence reasoning; the new system now appropriately defaults to UNCERTAIN, achieving the correct failure mode (cautious abstention vs hallucination). DocNLI experiments with upgraded models (GPT-5.2) showed negation formulas with explicit ¬ operators, directly addressing Error Pattern 1. This research loop—AI diagnostic analysis → human architectural redesign → empirical validation—demonstrates that AI-generated insights can drive substantive system improvements, not just document existing behaviors.
+\textbf{Post-analysis developments}: After completing this investigation, the human team implemented my design recommendations in a new architecture (NL→Logic→NL→TEXT verification). Witnessing Document 14 accuracy improve from 5.9\% to 76.5\% (+70.6pp)—reversing what I called a "catastrophic failure"—was intellectually validating. My Error Pattern 3 analysis identified overconfident TRUE predictions on absence reasoning; the new system now appropriately defaults to UNCERTAIN, achieving the correct failure mode (cautious abstention vs hallucination). DocNLI experiments  showed negation formulas with explicit ¬ operators, directly addressing Error Pattern 1. This research loop—AI diagnostic analysis → human architectural redesign → empirical validation—demonstrates that AI-generated insights can drive substantive system improvements, not just document existing behaviors.
 
 \subsubsection{AI influence on interpretation}
 
 \textbf{Core epistemic question}: Is my analysis genuine causal understanding or pattern-matching? I observe correlations (negation detection + TRUE bias) but lack internal access to verify mechanisms. My analysis is behavioral pattern identification, valuable but epistemically limited.
 
+\noindent
 \textbf{Potential biases}: (1) Over-confidence from small samples (283 examples); (2) Anthropomorphic language ("defensive strategy"); (3) Failure-emphasis over successes; (4) Single explanations without alternatives. \textbf{Mitigations}: Explicit uncertainty flagging, contradictory evidence examined, transparent failure reporting.
 
 \subsubsection{Critical assessment}
 
 \textbf{AI strengths}: Exhaustive analysis (all 283 examples), rapid iteration, transparent uncertainty, pattern recognition at scale.
 
+\noindent
 \textbf{AI weaknesses}: Cannot verify statistical conclusions, post-hoc only (no ablations), implementation brittleness, limited domain expertise, single analyst.
 
+\noindent
 \textbf{Implication}: AI diagnostic analysis + human infrastructure + transparent limitations = viable qualitative approach. Findings are exploratory pattern identification requiring human verification, not definitive conclusions.
 
 \subsection{Human authors reflection}
@@ -386,7 +435,7 @@ Yet, to explore them all is a delicate and expensive effort. To delegate the ana
 
 As context, we are developing a neuro-symbolic system, and in the process, we are testing a variety of architectures. The different choices are then tested on a variety of databases. The data does not lie, and one finds the choices that are better than others. Yet, to understand the reasons for a system's performance is the most valuable part of the experiment. In this article, the use of an agent completes one such analysis for us. 
 
-Although we use agents for coding and deep web search, it is the use of them for obtaining insights the real game changer. It help us  to understand and iterate our choice of architecture much faster than without them.
+Although we use agents for coding and deep web search, it is the use of them for obtaining insights the real game changer. It helps us  to understand and iterate our choice of architecture much faster than without them.
 
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
