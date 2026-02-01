@@ -176,20 +176,7 @@ These questions focus on diagnostic analysis rather than final system evaluation
 
 \subsection{Justification for qualitative diagnostic approach}
 
-This investigation employs \textbf{qualitative diagnostic analysis} rather than quantitative hypothesis testing. The research goal is not to evaluate whether ExNA achieves acceptable performance (it demonstrably does not—underperforming RAG by 19.5-54.0pp), but rather to understand \textit{why} it fails and under what conditions. This aligns with qualitative methodology's strengths: pattern discovery, exploratory investigation, and theory generation from observed phenomena.
-
-\textbf{Why qualitative methodology is appropriate}:
-\begin{enumerate}
-\item \textbf{Exploratory goal}: The research seeks to discover and taxonomize error patterns, not test pre-specified hypotheses. We did not know \textit{a priori} that negation loss, semantic collapse, and absence reasoning would emerge as systematic patterns.
-
-\item \textbf{Pattern identification over statistical inference}: The focus is on identifying \textit{what} types of errors occur and \textit{how} they propagate through the pipeline, rather than proving statistical significance. A single well-documented error pattern (e.g., negation stripped despite detection) provides actionable design insight regardless of p-values.
-
-\item \textbf{Contextual understanding}: Qualitative analysis enables examination of specific examples (e.g., Document 14 catastrophic failure vs. Document 7 success) to understand \textit{conditions} under which systems succeed or fail, rather than reporting aggregate metrics alone.
-
-\item \textbf{Theory generation}: The investigation generates design principles and architectural insights (e.g., "query translation is the primary bottleneck") grounded in systematic observation, contributing to theory development for neuro-symbolic AI.
-\end{enumerate}
-
-\textbf{What this methodology cannot provide}: Causal claims ("negation detection \textit{causes} X"), statistical generalization beyond the observed datasets, or definitive performance comparisons. The findings are bounded by the available data (13 ContractNLI documents, 62 DocNLI examples) and are intended to inform ongoing development, not make universal claims.
+\textbf{Qualitative diagnostic analysis} examines \textit{why} ExNA fails (underperforms 19.5-54.0pp), not \textit{whether}. Justified: (1) Exploratory pattern discovery—negation loss, collapse, absence emerged not a priori; (2) Pattern identification prioritized—errors provide insights regardless p-values; (3) Contextual understanding (Doc 14 vs 7) reveals conditions; (4) Theory generation via systematic observation. \textbf{Cannot provide}: Causal claims, generalization beyond 283 examples.
 
 \subsection{Research design: Post-hoc analysis of existing experimental data}
 
