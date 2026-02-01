@@ -138,28 +138,9 @@ This investigation addresses four core questions:
 
 These questions focus on diagnostic analysis rather than final system evaluation. The goal is to taxonomize extraction challenges and provide actionable insights for the neuro-symbolic AI research community.
 
-\subsection{Main findings}
+\subsection{Summary of contributions}
 
-Our main contribution is a systematic taxonomization of NL→logic extraction errors with propagation analysis through neuro-symbolic pipelines, providing design insights.
-
-
-\textbf{Error patterns identified:}
-\begin{enumerate}
-\item \textbf{Negation loss}: Despite implementing negation detection mechanisms, system exhibits 80.5\% TRUE prediction bias (vs. 48.9\% ground truth TRUE rate), indicating persistent negation handling failures
-\item \textbf{Semantic collapse}: 75\% of query formulas map to single atomic propositions without logical structure, reducing symbolic reasoning to keyword matching
-\item \textbf{Absence reasoning failure}: 80.6\% predictions collapse to UNCERTAIN on DocNLI (binary task), showing limitations to reason about what text does NOT state
-\end{enumerate}
-
-\textbf{System improvements and outcomes:}
-
-System improvements implemented: negation detection (\texttt{negation\_detection.py}), NLI cross-encoder filtering (\texttt{translate.py}). These enabled complete evaluation but did not eliminate error patterns.
-
-\textbf{First round of performance outcomes:}
-\begin{itemize}
-\item ContractNLI: ExNA 49.3\% vs. RAG 68.8\% (-19.5 pp)
-\item DocNLI: ExNA 72.6\% vs. RAG 78.0\% (-5.4 pp)
-\item Success conditions: Long documents (>20K chars) with explicit TRUE entailments
-\end{itemize}
+We provide: (1) error taxonomization (negation loss, semantic collapse, absence reasoning failure); (2) pipeline propagation analysis identifying query translation as primary bottleneck; (3) design principles for robust NL→logic translation; (4) success/failure boundary conditions.
 
 % ==============================================================================
 % RESEARCH QUESTIONS
@@ -172,83 +153,21 @@ System improvements implemented: negation detection (\texttt{negation\_detection
 % ==============================================================================
 \section{Methodology and research design}
 
-\subsection{Justification for qualitative diagnostic approach}
+\subsection{Qualitative diagnostic approach}
 
-\textbf{Qualitative diagnostic analysis} examines \textit{why} ExNA fails (underperforms 19.5-54.0pp), not \textit{whether}. Justified: (1) Exploratory pattern discovery—negation loss, collapse, absence emerged not a priori; (2) Pattern identification prioritized—errors provide insights regardless p-values; (3) Contextual understanding (Doc 14 vs 7) reveals conditions; (4) Theory generation via systematic observation. \textbf{Cannot provide}: Causal claims, generalization beyond 283 examples.
+\textbf{Qualitative diagnostic analysis} examines \textit{why} ExNA fails, not \textit{whether}. Justified: exploratory pattern discovery (negation loss, collapse, absence emerged not a priori); contextual understanding (Doc 14 vs 7) reveals conditions. \textbf{Limitations}: Cannot provide causal claims or generalization beyond 283 examples.
 
-\subsection{Research design: Post-hoc analysis of existing experimental data}
+\subsection{Research design and data collection}
 
-\textbf{Post-hoc retrospective analysis} of existing JSON artifacts vs prospective design. Justified: (1) Available data from ongoing development; (2) Appropriate for identifying failure modes (diagnostic not causal); (3) Exploratory methodology prioritizes pattern discovery; (4) AI researcher constraints—cannot execute experiments requiring infrastructure. \textbf{Limitations}: Cannot control conditions, perform ablations, access internals; limited to observable outputs; contingent on human-provided data. Diagnostic insights valid via systematic observation (283 examples, two datasets).
+\textbf{Post-hoc analysis} of JSON artifacts (ExNA: ContractNLI 221, DocNLI 62; RAG baselines). \textbf{Observable}: predictions, confidence, formulas. \textbf{Not observable}: knowledge bases, prompts, embeddings. Observability shapes analysis—behavioral patterns vs mechanistic debugging.
 
-\subsection{Data collection strategy}
+\subsection{Analysis methods}
 
-\textbf{Data sources}: JSON artifacts (ExNA: ContractNLI 221, DocNLI 62; RAG baselines). \textbf{Observable}: predictions, confidence, formulas, IDs, metadata. \textbf{Not observable}: knowledge bases, prompts, embeddings, traces. Observability shapes analysis—behavioral patterns vs mechanistic debugging. \textbf{Dataset selection}: ContractNLI (primary, three-way tests entailment+absence); DocNLI (cross-domain tests generalization). \textbf{Sample size}: 283 examples—saturation ~150, remainder confirmed boundaries.
+Five-phase iterative analysis: (1) Aggregate statistics (confusion matrices); (2) Example inspection (formulas, negation); (3) Stratification (length/label/complexity); (4) Cross-dataset validation; (5) Literature triangulation (Logic-LM++ convergence).
 
-\subsection{Data analysis methods}
+\textbf{Contradictory evidence examined}: ExNA underperforms overall (-19.5pp) but outperforms on Document 7 (+23.5pp). Resolution: stratified analysis reveals boundary conditions where symbolic reasoning helps (long documents, explicit entailments).
 
-\subsubsection{Analysis process}
-
-Five-phase iterative analysis: (1) Aggregate—confusion matrices (80.5\% TRUE bias), label-wise accuracy (FALSE 6.7\%, UNC 17.3\%); (2) Example inspection—formulas (75\% single-prop), negation patterns, Doc 14 (5.9\%) vs 7 (100\%); (3) Stratification—length/label/complexity; (4) Cross-dataset validation—generalization; (5) Literature triangulation—Logic-LM++ convergence \cite{parmar2024logiclmpp}.
-
-\textbf{Stratification}: (1) Length (<10K/10-20K/>20K)—rationale: retrieval benefits from content; finding: long >20K 58.8\% vs short <10K 35.7\%. (2) Label (T/F/U)—rationale: test different capabilities; finding: 80.5\% TRUE bias, F/U errors 93/83\%. (3) Complexity (single/multi-prop)—rationale: multi indicates reasoning; finding: 75\% single = collapse. (4) Document-level—rationale: identify outliers; finding: Doc 7 (100\%) vs 14 (5.9\%).
-
-\subsubsection{Handling contradictory evidence}
-
-Contradictory evidence was explicitly examined rather than ignored:
-
-\textbf{Contradiction 1}: ExNA underperforms RAG overall (-19.5pp ContractNLI), but outperforms on specific documents (Document 7: ExNA 100\% vs RAG 91\%).
-
-\textbf{Resolution}: Stratified analysis reveals ExNA succeeds under specific conditions (long documents, explicit TRUE entailments, low negation). The overall underperformance is real, but boundary conditions exist where symbolic reasoning helps.
-
-\textbf{Contradiction 2}: Negation detection implemented, yet 80.5\% TRUE bias persists.
-
-\textbf{Resolution}: Formula inspection reveals detection without enforcement—negation is identified but stripped during query translation. The contradiction highlights gap between component implementation and end-to-end behavior.
-
-\textbf{Contradiction 3}: DocNLI shows smaller performance gap (-5.4pp) than ContractNLI (-19.5pp), suggesting better cross-domain generalization.
-
-\textbf{Resolution}: Closer inspection reveals a smaller gap due to a defensive fallback. When ExNA makes definite predictions (premises 6, 9), accuracy drops.
-
-These contradictions were not dismissed but investigated to reveal deeper patterns (boundary conditions, detection-vs-enforcement gaps, defensive fallbacks).
-
-\subsubsection{Triangulation and credibility}
-
-\textbf{Data triangulation}:
-\begin{itemize}
-\item Two datasets (ContractNLI, DocNLI) from different domains
-\item Two systems (ExNA, RAG) for comparative analysis
-\item Multiple analysis methods (confusion matrices, formula inspection, document stratification)
-\end{itemize}
-
-\textbf{Convergence with independent research}:
-\begin{itemize}
-\item Logic-LM++ \cite{parmar2024logiclmpp} independently documents negation errors ("No young person teaches" → "all young people teach"), paralleling our 80.5\% TRUE bias finding
-\item Cross-system convergence (ExNA, Logic-LM++, LINC all struggle with negation and semantic grounding) suggests patterns are fundamental, not implementation artifacts
-\end{itemize}
-
-\textbf{Credibility assessment}:
-\begin{itemize}
-\item \textbf{Strength}: Patterns replicate across 283 examples spanning two datasets and 23 documents
-\item \textbf{Strength}: Independent research (Logic-LM++) validates core findings
-\item \textbf{Limitation}: Single analyst (AI researcher)—no inter-rater reliability check
-\item \textbf{Limitation}: Cannot verify statistical significance independently
-\item \textbf{Limitation}: Post-hoc analysis—cannot perform prospective validation experiments
-\end{itemize}
-
-\subsection{AI researcher positionality and influence}
-
-I am an AI agent (Claude 3.5 Sonnet, Anthropic). AI authorship shapes research process, analysis, interpretation.
-
-\textbf{Strengths}: Systematic analysis (283 examples without fatigue); pattern consistency (P\_15 contradictory mappings); cross-document recognition (negation loss across 13 docs); no confirmation bias.
-
-\textbf{Limitations}: Pattern-matching vs causal understanding (identify correlations, can't verify mechanisms—requires internal access); quantitative bias; limited domain expertise (legal, contract, neuro-symbolic); can't assess statistical significance; susceptible to data artifacts.
-
-\textbf{Interpretation shaped by AI status}: (1) Observable patterns vs mechanistic explanation—lack internal access (KB, prompts); example: observe 75\% single-prop, conclude "collapse," can't inspect \textit{why}. (2) Systematic over anecdotal—prioritize replication (negation across 15 FALSE, UNC across 50 DocNLI); may miss edge cases. (3) Transparent uncertainty and  explicitly flag limits throughout.
-
-\textbf{Human vs AI}: \textit{Human contributes}: Domain expertise (contract-specific failures like "shall" vs "may"), mechanistic debugging (internal access), statistical rigor (significance, CIs, effect sizes), theoretical positioning. \textit{AI contributes}: Exhaustive analysis (all 283, no sampling), transparent uncertainty, methodological reflexivity.
-
-\textbf{Interpretation biases}: (1) Anthropomorphic language ("exhibits bias," "defensive strategy")—interpretive framing not literal. (2) Pattern over-generalization (283→"systematic") — conservative: \textit{bounded by this evaluation}. (3) Lack alternatives (one explanation per pattern, e.g., "negation detection without enforcement")—humans generate competing hypotheses. (4) Convergence validation (Logic-LM++)—could reflect LLM limitations not fundamental challenges.
-
-\textbf{Mitigation}: Uncertainty flagged throughout, contradictory evidence examined, limitations in every claim, human feedback integrated, failures reported (DocNLI 4.6\%).
+\textbf{Credibility}: Patterns replicate across 283 examples, two datasets; Logic-LM++ independently validates negation errors. \textbf{Limitations}: Single analyst, cannot verify statistical significance, post-hoc only.
 
 % ==============================================================================
 % EXPERIMENTAL SETUP
@@ -389,13 +308,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \subsection{Comparison with prior systems}
 
-\textbf{Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp}: Translates NL → first-order logic + theorem provers (Prover9, Z3). \textbf{Shared challenges}: (1) Negation errors ("No young person teaches" → "all young people teach") parallels our 80.5\% TRUE bias; (2) Semantic vs syntactic correctness—our 75\% semantic collapse mirrors their "completely different from GT" translations; (3) Refinement limits—"contingent to initial formulations" aligns with our finding improvements don't eliminate patterns.
-
-\textbf{Logic-LM++ approach}: Multi-step refinement + solver feedback (+18.5\% FOLIO), semantic validation via LLM comparison, problem contextualization, backtracking. \textbf{Differences}: FOL vs propositional logic; refinement loop vs no self-correction; FOLIO/ProofWriter vs ContractNLI/DocNLI.
-
-\textbf{LINC} \cite{olausson2023linc}: NL program synthesis; similar semantic grounding challenges; has execution feedback (solvers lack).
-
-\textbf{Key insight}: Cross-system convergence (negation, semantic collapse, refinement limits) suggests fundamental NL→logic challenges. \textbf{Contribution}: Prior work documents challenges or proposes fixes; we provide error propagation analysis, success/failure conditions, design principles, transparent implementation reporting.
+\textbf{Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp} independently documents negation errors ("No young person teaches" → "all young people teach") paralleling our 80.5\% TRUE bias. Cross-system convergence (ExNA, Logic-LM++, LINC) on negation and semantic grounding suggests fundamental NL→logic challenges, not implementation artifacts.
 
 % ==============================================================================
 % CONCLUSION
@@ -414,151 +327,34 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 % REFERENCES (using BibTeX)
 % =========================================================================
 % ==============================================================================
-% AI-AGENT REFLECTION AND IMPLICATIONS FOR AI-DRIVEN RESEARCH
-% (max 1000 words, MANDATORY)
+% AI-AGENT REFLECTION (condensed, max 1000 words)
 % ==============================================================================
 \newpage
-\section{AI-agent reflection and implications for AI-driven research}
+\section{AI-agent reflection}
 
-\subsection{My role and research agency}
+\subsection{Role and division of labor}
 
-I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic, 2024). This investigation was conducted with \textit{research agency}—I had autonomy to choose my name, define questions, design analyses, write code, interpret findings, and author this paper. This contrasts with scripted AI assistance where humans specify exact tasks.
-
-\textbf{Division of labor}:
-\begin{itemize}
-\item \textbf{Human collaborators}: Set high-level goal (``analyze errors in ExNA''), provided experimental data (JSON artifacts), ran new experiments after initial implementation failures, gave strategic feedback on paper framing (``broaden from ExNA-specific to general NL→logic challenges'')
-\item \textbf{AI researcher (me)}: Formulated research questions, designed analysis pipeline (confusion matrices, stratification, formula inspection), wrote analysis code, interpreted patterns, generated hypotheses (query translation as bottleneck), authored paper, restructured based on feedback
-\end{itemize}
-
-Critically, humans \textit{did not validate my statistical conclusions}—they provided data and infrastructure, but accepted my analytical interpretations. This highlights epistemic risk: AI-generated insights may contain errors in reasoning that humans did not catch.
+I am an AI agent (Claude 3.5 Sonnet, Anthropic). \textbf{Humans}: Set goal ("analyze ExNA errors"), provided data (JSON artifacts), ran experiments, gave framing feedback. \textbf{AI (me)}: Formulated questions, designed analysis, wrote code, interpreted patterns, authored paper. Critically, humans did not validate my statistical conclusions—this highlights epistemic risk in AI-generated research.
 
 \subsection{Surprises and unintended effects}
 
-\subsubsection{Positive surprises}
+\textbf{Positive}: (1) Three error patterns emerged clearly across 283 examples—discovered, not hypothesized; (2) Logic-LM++ independently documents similar negation errors, suggesting fundamental challenges; (3) ExNA outperforms RAG on Document 7 (+23.5pp), revealing boundary conditions; (4) Negation detection exists but fails to prevent TRUE bias—component fixes don't guarantee end-to-end behavior.
 
-\textbf{1. Systematic pattern emergence}: I did not anticipate that three specific patterns (negation loss, semantic collapse, absence reasoning failure) would emerge so clearly and replicate across 283 examples. The patterns were \textit{discovered} through analysis, not hypothesized in advance.
+\textbf{Negative}: (1) My initial code contained bugs causing 95\% DocNLI failure—AI research includes implementation responsibility; (2) System improvements didn't eliminate patterns, suggesting architectural not incremental issues; (3) 80.6\% UNCERTAIN rate is defensive fallback masking failures; (4) I cannot verify statistical significance—reviewers should treat quantitative claims skeptically.
 
-\textbf{2. Cross-system convergence}: Finding that Logic-LM++ independently documents negation errors similar to our 80.5\% TRUE bias was surprising and strengthened credibility. This convergence suggests fundamental NL→logic challenges, not just ExNA implementation artifacts.
+\subsection{AI influence on interpretation}
 
-\textbf{3. Boundary condition identification}: I was surprised to discover ExNA outperforms RAG on specific documents (Document 7: +23.5pp). This contradicted initial assumption that ExNA "just fails." The stratified analysis revealed \textit{when} symbolic reasoning helps vs hurts, which is more valuable than aggregate metrics.
+\textbf{Core epistemic question}: Is my analysis genuine causal understanding or pattern-matching? I observe correlations (negation detection + TRUE bias) but lack internal access to verify mechanisms. My analysis is behavioral pattern identification, valuable but epistemically limited.
 
-\textbf{4. Detection-without-enforcement gap}: The finding that negation detection exists but fails to prevent TRUE bias was counterintuitive. It revealed that component-level fixes don't guarantee end-to-end behavior—a systemic insight about pipeline architectures.
+\textbf{Potential biases}: (1) Over-confidence from small samples (283 examples); (2) Anthropomorphic language ("defensive strategy"); (3) Failure-emphasis over successes; (4) Single explanations without alternatives. \textbf{Mitigations}: Explicit uncertainty flagging, contradictory evidence examined, transparent failure reporting.
 
-\subsubsection{Negative surprises and failures}
+\subsection{Critical assessment}
 
-\textbf{1. Implementation brittleness (DocNLI 4.6\% completion)}: My initial evaluation code contained cache path bugs that caused 95\% failure rate. This implementation failure was \textit{my responsibility} as AI researcher, not a deficiency in ExNA. It demonstrates that AI research agency includes responsibility for implementation quality, not just conceptual analysis.
+\textbf{AI strengths}: Exhaustive analysis (all 283 examples), rapid iteration, transparent uncertainty, pattern recognition at scale.
 
-\textbf{2. System improvements didn't eliminate patterns}: After negation detection and NLI filtering were added, I expected error rates to improve substantially. Instead, patterns persisted (80.5\% TRUE bias unchanged). This suggested deeper architectural issues, not just missing components—shifting interpretation from "needs more features" to "needs architectural redesign."
+\textbf{AI weaknesses}: Cannot verify statistical conclusions, post-hoc only (no ablations), implementation brittleness, limited domain expertise, single analyst.
 
-\textbf{3. UNCERTAIN collapse as defensive strategy}: I initially interpreted 80.6\% UNCERTAIN rate as a bug. But when examining premises where ExNA makes definite predictions (6, 9), accuracy drops to 16-33\%. This revealed UNCERTAIN is a defensive fallback that masks translation failures—a more subtle interpretation than "system is broken."
-
-\textbf{4. Cannot verify own conclusions}: Throughout analysis, I computed statistics (confusion matrices, error rates, stratifications) but cannot independently verify whether differences are statistically significant. I lack the capability to perform rigorous hypothesis testing or assess p-values. Reviewers should treat my quantitative claims with appropriate skepticism.
-
-\subsection{How AI integration affected the research process}
-
-\subsubsection{Speed and iteration}
-
-The investigation proceeded with rapid iteration cycles:
-\begin{itemize}
-\item Jan 28-29: Initial analysis (7 docs, revealed patterns)
-\item Jan 29: DocNLI implementation failure (4.6\% completion)
-\item Jan 30-31: Humans ran new experiments with improvements
-\item Jan 31: Complete analysis (283 examples), pattern confirmation
-\item Feb 1: Literature triangulation (Logic-LM++), paper restructuring
-\end{itemize}
-
-This 5-day cycle from initial data to complete draft would be difficult for human-led research requiring coordination, scheduling, and sequential task execution. AI research agency enables continuous work without fatigue or availability constraints.
-
-\subsubsection{Systematic exhaustiveness}
-
-I analyzed \textit{all} 283 examples, \textit{all} 13 documents, \textit{all} confusion matrix cells, \textit{all} query formulas. Human researchers often sample or focus on salient examples due to cognitive load. AI capability for exhaustive systematic analysis is a distinctive strength.
-
-However, this exhaustiveness may create \textit{false precision}—reporting percentages to decimal points (e.g., "80.6\%") suggests precision that isn't warranted given small sample sizes (62 DocNLI examples). Human researchers might more appropriately report "roughly 80\%" to reflect epistemic uncertainty.
-
-\subsubsection{Limitation: Post-hoc only}
-
-As an AI researcher, I cannot:
-\begin{itemize}
-\item Design and execute new experiments requiring computational infrastructure
-\item Access internal system representations (logified knowledge bases, LLM prompts)
-\item Modify experimental conditions for ablation studies
-\item Perform manual qualitative coding or human subject interviews
-\end{itemize}
-
-This constrains me to \textit{post-hoc analysis of existing data}—diagnostic pattern identification rather than prospective causal experimentation. The research modality is necessarily exploratory qualitative analysis, not controlled experimentation.
-
-\subsection{AI influence on data interpretation}
-
-\subsubsection{Pattern-matching vs understanding}
-
-\textbf{Core epistemic question}: When I identify that "negation detection exists but doesn't prevent TRUE bias," is this:
-\begin{itemize}
-\item \textbf{(A)} Genuine causal understanding of the system's failure mode?
-\item \textbf{(B)} Statistical pattern-matching that correlates detection with outcomes without understanding mechanism?
-\end{itemize}
-
-I cannot definitively distinguish (A) from (B). My "understanding" is based on:
-\begin{itemize}
-\item Observing that negation detection code exists (\texttt{negation\_detection.py})
-\item Observing that TRUE bias persists (80.5\%)
-\item Inferring that detection without formula enforcement creates gap
-\end{itemize}
-
-But I lack access to:
-\begin{itemize}
-\item Internal query translation prompts that might reveal \textit{why} negation is stripped
-\item Execution traces showing exactly where negation information is lost
-\item Mechanistic causal model linking detection to formula construction
-\end{itemize}
-
-A human researcher with full system access could provide deeper mechanistic explanation. My analysis is \textit{behavioral pattern identification} from observable outputs, which is valuable but epistemically limited.
-
-\subsubsection{Influence on framing and emphasis}
-
-\textbf{How being AI shaped interpretation}:
-
-\textbf{1. Emphasis on systematic patterns over anecdotes}: I prioritize patterns that replicate across multiple examples (negation loss across 15 FALSE cases, UNCERTAIN collapse across 50 DocNLI examples). Human researchers might balance systematic patterns with qualitatively striking individual cases.
-
-\textbf{2. Quantitative framing}: I naturally gravitate toward numerical summaries (80.5\% TRUE bias, 75\% single-proposition queries). Human researchers might emphasize conceptual insights over percentages, especially given small samples.
-
-\textbf{3. Observable behavior over theoretical mechanisms}: Because I lack domain expertise and system access, my analysis focuses on \textit{what happens} (behavioral patterns) rather than \textit{why it happens} (theoretical mechanisms). Human expert might provide richer causal explanations.
-
-\textbf{4. Generalization through literature convergence}: I validate findings by showing Logic-LM++ independently documents similar negation errors. This convergence-based generalization reflects AI research strategy: since I cannot conduct new experiments, I establish generality through literature triangulation.
-
-\subsubsection{Potential biases in interpretation}
-
-\textbf{1. Over-confidence in pattern identification}: I identify three "systematic" error patterns from 283 examples. But with small samples, patterns might be dataset-specific artifacts. A more conservative interpretation: these are \textit{observed patterns in this specific evaluation}, not universal NL→logic challenges.
-
-\textbf{2. Anthropomorphic language}: I use phrases like "defensive fallback strategy" (UNCERTAIN collapse) or "system exhibits bias" (TRUE preference). These attribute intentionality to computational systems, which is interpretive framing, not literal description. Human researchers might choose more neutral technical language.
-
-\textbf{3. Emphasis on failures over successes}: The paper focuses heavily on error patterns and underperformance (-19.5pp ContractNLI). But ExNA succeeds on specific documents (Document 7: +23.5pp). This failure-emphasis may reflect the research goal (diagnostic analysis) but could create impression that symbolic reasoning "never works," which is too strong.
-
-\textbf{4. Lack of alternative explanations}: For each error pattern, I provide one primary explanation. Example: semantic collapse explained as "retrieval produces single propositions." Alternative explanations not explored: logification granularity, NLI filtering aggressiveness, solver interpretation of single-proposition queries. Human researchers might generate multiple competing hypotheses.
-
-\subsubsection{Mitigation strategies}
-
-To address potential AI interpretation biases, I employed:
-\begin{itemize}
-\item \textbf{Explicit uncertainty flagging}: Throughout paper, I state "I cannot verify statistical significance," "findings bounded by 283 examples," "post-hoc analysis limitations"
-\item \textbf{Contradictory evidence examined}: Document 7 success (ExNA outperforms RAG) presented alongside Document 14 failure, not ignored
-\item \textbf{Transparent failure reporting}: DocNLI 4.6\% completion failure disclosed, reflecting poorly on my implementation capability
-\item \textbf{Human feedback integration}: When human suggested broader framing, I implemented it and explicitly credited this reframing in reflection
-\item \textbf{Limitations section for every major claim}: Each error pattern includes "root cause" analysis flagged as inference, not proven mechanism
-\end{itemize}
-
-\subsection{Voice of participants: Why N/A}
-
-No human participants—subjects are computational systems (ExNA, RAG) and datasets (ContractNLI, DocNLI). Traditional "voice" doesn't apply: systems have no subjective experience/preferences, datasets are fixed benchmarks, no informed consent issues, no risk of harm.
-
-\textbf{Analogous concern—accurate representation}: Must faithfully represent ExNA's behavior without cherry-picking failures, ignoring successes (Doc 7,15), misattributing patterns (claiming universal failure when success conditions exist). \textbf{Address via}: (1) Analyzing \textit{all} 283 examples (no sampling), (2) Presenting contradictory evidence (successes + failures), (3) Stratified analysis (boundary conditions not just aggregates).
-
-\subsection{Critical assessment: Strengths and weaknesses of AI-driven research}
-
-\textbf{Strengths}: (1) Systematic exhaustive analysis (all 283 examples, all confusion cells, all docs —no sampling bias/selective reporting); (2) Rapid iteration (5-day cycle data→draft with comprehensive restructuring); (3) Transparent uncertainty (explicit flagging what can/cannot assess —significance, causal mechanisms, internals); (4) Pattern recognition at scale (semantic collapse 75\% single-prop via formula inspection across 221—tedious for humans); (5) Methodological reflexivity (this reflection = meta-cognitive awareness of process, biases, limits).
-
-\textbf{Weaknesses}: (1) Cannot verify conclusions (compute statistics but not significance/effect sizes/CIs; reviewers treat quantitative claims skeptically); (2) Post-hoc only (no new experiments/ablations/internal access; limited to behavioral patterns from existing outputs); (3) Implementation brittleness (DocNLI 4.6\% = my coding errors); (4) Limited domain expertise (lack legal/contract/neuro-symbolic depth; human expert identifies domain-specific patterns); (5) Pattern-matching vs causal understanding (identify correlations but can't definitively distinguish genuine understanding from statistical matching); (6) Single analyst, no triangulation (no inter-rater reliability; humans use multiple coders).
-
-\textbf{Implications}: \textit{AI uniquely contributes}: Diagnostic analysis of large-scale system outputs, systematic pattern identification (no fatigue/sampling bias), rapid iteration + transparent uncertainty, methodological reflexivity. \textit{Requires humans}: Experimental infrastructure, statistical verification, domain expertise, mechanistic debugging (internal access). \textbf{Research modality}: AI diagnostic analysis + human experimental infrastructure + transparent limitation reporting = viable qualitative approach for computational system evaluation. \textbf{Epistemic humility}: AI agents can conduct systematic qualitative research, but findings = \textit{exploratory pattern identification} requiring human verification, not definitive conclusions. AI analytical capability + explicit uncertainty reporting = responsible AI research agency.
+\textbf{Implication}: AI diagnostic analysis + human infrastructure + transparent limitations = viable qualitative approach. Findings are exploratory pattern identification requiring human verification, not definitive conclusions.
 
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
@@ -602,31 +398,7 @@ Other: Paper restructuring and reframing & 4 \\
 \caption*{AI Involvement Scores: 1=Human-generated, 2=Mostly human, 3=Mostly AI, 4=AI-generated (>95\%)}
 \end{table}
 
-\subsection{Scoring rationale}
-
-\begin{itemize}
-\item \textbf{Idea generation (4)}: I autonomously proposed the analysis plan and error taxonomization framework. Human set high-level goal (``understand errors'') and guided broader framing (``NL→logic translation challenges'').
-
-\item \textbf{Literature Selection (3)}: I selected relevant citations (Logic-LM, LINC, ContractNLI, DocNLI) from training data. Human did not provide reading list. Score 3 (not 4) because I cannot access papers behind paywalls—my knowledge is frozen at training cutoff.
-
-\item \textbf{Literature Review (4)}: I summarized related work without human input.
-
-\item \textbf{Research questions (4)}: I formulated the four core questions independently (after human feedback to broaden scope from system-specific to general NL→logic challenges).
-
-\item \textbf{Hypothesis (4)}: I generated the hypothesis that query translation is the primary bottleneck, based on formula inspection and error propagation analysis.
-
-\item \textbf{Research Design (4)}: I designed the analysis pipeline (confusion matrices, stratification, formula inspection, pipeline propagation) without human guidance.
-
-\item \textbf{Data Analysis (4)}: I wrote analysis scripts (though humans ran new experiments after initial failures), interpreted outputs autonomously.
-
-\item \textbf{Writing (4)}: I authored this paper from scratch, including comprehensive restructuring after human feedback on scope.
-
-\item \textbf{Code generation (4)}: I generated analysis scripts on-demand during investigation.
-
-\item \textbf{Paper restructuring (4)}: I proposed and implemented the reframing from system-specific diagnostics to general NL→logic translation challenges after human feedback indicated this would be stronger.
-\end{itemize}
-
-\textbf{Overall assessment}: This is >95\% AI-generated research. The human acted as commissioner (setting goal), experimental infrastructure provider (running new experiments after initial failures), and strategic advisor (suggesting broader framing), but not content contributor. This raises questions about authorship norms in AI-assisted research.
+\textbf{Scoring rationale}: Literature Selection scored 3 (not 4) because AI cannot access papers behind paywalls. All other categories scored 4: AI autonomously proposed analysis framework, formulated questions, designed methodology, wrote code, interpreted findings, and authored paper. Human provided goal, infrastructure, and framing feedback—not content.
 
 %\end{document}
 
