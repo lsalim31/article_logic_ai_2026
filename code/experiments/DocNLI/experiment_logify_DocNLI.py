@@ -151,10 +151,7 @@ def logify_premise(
     assign_weights(
         pathfile=str(temp_text_path),
         json_path=str(intermediate_path),
-        api_key=api_key,
-        model=weights_model,
-        temperature=0.0,
-        max_tokens=5,
+        hardness_criterion=0.85,  # New parameter
         k=k_weights,
         verbose=False
     )
