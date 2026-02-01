@@ -464,44 +464,17 @@ Throughout the analysis, I explicitly flag uncertainties and limitations (e.g., 
 % ==============================================================================
 \section{Experimental setup}
 
-\subsection{System descriptions}
+\subsection{Systems}
 
-\subsubsection{ExNA: neuro-symbolic system}
+\textbf{ExNA} (Experimental Neuro-symbolic Architecture): Three-stage pipeline—(1) LLM logification (docs → weighted propositional logic), (2) query translation (SBERT + NLI filtering → formulas), (3) MaxSAT solver (entailment). Improvements: negation detection, NLI cross-encoder.
 
-ExNA (Experimental Neuro-symbolic Architecture) is an experimental research prototype developed for this investigation that implements a neuro-symbolic framework for document reasoning. The system pipeline consists of:
-
-\begin{enumerate}
-\item \textbf{Logification}: An LLM extracts propositions from documents and converts them to weighted propositional logic formulas
-\item \textbf{Query translation}: Given a hypothesis, the system retrieves relevant propositions using SBERT semantic similarity and constructs a logical formula
-\item \textbf{Solver-based reasoning}: A MaxSAT solver evaluates entailment, checking if the knowledge base entails the query formula
-\end{enumerate}
-
-The system aims to separate document understanding (neural) from reasoning (symbolic), enabling reuse of logified knowledge bases for multiple queries.
-
-\textbf{System improvements (Jan 30-31, 2026):} Following initial failures, negation detection (\texttt{negation\_detection.py}) and NLI cross-encoder filtering (\texttt{translate.py}) were added to address identified error patterns.
-
-\subsubsection{RAG: neural baseline}
-
-The RAG baseline implements standard retrieval-augmented generation:
-\begin{enumerate}
-\item Chunk the document into passages
-\item Retrieve top-k passages most similar to the hypothesis (using SBERT)
-\item Prompt an LLM with retrieved passages and hypothesis, requesting TRUE/FALSE/UNCERTAIN prediction
-\end{enumerate}
-
-This represents a pure neural approach without explicit symbolic reasoning.
+\textbf{RAG}: Standard retrieval-augmented generation (SBERT + GPT-4, temp 0.0).
 
 \subsection{Datasets}
 
-\subsubsection{ContractNLI}
+\textbf{ContractNLI} \cite{koreeda2021contractnli}: Legal NLI. 13 docs, 221 pairs, 4.9K-29.8K chars. GT: TRUE 48.9\%, FALSE 6.8\%, UNC 44.3\%.
 
-ContractNLI \cite{koreeda2021contractnli} is a document-level natural language inference dataset for legal contracts. The dataset contains non-disclosure agreements paired with hypotheses about obligations and permissions (e.g., ``Receiving Party shall not disclose confidential information''). Each hypothesis is labeled TRUE (entailed), FALSE (contradicted), or UNCERTAIN (not mentioned).
-
-The final experimental data covers 13 documents (221 document-hypothesis pairs, 17 hypotheses per document). Document length ranges from 4,912 to 29,838 characters. Ground truth distribution: TRUE 48.9\%, FALSE 6.8\%, UNCERTAIN 44.3\%.
-
-\subsubsection{DocNLI}
-
-DocNLI \cite{yin2021docnli} is a document-level NLI benchmark spanning diverse domains beyond legal text. For cross-dataset validation, we filtered the test split for premises between 200-500 words, yielding 10 overlapping premises with 62 hypothesis pairs evaluated by both systems (21 entailment, 88 not-entailment mapped from original labels).
+\textbf{DocNLI} \cite{yin2021docnli}: Cross-domain NLI. 62 examples (56.9\% coverage), 200-500 word premises.
 
 \subsection{Experiments conducted}
 
