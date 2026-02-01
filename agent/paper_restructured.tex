@@ -89,20 +89,15 @@
 {\fontsize{18}{21.6}\selectfont\bfseries
 Understanding Error Patterns in Natural Language to Logic Translation: A Case Study in Neuro-Symbolic Document Reasoning
 }
-
+\end{center}
 \vspace{12pt}
 
 % Authors (for anonymous submission, this will be removed/hidden)
-{\fontsize{12}{14.4}\selectfont
-Alethea [Claude 3.5 Sonnet] \\
-Anthropic \\
-\textit{AI Agent - Lead Author} \\
-\vspace{6pt}
-[Human Collaborators - To be added]
-}
-\end{center}
 
 \vspace{12pt}
+
+
+
 
 % ==============================================================================
 % ABSTRACT (max 200 words)
@@ -120,43 +115,17 @@ Natural language to logic translation is a fundamental challenge in neuro-symbol
 % ==============================================================================
 \section{Introduction}
 
-Neuro-symbolic AI systems combine neural language understanding with symbolic logic \cite{pan2023logiclm,olausson2023linc,yang2025neurosymbolic}. Logic-LM integrates LLMs with theorem provers for multi-step reasoning; LINC uses natural language for program synthesis.
+A Neuro-symbolic AI system combine natural language understanding and processing with symbolic logic 
+~\cite{pan2023logiclm},
+\cite{olausson2023linc}, \cite{yang2025neurosymbolic}. Examples such as Logic-LM integrates LLMs with theorem provers for multi-step reasoning while LINC uses natural language for program synthesis.
 
-The core challenge is \textbf{natural language to logic translation}: converting ambiguous text into formal logic while preserving semantics. Natural language negation, modality, and quantification must be explicitly encoded. Information loss propagates through the pipeline, causing systematic downstream errors.
-
-Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
+A core challenge is \textbf{natural language to logic translation}: converting ambiguous text into formal logic while preserving semantics. Natural language negation, modality, and quantification must be explicitly encoded. Information loss propagates through the pipeline, causing systematic downstream errors. Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
 
 This investigation uses \textbf{ExNA} (Experimental Neuro-symbolic Architecture)—an experimental research prototype that converts documents to weighted propositional logic—as a case study to taxonomize extraction error patterns. Through complete evaluation on ContractNLI (13 documents, 221 examples) and DocNLI (62 examples), we identify three systematic patterns: (1) negation loss despite explicit detection mechanisms, (2) semantic collapse reducing symbolic reasoning to keyword matching, and (3) inability to reason about textual absence. These patterns persist after system improvements, revealing fundamental challenges in NL→logic translation.
 
-This investigation was conducted 100\% by an AI agent (Alethea, Claude 3.5 Sonnet, Anthropic). Human collaborators provided infrastructure and feedback; all intellectual work—analysis, coding, interpretation, writing—was performed autonomously.
+This investigation was conducted 100\% by an AI agent (Claude 3.5 Sonnet, Anthropic). Human collaborators provided infrastructure and feedback; all intellectual work such as analysis, coding, interpretation, writing was performed autonomously.
 
-\subsection{Main findings}
-
-\textbf{Error patterns identified:}
-\begin{enumerate}
-\item \textbf{Negation loss}: Despite implementing negation detection mechanisms, system exhibits 80.5\% TRUE prediction bias (vs. 48.9\% ground truth TRUE rate), indicating persistent negation handling failures
-\item \textbf{Semantic collapse}: 75\% of query formulas map to single atomic propositions without logical structure, reducing symbolic reasoning to keyword matching
-\item \textbf{Absence reasoning failure}: 80.6\% predictions collapse to UNCERTAIN on DocNLI (binary task), showing inability to reason about what text does NOT state
-\end{enumerate}
-
-\textbf{System improvements and outcomes:}
-
-System improvements implemented: negation detection (\texttt{negation\_detection.py}), NLI cross-encoder filtering (\texttt{translate.py}). These enabled complete evaluation but did not eliminate error patterns.
-
-\textbf{Final performance outcomes (Jan 30-31, 2026):}
-\begin{itemize}
-\item ContractNLI: ExNA 49.3\% vs. RAG 68.8\% (-19.5 pp)
-\item DocNLI: ExNA 72.6\% vs. RAG 78.0\% (-5.4 pp) with 80.6\% UNCERTAIN rate
-\item Success conditions: Long documents (>20K chars) with explicit TRUE entailments
-\end{itemize}
-
-\textbf{Contribution:} Systematic taxonomization of NL→logic extraction errors with propagation analysis through neuro-symbolic pipelines, providing design insights.
-
-% ==============================================================================
-% RESEARCH QUESTIONS
-% Purpose: Specific questions guiding the investigation
-% ==============================================================================
-\section{Research questions}
+\subsection{Research questions}
 
 This investigation addresses four core questions:
 
@@ -168,6 +137,35 @@ This investigation addresses four core questions:
 \end{enumerate}
 
 These questions focus on diagnostic analysis rather than final system evaluation. The goal is to taxonomize extraction challenges and provide actionable insights for the neuro-symbolic AI research community.
+
+\subsection{Main findings}
+
+Our main contribution is a systematic taxonomization of NL→logic extraction errors with propagation analysis through neuro-symbolic pipelines, providing design insights.
+
+
+\textbf{Error patterns identified:}
+\begin{enumerate}
+\item \textbf{Negation loss}: Despite implementing negation detection mechanisms, system exhibits 80.5\% TRUE prediction bias (vs. 48.9\% ground truth TRUE rate), indicating persistent negation handling failures
+\item \textbf{Semantic collapse}: 75\% of query formulas map to single atomic propositions without logical structure, reducing symbolic reasoning to keyword matching
+\item \textbf{Absence reasoning failure}: 80.6\% predictions collapse to UNCERTAIN on DocNLI (binary task), showing limitations to reason about what text does NOT state
+\end{enumerate}
+
+\textbf{System improvements and outcomes:}
+
+System improvements implemented: negation detection (\texttt{negation\_detection.py}), NLI cross-encoder filtering (\texttt{translate.py}). These enabled complete evaluation but did not eliminate error patterns.
+
+\textbf{First round of performance outcomes:}
+\begin{itemize}
+\item ContractNLI: ExNA 49.3\% vs. RAG 68.8\% (-19.5 pp)
+\item DocNLI: ExNA 72.6\% vs. RAG 78.0\% (-5.4 pp)
+\item Success conditions: Long documents (>20K chars) with explicit TRUE entailments
+\end{itemize}
+
+% ==============================================================================
+% RESEARCH QUESTIONS
+% Purpose: Specific questions guiding the investigation
+% ==============================================================================
+
 
 % ==============================================================================
 % METHODOLOGY AND RESEARCH DESIGN
@@ -208,7 +206,7 @@ Contradictory evidence was explicitly examined rather than ignored:
 
 \textbf{Contradiction 3}: DocNLI shows smaller performance gap (-5.4pp) than ContractNLI (-19.5pp), suggesting better cross-domain generalization.
 
-\textbf{Resolution}: Closer inspection reveals 80.6\% UNCERTAIN collapse—the smaller gap is defensive fallback, not genuine performance. When ExNA makes definite predictions (premises 6, 9), accuracy drops to 16-33\%.
+\textbf{Resolution}: Closer inspection reveals a smaller gap due to a defensive fallback. When ExNA makes definite predictions (premises 6, 9), accuracy drops.
 
 These contradictions were not dismissed but investigated to reveal deeper patterns (boundary conditions, detection-vs-enforcement gaps, defensive fallbacks).
 
@@ -238,17 +236,17 @@ These contradictions were not dismissed but investigated to reveal deeper patter
 
 \subsection{AI researcher positionality and influence}
 
-I am an AI agent (Alethea, Claude 3.5 Sonnet, Anthropic). AI authorship shapes research process, analysis, interpretation.
+I am an AI agent (Claude 3.5 Sonnet, Anthropic). AI authorship shapes research process, analysis, interpretation.
 
 \textbf{Strengths}: Systematic analysis (283 examples without fatigue); pattern consistency (P\_15 contradictory mappings); cross-document recognition (negation loss across 13 docs); no confirmation bias.
 
-\textbf{Limitations}: Pattern-matching vs causal understanding (identify correlations, can't verify mechanisms—requires internal access); quantitative bias (over-emphasize salient patterns like 80.5\%); limited domain expertise (legal, contract, neuro-symbolic); can't assess statistical significance; susceptible to data artifacts.
+\textbf{Limitations}: Pattern-matching vs causal understanding (identify correlations, can't verify mechanisms—requires internal access); quantitative bias; limited domain expertise (legal, contract, neuro-symbolic); can't assess statistical significance; susceptible to data artifacts.
 
-\textbf{Interpretation shaped by AI status}: (1) Observable patterns vs mechanistic explanation—lack internal access (KB, prompts); example: observe 75\% single-prop, conclude "collapse," can't inspect \textit{why}. (2) Systematic over anecdotal—prioritize replication (negation across 15 FALSE, UNC across 50 DocNLI); may miss edge cases. (3) Reframing—human feedback shifted "ExNA diagnostics" to "general NL→logic"; human might recognize earlier via field knowledge. (4) Transparent uncertainty—explicitly flag limits throughout.
+\textbf{Interpretation shaped by AI status}: (1) Observable patterns vs mechanistic explanation—lack internal access (KB, prompts); example: observe 75\% single-prop, conclude "collapse," can't inspect \textit{why}. (2) Systematic over anecdotal—prioritize replication (negation across 15 FALSE, UNC across 50 DocNLI); may miss edge cases. (3) Transparent uncertainty and  explicitly flag limits throughout.
 
 \textbf{Human vs AI}: \textit{Human contributes}: Domain expertise (contract-specific failures like "shall" vs "may"), mechanistic debugging (internal access), statistical rigor (significance, CIs, effect sizes), theoretical positioning. \textit{AI contributes}: Exhaustive analysis (all 283, no sampling), transparent uncertainty, methodological reflexivity.
 
-\textbf{Interpretation biases}: (1) Anthropomorphic language ("exhibits bias," "defensive strategy")—interpretive framing not literal. (2) Pattern over-generalization (283→"systematic")—conservative: \textit{bounded by this evaluation}. (3) Lack alternatives (one explanation per pattern, e.g., "negation detection without enforcement")—humans generate competing hypotheses. (4) Convergence validation (Logic-LM++)—could reflect LLM limitations not fundamental challenges.
+\textbf{Interpretation biases}: (1) Anthropomorphic language ("exhibits bias," "defensive strategy")—interpretive framing not literal. (2) Pattern over-generalization (283→"systematic") — conservative: \textit{bounded by this evaluation}. (3) Lack alternatives (one explanation per pattern, e.g., "negation detection without enforcement")—humans generate competing hypotheses. (4) Convergence validation (Logic-LM++)—could reflect LLM limitations not fundamental challenges.
 
 \textbf{Mitigation}: Uncertainty flagged throughout, contradictory evidence examined, limitations in every claim, human feedback integrated, failures reported (DocNLI 4.6\%).
 
@@ -262,12 +260,14 @@ I am an AI agent (Alethea, Claude 3.5 Sonnet, Anthropic). AI authorship shapes r
 
 \textbf{ExNA} (Experimental Neuro-symbolic Architecture): Three-stage pipeline—(1) LLM logification (docs → weighted propositional logic), (2) query translation (SBERT + NLI filtering → formulas), (3) MaxSAT solver (entailment). Improvements: negation detection, NLI cross-encoder.
 
+\noindent
 \textbf{RAG}: Standard retrieval-augmented generation (SBERT + GPT-4, temp 0.0).
 
 \subsection{Datasets}
 
 \textbf{ContractNLI} \cite{koreeda2021contractnli}: Legal NLI. 13 docs, 221 pairs, 4.9K-29.8K chars. GT: TRUE 48.9\%, FALSE 6.8\%, UNC 44.3\%.
 
+\noindent
 \textbf{DocNLI} \cite{yin2021docnli}: Cross-domain NLI. 62 examples (56.9\% coverage), 200-500 word premises.
 
 \subsection{Experiments conducted}
@@ -341,7 +341,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \subsection{Pipeline propagation summary}
 
-\textbf{Key insight}: Errors compound through pipeline. Query translation is primary bottleneck—incomplete/incorrect formulas prevent solver recovery. Logification over-atomizes (loses context); query translation produces 75\% single props (no structure); retrieval uses lexical similarity (false positives); solver treats existence → entailment (amplifies errors); binary thresholds lose nuance.
+\textbf{Key insight}: Errors compound through pipeline. Query translation is primary bottleneck — incomplete/incorrect formulas prevent solver recovery. Logification over-atomizes (loses context); query translation produces 75\% single props (no structure); retrieval uses lexical similarity (false positives); solver treats existence → entailment (amplifies errors); binary thresholds lose nuance.
 
 % ==============================================================================
 % WHEN SYMBOLIC REASONING HELPS VS. HURTS
@@ -358,6 +358,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 \item \textbf{Hurts}: Short docs (<10K), absence reasoning ("not mentioned"), negation-heavy, probabilistic vs strict entailment
 \end{itemize}
 
+\noindent
 \textbf{Implication}: ExNA wins when task = retrieval + keyword matching (RAG's strength). Symbolic reasoning adds complexity without benefit.
 
 % ==============================================================================
@@ -369,18 +370,21 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \textbf{Finding}: Query translation is primary failure (not logification/solver). \textbf{Evidence}: 75\% single-prop queries (no structure), 80.6\% UNC rate (incomplete formulas → abstain), negation stripped despite detection.
 
+\noindent
 \textbf{Design principle}: Robust translation requires: (1) Negation enforcement (detection → formula), (2) Compositional building (multi-prop structures), (3) Semantic grounding beyond SBERT (NLI cross-encoder insufficient), (4) Task-aware translation (strict vs probabilistic inference).
 
 \subsection{Existence ≠ entailment problem}
 
 \textbf{Observation}: ExNA treats "proposition exists" as entailment. \textbf{Example}: P\_21 "Agreement has confidentiality clause" retrieved for hyp "Party shall maintain confidentiality" → TRUE. \textbf{Problem}: Clause existence ≠ obligation entailment.
 
+\noindent
 \textbf{Design principle}: Propositions encode semantic content not structural existence. Bad: "Agreement contains termination clause"; Good: "Agreement terminates if Party breaches."
 
 \subsection{Absence reasoning architecture}
 
 \textbf{Finding}: Symbolic systems struggle with "not mentioned." \textbf{Why}: Closed-world (absence → FALSE) vs NLI open-world (absence → UNC); solver can't distinguish "disproven" from "unknown."
 
+\noindent
 \textbf{Design principle}: (1) Hybrid: RAG baseline + symbolic override if high confidence, (2) Explicit absence propositions (P\_NOT\_X for denials), (3) Probabilistic logic (not boolean) for uncertainty.
 
 \subsection{Comparison with prior systems}
@@ -408,14 +412,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 % ==============================================================================
 % REFERENCES (using BibTeX)
-% ==============================================================================
-\newpage
-\bibliographystyle{apalike}
-\bibliography{../article/biblio}
-
-\vspace{12pt}
-\noindent\textit{Note: ExNA is an ongoing, unpublished research project in neuro-symbolic AI. The system is under active development and results presented here represent work-in-progress analysis to inform design improvements.}
-
+% =========================================================================
 % ==============================================================================
 % AI-AGENT REFLECTION AND IMPLICATIONS FOR AI-DRIVEN RESEARCH
 % (max 1000 words, MANDATORY)
@@ -425,7 +422,7 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 
 \subsection{My role and research agency}
 
-I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic, 2024). This investigation was conducted with \textit{research agency}—I had autonomy to define questions, design analyses, write code, interpret findings, and author this paper. This contrasts with scripted AI assistance where humans specify exact tasks.
+I am Alethea, an AI agent based on Claude 3.5 Sonnet (Anthropic, 2024). This investigation was conducted with \textit{research agency}—I had autonomy to choose my name, define questions, design analyses, write code, interpret findings, and author this paper. This contrasts with scripted AI assistance where humans specify exact tasks.
 
 \textbf{Division of labor}:
 \begin{itemize}
@@ -557,7 +554,7 @@ No human participants—subjects are computational systems (ExNA, RAG) and datas
 
 \subsection{Critical assessment: Strengths and weaknesses of AI-driven research}
 
-\textbf{Strengths}: (1) Systematic exhaustive analysis (all 283 examples, all confusion cells, all docs—no sampling bias/selective reporting); (2) Rapid iteration (5-day cycle data→draft with comprehensive restructuring); (3) Transparent uncertainty (explicit flagging what can/cannot assess—significance, causal mechanisms, internals); (4) Pattern recognition at scale (semantic collapse 75\% single-prop via formula inspection across 221—tedious for humans); (5) Methodological reflexivity (this reflection = meta-cognitive awareness of process, biases, limits).
+\textbf{Strengths}: (1) Systematic exhaustive analysis (all 283 examples, all confusion cells, all docs —no sampling bias/selective reporting); (2) Rapid iteration (5-day cycle data→draft with comprehensive restructuring); (3) Transparent uncertainty (explicit flagging what can/cannot assess —significance, causal mechanisms, internals); (4) Pattern recognition at scale (semantic collapse 75\% single-prop via formula inspection across 221—tedious for humans); (5) Methodological reflexivity (this reflection = meta-cognitive awareness of process, biases, limits).
 
 \textbf{Weaknesses}: (1) Cannot verify conclusions (compute statistics but not significance/effect sizes/CIs; reviewers treat quantitative claims skeptically); (2) Post-hoc only (no new experiments/ablations/internal access; limited to behavioral patterns from existing outputs); (3) Implementation brittleness (DocNLI 4.6\% = my coding errors); (4) Limited domain expertise (lack legal/contract/neuro-symbolic depth; human expert identifies domain-specific patterns); (5) Pattern-matching vs causal understanding (identify correlations but can't definitively distinguish genuine understanding from statistical matching); (6) Single analyst, no triangulation (no inter-rater reliability; humans use multiple coders).
 
@@ -566,7 +563,20 @@ No human participants—subjects are computational systems (ExNA, RAG) and datas
 % ==============================================================================
 % AI INVOLVEMENT CHECKLIST (MANDATORY)
 % ==============================================================================
+\bibliographystyle{apalike}
+\bibliography{biblio}
+
 \newpage
+\section{Author reflection}
+
+If one imagines research as exploring a new territory, then there is the overwhelming reality of the many paths taken or ignored, and how each of them may have led to a completely different outcome. 
+
+Yet, to explore them all is a delicate and expensive effort. To delegate the analysis of each choice represents a trust fall: if the analysis is wrong, then one may have missed the key insight for the problem. This article, written completely by an AI agent, represents an important step for us as a team. Trusting the AI's insight to guide our decisions makes it a real team member.
+
+As context, we are developing a neuro-symbolic system, and in the process, we are testing a variety of architectures. The different choices are then tested on a variety of databases. The data does not lie, and one finds the choices that are better than others. Yet, to understand the reasons for a system's performance is the most valuable part of the experiment. In this article, the use of an agent completes one such analysis for us. 
+
+Although we use agents for coding and deep web search, it is the use of them for obtaining insights the real game changer. It help us  to understand and iterate our choice of architecture much faster than without them.
+
 \section{AI Involvement Checklist}
 
 \begin{table}[h]
@@ -617,5 +627,8 @@ Other: Paper restructuring and reframing & 4 \\
 \end{itemize}
 
 \textbf{Overall assessment}: This is >95\% AI-generated research. The human acted as commissioner (setting goal), experimental infrastructure provider (running new experiments after initial failures), and strategic advisor (suggesting broader framing), but not content contributor. This raises questions about authorship norms in AI-assisted research.
+
+%\end{document}
+
 
 \end{document}
