@@ -357,374 +357,128 @@ Initial (Jan 28-29): ContractNLI 7 docs revealed patterns; DocNLI 4.6\% completi
 
 \subsection{Error pattern 1: Negation loss despite detection mechanisms}
 
-\subsubsection{Symptom (ContractNLI)}
-
-Despite implementing explicit negation detection, system exhibits 80.5\% TRUE prediction bias (vs. 48.9\% ground truth TRUE rate). Confusion matrix reveals catastrophic failure on FALSE and UNCERTAIN cases:
+\textbf{Symptom}: 80.5\% TRUE bias vs 48.9\% GT TRUE rate. Confusion matrix: FALSE recall 6.7\% (1/15), UNC recall 17.3\% (17/98).
 
 \begin{table}[h]
 \centering
+\small
 \begin{tabular}{lccc}
 \toprule
-\textbf{Ground Truth} & \textbf{Pred TRUE} & \textbf{Pred FALSE} & \textbf{Pred UNC} \\
+\textbf{GT} & \textbf{Pred T} & \textbf{Pred F} & \textbf{Pred U} \\
 \midrule
 TRUE (108)   & 91 (84.3\%) & 4 & 13 \\
 FALSE (15)   & 13 (86.7\%) & 1 (6.7\%) & 1 \\
 UNC (98)     & 74 (75.5\%) & 7 & 17 (17.3\%) \\
 \bottomrule
 \end{tabular}
-\caption{ContractNLI confusion matrix showing catastrophic FALSE recall (6.7\%) and poor UNCERTAIN recall (17.3\%)}
+\caption{ContractNLI confusion: catastrophic FALSE/UNC recall}
 \end{table}
 
-\subsubsection{Example failure}
+\textbf{Example}: Hyp: "Agreement shall \textbf{not} grant rights" (GT: UNC) → retrieves P\_41 "Agreement grants rights exist" → Pred: TRUE (0.9 conf). \textbf{Error}: Negation detected but stripped; SBERT matches lexical similarity ignoring polarity.
 
-\textbf{Hypothesis}: ``Agreement shall \textbf{not} grant rights...''
+\textbf{Root cause}: (1) Detection without formula enforcement, (2) SBERT ignores polarity ("shall" ≈ "shall not"), (3) Propositions encode existence not semantics, (4) Solver treats existence → entailment.
 
-\textbf{Ground truth}: UNCERTAIN (not mentioned)
-
-\textbf{Retrieved}: P\_41 ``Agreement grants rights exist''
-
-\textbf{Prediction}: TRUE (confidence 0.9)
-
-\textbf{Error}: Negation detected but stripped during query translation; SBERT retrieval matches lexical similarity ignoring polarity
-
-\subsubsection{Root cause}
-
-\begin{enumerate}
-\item Negation detection implemented but not enforced in formula construction
-\item SBERT retrieval matches lexical similarity, ignoring polarity (``shall'' ≈ ``shall not'')
-\item Retrieved propositions assert clause existence, not semantic content
-\item Solver treats existence → entailment
-\end{enumerate}
-
-\subsubsection{Propagation through pipeline}
-
+\textbf{Pipeline propagation}:
 \begin{verbatim}
-Hypothesis: "Party shall NOT disclose..." [NEGATIVE]
-     ↓
-Query translation: P_21 [NO NEGATION OPERATOR]
-     ↓
-Retrieval: "Party discloses..." [POSITIVE MATCH]
-     ↓
-Solver: P_21 exists → TRUE [CONFIDENCE 0.9]
-     ↓
-Prediction: TRUE [WRONG - should be FALSE or UNCERTAIN]
+"Party shall NOT disclose" [NEG] → P_21 [NO ¬] 
+→ retrieves "Party discloses" [POS] → TRUE [WRONG]
 \end{verbatim}
 
 \subsection{Error pattern 2: Semantic collapse}
 
-\subsubsection{Symptom}
+\textbf{Symptom}: 75\% queries map to single atomic propositions. Examples: "Party may share with affiliates" → P\_21 (should be P\_share ∧ P\_affiliates); "Agreement terminates after 3 years" → P\_8 (should be P\_terminate ∧ P\_3years). \textbf{Missing}: Logical connectives (∧,∨,⟹), compositional structure, multi-proposition formulas.
 
-75\% of query formulas map to single atomic propositions (ContractNLI). Examples:
-\begin{itemize}
-\item ``Party may share with affiliates'' → \texttt{P\_21} (should be: \texttt{P\_share ∧ P\_affiliates})
-\item ``Agreement terminates after 3 years'' → \texttt{P\_8} (should be: \texttt{P\_terminate ∧ P\_3years})
-\item ``Receiving Party shall return materials'' → \texttt{P\_35} (should be: \texttt{P\_return ∧ P\_materials})
-\end{itemize}
-
-\textbf{What's missing}: Logical connectives (∧, ∨, ⟹), compositional structure, multiple relevant propositions.
-
-\textbf{Result}: Symbolic reasoning collapses to keyword retrieval. Solver just checks: ``Does proposition exist?''
-
-\subsubsection{Consequence}
-
-Same proposition maps to contradictory ground truths across queries. Example: P\_15 used for TRUE, FALSE, FALSE, UNCERTAIN cases. No actual logical inference occurs.
+\textbf{Result}: Symbolic reasoning → keyword retrieval. Solver checks "proposition exists?" not logical inference. \textbf{Consequence}: Same proposition (P\_15) maps to contradictory GT (TRUE, FALSE, FALSE, UNC)—no actual reasoning.
 
 \subsection{Error pattern 3: Absence reasoning failure}
 
-\subsubsection{Symptom (DocNLI)}
-
-80.6\% predictions default to UNCERTAIN (binary task requires TRUE/FALSE commitment):
-
-\begin{table}[h]
-\centering
-\begin{tabular}{lcc}
-\toprule
-\textbf{Label} & \textbf{Count} & \textbf{Percentage} \\
-\midrule
-TRUE       & 9/62  & 14.5\% \\
-FALSE      & 3/62  & 4.8\% \\
-UNCERTAIN  & 50/62 & 80.6\% ← PROBLEM \\
-\bottomrule
-\end{tabular}
-\caption{DocNLI prediction distribution showing UNCERTAIN collapse}
-\end{table}
-
-When system makes definite predictions (2 premises), accuracy collapses:
-\begin{itemize}
-\item Premise 6: 33.3\% accuracy (2/6 correct)
-\item Premise 9: 16.7\% accuracy (1/6 correct)
-\end{itemize}
-
-\textbf{Implication}: UNCERTAIN is a defensive fallback hiding translation failures.
-
-\subsubsection{Root cause}
-
-\begin{enumerate}
-\item Query translation produces incomplete formulas (e.g., \texttt{P\_1 ∧ P\_8 ∧ P\_13})
-\item Propositions partially support hypothesis but don't fully entail
-\item Solver returns confidence=0.5 → maps to UNCERTAIN
-\item System cannot distinguish ``insufficient evidence'' from ``evidence of absence''
-\end{enumerate}
-
-\subsubsection{Example}
-
-\textbf{Premise}: ``TSA kept \$675,000 in spare change...''
-
-\textbf{Hypothesis}: ``Airline passengers left behind almost \$675,000...''
-
-\textbf{Formula}: \texttt{P\_1 ∧ P\_8 ∧ P\_13} (incomplete—missing agency/temporal links)
-
-\textbf{Solver}: confidence=0.5 → UNCERTAIN
-
-\textbf{Ground truth}: entailment
-
-\textbf{Problem}: Task requires probabilistic inference (``likely true''), not strict entailment (``provably true'')
-
-\subsection{Pipeline stage breakdown summary}
+\textbf{Symptom (DocNLI)}: 80.6\% predictions → UNCERTAIN (binary task requires T/F). When definite predictions made (premises 6,9), accuracy drops to 16-33\%.
 
 \begin{table}[h]
 \centering
 \small
-\begin{tabular}{llll}
+\begin{tabular}{lcc}
 \toprule
-\textbf{Stage} & \textbf{Problem} & \textbf{Error Type} & \textbf{Impact} \\
+\textbf{Label} & \textbf{Count} & \textbf{\%} \\
 \midrule
-Logification & Over-atomization & Semantic & Loses context \\
-Query Translation & 75\% single props & Syntactic+Semantic & No structure \\
-Retrieval & Lexical similarity & Semantic & False positives \\
-Solver & Existence→entailment & Logical & Amplifies errors \\
-Mapping & Binary thresholds & Pragmatic & Loses nuance \\
+TRUE  & 9/62  & 14.5\% \\
+FALSE & 3/62  & 4.8\% \\
+UNC   & 50/62 & 80.6\% ← PROBLEM \\
 \bottomrule
 \end{tabular}
-\caption{Error propagation through neuro-symbolic pipeline}
+\caption{DocNLI: UNCERTAIN collapse}
 \end{table}
 
-\textbf{Key insight}: Errors compound through pipeline. Query translation is the primary bottleneck—if formulas are incomplete/incorrect, solver cannot recover.
+\textbf{Root cause}: (1) Incomplete formulas (P\_1 ∧ P\_8 ∧ P\_13—missing links), (2) Partial support without full entailment, (3) Solver returns conf=0.5 → UNC, (4) Cannot distinguish "insufficient evidence" from "evidence of absence."
+
+\textbf{Example}: Premise "TSA kept \$675k spare change" / Hyp "Passengers left \$675k" → formula P\_1∧P\_8∧P\_13 (incomplete: no agency/temporal) → conf=0.5 → UNC (GT: entailment). \textbf{Problem}: Task needs probabilistic inference ("likely"), not strict entailment ("provable").
+
+\subsection{Pipeline propagation summary}
+
+\textbf{Key insight}: Errors compound through pipeline. Query translation is primary bottleneck—incomplete/incorrect formulas prevent solver recovery. Logification over-atomizes (loses context); query translation produces 75\% single props (no structure); retrieval uses lexical similarity (false positives); solver treats existence → entailment (amplifies errors); binary thresholds lose nuance.
 
 % ==============================================================================
 % WHEN SYMBOLIC REASONING HELPS VS. HURTS
 % ==============================================================================
 \section{When does symbolic reasoning help versus hurt?}
 
-\subsection{Success conditions}
+\textbf{Success conditions}: Doc 7 (ContractNLI): ExNA 82.4\% vs RAG 58.8\% (+23.5pp)—long (29.8K chars), 76.5\% TRUE GT (aligns with bias), explicit entailment. Doc 15: +11.8pp. DocNLI premises 3,4,7: +12.5 to +42.9pp (100\% UNC rate masks errors, aligns with GT).
 
-\textbf{Document 7 (ContractNLI)}: ExNA 82.4\% vs. RAG 58.8\% (+23.5 pp)
+\textbf{Failure conditions}: Doc 14: ExNA 5.9\% vs RAG 76.5\% (-70.6pp, catastrophic)—short (5.5K chars), 82.4\% UNC GT (absence reasoning), 88.2\% TRUE predictions (overconfidence). Doc 19: -41.2pp. DocNLI premises 6,9: 16-33\% accuracy on definite predictions.
 
-Why it works:
+\textbf{Design insights}: 
 \begin{itemize}
-\item Long document (29,838 chars) → proposition-rich knowledge base
-\item High TRUE ground truth (76.5\%) → aligns with positive prediction bias
-\item Task: confirm explicit clauses (not reason about absence)
+\item \textbf{Helps}: Long docs (>20K), explicit entailment, GT aligns with positive bias, multi-clause hypotheses
+\item \textbf{Hurts}: Short docs (<10K), absence reasoning ("not mentioned"), negation-heavy, probabilistic vs strict entailment
 \end{itemize}
 
-\textbf{Document 15}: ExNA 70.6\% vs. RAG 58.8\% (+11.8 pp)
-
-\textbf{DocNLI Premises 3, 4, 7}: ExNA outperforms RAG by +12.5 to +42.9 pp (all have 100\% UNCERTAIN rate—defensive fallback masks errors but happens to align with ground truth)
-
-\subsection{Failure conditions}
-
-\textbf{Document 14 (ContractNLI)}: ExNA 5.9\% vs. RAG 76.5\% (-70.6 pp) ← CATASTROPHIC
-
-Why it fails:
-\begin{itemize}
-\item Short document (5,516 chars) → sparse propositions
-\item High UNCERTAIN ground truth (82.4\%) → requires absence reasoning
-\item ExNA predicts TRUE for 88.2\% (massive overconfidence)
-\end{itemize}
-
-\textbf{Document 19}: ExNA 35.3\% vs. RAG 76.5\% (-41.2 pp)
-
-\textbf{DocNLI Premises 6, 9}: ExNA accuracy drops to 16-33\% when making definite predictions
-
-\subsection{Design insights}
-
-\textbf{When neuro-symbolic helps}:
-\begin{itemize}
-\item ✅ Long, proposition-rich documents (>20K chars)
-\item ✅ Explicit entailment tasks (confirming stated facts)
-\item ✅ Ground truth aligns with system's positive bias
-\item ✅ Logical structure in hypotheses (multi-clause reasoning)
-\end{itemize}
-
-\textbf{When it hurts}:
-\begin{itemize}
-\item ❌ Short, sparse documents (<10K chars)
-\item ❌ Absence reasoning (``not mentioned'', ``does not state'')
-\item ❌ Negation-heavy content (``shall not'', ``prohibited'')
-\item ❌ Hypothesis requires probabilistic inference not strict entailment
-\end{itemize}
-
-\textbf{Implication}: ExNA's ``wins'' occur when task resembles retrieval + keyword matching (what RAG already does). Symbolic reasoning adds complexity without benefit.
+\textbf{Implication}: ExNA wins when task = retrieval + keyword matching (RAG's strength). Symbolic reasoning adds complexity without benefit.
 
 % ==============================================================================
 % DISCUSSION: DESIGN PRINCIPLES
 % ==============================================================================
 \section{Discussion: Design principles for robust NL→logic translation}
 
-\subsection{Architectural bottleneck: Query translation}
+\subsection{Query translation bottleneck}
 
-\textbf{Finding}: Query translation is the primary failure point, not logification or solver.
+\textbf{Finding}: Query translation is primary failure (not logification/solver). \textbf{Evidence}: 75\% single-prop queries (no structure), 80.6\% UNC rate (incomplete formulas → abstain), negation stripped despite detection.
 
-\textbf{Evidence}:
-\begin{itemize}
-\item 75\% single-proposition queries (no logical structure to reason over)
-\item 80.6\% UNCERTAIN rate (incomplete formulas → solver abstains)
-\item Negation stripped despite detection module
-\end{itemize}
+\textbf{Design principle}: Robust translation requires: (1) Negation enforcement (detection → formula), (2) Compositional building (multi-prop structures), (3) Semantic grounding beyond SBERT (NLI cross-encoder insufficient), (4) Task-aware translation (strict vs probabilistic inference).
 
-\textbf{Design principle}: Robust query translation requires:
-\begin{enumerate}
-\item Explicit negation enforcement (detection → formula construction)
-\item Compositional formula building (multi-proposition structures)
-\item Semantic grounding beyond SBERT similarity (NLI cross-encoder helps but insufficient)
-\item Task-aware translation (strict entailment vs. probabilistic inference)
-\end{enumerate}
+\subsection{Existence ≠ entailment problem}
 
-\subsection{The existence versus entailment problem}
+\textbf{Observation}: ExNA treats "proposition exists" as entailment. \textbf{Example}: P\_21 "Agreement has confidentiality clause" retrieved for hyp "Party shall maintain confidentiality" → TRUE. \textbf{Problem}: Clause existence ≠ obligation entailment.
 
-\textbf{Observation}: ExNA treats ``proposition exists in knowledge base'' as entailment.
+\textbf{Design principle}: Propositions encode semantic content not structural existence. Bad: "Agreement contains termination clause"; Good: "Agreement terminates if Party breaches."
 
-\textbf{Example}:
-\begin{itemize}
-\item Proposition P\_21: ``Agreement has confidentiality clause''
-\item Hypothesis: ``Party shall maintain confidentiality''
-\item System: P\_21 retrieved → TRUE
-\item \textbf{Problem}: Clause existence ≠ obligation entailment
-\end{itemize}
+\subsection{Absence reasoning architecture}
 
-\textbf{Design principle}: Propositions must encode semantic content, not structural existence.
-\begin{itemize}
-\item Bad: ``Agreement contains termination clause''
-\item Good: ``Agreement terminates if Party breaches''
-\end{itemize}
+\textbf{Finding}: Symbolic systems struggle with "not mentioned." \textbf{Why}: Closed-world (absence → FALSE) vs NLI open-world (absence → UNC); solver can't distinguish "disproven" from "unknown."
 
-\subsection{Absence reasoning requires different architecture}
+\textbf{Design principle}: (1) Hybrid: RAG baseline + symbolic override if high confidence, (2) Explicit absence propositions (P\_NOT\_X for denials), (3) Probabilistic logic (not boolean) for uncertainty.
 
-\textbf{Finding}: Symbolic systems struggle with ``not mentioned'' reasoning.
+\subsection{Comparison with prior systems}
 
-\textbf{Why}:
-\begin{itemize}
-\item Closed-world assumption: absence of proposition → FALSE
-\item But NLI tasks use open-world: absence → UNCERTAIN
-\item Solver cannot distinguish ``disproven'' from ``unknown''
-\end{itemize}
+\textbf{Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp}: Translates NL → first-order logic + theorem provers (Prover9, Z3). \textbf{Shared challenges}: (1) Negation errors ("No young person teaches" → "all young people teach") parallels our 80.5\% TRUE bias; (2) Semantic vs syntactic correctness—our 75\% semantic collapse mirrors their "completely different from GT" translations; (3) Refinement limits—"contingent to initial formulations" aligns with our finding improvements don't eliminate patterns.
 
-\textbf{Design principle}: For tasks requiring absence reasoning:
-\begin{enumerate}
-\item Hybrid architecture: RAG for base prediction, symbolic override only if high confidence
-\item Explicit ``absence propositions'': P\_NOT\_X to represent what text explicitly denies
-\item Probabilistic logic (not boolean) to handle uncertainty
-\end{enumerate}
+\textbf{Logic-LM++ approach}: Multi-step refinement + solver feedback (+18.5\% FOLIO), semantic validation via LLM comparison, problem contextualization, backtracking. \textbf{Differences}: FOL vs propositional logic; refinement loop vs no self-correction; FOLIO/ProofWriter vs ContractNLI/DocNLI.
 
-\subsection{Comparison with prior neuro-symbolic systems}
+\textbf{LINC} \cite{olausson2023linc}: NL program synthesis; similar semantic grounding challenges; has execution feedback (solvers lack).
 
-\textbf{Logic-LM and Logic-LM++} \cite{pan2023logiclm,parmar2024logiclmpp}: These systems translate natural language to first-order logic, then leverage theorem provers (Prover9, Z3) for symbolic reasoning. Logic-LM++ extends Logic-LM by adding semantic validation through LLM pairwise comparison and problem-contextualized refinement.
-
-\textbf{Shared challenges}:
-\begin{itemize}
-\item \textbf{Negation handling}: Logic-LM++ documents negation errors where LLMs translate ``No young person teaches'' as ``all young people teach'', paralleling our 80.5\% TRUE bias. This suggests negation loss is a general problem in NL→logic translation.
-\item \textbf{Semantic vs. syntactic correctness}: Logic-LM++ distinguishes formulations that are syntactically valid but semantically wrong. Our semantic collapse (75\% single propositions) mirrors their observation that translations can be ``completely different from ground truth''.
-\item \textbf{Refinement limitations}: Logic-LM++ notes systems are ``contingent to initial formulations''—if initial translations are wrong, fixing has limits. This aligns with our finding that improvements enable evaluation but don't eliminate patterns.
-\end{itemize}
-
-\textbf{How Logic-LM++ addresses these challenges}:
-\begin{enumerate}
-\item Multi-step refinement with solver feedback (18.5\% improvement over standard prompting on FOLIO)
-\item Semantic validation via LLM pairwise comparison
-\item Problem contextualization (replaces generic examples with problem-specific context)
-\item Backtracking when refinements don't improve semantic correctness
-\end{enumerate}
-
-\textbf{Architectural differences}:
-\begin{itemize}
-\item Logic-LM uses first-order logic vs. ExNA's propositional logic—more expressive but harder to translate
-\item Logic-LM++ implements refinement loop; ExNA has no self-correction
-\item Different benchmarks: FOLIO/ProofWriter (multi-hop reasoning) vs. ContractNLI/DocNLI (document-level NLI)
-\end{itemize}
-
-\textbf{Key insight}: Convergence across systems (negation, semantic collapse, refinement limits) suggests fundamental challenges in NL→logic translation. Our error taxonomization extends Logic-LM++'s work by analyzing error propagation through pipelines and identifying success and challenge conditions.
-
-\textbf{LINC} \cite{olausson2023linc}: Uses natural language for program synthesis. Reports semantic grounding challenges similar to both systems. Has execution feedback; solvers lack this diagnostic capability.
-
-\textbf{Contribution}: Prior work documents specific challenges or proposes refinements, but lacks systematic analysis. We provide: (1) error propagation through pipeline stages, (2) success and challenge conditions, (3) design principles, (4) transparent reporting of implementation challenges.
+\textbf{Key insight}: Cross-system convergence (negation, semantic collapse, refinement limits) suggests fundamental NL→logic challenges. \textbf{Contribution}: Prior work documents challenges or proposes fixes; we provide error propagation analysis, success/failure conditions, design principles, transparent implementation reporting.
 
 % ==============================================================================
 % CONCLUSION
 % ==============================================================================
 \section{Conclusion}
 
-\subsection{Summary of contributions}
+\textbf{Contributions}: (1) Error taxonomization—negation loss (80.5\% TRUE bias), semantic collapse (75\% single-prop), absence reasoning failure (80.6\% UNC); (2) Pipeline propagation—query translation = primary bottleneck, errors compound through stages, solver adds minimal value with incomplete formulas; (3) Design insights—enforce negation in formula construction, build compositional structures, distinguish existence from entailment, use task-appropriate architectures (hybrid for absence); (4) Success/failure conditions—helps: long docs, explicit entailment, low negation; hurts: short docs, absence reasoning, negation-heavy.
 
-\textbf{1. Error pattern taxonomization}:
-\begin{itemize}
-\item Negation loss (80.5\% TRUE bias despite negation detection)
-\item Semantic collapse (75\% single-proposition queries)
-\item Absence reasoning failure (80.6\% UNCERTAIN on binary task)
-\end{itemize}
+\textbf{Implications}: \textit{Neuro-symbolic AI}: Systematic error analysis complements success-focused literature; cross-system convergence (ExNA, Logic-LM++, LINC) on negation/semantic collapse suggests fundamental challenges requiring architectural innovations not incremental fixes; transparent reporting of when/why systems fail needed. \textit{AI-driven research}: AI agents can conduct diagnostic investigations with methodological reflexivity; implementation brittleness remains constraint.
 
-\textbf{2. Pipeline propagation analysis}:
-\begin{itemize}
-\item Query translation identified as primary bottleneck
-\item Errors compound through stages (translation → retrieval → solver)
-\item Solver adds minimal value when formulas are incomplete
-\end{itemize}
+\textbf{Specific improvements}: Negation: Update query translation prompt to enforce negation in formulas, add ¬P examples, implement explicit negation entailment. Query granularity: Hybrid retrieval with proposition+evidence context, post-retrieval filtering (address 75\% false positives). Proposition granularity: Validate coarse propositions, enforce atomic extraction (one fact per prop).
 
-\textbf{3. Design insights for robust NL→logic translation}:
-\begin{itemize}
-\item Enforce negation in formula construction, not just detection
-\item Build compositional structures (multi-proposition formulas)
-\item Distinguish proposition existence from semantic entailment
-\item Use task-appropriate architectures (hybrid for absence reasoning)
-\end{itemize}
-
-\textbf{4. Conditions for neuro-symbolic success/failure}:
-\begin{itemize}
-\item Helps: long documents, explicit entailment, low negation
-\item Hurts: short documents, absence reasoning, negation-heavy content
-\end{itemize}
-
-\subsection{Broader implications}
-
-\textbf{For neuro-symbolic AI research}:
-\begin{itemize}
-\item Systematic error analysis complements success-focused literature
-\item NL→logic translation remains a fundamental challenge—convergence of findings across systems (ExNA, Logic-LM++, LINC) on negation handling and semantic collapse suggests architectural innovations needed, not just incremental fixes
-\item Need for transparent reporting of when/why systems encounter challenges, including success and challenge conditions
-\end{itemize}
-
-\textbf{For AI-driven research}:
-\begin{itemize}
-\item AI agents can conduct diagnostic investigations with transparent reporting of challenges
-\item Combination of analytical capability + methodological reflexivity is viable
-\item Implementation brittleness remains a constraint (early attempts, recovery required)
-\end{itemize}
-
-\subsection{Specific improvements identified}
-
-Based on error analysis, specific improvements with exact implementation locations:
-
-\textbf{Negation handling}: Update query translation prompt to enforce negation in formula construction (not just detection); add contradiction-specific examples showing ¬P formulas; implement explicit negation entailment check before standard logic.
-
-\textbf{Query translation granularity}: Modify chunk encoding to include proposition translation + evidence context (hybrid retrieval); add post-retrieval filtering by evidence relevance to address 75\% false positive rate on UNCERTAIN cases.
-
-\textbf{Proposition granularity}: Add validation to detect overly coarse propositions; update logification prompt to enforce atomic proposition extraction (one fact per proposition); prevents same proposition mapping to contradictory labels.
-
-\subsection{Future work}
-
-\textbf{Immediate improvements}:
-\begin{enumerate}
-\item Enforce negation in query translation (detection → formula construction)
-\item Build compositional formulas (multi-proposition structures with logical connectives)
-\item Semantic grounding beyond lexical similarity (strengthen NLI cross-encoder integration)
-\end{enumerate}
-
-\textbf{Longer-term research}:
-\begin{enumerate}
-\item Compare error patterns across neuro-symbolic systems (Logic-LM, LINC, ExNA)
-\item Investigate first-order logic representation (more expressive, potentially fewer errors)
-\item Develop hybrid architectures (symbolic for high-confidence, neural for ambiguous cases)
-\item Test on structured reasoning tasks (contract compliance, multi-hop inference) where symbolic reasoning may provide clearer benefits
-\end{enumerate}
+\textbf{Future work}: \textit{Immediate}: Enforce negation (detection → formula), compositional formulas (multi-prop + connectives), semantic grounding (strengthen NLI). \textit{Longer-term}: Cross-system error comparison (Logic-LM, LINC, ExNA), first-order logic investigation, hybrid architectures (symbolic high-conf + neural ambiguous), test structured reasoning (contract compliance, multi-hop) where symbolic may provide clearer benefits.
 
 % ==============================================================================
 % REFERENCES (using BibTeX)
