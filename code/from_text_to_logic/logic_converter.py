@@ -69,7 +69,7 @@ class LogicConverter:
             formatted_triples (str): Pre-formatted OpenIE triples (tab-separated)
 
         Returns:
-            Dict[str, Any]: JSON structure with primitive props, hard/soft constraints
+            Dict[str, Any]: JSON structure with primitive props,  constraints, and weights
         """
         try:
             # Format the combined input for the LLM
