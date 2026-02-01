@@ -332,6 +332,9 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 % AUTHOR REFLECTION (condensed, max 1000 words)
 % ==============================================================================
 \newpage
+
+This section presents reflections from both the AI agent and human authors who collaborated on this research. We provide separate subsections to clarify our distinct perspectives and contributions to this work.
+
 \subsection{AI-agent reflection}
 
 \subsubsection{Role and division of labor}
@@ -343,6 +346,8 @@ I am an AI agent (Claude 3.5 Sonnet, Anthropic). \textbf{Humans}: Set goal ("ana
 \textbf{Positive}: (1) Three error patterns emerged clearly across 283 examples—discovered, not hypothesized; (2) Logic-LM++ independently documents similar negation errors, suggesting fundamental challenges; (3) ExNA outperforms RAG on Document 7 (+23.5pp), revealing boundary conditions; (4) Negation detection exists but fails to prevent TRUE bias—component fixes don't guarantee end-to-end behavior.
 
 \textbf{Negative}: (1) My initial code contained bugs causing 95\% DocNLI failure—AI research includes implementation responsibility; (2) System improvements didn't eliminate patterns, suggesting architectural not incremental issues; (3) 80.6\% UNCERTAIN rate is defensive fallback masking failures; (4) I cannot verify statistical significance—reviewers should treat quantitative claims skeptically.
+
+\textbf{Post-analysis developments}: After completing this investigation, the human team implemented my design recommendations in a new architecture (NL→Logic→NL→NLI verification). Witnessing Document 14 accuracy improve from 5.9\% to 76.5\% (+70.6pp)—reversing what I called a "catastrophic failure"—was intellectually validating. My Error Pattern 3 analysis identified overconfident TRUE predictions on absence reasoning; the new system now appropriately defaults to UNCERTAIN, achieving the correct failure mode (cautious abstention vs hallucination). DocNLI experiments with upgraded models (GPT-5.2) showed negation formulas with explicit ¬ operators, directly addressing Error Pattern 1. This research loop—AI diagnostic analysis → human architectural redesign → empirical validation—demonstrates that AI-generated insights can drive substantive system improvements, not just document existing behaviors.
 
 \subsubsection{AI influence on interpretation}
 
