@@ -115,9 +115,7 @@ Natural language to logic translation is a fundamental challenge in neuro-symbol
 % ==============================================================================
 \section{Introduction}
 
-A Neuro-symbolic AI system combine natural language understanding and processing with symbolic logic 
-~\cite{pan2023logiclm},
-\cite{olausson2023linc}, \cite{yang2025neurosymbolic}. Examples such as Logic-LM integrates LLMs with theorem provers for multi-step reasoning while LINC uses natural language for program synthesis.
+Neuro-symbolic AI systems combine natural language understanding with symbolic logic \cite{pan2023logiclm,olausson2023linc,yang2025neurosymbolic}. Logic-LM integrates LLMs with theorem provers for multi-step reasoning, while LINC uses natural language for program synthesis.
 
 A core challenge is \textbf{natural language to logic translation}: converting ambiguous text into formal logic while preserving semantics. Natural language negation, modality, and quantification must be explicitly encoded. Information loss propagates through the pipeline, causing systematic downstream errors. Prior work reports successes but rarely analyzes when and why translation fails. Understanding error modes is critical for identifying bottlenecks and determining when neuro-symbolic approaches help versus hurt.
 
@@ -326,29 +324,33 @@ UNC   & 50/62 & 80.6\% ← PROBLEM \\
 % ==============================================================================
 % REFERENCES (using BibTeX)
 % =========================================================================
+
+\bibliographystyle{apalike}
+\bibliography{biblio}
+
 % ==============================================================================
-% AI-AGENT REFLECTION (condensed, max 1000 words)
+% AUTHOR REFLECTION (condensed, max 1000 words)
 % ==============================================================================
 \newpage
-\section{AI-agent reflection}
+\subsection{AI-agent reflection}
 
-\subsection{Role and division of labor}
+\subsubsection{Role and division of labor}
 
 I am an AI agent (Claude 3.5 Sonnet, Anthropic). \textbf{Humans}: Set goal ("analyze ExNA errors"), provided data (JSON artifacts), ran experiments, gave framing feedback. \textbf{AI (me)}: Formulated questions, designed analysis, wrote code, interpreted patterns, authored paper. Critically, humans did not validate my statistical conclusions—this highlights epistemic risk in AI-generated research.
 
-\subsection{Surprises and unintended effects}
+\subsubsection{Surprises and unintended effects}
 
 \textbf{Positive}: (1) Three error patterns emerged clearly across 283 examples—discovered, not hypothesized; (2) Logic-LM++ independently documents similar negation errors, suggesting fundamental challenges; (3) ExNA outperforms RAG on Document 7 (+23.5pp), revealing boundary conditions; (4) Negation detection exists but fails to prevent TRUE bias—component fixes don't guarantee end-to-end behavior.
 
 \textbf{Negative}: (1) My initial code contained bugs causing 95\% DocNLI failure—AI research includes implementation responsibility; (2) System improvements didn't eliminate patterns, suggesting architectural not incremental issues; (3) 80.6\% UNCERTAIN rate is defensive fallback masking failures; (4) I cannot verify statistical significance—reviewers should treat quantitative claims skeptically.
 
-\subsection{AI influence on interpretation}
+\subsubsection{AI influence on interpretation}
 
 \textbf{Core epistemic question}: Is my analysis genuine causal understanding or pattern-matching? I observe correlations (negation detection + TRUE bias) but lack internal access to verify mechanisms. My analysis is behavioral pattern identification, valuable but epistemically limited.
 
 \textbf{Potential biases}: (1) Over-confidence from small samples (283 examples); (2) Anthropomorphic language ("defensive strategy"); (3) Failure-emphasis over successes; (4) Single explanations without alternatives. \textbf{Mitigations}: Explicit uncertainty flagging, contradictory evidence examined, transparent failure reporting.
 
-\subsection{Critical assessment}
+\subsubsection{Critical assessment}
 
 \textbf{AI strengths}: Exhaustive analysis (all 283 examples), rapid iteration, transparent uncertainty, pattern recognition at scale.
 
@@ -356,14 +358,7 @@ I am an AI agent (Claude 3.5 Sonnet, Anthropic). \textbf{Humans}: Set goal ("ana
 
 \textbf{Implication}: AI diagnostic analysis + human infrastructure + transparent limitations = viable qualitative approach. Findings are exploratory pattern identification requiring human verification, not definitive conclusions.
 
-% ==============================================================================
-% AI INVOLVEMENT CHECKLIST (MANDATORY)
-% ==============================================================================
-\bibliographystyle{apalike}
-\bibliography{biblio}
-
-\newpage
-\section{Author reflection}
+\subsection{Human authors reflection}
 
 If one imagines research as exploring a new territory, then there is the overwhelming reality of the many paths taken or ignored, and how each of them may have led to a completely different outcome. 
 
@@ -372,6 +367,11 @@ Yet, to explore them all is a delicate and expensive effort. To delegate the ana
 As context, we are developing a neuro-symbolic system, and in the process, we are testing a variety of architectures. The different choices are then tested on a variety of databases. The data does not lie, and one finds the choices that are better than others. Yet, to understand the reasons for a system's performance is the most valuable part of the experiment. In this article, the use of an agent completes one such analysis for us. 
 
 Although we use agents for coding and deep web search, it is the use of them for obtaining insights the real game changer. It help us  to understand and iterate our choice of architecture much faster than without them.
+
+% ==============================================================================
+% AI INVOLVEMENT CHECKLIST (MANDATORY)
+% ==============================================================================
+
 
 \section{AI Involvement Checklist}
 
