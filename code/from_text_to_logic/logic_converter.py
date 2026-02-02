@@ -183,10 +183,30 @@ RELATION TRIPLES:
                 print(f"  Raw response saved to: {debug_file}")
 
                 # Try to extract JSON from markdown code fences or other wrapping text
-                if "{" in response_text and "}" in response_text:
-                    json_start = response_text.find("{")
-                    json_end = response_text.rfind("}") + 1
-                    json_text = response_text[json_start:json_end]
+                # First, try to strip markdown code fences
+                cleaned_text = response_text
+                if response_text.strip().startswith("```"):
+                    # Remove opening code fence (```json or ```)
+                    lines = response_text.strip().split('\n')
+                    if lines[0].startswith("```"):
+                        lines = lines[1:]  # Remove first line
+                    if lines and lines[-1].strip() == "```":
+                        lines = lines[:-1]  # Remove last line
+                    cleaned_text = '\n'.join(lines)
+
+                    # Try parsing cleaned text
+                    try:
+                        logic_structure = json.loads(cleaned_text)
+                        print(f"  Successfully extracted JSON from markdown code fence")
+                        return logic_structure
+                    except json.JSONDecodeError:
+                        pass  # Fall through to bracket extraction
+
+                # Fallback: extract between first { and last }
+                if "{" in cleaned_text and "}" in cleaned_text:
+                    json_start = cleaned_text.find("{")
+                    json_end = cleaned_text.rfind("}") + 1
+                    json_text = cleaned_text[json_start:json_end]
                     try:
                         logic_structure = json.loads(json_text)
                         return logic_structure
