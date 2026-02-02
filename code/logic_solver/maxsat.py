@@ -92,7 +92,7 @@ class LogicSolver:
             if not is_sat:
                 # UNSAT: Query is entailed by hard constraints alone
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_for_entailment(query_formula)
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
                     confidence=soft_confidence,
@@ -121,7 +121,7 @@ class LogicSolver:
             if consistency_result.answer == "FALSE":
                 # Q is inconsistent with KB, so ¬Q is entailed
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_for_entailment(query_formula)
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
                     confidence=soft_confidence,
@@ -132,7 +132,7 @@ class LogicSolver:
 
             # Query is neither entailed nor contradicted
             # Compute confidence based on soft constraints
-            confidence = self._compute_confidence_for_entailment(query_formula)
+            confidence = self._compute_confidence_uncertain(query_formula)
 
             return SolverResult(
                 answer="UNCERTAIN",
@@ -185,7 +185,7 @@ class LogicSolver:
             if is_sat:
                 # SAT: Query is consistent
                 # Compute confidence based on soft constraints
-                confidence = self._compute_confidence_for_consistency(query_formula, model)
+                confidence = self._compute_confidence_uncertain(query_formula)
 
                 return SolverResult(
                     answer="TRUE",
@@ -360,6 +360,7 @@ class LogicSolver:
         if cost_q + cost_not_q == 0:
             return 0.5
         return cost_not_q / (cost_q + cost_not_q)
+    
 
 def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> SolverResult:
     """
@@ -375,115 +376,115 @@ def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> Solve
     solver = LogicSolver(logified_structure)
     return solver.query(query_formula)
 
-   """ 
-    
-    def _compute_confidence_for_entailment(self, query_formula: str) -> float:
-        """
-        Compute confidence score for entailment based on soft constraints.
+#    """ 
+#     def _model_satisfies_clauses(self, model: List[int], clauses: List[List[int]]) -> bool:
+#         """
+#         Check if a model satisfies all clauses.
 
-        Higher confidence means the query is more likely to be true.
+#         Args:
+#             model: Satisfying assignment (list of signed literals)
+#             clauses: List of CNF clauses
 
-        Args:
-            query_formula: Query formula
+#         Returns:
+#             True if model satisfies all clauses
+#         """
+#         model_set = set(model)
 
-        Returns:
-            Confidence score in [0, 1]
-        """
-        try:
-            # Solve MaxSAT with Q
-            wcnf_with_q = self._copy_wcnf(self.base_wcnf)
-            query_clauses = self.encoder.encode_query(query_formula, negate=False)
-            for clause in query_clauses:
-                wcnf_with_q.append(clause)
+#         for clause in clauses:
+#             # A clause is satisfied if at least one literal is in the model
+#             satisfied = any(lit in model_set for lit in clause)
+#             if not satisfied:
+#                 return False
 
-            cost_with_q = self._solve_maxsat(wcnf_with_q)
+#         return True    
+        
+#     def _compute_confidence_for_entailment(self, query_formula: str) -> float:
+#         """
+#         Compute confidence score for entailment based on soft constraints.
 
-            # Solve MaxSAT with ¬Q
-            wcnf_with_not_q = self._copy_wcnf(self.base_wcnf)
-            negated_query_clauses = self.encoder.encode_query(query_formula, negate=True)
-            for clause in negated_query_clauses:
-                wcnf_with_not_q.append(clause)
+#         Higher confidence means the query is more likely to be true.
 
-            cost_with_not_q = self._solve_maxsat(wcnf_with_not_q)
+#         Args:
+#             query_formula: Query formula
 
-            if cost_with_q is None and cost_with_not_q is None:
-                return 0.5  # Both unsatisfiable, uncertain
+#         Returns:
+#             Confidence score in [0, 1]
+#         """
+#         try:
+#             # Solve MaxSAT with Q
+#             wcnf_with_q = self._copy_wcnf(self.base_wcnf)
+#             query_clauses = self.encoder.encode_query(query_formula, negate=False)
+#             for clause in query_clauses:
+#                 wcnf_with_q.append(clause)
 
-            if cost_with_q is None:
-                return 0.0  # Q is unsatisfiable, ¬Q is likely true
+#             cost_with_q = self._solve_maxsat(wcnf_with_q)
 
-            if cost_with_not_q is None:
-                return 1.0  # ¬Q is unsatisfiable, Q is likely true
+#             # Solve MaxSAT with ¬Q
+#             wcnf_with_not_q = self._copy_wcnf(self.base_wcnf)
+#             negated_query_clauses = self.encoder.encode_query(query_formula, negate=True)
+#             for clause in negated_query_clauses:
+#                 wcnf_with_not_q.append(clause)
 
-            # Both satisfiable: compare costs
-            # Lower cost = better fit with soft constraints
-            total_cost = cost_with_q + cost_with_not_q
-            if total_cost == 0:
-                return 0.5  # No soft constraints violated either way
+#             cost_with_not_q = self._solve_maxsat(wcnf_with_not_q)
 
-            # Confidence that Q is true: ¬Q has higher cost
-            confidence = cost_with_not_q / total_cost
+#             if cost_with_q is None and cost_with_not_q is None:
+#                 return 0.5  # Both unsatisfiable, uncertain
 
-            return confidence
+#             if cost_with_q is None:
+#                 return 0.0  # Q is unsatisfiable, ¬Q is likely true
 
-        except Exception:
-            return 0.5  # Default to uncertain
+#             if cost_with_not_q is None:
+#                 return 1.0  # ¬Q is unsatisfiable, Q is likely true
 
-    def _compute_confidence_for_consistency(self, query_formula: str, model: List[int]) -> float:
-        """
-        Compute confidence score for consistency based on soft constraints.
+#             # Both satisfiable: compare costs
+#             # Lower cost = better fit with soft constraints
+#             total_cost = cost_with_q + cost_with_not_q
+#             if total_cost == 0:
+#                 return 0.5  # No soft constraints violated either way
 
-        Args:
-            query_formula: Query formula
-            model: Satisfying assignment
+#             # Confidence that Q is true: ¬Q has higher cost
+#             confidence = cost_with_not_q / total_cost
 
-        Returns:
-            Confidence score in [0, 1]
-        """
-        # Count how many soft constraints are satisfied by the model
-        total_weight = 0.0
-        satisfied_weight = 0.0
+#             return confidence
 
-        for constraint in self.structure.get('soft_constraints', []):
-            weight = constraint.get('weight', 0.5)
-            formula = constraint['formula']
+#         except Exception:
+#             return 0.5  # Default to uncertain
 
-            try:
-                # Check if this soft constraint is satisfied by the model
-                clauses = self.encoder.encode_query(formula, negate=False)
-                is_satisfied = self._model_satisfies_clauses(model, clauses)
+#     def _compute_confidence_for_consistency(self, query_formula: str, model: List[int]) -> float:
+#         """
+#         Compute confidence score for consistency based on soft constraints.
 
-                total_weight += weight
-                if is_satisfied:
-                    satisfied_weight += weight
+#         Args:
+#             query_formula: Query formula
+#             model: Satisfying assignment
 
-            except Exception:
-                continue
+#         Returns:
+#             Confidence score in [0, 1]
+#         """
+#         # Count how many soft constraints are satisfied by the model
+#         total_weight = 0.0
+#         satisfied_weight = 0.0
 
-        if total_weight == 0:
-            return 0.5  # No soft constraints
+#         for constraint in self.structure.get('soft_constraints', []):
+#             weight = constraint.get('weight', 0.5)
+#             formula = constraint['formula']
 
-        confidence = satisfied_weight / total_weight
-        return confidence
+#             try:
+#                 # Check if this soft constraint is satisfied by the model
+#                 clauses = self.encoder.encode_query(formula, negate=False)
+#                 is_satisfied = self._model_satisfies_clauses(model, clauses)
 
-    def _model_satisfies_clauses(self, model: List[int], clauses: List[List[int]]) -> bool:
-        """
-        Check if a model satisfies all clauses.
+#                 total_weight += weight
+#                 if is_satisfied:
+#                     satisfied_weight += weight
 
-        Args:
-            model: Satisfying assignment (list of signed literals)
-            clauses: List of CNF clauses
+#             except Exception:
+#                 continue
 
-        Returns:
-            True if model satisfies all clauses
-        """
-        model_set = set(model)
+#         if total_weight == 0:
+#             return 0.5  # No soft constraints
 
-        for clause in clauses:
-            # A clause is satisfied if at least one literal is in the model
-            satisfied = any(lit in model_set for lit in clause)
-            if not satisfied:
-                return False
+#         confidence = satisfied_weight / total_weight
+#         return confidence
 
-        return True
-    """
+#     """
