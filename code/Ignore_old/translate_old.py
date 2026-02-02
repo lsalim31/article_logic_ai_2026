@@ -496,7 +496,9 @@ IMPORTANT:
 
 === OUTPUT FORMAT ===
 Return ONLY a JSON object (no other text):
-{{"formula": "<formula using {available_ids}>", "query_mode": "<entailment or consistency>", "translation": "<plain English meaning>", "reasoning": "<brief explanation>"}}
+{{"formula": "<formula using {available_ids}>",
+"query_mode": "<entailment or consistency>", "translation": "<plain English meaning>", 
+"reasoning": "<brief explanation>"}}
 """
 
     return prompt

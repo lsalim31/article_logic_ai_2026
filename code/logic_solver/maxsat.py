@@ -260,7 +260,7 @@ class LogicSolver:
                 #avg_confidence = (entailment_result.confidence + consistency_result.confidence) / 2
                 return SolverResult(
                     answer="UNCERTAIN",
-                    confidence=entailment_result.confidence,
+                    confidence= self._compute_confidence_uncertain(query_formula),
                     explanation="Query is consistent but not entailed by the knowledge base"
                 )
 
