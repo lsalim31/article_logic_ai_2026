@@ -21,7 +21,6 @@ import argparse
 import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
-from . import negation_detection
 
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
@@ -552,9 +551,8 @@ def build_prompt(query: str, props_text: str, constraints_section: str,
     {{"formula": "<formula using {available_ids}>", 
     "query_mode": "<entailment or consistency>", 
     "translation": "<plain English meaning>", 
-    "reasoning": "<brief explanation>"}
-    }
-    """
+    "reasoning": "<brief explanation>"}}"""
+    
     return prompt
 
 

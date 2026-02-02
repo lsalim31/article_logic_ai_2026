@@ -92,13 +92,13 @@ class LogicSolver:
             if not is_sat:
                 # UNSAT: Query is entailed by hard constraints alone
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_uncertain(query_formula)
+                #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
-                    confidence=soft_confidence,
+                    confidence= 1, #soft_confidence,
                     model=None,
                     explanation="Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)"
-                )
+                    )
 
 
             # SAT with hard constraints: Check soft constraints
@@ -121,10 +121,10 @@ class LogicSolver:
             if consistency_result.answer == "FALSE":
                 # Q is inconsistent with KB, so ¬Q is entailed
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_uncertain(query_formula)
+                #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
-                    confidence=soft_confidence,
+                    confidence= 1, #soft_confidence,
                     model=model,
                     explanation="Query is contradicted by the knowledge base"
                 )
@@ -189,7 +189,7 @@ class LogicSolver:
 
                 return SolverResult(
                     answer="TRUE",
-                    confidence=confidence,
+                    confidence=1, #confidence,
                     model=model,
                     explanation="Query is consistent with the knowledge base"
                 )
@@ -348,7 +348,10 @@ class LogicSolver:
         wcnf_with_q = self._copy_wcnf(self.base_wcnf)
         for clause in self.encoder.encode_query(query_formula, negate=False):
             wcnf_with_q.append(clause)
-        cost_q = self._solve_maxsat(wcnf_with_q) or float('inf')
+        cost_q = self._solve_maxsat(wcnf_with_q) 
+        if cost_q is None:
+            cost_q = float('inf')
+
         
         # Cost when Q is false
         wcnf_with_not_q = self._copy_wcnf(self.base_wcnf)

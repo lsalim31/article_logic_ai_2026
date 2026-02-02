@@ -363,28 +363,28 @@ class LogicEncoder:
             for clause in clauses:
                 self.wcnf.append(clause)  # Hard clause
             
-            # Soft constraints with selector literals
-            next_var = len(self.prop_to_var) + 1
+        # Soft constraints with selector literals
+        next_var = len(self.prop_to_var) + 1
             
-            for constraint in self.structure.get('soft_constraints', []):
-                formula = constraint['formula']
-                weight = self._extract_weight(constraint, default=0.5)
-                int_weight = self._weight_to_int(weight)
-                
-                clauses = self.parser.parse(formula)
-                
-                # Create selector variable
-                selector = next_var
-                next_var += 1
-                
-                # Add hard clauses: ¬selector ∨ clause (if selector is true, clause must hold)
-                for clause in clauses:
-                    self.wcnf.append([-selector] + clause)  # Hard clause
-                
-                # Add single soft clause: [selector] with weight
-                self.wcnf.append([selector], weight=int_weight)
+        for constraint in self.structure.get('soft_constraints', []):
+            formula = constraint['formula']
+            weight = self._extract_weight(constraint, default=0.5)
+            int_weight = self._weight_to_int(weight)
             
-            return self.wcnf
+            clauses = self.parser.parse(formula)
+            
+            # Create selector variable
+            selector = next_var
+            next_var += 1
+            
+            # Add hard clauses: ¬selector ∨ clause (if selector is true, clause must hold)
+            for clause in clauses:
+                self.wcnf.append([-selector] + clause)  # Hard clause
+            
+            # Add single soft clause: [selector] with weight
+            self.wcnf.append([selector], weight=int_weight)
+        
+        return self.wcnf
 
 
     def encode_query(self, query_formula: str, negate: bool = False) -> List[List[int]]:
