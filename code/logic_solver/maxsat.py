@@ -141,12 +141,21 @@ class LogicSolver:
                 explanation="Query is neither entailed nor contradicted by the knowledge base"
             )
 
+
         except Exception as e:
+            print(f"[SOLVER ERROR] {type(e).__name__}: {e}")
+            import traceback
+            traceback.print_exc()
             return SolverResult(
                 answer="UNCERTAIN",
-                confidence=0.5,
+                confidence=-1,
                 explanation=f"Error during solving: {str(e)}"
             )
+            #return SolverResult(
+            #    answer="UNCERTAIN",
+            #    confidence= -1,
+            #    explanation=f"Error during solving: {str(e)}"
+            #)
 
     def check_consistency(self, query_formula: str) -> SolverResult:
         """

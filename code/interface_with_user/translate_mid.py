@@ -8,7 +8,7 @@ Output: Propositional Formula (verified via NLI)
 
 Architecture:
 1. Retrieval: SBERT/Hybrid search (Preserved from original)
-2. Generation: LLM generates candidate formula(s)
+2. Generation: LLM generates 3-5 diverse candidate formulas
 3. Verbalization: Python recursively converts Logic -> "Structured English"
 4. Verification: NLI model scores candidates to find the best semantic match
 """
@@ -18,18 +18,19 @@ import os
 import re
 import json
 import argparse
+import textwrap
 import numpy as np
+import time as time_module
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
+
+from interface_with_user import negation_detection
 
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
 code_dir = script_dir.parent
 if str(code_dir) not in sys.path:
     sys.path.insert(0, str(code_dir))
-
-# Import negation detection
-from interface_with_user import negation_detection
 
 # External Dependencies
 try:
@@ -62,133 +63,56 @@ except ImportError as e:
 _cached_nli_model = None
 
 # ==========================================
-# 1. INFIX FORMULA PARSER (matches translate_old.py style)
+# 1. NEW: DETERMINISTIC VERBALIZER & PARSER
 # ==========================================
 
 Formula = Union[str, Tuple[str, ...]]
 
-def tokenize_formula(formula: str) -> List[str]:
-    """Tokenize an infix formula into operators, parentheses, and proposition IDs."""
-    # Normalize Unicode operators to ASCII
-    formula = formula.replace('⟹', '=>').replace('⇒', '=>').replace('→', '=>')
-    formula = formula.replace('⟺', '<=>').replace('⇔', '<=>').replace('↔', '<=>')
-    formula = formula.replace('∧', '&').replace('∨', '|')
-    formula = formula.replace('¬', '~').replace('!', '~')
+def parse_formula(formula_str: str) -> Formula:
+    """Parses logical strings into nested tuples strictly."""
+    formula_str = formula_str.strip()
     
-    # Pattern: proposition IDs (P_\d+), operators, parentheses
-    pattern = r'(P_\d+|<=>|=>|[&|~()])'
-    tokens = re.findall(pattern, formula)
-    return [t.strip() for t in tokens if t.strip()]
-
-
-def parse_infix_formula(formula_str: str) -> Formula:
-    """
-    Parse infix formula string into nested tuple structure.
+    # Match P_123 pattern
+    if re.match(r'^P_\d+$', formula_str):
+        return formula_str
     
-    Supports: ¬/~ (NOT), ∧/& (AND), ∨/| (OR), ⟹/=> (IMPLIES), ⟺/<=> (IFF)
+    # Match Operator(...)
+    match = re.match(r'^(NOT|AND|OR|IMPLIES|IFF)\((.+)\)$', formula_str)
+    if not match:
+        # Fallback for simple tokens or errors
+        if re.match(r'^\w+$', formula_str): return formula_str 
+        # Attempt to clean up common LLM artifacts like "Formula: ..."
+        clean = re.sub(r'^Formula:\s*', '', formula_str)
+        if clean != formula_str: return parse_formula(clean)
+        raise ValueError(f"Syntax Error: {formula_str}")
     
-    Grammar (precedence low to high):
-      formula := iff_expr
-      iff_expr := implies_expr ('<=>' implies_expr)*
-      implies_expr := or_expr ('=>' or_expr)*
-      or_expr := and_expr ('|' and_expr)*
-      and_expr := not_expr ('&' not_expr)*
-      not_expr := '~' not_expr | atom
-      atom := '(' formula ')' | prop_id
-    """
-    tokens = tokenize_formula(formula_str)
-    if not tokens:
-        raise ValueError(f"Empty formula: {formula_str}")
+    operator = match.group(1)
+    inner = match.group(2)
+    args = split_arguments(inner)
     
-    expr, remaining = _parse_iff(tokens)
-    
-    if remaining:
-        raise ValueError(f"Unexpected tokens after parsing: {remaining}")
-    
-    return expr
-
-
-def _parse_iff(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse IFF (biconditional) expressions."""
-    left, tokens = _parse_implies(tokens)
-    
-    while tokens and tokens[0] == '<=>':
-        tokens = tokens[1:]  # consume '<=>'
-        right, tokens = _parse_implies(tokens)
-        left = ('IFF', left, right)
-    
-    return left, tokens
-
-
-def _parse_implies(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse implication expressions."""
-    left, tokens = _parse_or(tokens)
-    
-    while tokens and tokens[0] == '=>':
-        tokens = tokens[1:]  # consume '=>'
-        right, tokens = _parse_or(tokens)
-        left = ('IMPLIES', left, right)
-    
-    return left, tokens
-
-
-def _parse_or(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse OR expressions."""
-    left, tokens = _parse_and(tokens)
-    
-    while tokens and tokens[0] == '|':
-        tokens = tokens[1:]  # consume '|'
-        right, tokens = _parse_and(tokens)
-        left = ('OR', left, right)
-    
-    return left, tokens
-
-
-def _parse_and(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse AND expressions."""
-    left, tokens = _parse_not(tokens)
-    
-    while tokens and tokens[0] == '&':
-        tokens = tokens[1:]  # consume '&'
-        right, tokens = _parse_not(tokens)
-        left = ('AND', left, right)
-    
-    return left, tokens
-
-
-def _parse_not(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse NOT expressions."""
-    if not tokens:
-        raise ValueError("Unexpected end of formula")
-    
-    if tokens[0] == '~':
-        tokens = tokens[1:]  # consume '~'
-        expr, tokens = _parse_not(tokens)
-        return ('NOT', expr), tokens
+    # Arity Validation
+    if operator == "NOT":
+        if len(args) != 1: raise ValueError(f"NOT needs 1 arg, got {len(args)}")
+        return (operator, parse_formula(args[0]))
     else:
-        return _parse_atom(tokens)
+        if len(args) != 2: raise ValueError(f"{operator} needs 2 args, got {len(args)}")
+        return (operator, parse_formula(args[0]), parse_formula(args[1]))
 
-
-def _parse_atom(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse atomic propositions or parenthesized expressions."""
-    if not tokens:
-        raise ValueError("Unexpected end of formula")
-    
-    if tokens[0] == '(':
-        tokens = tokens[1:]  # consume '('
-        expr, tokens = _parse_iff(tokens)
-        if not tokens or tokens[0] != ')':
-            raise ValueError("Missing closing parenthesis")
-        tokens = tokens[1:]  # consume ')'
-        return expr, tokens
-    
-    # Must be a proposition ID
-    prop_id = tokens[0]
-    if not prop_id.startswith('P_'):
-        raise ValueError(f"Invalid proposition ID: {prop_id}")
-    
-    return prop_id, tokens[1:]
-
+def split_arguments(s: str) -> list:
+    """Splits comma-separated args respecting nested parenthesis."""
+    args = []
+    depth = 0
+    current = ""
+    for char in s:
+        if char == '(': depth += 1
+        elif char == ')': depth -= 1
+        elif char == ',' and depth == 0:
+            args.append(current.strip())
+            current = ""
+            continue
+        current += char
+    if current.strip(): args.append(current.strip())
+    return args
 
 def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
     """Recursively converts logic to NLI-ready English."""
@@ -198,26 +122,18 @@ def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
         return prop_map[formula]
     
     op = formula[0]
-    if op == "NOT":
-        return f"it is not the case that {verbalize(formula[1], prop_map)}"
-    elif op == "AND":
-        return f"{verbalize(formula[1], prop_map)}, and {verbalize(formula[2], prop_map)}"
-    elif op == "OR":
-        return f"{verbalize(formula[1], prop_map)}, or {verbalize(formula[2], prop_map)}"
-    elif op == "IMPLIES":
-        return f"if {verbalize(formula[1], prop_map)}, then {verbalize(formula[2], prop_map)}"
-    elif op == "IFF":
-        return f"{verbalize(formula[1], prop_map)} if and only if {verbalize(formula[2], prop_map)}"
+    if op == "NOT": return f"it is not the case that {verbalize(formula[1], prop_map)}"
+    elif op == "AND": return f"{verbalize(formula[1], prop_map)}, and {verbalize(formula[2], prop_map)}"
+    elif op == "OR": return f"{verbalize(formula[1], prop_map)}, or {verbalize(formula[2], prop_map)}"
+    elif op == "IMPLIES": return f"if {verbalize(formula[1], prop_map)}, then {verbalize(formula[2], prop_map)}"
+    elif op == "IFF": return f"{verbalize(formula[1], prop_map)} if and only if {verbalize(formula[2], prop_map)}"
     return ""
 
-
 def verbalize_from_string(formula_str: str, prop_map: Dict[str, str]) -> str:
-    """Parse infix formula and verbalize it."""
-    return verbalize(parse_infix_formula(formula_str), prop_map)
-
+    return verbalize(parse_formula(formula_str), prop_map)
 
 # ==========================================
-# 2. RETRIEVAL & HELPERS
+# 2. EXISTING: RETRIEVAL & HELPERS
 # ==========================================
 
 def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedding: bool = True) -> List[Dict]:
@@ -238,7 +154,6 @@ def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedd
         })
     return chunks
 
-
 def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = 20) -> List[Dict]:
     """Preserved (simplified): Retrieve relevant chunks using SBERT."""
     chunk_embeddings = encode_chunks(chunks, sbert_model)
@@ -248,19 +163,16 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     
     retrieved = []
     for idx in top_k_indices:
-        if similarities[idx] < 0.1:
-            break
+        if similarities[idx] < 0.1: break 
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
         retrieved.append(chunk)
     return retrieved
 
-
 def is_yes_no_question(query: str) -> bool:
     """Preserved: Detect yes/no questions."""
     starters = ['is ', 'are ', 'was ', 'were ', 'will ', 'would ', 'should ', 'could ', 'can ', 'may ', 'must ', 'does ', 'do ', 'did ']
     return any(query.lower().strip().startswith(s) for s in starters)
-
 
 def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
     """Helper to configure OpenAI client for OpenRouter if needed."""
@@ -271,7 +183,6 @@ def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
     else:
         client = OpenAI(api_key=api_key)
     return client, model
-
 
 def convert_yes_no_to_statement(query: str, api_key: str, model: str = "gpt-4o", **kwargs) -> str:
     """Preserved: Convert Yes/No to statement."""
@@ -287,9 +198,8 @@ def convert_yes_no_to_statement(query: str, api_key: str, model: str = "gpt-4o",
     except:
         return query
 
-
 # ==========================================
-# 3. NEURO-SYMBOLIC CORE
+# 3. NEW: NEURO-SYMBOLIC CORE
 # ==========================================
 
 def load_nli_model_singleton():
@@ -299,11 +209,10 @@ def load_nli_model_singleton():
         _cached_nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-large')
     return _cached_nli_model
 
-
 def generate_candidates_llm(
     prompt: str, api_key: str, model: str, temperature: float = 0.7
 ) -> List[Dict]:
-    """Call LLM to get JSON result - handles both single object and candidates list."""
+    """Call LLM to get JSON list of candidates."""
     client, model = get_configured_client(api_key, model)
     
     try:
@@ -314,35 +223,110 @@ def generate_candidates_llm(
             response_format={"type": "json_object"}
         )
         content = response.choices[0].message.content
-        result = json.loads(content)
-        
-        # Handle both single object and candidates list formats
-        if 'candidates' in result:
-            return result['candidates']
-        elif 'formula' in result:
-            # Single result - wrap in list
-            return [result]
-        else:
-            print(f"  Warning: LLM response missing 'formula' or 'candidates' key")
-            return []
-            
+        return json.loads(content).get('candidates', [])
     except Exception as e:
-        print(f"  Warning: LLM generation failed or returned invalid JSON: {e}")
-        print(f"  [LLM ERROR] Generation failed: {type(e).__name__}: {e}")
+        print(f"  Warning: LLM generation failed or returned invalid JSON: {e}"),
+        print(f"  [LLM ERROR] Generation failed: {type(e).__name__}: {e}"),
         return []
 
+def translate_query(
+    query: str,
+    json_path: str,
+    api_key: str,
+    model: str = "gpt-4o",
+    temperature: float = 0.1,
+    reasoning_effort: str = "medium",
+    max_tokens: int = 64000,
+    k: int = 20,
+    sbert_model_name: str = "all-MiniLM-L6-v2",
+    verbose: bool = True
+) -> Dict[str, Any]:
+    """
+    Main Interface Function.
+    Replaces the old logic with the Generate -> Verbalize -> Verify loop.
+    Arguments matches exactly the old interface.
+    """
+    
+    # 1. Pre-process (Yes/No Handling)
+    original_query = query
+    if is_yes_no_question(query):
+        if verbose: print(f"Detected Yes/No question. Converting...")
+        try:
+            query = convert_yes_no_to_statement(query, api_key, model)
+            if verbose: print(f"  → Statement: {query}")
+        except:
+            if verbose: print("  → Conversion failed, proceeding with original.")
 
-def build_prompt(query: str, props_text: str, constraints_section: str, 
-                 available_ids: str, query_is_negative: bool) -> str:
+    # 2. Retrieval
+    if verbose: print(f"Loading propositions from: {json_path}")
+    with open(json_path, 'r', encoding='utf-8') as f:
+        logified_structure = json.load(f)
+
+    chunks = extract_proposition_chunks(logified_structure)
+    sbert_model = load_sbert_model(sbert_model_name)
+    retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
+
+    if not retrieved:
+        return {"formula": "NONE", "translation": "No relevant props", "query": query, "explanation": "No documents found."}
+
+    # 3. Build Prompt for Candidate Generation
+    
+    props_text = ""
+    prop_ids = []
+    for chunk in retrieved:
+        prop_id = chunk['id']
+        prop_ids.append(prop_id)
+        
+        # Add polarity annotation
+        is_negative = negation_detection.detect_negation_in_proposition(chunk['translation'])
+        polarity = "NEGATIVE" if is_negative else "AFFIRMATIVE"
+        
+        props_text += f"""
+    {prop_id}: {chunk['translation']} [Polarity: {polarity}]
+    Evidence: {chunk.get('evidence', 'N/A')}    
     """
-    Build the LLM prompt for translating query to propositional formula.
+    available_ids = ", ".join(prop_ids[:10])
+    if len(prop_ids) > 10:
+        available_ids += f", ... ({len(prop_ids)} total)"
     
-    Uses INFIX UNICODE syntax (∧, ∨, ⟹, ⟺, ¬) matching translate_old.py style.
+    prop_map = {p['id']: p['translation'].strip(".") for p in retrieved}
+    #props_formatted = "\n".join([f"- {p['id']}: {p['translation']}" for p in retrieved])
+    
+    constraints_text = ""
+    if logified_structure:
+        hard_constraints = logified_structure.get("hard_constraints", [])
+        soft_constraints = logified_structure.get("soft_constraints", [])
+
+        if hard_constraints:
+            constraints_text += "HARD CONSTRAINTS (must hold):\n"
+            for c in hard_constraints:
+                formula = c.get("formula", "")
+                if formula:
+                    constraints_text += f"- {formula}\n"
+
+        if soft_constraints:
+            constraints_text += "\nSOFT CONSTRAINTS (likely hold):\n"
+            for c in soft_constraints:
+                formula = c.get("formula", "")
+                weight = c.get("weight", "")
+                if formula:
+                    if weight:
+                        constraints_text += f"- {formula} (weight: {weight})\n"
+                    else:
+                        constraints_text += f"- {formula}\n"
+
+    constraints_section = ""
+    if constraints_text:
+        constraints_section = f"""
+    ESTABLISHED CONSTRAINTS:
+    {constraints_text}
     """
     
-    polarity_str = "NEGATIVE (prohibition/restriction)" if query_is_negative else "AFFIRMATIVE"
+    query_is_negative = negation_detection.detect_negation_in_hypothesis(query)
     
-    prompt = f"""You are a logic translator for Natural Language Inference (NLI). Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula.
+    prompt = textwrap.dedent(
+    f"""You are a logic translator for Natural Language Inference (NLI). 
+    Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula.
 
     === AVAILABLE PROPOSITIONS ===
     {props_text}
@@ -401,7 +385,7 @@ def build_prompt(query: str, props_text: str, constraints_section: str,
 
     === NEGATION HANDLING ===
 
-    Query polarity: {polarity_str}
+    Query polarity: {"NEGATIVE (prohibition/restriction)" if query_is_negative else "AFFIRMATIVE"}
 
     When translating negative queries ("shall not X", "only include Y"):
     - If query is NEGATIVE and proposition is AFFIRMATIVE → use negation: ¬P_i
@@ -434,135 +418,18 @@ def build_prompt(query: str, props_text: str, constraints_section: str,
     Return ONLY a JSON object (no other text):
     {{"formula": "<formula using {available_ids}>", "query_mode": "<entailment or consistency>", "translation": "<plain English meaning>", "reasoning": "<brief explanation>"}}
     """
-    return prompt
-
-
-def translate_query(
-    query: str,
-    json_path: str,
-    api_key: str,
-    model: str = "gpt-4o",
-    temperature: float = 0.1,
-    reasoning_effort: str = "medium",
-    max_tokens: int = 64000,
-    k: int = 20,
-    sbert_model_name: str = "all-MiniLM-L6-v2",
-    verbose: bool = True
-    ) -> Dict[str, Any]:
-    """
-    Main Interface Function.
-    Replaces the old logic with the Generate -> Verbalize -> Verify loop.
-    Arguments match exactly the old interface.
-    """
-    
-    # 1. Pre-process (Yes/No Handling)
-    original_query = query
-    if is_yes_no_question(query):
-        if verbose:
-            print(f"Detected Yes/No question. Converting...")
-        try:
-            query = convert_yes_no_to_statement(query, api_key, model)
-            if verbose:
-                print(f"  → Statement: {query}")
-        except:
-            if verbose:
-                print("  → Conversion failed, proceeding with original.")
-
-    # 2. Retrieval
-    if verbose:
-        print(f"Loading propositions from: {json_path}")
-    with open(json_path, 'r', encoding='utf-8') as f:
-        logified_structure = json.load(f)
-
-    chunks = extract_proposition_chunks(logified_structure)
-    sbert_model = load_sbert_model(sbert_model_name)
-    retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
-
-    if not retrieved:
-        return {
-            "formula": "NONE",
-            "translation": "No relevant props",
-            "query": query,
-            "explanation": "No documents found."
-        }
-
-    # 3. Build Prompt Variables (matching translate_old.py style)
-    props_text = ""
-    prop_ids = []
-    for chunk in retrieved:
-        prop_id = chunk['id']
-        prop_ids.append(prop_id)
-        
-        # Add polarity annotation
-        is_negative = negation_detection.detect_negation_in_proposition(chunk['translation'])
-        polarity = "NEGATIVE" if is_negative else "AFFIRMATIVE"
-        
-        props_text += f"""
-    {prop_id}: {chunk['translation']} [Polarity: {polarity}]
-    Evidence: {chunk.get('evidence', 'N/A')}
-    """
-
-    # Create available IDs string
-    available_ids = ", ".join(prop_ids[:10])
-    if len(prop_ids) > 10:
-        available_ids += f", ... ({len(prop_ids)} total)"
-    
-    # Build prop_map for verbalization
-    prop_map = {p['id']: p['translation'].strip(".") for p in retrieved}
-    
-    # Format constraints section
-    constraints_text = ""
-    hard_constraints = logified_structure.get("hard_constraints", [])
-    soft_constraints = logified_structure.get("soft_constraints", [])
-
-    if hard_constraints:
-        constraints_text += "HARD CONSTRAINTS (must hold):\n"
-        for c in hard_constraints:
-            formula = c.get("formula", "")
-            if formula:
-                constraints_text += f"- {formula}\n"
-
-    if soft_constraints:
-        constraints_text += "\nSOFT CONSTRAINTS (likely hold):\n"
-        for c in soft_constraints:
-            formula = c.get("formula", "")
-            weight = c.get("weight", "")
-            if formula:
-                if weight:
-                    constraints_text += f"- {formula} (weight: {weight})\n"
-                else:
-                    constraints_text += f"- {formula}\n"
-
-    constraints_section = ""
-    if constraints_text:
-        constraints_section = f"""
-    ESTABLISHED CONSTRAINTS:
-    {constraints_text}
-    """
-
-    # Detect query polarity
-    query_is_negative = negation_detection.detect_negation_in_hypothesis(query)
-    
-    # Build the prompt
-    prompt = build_prompt(query, props_text, constraints_section, available_ids, query_is_negative)
+    )
 
     # 4. Generate Candidates (Step A)
-    if verbose:
-        print("\nStep A: Generating logical candidates...")
-    
+    if verbose: print("\nStep A: Generating logical candidates...")
+    # NOTE: We use the 'model' passed in CLI, but the helper will prefix it for OpenRouter if needed
     candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
     
     if not candidates:
-        return {
-            "formula": "ERROR",
-            "translation": "",
-            "query": query,
-            "explanation": "LLM failed to generate valid candidates."
-        }
+        return {"formula": "ERROR", "translation": "", "query": query, "explanation": "LLM failed to generate valid candidates."}
 
     # 5. Verbalize & Verify (Step B & C)
-    if verbose:
-        print("Step B & C: Verbalizing and Verifying with NLI...")
+    if verbose: print("Step B & C: Verbalizing and Verifying with NLI...")
     nli_model = load_nli_model_singleton()
     
     valid_candidates = []
@@ -570,25 +437,22 @@ def translate_query(
     
     for c in candidates:
         try:
-            # Deterministic Verbalization (now uses infix parser)
+            # Deterministic Verbalization
             v_text = verbalize_from_string(c['formula'], prop_map)
             valid_candidates.append(c)
             verbalized_texts.append(v_text)
         except Exception as e:
-            if verbose:
-                print(f"  Skipped invalid formula {c.get('formula')}: {e}")
-                print(f"  [PARSE ERROR] Formula: {c.get('formula')}")
-                print(f"    Error type: {type(e).__name__}")
-                print(f"    Error message: {e}")
+            if verbose: 
+                print(f"  Skipped invalid formula {c.get('formula')}: {e}"),
+                #new Feb 1
+                print(f"  [PARSE ERROR] Formula: {c.get('formula')}"),
+                print(f"    Error type: {type(e).__name__}"),
+                print(f"    Error message: {e}"),
+                #end Feb  1
             continue
 
     if not valid_candidates:
-        return {
-            "formula": "ERROR",
-            "translation": "",
-            "query": query,
-            "explanation": "All candidates failed syntax parsing."
-        }
+        return {"formula": "ERROR", "translation": "", "query": query, "explanation": "All candidates failed syntax parsing."}
 
     # Score Pairs
     pairs = [(query, v_text) for v_text in verbalized_texts]
@@ -627,13 +491,12 @@ def translate_query(
     return {
         "formula": winner['formula'],
         "translation": winning_text,
-        "query": query,  # The statement version
+        "query": query, # The statement version
         "original_query": original_query,
         "explanation": f"Selected via NLI (Confidence: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}",
         "confidence": best_net_score,
         "debug_trace": debug_trace
     }
-
 
 # ==========================================
 # 4. MAIN ENTRY POINT
@@ -650,8 +513,8 @@ def main():
     parser.add_argument("json_path", help="Path to logified JSON")
     parser.add_argument("--api-key", required=True, help="API key")
     parser.add_argument("--model", default="gpt-4o", help="LLM model (default: gpt-4o)")
-    parser.add_argument("--temperature", type=float, default=0.1, help="Sampling temp")
-    parser.add_argument("--reasoning-effort", default="medium", help="Reasoning effort (for reasoning models)")
+    parser.add_argument("--temperature", type=float, default=0.1, help="Sampling temp (ignored in new pipeline)")
+    parser.add_argument("--reasoning-effort", default="medium", help="Reasoning effort (ignored)")
     parser.add_argument("--max-tokens", type=int, default=64000, help="Max tokens")
     parser.add_argument("--k", type=int, default=20, help="Retrieval K")
     parser.add_argument("--output", default=None, help="Output JSON path")
@@ -693,7 +556,6 @@ def main():
         import traceback
         traceback.print_exc()
         return 1
-
 
 if __name__ == "__main__":
     sys.exit(main())

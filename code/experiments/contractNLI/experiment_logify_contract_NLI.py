@@ -129,10 +129,7 @@ def logify_document(
     assign_weights(
         pathfile=str(temp_text_path),
         json_path=str(intermediate_path),
-        api_key=api_key,
-        model=weights_model,
-        temperature=0.0,
-        max_tokens=5,
+        hardness_criterion=0.85,  # New parameter
         k=k_weights,
         verbose=False
     )
@@ -232,7 +229,7 @@ def run_experiment(
     api_key: str,
     query_model: str = "openai/gpt-5-nano",
     weights_model: str = "gpt-4o",
-    temperature: float = 0.1,
+    temperature: float = 0.0,
     reasoning_effort: str = "medium",
     max_tokens: int = 128000,
     query_max_tokens: int = 64000,
@@ -381,7 +378,10 @@ def run_experiment(
                 confidence = query_result.get("confidence")
                 query_latency = query_result.get("query_latency_sec", 0.0)
                 query_error = query_result.get("error")
-                formula = query_result.get("formula")
+                formula = query_result.get("formula")                
+                # Debug: print formula errors
+                if formula == "ERROR" or query_error:   
+                    print(f"      [QUERY ERROR] {hyp_key}: {query_error or 'Formula parsing failed'}")
             else:
                 prediction = None
                 confidence = None
