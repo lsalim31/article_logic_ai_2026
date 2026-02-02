@@ -243,7 +243,7 @@ class LogicSolver:
             if consistency_result.answer == "FALSE":
                 # Query is inconsistent (contradicted)
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_for_entailment(query_formula)
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
                     confidence=soft_confidence,
@@ -257,10 +257,10 @@ class LogicSolver:
 
                 # Query is consistent but not entailed
                 # Return uncertainty with confidence from soft constraints
-                avg_confidence = (entailment_result.confidence + consistency_result.confidence) / 2
+                #avg_confidence = (entailment_result.confidence + consistency_result.confidence) / 2
                 return SolverResult(
                     answer="UNCERTAIN",
-                    confidence=avg_confidence,
+                    confidence=entailment_result.confidence,
                     explanation="Query is consistent but not entailed by the knowledge base"
                 )
 
@@ -340,7 +340,43 @@ class LogicSolver:
             hard_clauses = self._extract_hard_clauses(wcnf)
             is_sat, _ = self._check_sat(hard_clauses)
             return 0 if is_sat else None
+ 
+    
+    def _compute_confidence_uncertain(self, query_formula: str) -> float:
+        """Confidence for UNCERTAIN answers using MaxSAT cost comparison."""
+        # Cost when Q is true
+        wcnf_with_q = self._copy_wcnf(self.base_wcnf)
+        for clause in self.encoder.encode_query(query_formula, negate=False):
+            wcnf_with_q.append(clause)
+        cost_q = self._solve_maxsat(wcnf_with_q) or float('inf')
+        
+        # Cost when Q is false
+        wcnf_with_not_q = self._copy_wcnf(self.base_wcnf)
+        for clause in self.encoder.encode_query(query_formula, negate=True):
+            wcnf_with_not_q.append(clause)
+        cost_not_q = self._solve_maxsat(wcnf_with_not_q) or float('inf')
+        
+        # Higher cost for ¬Q means Q is more likely
+        if cost_q + cost_not_q == 0:
+            return 0.5
+        return cost_not_q / (cost_q + cost_not_q)
 
+def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> SolverResult:
+    """
+    Convenience function to solve a query against a logified structure.
+
+    Args:
+        logified_structure: JSON structure with propositions and constraints
+        query_formula: Propositional formula to check
+
+    Returns:
+        SolverResult with answer and confidence
+    """
+    solver = LogicSolver(logified_structure)
+    return solver.query(query_formula)
+
+   """ 
+    
     def _compute_confidence_for_entailment(self, query_formula: str) -> float:
         """
         Compute confidence score for entailment based on soft constraints.
@@ -450,18 +486,4 @@ class LogicSolver:
                 return False
 
         return True
-
-
-def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> SolverResult:
     """
-    Convenience function to solve a query against a logified structure.
-
-    Args:
-        logified_structure: JSON structure with propositions and constraints
-        query_formula: Propositional formula to check
-
-    Returns:
-        SolverResult with answer and confidence
-    """
-    solver = LogicSolver(logified_structure)
-    return solver.query(query_formula)

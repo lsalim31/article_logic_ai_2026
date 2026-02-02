@@ -405,7 +405,8 @@ ESTABLISHED CONSTRAINTS:
     if len(prop_ids) > 10:
         available_ids += f", ... ({len(prop_ids)} total)"
 
-    prompt = f"""You are a logic translator for Natural Language Inference (NLI). Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula.
+    prompt = f"""You are a logic translator for Natural Language Inference (NLI). 
+    Given a hypothesis and a set of atomic propositions from a legal document, translate the hypothesis into a propositional formula.
 
 === AVAILABLE PROPOSITIONS ===
 {props_text}

@@ -2,7 +2,7 @@
 """
 encoding.py - Convert logified structure to SAT encoding
 
-This module converts the logified JSON structure (propositions, hard/soft constraints)
+This module converts the logified JSON structure (propositions,  constraints)
 into a format suitable for PySAT's RC2 MaxSAT solver.
 """
 
@@ -219,6 +219,19 @@ class FormulaParser:
             else:
                 # ~(A => B) = A & ~B
                 return ('&', self._to_nnf(expr[1], True), self._to_nnf(expr[2], False))
+            
+        elif op == '<=>':
+            # A <=> B = (A => B) & (B => A) = (~A | B) & (~B | A)
+            if positive:
+                # (A <=> B) = (A => B) & (B => A)
+                return ('&',
+                    ('|', self._to_nnf(expr[1], False), self._to_nnf(expr[2], True)),
+                    ('|', self._to_nnf(expr[2], False), self._to_nnf(expr[1], True)))
+            else:
+                # ~(A <=> B) = (A & ~B) | (~A & B)
+                return ('|',
+                    ('&', self._to_nnf(expr[1], True), self._to_nnf(expr[2], False)),
+                    ('&', self._to_nnf(expr[1], False), self._to_nnf(expr[2], True)))    
 
         else:
             raise ValueError(f"Unknown operator: {op}")
@@ -267,7 +280,7 @@ class LogicEncoder:
         Initialize encoder with logified structure.
 
         Args:
-            logified_structure: JSON structure with primitive_props, hard_constraints, soft_constraints
+            logified_structure: JSON structure with primitive_props constraints, weights and evidence
         """
         self.structure = logified_structure
         self.prop_to_var: Dict[str, int] = {}  # P_1 -> 1, P_2 -> 2, etc.
@@ -349,18 +362,30 @@ class LogicEncoder:
             # Always add as hard clause (infinite weight)
             for clause in clauses:
                 self.wcnf.append(clause)  # Hard clause
+            
+            # Soft constraints with selector literals
+            next_var = len(self.prop_to_var) + 1
+            
+            for constraint in self.structure.get('soft_constraints', []):
+                formula = constraint['formula']
+                weight = self._extract_weight(constraint, default=0.5)
+                int_weight = self._weight_to_int(weight)
+                
+                clauses = self.parser.parse(formula)
+                
+                # Create selector variable
+                selector = next_var
+                next_var += 1
+                
+                # Add hard clauses: ¬selector ∨ clause (if selector is true, clause must hold)
+                for clause in clauses:
+                    self.wcnf.append([-selector] + clause)  # Hard clause
+                
+                # Add single soft clause: [selector] with weight
+                self.wcnf.append([selector], weight=int_weight)
+            
+            return self.wcnf
 
-        # Encode soft constraints (weighted)
-        for constraint in self.structure.get('soft_constraints', []):
-            formula = constraint['formula']
-            weight = self._extract_weight(constraint, default=0.5)
-            int_weight = self._weight_to_int(weight)
-
-            clauses = self.parser.parse(formula)
-            for clause in clauses:
-                self.wcnf.append(clause, weight=int_weight)
-
-        return self.wcnf
 
     def encode_query(self, query_formula: str, negate: bool = False) -> List[List[int]]:
         """
