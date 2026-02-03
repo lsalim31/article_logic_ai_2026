@@ -24,7 +24,7 @@ class LogicConverter:
             api_key (str): OpenAI API key (or OpenRouter key starting with sk-or-)
             model (str): Model to use (default: gpt-5.2)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
-            max_tokens (int): Maximum tokens in response (default: 64000)
+            max_tokens (int): Maximum tokens in response (default: MAX_TOKENS from config)
             reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: medium
         """
         # Detect OpenRouter keys and use appropriate base URL
