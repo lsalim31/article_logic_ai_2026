@@ -41,16 +41,16 @@ class FormulaParser:
         formula = formula.strip()
 
         # Replace various arrow symbols with standard ones
-        formula = formula.replace('⇒', '=>')
+        formula = formula.replace('⇒', '=>').replace('⟹', '=>').replace('→', '=>')
         formula = formula.replace('⟹', '=>')
         formula = formula.replace('→', '=>')
         formula = formula.replace('⟺', '<=>')
-        formula = formula.replace('⇔', '<=>')
+        formula = formula.replace('⇔', '<=>').replace('↔', '<=>')
         formula = formula.replace('↔', '<=>')
         formula = formula.replace('∧', '&')
         formula = formula.replace('∨', '|')
         formula = formula.replace('¬', '~')
-        formula = formula.replace('⟸', '<=')  # Reverse implication
+        formula = formula.replace('⟸', '<=').replace('<-', '<=')  # Reverse implication
         formula = formula.replace('⇐', '<=')
 
         # Parse and convert to CNF
@@ -81,7 +81,7 @@ class FormulaParser:
     def _tokenize(self, formula: str) -> List[str]:
         """Tokenize the formula into operators, parentheses, and proposition IDs."""
         # Pattern: proposition IDs (P_\d+), operators, parentheses
-        pattern = r'(P_\d+|<=>|=>|[&|~()])'
+        pattern = r'(P_\d+|<=>|=>|<=|[&|~()])'
         tokens = re.findall(pattern, formula)
         return [t.strip() for t in tokens if t.strip()]
 
@@ -101,11 +101,17 @@ class FormulaParser:
         """Parse implication expressions."""
         left, tokens = self._parse_or(tokens)
 
-        while tokens and tokens[0] == '=>':
-            tokens = tokens[1:]  # consume '=>'
+        # 2) Now _parse_implie also handle <=
+        while tokens and tokens[0] in ('=>', '<='):
+            op = tokens[0]
+            tokens = tokens[1:]
             right, tokens = self._parse_or(tokens)
-            # A => B is ~A | B
-            left = ('=>', left, right)
+            if op == '=>':
+                left = ('=>', left, right)
+            else:
+                # A <= B  ==  B => A
+                left = ('=>', right, left)
+
 
         return left, tokens
 
@@ -354,6 +360,8 @@ class LogicEncoder:
         Returns:
             WCNF object with hard and soft constraints
         """
+        
+        
         # Encode hard constraints - always as hard clauses (ignore weights)
         for constraint in self.structure.get('hard_constraints', []):
             formula = constraint['formula']

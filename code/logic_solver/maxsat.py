@@ -92,10 +92,10 @@ class LogicSolver:
             if not is_sat:
                 # UNSAT: Query is entailed by hard constraints alone
                 # Compute how strongly soft constraints support Q being true
-                #soft_confidence = self._compute_confidence_uncertain(query_formula)
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
-                    confidence= 1, #soft_confidence,
+                    confidence= soft_confidence,
                     model=None,
                     explanation="Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)"
                     )
@@ -109,7 +109,7 @@ class LogicSolver:
                 # UNSAT even with soft constraints
                 return SolverResult(
                     answer="TRUE",
-                    confidence=1.0,
+                    confidence=10, #WARNING
                     model=None,
                     explanation="Query is entailed (KB ∧ ¬Q is unsatisfiable)"
                 )
@@ -121,10 +121,10 @@ class LogicSolver:
             if consistency_result.answer == "FALSE":
                 # Q is inconsistent with KB, so ¬Q is entailed
                 # Compute how strongly soft constraints support Q being true
-                #soft_confidence = self._compute_confidence_uncertain(query_formula)
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
-                    confidence= 1, #soft_confidence,
+                    confidence= soft_confidence,
                     model=model,
                     explanation="Query is contradicted by the knowledge base"
                 )
@@ -189,7 +189,7 @@ class LogicSolver:
 
                 return SolverResult(
                     answer="TRUE",
-                    confidence=1, #confidence,
+                    confidence=confidence,
                     model=model,
                     explanation="Query is consistent with the knowledge base"
                 )
@@ -197,7 +197,7 @@ class LogicSolver:
                 # UNSAT: Query is inconsistent
                 return SolverResult(
                     answer="FALSE",
-                    confidence=0.0,  # Q cannot be true
+                    confidence=-10.0,  # WARNING
                     model=None,
                     explanation="Query is inconsistent with the knowledge base (KB ∧ Q is unsatisfiable)"
                 )
@@ -343,23 +343,22 @@ class LogicSolver:
  
     
     def _compute_confidence_uncertain(self, query_formula: str) -> float:
-        """Confidence for UNCERTAIN answers using MaxSAT cost comparison."""
-        # Cost when Q is true
         wcnf_with_q = self._copy_wcnf(self.base_wcnf)
         for clause in self.encoder.encode_query(query_formula, negate=False):
             wcnf_with_q.append(clause)
-        cost_q = self._solve_maxsat(wcnf_with_q) 
+        cost_q = self._solve_maxsat(wcnf_with_q)
         if cost_q is None:
             cost_q = float('inf')
 
-        
-        # Cost when Q is false
         wcnf_with_not_q = self._copy_wcnf(self.base_wcnf)
         for clause in self.encoder.encode_query(query_formula, negate=True):
             wcnf_with_not_q.append(clause)
-        cost_not_q = self._solve_maxsat(wcnf_with_not_q) or float('inf')
-        
-        # Higher cost for ¬Q means Q is more likely
+        cost_not_q = self._solve_maxsat(wcnf_with_not_q)
+        if cost_not_q is None:
+            cost_not_q = float('inf')
+
+        if cost_q == float('inf') and cost_not_q == float('inf'):
+            return 0.5
         if cost_q + cost_not_q == 0:
             return 0.5
         return cost_not_q / (cost_q + cost_not_q)

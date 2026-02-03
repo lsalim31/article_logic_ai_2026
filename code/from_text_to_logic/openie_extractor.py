@@ -478,85 +478,85 @@ class OpenIEExtractor:
             traceback.print_exc()
             return []
 
-def extract_triples_with_coref_info(self, text: str) -> Dict[str, Any]:
-    """
-    Extract OpenIE triples along with native Stanza coreference chain information.
+    def extract_triples_with_coref_info(self, text: str) -> Dict[str, Any]:
+        """
+        Extract OpenIE triples along with native Stanza coreference chain information.
 
-    Provides detailed information about coreference resolution for debugging
-    and analysis.
+        Provides detailed information about coreference resolution for debugging
+        and analysis.
 
-    Args:
-        text: Input text to extract relations from
+        Args:
+            text: Input text to extract relations from
 
-    Returns:
-        Dict containing:
-            - 'triples': List of relation triples (no confidence scores)
-            - 'coref_chains': List of coreference chains from native Stanza
-            - 'resolved_text': Text with pronouns replaced
-            - 'original_text': Original input text
-    """
-    print("Extracting triples with native Stanza coref information...")
+        Returns:
+            Dict containing:
+                - 'triples': List of relation triples (no confidence scores)
+                - 'coref_chains': List of coreference chains from native Stanza
+                - 'resolved_text': Text with pronouns replaced
+                - 'original_text': Original input text
+        """
+        print("Extracting triples with native Stanza coref information...")
 
-    if self.client is None:
-        raise RuntimeError("CoreNLP client not initialized.")
+        if self.client is None:
+            raise RuntimeError("CoreNLP client not initialized.")
 
-    try:
-        resolved_text, coref_chains = self._resolve_coreferences(text)
+        try:
+            resolved_text, coref_chains = self._resolve_coreferences(text)
 
-        # Extract triples from resolved text (not the original text)
-        annotation = self.client.annotate(resolved_text)
+            # Extract triples from resolved text (not the original text)
+            annotation = self.client.annotate(resolved_text)
 
-        triples = []
-        sentence_texts = []
-        for sentence in annotation.sentence:
-            tokens = [token.word for token in sentence.token]
-            sentence_texts.append(' '.join(tokens))
+            triples = []
+            sentence_texts = []
+            for sentence in annotation.sentence:
+                tokens = [token.word for token in sentence.token]
+                sentence_texts.append(' '.join(tokens))
 
-        for sent_idx, sentence in enumerate(annotation.sentence):
-            sentence_triples = []
-            existing_subjects = set()
+            for sent_idx, sentence in enumerate(annotation.sentence):
+                sentence_triples = []
+                existing_subjects = set()
 
-            if hasattr(sentence, 'openieTriple') and sentence.openieTriple:
-                for triple in sentence.openieTriple:
-                    subject = triple.subject.strip()
-                    predicate = triple.relation.strip()
-                    obj = triple.object.strip()
+                if hasattr(sentence, 'openieTriple') and sentence.openieTriple:
+                    for triple in sentence.openieTriple:
+                        subject = triple.subject.strip()
+                        predicate = triple.relation.strip()
+                        obj = triple.object.strip()
 
-                    if len(subject) > 0 and len(predicate) > 0 and len(obj) > 0:
-                        sentence_triples.append({
-                            'subject': subject,
-                            'predicate': predicate,
-                            'object': obj,
-                            'sentence_index': sent_idx,
-                            'source': 'openie'
-                        })
-                        existing_subjects.add(subject)
+                        if len(subject) > 0 and len(predicate) > 0 and len(obj) > 0:
+                            sentence_triples.append({
+                                'subject': subject,
+                                'predicate': predicate,
+                                'object': obj,
+                                'sentence_index': sent_idx,
+                                'source': 'openie'
+                            })
+                            existing_subjects.add(subject)
 
-            triples.extend(sentence_triples)
+                triples.extend(sentence_triples)
 
-            if self.use_depparse_fallback and not sentence_triples:
-                fallback_triples = self._extract_stanza_depparse_triples(
-                    sentence_texts[sent_idx], sent_idx, existing_subjects
-                )
-                triples.extend(fallback_triples)
+                if self.use_depparse_fallback and not sentence_triples:
+                    fallback_triples = self._extract_stanza_depparse_triples(
+                        sentence_texts[sent_idx], sent_idx, existing_subjects
+                    )
+                    triples.extend(fallback_triples)
 
-        return {
-            'triples': triples,
-            'coref_chains': coref_chains,
-            'resolved_text': resolved_text,
-            'original_text': text
-        }
+            return {
+                'triples': triples,
+                'coref_chains': coref_chains,
+                'resolved_text': resolved_text,
+                'original_text': text
+            }
 
-    except Exception as e:
-        print(f"Error extracting triples with coref info: {e}")
-        import traceback
-        traceback.print_exc()
-        return {
-            'triples': [],
-            'coref_chains': [],
-            'resolved_text': text,
-            'original_text': text
-        }
+        except Exception as e:
+            print(f"Error extracting triples with coref info: {e}")
+            import traceback
+            traceback.print_exc()
+            return {
+                'triples': [],
+                'coref_chains': [],
+                'resolved_text': text,
+                'original_text': text
+            }
 
     # Before Feb 2. Erase next edit.
     # def extract_triples_with_coref_info(self, text: str) -> Dict[str, Any]:

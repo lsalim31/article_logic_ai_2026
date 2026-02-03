@@ -47,6 +47,8 @@ from baseline_rag.retriever import (
 )
 from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
+from config.retrieval_config import HARDNESS_CONSTANT
+
 
 def extract_text_from_document(file_path: str) -> str:
     """Extract text from PDF, DOCX, or TXT file."""
@@ -143,7 +145,7 @@ def compute_nli_entailment(
 def assign_weights(
     pathfile: str,
     json_path: str,
-    hardness_criterion: float = 0.85,
+    hardness_criterion: float = HARDNESS_CONSTANT,
     k: int = 10,
     chunk_size: int = 512,
     chunk_overlap: int = 50,
@@ -233,7 +235,7 @@ def assign_weights(
             raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")        
         constraint_id = constraint.get('id', f'C_{i+1}')
         constraint_text = constraint.get('translation', '')
-        llm_weight = constraint.get('llm_weight', -10)
+        llm_weight = constraint.get('llm_weight', -100) #WARNING
 
         if not constraint_text:
             if verbose:
