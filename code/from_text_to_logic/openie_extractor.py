@@ -16,6 +16,7 @@ Key features:
 """
 
 import os
+import requests
 from typing import List, Dict, Any, Optional, Set
 
 import stanza
@@ -65,7 +66,8 @@ class OpenIEExtractor:
         self.language = language
 
         # Initialize native Stanza pipelines
-        self.coref_pipeline: Optional[stanza.Pipeline] = None
+        #self.coref_pipeline: Optional[stanza.Pipeline] = None
+        self.coref_pipeline = stanza.Pipeline( language,processors="tokenize,pos,lemma,coref",verbose=False)
         self.depparse_pipeline: Optional[stanza.Pipeline] = None
         self.client: Optional[CoreNLPClient] = None
 
@@ -142,6 +144,12 @@ class OpenIEExtractor:
         )
         # Enter the context to start the server
         self.client.__enter__()
+        endpoint = self.endpoint or f"http://localhost:{self.port}"
+        if self.endpoint is not None:
+            try:
+                requests.get(f"{endpoint}")
+            except Exception as e:
+                raise RuntimeError(f"CoreNLP endpoint unreachable: {endpoint}") from e
 
     def _resolve_coreferences(self, text: str) -> tuple[str, List[Dict[str, Any]]]:
         """
@@ -487,6 +495,8 @@ class OpenIEExtractor:
                 'resolved_text': text,
                 'original_text': text
             }
+
+
 
     def format_triples(self, triples: List[Dict[str, Any]]) -> str:
         """

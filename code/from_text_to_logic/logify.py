@@ -10,6 +10,8 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, Optional
 
+from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT
+
 # Add code directory to Python path for imports to work from any location
 _script_dir = Path(__file__).resolve().parent
 _code_dir = _script_dir.parent
@@ -89,7 +91,7 @@ def extract_text_from_document(file_path: str) -> str:
 class LogifyConverter:
     """Orchestrates the two-stage text-to-logic conversion pipeline."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, reasoning_effort: str = "medium", max_tokens: int = 128000):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = TEMPERATURE_LOGIC_CONVERTER, reasoning_effort: str = REASONING_EFFORT, max_tokens: int = MAX_TOKENS):
         """
         Initialize the pipeline with both stages.
 
@@ -98,7 +100,7 @@ class LogifyConverter:
             model (str): Model to use (default: gpt-5.2 with extended thinking)
             temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
             reasoning_effort (str): Reasoning effort for gpt-5.2/o1/o3 models (default: medium)
-            max_tokens (int): Maximum tokens in response (default: 128000)
+            max_tokens (int): Maximum tokens in response
         """
         # Stage 1: OpenIE extraction
         self.extractor = OpenIEExtractor()
@@ -163,20 +165,20 @@ def main():
     parser.add_argument(
         "--temperature",
         type=float,
-        default=0.1,
+        default=TEMPERATURE_LOGIC_CONVERTER,
         help="Sampling temperature for LLM (default: 0.1, ignored for reasoning models)"
     )
     parser.add_argument(
         "--reasoning-effort",
-        default="medium",
+        default=REASONING_EFFORT,
         choices=["none", "low", "medium", "high", "xhigh"],
         help="Reasoning effort for gpt-5.2/o1/o3 models (default: medium)"
     )
     parser.add_argument(
         "--max-tokens",
         type=int,
-        default=128000,
-        help="Maximum tokens in response (default: 128000)"
+        default=MAX_TOKENS,
+        help="Maximum tokens in response"
     )
     parser.add_argument("--output", default=None, help="Output JSON file path (default: auto-generated based on input file)")
 
