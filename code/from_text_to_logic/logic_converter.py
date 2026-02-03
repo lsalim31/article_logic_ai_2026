@@ -11,11 +11,12 @@ import json
 from typing import Dict, Any
 from openai import OpenAI
 
+from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_EFFORT
 
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = 0.1, max_tokens: int = 64000, reasoning_effort: str = "medium"):
+    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = TEMPERATURE_LOGIC_CONVERTER, max_tokens: int = MAX_TOKENS, reasoning_effort: str = REASONING_EFFORT):
         """
         Initialize the logic converter with API key and model.
 
@@ -66,7 +67,7 @@ class LogicConverter:
 
         Args:
             text (str): Original natural language text
-            formatted_triples (str): Pre-formatted OpenIE triples (tab-separated)
+            formatted_triples (str): Pre-formatted OpenIE triples
 
         Returns:
             Dict[str, Any]: JSON structure with primitive props,  constraints, and weights
@@ -74,14 +75,14 @@ class LogicConverter:
         try:
             # Format the combined input for the LLM
             combined_input = f"""ORIGINAL TEXT:
-<<<
-{text}
->>>
+            <<<
+            {text}
+            >>>
 
-RELATION TRIPLES:
-<<<
-{formatted_triples}
->>>"""
+            RELATION TRIPLES:
+            <<<
+            {formatted_triples}
+            >>>"""
 
             print(f"Sending to LLM for logical structure extraction (model: {self.model})...")
 
@@ -122,7 +123,6 @@ RELATION TRIPLES:
                     }
                 print(f"  Using reasoning effort: {self.reasoning_effort}")
             else:
-                # Standard models (gpt-4o, gpt-4-turbo, etc.)
                 api_params = {
                     "model": self.model,
                     "messages": [
@@ -161,15 +161,20 @@ RELATION TRIPLES:
 
             # Check for empty response after stripping
             if not response_text:
-                print(f"  ERROR: LLM returned empty response after stripping whitespace.")
-                print(f"  This may indicate API timeout, rate limiting, or model error.")
-                raise ValueError("LLM returned empty response. This may indicate API timeout, rate limiting, or model error.")
+                print(f"  ERROR: LLM returned empty response or an error after stripping whitespace.")
+                print(f" This may indicate API timeout, rate limiting, or model error.")
+                raise ValueError("LLM returned empty or a non string response. This may indicate API timeout, rate limiting, or model error.")
 
             print(f"  Response length: {len(response_text)} characters")
 
             # Parse the JSON response
             try:
                 logic_structure = json.loads(response_text)
+                if "primitive_props" not in logic_structure or "constraints" not in logic_structure:
+                    raise ValueError("LLM output missing required keys: primitive_props, constraints")
+                for c in logic_structure.get("constraints", []):
+                    if "id" not in c or "formula" not in c or "translation" not in c:
+                        raise ValueError("Constraint missing required fields: id, formula, translation")
                 return logic_structure
             except json.JSONDecodeError as e:
                 # If JSON parsing fails, try to extract JSON from response
