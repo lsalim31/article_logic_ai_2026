@@ -22,6 +22,9 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
 
+from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
+from config.retrieval_config import REASONING_MODEL,TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE
+
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
 code_dir = script_dir.parent
@@ -44,15 +47,15 @@ try:
         compute_cosine_similarity
     )
     
-    # Reuse config
-    try:
-        from config import retrieval_config
-    except ImportError:
-        # Fallback config if not found
-        class retrieval_config:
-            SBERT_TOP_K = 20
-            SBERT_MIN_SIMILARITY = 0.3
-            ENABLE_HYBRID_EMBEDDING = True
+    # # Reuse config
+    # try:
+    #     from config import retrieval_config
+    # except ImportError:
+    #     # Fallback config if not found
+    #     class retrieval_config:
+    #         SBERT_TOP_K = 20
+    #         SBERT_MIN_SIMILARITY = 0.3
+    #         ENABLE_HYBRID_EMBEDDING = True
             
 except ImportError as e:
     print(f"CRITICAL: Missing dependencies.\nError: {e}")
@@ -220,7 +223,7 @@ def verbalize_from_string(formula_str: str, prop_map: Dict[str, str]) -> str:
 # 2. RETRIEVAL & HELPERS
 # ==========================================
 
-def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedding: bool = True) -> List[Dict]:
+def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedding: bool = ENABLE_HYBRID_EMBEDDING) -> List[Dict]:
     """Preserved: Extract primitive propositions from logified JSON."""
     primitive_props = logified_structure.get('primitive_props', [])
     chunks = []
@@ -239,7 +242,7 @@ def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedd
     return chunks
 
 
-def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = 20) -> List[Dict]:
+def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = SBERT_TOP_K, minimal_similarity = SBERT_MIN_SIMILARITY) -> List[Dict]:
     """Preserved (simplified): Retrieve relevant chunks using SBERT."""
     chunk_embeddings = encode_chunks(chunks, sbert_model)
     query_embedding = encode_query(query, sbert_model)
@@ -248,7 +251,7 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     
     retrieved = []
     for idx in top_k_indices:
-        if similarities[idx] < 0.1:
+        if similarities[idx] < minimal_similarity:
             break
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
@@ -276,10 +279,10 @@ def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
 def convert_yes_no_to_statement(
     query: str,
     api_key: str,
-    model: str = "gpt-5.2",
-    temperature: float = 0.1,
-    reasoning_effort: str = "medium",
-    max_tokens: int = 1000
+    model: str = REASONING_MODEL,
+    temperature: float = TEMPERATURE_LOGIC_CONVERTER,
+    reasoning_effort: str = REASONING_EFFORT,
+    max_tokens: int = MAX_TOKENS
 ) -> str:
     """
     Convert a Yes/No question to a declarative statement using an LLM.
@@ -415,7 +418,7 @@ def load_nli_model_singleton():
 
 
 def generate_candidates_llm(
-    prompt: str, api_key: str, model: str, temperature: float = 0.7
+    prompt: str, api_key: str, model: str, temperature: float = TEMPERATURE_TRANSLATE
 ) -> List[Dict]:
     """Call LLM to get JSON result - handles both single object and candidates list."""
     client, model = get_configured_client(api_key, model)
@@ -560,11 +563,11 @@ def translate_query(
     query: str,
     json_path: str,
     api_key: str,
-    model: str = "gpt-4o",
-    temperature: float = 0.1,
-    reasoning_effort: str = "medium",
-    max_tokens: int = 64000,
-    k: int = 20,
+    model: str = TRANSLATE_MODEL,
+    temperature: float = TEMPERATURE_TRANSLATE,
+    reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
+    max_tokens: int = MAX_TOKENS,
+    k: int = SBERT_TOP_K,
     sbert_model_name: str = "all-MiniLM-L6-v2",
     verbose: bool = True
     ) -> Dict[str, Any]:
@@ -768,10 +771,10 @@ def main():
     parser.add_argument("query", help="Natural language query")
     parser.add_argument("json_path", help="Path to logified JSON")
     parser.add_argument("--api-key", required=True, help="API key")
-    parser.add_argument("--model", default="gpt-4o", help="LLM model (default: gpt-4o)")
-    parser.add_argument("--temperature", type=float, default=0.1, help="Sampling temp")
-    parser.add_argument("--reasoning-effort", default="medium", help="Reasoning effort (for reasoning models)")
-    parser.add_argument("--max-tokens", type=int, default=64000, help="Max tokens")
+    parser.add_argument("--model", default=TRANSLATE_MODEL, help="LLM model (default: gpt-4o)")
+    parser.add_argument("--temperature", type=float, default=TEMPERATURE_TRANSLATE, help="Sampling temp")
+    parser.add_argument("--reasoning-effort", default=REASONING_EFFORT, help="Reasoning effort (for reasoning models)")
+    parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Max tokens")
     parser.add_argument("--k", type=int, default=20, help="Retrieval K")
     parser.add_argument("--output", default=None, help="Output JSON path")
     parser.add_argument("--quiet", action="store_true", help="Suppress output")
