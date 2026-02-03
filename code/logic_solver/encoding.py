@@ -41,16 +41,16 @@ class FormulaParser:
         formula = formula.strip()
 
         # Replace various arrow symbols with standard ones
-        formula = formula.replace('⇒', '=>')
+        formula = formula.replace('⇒', '=>').replace('⟹', '=>').replace('→', '=>')
         formula = formula.replace('⟹', '=>')
         formula = formula.replace('→', '=>')
         formula = formula.replace('⟺', '<=>')
-        formula = formula.replace('⇔', '<=>')
+        formula = formula.replace('⇔', '<=>').replace('↔', '<=>')
         formula = formula.replace('↔', '<=>')
         formula = formula.replace('∧', '&')
         formula = formula.replace('∨', '|')
         formula = formula.replace('¬', '~')
-        formula = formula.replace('⟸', '<=')  # Reverse implication
+        formula = formula.replace('⟸', '<=').replace('<-', '<=')  # Reverse implication
         formula = formula.replace('⇐', '<=')
 
         # Parse and convert to CNF
