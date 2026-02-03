@@ -1,18 +1,6 @@
 #!/usr/bin/env python3
 """
-logify.py - Text to Logic Pipeline Orchestrator
 
-This module orchestrates the two-stage text-to-logic pipeline:
-  Stage 1: Extract relation triples using OpenIE (openie_extractor.py)
-  Stage 2: Convert text + triples to logic using LLM (logic_converter.py)
-
-Supports multiple document formats: PDF, DOCX, TXT, and plain text input.
-
-Usage (from repo root):
-    python code/from_text_to_logic/logify.py document.txt --api-key sk-...
-
-Usage (from code directory):
-    python from_text_to_logic/logify.py document.txt --api-key sk-...
 """
 
 import json
