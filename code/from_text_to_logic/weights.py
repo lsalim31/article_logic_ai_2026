@@ -8,8 +8,8 @@ using NLI cross-encoder scores combined with LLM-assigned weights.
 
 Pipeline:
 1. Load {primitive_props, constraints} from logified JSON
-2. For each constraint, retrieve top-k document chunks via SBERT
-3. Score (chunk, constraint) pairs using NLI cross-encoder
+2. For each constraint, retrieve top-k propositions chunks via SBERT
+3. Score (propositions, constraint) pairs using NLI cross-encoder
 4. Compute combined_score = llm_weight × max(nli_entailment)
 5. Classify: combined >= hardness_criterion → hard, else → soft
 
@@ -110,38 +110,69 @@ def retrieve_top_k_chunks(
     return retrieved
 
 
+# def compute_nli_entailment(
+#     constraint_text: str,
+#     chunks: List[Dict],
+#     chunk_embeddings: np.ndarray,
+#     sbert_model,
+#     nli_model,
+#     k: int = 10
+# ) -> float:
+#     """
+#     Compute max NLI entailment score for constraint against top-k chunks.
+    
+#     Returns the maximum P(entailment) across all retrieved chunks.
+#     """
+#     retrieved = retrieve_top_k_chunks(
+#         query=constraint_text,
+#         chunks=chunks,
+#         chunk_embeddings=chunk_embeddings,
+#         sbert_model=sbert_model,
+#         k=k
+#     )
+
+#     if not retrieved:
+#         return 0.0
+
+#     # Build (premise, hypothesis) pairs: premise=chunk, hypothesis=constraint
+#     pairs = [(chunk['text'], constraint_text) for chunk in retrieved]
+
+#     # Score with NLI: returns array of shape (n_pairs, 3) with [P(contra), P(neutral), P(entail)]
+#     probs = score_nli_pairs(nli_model, pairs)
+    
+#     # Return max entailment score
+#     return float(np.max(probs[:, 2]))
+
+
 def compute_nli_entailment(
     constraint_text: str,
-    chunks: List[Dict],
-    chunk_embeddings: np.ndarray,
-    sbert_model,
+    propositions: List[Dict],
     nli_model,
     k: int = 10
 ) -> float:
     """
-    Compute max NLI entailment score for constraint against top-k chunks.
-    
-    Returns the maximum P(entailment) across all retrieved chunks.
-    """
-    retrieved = retrieve_top_k_chunks(
-        query=constraint_text,
-        chunks=chunks,
-        chunk_embeddings=chunk_embeddings,
-        sbert_model=sbert_model,
-        k=k
-    )
+    Compute max NLI entailment score for a constraint against proposition texts.
 
-    if not retrieved:
+    Returns the maximum P(entailment) across top-k proposition candidates.
+    """
+    if not propositions:
         return 0.0
 
-    # Build (premise, hypothesis) pairs: premise=chunk, hypothesis=constraint
-    pairs = [(chunk['text'], constraint_text) for chunk in retrieved]
+    # Optional: truncate to top-k propositions if already ranked elsewhere
+    candidates = propositions[:k] if k else propositions
 
-    # Score with NLI: returns array of shape (n_pairs, 3) with [P(contra), P(neutral), P(entail)]
+    # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
+    pairs = [(prop["translation"], constraint_text) for prop in candidates if prop.get("translation")]
+
+    if not pairs:
+        return 0.0
+
+    # Score with NLI: returns array [P(contra), P(neutral), P(entail)]
     probs = score_nli_pairs(nli_model, pairs)
-    
+
     # Return max entailment score
     return float(np.max(probs[:, 2]))
+
 
 
 def assign_weights(
@@ -191,32 +222,12 @@ def assign_weights(
             "soft_constraints": []
         }
 
+
+    # Step 2: Get propositions (premise candidates)
+    propositions = logified.get("primitive_props", [])
     if verbose:
-        print(f"  Found {len(constraints)} constraints")
+        print(f"  Found {len(propositions)} propositions")
 
-    # Step 2: Extract and chunk document
-    if verbose:
-        print(f"Extracting text from: {pathfile}")
-
-    document_text = extract_text_from_document(pathfile)
-
-    if verbose:
-        print(f"  Extracted {len(document_text)} characters")
-        print(f"Chunking document (size={chunk_size}, overlap={chunk_overlap})...")
-
-    chunks = chunk_document(document_text, chunk_size=chunk_size, overlap=chunk_overlap)
-
-    if verbose:
-        print(f"  Created {len(chunks)} chunks")
-
-    # Step 3: Load models
-    if verbose:
-        print(f"Loading SBERT model: {sbert_model_name}")
-    sbert_model = load_sbert_model(sbert_model_name)
-
-    if verbose:
-        print("Pre-computing chunk embeddings...")
-    chunk_embeddings = encode_chunks(chunks, sbert_model)
 
     if verbose:
         print(f"Loading NLI model: {nli_model_name}")
@@ -232,27 +243,26 @@ def assign_weights(
     required_fields = {"id", "translation", "formula", "llm_weight"}
     missing = [c for c in constraints if not required_fields.issubset(c.keys())]
     if missing:
-        raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")   
+        raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")
 
     for i, constraint in enumerate(constraints):
         constraint_id = constraint.get('id', f'C_{i+1}')
         constraint_text = constraint.get('translation', '')
-        llm_weight = constraint.get('llm_weight', -100) #WARNING
+        llm_weight = constraint.get('llm_weight', -100)  # WARNING
 
         if not constraint_text:
             if verbose:
                 print(f"  [{i+1}/{len(constraints)}] {constraint_id}: SKIPPED (no translation)")
             continue
 
-        # Compute NLI entailment score
+        # Compute NLI entailment score (proposition-level)
         nli_entailment = compute_nli_entailment(
             constraint_text=constraint_text,
-            chunks=chunks,
-            chunk_embeddings=chunk_embeddings,
-            sbert_model=sbert_model,
+            propositions=propositions,
             nli_model=nli_model,
             k=k
         )
+
 
         # Compute combined score
         combined = llm_weight * nli_entailment
