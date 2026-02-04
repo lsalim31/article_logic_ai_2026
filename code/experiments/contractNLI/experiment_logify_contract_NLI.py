@@ -33,6 +33,8 @@ from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from logic_solver import LogicSolver
+from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_EFFORT, HARDNESS_CONSTANT, SBERT_TOP_K, TRANSLATE_MODEL
+
 
 
 # Paths
@@ -43,7 +45,7 @@ RESULTS_DIR = _script_dir / "results_logify_contract_NLI"
 DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
 
 # Fixed model for logification
-LOGIFY_MODEL = "openai/gpt-5.2"
+LOGIFY_MODEL = REASONING_EFFORT
 
 
 def load_contractnli_dataset(dataset_path: str) -> Dict[str, Any]:
@@ -129,7 +131,7 @@ def logify_document(
     assign_weights(
         pathfile=str(temp_text_path),
         json_path=str(intermediate_path),
-        hardness_criterion=0.85,  # New parameter
+        hardness_criterion=HARDNESS_CONSTANT,  # New parameter
         k=k_weights,
         verbose=False
     )
@@ -229,14 +231,14 @@ def query_hypothesis(
 def run_experiment(
     dataset_path: str,
     api_key: str,
-    query_model: str = "openai/gpt-5-nano",
+    query_model: str = TRANSLATE_MODEL,
     weights_model: str = "gpt-4o",
     temperature: float = 0.0,
-    reasoning_effort: str = "medium",
-    max_tokens: int = 128000,
-    query_max_tokens: int = 64000,
+    reasoning_effort: str = REASONING_EFFORT,
+    max_tokens: int = MAX_TOKENS,
+    query_max_tokens: int = MAX_TOKENS,
     k_weights: int = 10,
-    k_query: int = 20,
+    k_query: int = SBERT_TOP_K,
     doc_ids: List[int] = None
 ) -> Dict[str, Any]:
     """
@@ -484,7 +486,7 @@ def main():
     # Note: Logification model is fixed to LOGIFY_MODEL (openai/gpt-5.2) and cannot be changed
     parser.add_argument(
         "--query-model",
-        default="openai/gpt-5-nano",
+        default=TRANSLATE_MODEL,
         help="Model for query translation (default: openai/gpt-5-nano). Logification uses fixed model: openai/gpt-5.2"
     )
     parser.add_argument(
@@ -493,27 +495,27 @@ def main():
         help="Model for weight assignment (default: gpt-4o)"
     )
     parser.add_argument(
-        "--temperature",
+        "--temperature logic converted",
         type=float,
-        default=0.1,
+        default=TEMPERATURE_LOGIC_CONVERTER,
         help="Sampling temperature (default: 0.1)"
     )
     parser.add_argument(
         "--reasoning-effort",
-        default="medium",
+        default=REASONING_EFFORT,
         choices=["none", "low", "medium", "high", "xhigh"],
         help="Reasoning effort (default: medium)"
     )
     parser.add_argument(
         "--max-tokens",
         type=int,
-        default=128000,
+        default=MAX_TOKENS,
         help="Max tokens for logification (default: 128000)"
     )
     parser.add_argument(
         "--query-max-tokens",
         type=int,
-        default=64000,
+        default=MAX_TOKENS,
         help="Max tokens for query translation (default: 64000)"
     )
     parser.add_argument(
@@ -525,7 +527,7 @@ def main():
     parser.add_argument(
         "--k-query",
         type=int,
-        default=20,
+        default=SBERT_TOP_K,
         help="Top-k propositions for query (default: 20)"
     )
     parser.add_argument(

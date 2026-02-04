@@ -580,8 +580,8 @@ def translate_query(
     api_key: str,
     model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_TRANSLATE,
-    #reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
-    #max_tokens: int = MAX_TOKENS,
+    reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
+    max_tokens: int = MAX_TOKENS,
     k: int = SBERT_TOP_K,
     sbert_model_name: str = "all-MiniLM-L6-v2",
     verbose: bool = True
