@@ -76,7 +76,17 @@ class LogicSolver:
             # Create a copy of the base WCNF
             wcnf = self._copy_wcnf(self.base_wcnf)
 
-            # Add ¬Q as hard clauses
+            is_sat_kb, model_kb = self._check_sat(self._extract_hard_clauses(self.base_wcnf))
+            if not is_sat_kb:
+                print("[DEBUG] HARD constraints UNSAT.")
+                return SolverResult(
+                    answer="KB_not_sat",
+                    confidence= -1,
+                    model=None,
+                    explanation=" KB is not sat"
+                    )            
+                
+            # Add ¬Q as hard clauses           
             negated_query_clauses = self.encoder.encode_query(query_formula, negate=True)
             for clause in negated_query_clauses:
                 wcnf.append(clause)  # Hard clause

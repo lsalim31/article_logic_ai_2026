@@ -118,10 +118,10 @@ def _parse_implies(tokens: List[str]) -> Tuple[Any, List[str]]:
         tokens = tokens[1:]
         right, tokens = _parse_or(tokens)
         if op == '=>':
-            left = ('=>', left, right)
+            left = ('IMPLIES', left, right)
         else:
             # A <= B  ==  B => A
-            left = ('=>', right, left)
+            left = ('IMPLIES', right, left)
 
     return left, tokens
 
@@ -228,7 +228,8 @@ def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
         return f"if {verbalize(formula[1], prop_map)}, then {verbalize(formula[2], prop_map)}"
     elif op == "IFF":
         return f"{verbalize(formula[1], prop_map)} if and only if {verbalize(formula[2], prop_map)}"
-    return ""
+    else:
+        raise ValueError(f"Unknown operator in formula: {op}")
 
 
 def verbalize_from_string(formula_str: str, prop_map: Dict[str, str]) -> str:

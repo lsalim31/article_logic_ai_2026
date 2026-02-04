@@ -137,6 +137,15 @@ class LogifyConverter:
         """
         self.converter.save_output(logic_structure, output_path)
 
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit."""
+        self.close()
+        return False
+
     def close(self):
         """Clean up resources from both stages."""
         self.extractor.close()
