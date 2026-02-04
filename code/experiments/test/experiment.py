@@ -81,7 +81,7 @@ def logify_document(
     reasoning_effort: str,
     max_tokens: int,
     k_weights: int,
-    verbose: bool,
+    verbose: bool = True,
 ) -> Dict[str, Any]:
     cache_path = get_cached_logified_path(doc_id)
     if cache_path.exists():
@@ -186,7 +186,7 @@ def query_hypothesis(
                 formula=None,
                 query_mode=query_mode,
                 explanation=None,
-                error="Failed to translate hypothesis to formula",
+                error="Not formular from query translation. Failed to translate hypothesis to formula",
                 query_latency_sec=time.time() - start_time,
             )
 
@@ -223,6 +223,8 @@ def query_hypothesis(
         )
 
 
+
+
 def run_debug_experiment(
     dataset_path: str,
     api_key: str,
@@ -234,7 +236,7 @@ def run_debug_experiment(
     max_tokens: int,
     k_weights: int,
     k_query: int,
-    verbose: bool,
+    verbose: bool = True,
 ) -> List[QueryDebugResult]:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -307,10 +309,65 @@ def run_debug_experiment(
                 if result.explanation:
                     print(f"    explanation: {result.explanation}")
                 if result.error:
-                    print(f"    error: {result.error}")
+                    print(f"    query error: {result.error}")
                 print(f"    latency: {result.query_latency_sec:.2f}s")
 
     return results
+
+def write_experiment_debug_report(
+    results: List[QueryDebugResult],
+    output_name: str = "debug_report.md",
+    include_raw: bool = True,
+) -> Path:
+    """
+    Write a markdown/text debug report to _script_dir with all outcomes and details.
+
+    Contents:
+    - Summary counts (total, correct, incorrect, errors)
+    - Per-query details (hypothesis, formula, mode, prediction, confidence, explanation, error, latency)
+    - Optional raw fields for deeper debugging
+    """
+    output_path = _script_dir / output_name
+
+    total = len(results)
+    correct = sum(1 for r in results if r.prediction == r.ground_truth)
+    errors = sum(1 for r in results if r.error)
+    incorrect = total - correct - errors
+
+    lines = []
+    lines.append("# Experiment Debug Report\n")
+    lines.append("## Summary\n")
+    lines.append(f"- Total: {total}\n")
+    lines.append(f"- Correct: {correct}\n")
+    lines.append(f"- Incorrect: {incorrect}\n")
+    lines.append(f"- Errors: {errors}\n")
+
+    lines.append("\n## Detailed Results\n")
+    for r in results:
+        lines.append(f"### {r.hypothesis_key}\n")
+        lines.append(f"- Hypothesis: {r.hypothesis_text}\n")
+        lines.append(f"- Ground Truth: {r.ground_truth}\n")
+        lines.append(f"- Prediction: {r.prediction}\n")
+        lines.append(f"- Confidence: {r.confidence}\n")
+        lines.append(f"- Formula: {r.formula}\n")
+        lines.append(f"- Query Mode: {r.query_mode}\n")
+        lines.append(f"- Explanation: {r.explanation}\n")
+        lines.append(f"- Error: {r.error}\n")
+        lines.append(f"- Latency (sec): {r.query_latency_sec:.3f}\n")
+
+        if include_raw:
+            lines.append("\n**Raw Fields**\n")
+            lines.append(f"- hypothesis_key: {r.hypothesis_key}\n")
+            lines.append(f"- formula: {r.formula}\n")
+            lines.append(f"- query_mode: {r.query_mode}\n")
+            lines.append(f"- error: {r.error}\n")
+
+        lines.append("\n---\n")
+
+    output_path.write_text("".join(lines), encoding="utf-8")
+    print(f"[DEBUG REPORT] Saved to: {output_path}")
+    return output_path
+    
 
 
 def main() -> int:
@@ -375,7 +432,7 @@ def main() -> int:
         return 1
 
     try:
-        run_debug_experiment(
+        results = run_debug_experiment(
             dataset_path=args.dataset_path,
             api_key=args.api_key,
             doc_id=args.doc_id,
@@ -388,6 +445,9 @@ def main() -> int:
             k_query=args.k_query,
             verbose=args.verbose,
         )
+        
+        write_experiment_debug_report(results)
+        
     except Exception as exc:
         print(f"Error: {exc}")
         return 1
