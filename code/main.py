@@ -16,17 +16,6 @@ import argparse
 import json
 import os
 
-from from_text_to_logic.propositions import extract_propositions
-from from_text_to_logic.constraints import extract_constraints
-from from_text_to_logic.weights import assign_weights
-from from_text_to_logic.schema import build_schema
-from from_text_to_logic.update import update_structure
-from logic_solver.encoding import encode_to_maxsat
-from logic_solver.maxsat import solve
-from interface_with_user.translate import translate_query
-from interface_with_user.interpret import interpret_result
-from interface_with_user.refine import refine_query
-
 
 # Configuration
 ACTIVE_STRUCTURE_PATH = "outputs/logified/active.json"

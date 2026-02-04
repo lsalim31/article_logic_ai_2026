@@ -205,7 +205,9 @@ def query_hypothesis(
         else:
             # "Shall X?" → Check if X is entailed (required)
             solver_result = solver.query(formula)
-
+            
+        if solver_result.explanation and "Error" in solver_result.explanation:
+            print(f"[MAXSAT ERROR] doc={json_path} query={hypothesis_text[:80]}... -> {solver_result.explanation}")
         return {
             "prediction": solver_result.answer,
             "confidence": solver_result.confidence,

@@ -79,7 +79,7 @@ def tokenize_formula(formula: str) -> List[str]:
     formula = formula.replace('¬', '~').replace('!', '~')
     
     # Pattern: proposition IDs (P_\d+), operators, parentheses
-    pattern = r'(P_\d+|<=>|=>|[&|~()])'
+    pattern = r'(P_\d+|<=>|=>|<=|[&|~()])'
     tokens = re.findall(pattern, formula)
     return [t.strip() for t in tokens if t.strip()]
 
@@ -192,6 +192,21 @@ def _parse_atom(tokens: List[str]) -> Tuple[Formula, List[str]]:
     
     return prop_id, tokens[1:]
 
+
+def _parse_implies(self, tokens: List[str]) -> Tuple[Any, List[str]]:
+    left, tokens = self._parse_or(tokens)
+
+    while tokens and tokens[0] in ('=>', '<='):
+        op = tokens[0]
+        tokens = tokens[1:]
+        right, tokens = self._parse_or(tokens)
+        if op == '=>':
+            left = ('=>', left, right)
+        else:
+            # A <= B  ==  B => A
+            left = ('=>', right, left)
+
+    return left, tokens
 
 def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
     """Recursively converts logic to NLI-ready English."""
@@ -565,8 +580,8 @@ def translate_query(
     api_key: str,
     model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_TRANSLATE,
-    reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
-    max_tokens: int = MAX_TOKENS,
+    #reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
+    #max_tokens: int = MAX_TOKENS,
     k: int = SBERT_TOP_K,
     sbert_model_name: str = "all-MiniLM-L6-v2",
     verbose: bool = True
@@ -775,7 +790,7 @@ def main():
     parser.add_argument("--temperature", type=float, default=TEMPERATURE_TRANSLATE, help="Sampling temp")
     parser.add_argument("--reasoning-effort", default=REASONING_EFFORT, help="Reasoning effort (for reasoning models)")
     parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS, help="Max tokens")
-    parser.add_argument("--k", type=int, default=20, help="Retrieval K")
+    parser.add_argument("--k", type=int, default=SBERT_TOP_K, help="Retrieval K")
     parser.add_argument("--output", default=None, help="Output JSON path")
     parser.add_argument("--quiet", action="store_true", help="Suppress output")
     parser.add_argument("--sbert-model-name", default="all-MiniLM-L6-v2", help="SBERT model")

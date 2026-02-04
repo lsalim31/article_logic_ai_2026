@@ -65,11 +65,11 @@ class OpenIEExtractor:
         self.timeout = timeout
         self.port = port
         self.language = language
-        self.endpoint = endpoint
+        #self.endpoint = endpoint
 
         # Initialize native Stanza pipelines
         #self.coref_pipeline: Optional[stanza.Pipeline] = None
-        self.coref_pipeline = Optional[stanza.Pipeline] = None # Before Feb 2: stanza.Pipeline( language,processors="tokenize,pos,lemma,coref",verbose=False)
+        self.coref_pipeline: Optional[stanza.Pipeline] = None # Before Feb 2: stanza.Pipeline( language,processors="tokenize,pos,lemma,coref",verbose=False)
         self.depparse_pipeline: Optional[stanza.Pipeline] = None
         self.client: Optional[CoreNLPClient] = None
 
@@ -137,10 +137,9 @@ class OpenIEExtractor:
  
     def _start_client(self):
         """Start the CoreNLP client for OpenIE."""
-        endpoint = self.endpoint or f"http://localhost:{self.port}"
+        endpoint = getattr(self, 'endpoint', None) or f"http://localhost:{self.port}"
 
-        # If using an external endpoint, check it before starting a new server
-        if self.endpoint is not None:
+        if getattr(self, 'endpoint', None) is not None:
             try:
                 requests.get(endpoint, timeout=2)
             except Exception as e:
@@ -153,9 +152,10 @@ class OpenIEExtractor:
             properties=self.openie_properties,
             be_quiet=True,
             endpoint=endpoint,
-            start_server=self.endpoint is None,
+            start_server=getattr(self, 'endpoint', None) is None,
         )
         self.client.__enter__()
+
 
  
     # Commented on Feb 2 - Patricio

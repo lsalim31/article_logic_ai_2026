@@ -92,6 +92,7 @@ class LogicSolver:
             if not is_sat:
                 # UNSAT: Query is entailed by hard constraints alone
                 # Compute how strongly soft constraints support Q being true
+                print("[DEBUG] Hard constraints UNSAT; all queries entailed by hard KB.")
                 soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
