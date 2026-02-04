@@ -65,7 +65,7 @@ class OpenIEExtractor:
         self.timeout = timeout
         self.port = port
         self.language = language
-        #self.endpoint = endpoint
+        self.endpoint = endpoint
 
         # Initialize native Stanza pipelines
         #self.coref_pipeline: Optional[stanza.Pipeline] = None

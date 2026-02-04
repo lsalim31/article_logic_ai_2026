@@ -110,6 +110,21 @@ def parse_infix_formula(formula_str: str) -> Formula:
     
     return expr
 
+def _parse_implies(tokens: List[str]) -> Tuple[Any, List[str]]:
+    left, tokens = _parse_or(tokens)
+
+    while tokens and tokens[0] in ('=>', '<='):
+        op = tokens[0]
+        tokens = tokens[1:]
+        right, tokens = _parse_or(tokens)
+        if op == '=>':
+            left = ('=>', left, right)
+        else:
+            # A <= B  ==  B => A
+            left = ('=>', right, left)
+
+    return left, tokens
+
 
 def _parse_iff(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse IFF (biconditional) expressions."""
@@ -123,16 +138,17 @@ def _parse_iff(tokens: List[str]) -> Tuple[Formula, List[str]]:
     return left, tokens
 
 
-def _parse_implies(tokens: List[str]) -> Tuple[Formula, List[str]]:
-    """Parse implication expressions."""
-    left, tokens = _parse_or(tokens)
+# def _parse_implies(tokens: List[str]) -> Tuple[Formula, List[str]]:
+#     """Parse implication expressions."""
+#     left, tokens = _parse_or(tokens)
     
-    while tokens and tokens[0] == '=>':
-        tokens = tokens[1:]  # consume '=>'
-        right, tokens = _parse_or(tokens)
-        left = ('IMPLIES', left, right)
+#     while tokens and tokens[0] == '=>':
+#         tokens = tokens[1:]  # consume '=>'
+#         right, tokens = _parse_or(tokens)
+#         left = ('IMPLIES', left, right)
     
-    return left, tokens
+#     return left, tokens
+
 
 
 def _parse_or(tokens: List[str]) -> Tuple[Formula, List[str]]:
@@ -193,20 +209,6 @@ def _parse_atom(tokens: List[str]) -> Tuple[Formula, List[str]]:
     return prop_id, tokens[1:]
 
 
-def _parse_implies(self, tokens: List[str]) -> Tuple[Any, List[str]]:
-    left, tokens = self._parse_or(tokens)
-
-    while tokens and tokens[0] in ('=>', '<='):
-        op = tokens[0]
-        tokens = tokens[1:]
-        right, tokens = self._parse_or(tokens)
-        if op == '=>':
-            left = ('=>', left, right)
-        else:
-            # A <= B  ==  B => A
-            left = ('=>', right, left)
-
-    return left, tokens
 
 def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
     """Recursively converts logic to NLI-ready English."""
@@ -434,7 +436,7 @@ def load_nli_model_singleton():
 
 def generate_candidates_llm(
     prompt: str, api_key: str, model: str, temperature: float = TEMPERATURE_TRANSLATE
-) -> List[Dict]:
+    ) -> List[Dict]:
     """Call LLM to get JSON result - handles both single object and candidates list."""
     client, model = get_configured_client(api_key, model)
     

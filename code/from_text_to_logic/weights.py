@@ -227,12 +227,12 @@ def assign_weights(
     hard_constraints = []
     soft_constraints = []
 
+    required_fields = {"id", "translation", "formula", "llm_weight"}
+    missing = [c for c in constraints if not required_fields.issubset(c.keys())]
+    if missing:
+        raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")   
+
     for i, constraint in enumerate(constraints):
-        
-        required_fields = {"id", "translation", "formula", "llm_weight"}
-        missing = [c for c in constraints if not required_fields.issubset(c.keys())]
-        if missing:
-            raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")        
         constraint_id = constraint.get('id', f'C_{i+1}')
         constraint_text = constraint.get('translation', '')
         llm_weight = constraint.get('llm_weight', -100) #WARNING
