@@ -33,7 +33,7 @@ from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from logic_solver import LogicSolver
-from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_EFFORT, HARDNESS_CONSTANT, SBERT_TOP_K, TRANSLATE_MODEL
+from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT, HARDNESS_CONSTANT, SBERT_TOP_K, TRANSLATE_MODEL
 
 
 
@@ -45,7 +45,7 @@ RESULTS_DIR = _script_dir / "results_logify_contract_NLI"
 DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
 
 # Fixed model for logification
-LOGIFY_MODEL = REASONING_EFFORT
+LOGIFY_MODEL = REASONING_MODEL
 
 
 def load_contractnli_dataset(dataset_path: str) -> Dict[str, Any]:
@@ -233,7 +233,7 @@ def run_experiment(
     api_key: str,
     query_model: str = TRANSLATE_MODEL,
     weights_model: str = "gpt-4o",
-    temperature: float = 0.0,
+    temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,
     max_tokens: int = MAX_TOKENS,
     query_max_tokens: int = MAX_TOKENS,
@@ -495,7 +495,7 @@ def main():
         help="Model for weight assignment (default: gpt-4o)"
     )
     parser.add_argument(
-        "--temperature logic converted",
+        "--temperature",
         type=float,
         default=TEMPERATURE_LOGIC_CONVERTER,
         help="Sampling temperature (default: 0.1)"
