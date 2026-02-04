@@ -73,6 +73,9 @@ class LogicSolver:
             SolverResult with answer TRUE/FALSE/UNCERTAIN and confidence
         """
         try:
+            print(f"[DEBUG] Parsing formula: '{query_formula}'")
+            #print(f"[DEBUG] Tokens: {self._tokenize_debug(query_formula)}")
+            
             # Create a copy of the base WCNF
             wcnf = self._copy_wcnf(self.base_wcnf)
 
@@ -118,9 +121,10 @@ class LogicSolver:
 
             if optimal_cost is None:
                 # UNSAT even with soft constraints
+                soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
-                    confidence=10, #WARNING
+                    confidence=soft_confidence,
                     model=None,
                     explanation="Query is entailed (KB ∧ ¬Q is unsatisfiable)"
                 )
@@ -369,10 +373,11 @@ class LogicSolver:
             cost_not_q = float('inf')
 
         if cost_q == float('inf') and cost_not_q == float('inf'):
-            return 0.5
+            print(f"[WARNING] KB inconsistent. Query: {query_formula}")
+            return -1
         if cost_q + cost_not_q == 0:
-            return 0.5
-        return cost_not_q / (cost_q + cost_not_q)
+            return 0.5 #(0.5, cost_q, cost_not_q)
+        return cost_not_q / (cost_q + cost_not_q) # (cost_not_q / (cost_q + cost_not_q), cost_q, cost_not_q)
     
 
 def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> SolverResult:

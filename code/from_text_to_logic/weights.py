@@ -35,6 +35,8 @@ if str(_code_dir) not in sys.path:
 if str(_script_dir) not in sys.path:
     sys.path.insert(0, str(_script_dir))
 
+
+
 import numpy as np
 
 # Reuse existing infrastructure
@@ -47,7 +49,7 @@ from baseline_rag.retriever import (
 )
 from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
-from config.retrieval_config import HARDNESS_CONSTANT
+from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K
 
 
 def extract_text_from_document(file_path: str) -> str:
@@ -261,11 +263,15 @@ def assign_weights(
 
         # Build output constraint
         output_constraint = {
+            "llm-weight":llm_weight,
+            "nli_entailment":nli_entailment,
+            "combined=(llm)*(nli)":combined,
+            "hardness_constant":hardness_criterion,
             "id": constraint_id,
             "formula": constraint.get('formula', ''),
             "translation": constraint_text,
             "evidence": constraint.get('evidence', ''),
-            "reasoning": constraint.get('reasoning', '')
+            "reasoning": constraint.get('reasoning', ''),
         }
 
         # Classify based on combined score
@@ -308,10 +314,10 @@ def main():
     )
     parser.add_argument("pathfile", help="Path to document file (PDF, DOCX, TXT)")
     parser.add_argument("json_path", help="Path to logified JSON file")
-    parser.add_argument("--hardness-criterion", type=float, default=0.85,
-                        help="Threshold for hard classification (default: 0.85)")
-    parser.add_argument("--k", type=int, default=10,
-                        help="Number of top chunks to retrieve (default: 10)")
+    parser.add_argument("--hardness-criterion", type=float, default= HARDNESS_CONSTANT,
+                        help="Threshold for hard classification")
+    parser.add_argument("--k", type=int, default = SBERT_TOP_K,
+                        help="Number of top chunks to retrieve")
     parser.add_argument("--chunk-size", type=int, default=512,
                         help="Tokens per chunk (default: 512)")
     parser.add_argument("--chunk-overlap", type=int, default=50,

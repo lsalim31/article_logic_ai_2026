@@ -161,7 +161,6 @@ class FormulaParser:
                 raise ValueError("Missing closing parenthesis")
             tokens = tokens[1:]  # consume ')'
             return expr, tokens
-
         # Must be a proposition ID
         prop_id = tokens[0]
         if not prop_id.startswith('P_'):
@@ -341,14 +340,17 @@ class LogicEncoder:
         Returns:
             Integer weight for MaxSAT
         """
-        if weight >= 1.0:
-            return 10000  # Very high weight
-        elif weight <= 0.0:
-            return 1  # Very low weight
-        else:
-            # Log-odds ratio scaled to integer
-            log_odds = weight / (1 - weight)
-            return max(1, int(log_odds * 1000))
+
+
+        """Linear scaling: weight directly proportional to influence."""
+        return max(1, int(weight * 1000))
+        
+        #if weight >= 1.0: return 10000  # Very high weight
+        #elif weight <= 0.0: return 1  # Very low weight
+        #else:
+        #    # Log-odds ratio scaled to integer
+        #    log_odds = weight / (1 - weight)
+        #    return max(1, int(log_odds * 1000))
 
     def encode(self) -> WCNF:
         """

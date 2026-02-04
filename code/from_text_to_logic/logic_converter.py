@@ -59,7 +59,7 @@ class LogicConverter:
                     content = content[6:].strip()
                 return content
         except FileNotFoundError:
-            raise FileNotFoundError(f"System prompt file not found at {prompt_path}")
+            raise FileNotFoundError(f"[logic_converter]: System prompt file not found at {prompt_path}")
 
     def convert(self, text: str, formatted_triples: str) -> Dict[str, Any]:
         """
@@ -121,7 +121,7 @@ class LogicConverter:
                         "reasoning_effort": self.reasoning_effort,  # Top-level parameter for OpenAI
                         "max_completion_tokens": self.max_tokens
                     }
-                print(f"  Using reasoning effort: {self.reasoning_effort}")
+                print(f"[logic_converter] Using reasoning effort: {self.reasoning_effort}")
             else:
                 api_params = {
                     "model": self.model,
@@ -137,8 +137,8 @@ class LogicConverter:
             response = self.client.chat.completions.create(**api_params)
 
             # Debug: print the raw response
-            print(f"  Response received. Parsing...")
-            print(f"  DEBUG - Full response object:")
+            print(f" [logic_converter] Response received. Parsing...")
+            print(f" DEBUG - Full response object:")
             print(f"    Model: {response.model if hasattr(response, 'model') else 'N/A'}")
             print(f"    Choices: {len(response.choices) if hasattr(response, 'choices') else 0}")
             if hasattr(response, 'choices') and len(response.choices) > 0:
@@ -149,37 +149,37 @@ class LogicConverter:
                 if hasattr(response.choices[0].message, 'refusal') and response.choices[0].message.refusal:
                     print(f"    REFUSAL: {response.choices[0].message.refusal}")
             # Print full response for debugging
-            print(f"  DEBUG - Complete response dict: {response.model_dump() if hasattr(response, 'model_dump') else str(response)}")
+            print(f" [logic_converter] DEBUG - Complete response dict: {response.model_dump() if hasattr(response, 'model_dump') else str(response)}")
 
             response_text = response.choices[0].message.content
             if response_text is None:
-                print(f"  WARNING: Response content is None.")
-                print(f"  Full response: {response}")
-                raise ValueError("LLM returned empty response")
+                print(f"[logic_converter]  WARNING: Response content is None.")
+                print(f"[logic_converter]  Full response: {response}")
+                raise ValueError("[logic_converter] LLM returned empty response")
 
             response_text = response_text.strip()
 
             # Check for empty response after stripping
             if not response_text:
-                print(f"  ERROR: LLM returned empty response or an error after stripping whitespace.")
-                print(f" This may indicate API timeout, rate limiting, or model error.")
-                raise ValueError("LLM returned empty or a non string response. This may indicate API timeout, rate limiting, or model error.")
+                print(f"[logic_converter]  ERROR: LLM returned empty response or an error after stripping whitespace.")
+                print(f"[logic_converter] This may indicate API timeout, rate limiting, or model error.")
+                raise ValueError("[logic_converter] LLM returned empty or a non string response. This may indicate API timeout, rate limiting, or model error.")
 
-            print(f"  Response length: {len(response_text)} characters")
+            print(f"[logic_converter] Response length: {len(response_text)} characters")
 
             # Parse the JSON response
             try:
                 logic_structure = json.loads(response_text)
                 if "primitive_props" not in logic_structure or "constraints" not in logic_structure:
-                    raise ValueError("LLM output missing required keys: primitive_props, constraints")
+                    raise ValueError("[logic_converter] LLM output missing required keys: primitive_props, constraints")
                 for c in logic_structure.get("constraints", []):
                     if "id" not in c or "formula" not in c or "translation" not in c:
-                        raise ValueError("Constraint missing required fields: id, formula, translation")
+                        raise ValueError("[logic_converter] Constraint missing required fields: id, formula, translation")
                 return logic_structure
             except json.JSONDecodeError as e:
                 # If JSON parsing fails, try to extract JSON from response
-                print(f"  WARNING: JSON parse failed: {e}")
-                print(f"  Attempting to extract and repair JSON...")
+                print(f" [logic_converter] WARNING: JSON parse failed: {e}")
+                print(f" [logic_converter] Attempting to extract and repair JSON...")
 
                 # Save raw response for debugging
                 debug_file = "debug_llm_response.txt"
@@ -216,13 +216,13 @@ class LogicConverter:
                         logic_structure = json.loads(json_text)
                         return logic_structure
                     except json.JSONDecodeError as e2:
-                        print(f"  Failed to extract valid JSON: {e2}")
-                        raise ValueError(f"Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
+                        print(f"[logic_converter] Failed to extract valid JSON: {e2}")
+                        raise ValueError(f"[logic_converter] Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
                 else:
-                    raise ValueError(f"Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
+                    raise ValueError(f"[logic_converter] Failed to parse JSON response: {e}. Raw response saved to {debug_file}")
 
         except Exception as e:
-            raise RuntimeError(f"Error in LLM conversion: {e}")
+            raise RuntimeError(f"[logic_converter] Error in LLM conversion: {e}")
 
     def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
@@ -234,4 +234,4 @@ class LogicConverter:
         """
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(logic_structure, f, indent=2, ensure_ascii=False)
-        print(f"Output saved to {output_path}")
+        print(f"[logic_converter] Output saved to {output_path}")
