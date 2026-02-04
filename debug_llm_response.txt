@@ -1,0 +1,248 @@
+```json
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alice is a university student.",
+      "evidence": "Sentence 1: \"Alice is a university student.\"",
+      "explanation": "Atomic categorical statement about Alice's status; no logical connective to split."
+    },
+    {
+      "id": "P_2",
+      "translation": "Alice is a student.",
+      "evidence": "Sentence 1: \"Alice is a university student.\" (implies student)",
+      "explanation": "Atomic category membership used to encode a semantic entailment from 'university student'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Alice studies computer science.",
+      "evidence": "Sentence 2: \"She studies computer science.\"",
+      "explanation": "Atomic statement of what Alice studies; no connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "Alice studies.",
+      "evidence": "Sentence 2: \"She studies computer science.\" (implies studies)",
+      "explanation": "Atomic activity predicate included to support semantic implications (e.g., studying CS implies studying)."
+    },
+    {
+      "id": "P_5",
+      "translation": "Alice studies hard.",
+      "evidence": "Sentence 3: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic antecedent needed for the explicit conditional; no internal connective."
+    },
+    {
+      "id": "P_6",
+      "translation": "Alice passes her exams.",
+      "evidence": "Sentence 3: \"...then she passes her exams.\"",
+      "explanation": "Atomic consequent of the explicit conditional; no internal connective."
+    },
+    {
+      "id": "P_7",
+      "translation": "Alice studies hard before exams.",
+      "evidence": "Sentence 4: \"Alice typically studies hard before exams.\"",
+      "explanation": "Atomic statement capturing the described behavior with its time qualifier ('before exams') but no logical connective."
+    },
+    {
+      "id": "P_8",
+      "translation": "Alice is focused.",
+      "evidence": "Sentence 5: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic condition used in an explicit conditional ('when')."
+    },
+    {
+      "id": "P_9",
+      "translation": "Alice completes her assignments on time.",
+      "evidence": "Sentence 5: \"...she completes her assignments on time.\"",
+      "explanation": "Atomic consequent of the 'when focused' conditional; treated as a single primitive claim."
+    },
+    {
+      "id": "P_10",
+      "translation": "Alice completes her assignments.",
+      "evidence": "Sentence 5: \"...she completes her assignments on time.\" (entails completes assignments)",
+      "explanation": "Atomic statement included to express the semantic entailment from 'completes on time'."
+    },
+    {
+      "id": "P_11",
+      "translation": "Alice gets distracted by social media.",
+      "evidence": "Sentence 6: \"Alice sometimes gets distracted by social media.\"",
+      "explanation": "Atomic distraction claim; hedging ('sometimes') handled in constraint weights, not inside the proposition."
+    },
+    {
+      "id": "P_12",
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 7: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic employment-hours fact; split from location to avoid an implicit conjunction."
+    },
+    {
+      "id": "P_13",
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 7: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic workplace-location fact; split from part-time to keep atomics connective-free."
+    },
+    {
+      "id": "P_14",
+      "translation": "Alice works.",
+      "evidence": "Sentence 7: \"She works part-time at the campus library.\" (implies works)",
+      "explanation": "Atomic predicate added for semantic implications from more specific work statements."
+    },
+    {
+      "id": "P_15",
+      "translation": "Alice's assignments are due every Friday.",
+      "evidence": "Sentence 8: \"Her assignments are due every Friday.\"",
+      "explanation": "Atomic due-date regularity statement; no connectives."
+    },
+    {
+      "id": "P_16",
+      "translation": "Alice studies late at night.",
+      "evidence": "Sentence 9: \"Alice rarely studies late at night.\"",
+      "explanation": "Atomic studying-time claim; hedging ('rarely') is represented via a weighted constraint on its negation."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alice is a university student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Plain declarative assertion in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Alice studies computer science.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Plain declarative assertion in the text."
+    },
+    {
+      "id": "C_3",
+      "formula": "(P_5 ⟹ P_6)",
+      "translation": "If Alice studies hard, then she passes her exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit conditional ('If..., then...') stated as a rule."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_7",
+      "translation": "Alice studies hard before exams.",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 4: \"typically\"",
+      "reasoning": "Hedged by 'typically', so enforced as a moderate/typicality constraint rather than a strict fact."
+    },
+    {
+      "id": "C_5",
+      "formula": "(P_8 ⟹ P_9)",
+      "translation": "When Alice is focused, she completes her assignments on time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Explicit 'when' conditional indicates a strong rule."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_11",
+      "translation": "Alice gets distracted by social media.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 6: \"sometimes\"",
+      "reasoning": "'Sometimes' signals weak/occasional occurrence; encode as a low-weight tendency."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_12",
+      "translation": "Alice works part-time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Direct assertion."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_13",
+      "translation": "Alice works at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Direct assertion."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_15",
+      "translation": "Alice's assignments are due every Friday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Direct assertion."
+    },
+    {
+      "id": "C_10",
+      "formula": "¬P_16",
+      "translation": "Alice does not study late at night.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 9: \"rarely\"",
+      "reasoning": "'Rarely' suggests the negation is usually true but not absolute; thus a fairly strong soft constraint toward not studying late at night."
+    },
+    {
+      "id": "C_11",
+      "formula": "(P_1 ⟹ P_2)",
+      "translation": "If Alice is a university student, then Alice is a student.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1",
+      "reasoning": "Common-sense semantic entailment: university student implies student."
+    },
+    {
+      "id": "C_12",
+      "formula": "(P_3 ⟹ P_4)",
+      "translation": "If Alice studies computer science, then Alice studies.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2",
+      "reasoning": "Semantic entailment: studying a subject implies studying."
+    },
+    {
+      "id": "C_13",
+      "formula": "(P_5 ⟹ P_4)",
+      "translation": "If Alice studies hard, then Alice studies.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 3",
+      "reasoning": "Semantic entailment: studying hard implies studying."
+    },
+    {
+      "id": "C_14",
+      "formula": "(P_7 ⟹ P_5)",
+      "translation": "If Alice studies hard before exams, then Alice studies hard.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 4",
+      "reasoning": "Semantic containment: 'studies hard before exams' is a specific case of 'studies hard'."
+    },
+    {
+      "id": "C_15",
+      "formula": "(P_9 ⟹ P_10)",
+      "translation": "If Alice completes her assignments on time, then she completes her assignments.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 5",
+      "reasoning": "Semantic entailment: completing on time entails completing."
+    },
+    {
+      "id": "C_16",
+      "formula": "((P_12 ∧ P_13) ⟹ P_14)",
+      "translation": "If Alice works part-time and at the campus library, then Alice works.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 7",
+      "reasoning": "Semantic entailment: specific work facts imply the more general 'works'."
+    },
+    {
+      "id": "C_17",
+      "formula": "(P_8 ⟹ ¬P_11)",
+      "translation": "If Alice is focused, then she is not distracted by social media.",
+      "llm_weight": 0.7,
+      "evidence": "Sentences 5-6",
+      "reasoning": "Common-sense compatibility constraint: being focused tends to preclude being distracted; not stated as absolute, so softened."
+    },
+    {
+      "id": "C_18",
+      "formula": "(P_11 ⟹ ¬P_8)",
+      "translation": "If Alice is distracted by social media, then she is not focused.",
+      "llm_weight": 0.7,
+      "evidence": "Sentences 5-6",
+      "reasoning": "Common-sense inverse of the above; distraction tends to undermine focus, but not a strict logical impossibility."
+    }
+  ]
+}
+```
