@@ -159,6 +159,9 @@ def compute_nli_entailment(
         return 0.0
 
     # Optional: truncate to top-k propositions if already ranked elsewhere
+    
+    
+    
     candidates = propositions[:k] if k else propositions
 
     # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
@@ -222,12 +225,10 @@ def assign_weights(
             "soft_constraints": []
         }
 
-
     # Step 2: Get propositions (premise candidates)
     propositions = logified.get("primitive_props", [])
     if verbose:
         print(f"  Found {len(propositions)} propositions")
-
 
     if verbose:
         print(f"Loading NLI model: {nli_model_name}")
@@ -243,12 +244,12 @@ def assign_weights(
     required_fields = {"id", "translation", "formula", "llm_weight"}
     missing = [c for c in constraints if not required_fields.issubset(c.keys())]
     if missing:
-        raise ValueError("constraints missing required fields: id, translation, formula, llm_weight")
+        raise ValueError("[Weights] constraints missing required fields: id, translation, formula, llm_weight")
 
     for i, constraint in enumerate(constraints):
         constraint_id = constraint.get('id', f'C_{i+1}')
         constraint_text = constraint.get('translation', '')
-        llm_weight = constraint.get('llm_weight', -100)  # WARNING
+        llm_weight = constraint.get('llm_weight', 0)  # WARNING
 
         if not constraint_text:
             if verbose:
@@ -262,7 +263,6 @@ def assign_weights(
             nli_model=nli_model,
             k=k
         )
-
 
         # Compute combined score
         combined = llm_weight * nli_entailment
