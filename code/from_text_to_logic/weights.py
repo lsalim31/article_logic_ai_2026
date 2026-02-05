@@ -27,6 +27,7 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, List
 
+
 # Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
 _code_dir = _script_dir.parent
@@ -49,8 +50,10 @@ from baseline_rag.retriever import (
 )
 from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
-from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K
+from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL 
 
+
+################
 
 def extract_text_from_document(file_path: str) -> str:
     """Extract text from PDF, DOCX, or TXT file."""
@@ -146,23 +149,35 @@ def retrieve_top_k_chunks(
 
 def compute_nli_entailment(
     constraint_text: str,
-    propositions: List[Dict],
+    propositions_from_text: List[Dict],
     nli_model,
-    k: int = 10
+    k: int = 10, 
+    sbert_model_name = SBERT_MODEL
 ) -> float:
     """
     Compute max NLI entailment score for a constraint against proposition texts.
 
     Returns the maximum P(entailment) across top-k proposition candidates.
     """
-    if not propositions:
+    
+    # Build candidate list from propositions with translations
+    
+    prop_texts = [p["translation"] for p in propositions_from_text if p.get("translation")]
+    if not prop_texts:
         return 0.0
 
-    # Optional: truncate to top-k propositions if already ranked elsewhere
-    
-    
-    
-    candidates = propositions[:k] if k else propositions
+    # SBERT ranking by cosine similarity
+    sbert_model = load_sbert_model(sbert_model_name)
+
+    query_embedding = encode_query(constraint_text, sbert_model)
+    prop_embeddings = encode_chunks(prop_texts, sbert_model)
+    similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
+
+    k = min(k, len(prop_texts)) if k else len(prop_texts)
+    top_k_indices = np.argsort(similarities)[::-1][:k]
+
+    # Select top-k propositions by SBERT similarity
+    candidates = [propositions_from_text[i] for i in top_k_indices]
 
     # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
     pairs = [(prop["translation"], constraint_text) for prop in candidates if prop.get("translation")]
@@ -188,7 +203,7 @@ def assign_weights(
     sbert_model_name: str = "all-MiniLM-L6-v2",
     nli_model_name: str = "cross-encoder/nli-deberta-v3-large",
     verbose: bool = True
-) -> Dict[str, Any]:
+    ) -> Dict[str, Any]:
     """
     Classify constraints into hard and soft using NLI scores.
 
@@ -259,9 +274,10 @@ def assign_weights(
         # Compute NLI entailment score (proposition-level)
         nli_entailment = compute_nli_entailment(
             constraint_text=constraint_text,
-            propositions=propositions,
+            propositions_from_text=propositions,
             nli_model=nli_model,
-            k=k
+            k=k, 
+            sbert_model_name =sbert_model_name
         )
 
         # Compute combined score
