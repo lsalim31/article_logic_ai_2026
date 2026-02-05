@@ -67,102 +67,146 @@
       "explanation": "Atomic studying-time claim; 'rarely' is handled as a soft constraint favoring the negation."
     }
   ],
-  "constraints": [
+  "hard_constraints": [
     {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999906063079834,
+      "combined=(llm)*(nli)": 0.999906063079834,
+      "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1",
       "translation": "Alice is a university student.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 1",
       "reasoning": "Plain declarative statement with no hedging; treated as a hard fact."
     },
     {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999216794967651,
+      "combined=(llm)*(nli)": 0.9999216794967651,
+      "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_2",
       "translation": "Alice studies computer science.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 2",
       "reasoning": "Plain declarative statement; no uncertainty markers."
     },
     {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9996250867843628,
+      "combined=(llm)*(nli)": 0.9996250867843628,
+      "hardness_constant": 0.9,
       "id": "C_3",
       "formula": "(P_3 ⟹ P_4)",
       "translation": "If Alice studies hard, then she passes her exams.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 3",
       "reasoning": "Explicit conditional ('If ... then ...'); expressed as a strict rule."
     },
     {
-      "id": "C_4",
-      "formula": "P_5",
-      "translation": "Alice studies hard before exams.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 4",
-      "reasoning": "The sentence uses the hedge word 'typically', so it is a strong tendency rather than an absolute fact."
-    },
-    {
-      "id": "C_5",
-      "formula": "(P_5 ⟹ P_3)",
-      "translation": "If Alice studies hard before exams, then Alice studies hard.",
-      "llm_weight": 0.9,
-      "evidence": "Implied by Sentence 4 and the meanings of 'studies hard before exams' vs 'studies hard'.",
-      "reasoning": "Common-sense semantic entailment: 'studies hard before exams' is a specific instance of 'studies hard'. High confidence/near-necessity."
-    },
-    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999217987060547,
+      "combined=(llm)*(nli)": 0.9999217987060547,
+      "hardness_constant": 0.9,
       "id": "C_6",
       "formula": "(P_6 ⟹ P_7)",
       "translation": "When Alice is focused, she completes her assignments on time.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 5",
       "reasoning": "Explicit rule ('When ... , ...'); treated as a strict implication."
     },
     {
-      "id": "C_7",
-      "formula": "P_8",
-      "translation": "Alice gets distracted by social media.",
-      "llm_weight": 0.4,
-      "evidence": "Sentence 6",
-      "reasoning": "The hedge word 'sometimes' indicates occasional occurrence; weak enforcement toward the proposition being true."
-    },
-    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998530149459839,
+      "combined=(llm)*(nli)": 0.9998530149459839,
+      "hardness_constant": 0.9,
       "id": "C_8",
       "formula": "P_9",
       "translation": "Alice works part-time at the campus library.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 7",
       "reasoning": "Plain declarative employment statement; no hedging."
     },
     {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999222755432129,
+      "combined=(llm)*(nli)": 0.9999222755432129,
+      "hardness_constant": 0.9,
       "id": "C_9",
       "formula": "P_10",
       "translation": "Her assignments are due every Friday.",
-      "llm_weight": 1.0,
       "evidence": "Sentence 8",
       "reasoning": "Stated as a definite schedule fact."
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9998021721839905,
+      "combined=(llm)*(nli)": 0.6998615205287932,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Alice studies hard before exams.",
+      "evidence": "Sentence 4",
+      "reasoning": "The sentence uses the hedge word 'typically', so it is a strong tendency rather than an absolute fact.",
+      "weight": 0.6998615205287932
     },
     {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9990874528884888,
+      "combined=(llm)*(nli)": 0.8991787075996399,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "(P_5 ⟹ P_3)",
+      "translation": "If Alice studies hard before exams, then Alice studies hard.",
+      "evidence": "Implied by Sentence 4 and the meanings of 'studies hard before exams' vs 'studies hard'.",
+      "reasoning": "Common-sense semantic entailment: 'studies hard before exams' is a specific instance of 'studies hard'. High confidence/near-necessity.",
+      "weight": 0.8991787075996399
+    },
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 0.9987442493438721,
+      "combined=(llm)*(nli)": 0.39949769973754884,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_8",
+      "translation": "Alice gets distracted by social media.",
+      "evidence": "Sentence 6",
+      "reasoning": "The hedge word 'sometimes' indicates occasional occurrence; weak enforcement toward the proposition being true.",
+      "weight": 0.39949769973754884
+    },
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 0.9968767166137695,
+      "combined=(llm)*(nli)": 0.7476575374603271,
+      "hardness_constant": 0.9,
       "id": "C_10",
       "formula": "¬P_11",
       "translation": "Alice does not study late at night.",
-      "llm_weight": 0.75,
       "evidence": "Sentence 9",
-      "reasoning": "The hedge word 'rarely' suggests that the negation is usually true, but not absolute; thus a fairly strong soft constraint toward ¬P_11."
+      "reasoning": "The hedge word 'rarely' suggests that the negation is usually true, but not absolute; thus a fairly strong soft constraint toward ¬P_11.",
+      "weight": 0.7476575374603271
     },
     {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9992220401763916,
+      "combined=(llm)*(nli)": 0.599533224105835,
+      "hardness_constant": 0.9,
       "id": "C_11",
       "formula": "(P_8 ⟹ ¬P_6)",
       "translation": "If Alice gets distracted by social media, then Alice is not focused.",
-      "llm_weight": 0.6,
       "evidence": "Common-sense relation between being distracted and being focused; supported by Sentence 5 (focused) and Sentence 6 (distracted).",
-      "reasoning": "Distraction and focus typically conflict. Not a definitional contradiction, so enforced moderately rather than as a hard rule."
+      "reasoning": "Distraction and focus typically conflict. Not a definitional contradiction, so enforced moderately rather than as a hard rule.",
+      "weight": 0.599533224105835
     },
     {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9994891881942749,
+      "combined=(llm)*(nli)": 0.5996935129165649,
+      "hardness_constant": 0.9,
       "id": "C_12",
       "formula": "(P_6 ⟹ ¬P_8)",
       "translation": "If Alice is focused, then Alice is not distracted by social media.",
-      "llm_weight": 0.6,
       "evidence": "Common-sense relation between being focused and being distracted; supported by Sentence 5 and Sentence 6.",
-      "reasoning": "Focus typically suppresses distraction, but it is not logically impossible to be focused and still get distracted; moderate weight."
+      "reasoning": "Focus typically suppresses distraction, but it is not logically impossible to be focused and still get distracted; moderate weight.",
+      "weight": 0.5996935129165649
     }
   ]
 }

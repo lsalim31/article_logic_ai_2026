@@ -169,7 +169,8 @@ def compute_nli_entailment(
     # SBERT ranking by cosine similarity
     sbert_model = load_sbert_model(sbert_model_name)
     query_embedding = encode_query(constraint_text, sbert_model)
-    prop_embeddings = encode_chunks(prop_texts, sbert_model)
+    prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True)
+
     similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
 
     k = min(k, len(prop_texts)) if k else len(prop_texts)
