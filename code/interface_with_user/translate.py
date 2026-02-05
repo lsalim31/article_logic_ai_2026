@@ -566,6 +566,18 @@ def build_prompt(query: str, props_text: str, constraints_section: str,
     - Choose the SIMPLEST formula that preserves semantic intent
     - ALWAYS match hypothesis polarity with formula polarity
     - Check [Polarity: ...] annotations above
+    
+    
+    === ABSTAIN RULE (VERY IMPORTANT) ===
+    If the hypothesis cannot be translated to a formual with the AVAILABLE PROPOSITIONS,
+    return:
+    {{"formula": "NONE", "query_mode": "entailment", "translation": "...", "reasoning": "..."}}
+
+    Examples (MUST abstain):
+    - Hypothesis: "Alice studies biology" and only proposition is "Alice studies computer science" → NONE
+    - Hypothesis: "Alice is a high school student" and only proposition is "Alice is a student" → NONE
+    - Hypothesis: "Alice has a scholarship" and no proposition mentions scholarships → NONE
+
 
     === OUTPUT FORMAT ===
     Return ONLY a JSON object (no other text):

@@ -105,11 +105,11 @@ class LogicSolver:
             if not is_sat:
                 # UNSAT: Query is entailed by hard constraints alone
                 # Compute how strongly soft constraints support Q being true
-                print("[DEBUG] Hard constraints UNSAT; all queries entailed by hard KB.")
-                soft_confidence = self._compute_confidence_uncertain(query_formula)
+                print("[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.")
+                #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
-                    confidence= soft_confidence,
+                    confidence= 1,
                     model=None,
                     explanation="Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)"
                     )
@@ -121,10 +121,10 @@ class LogicSolver:
 
             if optimal_cost is None:
                 # UNSAT even with soft constraints
-                soft_confidence = self._compute_confidence_uncertain(query_formula)
+                #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="TRUE",
-                    confidence=soft_confidence,
+                    confidence= 1,
                     model=None,
                     explanation="Query is entailed (KB ∧ ¬Q is unsatisfiable)"
                 )
@@ -139,7 +139,7 @@ class LogicSolver:
                 soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
-                    confidence= soft_confidence,
+                    confidence= 0,
                     model=model,
                     explanation="Query is contradicted by the knowledge base"
                 )
@@ -162,7 +162,7 @@ class LogicSolver:
             import traceback
             traceback.print_exc()
             return SolverResult(
-                answer="UNCERTAIN",
+                answer="[maxsat] error",
                 confidence=-1,
                 explanation=f"Error during solving: {str(e)}"
             )
@@ -200,11 +200,11 @@ class LogicSolver:
             if is_sat:
                 # SAT: Query is consistent
                 # Compute confidence based on soft constraints
-                confidence = self._compute_confidence_uncertain(query_formula)
+                #confidence = self._compute_confidence_uncertain(query_formula)
 
                 return SolverResult(
                     answer="TRUE",
-                    confidence=confidence,
+                    confidence=1,
                     model=model,
                     explanation="Query is consistent with the knowledge base"
                 )
@@ -212,15 +212,15 @@ class LogicSolver:
                 # UNSAT: Query is inconsistent
                 return SolverResult(
                     answer="FALSE",
-                    confidence=-10.0,  # WARNING
+                    confidence= 0,  
                     model=None,
                     explanation="Query is inconsistent with the knowledge base (KB ∧ Q is unsatisfiable)"
                 )
 
         except Exception as e:
             return SolverResult(
-                answer="UNCERTAIN",
-                confidence=0.5,
+                answer="[maxsat] Error",
+                confidence=-1,
                 explanation=f"Error during solving: {str(e)}"
             )
 
@@ -258,10 +258,10 @@ class LogicSolver:
             if consistency_result.answer == "FALSE":
                 # Query is inconsistent (contradicted)
                 # Compute how strongly soft constraints support Q being true
-                soft_confidence = self._compute_confidence_uncertain(query_formula)
+                #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(
                     answer="FALSE",
-                    confidence=soft_confidence,
+                    confidence= 0,
                     explanation="Query is contradicted by the knowledge base"
                 )
 
@@ -393,6 +393,8 @@ def solve_query(logified_structure: Dict[str, Any], query_formula: str) -> Solve
     """
     solver = LogicSolver(logified_structure)
     return solver.query(query_formula)
+
+
 
 #    """ 
 #     def _model_satisfies_clauses(self, model: List[int], clauses: List[List[int]]) -> bool:

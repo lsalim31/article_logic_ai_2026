@@ -176,7 +176,7 @@ def query_hypothesis(
         formula = translation_result.get("formula")
         query_mode = translation_result.get("query_mode", "entailment")
 
-        if not formula:
+        if not formula or formula in {"ERROR", "NONE"}:
             return QueryDebugResult(
                 hypothesis_key=hypothesis_key,
                 hypothesis_text=hypothesis_text,
@@ -186,7 +186,7 @@ def query_hypothesis(
                 formula=None,
                 query_mode=query_mode,
                 explanation=None,
-                error="Not formular from query translation. Failed to translate hypothesis to formula",
+                error="Not formular, error or none from query translation. Failed to translate hypothesis to formula",
                 query_latency_sec=time.time() - start_time,
             )
 

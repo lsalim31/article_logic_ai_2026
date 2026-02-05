@@ -288,6 +288,7 @@ class LogicEncoder:
             logified_structure: JSON structure with primitive_props constraints, weights and evidence
         """
         self.structure = logified_structure
+        print("[DEBUG] Hard constraints passed to encoder:", [c["formula"] for c in logified_structure.get("hard_constraints", [])])
         self.prop_to_var: Dict[str, int] = {}  # P_1 -> 1, P_2 -> 2, etc.
         self.var_to_prop: Dict[int, str] = {}  # Reverse mapping
         self.wcnf = WCNF()
