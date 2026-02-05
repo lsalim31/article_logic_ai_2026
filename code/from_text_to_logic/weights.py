@@ -90,27 +90,27 @@ def extract_text_from_document(file_path: str) -> str:
         raise ValueError(f"Unsupported format: {suffix}. Supported: .txt, .pdf, .docx")
 
 
-def retrieve_top_k_chunks(
-    query: str,
-    chunks: List[Dict],
-    chunk_embeddings: np.ndarray,
-    sbert_model,
-    k: int = 10
-) -> List[Dict]:
-    """Retrieve top-k chunks most similar to query using SBERT."""
-    query_embedding = encode_query(query, sbert_model)
-    similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
+# def retrieve_top_k_chunks(
+#     query: str,
+#     chunks: List[Dict],
+#     chunk_embeddings: np.ndarray,
+#     sbert_model,
+#     k: int = 10
+# ) -> List[Dict]:
+#     """Retrieve top-k chunks most similar to query using SBERT."""
+#     query_embedding = encode_query(query, sbert_model)
+#     similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
 
-    k = min(k, len(chunks))
-    top_k_indices = np.argsort(similarities)[::-1][:k]
+#     k = min(k, len(chunks))
+#     top_k_indices = np.argsort(similarities)[::-1][:k]
 
-    retrieved = []
-    for idx in top_k_indices:
-        chunk = chunks[idx].copy()
-        chunk['similarity'] = float(similarities[idx])
-        retrieved.append(chunk)
+#     retrieved = []
+#     for idx in top_k_indices:
+#         chunk = chunks[idx].copy()
+#         chunk['similarity'] = float(similarities[idx])
+#         retrieved.append(chunk)
 
-    return retrieved
+#     return retrieved
 
 
 # def compute_nli_entailment(
@@ -151,7 +151,7 @@ def compute_nli_entailment(
     constraint_text: str,
     propositions_from_text: List[Dict],
     nli_model,
-    k: int = 10, 
+    k: int = 10,
     sbert_model_name = SBERT_MODEL
 ) -> float:
     """
@@ -159,16 +159,15 @@ def compute_nli_entailment(
 
     Returns the maximum P(entailment) across top-k proposition candidates.
     """
-    
-    # Build candidate list from propositions with translations
-    
-    prop_texts = [p["translation"] for p in propositions_from_text if p.get("translation")]
-    if not prop_texts:
+    # Filter to propositions that actually have a translation
+    filtered_props = [p for p in propositions_from_text if isinstance(p, dict) and p.get("translation")]
+    if not filtered_props:
         return 0.0
+
+    prop_texts = [p["translation"] for p in filtered_props]
 
     # SBERT ranking by cosine similarity
     sbert_model = load_sbert_model(sbert_model_name)
-
     query_embedding = encode_query(constraint_text, sbert_model)
     prop_embeddings = encode_chunks(prop_texts, sbert_model)
     similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
@@ -176,11 +175,11 @@ def compute_nli_entailment(
     k = min(k, len(prop_texts)) if k else len(prop_texts)
     top_k_indices = np.argsort(similarities)[::-1][:k]
 
-    # Select top-k propositions by SBERT similarity
-    candidates = [propositions_from_text[i] for i in top_k_indices]
+    # Select top-k propositions by SBERT similarity (aligned with filtered_props)
+    candidates = [filtered_props[i] for i in top_k_indices]
 
     # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
-    pairs = [(prop["translation"], constraint_text) for prop in candidates if prop.get("translation")]
+    pairs = [(prop["translation"], constraint_text) for prop in candidates]
 
     if not pairs:
         return 0.0
@@ -190,6 +189,7 @@ def compute_nli_entailment(
 
     # Return max entailment score
     return float(np.max(probs[:, 2]))
+
 
 
 
