@@ -173,22 +173,39 @@ def query_hypothesis(
             k=k_query,
             verbose=verbose,
         )
-        formula = translation_result.get("formula")
         query_mode = translation_result.get("query_mode", "entailment")
-
-        if not formula or formula in {"ERROR", "NONE"}:
+        
+        formula = translation_result.get("formula")
+        
+        if formula == "NONE":
+            return QueryDebugResult(
+                hypothesis_key=hypothesis_key,
+                hypothesis_text=hypothesis_text,
+                ground_truth=ground_truth,
+                prediction="UNCERTAIN",
+                confidence=0.5,
+                formula=formula,
+                query_mode=query_mode,
+                explanation="No matching proposition for hypothesis",
+                error=None,
+                query_latency_sec=time.time() - start_time,
+            )
+    
+        if formula == "ERROR":
             return QueryDebugResult(
                 hypothesis_key=hypothesis_key,
                 hypothesis_text=hypothesis_text,
                 ground_truth=ground_truth,
                 prediction=None,
                 confidence=None,
-                formula=None,
+                formula=formula,
                 query_mode=query_mode,
                 explanation=None,
-                error="Not formular, error or none from query translation. Failed to translate hypothesis to formula",
+                error="LLM failed to generate a valid formula",
                 query_latency_sec=time.time() - start_time,
             )
+
+
 
         solver = LogicSolver(logified_structure)
         if query_mode == "consistency":

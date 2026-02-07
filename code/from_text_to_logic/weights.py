@@ -153,7 +153,7 @@ def compute_nli_entailment(
     nli_model,
     k: int = 10,
     sbert_model_name = SBERT_MODEL
-) -> float:
+):
     """
     Compute max NLI entailment score for a constraint against proposition texts.
 
@@ -189,9 +189,40 @@ def compute_nli_entailment(
     probs = score_nli_pairs(nli_model, pairs)
 
     # Return max entailment score
-    return float(np.max(probs[:, 2]))
+    return float(1)
+    #return float(np.max(probs[:, 2]))
 
 
+def compute_list_nli_entailment(
+    constraint_text: str,
+    propositions_from_text: List[Dict],
+    nli_model,
+    k: int = 10,
+    sbert_model_name = SBERT_MODEL
+):
+    """
+    """
+    # Filter to propositions that actually have a translation
+    filtered_props = [p for p in propositions_from_text if isinstance(p, dict) and p.get("translation")]
+    if not filtered_props:
+        return 0.0
+    prop_texts = [p["translation"] for p in filtered_props]
+    # SBERT ranking by cosine similarity
+    sbert_model = load_sbert_model(sbert_model_name)
+    query_embedding = encode_query(constraint_text, sbert_model)
+    prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True)
+    similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
+    k = min(k, len(prop_texts)) if k else len(prop_texts)
+    top_k_indices = np.argsort(similarities)[::-1][:k]
+    # Select top-k propositions by SBERT similarity (aligned with filtered_props)
+    candidates = [filtered_props[i] for i in top_k_indices]
+    # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
+    pairs = [(prop["translation"], constraint_text) for prop in candidates]
+    if not pairs:
+        return 0.0
+    probs = score_nli_pairs(nli_model, pairs)
+    top = sorted(probs, key=lambda x: x[2], reverse=True)[:3]
+    return [row.tolist() for row in top]
 
 
 def assign_weights(
@@ -281,6 +312,15 @@ def assign_weights(
             sbert_model_name =sbert_model_name
         )
 
+        
+        list_nli_entailment = compute_list_nli_entailment(
+            constraint_text=constraint_text,
+            propositions_from_text=propositions,
+            nli_model=nli_model,
+            k=k, 
+            sbert_model_name =sbert_model_name
+        )
+    
         # Compute combined score
         combined = llm_weight * nli_entailment
 
@@ -299,6 +339,7 @@ def assign_weights(
             "translation": constraint_text,
             "evidence": constraint.get('evidence', ''),
             "reasoning": constraint.get('reasoning', ''),
+            "list nli": list_nli_entailment
         }
 
         # Classify based on combined score

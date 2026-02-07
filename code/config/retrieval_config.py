@@ -26,7 +26,7 @@ ENABLE_NEGATION_WARNINGS = True  # Log warnings for polarity issues
 
 # Confidence thresholds (for future use in experiments)
 CONFIDENCE_THRESHOLD_TRUE = 0.55  # TRUE → UNCERTAIN if confidence below this
-MIN_PROPOSITION_WEIGHT = 0.4  # Low weight → low confidence adjustment
+MIN_PROPOSIT3ION_WEIGHT = 0.4  # Low weight → low confidence adjustment
 
 
 MAX_COMPLETION_TOKENS = 32000
@@ -41,3 +41,5 @@ REASONING_MODEL = "gpt-5.2"
 TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
+
+PROMPT_EXTRACTION = "prompt_logify_maybe"

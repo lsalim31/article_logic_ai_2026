@@ -318,30 +318,30 @@ def convert_yes_no_to_statement(
     """
     prompt = f"""Convert the following Yes/No question into a declarative statement that expresses what the question is asking about.
 
-EXAMPLES:
-Question: "Can the receiving party share information with third parties?"
-Statement: "The receiving party can share information with third parties"
+    EXAMPLES:
+    Question: "Can the receiving party share information with third parties?"
+    Statement: "The receiving party can share information with third parties"
 
-Question: "Is Alice a student?"
-Statement: "Alice is a student"
+    Question: "Is Alice a student?"
+    Statement: "Alice is a student"
 
-Question: "Does the policy allow data retention?"
-Statement: "The policy allows data retention"
+    Question: "Does the policy allow data retention?"
+    Statement: "The policy allows data retention"
 
-Question: "Will the contract expire in 2025?"
-Statement: "The contract will expire in 2025"
+    Question: "Will the contract expire in 2025?"
+    Statement: "The contract will expire in 2025"
 
-Question: "Should employees wear safety equipment?"
-Statement: "Employees should wear safety equipment"
+    Question: "Should employees wear safety equipment?"
+    Statement: "Employees should wear safety equipment"
 
-Now convert this question:
-Question: "{query}"
+    Now convert this question:
+    Question: "{query}"
 
-OUTPUT FORMAT (JSON only, no other text):
-{{
-    "statement": "<declarative statement>",
-    "reasoning": "<1 sentence explanation>"
-}}"""
+    OUTPUT FORMAT (JSON only, no other text):
+    {{
+        "statement": "<declarative statement>",
+        "reasoning": "<1 sentence explanation>"
+    }}"""
 
     # Detect OpenRouter keys and use appropriate base URL
     if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
@@ -571,7 +571,7 @@ def build_prompt(query: str, props_text: str, constraints_section: str,
     === ABSTAIN RULE (VERY IMPORTANT) ===
     If the hypothesis cannot be translated to a formual with the AVAILABLE PROPOSITIONS,
     return:
-    {{"formula": "NONE", "query_mode": "entailment", "translation": "...", "reasoning": "..."}}
+    {{"formula": "NONE", "query_mode": "entailment", "translation": "Not matching proposition", "reasoning": "Not maching proposition"}}
 
     Examples (MUST abstain):
     - Hypothesis: "Alice studies biology" and only proposition is "Alice studies computer science" → NONE

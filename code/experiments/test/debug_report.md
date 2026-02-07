@@ -1,8 +1,8 @@
 # Experiment Debug Report
 ## Summary
 - Total: 30
-- Correct: 9
-- Incorrect: 8
+- Correct: 17
+- Incorrect: 0
 - Errors: 13
 
 ## Detailed Results
@@ -15,7 +15,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 12.353
+- Latency (sec): 6.343
 
 **Raw Fields**
 - hypothesis_key: test-1
@@ -33,7 +33,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 8.049
+- Latency (sec): 7.838
 
 **Raw Fields**
 - hypothesis_key: test-2
@@ -47,15 +47,15 @@
 - Ground Truth: TRUE
 - Prediction: TRUE
 - Confidence: 1
-- Formula: P_4 ⟹ P_5
+- Formula: P_5 ⟹ P_6
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 12.561
+- Latency (sec): 9.089
 
 **Raw Fields**
 - hypothesis_key: test-3
-- formula: P_4 ⟹ P_5
+- formula: P_5 ⟹ P_6
 - query_mode: entailment
 - error: None
 
@@ -63,17 +63,17 @@
 ### test-4
 - Hypothesis: Alice typically studies hard before exams.
 - Ground Truth: TRUE
-- Prediction: UNCERTAIN
-- Confidence: 0.6002004008016032
-- Formula: P_6
+- Prediction: TRUE
+- Confidence: 1
+- Formula: P_8
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 18.450
+- Latency (sec): 10.424
 
 **Raw Fields**
 - hypothesis_key: test-4
-- formula: P_6
+- formula: P_8
 - query_mode: entailment
 - error: None
 
@@ -83,15 +83,15 @@
 - Ground Truth: TRUE
 - Prediction: TRUE
 - Confidence: 1
-- Formula: P_7 ⟹ P_8
+- Formula: P_9 ⟹ P_11
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 11.103
+- Latency (sec): 7.592
 
 **Raw Fields**
 - hypothesis_key: test-5
-- formula: P_7 ⟹ P_8
+- formula: P_9 ⟹ P_11
 - query_mode: entailment
 - error: None
 
@@ -99,17 +99,17 @@
 ### test-6
 - Hypothesis: Alice sometimes gets distracted by social media.
 - Ground Truth: TRUE
-- Prediction: UNCERTAIN
-- Confidence: 0.5
-- Formula: P_10
+- Prediction: TRUE
+- Confidence: 1
+- Formula: P_14
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 9.471
+- Latency (sec): 6.435
 
 **Raw Fields**
 - hypothesis_key: test-6
-- formula: P_10
+- formula: P_14
 - query_mode: entailment
 - error: None
 
@@ -119,15 +119,15 @@
 - Ground Truth: TRUE
 - Prediction: TRUE
 - Confidence: 1
-- Formula: P_11 ∧ P_12
+- Formula: P_15
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 13.968
+- Latency (sec): 10.506
 
 **Raw Fields**
 - hypothesis_key: test-7
-- formula: P_11 ∧ P_12
+- formula: P_15
 - query_mode: entailment
 - error: None
 
@@ -137,15 +137,15 @@
 - Ground Truth: TRUE
 - Prediction: TRUE
 - Confidence: 1
-- Formula: P_13
+- Formula: P_20
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 12.268
+- Latency (sec): 10.471
 
 **Raw Fields**
 - hypothesis_key: test-8
-- formula: P_13
+- formula: P_20
 - query_mode: entailment
 - error: None
 
@@ -153,35 +153,35 @@
 ### test-9
 - Hypothesis: Alice rarely studies late at night.
 - Ground Truth: TRUE
-- Prediction: None
-- Confidence: None
-- Formula: None
+- Prediction: TRUE
+- Confidence: 1
+- Formula: P_22
 - Query Mode: entailment
-- Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 12.006
+- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
+- Error: None
+- Latency (sec): 9.394
 
 **Raw Fields**
 - hypothesis_key: test-9
-- formula: None
+- formula: P_22
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: None
 
 ---
 ### test-10
 - Hypothesis: Alice is a student who studies hard before exams.
 - Ground Truth: TRUE
-- Prediction: UNCERTAIN
-- Confidence: 0.6002004008016032
-- Formula: P_2 ∧ P_6
+- Prediction: TRUE
+- Confidence: 1
+- Formula: P_2 ∧ P_7
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 27.355
+- Latency (sec): 15.425
 
 **Raw Fields**
 - hypothesis_key: test-10
-- formula: P_2 ∧ P_6
+- formula: P_2 ∧ P_7
 - query_mode: entailment
 - error: None
 
@@ -195,7 +195,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 37.566
+- Latency (sec): 29.486
 
 **Raw Fields**
 - hypothesis_key: test-11
@@ -209,33 +209,33 @@
 - Ground Truth: FALSE
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 8.798
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 13.696
 
 **Raw Fields**
 - hypothesis_key: test-12
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-13
 - Hypothesis: Alice fails her exams even when she studies hard.
 - Ground Truth: FALSE
-- Prediction: UNCERTAIN
-- Confidence: 0.3997995991983968
-- Formula: P_4 ⟹ ¬P_5
+- Prediction: FALSE
+- Confidence: 0
+- Formula: P_5 ⟹ ¬P_6
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 55.362
+- Latency (sec): 48.075
 
 **Raw Fields**
 - hypothesis_key: test-13
-- formula: P_4 ⟹ ¬P_5
+- formula: P_5 ⟹ ¬P_6
 - query_mode: entailment
 - error: None
 
@@ -243,17 +243,17 @@
 ### test-14
 - Hypothesis: Alice never studies hard before exams.
 - Ground Truth: FALSE
-- Prediction: UNCERTAIN
-- Confidence: 0.3997995991983968
-- Formula: ¬P_6
+- Prediction: FALSE
+- Confidence: 0
+- Formula: ¬P_7
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 34.933
+- Latency (sec): 40.861
 
 **Raw Fields**
 - hypothesis_key: test-14
-- formula: ¬P_6
+- formula: ¬P_7
 - query_mode: entailment
 - error: None
 
@@ -261,35 +261,35 @@
 ### test-15
 - Hypothesis: When Alice is focused, she misses assignments.
 - Ground Truth: FALSE
-- Prediction: UNCERTAIN
-- Confidence: 0.5
-- Formula: P_7 ⟹ ¬P_9
+- Prediction: None
+- Confidence: None
+- Formula: ERROR
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
-- Error: None
-- Latency (sec): 46.543
+- Explanation: None
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 28.603
 
 **Raw Fields**
 - hypothesis_key: test-15
-- formula: P_7 ⟹ ¬P_9
+- formula: ERROR
 - query_mode: entailment
-- error: None
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-16
 - Hypothesis: Alice never gets distracted by social media.
 - Ground Truth: FALSE
-- Prediction: UNCERTAIN
-- Confidence: 0.5
-- Formula: ¬P_10
+- Prediction: FALSE
+- Confidence: 0
+- Formula: ¬P_13
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
+- Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 63.712
+- Latency (sec): 37.489
 
 **Raw Fields**
 - hypothesis_key: test-16
-- formula: ¬P_10
+- formula: ¬P_13
 - query_mode: entailment
 - error: None
 
@@ -299,15 +299,15 @@
 - Ground Truth: FALSE
 - Prediction: FALSE
 - Confidence: 0
-- Formula: ¬(P_11 ∧ P_12)
+- Formula: ¬P_15
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 66.595
+- Latency (sec): 29.013
 
 **Raw Fields**
 - hypothesis_key: test-17
-- formula: ¬(P_11 ∧ P_12)
+- formula: ¬P_15
 - query_mode: entailment
 - error: None
 
@@ -317,35 +317,35 @@
 - Ground Truth: FALSE
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 12.354
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 7.480
 
 **Raw Fields**
 - hypothesis_key: test-18
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-19
 - Hypothesis: Alice often studies late at night.
 - Ground Truth: FALSE
-- Prediction: UNCERTAIN
-- Confidence: 0.35
-- Formula: P_14
+- Prediction: None
+- Confidence: None
+- Formula: ERROR
 - Query Mode: entailment
-- Explanation: Query is consistent but not entailed by the knowledge base
-- Error: None
-- Latency (sec): 35.600
+- Explanation: None
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 22.504
 
 **Raw Fields**
 - hypothesis_key: test-19
-- formula: P_14
+- formula: ERROR
 - query_mode: entailment
-- error: None
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-20
@@ -353,17 +353,17 @@
 - Ground Truth: FALSE
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 17.002
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 13.559
 
 **Raw Fields**
 - hypothesis_key: test-20
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-21
@@ -371,17 +371,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 18.737
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 11.234
 
 **Raw Fields**
 - hypothesis_key: test-21
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-22
@@ -389,17 +389,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 9.450
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 11.569
 
 **Raw Fields**
 - hypothesis_key: test-22
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-23
@@ -407,15 +407,15 @@
 - Ground Truth: UNCERTAIN
 - Prediction: UNCERTAIN
 - Confidence: 0.5
-- Formula: P_8
+- Formula: P_11
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 34.040
+- Latency (sec): 25.313
 
 **Raw Fields**
 - hypothesis_key: test-23
-- formula: P_8
+- formula: P_11
 - query_mode: entailment
 - error: None
 
@@ -423,19 +423,19 @@
 ### test-24
 - Hypothesis: Alice is focused during every exam.
 - Ground Truth: UNCERTAIN
-- Prediction: None
-- Confidence: None
-- Formula: None
+- Prediction: UNCERTAIN
+- Confidence: 0.5
+- Formula: P_9
 - Query Mode: entailment
-- Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 27.146
+- Explanation: Query is consistent but not entailed by the knowledge base
+- Error: None
+- Latency (sec): 24.905
 
 **Raw Fields**
 - hypothesis_key: test-24
-- formula: None
+- formula: P_9
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: None
 
 ---
 ### test-25
@@ -443,17 +443,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 18.360
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 19.526
 
 **Raw Fields**
 - hypothesis_key: test-25
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-26
@@ -461,17 +461,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 23.312
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 12.838
 
 **Raw Fields**
 - hypothesis_key: test-26
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-27
@@ -479,17 +479,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 11.259
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 8.830
 
 **Raw Fields**
 - hypothesis_key: test-27
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-28
@@ -497,17 +497,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 11.719
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 18.378
 
 **Raw Fields**
 - hypothesis_key: test-28
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-29
@@ -515,17 +515,17 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 23.777
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 20.471
 
 **Raw Fields**
 - hypothesis_key: test-29
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---
 ### test-30
@@ -533,16 +533,16 @@
 - Ground Truth: UNCERTAIN
 - Prediction: None
 - Confidence: None
-- Formula: None
+- Formula: ERROR
 - Query Mode: entailment
 - Explanation: None
-- Error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
-- Latency (sec): 10.737
+- Error: LLM failed to generate a valid formula
+- Latency (sec): 12.769
 
 **Raw Fields**
 - hypothesis_key: test-30
-- formula: None
+- formula: ERROR
 - query_mode: entailment
-- error: Not formular, error or none from query translation. Failed to translate hypothesis to formula
+- error: LLM failed to generate a valid formula
 
 ---

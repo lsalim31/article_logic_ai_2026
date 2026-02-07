@@ -11,12 +11,17 @@ import json
 from typing import Dict, Any
 from openai import OpenAI
 
-from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_EFFORT
+from config.retrieval_config import MAX_TOKENS, TEMPERATURE_LOGIC_CONVERTER,  REASONING_EFFORT, PROMPT_EXTRACTION, TRANSLATE_MODEL
 
 class LogicConverter:
     """Converts text + OpenIE triples to structured propositional logic using LLM."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = TEMPERATURE_LOGIC_CONVERTER, max_tokens: int = MAX_TOKENS, reasoning_effort: str = REASONING_EFFORT):
+    def __init__(self, api_key: str, 
+                 model: str = TRANSLATE_MODEL, 
+                 temperature: float = TEMPERATURE_LOGIC_CONVERTER, 
+                 max_tokens: int = MAX_TOKENS,
+                 reasoning_effort: str = REASONING_EFFORT
+                 ):
         """
         Initialize the logic converter with API key and model.
 
@@ -47,7 +52,7 @@ class LogicConverter:
         """Load the system prompt from the prompt file."""
         import os
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        prompt_path = os.path.join(script_dir, "..", "prompts", "prompt_logify")
+        prompt_path = os.path.join(script_dir, "..", "prompts", PROMPT_EXTRACTION)
         try:
             with open(prompt_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -84,12 +89,13 @@ class LogicConverter:
             {formatted_triples}
             >>>"""
 
-            print(f"Sending to LLM for logical structure extraction (model: {self.model})...")
+            print(f"Sending to LLM for logical structure extraction (model: {self.model}). Prompt: {self.system_prompt}")
 
             # Determine if this is a reasoning model (GPT-5.x, o1, o3, etc.)
             # Check base model name (strip openai/ prefix if present for OpenRouter)
             base_model = self.model.replace("openai/", "")
             is_reasoning_model = base_model.startswith("gpt-5") or base_model.startswith("o1") or base_model.startswith("o3")
+
 
             # Build API call parameters based on model type
             if is_reasoning_model:
