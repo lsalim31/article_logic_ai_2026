@@ -42,4 +42,4 @@ TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
 
-PROMPT_EXTRACTION = "prompt_logify_maybe"
+PROMPT_EXTRACTION = "prompt_logify_feb7"

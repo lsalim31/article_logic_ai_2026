@@ -2,621 +2,505 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "There is a Confidentiality and Non-Disclosure Agreement governing the inspection of the stockholder list.",
-      "evidence": "Title: \"CONFIDENTIALITY AND NON-DISCLOSURE AGREEMENT GOVERNING THE INSPECTION OF STOCKHOLDER LIST\"",
-      "explanation": "Atomic existence/identification of the agreement document; no logical connectives."
+      "translation": "This Confidentiality and Non-Disclosure Agreement Governing the Inspection of Stockholder List exists (the “Agreement”).",
+      "evidence": "Title/first paragraph: “This Confidentiality and Non-Disclosure Agreement Governing the Inspection of Stockholder List (the “Agreement”) …”",
+      "explanation": "Atomic existence/identification of the agreement; no logical connective."
     },
     {
       "id": "P_2",
       "translation": "The Agreement is entered into between Patriot Scientific Corporation and the Stockholder.",
-      "evidence": "Intro: \"...is entered into between Patriot Scientific Corporation (the 'Company'), and the 'Stockholder'.\"",
-      "explanation": "Atomic statement about the contracting parties."
+      "evidence": "First paragraph: “is entered into between Patriot Scientific Corporation (the “Company”), and the “Stockholder”.”",
+      "explanation": "Single relational fact about the parties to the agreement."
     },
     {
       "id": "P_3",
-      "translation": "Patriot Scientific Corporation is the Company.",
-      "evidence": "Intro: \"Patriot Scientific Corporation (the 'Company')\"",
-      "explanation": "Atomic definitional statement (entity-label mapping)."
+      "translation": "Patriot Scientific Corporation is the “Company”.",
+      "evidence": "First paragraph: “Patriot Scientific Corporation (the “Company”)”",
+      "explanation": "Atomic naming/definition."
     },
     {
       "id": "P_4",
-      "translation": "The Company and the Stockholder are each individually referred to as a Party.",
-      "evidence": "Intro: \"...each individually referred to herein as a 'Party'\"",
+      "translation": "The Company and the Stockholder are each individually referred to as a “Party”.",
+      "evidence": "First paragraph: “each individually referred to herein as a “Party””",
       "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_5",
-      "translation": "The Company and the Stockholder are collectively referred to as the Parties.",
-      "evidence": "Intro: \"...collectively referred to as the 'Parties.'\"",
+      "translation": "The Company and the Stockholder are collectively referred to as the “Parties”.",
+      "evidence": "First paragraph: “collectively referred to as the “Parties.””",
       "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_6",
-      "translation": "On or about April 30, 2015, the Stockholder made a demand to inspect the Company's stockholder list.",
-      "evidence": "WHEREAS: \"on or about April 30, 2015, the Stockholder made a demand ... to inspect the stockholder list of the Company\"",
-      "explanation": "Atomic event claim with an uncertainty marker ('on or about') retained."
+      "translation": "On or about April 30, 2015, the Stockholder made a demand to inspect the Company’s stockholder list.",
+      "evidence": "Whereas clause: “on or about April 30, 2015, the Stockholder made a demand … to inspect the stockholder list of the Company;”",
+      "explanation": "Single historical event with a time reference."
     },
     {
       "id": "P_7",
-      "translation": "On April 30, 2015, the Stockholder made a demand to inspect the Company's stockholder list.",
-      "evidence": "WHEREAS: \"on or about April 30, 2015, the Stockholder made a demand ...\"",
-      "explanation": "Same content as P_6 but without the uncertainty phrase, per modality/uncertainty rule."
+      "translation": "The Company has agreed to allow the Stockholder to inspect the stockholder list, subject to the Stockholder executing the Agreement.",
+      "evidence": "Whereas clause: “subject to the Stockholder executing this Agreement, the Company has agreed to allow the Stockholder to inspect the stockholder list”",
+      "explanation": "Atomic commitment stated as one conditional agreement fact (no explicit logical operator symbols)."
     },
     {
       "id": "P_8",
-      "translation": "The Company has agreed to allow the Stockholder to inspect the stockholder list.",
-      "evidence": "WHEREAS: \"...the Company has agreed to allow the Stockholder to inspect the stockholder list\"",
-      "explanation": "Atomic permission/decision claim."
+      "translation": "The stockholder list and information or analyses derived from the inspection are referred to as “Confidential Material”.",
+      "evidence": "Whereas clause: “the stockholder list (which, together with information or analyses derived … is referred to as the “Confidential Material”)”",
+      "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_9",
-      "translation": "The Company's agreement to allow inspection is subject to the Stockholder executing the Agreement.",
-      "evidence": "WHEREAS: \"...subject to the Stockholder executing this Agreement\"",
-      "explanation": "Atomic dependency statement; the conditional is expressed later as a constraint."
+      "translation": "The Company believes that the stockholder list contains confidential information.",
+      "evidence": "Whereas clause: “the Company believes that stockholder list contains confidential information;”",
+      "explanation": "Atomic belief attribution."
     },
     {
       "id": "P_10",
-      "translation": "The stockholder list and information or analyses derived from the inspection information are Confidential Material.",
-      "evidence": "WHEREAS: \"...stockholder list (which, together with information or analyses derived from information made available for inspection, is referred to as the 'Confidential Material')\"",
-      "explanation": "Atomic definitional statement about what the term denotes."
+      "translation": "The Agreement is dated the 30th day of April 2015.",
+      "evidence": "Preamble: “this 30th day of April 2015”",
+      "explanation": "Atomic date attribution."
     },
     {
       "id": "P_11",
-      "translation": "The Company believes the stockholder list contains confidential information.",
-      "evidence": "WHEREAS: \"the Company believes that stockholder list contains confidential information\"",
-      "explanation": "Atomic mental-state attribution (belief) to the Company."
+      "translation": "The Agreement is not dated April 29, 2015.",
+      "evidence": "Implied by: “this 30th day of April 2015”",
+      "explanation": "Auxiliary negative alternative date (mutually exclusive with April 30)."
     },
     {
       "id": "P_12",
-      "translation": "The stockholder list contains confidential information.",
-      "evidence": "WHEREAS: \"...contains confidential information\" (in context of Company's belief)",
-      "explanation": "Atomic factual claim (without 'believes'); included to support possible implied constraints."
+      "translation": "The Agreement is not dated May 1, 2015.",
+      "evidence": "Implied by: “this 30th day of April 2015”",
+      "explanation": "Auxiliary negative alternative date (mutually exclusive with April 30)."
     },
     {
       "id": "P_13",
-      "translation": "The stockholder list does not contain confidential information.",
-      "evidence": "WHEREAS: \"...contains confidential information\" (contrast alternative added)",
-      "explanation": "Auxiliary negative alternative for a categorical/boolean attribute (confidential vs not confidential)."
+      "translation": "The Confidential Material is being produced only for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1: “Confidential Material is being produced … only for purposes reasonably related to Stockholder’s interests as a stockholder”",
+      "explanation": "Atomic restriction statement (includes the exclusivity word 'only' as part of the content)."
     },
     {
       "id": "P_14",
-      "translation": "The Agreement is agreed to by and between the Parties on the 30th day of April 2015.",
-      "evidence": "\"...this 30th day of April 2015...\"",
-      "explanation": "Atomic date assertion for the agreement."
+      "translation": "The Confidential Material is being produced for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1 (same sentence as P_13, without “only”).",
+      "explanation": "Same statement as P_13 but without the exclusivity term (needed to support logical decomposition)."
     },
     {
       "id": "P_15",
-      "translation": "The Agreement is agreed to on April 29, 2015.",
-      "evidence": "\"...this 30th day of April 2015...\" (alternative date added)",
-      "explanation": "Auxiliary negative-value alternative (nearby plausible date) for mutual exclusivity constraints."
+      "translation": "The Confidential Material is being produced for some other purpose not reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1 (negated by: “only for purposes reasonably related …”).",
+      "explanation": "Auxiliary alternative purpose to capture exclusivity."
     },
     {
       "id": "P_16",
-      "translation": "The Agreement is agreed to on May 1, 2015.",
-      "evidence": "\"...this 30th day of April 2015...\" (alternative date added)",
-      "explanation": "Auxiliary negative-value alternative (nearby plausible date)."
+      "translation": "The Stockholder shall not utilize Confidential Material (or other produced information or anything derived from them) for any other purpose.",
+      "evidence": "Section 1: “Stockholder shall not utilize … for any other purpose.”",
+      "explanation": "Atomic prohibition (modal 'shall not' retained)."
     },
     {
       "id": "P_17",
-      "translation": "The Confidential Material is produced to the Stockholder only for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
-      "evidence": "Clause 1: \"...produced ... only for purposes reasonably related to Stockholder’s interests as a stockholder...\"",
-      "explanation": "Atomic restriction statement (includes 'only' as part of content; no logical operators)."
+      "translation": "The Stockholder does not utilize Confidential Material (or other produced information or anything derived from them) for any other purpose.",
+      "evidence": "Section 1 (same obligation, without the modal “shall”).",
+      "explanation": "Same core content as P_16 without modal wording, to enable modal constraints."
     },
     {
       "id": "P_18",
-      "translation": "The Confidential Material is produced to the Stockholder for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
-      "evidence": "Clause 1",
-      "explanation": "Variant without exclusivity term 'only' (treated as a strength/modality-like restriction)."
+      "translation": "The Stockholder will not disclose Confidential Material to any person or entity in any form (directly or indirectly), except as provided in the Agreement.",
+      "evidence": "Section 2: “The Stockholder will not disclose … except as provided in this Confidentiality Agreement …”",
+      "explanation": "Atomic non-disclosure rule (modal 'will not' retained)."
     },
     {
       "id": "P_19",
-      "translation": "The Stockholder shall not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1: \"Stockholder shall not utilize Confidential Material ... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not disclose Confidential Material to any person or entity in any form (directly or indirectly), except as provided in the Agreement.",
+      "evidence": "Section 2 (same obligation, without the modal “will”).",
+      "explanation": "Same content without modal wording for modal linkage."
     },
     {
       "id": "P_20",
-      "translation": "The Stockholder does not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_19 without the modal word, per modality rule."
+      "translation": "In no event shall the Stockholder publicly disclose the names of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … names … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to names."
     },
     {
       "id": "P_21",
-      "translation": "The Stockholder shall not utilize other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1: \"...any other information produced by the Company... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the names of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_22",
-      "translation": "The Stockholder does not utilize other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_21 without the modal word."
+      "translation": "In no event shall the Stockholder publicly disclose the addresses of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … addresses … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to addresses."
     },
     {
       "id": "P_23",
-      "translation": "The Stockholder shall not utilize anything derived from Confidential Material for any other purpose.",
-      "evidence": "Clause 1: \"...anything derived from Confidential Material... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the addresses of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_24",
-      "translation": "The Stockholder does not utilize anything derived from Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_23 without the modal word."
+      "translation": "In no event shall the Stockholder publicly disclose the holdings of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … holdings … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to holdings."
     },
     {
       "id": "P_25",
-      "translation": "The Stockholder shall not utilize anything derived from any other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1: \"...or derived from any other information produced by the Company for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the holdings of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_26",
-      "translation": "The Stockholder does not utilize anything derived from any other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_25 without the modal word."
+      "translation": "The Stockholder is required by legal process (interrogatory, subpoena, civil investigatory demand, or similar) to disclose Confidential Material.",
+      "evidence": "Section 3: “If the Stockholder is required (by interrogatory, subpoena, civil investigatory demand …) to disclose … any Confidential Material”",
+      "explanation": "Atomic condition/event type."
     },
     {
       "id": "P_27",
-      "translation": "The Stockholder will not disclose Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"The Stockholder will not disclose... except as provided in this Confidentiality Agreement\"",
-      "explanation": "Atomic prohibition with modal 'will'."
-    },
-    {
-      "id": "P_28",
-      "translation": "The Stockholder does not disclose Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_27 without the modal word."
-    },
-    {
-      "id": "P_29",
-      "translation": "The Stockholder will not publish Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"...will not disclose, publish, or communicate...\"",
-      "explanation": "Atomic prohibition (publish) with modal 'will'."
-    },
-    {
-      "id": "P_30",
-      "translation": "The Stockholder does not publish Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_29 without the modal word."
-    },
-    {
-      "id": "P_31",
-      "translation": "The Stockholder will not communicate Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"...will not ... communicate ...\"",
-      "explanation": "Atomic prohibition (communicate) with modal 'will'."
-    },
-    {
-      "id": "P_32",
-      "translation": "The Stockholder does not communicate Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_31 without the modal word."
-    },
-    {
-      "id": "P_33",
-      "translation": "In no event shall the Stockholder publicly disclose the names, addresses, or holdings of any other stockholder.",
-      "evidence": "Clause 2: \"...in no event shall stockholder ... publically disclose ... names, addresses, holdings of any other stockholder.\"",
-      "explanation": "Atomic absolute prohibition ('in no event shall') kept intact."
-    },
-    {
-      "id": "P_34",
-      "translation": "The Stockholder does not publicly disclose the names, addresses, or holdings of any other stockholder.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_33 without the modal phrase."
-    },
-    {
-      "id": "P_35",
-      "translation": "The Stockholder is required by legal process (e.g., subpoena or interrogatory) to disclose Confidential Material.",
-      "evidence": "Clause 3: \"If the Stockholder is required ... to disclose ... any Confidential Material\"",
-      "explanation": "Atomic trigger condition description."
-    },
-    {
-      "id": "P_36",
       "translation": "The Stockholder will provide the Company with prompt notice within 2 business days of receipt of such legal process.",
-      "evidence": "Clause 3: \"...will provide the Company with prompt notice (i.e., within 2 business days...)\"",
+      "evidence": "Section 3: “will provide the Company with prompt notice (i.e., within 2 business days …)”",
       "explanation": "Atomic obligation with modal 'will'."
     },
     {
-      "id": "P_37",
+      "id": "P_28",
       "translation": "The Stockholder provides the Company with prompt notice within 2 business days of receipt of such legal process.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_36 without the modal word."
+      "evidence": "Section 3 (same obligation, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_38",
-      "translation": "The Company may seek a protective order or other appropriate remedy.",
-      "evidence": "Clause 3: \"...so that the Company may seek a protective order or other appropriate remedy...\"",
-      "explanation": "Atomic permission with modal 'may'."
+      "id": "P_29",
+      "translation": "The Company may seek a protective order or other appropriate remedy after receiving notice.",
+      "evidence": "Section 3: “so that the Company may seek a protective order or other appropriate remedy”",
+      "explanation": "Atomic permission ('may') statement."
     },
     {
-      "id": "P_39",
-      "translation": "The Company seeks a protective order or other appropriate remedy.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_38 without the modal word."
+      "id": "P_30",
+      "translation": "The Company seeks a protective order or other appropriate remedy after receiving notice.",
+      "evidence": "Section 3 (same idea, without modal “may”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_40",
-      "translation": "The Company may waive compliance with the Agreement.",
-      "evidence": "Clause 3: \"...and/or waive compliance with this Agreement...\"",
-      "explanation": "Atomic permission with modal 'may'."
+      "id": "P_31",
+      "translation": "A protective order or other appropriate remedy is obtained.",
+      "evidence": "Section 3: “in the event that such protective order or other remedy is not obtained” (implies the alternative).",
+      "explanation": "Atomic outcome condition."
     },
     {
-      "id": "P_41",
+      "id": "P_32",
+      "translation": "A protective order or other appropriate remedy is not obtained.",
+      "evidence": "Section 3: “in the event that such protective order or other remedy is not obtained”",
+      "explanation": "Atomic outcome condition (negated alternative)."
+    },
+    {
+      "id": "P_33",
       "translation": "The Company waives compliance with the Agreement.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_40 without the modal word."
+      "evidence": "Section 3: “and/or waive compliance with this Agreement”",
+      "explanation": "Atomic waiver event."
     },
     {
-      "id": "P_42",
-      "translation": "If a protective order or other remedy is not obtained, the Stockholder may furnish only such Confidential Material as they are advised is legally required.",
-      "evidence": "Clause 3: \"...if such protective order or other remedy is not obtained... the Stockholder may furnish only such Confidential Material as... legally required\"",
-      "explanation": "Atomic permission statement with modal 'may' and a condition; the conditional is represented as constraints."
+      "id": "P_34",
+      "translation": "If a protective order/remedy is not obtained or the Company waives compliance, the Stockholder may furnish only such Confidential Material as legally required.",
+      "evidence": "Section 3: “... if … not obtained, or if the Company waives … the Stockholder may furnish only such Confidential Material as they are advised is legally required”",
+      "explanation": "Atomic permission rule (contains modal 'may')."
     },
     {
-      "id": "P_43",
-      "translation": "If a protective order or other remedy is not obtained, the Stockholder furnishes only such Confidential Material as they are advised is legally required.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_42 without the modal word."
+      "id": "P_35",
+      "translation": "If a protective order/remedy is not obtained or the Company waives compliance, the Stockholder furnishes only such Confidential Material as legally required.",
+      "evidence": "Section 3 (same statement, without modal “may”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_44",
-      "translation": "The Stockholder must exercise best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material.",
-      "evidence": "Clause 3: \"...and must exercise their best efforts to obtain assurance that confidential treatment will be accorded...\"",
+      "id": "P_36",
+      "translation": "The Stockholder must exercise best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material that is disclosed.",
+      "evidence": "Section 3: “must exercise their best efforts to obtain assurance that confidential treatment will be accorded …”",
       "explanation": "Atomic obligation with modal 'must'."
     },
     {
+      "id": "P_37",
+      "translation": "The Stockholder exercises best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material that is disclosed.",
+      "evidence": "Section 3 (same statement, without modal “must”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
+      "id": "P_38",
+      "translation": "Each Party who receives Confidential Material pursuant to the Agreement submits to the exclusive jurisdiction of the Delaware Court of Chancery for actions to enforce or based on rights/claims arising out of the Agreement (including disputes about confidentiality).",
+      "evidence": "Section 4: “agrees to submit to the exclusive jurisdiction of the Delaware Court of Chancery …”",
+      "explanation": "Atomic forum-selection rule."
+    },
+    {
+      "id": "P_39",
+      "translation": "Exclusive jurisdiction for such actions is in the Delaware Court of Chancery.",
+      "evidence": "Section 4: “exclusive jurisdiction of the Delaware Court of Chancery”",
+      "explanation": "Atomic distilled version of the exclusive-forum content."
+    },
+    {
+      "id": "P_40",
+      "translation": "Exclusive jurisdiction for such actions is not in California state courts.",
+      "evidence": "Implied by Section 4 exclusive Delaware Court of Chancery jurisdiction.",
+      "explanation": "Auxiliary mutually exclusive alternative forum."
+    },
+    {
+      "id": "P_41",
+      "translation": "Exclusive jurisdiction for such actions is not in New York state courts.",
+      "evidence": "Implied by Section 4 exclusive Delaware Court of Chancery jurisdiction.",
+      "explanation": "Auxiliary mutually exclusive alternative forum."
+    },
+    {
+      "id": "P_42",
+      "translation": "Each Party waives all objections to personal jurisdiction or venue (including inconvenience) in the Delaware Court of Chancery.",
+      "evidence": "Section 4: “expressly waives any and all objections … to personal jurisdiction or to venue … in the Court of Chancery.”",
+      "explanation": "Atomic waiver statement."
+    },
+    {
+      "id": "P_43",
+      "translation": "The Company does not have an adequate remedy at law in the event of a breach of the Agreement by the Stockholder.",
+      "evidence": "Section 5: “the Company does not have an adequate remedy at law … in the event of a breach … by the Stockholder.”",
+      "explanation": "Atomic legal-remedy assertion."
+    },
+    {
+      "id": "P_44",
+      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will suffer irreparable harm.",
+      "evidence": "Section 5: “in the event of a breach … the Company will suffer irreparable harm”",
+      "explanation": "Atomic consequence assertion with modal 'will'."
+    },
+    {
       "id": "P_45",
-      "translation": "The Stockholder exercises best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_44 without the modal word."
+      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company suffers irreparable harm.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_46",
-      "translation": "Each Party who receives Confidential Material agrees to submit to the exclusive jurisdiction of the Delaware Court of Chancery for actions to enforce the Agreement.",
-      "evidence": "Clause 4: \"...submit to the exclusive jurisdiction of the Delaware Court of Chancery in any action to enforce...\"",
-      "explanation": "Atomic jurisdiction/venue commitment."
+      "translation": "In the event of a breach by the Stockholder, the Company will be entitled to specific performance to enforce the Agreement.",
+      "evidence": "Section 5: “will be entitled to specific performance … to enforce the terms …”",
+      "explanation": "Atomic entitlement statement with modal 'will'."
     },
     {
       "id": "P_47",
-      "translation": "Exclusive jurisdiction for enforcement actions is in the Delaware Court of Chancery.",
-      "evidence": "Clause 4",
-      "explanation": "Atomic restatement focusing on the exclusivity/location value for later mutual-exclusion constraints."
+      "translation": "In the event of a breach by the Stockholder, the Company is entitled to specific performance to enforce the Agreement.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_48",
-      "translation": "Exclusive jurisdiction for enforcement actions is in a federal court.",
-      "evidence": "Clause 4 (alternative forum added)",
-      "explanation": "Auxiliary alternative value for exclusive jurisdiction forum."
+      "translation": "In the event of a breach by the Stockholder, the Company will be entitled to injunctive relief to enforce the Agreement.",
+      "evidence": "Section 5: “and/or injunctive relief to enforce the terms …”",
+      "explanation": "Atomic entitlement statement with modal 'will'."
     },
     {
       "id": "P_49",
-      "translation": "Exclusive jurisdiction for enforcement actions is in New York state courts.",
-      "evidence": "Clause 4 (alternative forum added)",
-      "explanation": "Auxiliary alternative value for exclusive jurisdiction forum."
+      "translation": "In the event of a breach by the Stockholder, the Company is entitled to injunctive relief to enforce the Agreement.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_50",
-      "translation": "Each Party waives objections to personal jurisdiction in the Court of Chancery.",
-      "evidence": "Clause 4: \"...waives any and all objections ... to personal jurisdiction...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_51",
-      "translation": "Each Party waives objections to venue in the Court of Chancery.",
-      "evidence": "Clause 4: \"...or to venue...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_52",
-      "translation": "Each Party waives objections based on inconvenience of the Court of Chancery forum.",
-      "evidence": "Clause 4: \"...including ... the inconvenience of such forum...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_53",
-      "translation": "The Company does not have an adequate remedy at law in the event of a breach of the Agreement by the Stockholder.",
-      "evidence": "Clause 5: \"...does not have an adequate remedy at law in the event of a breach...\"",
-      "explanation": "Atomic legal-remedy statement."
-    },
-    {
-      "id": "P_54",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will suffer irreparable harm.",
-      "evidence": "Clause 5: \"...the Company will suffer irreparable harm...\"",
-      "explanation": "Atomic consequence claim with modal 'will'."
-    },
-    {
-      "id": "P_55",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company suffers irreparable harm.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_54 without the modal word."
-    },
-    {
-      "id": "P_56",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will be entitled to specific performance to enforce the Agreement.",
-      "evidence": "Clause 5: \"...will be entitled to specific performance...\"",
-      "explanation": "Atomic entitlement claim with modal 'will'."
-    },
-    {
-      "id": "P_57",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company is entitled to specific performance to enforce the Agreement.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_56 without the modal word."
-    },
-    {
-      "id": "P_58",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will be entitled to injunctive relief to enforce the Agreement.",
-      "evidence": "Clause 5: \"...and/or injunctive relief...\"",
-      "explanation": "Atomic entitlement claim with modal 'will'."
-    },
-    {
-      "id": "P_59",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company is entitled to injunctive relief to enforce the Agreement.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_58 without the modal word."
-    },
-    {
-      "id": "P_60",
-      "translation": "Specific performance and injunctive relief are not the exclusive remedies for a breach of the Agreement.",
-      "evidence": "Clause 5: \"Such remedies shall not be deemed to be the exclusive remedies...\"",
+      "translation": "Specific performance and injunctive relief are not the exclusive remedies for breach of the Agreement.",
+      "evidence": "Section 5: “Such remedies shall not be deemed to be the exclusive remedies …”",
       "explanation": "Atomic non-exclusivity statement."
     },
     {
+      "id": "P_51",
+      "translation": "The Agreement may not be amended, changed, waived, discharged, or terminated (except as explicitly provided) except by a signed written instrument specifically referring to the Agreement.",
+      "evidence": "Section 6: “may not be amended … except by an instrument in writing … signed …”",
+      "explanation": "Atomic amendment/waiver/termination rule (modal 'may not' retained)."
+    },
+    {
+      "id": "P_52",
+      "translation": "The Agreement is not amended, changed, waived, discharged, or terminated (except as explicitly provided) except by a signed written instrument specifically referring to the Agreement.",
+      "evidence": "Section 6 (same rule, without modal “may”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
+      "id": "P_53",
+      "translation": "A waiver by any Party of any breach is not a waiver of any other breach of the Agreement.",
+      "evidence": "Section 6: “will not be deemed … as a waiver of any other breach …”",
+      "explanation": "Atomic waiver-scope rule."
+    },
+    {
+      "id": "P_54",
+      "translation": "No failure or delay in exercising any right, power, or privilege under the Agreement operates as a waiver of that right, power, or privilege.",
+      "evidence": "Section 6: “No failure or delay … shall operate as a waiver thereof.”",
+      "explanation": "Atomic anti-waiver-by-delay rule."
+    },
+    {
+      "id": "P_55",
+      "translation": "The Agreement is binding upon and inures to the benefit of the Parties and their respective agents, executors, heirs, beneficiaries, successors, and assigns.",
+      "evidence": "Section 7: “shall be binding upon and inure to the benefit of …”",
+      "explanation": "Atomic binding/inurement statement."
+    },
+    {
+      "id": "P_56",
+      "translation": "The Agreement shall be governed by and construed in accordance with the laws of the State of Delaware.",
+      "evidence": "Section 8: “shall be governed by and construed in accordance with the laws of the State of Delaware”",
+      "explanation": "Atomic governing-law rule (categorical value: Delaware)."
+    },
+    {
+      "id": "P_57",
+      "translation": "The Agreement shall not be governed by the laws of California.",
+      "evidence": "Implied by Section 8 choosing Delaware law.",
+      "explanation": "Auxiliary negative alternative governing-law jurisdiction."
+    },
+    {
+      "id": "P_58",
+      "translation": "The Agreement shall not be governed by the laws of New York.",
+      "evidence": "Implied by Section 8 choosing Delaware law.",
+      "explanation": "Auxiliary negative alternative governing-law jurisdiction."
+    },
+    {
+      "id": "P_59",
+      "translation": "The Agreement may be executed in multiple counterparts by any signatories and as so executed constitutes one agreement.",
+      "evidence": "Section 9: “may be executed in multiple counterparts … and … shall constitute one agreement.”",
+      "explanation": "Atomic execution/counterparts rule with modal 'may'."
+    },
+    {
+      "id": "P_60",
+      "translation": "The Agreement is executed in multiple counterparts by signatories and as so executed constitutes one agreement.",
+      "evidence": "Section 9 (same statement, without modal “may”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
       "id": "P_61",
-      "translation": "The Agreement may not be amended except by a written instrument that refers specifically to the Agreement and is signed by the relevant Party.",
-      "evidence": "Clause 6: \"may not be amended... except by an instrument in writing... refers specifically... signed...\"",
-      "explanation": "Atomic amendment restriction with modal 'may not'."
+      "translation": "The Agreement constitutes the entire agreement between the Parties regarding the subject matter and supersedes all prior agreements and understandings (written and oral) regarding that subject matter.",
+      "evidence": "Section 10: “constitutes the entire agreement … and supersedes all prior agreements …”",
+      "explanation": "Atomic integration clause content."
     },
     {
       "id": "P_62",
-      "translation": "The Agreement is not amended except by a written instrument that refers specifically to the Agreement and is signed by the relevant Party.",
-      "evidence": "Clause 6",
-      "explanation": "Same content as P_61 without the modal word."
+      "translation": "The Agreement will be deemed to have been mutually prepared by the Parties.",
+      "evidence": "Section 11: “will be deemed to have been mutually prepared by the Parties”",
+      "explanation": "Atomic deeming statement with modal 'will'."
     },
     {
       "id": "P_63",
-      "translation": "A waiver by any Party of any breach of the Agreement is not a waiver of any other breach of the Agreement.",
-      "evidence": "Clause 6: \"...will not be deemed ... as a waiver of any other breach...\"",
-      "explanation": "Atomic waiver-scope statement."
+      "translation": "The Agreement is deemed to have been mutually prepared by the Parties.",
+      "evidence": "Section 11 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_64",
-      "translation": "No failure or delay in exercising any right, power, or privilege under the Agreement operates as a waiver of it.",
-      "evidence": "Clause 6: \"No failure or delay... shall operate as a waiver thereof.\"",
-      "explanation": "Atomic anti-waiver-by-delay statement."
+      "translation": "The Agreement will not be construed against either Party by reason of authorship.",
+      "evidence": "Section 11: “will not be construed against either … by reason of authorship.”",
+      "explanation": "Atomic construction rule with modal 'will not'."
     },
     {
       "id": "P_65",
-      "translation": "The Agreement is binding upon the Parties and their respective agents, executors, heirs, beneficiaries, successors, and assigns.",
-      "evidence": "Clause 7: \"...binding upon and inure to the benefit of the Parties and their respective agents...\"",
-      "explanation": "Atomic binding-effect statement."
-    },
-    {
-      "id": "P_66",
-      "translation": "The Agreement is governed by and construed in accordance with the laws of the State of Delaware.",
-      "evidence": "Clause 8: \"...governed by and construed... laws of the State of Delaware\"",
-      "explanation": "Atomic governing-law statement."
-    },
-    {
-      "id": "P_67",
-      "translation": "The Agreement is not governed by the laws of the State of California.",
-      "evidence": "Clause 8 (alternative governing law added)",
-      "explanation": "Auxiliary negative alternative value for governing law."
-    },
-    {
-      "id": "P_68",
-      "translation": "The Agreement is not governed by the laws of the State of New York.",
-      "evidence": "Clause 8 (alternative governing law added)",
-      "explanation": "Auxiliary negative alternative value for governing law."
-    },
-    {
-      "id": "P_69",
-      "translation": "The Agreement may be executed in multiple counterparts by any of the signatories.",
-      "evidence": "Clause 9: \"may be executed in multiple counterparts\"",
-      "explanation": "Atomic permission with modal 'may'."
-    },
-    {
-      "id": "P_70",
-      "translation": "The Agreement is executed in multiple counterparts by any of the signatories.",
-      "evidence": "Clause 9",
-      "explanation": "Same content as P_69 without the modal word."
-    },
-    {
-      "id": "P_71",
-      "translation": "The Agreement constitutes the entire agreement between the Parties with regard to the subject matter.",
-      "evidence": "Clause 10: \"constitutes the entire agreement...\"",
-      "explanation": "Atomic integration clause statement."
-    },
-    {
-      "id": "P_72",
-      "translation": "The Agreement supersedes all prior agreements and understandings between the Parties with regard to the subject matter.",
-      "evidence": "Clause 10: \"...supersedes all prior agreements and understandings...\"",
-      "explanation": "Atomic supersession statement."
-    },
-    {
-      "id": "P_73",
-      "translation": "The Agreement is deemed to have been mutually prepared by the Parties.",
-      "evidence": "Clause 11: \"...deemed to have been mutually prepared...\"",
-      "explanation": "Atomic deeming/preparation statement."
-    },
-    {
-      "id": "P_74",
-      "translation": "The Agreement will not be construed against either Party by reason of authorship.",
-      "evidence": "Clause 11: \"...will not be construed against either... by reason of authorship.\"",
-      "explanation": "Atomic construction rule with modal 'will'."
-    },
-    {
-      "id": "P_75",
       "translation": "The Agreement is not construed against either Party by reason of authorship.",
-      "evidence": "Clause 11",
-      "explanation": "Same content as P_74 without the modal word."
+      "evidence": "Section 11 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_2",
       "translation": "The Agreement is entered into between the Company and the Stockholder.",
-      "evidence": "Intro",
-      "reasoning": "Direct definitional statement of the contracting parties.",
+      "evidence": "First paragraph",
+      "reasoning": "Direct definitional/recital statement of the agreement parties.",
       "list nli": [
         [
-          2.6436877305968665e-05,
-          0.00016251888882834464,
-          0.9998111128807068
+          1.8060822185361758e-05,
+          8.609607903053984e-05,
+          0.9998958110809326
         ],
         [
-          1.6770824004197493e-05,
-          0.00022086550598032773,
-          0.9997623562812805
+          1.3152267456462141e-05,
+          0.00021182780619710684,
+          0.9997749924659729
         ],
         [
-          4.421879566507414e-05,
-          0.0002018597151618451,
-          0.9997538924217224
+          1.4814664609730244e-05,
+          0.00021117790311109275,
+          0.9997740387916565
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_3",
       "translation": "Patriot Scientific Corporation is the Company.",
-      "evidence": "Intro",
-      "reasoning": "Explicit definition in the text.",
+      "evidence": "First paragraph",
+      "reasoning": "Explicit definition.",
       "list nli": [
         [
-          0.0011573471128940582,
-          0.0002326543180970475,
-          0.9986100196838379
+          0.0013992247404530644,
+          0.00022635349887423217,
+          0.998374342918396
         ],
         [
-          0.0013301061699166894,
-          0.00011733113933587447,
-          0.9985525012016296
+          0.003455565543845296,
+          0.00037952762795612216,
+          0.9961649179458618
         ],
         [
-          0.003966513089835644,
-          0.0004261754802428186,
-          0.995607316493988
+          0.003701854031533003,
+          0.00020096210937481374,
+          0.9960972666740417
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_5",
-      "translation": "Company and Stockholder are collectively the Parties.",
-      "evidence": "Intro",
-      "reasoning": "Explicit definitional language.",
+      "formula": "P_4",
+      "translation": "Each is individually a Party.",
+      "evidence": "First paragraph",
+      "reasoning": "Explicit definition.",
       "list nli": [
         [
-          0.0048584830947220325,
-          0.010096374899148941,
-          0.9850451350212097
+          0.03719184175133705,
+          0.024925583973526955,
+          0.9378825426101685
         ],
         [
-          0.007910490036010742,
-          0.012229827232658863,
-          0.9798596501350403
+          0.08520644903182983,
+          0.05415451526641846,
+          0.8606390357017517
         ],
         [
-          0.016467904672026634,
-          0.04172897711396217,
-          0.9418030977249146
+          0.0481770783662796,
+          0.11701223999261856,
+          0.8348106145858765
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "P_14",
-      "translation": "Agreed this 30th day of April 2015.",
-      "evidence": "\"...this 30th day of April 2015...\"",
-      "reasoning": "Stated as the execution/agreeing date.",
+      "formula": "P_5",
+      "translation": "Collectively they are the Parties.",
+      "evidence": "First paragraph",
+      "reasoning": "Explicit definition.",
       "list nli": [
         [
-          0.00018330090097151697,
-          2.067103014269378e-05,
-          0.9997960925102234
+          0.8289496898651123,
+          0.01794145628809929,
+          0.15310882031917572
         ],
         [
-          0.00020053763000760227,
-          1.8127151633962058e-05,
-          0.9997813105583191
+          0.0031999610364437103,
+          0.8673281669616699,
+          0.12947191298007965
         ],
         [
-          0.00022662356786895543,
-          2.3851574951549992e-05,
-          0.999749481678009
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_14 ⟹ ¬P_15",
-      "translation": "If the Agreement date is April 30, 2015, then it is not April 29, 2015.",
-      "evidence": "Date line; auxiliary alternative date added",
-      "reasoning": "Nearby dates are mutually exclusive for a single-date execution.",
-      "list nli": [
-        [
-          0.0003820525307673961,
-          0.00039173007826320827,
-          0.9992262125015259
-        ],
-        [
-          0.0011734628351405263,
-          0.0024669214617460966,
-          0.996359646320343
-        ],
-        [
-          0.00530464481562376,
-          0.0013994555920362473,
-          0.9932958483695984
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_6",
-      "formula": "P_14 ⟹ ¬P_16",
-      "translation": "If the Agreement date is April 30, 2015, then it is not May 1, 2015.",
-      "evidence": "Date line; auxiliary alternative date added",
-      "reasoning": "Mutual exclusivity of distinct calendar dates.",
-      "list nli": [
-        [
-          0.0002287838578922674,
-          0.00021223736985120922,
-          0.9995589852333069
-        ],
-        [
-          0.0012483486207202077,
-          0.0008229426457546651,
-          0.9979287385940552
-        ],
-        [
-          0.0023418867494910955,
-          0.0005511824856512249,
-          0.9971069693565369
+          0.8285523653030396,
+          0.0858171284198761,
+          0.08563049137592316
         ]
       ]
     },
@@ -625,795 +509,627 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.95,
       "hardness_constant": 0.9,
-      "id": "C_7",
+      "id": "C_5",
       "formula": "P_6",
       "translation": "On or about April 30, 2015, Stockholder made the Demand to inspect the stockholder list.",
-      "evidence": "WHEREAS (Demand)",
-      "reasoning": "Direct recital; 'on or about' slightly weakens precision but not the occurrence.",
+      "evidence": "WHEREAS clause about April 30, 2015",
+      "reasoning": "Recital; treated as factual background (very strong but 'on or about' introduces slight looseness).",
       "list nli": [
         [
-          2.5256753360736184e-05,
-          5.374435204430483e-05,
-          0.9999209642410278
+          6.570509140146896e-05,
+          3.084682612097822e-05,
+          0.9999034404754639
         ],
         [
-          7.343749166466296e-05,
-          4.63199321529828e-05,
-          0.9998801946640015
+          7.401330367429182e-05,
+          3.660484071588144e-05,
+          0.9998893737792969
         ],
         [
-          0.0001131944009102881,
-          3.271147943451069e-05,
-          0.9998540878295898
+          8.451331086689606e-05,
+          3.4237211366416886e-05,
+          0.9998812675476074
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7",
+      "translation": "Company agreed to allow inspection subject to Stockholder executing the Agreement.",
+      "evidence": "Second WHEREAS clause",
+      "reasoning": "Recital of the parties’ understanding; strong but framed as background.",
+      "list nli": [
+        [
+          0.0001812165428418666,
+          5.418049477157183e-05,
+          0.999764621257782
+        ],
+        [
+          5.30135293956846e-05,
+          0.00024098140420392156,
+          0.999705970287323
+        ],
+        [
+          0.0001859076728578657,
+          0.0010301198344677687,
+          0.9987840056419373
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_8",
+      "translation": "The stockholder list plus derived analyses are 'Confidential Material'.",
+      "evidence": "Second WHEREAS clause (definition parenthetical)",
+      "reasoning": "Explicit defined term.",
+      "list nli": [
+        [
+          1.866892671387177e-05,
+          8.555260865250602e-05,
+          0.9998958110809326
+        ],
+        [
+          9.997184861276764e-06,
+          9.643008525017649e-05,
+          0.9998935461044312
+        ],
+        [
+          0.00020946579752489924,
+          0.00014140938583295792,
+          0.999649167060852
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
       "id": "C_8",
-      "formula": "P_7 ⟹ P_6",
-      "translation": "If it was on April 30, 2015, then it was on or about April 30, 2015.",
-      "evidence": "WHEREAS (\"on or about\")",
-      "reasoning": "Exact date implies the weaker 'on or about' date claim.",
+      "formula": "P_9",
+      "translation": "Company believes the stockholder list contains confidential information.",
+      "evidence": "Third WHEREAS clause",
+      "reasoning": "Explicitly stated as a belief; strong as to the belief itself, not necessarily as to truth of confidentiality.",
       "list nli": [
         [
-          0.0003133928112220019,
-          0.0003061926399823278,
-          0.999380350112915
+          7.184634159784764e-05,
+          0.00018892507068812847,
+          0.9997392296791077
         ],
         [
-          0.00035090380697511137,
-          0.0003211693838238716,
-          0.9993278980255127
+          0.000176098124939017,
+          0.0005092299543321133,
+          0.9993146657943726
         ],
         [
-          0.00025894411373883486,
-          0.0005042366101406515,
-          0.9992368221282959
+          1.9332395822857507e-05,
+          0.0011406969279050827,
+          0.9988400340080261
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.95,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
+      "combined=(llm)*(nli)": 0.95,
       "hardness_constant": 0.9,
       "id": "C_9",
-      "formula": "P_8",
-      "translation": "Company has agreed to allow inspection of the stockholder list.",
-      "evidence": "Second WHEREAS",
-      "reasoning": "Explicit commitment in recitals.",
+      "formula": "P_10",
+      "translation": "Agreement date is April 30, 2015.",
+      "evidence": "Preamble: “this 30th day of April 2015”",
+      "reasoning": "Stated effective/signing date; strong but could be formal recital.",
       "list nli": [
         [
-          3.098177694482729e-05,
-          0.00010524871322559193,
-          0.9998637437820435
+          6.611233402509242e-05,
+          2.367778324696701e-05,
+          0.9999102354049683
         ],
         [
-          0.00011175096005899832,
-          3.1535451853415e-05,
-          0.99985671043396
+          7.317202107515186e-05,
+          2.4147182557499036e-05,
+          0.9999027252197266
         ],
         [
-          0.0001529207220301032,
-          2.9923910915385932e-05,
-          0.9998171925544739
+          8.259368769358844e-05,
+          2.267065065097995e-05,
+          0.9998947381973267
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_10",
-      "formula": "P_9",
-      "translation": "Inspection permission is subject to Stockholder executing the Agreement.",
-      "evidence": "Second WHEREAS",
-      "reasoning": "Explicit condition stated.",
+      "formula": "P_10 ⟹ P_11",
+      "translation": "If dated April 30, 2015, then it is not dated April 29, 2015.",
+      "evidence": "Preamble date",
+      "reasoning": "Mutual exclusivity of dates in ordinary usage.",
       "list nli": [
         [
-          3.985094735980965e-05,
-          8.125089516397566e-05,
-          0.9998788833618164
+          0.0007553889881819487,
+          0.0015512589598074555,
+          0.9976933598518372
         ],
         [
-          0.00013569675502367318,
-          9.078184666577727e-05,
-          0.9997735619544983
+          0.00019919151964131743,
+          0.0028266673907637596,
+          0.9969741106033325
         ],
         [
-          2.1119161829119548e-05,
-          0.000629548158030957,
-          0.9993492960929871
+          0.005114686209708452,
+          0.0025563689414411783,
+          0.992328941822052
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_10 ⟹ P_12",
+      "translation": "If dated April 30, 2015, then it is not dated May 1, 2015.",
+      "evidence": "Preamble date",
+      "reasoning": "Mutual exclusivity of dates in ordinary usage.",
+      "list nli": [
+        [
+          3.1395567930303514e-05,
+          0.00016957528714556247,
+          0.9997990727424622
+        ],
+        [
+          3.489838127279654e-05,
+          0.0006201143260113895,
+          0.9993450045585632
+        ],
+        [
+          0.0002475762739777565,
+          0.0005921502015553415,
+          0.9991602897644043
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_12",
-      "formula": "P_10",
-      "translation": "The stockholder list and derived info/analyses are 'Confidential Material'.",
-      "evidence": "Second WHEREAS (definition of Confidential Material)",
-      "reasoning": "Explicit definition.",
+      "formula": "P_13",
+      "translation": "Confidential Material is produced only for purposes related to Stockholder’s interests as stockholder.",
+      "evidence": "Section 1",
+      "reasoning": "Contract term: “Stockholder agrees … only for purposes …”.",
       "list nli": [
         [
-          6.239838694455102e-05,
-          8.587965567130595e-05,
-          0.9998517036437988
+          2.2947386241867207e-05,
+          8.03001385065727e-05,
+          0.999896764755249
         ],
         [
-          6.685584230581298e-05,
-          8.435241761617362e-05,
-          0.9998487234115601
+          2.444472920615226e-05,
+          9.101967589231208e-05,
+          0.9998844861984253
         ],
         [
-          3.0926443287171423e-05,
-          0.00014184505562298,
-          0.9998272061347961
+          4.0126917156158015e-05,
+          0.00018353255291003734,
+          0.999776303768158
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_13",
-      "formula": "P_11",
-      "translation": "Company believes the stockholder list contains confidential information.",
-      "evidence": "Third WHEREAS",
-      "reasoning": "Directly stated belief.",
+      "formula": "P_13 ⟹ P_14",
+      "translation": "Only-for-related-purpose implies for-related-purpose.",
+      "evidence": "Section 1",
+      "reasoning": "Semantic entailment: 'only for X' entails 'for X'.",
       "list nli": [
         [
-          0.00014732629642821848,
-          0.00045813535689376295,
-          0.9993945360183716
+          0.00032303115585818887,
+          0.0015940399607643485,
+          0.9980829954147339
         ],
         [
-          0.0006696698837913573,
-          0.0010616157669574022,
-          0.998268723487854
+          0.00015889608766883612,
+          0.002367981942370534,
+          0.9974730610847473
         ],
         [
-          1.4446067325479817e-05,
-          0.003997404593974352,
-          0.9959881901741028
+          0.01108823623508215,
+          0.001514119328930974,
+          0.9873977303504944
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_13 ⟹ ¬P_15",
+      "translation": "Only-for-related-purpose excludes production for other purposes.",
+      "evidence": "Section 1 (word “only”)",
+      "reasoning": "Semantic entailment of exclusivity.",
+      "list nli": [
+        [
+          0.00026055160560645163,
+          0.0002078977122437209,
+          0.999531626701355
+        ],
+        [
+          0.00017739359464030713,
+          0.0016797124408185482,
+          0.9981428384780884
+        ],
+        [
+          0.00019347839406691492,
+          0.0016893126303330064,
+          0.998117208480835
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_15",
-      "formula": "P_12 ⟹ ¬P_13",
-      "translation": "If the stockholder list contains confidential information, then it is not non-confidential.",
-      "evidence": "Third WHEREAS; auxiliary alternative added",
-      "reasoning": "Confidential vs not confidential are ordinary-language opposites.",
+      "formula": "P_16",
+      "translation": "Stockholder shall not use Confidential Material (or derivatives) for any other purpose.",
+      "evidence": "Section 1",
+      "reasoning": "Direct 'shall not' prohibition.",
       "list nli": [
         [
-          0.00037191403680481017,
-          0.0005803558742627501,
-          0.9990476965904236
+          7.571014430141076e-05,
+          8.506671292707324e-05,
+          0.999839186668396
         ],
         [
-          0.0006428398774005473,
-          0.0020531851332634687,
-          0.9973039627075195
+          8.22947476990521e-05,
+          0.0001488834386691451,
+          0.9997687935829163
         ],
         [
-          0.014040620997548103,
-          0.004741871729493141,
-          0.9812175035476685
+          0.00035216048127040267,
+          0.0008476766524836421,
+          0.9988001585006714
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_16",
-      "formula": "P_17",
-      "translation": "Confidential Material is produced only for purposes reasonably related to Stockholder's interests as a stockholder.",
-      "evidence": "Clause 1",
-      "reasoning": "Explicit 'only for purposes' restriction.",
+      "formula": "P_16 ⟹ P_17",
+      "translation": "If Stockholder 'shall not' use it for other purposes, then (non-modally) Stockholder does not use it for other purposes.",
+      "evidence": "Section 1",
+      "reasoning": "Modal-to-base linkage required by the methodology.",
       "list nli": [
         [
-          3.0845956644043326e-05,
-          5.6605123972985893e-05,
-          0.9999125003814697
+          0.0003337426751386374,
+          0.0015803942224010825,
+          0.9980858564376831
         ],
         [
-          3.346317680552602e-05,
-          6.563728675246239e-05,
-          0.9999009370803833
+          0.0012535059358924627,
+          0.0021701292134821415,
+          0.9965763688087463
         ],
         [
-          2.704711187107023e-05,
-          0.00013255715020932257,
-          0.9998403787612915
+          0.0014487412991002202,
+          0.002809781115502119,
+          0.9957414865493774
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_17",
-      "formula": "P_17 ⟹ P_18",
-      "translation": "If it is produced only for those purposes, then it is produced for those purposes.",
-      "evidence": "Clause 1",
-      "reasoning": "Logical weakening: 'only for X' entails 'for X'.",
+      "formula": "P_18",
+      "translation": "Stockholder will not disclose Confidential Material except as provided.",
+      "evidence": "Section 2",
+      "reasoning": "Direct 'will not' contractual obligation.",
       "list nli": [
         [
-          2.3436414267052896e-05,
-          0.000417885574279353,
-          0.9995586276054382
+          2.6247957066516392e-05,
+          0.00014845300756860524,
+          0.9998252987861633
         ],
         [
-          3.117840242339298e-05,
-          0.0004312662058509886,
-          0.9995375871658325
+          2.5710232876008376e-05,
+          0.00014957062376197428,
+          0.9998247027397156
         ],
         [
-          5.877914372831583e-05,
-          0.0005879616946913302,
-          0.9993532299995422
+          2.3753122150083072e-05,
+          0.00019346721819601953,
+          0.9997827410697937
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_18",
-      "formula": "P_19",
-      "translation": "Stockholder shall not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "reasoning": "Clear prohibition ('shall not').",
+      "formula": "P_18 ⟹ P_19",
+      "translation": "If Stockholder 'will not' disclose, then (non-modally) Stockholder does not disclose (except as provided).",
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage.",
       "list nli": [
         [
-          0.001101720379665494,
-          0.009160010144114494,
-          0.9897382855415344
+          0.0009834093507379293,
+          0.0009847843321040273,
+          0.9980317950248718
         ],
         [
-          0.0019018830498680472,
-          0.025178227573633194,
-          0.9729199409484863
+          0.0025265314616262913,
+          0.002214898355305195,
+          0.995258629322052
         ],
         [
-          0.00028979804483242333,
-          0.4146081209182739,
-          0.5851020216941833
+          0.0025759811978787184,
+          0.0024735822807997465,
+          0.9949504137039185
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_19",
-      "formula": "P_20 ⟹ P_19",
-      "translation": "If Stockholder does not utilize it for other purposes, then it is consistent with the obligation not to.",
-      "evidence": "Clause 1",
-      "reasoning": "Actual non-use for other purposes implies satisfaction of the stated prohibition (strong-to-weaker).",
+      "formula": "P_20",
+      "translation": "In no event shall Stockholder publicly disclose names of other stockholders.",
+      "evidence": "Section 2 (provided that clause)",
+      "reasoning": "Absolute prohibition language: 'in no event shall'.",
       "list nli": [
         [
-          0.00020150828640908003,
-          0.00030211114790290594,
-          0.999496340751648
+          1.569797495903913e-05,
+          0.00016495081945322454,
+          0.9998193383216858
         ],
         [
-          9.43560735322535e-05,
-          0.0005791271687485278,
-          0.9993265867233276
+          1.127209634432802e-05,
+          0.0002675372234079987,
+          0.9997212290763855
         ],
         [
-          0.0003100896719843149,
-          0.0006778875249437988,
-          0.9990119934082031
+          7.923269549792167e-06,
+          0.0003106148506049067,
+          0.9996814727783203
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_20",
+      "formula": "P_20 ⟹ P_21",
+      "translation": "If Stockholder 'shall not' publicly disclose names, then Stockholder does not publicly disclose names.",
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.003390695434063673,
+          0.0027130721136927605,
+          0.9938961863517761
+        ],
+        [
+          0.002231895923614502,
+          0.00407596118748188,
+          0.99369215965271
+        ],
+        [
+          0.000930627400521189,
+          0.0066248890943825245,
+          0.9924444556236267
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_21",
-      "formula": "P_21",
-      "translation": "Stockholder shall not utilize other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited.",
+      "formula": "P_22",
+      "translation": "In no event shall Stockholder publicly disclose addresses of other stockholders.",
+      "evidence": "Section 2",
+      "reasoning": "Absolute prohibition language.",
       "list nli": [
         [
-          1.1555071068869438e-05,
-          0.00020759188919328153,
-          0.9997808337211609
+          2.443753692205064e-05,
+          5.834395415149629e-05,
+          0.9999172687530518
         ],
         [
-          4.211440318613313e-05,
-          0.00017898644728120416,
-          0.9997789263725281
+          1.7471142200520262e-05,
+          8.748735854169354e-05,
+          0.9998949766159058
         ],
         [
-          0.0001098155407817103,
-          0.00016928381228353828,
-          0.9997208714485168
+          1.2827412319893483e-05,
+          0.00010412199480924755,
+          0.9998830556869507
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_22",
-      "formula": "P_22 ⟹ P_21",
-      "translation": "If Stockholder does not use such other information for other purposes, then the prohibition holds.",
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker relation between factual compliance and obligation.",
+      "formula": "P_22 ⟹ P_23",
+      "translation": "If Stockholder 'shall not' publicly disclose addresses, then Stockholder does not publicly disclose addresses.",
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage.",
       "list nli": [
         [
-          5.202976171858609e-05,
-          0.00019151736341882497,
-          0.999756395816803
+          0.0006651015137322247,
+          0.0030520313885062933,
+          0.9962828755378723
         ],
         [
-          2.988361484312918e-05,
-          0.0002949632180389017,
-          0.9996751546859741
+          0.0037800809368491173,
+          0.0010839160531759262,
+          0.9951359629631042
         ],
         [
-          8.661149331601337e-05,
-          0.0003079315065406263,
-          0.9996054768562317
+          0.004317028447985649,
+          0.0027130614034831524,
+          0.9929699301719666
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_23",
+      "formula": "P_24",
+      "translation": "In no event shall Stockholder publicly disclose holdings of other stockholders.",
+      "evidence": "Section 2",
+      "reasoning": "Absolute prohibition language.",
+      "list nli": [
+        [
+          0.00026298646116629243,
+          0.0005309109692461789,
+          0.9992061257362366
+        ],
+        [
+          0.0005069548496976495,
+          0.000743432785384357,
+          0.9987496137619019
+        ],
+        [
+          7.110932347131893e-05,
+          0.0014838767237961292,
+          0.9984450936317444
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_24",
-      "formula": "P_23",
-      "translation": "Stockholder shall not use anything derived from Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited.",
+      "formula": "P_24 ⟹ P_25",
+      "translation": "If Stockholder 'shall not' publicly disclose holdings, then Stockholder does not publicly disclose holdings.",
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage.",
       "list nli": [
         [
-          0.00021365104475989938,
-          0.0045379577204585075,
-          0.9952483773231506
+          0.0018279136857017875,
+          0.0012450901558622718,
+          0.9969269633293152
         ],
         [
-          0.0014747623354196548,
-          0.009307465516030788,
-          0.9892177581787109
+          0.002112839836627245,
+          0.001867976738139987,
+          0.996019184589386
         ],
         [
-          7.453862781403586e-05,
-          0.013952642679214478,
-          0.9859727621078491
+          0.00032087560975924134,
+          0.004364521708339453,
+          0.9953145980834961
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_25",
-      "formula": "P_24 ⟹ P_23",
-      "translation": "If Stockholder does not do it, then the prohibition is satisfied.",
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker compliance relation.",
+      "formula": "P_26 ⟹ P_27",
+      "translation": "If required by legal process to disclose, Stockholder will give notice within 2 business days.",
+      "evidence": "Section 3",
+      "reasoning": "Explicit conditional obligation: “If … required … will provide … within 2 business days”.",
       "list nli": [
         [
-          4.547584831016138e-05,
-          0.00010327099153073505,
-          0.9998512268066406
+          3.9344340621028095e-05,
+          3.64168627129402e-05,
+          0.9999241828918457
         ],
         [
-          2.8778660634998232e-05,
-          0.00012672213779296726,
-          0.9998444318771362
+          3.9365793782053515e-05,
+          4.163768608123064e-05,
+          0.9999189376831055
         ],
         [
-          4.918707054457627e-05,
-          0.0001222518039867282,
-          0.999828577041626
+          7.334886322496459e-05,
+          3.1425912311533466e-05,
+          0.9998952150344849
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_26",
+      "formula": "P_27 ⟹ P_28",
+      "translation": "If Stockholder will provide prompt notice, then (non-modally) Stockholder provides prompt notice.",
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.0003022133023478091,
+          0.00030668661929666996,
+          0.9993910789489746
+        ],
+        [
+          0.0005479594692587852,
+          0.00020499325182754546,
+          0.9992470741271973
+        ],
+        [
+          0.0004058392660226673,
+          0.000719006871804595,
+          0.998875081539154
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
       "id": "C_27",
-      "formula": "P_25",
-      "translation": "Stockholder shall not use anything derived from other Company-produced information for other purposes.",
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited.",
-      "list nli": [
-        [
-          6.188096449477598e-05,
-          0.0013360936427488923,
-          0.9986020922660828
-        ],
-        [
-          6.1029732023598626e-05,
-          0.0019684552680701017,
-          0.9979705214500427
-        ],
-        [
-          0.0005488446913659573,
-          0.0019813559483736753,
-          0.9974697828292847
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_28",
-      "formula": "P_26 ⟹ P_25",
-      "translation": "If Stockholder does not do it, then the prohibition is satisfied.",
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker compliance relation.",
-      "list nli": [
-        [
-          4.547584831016138e-05,
-          0.00010327099153073505,
-          0.9998512268066406
-        ],
-        [
-          2.8778660634998232e-05,
-          0.00012672213779296726,
-          0.9998444318771362
-        ],
-        [
-          4.918707054457627e-05,
-          0.0001222518039867282,
-          0.999828577041626
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_30",
-      "formula": "P_27",
-      "translation": "Stockholder will not disclose Confidential Material except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant ('will not').",
-      "list nli": [
-        [
-          8.70478615979664e-05,
-          0.001974649028852582,
-          0.997938334941864
-        ],
-        [
-          0.0002302625507581979,
-          0.003670306410640478,
-          0.9960994720458984
-        ],
-        [
-          3.5643624869408086e-05,
-          0.007205688860267401,
-          0.9927586317062378
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_31",
-      "formula": "P_28 ⟹ P_27",
-      "translation": "If Stockholder does not disclose, then it aligns with the covenant not to disclose.",
-      "evidence": "Clause 2",
-      "reasoning": "Actual non-disclosure is stronger than commitment/obligation.",
-      "list nli": [
-        [
-          0.0005848802975378931,
-          0.0005256040021777153,
-          0.9988895058631897
-        ],
-        [
-          0.002752299653366208,
-          0.003670390462502837,
-          0.9935773015022278
-        ],
-        [
-          0.008779855445027351,
-          0.02262367121875286,
-          0.9685964584350586
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_33",
       "formula": "P_29",
-      "translation": "Stockholder will not publish Confidential Material except as allowed.",
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant.",
-      "list nli": [
-        [
-          0.0001772152172634378,
-          0.004712887108325958,
-          0.9951098561286926
-        ],
-        [
-          0.00019909985712729394,
-          0.0067900908179581165,
-          0.9930108189582825
-        ],
-        [
-          0.00016116576443891972,
-          0.9860532879829407,
-          0.013785475865006447
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_34",
-      "formula": "P_30 ⟹ P_29",
-      "translation": "If Stockholder does not publish, then it aligns with the covenant not to publish.",
-      "evidence": "Clause 2",
-      "reasoning": "Strong-to-weaker relation.",
-      "list nli": [
-        [
-          0.0029060058295726776,
-          0.001496960991062224,
-          0.9955970644950867
-        ],
-        [
-          0.004784697201102972,
-          0.004311379045248032,
-          0.990903913974762
-        ],
-        [
-          0.008916572667658329,
-          0.006378375459462404,
-          0.9847050905227661
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_36",
-      "formula": "P_31",
-      "translation": "Stockholder will not communicate Confidential Material except as allowed.",
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant.",
-      "list nli": [
-        [
-          0.0002769583370536566,
-          0.003586321137845516,
-          0.9961367249488831
-        ],
-        [
-          0.00039659623871557415,
-          0.009910402819514275,
-          0.9896929860115051
-        ],
-        [
-          0.0006097891600802541,
-          0.018451521173119545,
-          0.9809386730194092
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_37",
-      "formula": "P_32 ⟹ P_31",
-      "translation": "If Stockholder does not communicate, then it aligns with the covenant not to communicate.",
-      "evidence": "Clause 2",
-      "reasoning": "Strong-to-weaker relation.",
-      "list nli": [
-        [
-          0.0019967560656368732,
-          0.0012518545845523477,
-          0.9967514276504517
-        ],
-        [
-          0.0055372873321175575,
-          0.00245807901956141,
-          0.9920045733451843
-        ],
-        [
-          0.007830033078789711,
-          0.004327188711613417,
-          0.9878427982330322
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_39",
-      "formula": "P_33",
-      "translation": "In no event shall Stockholder publicly disclose names, addresses, holdings of other stockholders.",
-      "evidence": "Clause 2",
-      "reasoning": "Absolute prohibition language ('in no event shall').",
-      "list nli": [
-        [
-          3.859959906549193e-05,
-          8.16870597191155e-05,
-          0.9998797178268433
-        ],
-        [
-          5.513420546776615e-05,
-          7.065289537422359e-05,
-          0.9998742341995239
-        ],
-        [
-          8.84125711309025e-06,
-          0.00021971478417981416,
-          0.9997714161872864
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_40",
-      "formula": "P_34 ⟹ P_33",
-      "translation": "If Stockholder does not publicly disclose those details, then it aligns with the prohibition.",
-      "evidence": "Clause 2",
-      "reasoning": "Factual non-disclosure is stronger than obligation.",
-      "list nli": [
-        [
-          1.7083650163840503e-05,
-          0.00011491213808767498,
-          0.9998680353164673
-        ],
-        [
-          2.2420763343689032e-05,
-          0.00018031032232102007,
-          0.9997972846031189
-        ],
-        [
-          0.000958731397986412,
-          0.0029767591040581465,
-          0.9960644841194153
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_42",
-      "formula": "P_35 ⟹ P_36",
-      "translation": "If Stockholder is required by legal process to disclose, then Stockholder will give prompt notice within 2 business days.",
-      "evidence": "Clause 3",
-      "reasoning": "Explicit 'If ... required ... [then] will provide ... within 2 business days'.",
-      "list nli": [
-        [
-          3.9102742448449135e-05,
-          4.016073580714874e-05,
-          0.9999207258224487
-        ],
-        [
-          3.971260957769118e-05,
-          4.5398490328807384e-05,
-          0.9999148845672607
-        ],
-        [
-          4.578445077640936e-05,
-          4.3198328057769686e-05,
-          0.9999109506607056
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_43",
-      "formula": "P_37 ⟹ P_36",
-      "translation": "If Stockholder provides notice within 2 business days, then it satisfies the 'will provide notice' obligation.",
-      "evidence": "Clause 3",
-      "reasoning": "Factual performance implies the weaker commitment.",
-      "list nli": [
-        [
-          2.6864425308303908e-05,
-          5.8782366977538913e-05,
-          0.999914288520813
-        ],
-        [
-          5.052664710092358e-05,
-          3.8657344703096896e-05,
-          0.999910831451416
-        ],
-        [
-          5.655739732901566e-05,
-          5.046410296927206e-05,
-          0.9998929500579834
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_44",
-      "formula": "P_36",
-      "translation": "Stockholder will provide prompt notice within 2 business days.",
-      "evidence": "Clause 3",
-      "reasoning": "Strong, explicit covenant ('will').",
-      "list nli": [
-        [
-          3.1435582059202716e-05,
-          3.6545599868986756e-05,
-          0.999932050704956
-        ],
-        [
-          3.4289187169633806e-05,
-          3.896126872859895e-05,
-          0.9999266862869263
-        ],
-        [
-          3.9268237742362544e-05,
-          3.565022052498534e-05,
-          0.9999250173568726
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_46",
-      "formula": "P_38",
       "translation": "Company may seek a protective order or other remedy.",
-      "evidence": "Clause 3",
-      "reasoning": "Explicit permission ('may').",
+      "evidence": "Section 3",
+      "reasoning": "Permission ('may') is strongly supported, but not an obligation.",
       "list nli": [
         [
           2.525524905649945e-05,
@@ -1433,954 +1149,786 @@
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_28",
+      "formula": "P_30 ⟹ P_29",
+      "translation": "If Company seeks a protective order/remedy, then it is permitted that Company may seek it.",
+      "evidence": "Section 3",
+      "reasoning": "If the action occurs, the permission statement is satisfied (semantic consistency).",
+      "list nli": [
+        [
+          0.0001388022064929828,
+          0.0003112764679826796,
+          0.999549925327301
+        ],
+        [
+          0.0001848202955443412,
+          0.00032041530357673764,
+          0.9994947910308838
+        ],
+        [
+          0.0007496519829146564,
+          0.0016084116650745273,
+          0.997641921043396
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_29",
+      "formula": "P_31 ⟹ ¬P_32",
+      "translation": "If a protective order/remedy is obtained, then it is not the case that it is not obtained.",
+      "evidence": "Section 3 (obtained vs not obtained alternatives)",
+      "reasoning": "Direct semantic opposition.",
+      "list nli": [
+        [
+          0.004446455743163824,
+          0.002301167231053114,
+          0.9932523369789124
+        ],
+        [
+          0.006900292355567217,
+          0.006942417472600937,
+          0.9861572980880737
+        ],
+        [
+          0.0008400049991905689,
+          0.02001183107495308,
+          0.9791481494903564
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_30",
+      "formula": "P_32 ⟹ ¬P_31",
+      "translation": "If a protective order/remedy is not obtained, then it is not obtained (i.e., not obtained excludes obtained).",
+      "evidence": "Section 3",
+      "reasoning": "Direct semantic opposition.",
+      "list nli": [
+        [
+          0.0041532996110618114,
+          0.021677734330296516,
+          0.9741689562797546
+        ],
+        [
+          0.040446992963552475,
+          0.08837603032588959,
+          0.8711769580841064
+        ],
+        [
+          0.12538866698741913,
+          0.030409863218665123,
+          0.8442014455795288
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_31",
+      "formula": "(P_32 ∨ P_33) ⟹ P_34",
+      "translation": "If no protective order/remedy is obtained or Company waives compliance, Stockholder may furnish only legally required Confidential Material.",
+      "evidence": "Section 3",
+      "reasoning": "Directly stated conditional permission.",
+      "list nli": [
+        [
+          5.54569014639128e-05,
+          0.00012999982573091984,
+          0.9998145699501038
+        ],
+        [
+          0.00012169691763119772,
+          0.00032619197736494243,
+          0.9995520710945129
+        ],
+        [
+          0.00013575547200161964,
+          0.00046468700747936964,
+          0.9993995428085327
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_32",
+      "formula": "P_34 ⟹ P_35",
+      "translation": "If Stockholder may furnish only legally required material (under the condition), then (non-modally) Stockholder furnishes only legally required material (under the condition).",
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage required by methodology.",
+      "list nli": [
+        [
+          0.06336928904056549,
+          0.020533308386802673,
+          0.9160974621772766
+        ],
+        [
+          0.31863999366760254,
+          0.39653903245925903,
+          0.2848209738731384
+        ],
+        [
+          0.15034785866737366,
+          0.5823748111724854,
+          0.267277330160141
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_33",
+      "formula": "P_36",
+      "translation": "Stockholder must use best efforts to obtain confidential treatment assurance.",
+      "evidence": "Section 3",
+      "reasoning": "Explicit 'must' obligation.",
+      "list nli": [
+        [
+          1.933175190060865e-05,
+          0.00010276043030899018,
+          0.9998779296875
+        ],
+        [
+          6.073119948268868e-05,
+          9.934583067661151e-05,
+          0.9998399019241333
+        ],
+        [
+          4.259278284735046e-05,
+          0.000123464415082708,
+          0.9998339414596558
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_34",
+      "formula": "P_36 ⟹ P_37",
+      "translation": "If Stockholder must exercise best efforts, then Stockholder exercises best efforts.",
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.00013562612002715468,
+          0.0006989251123741269,
+          0.999165415763855
+        ],
+        [
+          0.00038538427907042205,
+          0.0005245504435151815,
+          0.9990900754928589
+        ],
+        [
+          0.00027020814013667405,
+          0.0006972362170927227,
+          0.9990326166152954
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_35",
+      "formula": "P_38",
+      "translation": "Each receiving Party submits to exclusive jurisdiction of Delaware Court of Chancery for enforcement/related actions.",
+      "evidence": "Section 4",
+      "reasoning": "Explicit 'agrees to submit to the exclusive jurisdiction' clause.",
+      "list nli": [
+        [
+          1.1920381439267658e-05,
+          0.00013373761612456292,
+          0.999854326248169
+        ],
+        [
+          0.00021785922581329942,
+          0.00013096642214804888,
+          0.9996511936187744
+        ],
+        [
+          0.00010099299106514081,
+          0.00034317438257858157,
+          0.999555766582489
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_36",
+      "formula": "P_38 ⟹ P_39",
+      "translation": "Submitting to exclusive jurisdiction of Delaware Court of Chancery implies exclusive jurisdiction is in that court.",
+      "evidence": "Section 4",
+      "reasoning": "Semantic entailment (P_39 is a distilled restatement of P_38).",
+      "list nli": [
+        [
+          0.0004357008438091725,
+          0.0009891882073134184,
+          0.9985750913619995
+        ],
+        [
+          0.0035127478186041117,
+          0.0002970513887703419,
+          0.9961901903152466
+        ],
+        [
+          0.004477255512028933,
+          0.000220205940422602,
+          0.9953025579452515
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_37",
+      "formula": "P_39 ⟹ P_40",
+      "translation": "If exclusive jurisdiction is in Delaware Court of Chancery, it is not in California state courts.",
+      "evidence": "Section 4 (exclusive jurisdiction)",
+      "reasoning": "Mutual exclusivity of exclusive forum selections in ordinary legal meaning.",
+      "list nli": [
+        [
+          7.497133628930897e-05,
+          3.4897475416073576e-05,
+          0.9998900890350342
+        ],
+        [
+          2.7458978365757503e-05,
+          0.00010425450454931706,
+          0.9998682737350464
+        ],
+        [
+          0.00024042460427153856,
+          0.00017807538097258657,
+          0.999581515789032
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_38",
+      "formula": "P_39 ⟹ P_41",
+      "translation": "If exclusive jurisdiction is in Delaware Court of Chancery, it is not in New York state courts.",
+      "evidence": "Section 4 (exclusive jurisdiction)",
+      "reasoning": "Mutual exclusivity of exclusive forum selections in ordinary legal meaning.",
+      "list nli": [
+        [
+          6.911786476848647e-05,
+          4.410097244544886e-05,
+          0.9998867511749268
+        ],
+        [
+          2.6672129024518654e-05,
+          9.01624298421666e-05,
+          0.9998831748962402
+        ],
+        [
+          5.2253701142035425e-05,
+          0.00032345103682018816,
+          0.9996242523193359
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_39",
+      "formula": "P_42",
+      "translation": "Each Party waives objections to personal jurisdiction/venue in Delaware Court of Chancery.",
+      "evidence": "Section 4",
+      "reasoning": "Explicit waiver clause.",
+      "list nli": [
+        [
+          0.0008217591675929725,
+          2.9650705982930958e-05,
+          0.9991486072540283
+        ],
+        [
+          0.003944765776395798,
+          6.655322795268148e-05,
+          0.995988667011261
+        ],
+        [
+          0.008950099349021912,
+          6.647819100180641e-05,
+          0.9909833669662476
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_40",
+      "formula": "P_43",
+      "translation": "Company lacks adequate remedy at law for Stockholder breach.",
+      "evidence": "Section 5",
+      "reasoning": "Explicit agreement: “Each Party agrees … does not have an adequate remedy at law …”.",
+      "list nli": [
+        [
+          0.00016207819862756878,
+          7.758285210002214e-05,
+          0.9997603297233582
+        ],
+        [
+          1.3251452401163988e-05,
+          0.00037585117388516665,
+          0.999610960483551
+        ],
+        [
+          0.00036605927743948996,
+          3.660063521238044e-05,
+          0.9995973706245422
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_41",
+      "formula": "P_44",
+      "translation": "Company will suffer irreparable harm upon Stockholder breach.",
+      "evidence": "Section 5",
+      "reasoning": "Explicitly stated consequence.",
+      "list nli": [
+        [
+          3.529597233864479e-05,
+          4.321662709116936e-05,
+          0.999921441078186
+        ],
+        [
+          9.447881893720478e-05,
+          6.488167127827182e-05,
+          0.9998406171798706
+        ],
+        [
+          0.00012101255560992286,
+          4.4061187509214506e-05,
+          0.9998348951339722
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_42",
+      "formula": "P_44 ⟹ P_45",
+      "translation": "If Company will suffer irreparable harm, then (non-modally) Company suffers irreparable harm.",
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.0020836128387600183,
+          0.0005258035962469876,
+          0.9973905682563782
+        ],
+        [
+          0.002148002153262496,
+          0.0007646030280739069,
+          0.9970874190330505
+        ],
+        [
+          0.002890788484364748,
+          0.004193846136331558,
+          0.9929153919219971
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_43",
+      "formula": "P_46",
+      "translation": "Company will be entitled to specific performance upon Stockholder breach.",
+      "evidence": "Section 5",
+      "reasoning": "Explicit entitlement language.",
+      "list nli": [
+        [
+          2.636199315020349e-05,
+          0.00022101633658166975,
+          0.9997525811195374
+        ],
+        [
+          0.0003722149122040719,
+          0.00021274581376928836,
+          0.9994150400161743
+        ],
+        [
+          0.00026630947832018137,
+          0.00048615882406011224,
+          0.9992475509643555
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_44",
+      "formula": "P_46 ⟹ P_47",
+      "translation": "If Company will be entitled to specific performance, then (non-modally) Company is entitled to specific performance.",
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.0011550169438123703,
+          0.0020910538733005524,
+          0.9967538714408875
+        ],
+        [
+          0.0012219242053106427,
+          0.0026501629035919905,
+          0.9961279034614563
+        ],
+        [
+          0.0009617531904950738,
+          0.0032275908160954714,
+          0.9958106279373169
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_45",
+      "formula": "P_48",
+      "translation": "Company will be entitled to injunctive relief upon Stockholder breach.",
+      "evidence": "Section 5",
+      "reasoning": "Explicit entitlement language.",
+      "list nli": [
+        [
+          1.7478032532380894e-05,
+          0.0001777808356564492,
+          0.9998047947883606
+        ],
+        [
+          0.0016808024374768138,
+          0.0006500596064142883,
+          0.9976691603660583
+        ],
+        [
+          7.823988562449813e-05,
+          0.0023626284673810005,
+          0.9975590705871582
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_46",
+      "formula": "P_48 ⟹ P_49",
+      "translation": "If Company will be entitled to injunctive relief, then (non-modally) Company is entitled to injunctive relief.",
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          0.0007119174115359783,
+          0.0009447802440263331,
+          0.9983433485031128
+        ],
+        [
+          0.0003576696617528796,
+          0.002900341060012579,
+          0.9967419505119324
+        ],
+        [
+          0.0005068572936579585,
+          0.0029735879506915808,
+          0.9965195655822754
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_47",
-      "formula": "P_39 ⟹ P_38",
-      "translation": "If Company seeks such an order/remedy, then it is consistent with being permitted to do so.",
-      "evidence": "Clause 3",
-      "reasoning": "Doing X implies it was (at least) permitted by the 'may' statement.",
+      "formula": "P_50",
+      "translation": "Specific performance/injunctive relief are not exclusive remedies.",
+      "evidence": "Section 5",
+      "reasoning": "Explicitly stated.",
       "list nli": [
         [
-          0.0002047867455985397,
-          0.00026295462157577276,
-          0.9995322227478027
+          5.938427057117224e-05,
+          8.32767182146199e-05,
+          0.9998573064804077
         ],
         [
-          0.00019792967941612005,
-          0.00027999209123663604,
-          0.9995220899581909
+          6.095575008657761e-05,
+          9.157561726169661e-05,
+          0.999847412109375
         ],
         [
-          0.000855250924360007,
-          0.001582335215061903,
-          0.9975624084472656
+          1.2753211194649339e-05,
+          0.0011126642348244786,
+          0.9988746047019958
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_48",
+      "formula": "P_51",
+      "translation": "Agreement may not be amended/waived/etc. except by signed writing referring to the Agreement.",
+      "evidence": "Section 6",
+      "reasoning": "Explicit contractual restriction.",
+      "list nli": [
+        [
+          0.00010018972534453496,
+          0.0012828647159039974,
+          0.9986169338226318
+        ],
+        [
+          0.0007369773811660707,
+          0.0010931091383099556,
+          0.9981698989868164
+        ],
+        [
+          0.003553166752681136,
+          0.002228994620963931,
+          0.9942178726196289
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_49",
-      "formula": "P_40",
-      "translation": "Company may waive compliance with the Agreement.",
-      "evidence": "Clause 3",
-      "reasoning": "Explicitly stated as an option.",
+      "formula": "P_51 ⟹ P_52",
+      "translation": "If Agreement 'may not' be amended except by signed writing, then (non-modally) it is not amended except by signed writing.",
+      "evidence": "Section 6",
+      "reasoning": "Modal-to-base linkage.",
       "list nli": [
         [
-          0.001438015722669661,
-          0.0016506700776517391,
-          0.996911346912384
+          0.007344469428062439,
+          0.027109326794743538,
+          0.9655462503433228
         ],
         [
-          0.026865730062127113,
-          0.004004466813057661,
-          0.969129741191864
+          0.005002189893275499,
+          0.044986750930547714,
+          0.9500110745429993
         ],
         [
-          0.0004122176906093955,
-          0.9590379595756531,
-          0.04054982587695122
+          0.013690696097910404,
+          0.0381343811750412,
+          0.9481749534606934
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_50",
-      "formula": "P_41 ⟹ P_40",
-      "translation": "If Company waives compliance, then it is consistent with its ability to waive compliance.",
-      "evidence": "Clause 3",
-      "reasoning": "Actual waiver implies permissibility.",
+      "formula": "P_53",
+      "translation": "Waiver of one breach is not waiver of another.",
+      "evidence": "Section 6",
+      "reasoning": "Explicitly stated rule.",
       "list nli": [
         [
-          0.001715929596684873,
-          0.008260094560682774,
-          0.9900240302085876
+          3.786522211157717e-05,
+          0.00024440011475235224,
+          0.9997177720069885
         ],
         [
-          0.00551078375428915,
-          0.051358550786972046,
-          0.9431306719779968
+          3.104151983279735e-05,
+          0.0002670779940672219,
+          0.9997017979621887
         ],
         [
-          0.06260287761688232,
-          0.04732557013630867,
-          0.8900716304779053
+          8.542132854927331e-05,
+          0.0009160217014141381,
+          0.9989985823631287
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_51",
+      "formula": "P_54",
+      "translation": "Delay/failure to exercise rights is not a waiver.",
+      "evidence": "Section 6",
+      "reasoning": "Explicit 'shall not operate as a waiver' rule.",
+      "list nli": [
+        [
+          5.1263512432342395e-05,
+          0.0002870494790840894,
+          0.9996616840362549
+        ],
+        [
+          7.041948265396059e-05,
+          0.00029938481748104095,
+          0.9996302127838135
+        ],
+        [
+          5.99391023570206e-05,
+          0.000500763941090554,
+          0.9994392991065979
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_52",
-      "formula": "P_42",
-      "translation": "If protective order/remedy is not obtained, Stockholder may furnish only legally required Confidential Material.",
-      "evidence": "Clause 3",
-      "reasoning": "Explicit conditional permission ('may furnish only... legally required').",
+      "formula": "P_55",
+      "translation": "Agreement binds and benefits Parties and related persons (agents/heirs/etc.).",
+      "evidence": "Section 7",
+      "reasoning": "Explicitly stated.",
       "list nli": [
         [
-          4.5124004827812314e-05,
-          0.0002640957245603204,
-          0.9996907711029053
+          3.3509262721054256e-05,
+          0.0004361968894954771,
+          0.9995303153991699
         ],
         [
-          6.543480412801728e-05,
-          0.0002755714813247323,
-          0.9996589422225952
+          2.0155081074335612e-05,
+          0.000912634888663888,
+          0.9990672469139099
         ],
         [
-          7.769904186716303e-05,
-          0.00030096861883066595,
-          0.9996212720870972
+          2.413076435914263e-05,
+          0.0010967949638143182,
+          0.9988790154457092
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_53",
-      "formula": "P_43 ⟹ P_42",
-      "translation": "If Stockholder furnishes only what is legally required, then it aligns with being permitted to do so.",
-      "evidence": "Clause 3",
-      "reasoning": "Factual doing implies permissibility.",
+      "formula": "P_56",
+      "translation": "Agreement governed by Delaware law.",
+      "evidence": "Section 8",
+      "reasoning": "Explicit governing-law clause ('shall').",
       "list nli": [
         [
-          6.538110028486699e-05,
-          0.0001974372280528769,
-          0.9997372031211853
+          0.00010658911924110726,
+          2.2928537873667665e-05,
+          0.9998704195022583
         ],
         [
-          6.925962952664122e-05,
-          0.0005030211177654564,
-          0.9994277358055115
+          0.00010899153858190402,
+          2.3878461433923803e-05,
+          0.9998670816421509
         ],
         [
-          0.00020535952353384346,
-          0.0004094501491636038,
-          0.9993851184844971
+          0.0001234691881109029,
+          2.399934055574704e-05,
+          0.9998525381088257
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_54",
+      "formula": "P_56 ⟹ P_57",
+      "translation": "If governed by Delaware law, it is not governed by California law.",
+      "evidence": "Section 8",
+      "reasoning": "Mutually exclusive governing-law selection (auxiliary negative alternative).",
+      "list nli": [
+        [
+          6.710305024171248e-05,
+          4.225130760460161e-05,
+          0.9998906850814819
+        ],
+        [
+          0.0001164553759736009,
+          3.598671537474729e-05,
+          0.9998475313186646
+        ],
+        [
+          4.728484418592416e-05,
+          0.00012022430746583268,
+          0.9998325109481812
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_55",
-      "formula": "P_44",
-      "translation": "Stockholder must exercise best efforts to obtain assurance of confidential treatment.",
-      "evidence": "Clause 3",
-      "reasoning": "Explicit 'must' obligation.",
+      "formula": "P_56 ⟹ P_58",
+      "translation": "If governed by Delaware law, it is not governed by New York law.",
+      "evidence": "Section 8",
+      "reasoning": "Mutually exclusive governing-law selection (auxiliary negative alternative).",
       "list nli": [
         [
-          1.5021963008621242e-05,
-          7.280524732777849e-05,
-          0.9999121427536011
+          6.638394552282989e-05,
+          4.15942158724647e-05,
+          0.999891996383667
         ],
         [
-          2.3957652956596576e-05,
-          8.438645454589278e-05,
-          0.9998916387557983
+          0.00011619432189036161,
+          4.1283248719992116e-05,
+          0.9998425245285034
         ],
         [
-          5.10633981321007e-05,
-          0.00012265336408745497,
-          0.9998263716697693
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_56",
-      "formula": "P_45 ⟹ P_44",
-      "translation": "If Stockholder exercises best efforts, then the 'must' obligation is satisfied.",
-      "evidence": "Clause 3",
-      "reasoning": "Factual performance implies the weaker normative requirement holds.",
-      "list nli": [
-        [
-          7.074027234921232e-05,
-          3.595172893255949e-05,
-          0.999893307685852
-        ],
-        [
-          0.00010477838077349588,
-          5.9490801504580304e-05,
-          0.999835729598999
-        ],
-        [
-          0.0001080005313269794,
-          6.671829032711685e-05,
-          0.9998252987861633
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_58",
-      "formula": "P_46",
-      "translation": "Receiving Parties submit to exclusive jurisdiction of the Delaware Court of Chancery for enforcement-related actions.",
-      "evidence": "Clause 4",
-      "reasoning": "Explicit exclusive jurisdiction agreement.",
-      "list nli": [
-        [
-          0.00012443687592167407,
-          5.233672709437087e-05,
-          0.999823272228241
-        ],
-        [
-          1.2325578609306831e-05,
-          0.00024989331723190844,
-          0.9997377991676331
-        ],
-        [
-          0.00028919745818711817,
-          9.081232565222308e-05,
-          0.9996199607849121
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_59",
-      "formula": "P_46 ⟹ P_47",
-      "translation": "If Parties submit to exclusive jurisdiction in Delaware Chancery, then exclusive jurisdiction is in Delaware Chancery.",
-      "evidence": "Clause 4",
-      "reasoning": "Direct semantic entailment from the phrasing.",
-      "list nli": [
-        [
-          0.002458335133269429,
-          0.001599710201844573,
-          0.9959419369697571
-        ],
-        [
-          0.0013769186334684491,
-          0.004998210351914167,
-          0.9936248064041138
-        ],
-        [
-          0.0034937416203320026,
-          0.002983363810926676,
-          0.9935228824615479
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_60",
-      "formula": "P_47 ⟹ ¬P_48",
-      "translation": "If exclusive jurisdiction is Delaware Chancery, then it is not a federal court.",
-      "evidence": "Clause 4; auxiliary alternative forum added",
-      "reasoning": "Exclusivity implies exclusion of other forums.",
-      "list nli": [
-        [
-          0.00018462385924067348,
-          8.723991049919277e-05,
-          0.9997281432151794
-        ],
-        [
-          0.00016143920947797596,
-          0.00020997447427362204,
-          0.9996285438537598
-        ],
-        [
-          0.0001795651187421754,
-          0.0006548380479216576,
-          0.9991656541824341
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_61",
-      "formula": "P_47 ⟹ ¬P_49",
-      "translation": "If exclusive jurisdiction is Delaware Chancery, then it is not New York state courts.",
-      "evidence": "Clause 4; auxiliary alternative forum added",
-      "reasoning": "Exclusivity implies exclusion of other forums.",
-      "list nli": [
-        [
-          3.730558091774583e-05,
-          9.465655602980405e-05,
-          0.9998680353164673
-        ],
-        [
-          0.0003714673803187907,
-          9.824754670262337e-05,
-          0.9995303153991699
-        ],
-        [
-          0.00024260120699182153,
-          0.0003015841939486563,
-          0.9994558691978455
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_62",
-      "formula": "P_50",
-      "translation": "Each Party waives objections to personal jurisdiction in the Court of Chancery.",
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver.",
-      "list nli": [
-        [
-          0.0005993871600367129,
-          2.2793155949329957e-05,
-          0.9993778467178345
-        ],
-        [
-          0.0017041356768459082,
-          3.6313445889391005e-05,
-          0.9982596039772034
-        ],
-        [
-          0.0023343234788626432,
-          4.402650301926769e-05,
-          0.9976215958595276
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_63",
-      "formula": "P_51",
-      "translation": "Each Party waives objections to venue in the Court of Chancery.",
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver.",
-      "list nli": [
-        [
-          0.0023314314894378185,
-          3.0187511583790183e-05,
-          0.9976383447647095
-        ],
-        [
-          0.007056643720716238,
-          0.001182543346658349,
-          0.9917607307434082
-        ],
-        [
-          0.008683710359036922,
-          0.0006144306971691549,
-          0.9907017946243286
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_64",
-      "formula": "P_52",
-      "translation": "Each Party waives objections based on inconvenience of the forum.",
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver.",
-      "list nli": [
-        [
-          6.227666744962335e-05,
-          7.791208918206394e-05,
-          0.9998598098754883
-        ],
-        [
-          0.00030367288854904473,
-          2.87731545540737e-05,
-          0.9996675252914429
-        ],
-        [
-          0.00038022574153728783,
-          2.8240356186870486e-05,
-          0.9995915293693542
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_65",
-      "formula": "P_53",
-      "translation": "Company lacks an adequate remedy at law if Stockholder breaches.",
-      "evidence": "Clause 5",
-      "reasoning": "Explicitly stated.",
-      "list nli": [
-        [
-          0.00012695178156718612,
-          2.2367243218468502e-05,
-          0.9998506307601929
-        ],
-        [
-          0.00014298151654656976,
-          3.3962642191909254e-05,
-          0.9998230338096619
-        ],
-        [
-          0.00023301871260628104,
-          2.6844867534236982e-05,
-          0.9997401833534241
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_66",
-      "formula": "P_54",
-      "translation": "If Stockholder breaches, Company will suffer irreparable harm.",
-      "evidence": "Clause 5",
-      "reasoning": "Explicitly stated ('will suffer irreparable harm').",
-      "list nli": [
-        [
-          3.119920802419074e-05,
-          4.563317270367406e-05,
-          0.9999231100082397
-        ],
-        [
-          2.926988781837281e-05,
-          5.3436539019457996e-05,
-          0.9999172687530518
-        ],
-        [
-          7.21318501746282e-05,
-          2.5934081349987537e-05,
-          0.9999018907546997
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_67",
-      "formula": "P_55 ⟹ P_54",
-      "translation": "If Company suffers irreparable harm (in that event), then it is consistent with 'will suffer irreparable harm'.",
-      "evidence": "Clause 5",
-      "reasoning": "Factual harm implies the weaker future/commitment phrasing.",
-      "list nli": [
-        [
-          0.0030770166777074337,
-          0.0007659285329282284,
-          0.9961571097373962
-        ],
-        [
-          0.004760500509291887,
-          0.001941779162734747,
-          0.9932977557182312
-        ],
-        [
-          0.004601127468049526,
-          0.0024448619224131107,
-          0.9929540753364563
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_69",
-      "formula": "P_56",
-      "translation": "If Stockholder breaches, Company will be entitled to specific performance.",
-      "evidence": "Clause 5",
-      "reasoning": "Explicit entitlement statement.",
-      "list nli": [
-        [
-          2.6133306164410897e-05,
-          0.0001488716370658949,
-          0.9998250603675842
-        ],
-        [
-          2.8822163585573435e-05,
-          0.00015340080426540226,
-          0.9998177886009216
-        ],
-        [
-          1.9492026694933884e-05,
-          0.00020495266653597355,
-          0.9997755885124207
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_70",
-      "formula": "P_57 ⟹ P_56",
-      "translation": "If Company is entitled to specific performance, then it aligns with 'will be entitled'.",
-      "evidence": "Clause 5",
-      "reasoning": "Stronger factual entitlement implies the weaker 'will be entitled' form.",
-      "list nli": [
-        [
-          0.001905823010019958,
-          0.0006692336173728108,
-          0.9974249601364136
-        ],
-        [
-          0.0034743212163448334,
-          0.002407416235655546,
-          0.9941182136535645
-        ],
-        [
-          0.007530067581683397,
-          0.014685699716210365,
-          0.9777841567993164
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_72",
-      "formula": "P_58",
-      "translation": "If Stockholder breaches, Company will be entitled to injunctive relief.",
-      "evidence": "Clause 5",
-      "reasoning": "Explicit entitlement statement.",
-      "list nli": [
-        [
-          0.00010673444194253534,
-          0.00040075439028441906,
-          0.9994925260543823
-        ],
-        [
-          0.00026715293643064797,
-          0.0004454980371519923,
-          0.9992874264717102
-        ],
-        [
-          0.0014137576799839735,
-          0.00018489296780899167,
-          0.9984013438224792
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_73",
-      "formula": "P_59 ⟹ P_58",
-      "translation": "If Company is entitled to injunctive relief, then it aligns with 'will be entitled'.",
-      "evidence": "Clause 5",
-      "reasoning": "Stronger factual entitlement implies the weaker form.",
-      "list nli": [
-        [
-          0.004117853473871946,
-          0.0029875084292143583,
-          0.9928945899009705
-        ],
-        [
-          0.005268558859825134,
-          0.0021386099979281425,
-          0.9925927519798279
-        ],
-        [
-          0.002746534300968051,
-          0.008956803940236568,
-          0.9882966876029968
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_75",
-      "formula": "P_60",
-      "translation": "Those remedies are not exclusive; other remedies may also be available.",
-      "evidence": "Clause 5",
-      "reasoning": "Explicit non-exclusivity language.",
-      "list nli": [
-        [
-          3.255020419601351e-05,
-          3.932521212846041e-05,
-          0.9999281167984009
-        ],
-        [
-          3.746596848941408e-05,
-          3.6926361644873396e-05,
-          0.9999256134033203
-        ],
-        [
-          4.038474435219541e-05,
-          3.559013202902861e-05,
-          0.9999240636825562
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_76",
-      "formula": "P_61",
-      "translation": "Agreement may not be amended except by a signed writing referring specifically to it.",
-      "evidence": "Clause 6",
-      "reasoning": "Explicit amendment restriction.",
-      "list nli": [
-        [
-          5.999302084092051e-05,
-          0.00010151564492844045,
-          0.9998384714126587
-        ],
-        [
-          6.185955135151744e-05,
-          0.00010481910430826247,
-          0.999833345413208
-        ],
-        [
-          2.4057022528722882e-05,
-          0.0001755206030793488,
-          0.9998003840446472
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_77",
-      "formula": "P_62 ⟹ P_61",
-      "translation": "If it is not amended except by such a writing, then it is consistent with 'may not be amended' except by such writing.",
-      "evidence": "Clause 6",
-      "reasoning": "Stronger factual restriction implies the modal restriction.",
-      "list nli": [
-        [
-          0.004114862997084856,
-          0.010753735899925232,
-          0.9851314425468445
-        ],
-        [
-          0.019717419520020485,
-          0.9281949996948242,
-          0.052087608724832535
-        ],
-        [
-          0.005243701860308647,
-          0.9664192795753479,
-          0.028336985036730766
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_79",
-      "formula": "P_63",
-      "translation": "Waiver of one breach is not waiver of any other breach.",
-      "evidence": "Clause 6",
-      "reasoning": "Explicit anti-implied-waiver provision.",
-      "list nli": [
-        [
-          6.881607259856537e-05,
-          0.0003003507445100695,
-          0.9996308088302612
-        ],
-        [
-          0.00017210743681062013,
-          0.000303496461128816,
-          0.9995243549346924
-        ],
-        [
-          0.0002431343455100432,
-          0.00032681471202522516,
-          0.9994300007820129
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_80",
-      "formula": "P_64",
-      "translation": "No failure or delay operates as a waiver.",
-      "evidence": "Clause 6",
-      "reasoning": "Explicit statement.",
-      "list nli": [
-        [
-          9.087634680327028e-05,
-          0.00015843752771615982,
-          0.9997506737709045
-        ],
-        [
-          0.002459454583004117,
-          0.00012871094804722816,
-          0.9974119067192078
-        ],
-        [
-          0.004189146216958761,
-          8.696061559021473e-05,
-          0.9957238435745239
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_81",
-      "formula": "P_65",
-      "translation": "Agreement is binding on Parties and specified related persons (agents, heirs, successors, assigns, etc.).",
-      "evidence": "Clause 7",
-      "reasoning": "Explicit binding/inurement clause.",
-      "list nli": [
-        [
-          1.4770916095585562e-05,
-          0.0003942479088436812,
-          0.9995909333229065
-        ],
-        [
-          2.608122849778738e-05,
-          0.0004908754490315914,
-          0.9994829893112183
-        ],
-        [
-          1.838012394728139e-05,
-          0.0005051240441389382,
-          0.9994764924049377
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_82",
-      "formula": "P_66",
-      "translation": "Agreement is governed by Delaware law.",
-      "evidence": "Clause 8",
-      "reasoning": "Explicit governing-law clause.",
-      "list nli": [
-        [
-          7.967010606080294e-05,
-          2.4967288482002914e-05,
-          0.9998953342437744
-        ],
-        [
-          9.421921276953071e-05,
-          2.4434399165329523e-05,
-          0.999881386756897
-        ],
-        [
-          9.531698015052825e-05,
-          2.4673914595041424e-05,
-          0.9998799562454224
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_83",
-      "formula": "P_66 ⟹ P_67",
-      "translation": "If governed by Delaware law, then it is not governed by California law.",
-      "evidence": "Clause 8; auxiliary alternative added",
-      "reasoning": "Single governing-law designation excludes typical alternative states in ordinary contract reading.",
-      "list nli": [
-        [
-          5.1610273658297956e-05,
-          0.0001008654580800794,
-          0.9998475313186646
-        ],
-        [
-          0.0002111417124979198,
-          4.8898920795181766e-05,
-          0.999739944934845
-        ],
-        [
-          0.0001065384058165364,
-          0.00020992974168621004,
-          0.9996834993362427
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_84",
-      "formula": "P_66 ⟹ P_68",
-      "translation": "If governed by Delaware law, then it is not governed by New York law.",
-      "evidence": "Clause 8; auxiliary alternative added",
-      "reasoning": "Mutual exclusivity of governing law choices.",
-      "list nli": [
-        [
-          5.1679511670954525e-05,
-          0.00012962166510988027,
-          0.999818742275238
-        ],
-        [
-          6.028022835380398e-05,
-          0.00019278198305983096,
-          0.9997469782829285
-        ],
-        [
-          0.00010772501991596073,
-          0.00020744113135151565,
-          0.9996848106384277
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_85",
-      "formula": "P_69",
-      "translation": "Agreement may be executed in multiple counterparts.",
-      "evidence": "Clause 9",
-      "reasoning": "Explicit permissive statement.",
-      "list nli": [
-        [
-          7.600998651469126e-05,
-          0.00017768160614650697,
-          0.9997462630271912
-        ],
-        [
-          0.0006129202083684504,
-          0.000583161658141762,
-          0.998803973197937
-        ],
-        [
-          0.00016861027688719332,
-          0.001239023287780583,
-          0.9985923171043396
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_86",
-      "formula": "P_70 ⟹ P_69",
-      "translation": "If it is executed in multiple counterparts, then it is permitted to be executed in multiple counterparts.",
-      "evidence": "Clause 9",
-      "reasoning": "Factual execution implies permissibility.",
-      "list nli": [
-        [
-          0.0006170592387206852,
-          0.00021583096531685442,
-          0.9991670846939087
-        ],
-        [
-          0.0008420575177296996,
-          0.0008658735896460712,
-          0.9982920289039612
-        ],
-        [
-          0.0007554810144938529,
-          0.0012212664587423205,
-          0.998023271560669
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_88",
-      "formula": "P_71",
-      "translation": "Agreement is the entire agreement regarding the subject matter.",
-      "evidence": "Clause 10",
-      "reasoning": "Explicit integration clause.",
-      "list nli": [
-        [
-          6.936490535736084e-06,
-          0.0002095820673275739,
-          0.999783456325531
-        ],
-        [
-          6.693767772958381e-06,
-          0.00021388752793427557,
-          0.9997794032096863
-        ],
-        [
-          5.55409815206076e-06,
-          0.0004496439651120454,
-          0.9995447993278503
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_89",
-      "formula": "P_72",
-      "translation": "Agreement supersedes all prior agreements/understandings on the subject matter.",
-      "evidence": "Clause 10",
-      "reasoning": "Explicit supersession statement.",
-      "list nli": [
-        [
-          2.6876479751081206e-05,
-          7.270469359355047e-05,
-          0.9999004602432251
-        ],
-        [
-          3.338286478538066e-05,
-          6.906082126079127e-05,
-          0.9998975992202759
-        ],
-        [
-          6.957245204830542e-05,
-          3.808549081441015e-05,
-          0.9998923540115356
+          4.34579087595921e-05,
+          0.00011986945173703134,
+          0.9998366832733154
         ]
       ]
     },
@@ -2389,723 +1937,197 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
-      "id": "C_90",
-      "formula": "P_71 ⟹ P_72",
-      "translation": "If it is the entire agreement, it (typically) supersedes prior agreements on that subject matter.",
-      "evidence": "Clause 10",
-      "reasoning": "Here both are explicitly stated; also a common semantic linkage of integration clauses.",
+      "id": "C_56",
+      "formula": "P_59",
+      "translation": "Agreement may be executed in multiple counterparts and still be one agreement.",
+      "evidence": "Section 9",
+      "reasoning": "Permission/authorization ('may') rather than an obligation.",
       "list nli": [
         [
-          3.0132632673485205e-05,
-          3.9735834434395656e-05,
-          0.9999301433563232
+          0.0004265248717274517,
+          0.000246435432927683,
+          0.9993270635604858
         ],
         [
-          1.5758434528834186e-05,
-          5.760117346653715e-05,
-          0.9999266862869263
+          0.0006502929027192295,
+          0.00028827000642195344,
+          0.9990614056587219
         ],
         [
-          1.8608514437801205e-05,
-          5.553230585064739e-05,
-          0.9999258518218994
+          0.0005692961276508868,
+          0.0006377851241268218,
+          0.9987928867340088
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_91",
-      "formula": "P_73",
-      "translation": "Agreement is deemed mutually prepared by the Parties.",
-      "evidence": "Clause 11",
-      "reasoning": "Explicit deeming language.",
+      "id": "C_57",
+      "formula": "P_59 ⟹ P_60",
+      "translation": "If it may be executed in multiple counterparts (and be one agreement), then (non-modally) it is executed in multiple counterparts (and is one agreement).",
+      "evidence": "Section 9",
+      "reasoning": "Modal-to-base linkage.",
       "list nli": [
         [
-          7.06074497429654e-05,
-          7.762865425320342e-05,
-          0.9998517036437988
+          0.0001914988097269088,
+          0.002176536712795496,
+          0.9976319074630737
         ],
         [
-          1.0101404768647626e-05,
-          0.00018146329966839403,
-          0.9998084902763367
+          0.0010747058549895883,
+          0.006177882198244333,
+          0.9927473664283752
         ],
         [
-          1.887571852421388e-05,
-          0.000335863878717646,
-          0.9996452331542969
+          0.0014476460637524724,
+          0.007442777045071125,
+          0.9911096096038818
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_92",
-      "formula": "P_74",
-      "translation": "Agreement will not be construed against either Party due to authorship.",
-      "evidence": "Clause 11",
-      "reasoning": "Explicit interpretive rule in the contract.",
+      "id": "C_58",
+      "formula": "P_61",
+      "translation": "This is the entire agreement and it supersedes prior agreements/understandings on the subject matter.",
+      "evidence": "Section 10",
+      "reasoning": "Explicit integration clause.",
       "list nli": [
         [
-          0.00029783902573399246,
-          3.193343582097441e-05,
-          0.9996702671051025
+          2.259019311168231e-05,
+          4.83141811855603e-05,
+          0.9999290704727173
         ],
         [
-          0.0003167145769111812,
-          3.5321871109772474e-05,
-          0.9996479749679565
+          9.785768270376138e-06,
+          8.777224138611928e-05,
+          0.9999024868011475
         ],
         [
-          0.0004031130811199546,
-          0.0001429294206900522,
-          0.9994539618492126
+          8.27764506539097e-06,
+          0.00011192687088623643,
+          0.9998798370361328
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 1,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_93",
-      "formula": "P_75 ⟹ P_74",
-      "translation": "If it is not construed against either Party due to authorship, then it aligns with 'will not be construed' language.",
-      "evidence": "Clause 11",
-      "reasoning": "Stronger factual claim implies the modalized claim.",
+      "id": "C_59",
+      "formula": "P_62",
+      "translation": "Agreement will be deemed mutually prepared by the Parties.",
+      "evidence": "Section 11",
+      "reasoning": "Explicit deeming statement.",
       "list nli": [
         [
-          9.093413245864213e-05,
-          0.0001445502130081877,
-          0.9997645020484924
+          0.00012939245789311826,
+          6.783577555324882e-05,
+          0.9998027682304382
         ],
         [
-          0.0001548568397993222,
-          0.00011895431816810742,
-          0.9997261166572571
+          4.783625990967266e-05,
+          0.0001861139026004821,
+          0.9997660517692566
         ],
         [
-          0.00023924412380438298,
-          5.454822530737147e-05,
-          0.9997062087059021
+          5.3577179642161354e-05,
+          0.000200498805497773,
+          0.9997459053993225
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_60",
+      "formula": "P_62 ⟹ P_63",
+      "translation": "If it will be deemed mutually prepared, then (non-modally) it is deemed mutually prepared.",
+      "evidence": "Section 11",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          9.144692739937454e-05,
+          0.00024083457537926733,
+          0.999667763710022
+        ],
+        [
+          0.00016044462972786278,
+          0.0007170276949182153,
+          0.9991225600242615
+        ],
+        [
+          0.00015328056178987026,
+          0.0010001757182180882,
+          0.9988465309143066
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_61",
+      "formula": "P_64",
+      "translation": "Agreement will not be construed against either party due to authorship.",
+      "evidence": "Section 11",
+      "reasoning": "Explicit construction clause.",
+      "list nli": [
+        [
+          0.00028619737713597715,
+          2.1936408302281052e-05,
+          0.9996918439865112
+        ],
+        [
+          0.0002914289361797273,
+          2.394775947323069e-05,
+          0.9996846914291382
+        ],
+        [
+          0.0002043095591943711,
+          0.00011493355850689113,
+          0.999680757522583
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_62",
+      "formula": "P_64 ⟹ P_65",
+      "translation": "If it will not be construed against either party, then (non-modally) it is not construed against either party.",
+      "evidence": "Section 11",
+      "reasoning": "Modal-to-base linkage.",
+      "list nli": [
+        [
+          6.204080273164436e-05,
+          0.00022117415210232139,
+          0.9997168183326721
+        ],
+        [
+          0.0001709428324829787,
+          0.00037012985558249056,
+          0.9994589686393738
+        ],
+        [
+          0.0001602556585567072,
+          0.000695071998052299,
+          0.9991446733474731
         ]
       ]
     }
   ],
-  "soft_constraints": [
-    {
-      "llm-weight": 0.8,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.8,
-      "hardness_constant": 0.9,
-      "id": "C_11",
-      "formula": "P_9 ⟹ (P_8)",
-      "translation": "The inspection permission described is conditional on execution of the Agreement.",
-      "evidence": "Second WHEREAS",
-      "reasoning": "Text explicitly links permission to the condition; formal conditional direction is inferred but aligns with 'subject to'.",
-      "list nli": [
-        [
-          0.00013085389218758792,
-          4.3724099668907e-05,
-          0.9998254179954529
-        ],
-        [
-          2.5264818759751506e-05,
-          0.00027604721253737807,
-          0.9996987581253052
-        ],
-        [
-          3.080411261180416e-05,
-          0.0002763774828054011,
-          0.9996927976608276
-        ]
-      ],
-      "weight": 0.8
-    },
-    {
-      "llm-weight": 0.35,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.35,
-      "hardness_constant": 0.9,
-      "id": "C_14",
-      "formula": "P_11 ⟹ P_12",
-      "translation": "If Company believes the list contains confidential information, then (possibly) the list contains confidential information.",
-      "evidence": "Third WHEREAS",
-      "reasoning": "Belief weakly supports the factual claim but does not entail it.",
-      "list nli": [
-        [
-          7.807005749782547e-05,
-          0.00018995199934579432,
-          0.9997319579124451
-        ],
-        [
-          7.236707460833713e-05,
-          0.0010456553427502513,
-          0.998881995677948
-        ],
-        [
-          2.9474400434992276e-05,
-          0.0023629420902580023,
-          0.9976075887680054
-        ]
-      ],
-      "weight": 0.35
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_20",
-      "formula": "P_20",
-      "translation": "Stockholder does not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "reasoning": "Text states an obligation; it only moderately supports the factual claim of compliance.",
-      "list nli": [
-        [
-          0.004186644684523344,
-          0.8545480966567993,
-          0.14126524329185486
-        ],
-        [
-          0.011731689795851707,
-          0.9467505216598511,
-          0.04151776060461998
-        ],
-        [
-          0.006831958889961243,
-          0.9660552144050598,
-          0.027112850919365883
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_23",
-      "formula": "P_22",
-      "translation": "Stockholder does not utilize other information for any other purpose.",
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; compliance is plausible but not guaranteed by the text.",
-      "list nli": [
-        [
-          0.0010802519973367453,
-          0.007082737050950527,
-          0.9918369650840759
-        ],
-        [
-          9.309382585342973e-05,
-          0.010999422520399094,
-          0.9889074563980103
-        ],
-        [
-          0.04227469488978386,
-          0.6907409429550171,
-          0.26698437333106995
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_26",
-      "formula": "P_24",
-      "translation": "Stockholder does not use derived-from-Confidential-Material items for other purposes.",
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; factual compliance is uncertain.",
-      "list nli": [
-        [
-          0.00012529113155324012,
-          0.002339392201974988,
-          0.9975353479385376
-        ],
-        [
-          0.0003169278206769377,
-          0.009925581514835358,
-          0.9897574186325073
-        ],
-        [
-          0.0003858202544506639,
-          0.015129536390304565,
-          0.9844846725463867
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_29",
-      "formula": "P_26",
-      "translation": "Stockholder does not use derived-from-other-information items for other purposes.",
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; compliance not asserted as fact.",
-      "list nli": [
-        [
-          0.00017692601250018924,
-          0.003161806846037507,
-          0.9966613054275513
-        ],
-        [
-          0.0040120878256857395,
-          0.42550936341285706,
-          0.5704785585403442
-        ],
-        [
-          0.0010764498729258776,
-          0.9439721703529358,
-          0.05495130270719528
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_32",
-      "formula": "P_28",
-      "translation": "Stockholder does not disclose Confidential Material except as allowed.",
-      "evidence": "Clause 2",
-      "reasoning": "Obligation stated; compliance as fact is not guaranteed.",
-      "list nli": [
-        [
-          2.6128524041268975e-05,
-          0.00017255850252695382,
-          0.9998013377189636
-        ],
-        [
-          3.2064799597719684e-05,
-          0.04125158488750458,
-          0.9587163329124451
-        ],
-        [
-          4.257312320987694e-05,
-          0.7360714673995972,
-          0.2638860046863556
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_35",
-      "formula": "P_30",
-      "translation": "Stockholder does not publish Confidential Material except as allowed.",
-      "evidence": "Clause 2",
-      "reasoning": "Obligation does not entail compliance.",
-      "list nli": [
-        [
-          3.571848719730042e-05,
-          0.00018636937602423131,
-          0.9997779726982117
-        ],
-        [
-          6.818467954872176e-05,
-          0.006153616588562727,
-          0.9937782287597656
-        ],
-        [
-          9.954208508133888e-05,
-          0.009969357401132584,
-          0.9899311065673828
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_38",
-      "formula": "P_32",
-      "translation": "Stockholder does not communicate Confidential Material except as allowed.",
-      "evidence": "Clause 2",
-      "reasoning": "Obligation stated; compliance uncertain.",
-      "list nli": [
-        [
-          0.00018398249812889844,
-          0.0009331340552307665,
-          0.9988828301429749
-        ],
-        [
-          0.0003478653961792588,
-          0.009300656616687775,
-          0.9903514981269836
-        ],
-        [
-          0.0006074701668694615,
-          0.01629730500280857,
-          0.9830952286720276
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_41",
-      "formula": "P_34",
-      "translation": "Stockholder does not publicly disclose other stockholders' names/addresses/holdings.",
-      "evidence": "Clause 2",
-      "reasoning": "Prohibition stated; compliance not explicitly asserted.",
-      "list nli": [
-        [
-          8.711426926311105e-05,
-          0.00032710202503949404,
-          0.9995858073234558
-        ],
-        [
-          1.2847814105043653e-05,
-          0.0012168464018031955,
-          0.9987702965736389
-        ],
-        [
-          1.1605721738305874e-05,
-          0.0014394333120435476,
-          0.9985489249229431
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_45",
-      "formula": "P_37",
-      "translation": "Stockholder provides prompt notice within 2 business days.",
-      "evidence": "Clause 3",
-      "reasoning": "Obligation does not entail that it actually occurs.",
-      "list nli": [
-        [
-          4.283527596271597e-05,
-          3.2748052035458386e-05,
-          0.9999244213104248
-        ],
-        [
-          3.9272403228096664e-05,
-          3.65764535672497e-05,
-          0.9999241828918457
-        ],
-        [
-          4.481106225284748e-05,
-          3.3070737117668614e-05,
-          0.9999221563339233
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.4,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.4,
-      "hardness_constant": 0.9,
-      "id": "C_48",
-      "formula": "P_39",
-      "translation": "Company seeks a protective order or other remedy.",
-      "evidence": "Clause 3",
-      "reasoning": "Text grants an option; it does not assert the Company will actually pursue it.",
-      "list nli": [
-        [
-          1.7808475604397245e-05,
-          7.301355799427256e-05,
-          0.9999091625213623
-        ],
-        [
-          1.6808924556244165e-05,
-          7.923367229523137e-05,
-          0.9999039173126221
-        ],
-        [
-          5.094824246043572e-06,
-          0.0002457475056871772,
-          0.9997491240501404
-        ]
-      ],
-      "weight": 0.4
-    },
-    {
-      "llm-weight": 0.4,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.4,
-      "hardness_constant": 0.9,
-      "id": "C_51",
-      "formula": "P_41",
-      "translation": "Company waives compliance with the Agreement.",
-      "evidence": "Clause 3",
-      "reasoning": "The clause allows waiver; it does not state waiver occurs.",
-      "list nli": [
-        [
-          0.005070459563285112,
-          0.001974849496036768,
-          0.992954671382904
-        ],
-        [
-          0.03228972107172012,
-          0.4554583728313446,
-          0.5122519135475159
-        ],
-        [
-          0.9765167832374573,
-          0.0007600043900310993,
-          0.022723201662302017
-        ]
-      ],
-      "weight": 0.4
-    },
-    {
-      "llm-weight": 0.4,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.4,
-      "hardness_constant": 0.9,
-      "id": "C_54",
-      "formula": "P_43",
-      "translation": "If protective order/remedy is not obtained, Stockholder furnishes only legally required Confidential Material.",
-      "evidence": "Clause 3",
-      "reasoning": "Text permits/limits what may be furnished; it does not assert that furnishing occurs.",
-      "list nli": [
-        [
-          6.138897879282013e-05,
-          0.00028449666569940746,
-          0.9996540546417236
-        ],
-        [
-          7.025690138107166e-05,
-          0.0003325095749460161,
-          0.9995972514152527
-        ],
-        [
-          0.00011267482477705926,
-          0.0003079243761021644,
-          0.9995793700218201
-        ]
-      ],
-      "weight": 0.4
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_57",
-      "formula": "P_45",
-      "translation": "Stockholder exercises best efforts to obtain assurance of confidential treatment.",
-      "evidence": "Clause 3",
-      "reasoning": "Obligation stated; compliance not assured.",
-      "list nli": [
-        [
-          2.441137985442765e-05,
-          4.6799297706456855e-05,
-          0.9999288320541382
-        ],
-        [
-          1.6316016626660712e-05,
-          7.350499072344974e-05,
-          0.9999101161956787
-        ],
-        [
-          1.8136239305022173e-05,
-          7.703348819632083e-05,
-          0.9999048709869385
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.65,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.65,
-      "hardness_constant": 0.9,
-      "id": "C_68",
-      "formula": "P_55",
-      "translation": "If Stockholder breaches, Company suffers irreparable harm.",
-      "evidence": "Clause 5",
-      "reasoning": "Text states an expected legal characterization; factual occurrence is not independently established.",
-      "list nli": [
-        [
-          4.1277158743469045e-05,
-          4.7246881877072155e-05,
-          0.9999114274978638
-        ],
-        [
-          5.379950744099915e-05,
-          4.0806946344673634e-05,
-          0.9999053478240967
-        ],
-        [
-          0.00011515129153849557,
-          2.243882408947684e-05,
-          0.9998624324798584
-        ]
-      ],
-      "weight": 0.65
-    },
-    {
-      "llm-weight": 0.75,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.75,
-      "hardness_constant": 0.9,
-      "id": "C_71",
-      "formula": "P_57",
-      "translation": "If Stockholder breaches, Company is entitled to specific performance.",
-      "evidence": "Clause 5",
-      "reasoning": "Entitlement is asserted as part of the agreement; slightly less than 1.0 because it is contingent on breach and enforceability.",
-      "list nli": [
-        [
-          2.921265513577964e-05,
-          0.00020349299302324653,
-          0.9997672438621521
-        ],
-        [
-          2.1962301616440527e-05,
-          0.00025843229377642274,
-          0.9997195601463318
-        ],
-        [
-          0.0001567760482430458,
-          0.0001688945631030947,
-          0.9996743202209473
-        ]
-      ],
-      "weight": 0.75
-    },
-    {
-      "llm-weight": 0.75,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.75,
-      "hardness_constant": 0.9,
-      "id": "C_74",
-      "formula": "P_59",
-      "translation": "If Stockholder breaches, Company is entitled to injunctive relief.",
-      "evidence": "Clause 5",
-      "reasoning": "Entitlement asserted as contractual remedy; still contingent on breach/enforcement.",
-      "list nli": [
-        [
-          0.00016295691602863371,
-          0.0005070797051303089,
-          0.9993300437927246
-        ],
-        [
-          0.0013598969671875238,
-          0.0001426815433660522,
-          0.9984973669052124
-        ],
-        [
-          0.00040663385880179703,
-          0.002095713745802641,
-          0.9974976181983948
-        ]
-      ],
-      "weight": 0.75
-    },
-    {
-      "llm-weight": 0.7,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.7,
-      "hardness_constant": 0.9,
-      "id": "C_78",
-      "formula": "P_62",
-      "translation": "Agreement is not amended except by a signed writing referring specifically to it.",
-      "evidence": "Clause 6",
-      "reasoning": "Clause states a rule for valid amendments; factual state of being unamended is not directly asserted.",
-      "list nli": [
-        [
-          4.5590553781948984e-05,
-          6.156013841973618e-05,
-          0.9998928308486938
-        ],
-        [
-          0.00018950244702864438,
-          7.821629696991295e-05,
-          0.9997323155403137
-        ],
-        [
-          0.00023186474572867155,
-          8.016538777155802e-05,
-          0.9996880292892456
-        ]
-      ],
-      "weight": 0.7
-    },
-    {
-      "llm-weight": 0.4,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.4,
-      "hardness_constant": 0.9,
-      "id": "C_87",
-      "formula": "P_70",
-      "translation": "Agreement is executed in multiple counterparts.",
-      "evidence": "Clause 9",
-      "reasoning": "The clause allows counterparts; it does not say they were actually used.",
-      "list nli": [
-        [
-          0.00012816867092624307,
-          0.00010403972555650398,
-          0.9997678399085999
-        ],
-        [
-          0.00018630079284776002,
-          7.105860277079046e-05,
-          0.9997426867485046
-        ],
-        [
-          0.000605109438765794,
-          0.00016590066661592573,
-          0.9992289543151855
-        ]
-      ],
-      "weight": 0.4
-    },
-    {
-      "llm-weight": 0.7,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.7,
-      "hardness_constant": 0.9,
-      "id": "C_94",
-      "formula": "P_75",
-      "translation": "Agreement is not construed against either Party due to authorship.",
-      "evidence": "Clause 11",
-      "reasoning": "The clause sets an interpretive rule; actual judicial construction is a future application, so factual version is weaker.",
-      "list nli": [
-        [
-          0.00023028797295410186,
-          2.5559356799931265e-05,
-          0.9997441172599792
-        ],
-        [
-          0.00025422038743272424,
-          2.749379382294137e-05,
-          0.9997182488441467
-        ],
-        [
-          0.0006294964114204049,
-          0.00014148239279165864,
-          0.9992290735244751
-        ]
-      ],
-      "weight": 0.7
-    }
-  ]
+  "soft_constraints": []
 }

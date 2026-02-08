@@ -6,9 +6,7 @@ Debug-focused experiment runner for ContractNLI-style JSON files.
 
 Usage:
     python experiment.py --dataset-path contractnli_test.json
-    python experiment.py --dataset-path contractnli_test.json --doc-id 1 --hypothesis-key test-3
-    
-    
+    python experiment.py --dataset-path contractnli_test.json --doc-id 1 --hypothesis-key test-3    
 """
 
 import argparse
@@ -40,8 +38,10 @@ from config.retrieval_config import (
     TRANSLATE_MODEL,
 )
 
-CACHE_DIR = _script_dir / "cache"
 
+CACHE_DIR = _script_dir / "cache"
+RESULTS_DIR = _script_dir / "results_logify_contract_NLI"
+DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
 
 @dataclass
 class QueryDebugResult:
@@ -256,8 +256,10 @@ def run_debug_experiment(
     k_weights: int,
     k_query: int,
     verbose: bool = True,
+    doc_ids: List[int] = None
 ) -> List[QueryDebugResult]:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
     dataset = load_dataset(dataset_path)
     documents = dataset.get("documents", [])
@@ -265,6 +267,13 @@ def run_debug_experiment(
 
     if doc_id is not None:
         documents = [doc for doc in documents if doc.get("id") == doc_id]
+
+    # Filter documents by ID
+    if doc_ids is None:
+        doc_ids = DEFAULT_DOC_IDS
+    doc_id_set = set(doc_ids)
+    documents = [doc for doc in documents if doc.get("id") in doc_id_set]
+    print(f"  Processing {len(documents)} documents with IDs: {doc_ids}")
 
     if not documents:
         raise ValueError("No matching document found for the provided doc_id.")
@@ -439,6 +448,13 @@ def main() -> int:
         action="store_true",
         help="Enable detailed debugging output",
     )
+    parser.add_argument(
+        "--doc-ids",
+        type=str,
+        default=None,
+        help="Comma-separated list of document IDs to process (default: predefined list of 20 docs)"
+    )    
+
 
     args = parser.parse_args()
 
@@ -449,6 +465,10 @@ def main() -> int:
     if not Path(args.dataset_path).exists():
         print(f"Error: Dataset not found: {args.dataset_path}")
         return 1
+    
+    doc_ids = None
+    if args.doc_ids:
+        doc_ids = [int(x.strip()) for x in args.doc_ids.split(",")]
 
     try:
         results = run_debug_experiment(
@@ -462,7 +482,8 @@ def main() -> int:
             max_tokens=args.max_tokens,
             k_weights=args.k_weights,
             k_query=args.k_query,
-            verbose=args.verbose,
+            verbose=args.verbose #,
+            #doc_id =doc_ids
         )
         
         write_experiment_debug_report(results)

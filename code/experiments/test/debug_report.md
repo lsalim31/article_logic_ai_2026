@@ -1,8 +1,8 @@
 # Experiment Debug Report
 ## Summary
 - Total: 30
-- Correct: 24
-- Incorrect: 6
+- Correct: 27
+- Incorrect: 3
 - Errors: 0
 
 ## Detailed Results
@@ -15,7 +15,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 10.212
+- Latency (sec): 6.275
 
 **Raw Fields**
 - hypothesis_key: test-1
@@ -33,7 +33,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 4.858
+- Latency (sec): 7.287
 
 **Raw Fields**
 - hypothesis_key: test-2
@@ -51,7 +51,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 12.243
+- Latency (sec): 12.108
 
 **Raw Fields**
 - hypothesis_key: test-3
@@ -69,7 +69,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 7.733
+- Latency (sec): 9.816
 
 **Raw Fields**
 - hypothesis_key: test-4
@@ -87,7 +87,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 14.760
+- Latency (sec): 7.268
 
 **Raw Fields**
 - hypothesis_key: test-5
@@ -105,7 +105,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 8.605
+- Latency (sec): 7.490
 
 **Raw Fields**
 - hypothesis_key: test-6
@@ -123,7 +123,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 7.008
+- Latency (sec): 6.019
 
 **Raw Fields**
 - hypothesis_key: test-7
@@ -141,7 +141,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 5.822
+- Latency (sec): 4.033
 
 **Raw Fields**
 - hypothesis_key: test-8
@@ -159,7 +159,7 @@
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 7.044
+- Latency (sec): 6.419
 
 **Raw Fields**
 - hypothesis_key: test-9
@@ -171,17 +171,17 @@
 ### test-10
 - Hypothesis: Alice is a student who studies hard before exams.
 - Ground Truth: TRUE
-- Prediction: UNCERTAIN
-- Confidence: 0.5
-- Formula: NONE
+- Prediction: TRUE
+- Confidence: 1
+- Formula: P_13
 - Query Mode: entailment
-- Explanation: No matching proposition for hypothesis
+- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 19.591
+- Latency (sec): 16.427
 
 **Raw Fields**
 - hypothesis_key: test-10
-- formula: NONE
+- formula: P_13
 - query_mode: entailment
 - error: None
 
@@ -195,7 +195,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 60.559
+- Latency (sec): 14.909
 
 **Raw Fields**
 - hypothesis_key: test-11
@@ -213,7 +213,7 @@
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 25.180
+- Latency (sec): 71.016
 
 **Raw Fields**
 - hypothesis_key: test-12
@@ -227,15 +227,15 @@
 - Ground Truth: FALSE
 - Prediction: FALSE
 - Confidence: 0
-- Formula: P_10 ⟹ ¬P_11
+- Formula: P_10 ∧ ¬P_11
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 57.089
+- Latency (sec): 41.183
 
 **Raw Fields**
 - hypothesis_key: test-13
-- formula: P_10 ⟹ ¬P_11
+- formula: P_10 ∧ ¬P_11
 - query_mode: entailment
 - error: None
 
@@ -249,7 +249,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 33.833
+- Latency (sec): 25.140
 
 **Raw Fields**
 - hypothesis_key: test-14
@@ -267,7 +267,7 @@
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 16.600
+- Latency (sec): 35.034
 
 **Raw Fields**
 - hypothesis_key: test-15
@@ -285,7 +285,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 28.618
+- Latency (sec): 33.602
 
 **Raw Fields**
 - hypothesis_key: test-16
@@ -303,7 +303,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 35.960
+- Latency (sec): 22.627
 
 **Raw Fields**
 - hypothesis_key: test-17
@@ -321,7 +321,7 @@
 - Query Mode: entailment
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 47.521
+- Latency (sec): 27.027
 
 **Raw Fields**
 - hypothesis_key: test-18
@@ -335,15 +335,15 @@
 - Ground Truth: FALSE
 - Prediction: TRUE
 - Confidence: 1
-- Formula: P_30
+- Formula: P_29
 - Query Mode: entailment
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
-- Latency (sec): 48.646
+- Latency (sec): 68.807
 
 **Raw Fields**
 - hypothesis_key: test-19
-- formula: P_30
+- formula: P_29
 - query_mode: entailment
 - error: None
 
@@ -351,17 +351,17 @@
 ### test-20
 - Hypothesis: Alice is a high school student.
 - Ground Truth: FALSE
-- Prediction: TRUE
-- Confidence: 1
-- Formula: P_3
+- Prediction: FALSE
+- Confidence: 0
+- Formula: ¬P_3
 - Query Mode: entailment
-- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
+- Explanation: Query is contradicted by the knowledge base
 - Error: None
-- Latency (sec): 55.452
+- Latency (sec): 45.057
 
 **Raw Fields**
 - hypothesis_key: test-20
-- formula: P_3
+- formula: ¬P_3
 - query_mode: entailment
 - error: None
 
@@ -375,7 +375,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 5.875
+- Latency (sec): 5.747
 
 **Raw Fields**
 - hypothesis_key: test-21
@@ -388,16 +388,16 @@
 - Hypothesis: Alice's major is mathematics.
 - Ground Truth: UNCERTAIN
 - Prediction: UNCERTAIN
-- Confidence: 1.0
-- Formula: P_7
+- Confidence: 0.0
+- Formula: ¬P_7
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 50.820
+- Latency (sec): 39.545
 
 **Raw Fields**
 - hypothesis_key: test-22
-- formula: P_7
+- formula: ¬P_7
 - query_mode: entailment
 - error: None
 
@@ -411,7 +411,7 @@
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 25.404
+- Latency (sec): 34.108
 
 **Raw Fields**
 - hypothesis_key: test-23
@@ -429,7 +429,7 @@
 - Query Mode: entailment
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
-- Latency (sec): 21.577
+- Latency (sec): 18.085
 
 **Raw Fields**
 - hypothesis_key: test-24
@@ -441,17 +441,17 @@
 ### test-25
 - Hypothesis: Alice works full-time.
 - Ground Truth: UNCERTAIN
-- Prediction: TRUE
-- Confidence: 1
-- Formula: P_21
+- Prediction: UNCERTAIN
+- Confidence: 0.5
+- Formula: NONE
 - Query Mode: entailment
-- Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
+- Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 59.257
+- Latency (sec): 17.063
 
 **Raw Fields**
 - hypothesis_key: test-25
-- formula: P_21
+- formula: NONE
 - query_mode: entailment
 - error: None
 
@@ -465,7 +465,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 8.466
+- Latency (sec): 10.084
 
 **Raw Fields**
 - hypothesis_key: test-26
@@ -483,7 +483,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 6.196
+- Latency (sec): 10.718
 
 **Raw Fields**
 - hypothesis_key: test-27
@@ -501,7 +501,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 8.190
+- Latency (sec): 7.973
 
 **Raw Fields**
 - hypothesis_key: test-28
@@ -519,7 +519,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 15.222
+- Latency (sec): 19.312
 
 **Raw Fields**
 - hypothesis_key: test-29
@@ -537,7 +537,7 @@
 - Query Mode: entailment
 - Explanation: No matching proposition for hypothesis
 - Error: None
-- Latency (sec): 5.656
+- Latency (sec): 7.318
 
 **Raw Fields**
 - hypothesis_key: test-30

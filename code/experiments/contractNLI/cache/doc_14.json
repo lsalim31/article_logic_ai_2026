@@ -2,453 +2,393 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "There is a Confidentiality and Non-Disclosure Agreement governing the inspection of the stockholder list.",
-      "evidence": "Title: \"CONFIDENTIALITY AND NON-DISCLOSURE AGREEMENT GOVERNING THE INSPECTION OF STOCKHOLDER LIST\"",
-      "explanation": "Atomic existence/identification of the agreement document; no logical connectives."
+      "translation": "This Confidentiality and Non-Disclosure Agreement Governing the Inspection of Stockholder List exists (the “Agreement”).",
+      "evidence": "Title/first paragraph: “This Confidentiality and Non-Disclosure Agreement Governing the Inspection of Stockholder List (the “Agreement”) …”",
+      "explanation": "Atomic existence/identification of the agreement; no logical connective."
     },
     {
       "id": "P_2",
       "translation": "The Agreement is entered into between Patriot Scientific Corporation and the Stockholder.",
-      "evidence": "Intro: \"...is entered into between Patriot Scientific Corporation (the 'Company'), and the 'Stockholder'.\"",
-      "explanation": "Atomic statement about the contracting parties."
+      "evidence": "First paragraph: “is entered into between Patriot Scientific Corporation (the “Company”), and the “Stockholder”.”",
+      "explanation": "Single relational fact about the parties to the agreement."
     },
     {
       "id": "P_3",
-      "translation": "Patriot Scientific Corporation is the Company.",
-      "evidence": "Intro: \"Patriot Scientific Corporation (the 'Company')\"",
-      "explanation": "Atomic definitional statement (entity-label mapping)."
+      "translation": "Patriot Scientific Corporation is the “Company”.",
+      "evidence": "First paragraph: “Patriot Scientific Corporation (the “Company”)”",
+      "explanation": "Atomic naming/definition."
     },
     {
       "id": "P_4",
-      "translation": "The Company and the Stockholder are each individually referred to as a Party.",
-      "evidence": "Intro: \"...each individually referred to herein as a 'Party'\"",
+      "translation": "The Company and the Stockholder are each individually referred to as a “Party”.",
+      "evidence": "First paragraph: “each individually referred to herein as a “Party””",
       "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_5",
-      "translation": "The Company and the Stockholder are collectively referred to as the Parties.",
-      "evidence": "Intro: \"...collectively referred to as the 'Parties.'\"",
+      "translation": "The Company and the Stockholder are collectively referred to as the “Parties”.",
+      "evidence": "First paragraph: “collectively referred to as the “Parties.””",
       "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_6",
-      "translation": "On or about April 30, 2015, the Stockholder made a demand to inspect the Company's stockholder list.",
-      "evidence": "WHEREAS: \"on or about April 30, 2015, the Stockholder made a demand ... to inspect the stockholder list of the Company\"",
-      "explanation": "Atomic event claim with an uncertainty marker ('on or about') retained."
+      "translation": "On or about April 30, 2015, the Stockholder made a demand to inspect the Company’s stockholder list.",
+      "evidence": "Whereas clause: “on or about April 30, 2015, the Stockholder made a demand … to inspect the stockholder list of the Company;”",
+      "explanation": "Single historical event with a time reference."
     },
     {
       "id": "P_7",
-      "translation": "On April 30, 2015, the Stockholder made a demand to inspect the Company's stockholder list.",
-      "evidence": "WHEREAS: \"on or about April 30, 2015, the Stockholder made a demand ...\"",
-      "explanation": "Same content as P_6 but without the uncertainty phrase, per modality/uncertainty rule."
+      "translation": "The Company has agreed to allow the Stockholder to inspect the stockholder list, subject to the Stockholder executing the Agreement.",
+      "evidence": "Whereas clause: “subject to the Stockholder executing this Agreement, the Company has agreed to allow the Stockholder to inspect the stockholder list”",
+      "explanation": "Atomic commitment stated as one conditional agreement fact (no explicit logical operator symbols)."
     },
     {
       "id": "P_8",
-      "translation": "The Company has agreed to allow the Stockholder to inspect the stockholder list.",
-      "evidence": "WHEREAS: \"...the Company has agreed to allow the Stockholder to inspect the stockholder list\"",
-      "explanation": "Atomic permission/decision claim."
+      "translation": "The stockholder list and information or analyses derived from the inspection are referred to as “Confidential Material”.",
+      "evidence": "Whereas clause: “the stockholder list (which, together with information or analyses derived … is referred to as the “Confidential Material”)”",
+      "explanation": "Atomic definitional statement."
     },
     {
       "id": "P_9",
-      "translation": "The Company's agreement to allow inspection is subject to the Stockholder executing the Agreement.",
-      "evidence": "WHEREAS: \"...subject to the Stockholder executing this Agreement\"",
-      "explanation": "Atomic dependency statement; the conditional is expressed later as a constraint."
+      "translation": "The Company believes that the stockholder list contains confidential information.",
+      "evidence": "Whereas clause: “the Company believes that stockholder list contains confidential information;”",
+      "explanation": "Atomic belief attribution."
     },
     {
       "id": "P_10",
-      "translation": "The stockholder list and information or analyses derived from the inspection information are Confidential Material.",
-      "evidence": "WHEREAS: \"...stockholder list (which, together with information or analyses derived from information made available for inspection, is referred to as the 'Confidential Material')\"",
-      "explanation": "Atomic definitional statement about what the term denotes."
+      "translation": "The Agreement is dated the 30th day of April 2015.",
+      "evidence": "Preamble: “this 30th day of April 2015”",
+      "explanation": "Atomic date attribution."
     },
     {
       "id": "P_11",
-      "translation": "The Company believes the stockholder list contains confidential information.",
-      "evidence": "WHEREAS: \"the Company believes that stockholder list contains confidential information\"",
-      "explanation": "Atomic mental-state attribution (belief) to the Company."
+      "translation": "The Agreement is not dated April 29, 2015.",
+      "evidence": "Implied by: “this 30th day of April 2015”",
+      "explanation": "Auxiliary negative alternative date (mutually exclusive with April 30)."
     },
     {
       "id": "P_12",
-      "translation": "The stockholder list contains confidential information.",
-      "evidence": "WHEREAS: \"...contains confidential information\" (in context of Company's belief)",
-      "explanation": "Atomic factual claim (without 'believes'); included to support possible implied constraints."
+      "translation": "The Agreement is not dated May 1, 2015.",
+      "evidence": "Implied by: “this 30th day of April 2015”",
+      "explanation": "Auxiliary negative alternative date (mutually exclusive with April 30)."
     },
     {
       "id": "P_13",
-      "translation": "The stockholder list does not contain confidential information.",
-      "evidence": "WHEREAS: \"...contains confidential information\" (contrast alternative added)",
-      "explanation": "Auxiliary negative alternative for a categorical/boolean attribute (confidential vs not confidential)."
+      "translation": "The Confidential Material is being produced only for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1: “Confidential Material is being produced … only for purposes reasonably related to Stockholder’s interests as a stockholder”",
+      "explanation": "Atomic restriction statement (includes the exclusivity word 'only' as part of the content)."
     },
     {
       "id": "P_14",
-      "translation": "The Agreement is agreed to by and between the Parties on the 30th day of April 2015.",
-      "evidence": "\"...this 30th day of April 2015...\"",
-      "explanation": "Atomic date assertion for the agreement."
+      "translation": "The Confidential Material is being produced for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1 (same sentence as P_13, without “only”).",
+      "explanation": "Same statement as P_13 but without the exclusivity term (needed to support logical decomposition)."
     },
     {
       "id": "P_15",
-      "translation": "The Agreement is agreed to on April 29, 2015.",
-      "evidence": "\"...this 30th day of April 2015...\" (alternative date added)",
-      "explanation": "Auxiliary negative-value alternative (nearby plausible date) for mutual exclusivity constraints."
+      "translation": "The Confidential Material is being produced for some other purpose not reasonably related to the Stockholder’s interests as a stockholder of the Company.",
+      "evidence": "Section 1 (negated by: “only for purposes reasonably related …”).",
+      "explanation": "Auxiliary alternative purpose to capture exclusivity."
     },
     {
       "id": "P_16",
-      "translation": "The Agreement is agreed to on May 1, 2015.",
-      "evidence": "\"...this 30th day of April 2015...\" (alternative date added)",
-      "explanation": "Auxiliary negative-value alternative (nearby plausible date)."
+      "translation": "The Stockholder shall not utilize Confidential Material (or other produced information or anything derived from them) for any other purpose.",
+      "evidence": "Section 1: “Stockholder shall not utilize … for any other purpose.”",
+      "explanation": "Atomic prohibition (modal 'shall not' retained)."
     },
     {
       "id": "P_17",
-      "translation": "The Confidential Material is produced to the Stockholder only for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
-      "evidence": "Clause 1: \"...produced ... only for purposes reasonably related to Stockholder’s interests as a stockholder...\"",
-      "explanation": "Atomic restriction statement (includes 'only' as part of content; no logical operators)."
+      "translation": "The Stockholder does not utilize Confidential Material (or other produced information or anything derived from them) for any other purpose.",
+      "evidence": "Section 1 (same obligation, without the modal “shall”).",
+      "explanation": "Same core content as P_16 without modal wording, to enable modal constraints."
     },
     {
       "id": "P_18",
-      "translation": "The Confidential Material is produced to the Stockholder for purposes reasonably related to the Stockholder’s interests as a stockholder of the Company.",
-      "evidence": "Clause 1",
-      "explanation": "Variant without exclusivity term 'only' (treated as a strength/modality-like restriction)."
+      "translation": "The Stockholder will not disclose Confidential Material to any person or entity in any form (directly or indirectly), except as provided in the Agreement.",
+      "evidence": "Section 2: “The Stockholder will not disclose … except as provided in this Confidentiality Agreement …”",
+      "explanation": "Atomic non-disclosure rule (modal 'will not' retained)."
     },
     {
       "id": "P_19",
-      "translation": "The Stockholder shall not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1: \"Stockholder shall not utilize Confidential Material ... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not disclose Confidential Material to any person or entity in any form (directly or indirectly), except as provided in the Agreement.",
+      "evidence": "Section 2 (same obligation, without the modal “will”).",
+      "explanation": "Same content without modal wording for modal linkage."
     },
     {
       "id": "P_20",
-      "translation": "The Stockholder does not utilize Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_19 without the modal word, per modality rule."
+      "translation": "In no event shall the Stockholder publicly disclose the names of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … names … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to names."
     },
     {
       "id": "P_21",
-      "translation": "The Stockholder shall not utilize other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1: \"...any other information produced by the Company... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the names of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_22",
-      "translation": "The Stockholder does not utilize other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_21 without the modal word."
+      "translation": "In no event shall the Stockholder publicly disclose the addresses of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … addresses … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to addresses."
     },
     {
       "id": "P_23",
-      "translation": "The Stockholder shall not utilize anything derived from Confidential Material for any other purpose.",
-      "evidence": "Clause 1: \"...anything derived from Confidential Material... for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the addresses of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_24",
-      "translation": "The Stockholder does not utilize anything derived from Confidential Material for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_23 without the modal word."
+      "translation": "In no event shall the Stockholder publicly disclose the holdings of any other stockholder.",
+      "evidence": "Section 2: “in no event shall stockholder … publically disclose … holdings … of any other stockholder.”",
+      "explanation": "Atomic absolute prohibition specific to holdings."
     },
     {
       "id": "P_25",
-      "translation": "The Stockholder shall not utilize anything derived from any other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1: \"...or derived from any other information produced by the Company for any other purpose.\"",
-      "explanation": "Atomic prohibition with modal 'shall'."
+      "translation": "The Stockholder does not publicly disclose the holdings of any other stockholder.",
+      "evidence": "Section 2 (same obligation, without modal “shall”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_26",
-      "translation": "The Stockholder does not utilize anything derived from any other information produced by the Company for any other purpose.",
-      "evidence": "Clause 1",
-      "explanation": "Same content as P_25 without the modal word."
+      "translation": "The Stockholder is required by legal process (interrogatory, subpoena, civil investigatory demand, or similar) to disclose Confidential Material.",
+      "evidence": "Section 3: “If the Stockholder is required (by interrogatory, subpoena, civil investigatory demand …) to disclose … any Confidential Material”",
+      "explanation": "Atomic condition/event type."
     },
     {
       "id": "P_27",
-      "translation": "The Stockholder will not disclose Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"The Stockholder will not disclose... except as provided in this Confidentiality Agreement\"",
-      "explanation": "Atomic prohibition with modal 'will'."
-    },
-    {
-      "id": "P_28",
-      "translation": "The Stockholder does not disclose Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_27 without the modal word."
-    },
-    {
-      "id": "P_29",
-      "translation": "The Stockholder will not publish Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"...will not disclose, publish, or communicate...\"",
-      "explanation": "Atomic prohibition (publish) with modal 'will'."
-    },
-    {
-      "id": "P_30",
-      "translation": "The Stockholder does not publish Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_29 without the modal word."
-    },
-    {
-      "id": "P_31",
-      "translation": "The Stockholder will not communicate Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2: \"...will not ... communicate ...\"",
-      "explanation": "Atomic prohibition (communicate) with modal 'will'."
-    },
-    {
-      "id": "P_32",
-      "translation": "The Stockholder does not communicate Confidential Material to any person or entity in any form, directly or indirectly, except as provided in the Agreement.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_31 without the modal word."
-    },
-    {
-      "id": "P_33",
-      "translation": "In no event shall the Stockholder publicly disclose the names, addresses, or holdings of any other stockholder.",
-      "evidence": "Clause 2: \"...in no event shall stockholder ... publically disclose ... names, addresses, holdings of any other stockholder.\"",
-      "explanation": "Atomic absolute prohibition ('in no event shall') kept intact."
-    },
-    {
-      "id": "P_34",
-      "translation": "The Stockholder does not publicly disclose the names, addresses, or holdings of any other stockholder.",
-      "evidence": "Clause 2",
-      "explanation": "Same content as P_33 without the modal phrase."
-    },
-    {
-      "id": "P_35",
-      "translation": "The Stockholder is required by legal process (e.g., subpoena or interrogatory) to disclose Confidential Material.",
-      "evidence": "Clause 3: \"If the Stockholder is required ... to disclose ... any Confidential Material\"",
-      "explanation": "Atomic trigger condition description."
-    },
-    {
-      "id": "P_36",
       "translation": "The Stockholder will provide the Company with prompt notice within 2 business days of receipt of such legal process.",
-      "evidence": "Clause 3: \"...will provide the Company with prompt notice (i.e., within 2 business days...)\"",
+      "evidence": "Section 3: “will provide the Company with prompt notice (i.e., within 2 business days …)”",
       "explanation": "Atomic obligation with modal 'will'."
     },
     {
-      "id": "P_37",
+      "id": "P_28",
       "translation": "The Stockholder provides the Company with prompt notice within 2 business days of receipt of such legal process.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_36 without the modal word."
+      "evidence": "Section 3 (same obligation, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_38",
-      "translation": "The Company may seek a protective order or other appropriate remedy.",
-      "evidence": "Clause 3: \"...so that the Company may seek a protective order or other appropriate remedy...\"",
-      "explanation": "Atomic permission with modal 'may'."
+      "id": "P_29",
+      "translation": "The Company may seek a protective order or other appropriate remedy after receiving notice.",
+      "evidence": "Section 3: “so that the Company may seek a protective order or other appropriate remedy”",
+      "explanation": "Atomic permission ('may') statement."
     },
     {
-      "id": "P_39",
-      "translation": "The Company seeks a protective order or other appropriate remedy.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_38 without the modal word."
+      "id": "P_30",
+      "translation": "The Company seeks a protective order or other appropriate remedy after receiving notice.",
+      "evidence": "Section 3 (same idea, without modal “may”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_40",
-      "translation": "The Company may waive compliance with the Agreement.",
-      "evidence": "Clause 3: \"...and/or waive compliance with this Agreement...\"",
-      "explanation": "Atomic permission with modal 'may'."
+      "id": "P_31",
+      "translation": "A protective order or other appropriate remedy is obtained.",
+      "evidence": "Section 3: “in the event that such protective order or other remedy is not obtained” (implies the alternative).",
+      "explanation": "Atomic outcome condition."
     },
     {
-      "id": "P_41",
+      "id": "P_32",
+      "translation": "A protective order or other appropriate remedy is not obtained.",
+      "evidence": "Section 3: “in the event that such protective order or other remedy is not obtained”",
+      "explanation": "Atomic outcome condition (negated alternative)."
+    },
+    {
+      "id": "P_33",
       "translation": "The Company waives compliance with the Agreement.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_40 without the modal word."
+      "evidence": "Section 3: “and/or waive compliance with this Agreement”",
+      "explanation": "Atomic waiver event."
     },
     {
-      "id": "P_42",
-      "translation": "If a protective order or other remedy is not obtained, the Stockholder may furnish only such Confidential Material as they are advised is legally required.",
-      "evidence": "Clause 3: \"...if such protective order or other remedy is not obtained... the Stockholder may furnish only such Confidential Material as... legally required\"",
-      "explanation": "Atomic permission statement with modal 'may' and a condition; the conditional is represented as constraints."
+      "id": "P_34",
+      "translation": "If a protective order/remedy is not obtained or the Company waives compliance, the Stockholder may furnish only such Confidential Material as legally required.",
+      "evidence": "Section 3: “... if … not obtained, or if the Company waives … the Stockholder may furnish only such Confidential Material as they are advised is legally required”",
+      "explanation": "Atomic permission rule (contains modal 'may')."
     },
     {
-      "id": "P_43",
-      "translation": "If a protective order or other remedy is not obtained, the Stockholder furnishes only such Confidential Material as they are advised is legally required.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_42 without the modal word."
+      "id": "P_35",
+      "translation": "If a protective order/remedy is not obtained or the Company waives compliance, the Stockholder furnishes only such Confidential Material as legally required.",
+      "evidence": "Section 3 (same statement, without modal “may”).",
+      "explanation": "Same content without modal wording."
     },
     {
-      "id": "P_44",
-      "translation": "The Stockholder must exercise best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material.",
-      "evidence": "Clause 3: \"...and must exercise their best efforts to obtain assurance that confidential treatment will be accorded...\"",
+      "id": "P_36",
+      "translation": "The Stockholder must exercise best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material that is disclosed.",
+      "evidence": "Section 3: “must exercise their best efforts to obtain assurance that confidential treatment will be accorded …”",
       "explanation": "Atomic obligation with modal 'must'."
     },
     {
+      "id": "P_37",
+      "translation": "The Stockholder exercises best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material that is disclosed.",
+      "evidence": "Section 3 (same statement, without modal “must”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
+      "id": "P_38",
+      "translation": "Each Party who receives Confidential Material pursuant to the Agreement submits to the exclusive jurisdiction of the Delaware Court of Chancery for actions to enforce or based on rights/claims arising out of the Agreement (including disputes about confidentiality).",
+      "evidence": "Section 4: “agrees to submit to the exclusive jurisdiction of the Delaware Court of Chancery …”",
+      "explanation": "Atomic forum-selection rule."
+    },
+    {
+      "id": "P_39",
+      "translation": "Exclusive jurisdiction for such actions is in the Delaware Court of Chancery.",
+      "evidence": "Section 4: “exclusive jurisdiction of the Delaware Court of Chancery”",
+      "explanation": "Atomic distilled version of the exclusive-forum content."
+    },
+    {
+      "id": "P_40",
+      "translation": "Exclusive jurisdiction for such actions is not in California state courts.",
+      "evidence": "Implied by Section 4 exclusive Delaware Court of Chancery jurisdiction.",
+      "explanation": "Auxiliary mutually exclusive alternative forum."
+    },
+    {
+      "id": "P_41",
+      "translation": "Exclusive jurisdiction for such actions is not in New York state courts.",
+      "evidence": "Implied by Section 4 exclusive Delaware Court of Chancery jurisdiction.",
+      "explanation": "Auxiliary mutually exclusive alternative forum."
+    },
+    {
+      "id": "P_42",
+      "translation": "Each Party waives all objections to personal jurisdiction or venue (including inconvenience) in the Delaware Court of Chancery.",
+      "evidence": "Section 4: “expressly waives any and all objections … to personal jurisdiction or to venue … in the Court of Chancery.”",
+      "explanation": "Atomic waiver statement."
+    },
+    {
+      "id": "P_43",
+      "translation": "The Company does not have an adequate remedy at law in the event of a breach of the Agreement by the Stockholder.",
+      "evidence": "Section 5: “the Company does not have an adequate remedy at law … in the event of a breach … by the Stockholder.”",
+      "explanation": "Atomic legal-remedy assertion."
+    },
+    {
+      "id": "P_44",
+      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will suffer irreparable harm.",
+      "evidence": "Section 5: “in the event of a breach … the Company will suffer irreparable harm”",
+      "explanation": "Atomic consequence assertion with modal 'will'."
+    },
+    {
       "id": "P_45",
-      "translation": "The Stockholder exercises best efforts to obtain assurance that confidential treatment will be accorded to any Confidential Material.",
-      "evidence": "Clause 3",
-      "explanation": "Same content as P_44 without the modal word."
+      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company suffers irreparable harm.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_46",
-      "translation": "Each Party who receives Confidential Material agrees to submit to the exclusive jurisdiction of the Delaware Court of Chancery for actions to enforce the Agreement.",
-      "evidence": "Clause 4: \"...submit to the exclusive jurisdiction of the Delaware Court of Chancery in any action to enforce...\"",
-      "explanation": "Atomic jurisdiction/venue commitment."
+      "translation": "In the event of a breach by the Stockholder, the Company will be entitled to specific performance to enforce the Agreement.",
+      "evidence": "Section 5: “will be entitled to specific performance … to enforce the terms …”",
+      "explanation": "Atomic entitlement statement with modal 'will'."
     },
     {
       "id": "P_47",
-      "translation": "Exclusive jurisdiction for enforcement actions is in the Delaware Court of Chancery.",
-      "evidence": "Clause 4",
-      "explanation": "Atomic restatement focusing on the exclusivity/location value for later mutual-exclusion constraints."
+      "translation": "In the event of a breach by the Stockholder, the Company is entitled to specific performance to enforce the Agreement.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_48",
-      "translation": "Exclusive jurisdiction for enforcement actions is in a federal court.",
-      "evidence": "Clause 4 (alternative forum added)",
-      "explanation": "Auxiliary alternative value for exclusive jurisdiction forum."
+      "translation": "In the event of a breach by the Stockholder, the Company will be entitled to injunctive relief to enforce the Agreement.",
+      "evidence": "Section 5: “and/or injunctive relief to enforce the terms …”",
+      "explanation": "Atomic entitlement statement with modal 'will'."
     },
     {
       "id": "P_49",
-      "translation": "Exclusive jurisdiction for enforcement actions is in New York state courts.",
-      "evidence": "Clause 4 (alternative forum added)",
-      "explanation": "Auxiliary alternative value for exclusive jurisdiction forum."
+      "translation": "In the event of a breach by the Stockholder, the Company is entitled to injunctive relief to enforce the Agreement.",
+      "evidence": "Section 5 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_50",
-      "translation": "Each Party waives objections to personal jurisdiction in the Court of Chancery.",
-      "evidence": "Clause 4: \"...waives any and all objections ... to personal jurisdiction...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_51",
-      "translation": "Each Party waives objections to venue in the Court of Chancery.",
-      "evidence": "Clause 4: \"...or to venue...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_52",
-      "translation": "Each Party waives objections based on inconvenience of the Court of Chancery forum.",
-      "evidence": "Clause 4: \"...including ... the inconvenience of such forum...\"",
-      "explanation": "Atomic waiver statement."
-    },
-    {
-      "id": "P_53",
-      "translation": "The Company does not have an adequate remedy at law in the event of a breach of the Agreement by the Stockholder.",
-      "evidence": "Clause 5: \"...does not have an adequate remedy at law in the event of a breach...\"",
-      "explanation": "Atomic legal-remedy statement."
-    },
-    {
-      "id": "P_54",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will suffer irreparable harm.",
-      "evidence": "Clause 5: \"...the Company will suffer irreparable harm...\"",
-      "explanation": "Atomic consequence claim with modal 'will'."
-    },
-    {
-      "id": "P_55",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company suffers irreparable harm.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_54 without the modal word."
-    },
-    {
-      "id": "P_56",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will be entitled to specific performance to enforce the Agreement.",
-      "evidence": "Clause 5: \"...will be entitled to specific performance...\"",
-      "explanation": "Atomic entitlement claim with modal 'will'."
-    },
-    {
-      "id": "P_57",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company is entitled to specific performance to enforce the Agreement.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_56 without the modal word."
-    },
-    {
-      "id": "P_58",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company will be entitled to injunctive relief to enforce the Agreement.",
-      "evidence": "Clause 5: \"...and/or injunctive relief...\"",
-      "explanation": "Atomic entitlement claim with modal 'will'."
-    },
-    {
-      "id": "P_59",
-      "translation": "In the event of a breach of the Agreement by the Stockholder, the Company is entitled to injunctive relief to enforce the Agreement.",
-      "evidence": "Clause 5",
-      "explanation": "Same content as P_58 without the modal word."
-    },
-    {
-      "id": "P_60",
-      "translation": "Specific performance and injunctive relief are not the exclusive remedies for a breach of the Agreement.",
-      "evidence": "Clause 5: \"Such remedies shall not be deemed to be the exclusive remedies...\"",
+      "translation": "Specific performance and injunctive relief are not the exclusive remedies for breach of the Agreement.",
+      "evidence": "Section 5: “Such remedies shall not be deemed to be the exclusive remedies …”",
       "explanation": "Atomic non-exclusivity statement."
     },
     {
+      "id": "P_51",
+      "translation": "The Agreement may not be amended, changed, waived, discharged, or terminated (except as explicitly provided) except by a signed written instrument specifically referring to the Agreement.",
+      "evidence": "Section 6: “may not be amended … except by an instrument in writing … signed …”",
+      "explanation": "Atomic amendment/waiver/termination rule (modal 'may not' retained)."
+    },
+    {
+      "id": "P_52",
+      "translation": "The Agreement is not amended, changed, waived, discharged, or terminated (except as explicitly provided) except by a signed written instrument specifically referring to the Agreement.",
+      "evidence": "Section 6 (same rule, without modal “may”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
+      "id": "P_53",
+      "translation": "A waiver by any Party of any breach is not a waiver of any other breach of the Agreement.",
+      "evidence": "Section 6: “will not be deemed … as a waiver of any other breach …”",
+      "explanation": "Atomic waiver-scope rule."
+    },
+    {
+      "id": "P_54",
+      "translation": "No failure or delay in exercising any right, power, or privilege under the Agreement operates as a waiver of that right, power, or privilege.",
+      "evidence": "Section 6: “No failure or delay … shall operate as a waiver thereof.”",
+      "explanation": "Atomic anti-waiver-by-delay rule."
+    },
+    {
+      "id": "P_55",
+      "translation": "The Agreement is binding upon and inures to the benefit of the Parties and their respective agents, executors, heirs, beneficiaries, successors, and assigns.",
+      "evidence": "Section 7: “shall be binding upon and inure to the benefit of …”",
+      "explanation": "Atomic binding/inurement statement."
+    },
+    {
+      "id": "P_56",
+      "translation": "The Agreement shall be governed by and construed in accordance with the laws of the State of Delaware.",
+      "evidence": "Section 8: “shall be governed by and construed in accordance with the laws of the State of Delaware”",
+      "explanation": "Atomic governing-law rule (categorical value: Delaware)."
+    },
+    {
+      "id": "P_57",
+      "translation": "The Agreement shall not be governed by the laws of California.",
+      "evidence": "Implied by Section 8 choosing Delaware law.",
+      "explanation": "Auxiliary negative alternative governing-law jurisdiction."
+    },
+    {
+      "id": "P_58",
+      "translation": "The Agreement shall not be governed by the laws of New York.",
+      "evidence": "Implied by Section 8 choosing Delaware law.",
+      "explanation": "Auxiliary negative alternative governing-law jurisdiction."
+    },
+    {
+      "id": "P_59",
+      "translation": "The Agreement may be executed in multiple counterparts by any signatories and as so executed constitutes one agreement.",
+      "evidence": "Section 9: “may be executed in multiple counterparts … and … shall constitute one agreement.”",
+      "explanation": "Atomic execution/counterparts rule with modal 'may'."
+    },
+    {
+      "id": "P_60",
+      "translation": "The Agreement is executed in multiple counterparts by signatories and as so executed constitutes one agreement.",
+      "evidence": "Section 9 (same statement, without modal “may”).",
+      "explanation": "Same content without modal wording."
+    },
+    {
       "id": "P_61",
-      "translation": "The Agreement may not be amended except by a written instrument that refers specifically to the Agreement and is signed by the relevant Party.",
-      "evidence": "Clause 6: \"may not be amended... except by an instrument in writing... refers specifically... signed...\"",
-      "explanation": "Atomic amendment restriction with modal 'may not'."
+      "translation": "The Agreement constitutes the entire agreement between the Parties regarding the subject matter and supersedes all prior agreements and understandings (written and oral) regarding that subject matter.",
+      "evidence": "Section 10: “constitutes the entire agreement … and supersedes all prior agreements …”",
+      "explanation": "Atomic integration clause content."
     },
     {
       "id": "P_62",
-      "translation": "The Agreement is not amended except by a written instrument that refers specifically to the Agreement and is signed by the relevant Party.",
-      "evidence": "Clause 6",
-      "explanation": "Same content as P_61 without the modal word."
+      "translation": "The Agreement will be deemed to have been mutually prepared by the Parties.",
+      "evidence": "Section 11: “will be deemed to have been mutually prepared by the Parties”",
+      "explanation": "Atomic deeming statement with modal 'will'."
     },
     {
       "id": "P_63",
-      "translation": "A waiver by any Party of any breach of the Agreement is not a waiver of any other breach of the Agreement.",
-      "evidence": "Clause 6: \"...will not be deemed ... as a waiver of any other breach...\"",
-      "explanation": "Atomic waiver-scope statement."
+      "translation": "The Agreement is deemed to have been mutually prepared by the Parties.",
+      "evidence": "Section 11 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     },
     {
       "id": "P_64",
-      "translation": "No failure or delay in exercising any right, power, or privilege under the Agreement operates as a waiver of it.",
-      "evidence": "Clause 6: \"No failure or delay... shall operate as a waiver thereof.\"",
-      "explanation": "Atomic anti-waiver-by-delay statement."
+      "translation": "The Agreement will not be construed against either Party by reason of authorship.",
+      "evidence": "Section 11: “will not be construed against either … by reason of authorship.”",
+      "explanation": "Atomic construction rule with modal 'will not'."
     },
     {
       "id": "P_65",
-      "translation": "The Agreement is binding upon the Parties and their respective agents, executors, heirs, beneficiaries, successors, and assigns.",
-      "evidence": "Clause 7: \"...binding upon and inure to the benefit of the Parties and their respective agents...\"",
-      "explanation": "Atomic binding-effect statement."
-    },
-    {
-      "id": "P_66",
-      "translation": "The Agreement is governed by and construed in accordance with the laws of the State of Delaware.",
-      "evidence": "Clause 8: \"...governed by and construed... laws of the State of Delaware\"",
-      "explanation": "Atomic governing-law statement."
-    },
-    {
-      "id": "P_67",
-      "translation": "The Agreement is not governed by the laws of the State of California.",
-      "evidence": "Clause 8 (alternative governing law added)",
-      "explanation": "Auxiliary negative alternative value for governing law."
-    },
-    {
-      "id": "P_68",
-      "translation": "The Agreement is not governed by the laws of the State of New York.",
-      "evidence": "Clause 8 (alternative governing law added)",
-      "explanation": "Auxiliary negative alternative value for governing law."
-    },
-    {
-      "id": "P_69",
-      "translation": "The Agreement may be executed in multiple counterparts by any of the signatories.",
-      "evidence": "Clause 9: \"may be executed in multiple counterparts\"",
-      "explanation": "Atomic permission with modal 'may'."
-    },
-    {
-      "id": "P_70",
-      "translation": "The Agreement is executed in multiple counterparts by any of the signatories.",
-      "evidence": "Clause 9",
-      "explanation": "Same content as P_69 without the modal word."
-    },
-    {
-      "id": "P_71",
-      "translation": "The Agreement constitutes the entire agreement between the Parties with regard to the subject matter.",
-      "evidence": "Clause 10: \"constitutes the entire agreement...\"",
-      "explanation": "Atomic integration clause statement."
-    },
-    {
-      "id": "P_72",
-      "translation": "The Agreement supersedes all prior agreements and understandings between the Parties with regard to the subject matter.",
-      "evidence": "Clause 10: \"...supersedes all prior agreements and understandings...\"",
-      "explanation": "Atomic supersession statement."
-    },
-    {
-      "id": "P_73",
-      "translation": "The Agreement is deemed to have been mutually prepared by the Parties.",
-      "evidence": "Clause 11: \"...deemed to have been mutually prepared...\"",
-      "explanation": "Atomic deeming/preparation statement."
-    },
-    {
-      "id": "P_74",
-      "translation": "The Agreement will not be construed against either Party by reason of authorship.",
-      "evidence": "Clause 11: \"...will not be construed against either... by reason of authorship.\"",
-      "explanation": "Atomic construction rule with modal 'will'."
-    },
-    {
-      "id": "P_75",
       "translation": "The Agreement is not construed against either Party by reason of authorship.",
-      "evidence": "Clause 11",
-      "explanation": "Same content as P_74 without the modal word."
+      "evidence": "Section 11 (same statement, without modal “will”).",
+      "explanation": "Same content without modal wording."
     }
   ],
   "constraints": [
@@ -456,753 +396,497 @@
       "id": "C_1",
       "formula": "P_2",
       "translation": "The Agreement is entered into between the Company and the Stockholder.",
-      "llm_weight": 1.0,
-      "evidence": "Intro",
-      "reasoning": "Direct definitional statement of the contracting parties."
+      "llm_weight": 1,
+      "evidence": "First paragraph",
+      "reasoning": "Direct definitional/recital statement of the agreement parties."
     },
     {
       "id": "C_2",
       "formula": "P_3",
       "translation": "Patriot Scientific Corporation is the Company.",
-      "llm_weight": 1.0,
-      "evidence": "Intro",
-      "reasoning": "Explicit definition in the text."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_5",
-      "translation": "Company and Stockholder are collectively the Parties.",
-      "llm_weight": 1.0,
-      "evidence": "Intro",
-      "reasoning": "Explicit definitional language."
-    },
-    {
-      "id": "C_4",
-      "formula": "P_14",
-      "translation": "Agreed this 30th day of April 2015.",
-      "llm_weight": 1.0,
-      "evidence": "\"...this 30th day of April 2015...\"",
-      "reasoning": "Stated as the execution/agreeing date."
-    },
-    {
-      "id": "C_5",
-      "formula": "P_14 ⟹ ¬P_15",
-      "translation": "If the Agreement date is April 30, 2015, then it is not April 29, 2015.",
-      "llm_weight": 1.0,
-      "evidence": "Date line; auxiliary alternative date added",
-      "reasoning": "Nearby dates are mutually exclusive for a single-date execution."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_14 ⟹ ¬P_16",
-      "translation": "If the Agreement date is April 30, 2015, then it is not May 1, 2015.",
-      "llm_weight": 1.0,
-      "evidence": "Date line; auxiliary alternative date added",
-      "reasoning": "Mutual exclusivity of distinct calendar dates."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_6",
-      "translation": "On or about April 30, 2015, Stockholder made the Demand to inspect the stockholder list.",
-      "llm_weight": 0.95,
-      "evidence": "WHEREAS (Demand)",
-      "reasoning": "Direct recital; 'on or about' slightly weakens precision but not the occurrence."
-    },
-    {
-      "id": "C_8",
-      "formula": "P_7 ⟹ P_6",
-      "translation": "If it was on April 30, 2015, then it was on or about April 30, 2015.",
-      "llm_weight": 1.0,
-      "evidence": "WHEREAS (\"on or about\")",
-      "reasoning": "Exact date implies the weaker 'on or about' date claim."
-    },
-    {
-      "id": "C_9",
-      "formula": "P_8",
-      "translation": "Company has agreed to allow inspection of the stockholder list.",
-      "llm_weight": 1.0,
-      "evidence": "Second WHEREAS",
-      "reasoning": "Explicit commitment in recitals."
-    },
-    {
-      "id": "C_10",
-      "formula": "P_9",
-      "translation": "Inspection permission is subject to Stockholder executing the Agreement.",
-      "llm_weight": 1.0,
-      "evidence": "Second WHEREAS",
-      "reasoning": "Explicit condition stated."
-    },
-    {
-      "id": "C_11",
-      "formula": "P_9 ⟹ (P_8)",
-      "translation": "The inspection permission described is conditional on execution of the Agreement.",
-      "llm_weight": 0.8,
-      "evidence": "Second WHEREAS",
-      "reasoning": "Text explicitly links permission to the condition; formal conditional direction is inferred but aligns with 'subject to'."
-    },
-    {
-      "id": "C_12",
-      "formula": "P_10",
-      "translation": "The stockholder list and derived info/analyses are 'Confidential Material'.",
-      "llm_weight": 1.0,
-      "evidence": "Second WHEREAS (definition of Confidential Material)",
+      "llm_weight": 1,
+      "evidence": "First paragraph",
       "reasoning": "Explicit definition."
     },
     {
-      "id": "C_13",
-      "formula": "P_11",
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Each is individually a Party.",
+      "llm_weight": 1,
+      "evidence": "First paragraph",
+      "reasoning": "Explicit definition."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Collectively they are the Parties.",
+      "llm_weight": 1,
+      "evidence": "First paragraph",
+      "reasoning": "Explicit definition."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "On or about April 30, 2015, Stockholder made the Demand to inspect the stockholder list.",
+      "llm_weight": 0.95,
+      "evidence": "WHEREAS clause about April 30, 2015",
+      "reasoning": "Recital; treated as factual background (very strong but 'on or about' introduces slight looseness)."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_7",
+      "translation": "Company agreed to allow inspection subject to Stockholder executing the Agreement.",
+      "llm_weight": 0.95,
+      "evidence": "Second WHEREAS clause",
+      "reasoning": "Recital of the parties’ understanding; strong but framed as background."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_8",
+      "translation": "The stockholder list plus derived analyses are 'Confidential Material'.",
+      "llm_weight": 1,
+      "evidence": "Second WHEREAS clause (definition parenthetical)",
+      "reasoning": "Explicit defined term."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_9",
       "translation": "Company believes the stockholder list contains confidential information.",
-      "llm_weight": 1.0,
-      "evidence": "Third WHEREAS",
-      "reasoning": "Directly stated belief."
+      "llm_weight": 0.9,
+      "evidence": "Third WHEREAS clause",
+      "reasoning": "Explicitly stated as a belief; strong as to the belief itself, not necessarily as to truth of confidentiality."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_10",
+      "translation": "Agreement date is April 30, 2015.",
+      "llm_weight": 0.95,
+      "evidence": "Preamble: “this 30th day of April 2015”",
+      "reasoning": "Stated effective/signing date; strong but could be formal recital."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10 ⟹ P_11",
+      "translation": "If dated April 30, 2015, then it is not dated April 29, 2015.",
+      "llm_weight": 1,
+      "evidence": "Preamble date",
+      "reasoning": "Mutual exclusivity of dates in ordinary usage."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_10 ⟹ P_12",
+      "translation": "If dated April 30, 2015, then it is not dated May 1, 2015.",
+      "llm_weight": 1,
+      "evidence": "Preamble date",
+      "reasoning": "Mutual exclusivity of dates in ordinary usage."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_13",
+      "translation": "Confidential Material is produced only for purposes related to Stockholder’s interests as stockholder.",
+      "llm_weight": 1,
+      "evidence": "Section 1",
+      "reasoning": "Contract term: “Stockholder agrees … only for purposes …”."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_13 ⟹ P_14",
+      "translation": "Only-for-related-purpose implies for-related-purpose.",
+      "llm_weight": 1,
+      "evidence": "Section 1",
+      "reasoning": "Semantic entailment: 'only for X' entails 'for X'."
     },
     {
       "id": "C_14",
-      "formula": "P_11 ⟹ P_12",
-      "translation": "If Company believes the list contains confidential information, then (possibly) the list contains confidential information.",
-      "llm_weight": 0.35,
-      "evidence": "Third WHEREAS",
-      "reasoning": "Belief weakly supports the factual claim but does not entail it."
+      "formula": "P_13 ⟹ ¬P_15",
+      "translation": "Only-for-related-purpose excludes production for other purposes.",
+      "llm_weight": 1,
+      "evidence": "Section 1 (word “only”)",
+      "reasoning": "Semantic entailment of exclusivity."
     },
     {
       "id": "C_15",
-      "formula": "P_12 ⟹ ¬P_13",
-      "translation": "If the stockholder list contains confidential information, then it is not non-confidential.",
-      "llm_weight": 1.0,
-      "evidence": "Third WHEREAS; auxiliary alternative added",
-      "reasoning": "Confidential vs not confidential are ordinary-language opposites."
+      "formula": "P_16",
+      "translation": "Stockholder shall not use Confidential Material (or derivatives) for any other purpose.",
+      "llm_weight": 1,
+      "evidence": "Section 1",
+      "reasoning": "Direct 'shall not' prohibition."
     },
     {
       "id": "C_16",
-      "formula": "P_17",
-      "translation": "Confidential Material is produced only for purposes reasonably related to Stockholder's interests as a stockholder.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Explicit 'only for purposes' restriction."
+      "formula": "P_16 ⟹ P_17",
+      "translation": "If Stockholder 'shall not' use it for other purposes, then (non-modally) Stockholder does not use it for other purposes.",
+      "llm_weight": 1,
+      "evidence": "Section 1",
+      "reasoning": "Modal-to-base linkage required by the methodology."
     },
     {
       "id": "C_17",
-      "formula": "P_17 ⟹ P_18",
-      "translation": "If it is produced only for those purposes, then it is produced for those purposes.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Logical weakening: 'only for X' entails 'for X'."
+      "formula": "P_18",
+      "translation": "Stockholder will not disclose Confidential Material except as provided.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Direct 'will not' contractual obligation."
     },
     {
       "id": "C_18",
-      "formula": "P_19",
-      "translation": "Stockholder shall not utilize Confidential Material for any other purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Clear prohibition ('shall not')."
+      "formula": "P_18 ⟹ P_19",
+      "translation": "If Stockholder 'will not' disclose, then (non-modally) Stockholder does not disclose (except as provided).",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage."
     },
     {
       "id": "C_19",
-      "formula": "P_20 ⟹ P_19",
-      "translation": "If Stockholder does not utilize it for other purposes, then it is consistent with the obligation not to.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Actual non-use for other purposes implies satisfaction of the stated prohibition (strong-to-weaker)."
+      "formula": "P_20",
+      "translation": "In no event shall Stockholder publicly disclose names of other stockholders.",
+      "llm_weight": 1,
+      "evidence": "Section 2 (provided that clause)",
+      "reasoning": "Absolute prohibition language: 'in no event shall'."
     },
     {
       "id": "C_20",
-      "formula": "P_20",
-      "translation": "Stockholder does not utilize Confidential Material for any other purpose.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 1",
-      "reasoning": "Text states an obligation; it only moderately supports the factual claim of compliance."
+      "formula": "P_20 ⟹ P_21",
+      "translation": "If Stockholder 'shall not' publicly disclose names, then Stockholder does not publicly disclose names.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage."
     },
     {
       "id": "C_21",
-      "formula": "P_21",
-      "translation": "Stockholder shall not utilize other information produced by the Company for any other purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited."
+      "formula": "P_22",
+      "translation": "In no event shall Stockholder publicly disclose addresses of other stockholders.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Absolute prohibition language."
     },
     {
       "id": "C_22",
-      "formula": "P_22 ⟹ P_21",
-      "translation": "If Stockholder does not use such other information for other purposes, then the prohibition holds.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker relation between factual compliance and obligation."
+      "formula": "P_22 ⟹ P_23",
+      "translation": "If Stockholder 'shall not' publicly disclose addresses, then Stockholder does not publicly disclose addresses.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage."
     },
     {
       "id": "C_23",
-      "formula": "P_22",
-      "translation": "Stockholder does not utilize other information for any other purpose.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; compliance is plausible but not guaranteed by the text."
+      "formula": "P_24",
+      "translation": "In no event shall Stockholder publicly disclose holdings of other stockholders.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Absolute prohibition language."
     },
     {
       "id": "C_24",
-      "formula": "P_23",
-      "translation": "Stockholder shall not use anything derived from Confidential Material for any other purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited."
+      "formula": "P_24 ⟹ P_25",
+      "translation": "If Stockholder 'shall not' publicly disclose holdings, then Stockholder does not publicly disclose holdings.",
+      "llm_weight": 1,
+      "evidence": "Section 2",
+      "reasoning": "Modal-to-base linkage."
     },
     {
       "id": "C_25",
-      "formula": "P_24 ⟹ P_23",
-      "translation": "If Stockholder does not do it, then the prohibition is satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker compliance relation."
+      "formula": "P_26 ⟹ P_27",
+      "translation": "If required by legal process to disclose, Stockholder will give notice within 2 business days.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Explicit conditional obligation: “If … required … will provide … within 2 business days”."
     },
     {
       "id": "C_26",
-      "formula": "P_24",
-      "translation": "Stockholder does not use derived-from-Confidential-Material items for other purposes.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; factual compliance is uncertain."
+      "formula": "P_27 ⟹ P_28",
+      "translation": "If Stockholder will provide prompt notice, then (non-modally) Stockholder provides prompt notice.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage."
     },
     {
       "id": "C_27",
-      "formula": "P_25",
-      "translation": "Stockholder shall not use anything derived from other Company-produced information for other purposes.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Expressly prohibited."
+      "formula": "P_29",
+      "translation": "Company may seek a protective order or other remedy.",
+      "llm_weight": 0.9,
+      "evidence": "Section 3",
+      "reasoning": "Permission ('may') is strongly supported, but not an obligation."
     },
     {
       "id": "C_28",
-      "formula": "P_26 ⟹ P_25",
-      "translation": "If Stockholder does not do it, then the prohibition is satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 1",
-      "reasoning": "Strong-to-weaker compliance relation."
+      "formula": "P_30 ⟹ P_29",
+      "translation": "If Company seeks a protective order/remedy, then it is permitted that Company may seek it.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "If the action occurs, the permission statement is satisfied (semantic consistency)."
     },
     {
       "id": "C_29",
-      "formula": "P_26",
-      "translation": "Stockholder does not use derived-from-other-information items for other purposes.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 1",
-      "reasoning": "Obligation stated; compliance not asserted as fact."
+      "formula": "P_31 ⟹ ¬P_32",
+      "translation": "If a protective order/remedy is obtained, then it is not the case that it is not obtained.",
+      "llm_weight": 1,
+      "evidence": "Section 3 (obtained vs not obtained alternatives)",
+      "reasoning": "Direct semantic opposition."
     },
     {
       "id": "C_30",
-      "formula": "P_27",
-      "translation": "Stockholder will not disclose Confidential Material except as provided in the Agreement.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant ('will not')."
+      "formula": "P_32 ⟹ ¬P_31",
+      "translation": "If a protective order/remedy is not obtained, then it is not obtained (i.e., not obtained excludes obtained).",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Direct semantic opposition."
     },
     {
       "id": "C_31",
-      "formula": "P_28 ⟹ P_27",
-      "translation": "If Stockholder does not disclose, then it aligns with the covenant not to disclose.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Actual non-disclosure is stronger than commitment/obligation."
+      "formula": "(P_32 ∨ P_33) ⟹ P_34",
+      "translation": "If no protective order/remedy is obtained or Company waives compliance, Stockholder may furnish only legally required Confidential Material.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Directly stated conditional permission."
     },
     {
       "id": "C_32",
-      "formula": "P_28",
-      "translation": "Stockholder does not disclose Confidential Material except as allowed.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 2",
-      "reasoning": "Obligation stated; compliance as fact is not guaranteed."
+      "formula": "P_34 ⟹ P_35",
+      "translation": "If Stockholder may furnish only legally required material (under the condition), then (non-modally) Stockholder furnishes only legally required material (under the condition).",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage required by methodology."
     },
     {
       "id": "C_33",
-      "formula": "P_29",
-      "translation": "Stockholder will not publish Confidential Material except as allowed.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant."
-    },
-    {
-      "id": "C_34",
-      "formula": "P_30 ⟹ P_29",
-      "translation": "If Stockholder does not publish, then it aligns with the covenant not to publish.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Strong-to-weaker relation."
-    },
-    {
-      "id": "C_35",
-      "formula": "P_30",
-      "translation": "Stockholder does not publish Confidential Material except as allowed.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 2",
-      "reasoning": "Obligation does not entail compliance."
-    },
-    {
-      "id": "C_36",
-      "formula": "P_31",
-      "translation": "Stockholder will not communicate Confidential Material except as allowed.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Express covenant."
-    },
-    {
-      "id": "C_37",
-      "formula": "P_32 ⟹ P_31",
-      "translation": "If Stockholder does not communicate, then it aligns with the covenant not to communicate.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Strong-to-weaker relation."
-    },
-    {
-      "id": "C_38",
-      "formula": "P_32",
-      "translation": "Stockholder does not communicate Confidential Material except as allowed.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 2",
-      "reasoning": "Obligation stated; compliance uncertain."
-    },
-    {
-      "id": "C_39",
-      "formula": "P_33",
-      "translation": "In no event shall Stockholder publicly disclose names, addresses, holdings of other stockholders.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Absolute prohibition language ('in no event shall')."
-    },
-    {
-      "id": "C_40",
-      "formula": "P_34 ⟹ P_33",
-      "translation": "If Stockholder does not publicly disclose those details, then it aligns with the prohibition.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 2",
-      "reasoning": "Factual non-disclosure is stronger than obligation."
-    },
-    {
-      "id": "C_41",
-      "formula": "P_34",
-      "translation": "Stockholder does not publicly disclose other stockholders' names/addresses/holdings.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 2",
-      "reasoning": "Prohibition stated; compliance not explicitly asserted."
-    },
-    {
-      "id": "C_42",
-      "formula": "P_35 ⟹ P_36",
-      "translation": "If Stockholder is required by legal process to disclose, then Stockholder will give prompt notice within 2 business days.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Explicit 'If ... required ... [then] will provide ... within 2 business days'."
-    },
-    {
-      "id": "C_43",
-      "formula": "P_37 ⟹ P_36",
-      "translation": "If Stockholder provides notice within 2 business days, then it satisfies the 'will provide notice' obligation.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Factual performance implies the weaker commitment."
-    },
-    {
-      "id": "C_44",
       "formula": "P_36",
-      "translation": "Stockholder will provide prompt notice within 2 business days.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Strong, explicit covenant ('will')."
-    },
-    {
-      "id": "C_45",
-      "formula": "P_37",
-      "translation": "Stockholder provides prompt notice within 2 business days.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 3",
-      "reasoning": "Obligation does not entail that it actually occurs."
-    },
-    {
-      "id": "C_46",
-      "formula": "P_38",
-      "translation": "Company may seek a protective order or other remedy.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Explicit permission ('may')."
-    },
-    {
-      "id": "C_47",
-      "formula": "P_39 ⟹ P_38",
-      "translation": "If Company seeks such an order/remedy, then it is consistent with being permitted to do so.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Doing X implies it was (at least) permitted by the 'may' statement."
-    },
-    {
-      "id": "C_48",
-      "formula": "P_39",
-      "translation": "Company seeks a protective order or other remedy.",
-      "llm_weight": 0.4,
-      "evidence": "Clause 3",
-      "reasoning": "Text grants an option; it does not assert the Company will actually pursue it."
-    },
-    {
-      "id": "C_49",
-      "formula": "P_40",
-      "translation": "Company may waive compliance with the Agreement.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Explicitly stated as an option."
-    },
-    {
-      "id": "C_50",
-      "formula": "P_41 ⟹ P_40",
-      "translation": "If Company waives compliance, then it is consistent with its ability to waive compliance.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Actual waiver implies permissibility."
-    },
-    {
-      "id": "C_51",
-      "formula": "P_41",
-      "translation": "Company waives compliance with the Agreement.",
-      "llm_weight": 0.4,
-      "evidence": "Clause 3",
-      "reasoning": "The clause allows waiver; it does not state waiver occurs."
-    },
-    {
-      "id": "C_52",
-      "formula": "P_42",
-      "translation": "If protective order/remedy is not obtained, Stockholder may furnish only legally required Confidential Material.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Explicit conditional permission ('may furnish only... legally required')."
-    },
-    {
-      "id": "C_53",
-      "formula": "P_43 ⟹ P_42",
-      "translation": "If Stockholder furnishes only what is legally required, then it aligns with being permitted to do so.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Factual doing implies permissibility."
-    },
-    {
-      "id": "C_54",
-      "formula": "P_43",
-      "translation": "If protective order/remedy is not obtained, Stockholder furnishes only legally required Confidential Material.",
-      "llm_weight": 0.4,
-      "evidence": "Clause 3",
-      "reasoning": "Text permits/limits what may be furnished; it does not assert that furnishing occurs."
-    },
-    {
-      "id": "C_55",
-      "formula": "P_44",
-      "translation": "Stockholder must exercise best efforts to obtain assurance of confidential treatment.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
+      "translation": "Stockholder must use best efforts to obtain confidential treatment assurance.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
       "reasoning": "Explicit 'must' obligation."
     },
     {
-      "id": "C_56",
-      "formula": "P_45 ⟹ P_44",
-      "translation": "If Stockholder exercises best efforts, then the 'must' obligation is satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 3",
-      "reasoning": "Factual performance implies the weaker normative requirement holds."
+      "id": "C_34",
+      "formula": "P_36 ⟹ P_37",
+      "translation": "If Stockholder must exercise best efforts, then Stockholder exercises best efforts.",
+      "llm_weight": 1,
+      "evidence": "Section 3",
+      "reasoning": "Modal-to-base linkage."
     },
     {
-      "id": "C_57",
-      "formula": "P_45",
-      "translation": "Stockholder exercises best efforts to obtain assurance of confidential treatment.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 3",
-      "reasoning": "Obligation stated; compliance not assured."
+      "id": "C_35",
+      "formula": "P_38",
+      "translation": "Each receiving Party submits to exclusive jurisdiction of Delaware Court of Chancery for enforcement/related actions.",
+      "llm_weight": 1,
+      "evidence": "Section 4",
+      "reasoning": "Explicit 'agrees to submit to the exclusive jurisdiction' clause."
     },
     {
-      "id": "C_58",
+      "id": "C_36",
+      "formula": "P_38 ⟹ P_39",
+      "translation": "Submitting to exclusive jurisdiction of Delaware Court of Chancery implies exclusive jurisdiction is in that court.",
+      "llm_weight": 1,
+      "evidence": "Section 4",
+      "reasoning": "Semantic entailment (P_39 is a distilled restatement of P_38)."
+    },
+    {
+      "id": "C_37",
+      "formula": "P_39 ⟹ P_40",
+      "translation": "If exclusive jurisdiction is in Delaware Court of Chancery, it is not in California state courts.",
+      "llm_weight": 1,
+      "evidence": "Section 4 (exclusive jurisdiction)",
+      "reasoning": "Mutual exclusivity of exclusive forum selections in ordinary legal meaning."
+    },
+    {
+      "id": "C_38",
+      "formula": "P_39 ⟹ P_41",
+      "translation": "If exclusive jurisdiction is in Delaware Court of Chancery, it is not in New York state courts.",
+      "llm_weight": 1,
+      "evidence": "Section 4 (exclusive jurisdiction)",
+      "reasoning": "Mutual exclusivity of exclusive forum selections in ordinary legal meaning."
+    },
+    {
+      "id": "C_39",
+      "formula": "P_42",
+      "translation": "Each Party waives objections to personal jurisdiction/venue in Delaware Court of Chancery.",
+      "llm_weight": 1,
+      "evidence": "Section 4",
+      "reasoning": "Explicit waiver clause."
+    },
+    {
+      "id": "C_40",
+      "formula": "P_43",
+      "translation": "Company lacks adequate remedy at law for Stockholder breach.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Explicit agreement: “Each Party agrees … does not have an adequate remedy at law …”."
+    },
+    {
+      "id": "C_41",
+      "formula": "P_44",
+      "translation": "Company will suffer irreparable harm upon Stockholder breach.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Explicitly stated consequence."
+    },
+    {
+      "id": "C_42",
+      "formula": "P_44 ⟹ P_45",
+      "translation": "If Company will suffer irreparable harm, then (non-modally) Company suffers irreparable harm.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage."
+    },
+    {
+      "id": "C_43",
       "formula": "P_46",
-      "translation": "Receiving Parties submit to exclusive jurisdiction of the Delaware Court of Chancery for enforcement-related actions.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4",
-      "reasoning": "Explicit exclusive jurisdiction agreement."
+      "translation": "Company will be entitled to specific performance upon Stockholder breach.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Explicit entitlement language."
     },
     {
-      "id": "C_59",
+      "id": "C_44",
       "formula": "P_46 ⟹ P_47",
-      "translation": "If Parties submit to exclusive jurisdiction in Delaware Chancery, then exclusive jurisdiction is in Delaware Chancery.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4",
-      "reasoning": "Direct semantic entailment from the phrasing."
+      "translation": "If Company will be entitled to specific performance, then (non-modally) Company is entitled to specific performance.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage."
     },
     {
-      "id": "C_60",
-      "formula": "P_47 ⟹ ¬P_48",
-      "translation": "If exclusive jurisdiction is Delaware Chancery, then it is not a federal court.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4; auxiliary alternative forum added",
-      "reasoning": "Exclusivity implies exclusion of other forums."
+      "id": "C_45",
+      "formula": "P_48",
+      "translation": "Company will be entitled to injunctive relief upon Stockholder breach.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Explicit entitlement language."
     },
     {
-      "id": "C_61",
-      "formula": "P_47 ⟹ ¬P_49",
-      "translation": "If exclusive jurisdiction is Delaware Chancery, then it is not New York state courts.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4; auxiliary alternative forum added",
-      "reasoning": "Exclusivity implies exclusion of other forums."
+      "id": "C_46",
+      "formula": "P_48 ⟹ P_49",
+      "translation": "If Company will be entitled to injunctive relief, then (non-modally) Company is entitled to injunctive relief.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
+      "reasoning": "Modal-to-base linkage."
     },
     {
-      "id": "C_62",
+      "id": "C_47",
       "formula": "P_50",
-      "translation": "Each Party waives objections to personal jurisdiction in the Court of Chancery.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver."
-    },
-    {
-      "id": "C_63",
-      "formula": "P_51",
-      "translation": "Each Party waives objections to venue in the Court of Chancery.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver."
-    },
-    {
-      "id": "C_64",
-      "formula": "P_52",
-      "translation": "Each Party waives objections based on inconvenience of the forum.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 4",
-      "reasoning": "Explicit waiver."
-    },
-    {
-      "id": "C_65",
-      "formula": "P_53",
-      "translation": "Company lacks an adequate remedy at law if Stockholder breaches.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
+      "translation": "Specific performance/injunctive relief are not exclusive remedies.",
+      "llm_weight": 1,
+      "evidence": "Section 5",
       "reasoning": "Explicitly stated."
     },
     {
-      "id": "C_66",
+      "id": "C_48",
+      "formula": "P_51",
+      "translation": "Agreement may not be amended/waived/etc. except by signed writing referring to the Agreement.",
+      "llm_weight": 1,
+      "evidence": "Section 6",
+      "reasoning": "Explicit contractual restriction."
+    },
+    {
+      "id": "C_49",
+      "formula": "P_51 ⟹ P_52",
+      "translation": "If Agreement 'may not' be amended except by signed writing, then (non-modally) it is not amended except by signed writing.",
+      "llm_weight": 1,
+      "evidence": "Section 6",
+      "reasoning": "Modal-to-base linkage."
+    },
+    {
+      "id": "C_50",
+      "formula": "P_53",
+      "translation": "Waiver of one breach is not waiver of another.",
+      "llm_weight": 1,
+      "evidence": "Section 6",
+      "reasoning": "Explicitly stated rule."
+    },
+    {
+      "id": "C_51",
       "formula": "P_54",
-      "translation": "If Stockholder breaches, Company will suffer irreparable harm.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Explicitly stated ('will suffer irreparable harm')."
+      "translation": "Delay/failure to exercise rights is not a waiver.",
+      "llm_weight": 1,
+      "evidence": "Section 6",
+      "reasoning": "Explicit 'shall not operate as a waiver' rule."
     },
     {
-      "id": "C_67",
-      "formula": "P_55 ⟹ P_54",
-      "translation": "If Company suffers irreparable harm (in that event), then it is consistent with 'will suffer irreparable harm'.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Factual harm implies the weaker future/commitment phrasing."
-    },
-    {
-      "id": "C_68",
+      "id": "C_52",
       "formula": "P_55",
-      "translation": "If Stockholder breaches, Company suffers irreparable harm.",
-      "llm_weight": 0.65,
-      "evidence": "Clause 5",
-      "reasoning": "Text states an expected legal characterization; factual occurrence is not independently established."
+      "translation": "Agreement binds and benefits Parties and related persons (agents/heirs/etc.).",
+      "llm_weight": 1,
+      "evidence": "Section 7",
+      "reasoning": "Explicitly stated."
     },
     {
-      "id": "C_69",
+      "id": "C_53",
       "formula": "P_56",
-      "translation": "If Stockholder breaches, Company will be entitled to specific performance.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Explicit entitlement statement."
+      "translation": "Agreement governed by Delaware law.",
+      "llm_weight": 1,
+      "evidence": "Section 8",
+      "reasoning": "Explicit governing-law clause ('shall')."
     },
     {
-      "id": "C_70",
-      "formula": "P_57 ⟹ P_56",
-      "translation": "If Company is entitled to specific performance, then it aligns with 'will be entitled'.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Stronger factual entitlement implies the weaker 'will be entitled' form."
+      "id": "C_54",
+      "formula": "P_56 ⟹ P_57",
+      "translation": "If governed by Delaware law, it is not governed by California law.",
+      "llm_weight": 1,
+      "evidence": "Section 8",
+      "reasoning": "Mutually exclusive governing-law selection (auxiliary negative alternative)."
     },
     {
-      "id": "C_71",
-      "formula": "P_57",
-      "translation": "If Stockholder breaches, Company is entitled to specific performance.",
-      "llm_weight": 0.75,
-      "evidence": "Clause 5",
-      "reasoning": "Entitlement is asserted as part of the agreement; slightly less than 1.0 because it is contingent on breach and enforceability."
+      "id": "C_55",
+      "formula": "P_56 ⟹ P_58",
+      "translation": "If governed by Delaware law, it is not governed by New York law.",
+      "llm_weight": 1,
+      "evidence": "Section 8",
+      "reasoning": "Mutually exclusive governing-law selection (auxiliary negative alternative)."
     },
     {
-      "id": "C_72",
-      "formula": "P_58",
-      "translation": "If Stockholder breaches, Company will be entitled to injunctive relief.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Explicit entitlement statement."
-    },
-    {
-      "id": "C_73",
-      "formula": "P_59 ⟹ P_58",
-      "translation": "If Company is entitled to injunctive relief, then it aligns with 'will be entitled'.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Stronger factual entitlement implies the weaker form."
-    },
-    {
-      "id": "C_74",
+      "id": "C_56",
       "formula": "P_59",
-      "translation": "If Stockholder breaches, Company is entitled to injunctive relief.",
-      "llm_weight": 0.75,
-      "evidence": "Clause 5",
-      "reasoning": "Entitlement asserted as contractual remedy; still contingent on breach/enforcement."
+      "translation": "Agreement may be executed in multiple counterparts and still be one agreement.",
+      "llm_weight": 0.9,
+      "evidence": "Section 9",
+      "reasoning": "Permission/authorization ('may') rather than an obligation."
     },
     {
-      "id": "C_75",
-      "formula": "P_60",
-      "translation": "Those remedies are not exclusive; other remedies may also be available.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 5",
-      "reasoning": "Explicit non-exclusivity language."
+      "id": "C_57",
+      "formula": "P_59 ⟹ P_60",
+      "translation": "If it may be executed in multiple counterparts (and be one agreement), then (non-modally) it is executed in multiple counterparts (and is one agreement).",
+      "llm_weight": 1,
+      "evidence": "Section 9",
+      "reasoning": "Modal-to-base linkage."
     },
     {
-      "id": "C_76",
+      "id": "C_58",
       "formula": "P_61",
-      "translation": "Agreement may not be amended except by a signed writing referring specifically to it.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 6",
-      "reasoning": "Explicit amendment restriction."
-    },
-    {
-      "id": "C_77",
-      "formula": "P_62 ⟹ P_61",
-      "translation": "If it is not amended except by such a writing, then it is consistent with 'may not be amended' except by such writing.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 6",
-      "reasoning": "Stronger factual restriction implies the modal restriction."
-    },
-    {
-      "id": "C_78",
-      "formula": "P_62",
-      "translation": "Agreement is not amended except by a signed writing referring specifically to it.",
-      "llm_weight": 0.7,
-      "evidence": "Clause 6",
-      "reasoning": "Clause states a rule for valid amendments; factual state of being unamended is not directly asserted."
-    },
-    {
-      "id": "C_79",
-      "formula": "P_63",
-      "translation": "Waiver of one breach is not waiver of any other breach.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 6",
-      "reasoning": "Explicit anti-implied-waiver provision."
-    },
-    {
-      "id": "C_80",
-      "formula": "P_64",
-      "translation": "No failure or delay operates as a waiver.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 6",
-      "reasoning": "Explicit statement."
-    },
-    {
-      "id": "C_81",
-      "formula": "P_65",
-      "translation": "Agreement is binding on Parties and specified related persons (agents, heirs, successors, assigns, etc.).",
-      "llm_weight": 1.0,
-      "evidence": "Clause 7",
-      "reasoning": "Explicit binding/inurement clause."
-    },
-    {
-      "id": "C_82",
-      "formula": "P_66",
-      "translation": "Agreement is governed by Delaware law.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 8",
-      "reasoning": "Explicit governing-law clause."
-    },
-    {
-      "id": "C_83",
-      "formula": "P_66 ⟹ P_67",
-      "translation": "If governed by Delaware law, then it is not governed by California law.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 8; auxiliary alternative added",
-      "reasoning": "Single governing-law designation excludes typical alternative states in ordinary contract reading."
-    },
-    {
-      "id": "C_84",
-      "formula": "P_66 ⟹ P_68",
-      "translation": "If governed by Delaware law, then it is not governed by New York law.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 8; auxiliary alternative added",
-      "reasoning": "Mutual exclusivity of governing law choices."
-    },
-    {
-      "id": "C_85",
-      "formula": "P_69",
-      "translation": "Agreement may be executed in multiple counterparts.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 9",
-      "reasoning": "Explicit permissive statement."
-    },
-    {
-      "id": "C_86",
-      "formula": "P_70 ⟹ P_69",
-      "translation": "If it is executed in multiple counterparts, then it is permitted to be executed in multiple counterparts.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 9",
-      "reasoning": "Factual execution implies permissibility."
-    },
-    {
-      "id": "C_87",
-      "formula": "P_70",
-      "translation": "Agreement is executed in multiple counterparts.",
-      "llm_weight": 0.4,
-      "evidence": "Clause 9",
-      "reasoning": "The clause allows counterparts; it does not say they were actually used."
-    },
-    {
-      "id": "C_88",
-      "formula": "P_71",
-      "translation": "Agreement is the entire agreement regarding the subject matter.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 10",
+      "translation": "This is the entire agreement and it supersedes prior agreements/understandings on the subject matter.",
+      "llm_weight": 1,
+      "evidence": "Section 10",
       "reasoning": "Explicit integration clause."
     },
     {
-      "id": "C_89",
-      "formula": "P_72",
-      "translation": "Agreement supersedes all prior agreements/understandings on the subject matter.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 10",
-      "reasoning": "Explicit supersession statement."
+      "id": "C_59",
+      "formula": "P_62",
+      "translation": "Agreement will be deemed mutually prepared by the Parties.",
+      "llm_weight": 1,
+      "evidence": "Section 11",
+      "reasoning": "Explicit deeming statement."
     },
     {
-      "id": "C_90",
-      "formula": "P_71 ⟹ P_72",
-      "translation": "If it is the entire agreement, it (typically) supersedes prior agreements on that subject matter.",
-      "llm_weight": 0.9,
-      "evidence": "Clause 10",
-      "reasoning": "Here both are explicitly stated; also a common semantic linkage of integration clauses."
+      "id": "C_60",
+      "formula": "P_62 ⟹ P_63",
+      "translation": "If it will be deemed mutually prepared, then (non-modally) it is deemed mutually prepared.",
+      "llm_weight": 1,
+      "evidence": "Section 11",
+      "reasoning": "Modal-to-base linkage."
     },
     {
-      "id": "C_91",
-      "formula": "P_73",
-      "translation": "Agreement is deemed mutually prepared by the Parties.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 11",
-      "reasoning": "Explicit deeming language."
+      "id": "C_61",
+      "formula": "P_64",
+      "translation": "Agreement will not be construed against either party due to authorship.",
+      "llm_weight": 1,
+      "evidence": "Section 11",
+      "reasoning": "Explicit construction clause."
     },
     {
-      "id": "C_92",
-      "formula": "P_74",
-      "translation": "Agreement will not be construed against either Party due to authorship.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 11",
-      "reasoning": "Explicit interpretive rule in the contract."
-    },
-    {
-      "id": "C_93",
-      "formula": "P_75 ⟹ P_74",
-      "translation": "If it is not construed against either Party due to authorship, then it aligns with 'will not be construed' language.",
-      "llm_weight": 1.0,
-      "evidence": "Clause 11",
-      "reasoning": "Stronger factual claim implies the modalized claim."
-    },
-    {
-      "id": "C_94",
-      "formula": "P_75",
-      "translation": "Agreement is not construed against either Party due to authorship.",
-      "llm_weight": 0.7,
-      "evidence": "Clause 11",
-      "reasoning": "The clause sets an interpretive rule; actual judicial construction is a future application, so factual version is weaker."
+      "id": "C_62",
+      "formula": "P_64 ⟹ P_65",
+      "translation": "If it will not be construed against either party, then (non-modally) it is not construed against either party.",
+      "llm_weight": 1,
+      "evidence": "Section 11",
+      "reasoning": "Modal-to-base linkage."
     }
   ]
 }
