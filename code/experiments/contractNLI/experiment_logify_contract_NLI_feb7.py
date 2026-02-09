@@ -5,7 +5,7 @@ experiment_logify_contract_NLIb.py
 Debug-focused + metrics-rich experiment runner for ContractNLI-style JSON files.
 
 Simple folder structure in this directory:
-- contract-nli/   -> dataset files (train/dev/test)
+- dataset/   -> dataset files (train/dev/test)
 - cache/          -> cached logified files
 - results/        -> experiment output JSON and optional debug reports
 

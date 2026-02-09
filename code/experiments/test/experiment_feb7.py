@@ -5,7 +5,7 @@ experiment_logify_contract_NLIb.py
 Debug-focused + metrics-rich experiment runner for ContractNLI-style JSON files.
 
 Simple folder structure in this directory:
-- contract-nli/   -> dataset files (train/dev/test)
+- dataset/   -> dataset files (train/dev/test)
 - cache/          -> cached logified files
 - results/        -> experiment output JSON and optional debug reports
 
@@ -48,13 +48,10 @@ from config.retrieval_config import (
     TRANSLATE_MODEL,
 )
 
-
-
 DATASET_DIR = _script_dir / "dataset"
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
-DEFAULT_DATASET_PATH = DATASET_DIR / "dev.json"
-DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
+DEFAULT_DATASET_PATH = DATASET_DIR / "dataset/data_test.json"
 
 
 @dataclass
