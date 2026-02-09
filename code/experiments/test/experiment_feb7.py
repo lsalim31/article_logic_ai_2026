@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-experiment_logify_contract_NLIb.py
+experiment code
 
 Debug-focused + metrics-rich experiment runner for ContractNLI-style JSON files.
 
@@ -10,9 +10,9 @@ Simple folder structure in this directory:
 - results/        -> experiment output JSON and optional debug reports
 
 Usage:
-    python experiment_logify_contract_NLIb.py --dataset-path contract-nli/dev.json
-    python experiment_logify_contract_NLIb.py --dataset-path contract-nli/test.json --doc-id 3 --hypothesis-key nda-1
-    python experiment_logify_contract_NLIb.py --dataset-path contract-nli/dev.json --doc-ids 3,7,9 --verbose
+    python experiment_feb7.py --dataset-path dataset/dev.json
+    python experiment_feb7.py --dataset-path dataset/data_test.json --doc-id 3 --hypothesis-key nda-1
+    python experiment_feb7.py --dataset-path dataset/dev.json --doc-ids 3,7,9 --verbose
 
 Environment:
     OPENROUTER_API_KEY: API key (used if --api-key not provided)
@@ -51,8 +51,8 @@ from config.retrieval_config import (
 DATASET_DIR = _script_dir / "dataset"
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
-DEFAULT_DATASET_PATH = DATASET_DIR / "dataset/data_test.json"
-
+DEFAULT_DATASET_PATH = DATASET_DIR / "data_test.json"
+DEFAULT_DOC_IDS = 1
 
 @dataclass
 class QueryDebugResult:
@@ -628,7 +628,7 @@ def run_debug_experiment(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Debug + metrics-rich ContractNLI experiment runner")
+    parser = argparse.ArgumentParser(description="Debug + metrics-rich experiment runner")
     parser.add_argument(
         "--dataset-path",
         default=str(DEFAULT_DATASET_PATH),
