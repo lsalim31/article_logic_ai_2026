@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
 
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
-from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE
+from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
@@ -412,6 +412,13 @@ def generate_candidates_llm(
         print(f"  [LLM ERROR] Generation failed: {type(e).__name__}: {e}")
         return []
 
+def load_prompt_template(prompt_name: str) -> str:
+    prompt_path = code_dir / "prompts" / prompt_name
+    if not prompt_path.exists():
+        raise FileNotFoundError(f"Prompt file not found: {prompt_path}")
+    return prompt_path.read_text(encoding="utf-8")
+
+
 
 def build_prompt(query: str, props_text: str, available_ids: str, query_is_negative: bool) -> str:
     """
@@ -420,113 +427,14 @@ def build_prompt(query: str, props_text: str, available_ids: str, query_is_negat
     
     polarity_str = "NEGATIVE (prohibition/restriction)" if query_is_negative else "AFFIRMATIVE"
     
-    prompt = f"""You are a logic translator for Natural Language Inference (NLI). 
-    Given a hypothesis and a set of atomic propositions from a legal document, 
-    translate the hypothesis into a propositional formula.
-
-    === AVAILABLE PROPOSITIONS ===
-    {props_text}
-    === HYPOTHESIS TO CHECK ===
-    "{query}"
-
-    === TASK ===
-    Translate the above hypothesis into a propositional formula using ONLY these proposition IDs: {available_ids}
-
-    The formula will be evaluated to determine:
-    - TRUE: The hypothesis is entailed (follows from the document)
-    - FALSE: The hypothesis is contradicted (negation follows from the document)
-    - UNCERTAIN: Neither entailment nor contradiction can be determined
-
-    === EXAMPLES ===
-
-    Example 1 - Simple match:
-    Hypothesis: "The receiving party shall keep information confidential"
-    If P_6 states "The Receiving Party shall not disclose Confidential Information..."
-    Output: {{"formula": "P_6", "query_mode": "entailment", "translation": "The receiving party shall not disclose confidential information", "reasoning": "'Shall' indicates obligation - check if this is entailed"}}
-
-    Example 2 - Negation:
-    Hypothesis: "The receiving party shall not reverse engineer any information"
-    If P_9 states "The Receiving Party shall not alter, modify, disassemble, reverse engineer..."
-    Output: {{"formula": "P_9", "query_mode": "entailment", "translation": "The receiving party shall not reverse engineer information", "reasoning": "'Shall not' is a prohibition - check if this is entailed"}}
-
-    Example 3 - Conjunction:
-    Hypothesis: "All confidential information must be marked and returned"
-    If P_4 = "Information shall be marked" and P_11 = "Information must be returned"
-    Output: {{"formula": "P_4 ∧ P_11", "query_mode": "entailment", "translation": "Information is marked AND returned", "reasoning": "'Must' indicates obligation - check if both conditions are entailed"}}
-
-    Example 4 - Disjunction:
-    Hypothesis: "Some information may be destroyed or returned"
-    If P_11 = "must return information" and P_12 = "may destroy information"
-    Output: {{"formula": "P_11 ∨ P_12", "query_mode": "consistency", "translation": "Information is returned OR destroyed", "reasoning": "'Some...may' suggests either option satisfies the hypothesis"}}
-
-    Example 5 - Permission (consistency mode):
-    Hypothesis: "Receiving Party may share Confidential Information with employees"
-    If P_21 states "The Recipient discloses Confidential Information to need-to-know persons"
-    Output: {{"formula": "P_21", "query_mode": "consistency", "translation": "Sharing with employees is permitted", "reasoning": "'May' indicates permission - check if this action is allowed (consistent with KB), not required"}}
-
-    Example 6 - Conditional obligation:
-    Hypothesis: "Receiving Party shall notify Disclosing Party in case disclosure is required by law"
-    If P_29 = "Disclosure is required by law" and P_30 = "Recipient gives notice"
-    Output: {{"formula": "P_29 ⟹ P_30", "query_mode": "entailment", "translation": "If legally required to disclose, then must notify", "reasoning": "'In case' creates a conditional - check if implication holds"}}
-
-    === QUERY MODE ===
-    First, determine the QUERY MODE based on the hypothesis wording:
-
-    1. **entailment** (default): The hypothesis claims something MUST be true.
-    - Keywords: "shall", "must", "is required", "will", "is obligated", "shall not"
-
-    2. **consistency**: The hypothesis asks if something is ALLOWED or POSSIBLE.
-    - Keywords: "may", "can", "could", "is allowed", "is permitted", "is possible"
-
-    === NEGATION HANDLING ===
-
-    Query polarity: {polarity_str}
-
-    When translating negative queries ("shall not X", "only include Y"):
-    - If query is NEGATIVE and proposition is AFFIRMATIVE → use negation: ¬P_i
-    - If query is NEGATIVE and proposition is NEGATIVE → use directly: P_i
-    - If query is AFFIRMATIVE and proposition is AFFIRMATIVE → use directly: P_i
-
-    Examples:
-    - Query: "Party shall not disclose" + P_1="Party discloses" [AFFIRMATIVE] → Formula: ¬P_1
-    - Query: "Party shall not disclose" + P_1="Party does not disclose" [NEGATIVE] → Formula: P_1
-    - Query: "Info includes only X" + P_2="Info includes X and Y" [AFFIRMATIVE] → Formula: ¬P_2
-
-    === TRANSLATION GUIDELINES ===
-
-    1. "Shall"/"Must" obligations → Use proposition directly: P_i (mode: entailment)
-    2. "Shall not"/"Must not" prohibitions → Check proposition polarity:
-    - If proposition is AFFIRMATIVE, apply negation: ¬P_i
-    - If proposition is NEGATIVE, use directly: P_i
-    - Mode: entailment
-    3. "May"/"Can" permissions → Use proposition for the permitted action: P_i (mode: consistency)
-    4. Conditionals "If A then B" / "in case" / "when" → Use implication: P_a ⟹ P_b (mode: entailment)
-    5. "Some"/"Any" (existential) → Use disjunction: P_1 ∨ P_2
-    6. "All"/"Every" (universal) → Use conjunction: P_1 ∧ P_2
-
-    IMPORTANT:
-    - Choose the SIMPLEST formula that preserves semantic intent
-    - ALWAYS match hypothesis polarity with formula polarity
-    - Check [Polarity: ...] annotations above
-    
-    
-    === ABSTAIN RULE (VERY IMPORTANT) ===
-    If the hypothesis cannot be translated to a formula with the AVAILABLE PROPOSITIONS,
-    return:
-    {{"formula": "NONE", "query_mode": "entailment", "translation": "Not matching proposition", "reasoning": "No matching proposition"}}
-
-    Examples (MUST abstain):
-    - Hypothesis: "Alice studies biology" and only proposition is "Alice studies computer science" → NONE
-    - Hypothesis: "Alice is a high school student" and only proposition is "Alice is a student" → NONE
-    - Hypothesis: "Alice has a scholarship" and no proposition mentions scholarships → NONE
-
-
-    === OUTPUT FORMAT ===
-    Return ONLY a JSON object (no other text):
-    {{"formula": "<formula using {available_ids}>", 
-    "query_mode": "<entailment or consistency>", 
-    "translation": "<plain English meaning>", 
-    "reasoning": "<brief explanation>"}}"""
+    template = load_prompt_template(PROMPT_TRANSLATION)
+    prompt = (
+    template
+    .replace("{props_text}", props_text)
+    .replace("{query}", query)
+    .replace("{available_ids}", available_ids)
+    .replace("{polarity_str}", polarity_str)
+    )
     
     return prompt
 

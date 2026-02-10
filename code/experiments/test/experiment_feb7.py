@@ -46,6 +46,7 @@ from config.retrieval_config import (
     SBERT_TOP_K,
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
+    PROMPT_TRANSLATION
 )
 
 DATASET_DIR = _script_dir / "dataset"
