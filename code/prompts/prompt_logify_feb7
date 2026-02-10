@@ -10,7 +10,7 @@ Given natural language text T and its Stanford OpenIE relation triples, extract:
    - Non-redundant: avoid paraphrase duplicates; do not split into overlapping variants unless required by uncertainty rules
    - Include natural language meaning and textual evidence
    - Propositions must be specific, complete, and exhaustive for all constraints
-   - CRITICAL: The proposition TEXT must be a simple declarative clause with no conditional words ("if", "when", "unless", "whenever") or logical connectives ("and", "or"). If the original text contains these, extract the component clauses as separate propositions and express the relationship in a constraint formula.
+   - CRITICAL: The proposition TEXT must be a simple declarative clause with no conditional words ("if", "when", "unless", "whenever", "not") or logical connectives ("and", "or"). If the original text contains these, extract the component clauses as separate propositions and express the relationship in a constraint formula.
 
 2. CONSTRAINTS WITH WEIGHTS (C_1, C_2, ..., C_m)
    - Zero-order propositional formulas over {P_1, ..., P_n} suggested by the text
@@ -41,7 +41,7 @@ STEP 2: Construct Primitive Propositions
 - Extract atomic, truth-evaluable statements from text that cannot further be broken down
 - Ensure propositions are non-redundant and that they exhaust all constraints
 - Break down to genuinely atomic statements (no hidden logical connectives)
-- CRITICAL RULE: If text contains conditional or connective words ("if", "when", "unless", "and", "or"), extract component clauses separately
+- CRITICAL RULE: If text contains conditional or connective words ("if", "when", "unless", "and", "or", "not"), extract component clauses separately
   - Example: "When Alice is focused, she completes her assignments on time"
     → P_13: "Alice is focused" (simple declarative)
     → P_14: "Alice completes her assignments on time" (simple declarative)
