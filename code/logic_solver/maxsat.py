@@ -83,8 +83,8 @@ class LogicSolver:
             if not is_sat_kb:
                 print("[DEBUG] HARD constraints UNSAT.")
                 return SolverResult(
-                    answer="KB_not_sat",
-                    confidence= -1,
+                    answer="INCONSISTENT",
+                    confidence= 1,
                     model=None,
                     explanation=" KB is not sat"
                     )            
@@ -117,9 +117,9 @@ class LogicSolver:
 
             # SAT with hard constraints: Check soft constraints
             # Use RC2 to find optimal model considering soft constraints
-            optimal_cost = self._solve_maxsat(wcnf)
+            optimal_cost = self._solve_maxsat(wcnf) #FEB 9, check this
 
-            if optimal_cost is None:
+            if optimal_cost is None: #where is the source and meaning of None
                 # UNSAT even with soft constraints
                 #soft_confidence = self._compute_confidence_uncertain(query_formula)
                 return SolverResult(

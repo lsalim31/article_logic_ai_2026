@@ -82,9 +82,10 @@ def get_ground_truth_label(choice: str) -> str:
     mapping = {
         "Entailment": "TRUE",
         "Contradiction": "FALSE",
-        "NotMentioned": "UNCERTAIN",
+        "NotMentioned": "NOT MENTIONED",
+        "Uncertain":"UNCERTAIN"
     }
-    return mapping.get(choice, "UNCERTAIN")
+    return mapping.get(choice, "Error in mapping")
 
 
 def get_cached_logified_path(doc_id: int) -> Path:
@@ -229,7 +230,7 @@ def query_hypothesis(
         formula = translation_result.get("formula")
 
         if formula == "NONE":
-            prediction = "UNCERTAIN"
+            prediction = "NOT MENTIONED"
             is_correct = prediction == ground_truth
             return QueryDebugResult(
                 doc_id=doc_id,
@@ -237,7 +238,7 @@ def query_hypothesis(
                 hypothesis_text=hypothesis_text,
                 ground_truth=ground_truth,
                 prediction=prediction,
-                confidence=0.5,
+                confidence= 1,
                 formula=formula,
                 query_mode=query_mode,
                 explanation="No matching proposition for hypothesis",
@@ -259,7 +260,7 @@ def query_hypothesis(
                 formula=formula,
                 query_mode=query_mode,
                 explanation=None,
-                error="ERROR: LLM failed to generate a valid formula",
+                error="ERROR: LLM failed to generate a valid formula. e.g, P9 =>< P10",
                 error_type="translate_error",
                 amount_evidence=amount_evidence,
                 is_correct=False,
