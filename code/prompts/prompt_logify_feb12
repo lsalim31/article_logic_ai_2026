@@ -64,17 +64,17 @@ STEP 2: Construct Primitive Propositions
   propositions for reasonable alternative values that are common, plausible, and mutually exclusive in everyday
   language. This remains zeroth‑order logic: each auxiliary is a standalone proposition.
   - MANDATORY for clearly finite domains:
-    * Days of week: "Assignments are due every Friday" ⇒ add "not due every Monday", "not due every Tuesday", etc. (all 6 other weekdays)
-    * Months: "The report is in January" ⇒ add "not in February", "not in March", etc.
-    * Binary status: "The system is active" ⇒ add "not inactive"
-    * Grade/education levels: "Alice is a university student" ⇒ add "not a high school student", "not a middle school student"
+    * Days of week: "Assignments are due every Friday" ⇒ add primitive proposition such as "Assignments are due every Monday", "Assignements are due every Tuesday", etc. (all 6 other weekdays)
+    * Months: "The report is in January" ⇒ add "...in February", "...in March", etc.
+    * Grade/education levels: "Alice is a university student" ⇒ add "Alice is a high school student", "Alice is a middle school student"
+    * Based on context from the text, determine other finite domains that should be included. 
   - RECOMMENDED for semi-open domains when alternatives are high-salience for mutual exclusion:
-    * Academic majors: "Alice studies computer science" ⇒ add "does not study biology", "does not study mathematics", "does not study literature" (2-4 common alternatives)
-    * Job roles: "John is a manager" ⇒ add "not an engineer", "not an analyst" (if relevant to context)
-    * Locations: "The office is in New York" ⇒ add "not in California", "not in Texas" (only if text context suggests locations matter)
-  - GUIDELINE: Prefer 2-4 auxiliary negatives per original proposition
-  - PURPOSE: These auxiliary negatives are essential for correct FALSE predictions in downstream natural language inference tasks
-  Keep the set of alternatives small but useful
+    * Academic majors: "Alice studies computer science" ⇒ add "studies biology", "studies mathematics", "studies literature" (2-4 common alternatives)
+    * Job roles: "John is a manager" ⇒ add "...an engineer", "...an analyst" (if relevant to context)
+    * Locations: "The office is in New York" ⇒ add "in California", "in Texas" (only if text context suggests locations matter)
+  - GUIDELINE: Prefer 2-4 auxiliary primitive propositions per original proposition. 
+  - PURPOSE: These auxiliary negatives are to anticipate queries that relate to the text but that the text does not explicitely state. 
+  Keep the set of alternatives small but useful.
 - Include textual evidence, location, and brief atomicity reasoning
 - The outcome of this step includes a set of primitive propositions {P_1, ..., P_n}
 
@@ -87,6 +87,8 @@ CRITICAL: Every primitive proposition P_i must appear in at least one constraint
 
 - Extract propositional formulas C_1, ..., C_m over {P_1, ..., P_n} denoting statements that may or must hold according to the text
 - These formulas might not be explicitly stated in the text, but are relevant to the structural logic and can be obtained from common-sense or implied logical constraints
+- For each primitive propositions extracted from Step 2 that corresponds to auxiliary negatives, include their negation has a hard constraint. 
+- E.g. if "The report is in January" is in the text, and we added by Step 2, "The report is in Febuary", then include the hard constrant "The report is not in Febuary". 
 - CRITICAL MODAL PATTERN: if the text says "X [modal-word] Y", then from Step 2 we have two primitive propositions:
   - P_modal: "X [modal-word] Y" (original text statement)
   - P_base: "X Y" (derived proposition)
