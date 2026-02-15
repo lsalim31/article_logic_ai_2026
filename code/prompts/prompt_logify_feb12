@@ -58,11 +58,15 @@ STEP 2: Construct Primitive Propositions
   - Example: "the cat sometimes eats food" yields:
     * P_1: "the cat sometimes eats food" (original text statement)
     * P_2: "the cat eats food" (derived proposition)
-- Auxiliary negatives for finite sets and mutual exclusion:
-  Additionally, when a proposition asserts a specific value of an attribute (e.g., a day, month, category, role,
-  major, location, school level, status, or other categorical value), you must add auxiliary negative primitive
-  propositions for reasonable alternative values that are common, plausible, and mutually exclusive in everyday
-  language. This remains zeroth‑order logic: each auxiliary is a standalone proposition.
+   - Auxiliary negatives for finite sets and mutual exclusion:
+     When a proposition asserts a specific value of an attribute (e.g., a day, month, category, role),
+     you must add auxiliary primitive propositions for alternative values. These auxiliary propositions
+     should be in AFFIRMATIVE form, with the negation expressed in constraints. This remains zeroth‑order logic: each auxiliary is a standalone proposition.
+  - Example: "The report is in January" (text)
+    → P_a: "The report is in January" (affirmative, from text)
+    → P_b: "The report is in February" (affirmative auxiliary)
+    → C_1: P_a with weight 1.0 (original statement)
+    → C_2: ¬P_b with weight 1.0 (mutual exclusion: NOT February)
   - MANDATORY for clearly finite domains:
     * Days of week: "Assignments are due every Friday" ⇒ add primitive proposition such as "Assignments are due every Monday", "Assignements are due every Tuesday", etc. (all 6 other weekdays)
     * Months: "The report is in January" ⇒ add "...in February", "...in March", etc.
@@ -115,21 +119,20 @@ CRITICAL: Every primitive proposition P_i must appear in at least one constraint
   - 0.65: "usually", "typically", "generally" (frequent/common pattern)
   - 0.40: "sometimes", "may", "might", "encouraged" (occasional/weak suggestion)
 
-- For any auxiliary negative primitive propositions you introduced in STEP 2, add explicit constraints:
-  - Standalone assertion: P_aux_negative with weight 1.0 (it is a definitional consequence)
-  - Mutual exclusion: P_positive ⟹ P_aux_negative with weight 1.0
-  - Example: If P_a is "Assignments are due every Friday" and P_b is "Assignments are not due every Monday", then add:
-    * C_x: P_a with weight 1.0 (original statement)
-    * C_y: P_b with weight 1.0 (auxiliary is definitional)
-    * C_z: P_a ⟹ P_b with weight 1.0 (mutual exclusion constraint)
-  - Example: If P_a is "Alice studies computer science" and P_b is "Alice does not study biology", then add:
-    * C_x: P_a with weight 1.0
-    * C_y: P_b with weight 1.0
-    * C_z: P_a ⟹ P_b with weight 1.0
-  - Example: If P_a is "Alice is a university student" and P_b is "Alice is not a high school student", then add:
-    * C_x: P_a with weight 1.0
-    * C_y: P_b with weight 1.0
-    * C_z: P_a ⟹ P_b with weight 1.0
+- For any auxiliary primitive propositions you introduced in STEP 2, add explicit constraints:
+  - CRITICAL: Auxiliary primitive propositions must be in AFFIRMATIVE form
+  - The CONSTRAINT then negates the auxiliary to assert it is false based on the original text
+  - Standalone negation: ¬P_aux with weight 1.0 (the alternative does not hold)
+  - Example: Text says "Assignments are due every Friday"
+    * P_a: "Assignments are due every Friday" (from text)
+    * P_b: "Assignments are due every Monday" (auxiliary - affirmative form)
+    * P_c: "Assignments are due every Tuesday" (auxiliary - affirmative form)
+    * ... (other weekdays)
+    Constraints:
+    * C_x: P_a with weight 1.0 (original statement is true)
+    * C_y: ¬P_b with weight 1.0 (Monday is not true)
+    * C_z: ¬P_c with weight 1.0 (Tuesday is not true)
+    * ... (other weekdays)
 
 - Include textual evidence, location, and reasoning for each constraint
 - IMPORTANT: You must review each of the primitive propositions and their translations. The translations are often too literal to the text; if there are any obvious relationships between them you MUST include them as constraints with the appropriate weight
@@ -756,6 +759,8 @@ OUTPUT JSON
 
 EXEMPLAR 2 (FINITE-SET AUXILIARY NEGATIVES)
 
+EXEMPLAR 2 (FINITE-SET AUXILIARY PROPOSITIONS)
+
 INPUT TEXT
 <<<
 The team meeting is scheduled for Tuesday at 3 PM. Sarah works in the Engineering department.
@@ -779,27 +784,27 @@ OUTPUT JSON
     },
     {
       "id": "P_2",
-      "translation": "The team meeting is not scheduled for Monday",
-      "evidence": "Sentence 0 (auxiliary negative for mutual exclusion with P_1)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "translation": "The team meeting is scheduled for Monday",
+      "evidence": "Sentence 0 (auxiliary for mutual exclusion with P_1)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_3",
-      "translation": "The team meeting is not scheduled for Wednesday",
-      "evidence": "Sentence 0 (auxiliary negative for mutual exclusion with P_1)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "translation": "The team meeting is scheduled for Wednesday",
+      "evidence": "Sentence 0 (auxiliary for mutual exclusion with P_1)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_4",
-      "translation": "The team meeting is not scheduled for Thursday",
-      "evidence": "Sentence 0 (auxiliary negative for mutual exclusion with P_1)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "translation": "The team meeting is scheduled for Thursday",
+      "evidence": "Sentence 0 (auxiliary for mutual exclusion with P_1)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_5",
-      "translation": "The team meeting is not scheduled for Friday",
-      "evidence": "Sentence 0 (auxiliary negative for mutual exclusion with P_1)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "translation": "The team meeting is scheduled for Friday",
+      "evidence": "Sentence 0 (auxiliary for mutual exclusion with P_1)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_6",
@@ -815,21 +820,21 @@ OUTPUT JSON
     },
     {
       "id": "P_8",
-      "translation": "Sarah does not work in the Marketing department",
-      "evidence": "Sentence 1 (auxiliary negative for mutual exclusion with P_7)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_7. High-salience alternative department for mutual exclusion."
+      "translation": "Sarah works in the Marketing department",
+      "evidence": "Sentence 1 (auxiliary for mutual exclusion with P_7)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_7. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_9",
-      "translation": "Sarah does not work in the Sales department",
-      "evidence": "Sentence 1 (auxiliary negative for mutual exclusion with P_7)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_7. High-salience alternative department for mutual exclusion."
+      "translation": "Sarah works in the Sales department",
+      "evidence": "Sentence 1 (auxiliary for mutual exclusion with P_7)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_7. Affirmative form; negation expressed in constraints."
     },
     {
       "id": "P_10",
-      "translation": "Sarah does not work in the Human Resources department",
-      "evidence": "Sentence 1 (auxiliary negative for mutual exclusion with P_7)",
-      "explanation": "Auxiliary negative for mutual exclusion with P_7. High-salience alternative department for mutual exclusion."
+      "translation": "Sarah works in the Human Resources department",
+      "evidence": "Sentence 1 (auxiliary for mutual exclusion with P_7)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_7. Affirmative form; negation expressed in constraints."
     }
   ],
   "constraints": [
@@ -843,70 +848,38 @@ OUTPUT JSON
     },
     {
       "id": "C_2",
-      "formula": "P_2",
+      "formula": "¬P_2",
       "translation": "The team meeting is not scheduled for Monday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
       "id": "C_3",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "If meeting is on Tuesday, then it is not on Monday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_4",
-      "formula": "P_3",
+      "formula": "¬P_3",
       "translation": "The team meeting is not scheduled for Wednesday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
-      "id": "C_5",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If meeting is on Tuesday, then it is not on Wednesday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_6",
-      "formula": "P_4",
+      "id": "C_4",
+      "formula": "¬P_4",
       "translation": "The team meeting is not scheduled for Thursday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
-      "id": "C_7",
-      "formula": "P_1 ⟹ P_4",
-      "translation": "If meeting is on Tuesday, then it is not on Thursday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_8",
-      "formula": "P_5",
+      "id": "C_5",
+      "formula": "¬P_5",
       "translation": "The team meeting is not scheduled for Friday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
-      "id": "C_9",
-      "formula": "P_1 ⟹ P_5",
-      "translation": "If meeting is on Tuesday, then it is not on Friday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_10",
+      "id": "C_6",
       "formula": "P_6",
       "translation": "The team meeting is scheduled for 3 PM",
       "llm_weight": 1.0,
@@ -914,7 +887,7 @@ OUTPUT JSON
       "reasoning": "Original statement has weight 1.0"
     },
     {
-      "id": "C_11",
+      "id": "C_7",
       "formula": "P_7",
       "translation": "Sarah works in the Engineering department",
       "llm_weight": 1.0,
@@ -922,52 +895,28 @@ OUTPUT JSON
       "reasoning": "Original statement has weight 1.0"
     },
     {
-      "id": "C_12",
-      "formula": "P_8",
+      "id": "C_8",
+      "formula": "¬P_8",
       "translation": "Sarah does not work in the Marketing department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
-      "id": "C_13",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "If Sarah works in Engineering, then she does not work in Marketing",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
-    },
-    {
-      "id": "C_14",
-      "formula": "P_9",
+      "id": "C_9",
+      "formula": "¬P_9",
       "translation": "Sarah does not work in the Sales department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     },
     {
-      "id": "C_15",
-      "formula": "P_7 ⟹ P_9",
-      "translation": "If Sarah works in Engineering, then she does not work in Sales",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
-    },
-    {
-      "id": "C_16",
-      "formula": "P_10",
+      "id": "C_10",
+      "formula": "¬P_10",
       "translation": "Sarah does not work in the Human Resources department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Auxiliary negative is definitional consequence with weight 1.0"
-    },
-    {
-      "id": "C_17",
-      "formula": "P_7 ⟹ P_10",
-      "translation": "If Sarah works in Engineering, then she does not work in Human Resources",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
+      "reasoning": "Auxiliary proposition is false; negation asserted as constraint"
     }
   ]
 }
