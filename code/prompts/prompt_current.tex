@@ -63,7 +63,7 @@ STEP 2: Construct Primitive Propositions
   propositions for reasonable alternative values that are common, plausible, and mutually exclusive in everyday
   language. This remains zeroth‑order logic: each auxiliary is a standalone proposition.
   - MANDATORY for clearly finite domains:
-    * Days of week: "Assignments are due every Friday" ⇒ add primitive proposition such as "Assignments are due every Monday", "Assignements are due every Tuesday", etc. (all 6 other weekdays)
+    * Days of week: "Assignments are due every Friday" ⇒ add primitive proposition such as "Assignments are due every Monday", "Assignments are due every Tuesday", etc. (all 6 other weekdays)
     * Months: "The report is in January" ⇒ add "...in February", "...in March", etc.
     * Grade/education levels: "Alice is a university student" ⇒ add "Alice is a high school student", "Alice is a middle school student"
     * Based on context from the text, determine other finite domains that should be included. 
@@ -116,19 +116,12 @@ CRITICAL: Every primitive proposition P_i must appear in at least one constraint
 
 - For any auxiliary negative primitive propositions you introduced in STEP 2, add explicit constraints:
   - Standalone assertion: P_aux_negative with weight 1.0 (it is a definitional consequence)
-  - Mutual exclusion: P_positive ⟹ P_aux_negative with weight 1.0
-  - Example: If P_a is "Assignments are due every Friday" and P_b is "Assignments are not due every Monday", then add:
+  - Example: If P_a is "Assignments are due every Friday" and P_b is "Assignments are due every Monday" and the text affirms P_a, then add:
     * C_x: P_a with weight 1.0 (original statement)
-    * C_y: P_b with weight 1.0 (auxiliary is definitional)
-    * C_z: P_a ⟹ P_b with weight 1.0 (mutual exclusion constraint)
-  - Example: If P_a is "Alice studies computer science" and P_b is "Alice does not study biology", then add:
-    * C_x: P_a with weight 1.0
+    * C_y: ¬P_b with weight 1.0 (auxiliary is definitional)
+  - Example: If P_a is "Alice studies computer science" and P_b is "Alice does not study biology" and the text affirms P_b, then add:
+    * C_x: ¬P_a with weight 1.0
     * C_y: P_b with weight 1.0
-    * C_z: P_a ⟹ P_b with weight 1.0
-  - Example: If P_a is "Alice is a university student" and P_b is "Alice is not a high school student", then add:
-    * C_x: P_a with weight 1.0
-    * C_y: P_b with weight 1.0
-    * C_z: P_a ⟹ P_b with weight 1.0
 
 - Include textual evidence, location, and reasoning for each constraint
 - IMPORTANT: You must review each of the primitive propositions and their translations. The translations are often too literal to the text; if there are any obvious relationships between them you MUST include them as constraints with the appropriate weight
