@@ -152,9 +152,26 @@ def logify_document(
     finally:
         converter.close()
 
+    from from_text_to_logic.check_logic_structure import enrich_logic_structure
+
     intermediate_path = get_intermediate_logified_path(doc_id)
     with open(intermediate_path, "w", encoding="utf-8") as f:
         json.dump(logic_structure, f, indent=2, ensure_ascii=False)
+
+
+    # 2. Create temp text file
+    temp_text_path = CACHE_DIR / f"doc_{doc_id}_text.txt"
+    with open(temp_text_path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+    # 3. NEW: Enrich logic structure
+    enrich_logic_structure(
+        logified_path=str(intermediate_path),
+        source_path=str(temp_text_path),
+        output_path=str(intermediate_path),
+        verbose=verbose,
+    )
+
 
     if verbose:
         print("[WEIGHTS] Assigning weights...")

@@ -1,0 +1,444 @@
+```json
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alice is a university student.",
+      "evidence": "Sentence 0: 'Alice is a university student.'",
+      "explanation": "Simple categorical status statement about Alice with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "Alice is a student.",
+      "evidence": "Sentence 0: 'Alice is a university student.'",
+      "explanation": "Atomic class-membership statement (used for a common-sense taxonomy inference from 'university student')."
+    },
+    {
+      "id": "P_3",
+      "translation": "Alice is a high school student.",
+      "evidence": "Sentence 0: 'Alice is a university student.'",
+      "explanation": "Atomic alternative education-level category (auxiliary negative for mutually exclusive levels)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Alice is a middle school student.",
+      "evidence": "Sentence 0: 'Alice is a university student.'",
+      "explanation": "Atomic alternative education-level category (auxiliary negative for mutually exclusive levels)."
+    },
+    {
+      "id": "P_5",
+      "translation": "Alice is an elementary school student.",
+      "evidence": "Sentence 0: 'Alice is a university student.'",
+      "explanation": "Atomic alternative education-level category (auxiliary negative for mutually exclusive levels)."
+    },
+    {
+      "id": "P_6",
+      "translation": "Alice studies computer science.",
+      "evidence": "Sentence 1: 'She studies computer science.'",
+      "explanation": "Simple subject-verb-object educational fact with no logical connectives."
+    },
+    {
+      "id": "P_7",
+      "translation": "Alice studies hard.",
+      "evidence": "Sentence 2: 'If Alice studies hard, then she passes her exams.'",
+      "explanation": "Atomic activity predicate; extracted as a component of a conditional."
+    },
+    {
+      "id": "P_8",
+      "translation": "Alice passes her exams.",
+      "evidence": "Sentence 2: 'If Alice studies hard, then she passes her exams.'",
+      "explanation": "Atomic outcome predicate; extracted as a component of a conditional."
+    },
+    {
+      "id": "P_9",
+      "translation": "Alice typically studies hard before exams.",
+      "evidence": "Sentence 3: 'Alice typically studies hard before exams.'",
+      "explanation": "Atomic proposition including the modal frequency word 'typically' (kept as its own primitive by the modal rule)."
+    },
+    {
+      "id": "P_10",
+      "translation": "Alice studies hard before exams.",
+      "evidence": "Sentence 3: 'Alice typically studies hard before exams.'",
+      "explanation": "Modal-base version of P_9 with the modal word removed (required by the modal rule)."
+    },
+    {
+      "id": "P_11",
+      "translation": "Alice is focused.",
+      "evidence": "Sentence 4: 'When Alice is focused, she completes her assignments on time.'",
+      "explanation": "Atomic state predicate; extracted as the antecedent component of a conditional-like 'when' statement."
+    },
+    {
+      "id": "P_12",
+      "translation": "Alice completes her assignments on time.",
+      "evidence": "Sentence 4: 'When Alice is focused, she completes her assignments on time.'",
+      "explanation": "Atomic action/result predicate; extracted as the consequent component of a conditional-like 'when' statement."
+    },
+    {
+      "id": "P_13",
+      "translation": "Alice sometimes gets distracted by social media.",
+      "evidence": "Sentence 5: 'Alice sometimes gets distracted by social media.'",
+      "explanation": "Atomic proposition including the modal frequency word 'sometimes' (kept as its own primitive by the modal rule)."
+    },
+    {
+      "id": "P_14",
+      "translation": "Alice gets distracted by social media.",
+      "evidence": "Sentence 5: 'Alice sometimes gets distracted by social media.'",
+      "explanation": "Modal-base version of P_13 with the modal word removed (required by the modal rule)."
+    },
+    {
+      "id": "P_15",
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 6: 'She works part-time at the campus library.'",
+      "explanation": "Atomic employment-hours predicate extracted from a sentence containing multiple modifiers."
+    },
+    {
+      "id": "P_16",
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 6: 'She works part-time at the campus library.'",
+      "explanation": "Atomic workplace-location predicate extracted from a sentence containing multiple modifiers."
+    },
+    {
+      "id": "P_17",
+      "translation": "Her assignments are due every Friday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Atomic due-date statement including the frequency word 'every' (treated as a modal/frequency marker)."
+    },
+    {
+      "id": "P_18",
+      "translation": "Her assignments are due on Friday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Modal-base version of P_17 with the frequency word removed."
+    },
+    {
+      "id": "P_19",
+      "translation": "Her assignments are due every Monday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_20",
+      "translation": "Her assignments are due every Tuesday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_21",
+      "translation": "Her assignments are due every Wednesday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_22",
+      "translation": "Her assignments are due every Thursday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_23",
+      "translation": "Her assignments are due every Saturday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_24",
+      "translation": "Her assignments are due every Sunday.",
+      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
+      "explanation": "Auxiliary alternative weekday due-date (introduced for a clearly finite domain: days of week)."
+    },
+    {
+      "id": "P_25",
+      "translation": "Alice rarely studies late at night.",
+      "evidence": "Sentence 8: 'Alice rarely studies late at night.'",
+      "explanation": "Atomic proposition including the modal frequency word 'rarely' (kept as its own primitive by the modal rule)."
+    },
+    {
+      "id": "P_26",
+      "translation": "Alice studies late at night.",
+      "evidence": "Sentence 8: 'Alice rarely studies late at night.'",
+      "explanation": "Modal-base version of P_25 with the modal word removed (required by the modal rule)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alice is a university student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Direct explicit assertion."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_6",
+      "translation": "Alice studies computer science.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct explicit assertion."
+    },
+    {
+      "id": "C_3",
+      "formula": "(P_7 ⟹ P_8)",
+      "translation": "If Alice studies hard, then she passes her exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct explicit conditional stated in the text."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_9",
+      "translation": "Alice typically studies hard before exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "The modal claim itself is explicitly asserted, so it is certain as a claim."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_10",
+      "translation": "Alice studies hard before exams.",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 3",
+      "reasoning": "Derived modal-base event from 'typically' (default weight 0.65)."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_10 ⟹ P_9)",
+      "translation": "If Alice studies hard before exams, that is consistent with 'typically studies hard before exams'.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Required modal-pattern constraint: base event implies satisfaction/compatibility with the modal claim."
+    },
+    {
+      "id": "C_7",
+      "formula": "(P_10 ⟹ P_7)",
+      "translation": "Studying hard before exams implies studying hard.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 3 (source of 'studies hard before exams')",
+      "reasoning": "Common-sense semantic entailment; slightly discounted because 'before exams' is contextual while 'studies hard' is more general."
+    },
+    {
+      "id": "C_8",
+      "formula": "(P_11 ⟹ P_12)",
+      "translation": "When Alice is focused, she completes her assignments on time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Direct explicit conditional-like ('when') statement."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_11",
+      "translation": "Alice is focused.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 4",
+      "reasoning": "Mentioned as a condition, not asserted as a fact; treated as unknown/neutral."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_12",
+      "translation": "Alice completes her assignments on time.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 4",
+      "reasoning": "Only appears as the consequent of a 'when' statement; not asserted to always/actually occur."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_13",
+      "translation": "Alice sometimes gets distracted by social media.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "The modal claim itself is explicitly asserted, so it is certain as a claim."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_14",
+      "translation": "Alice gets distracted by social media.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 5",
+      "reasoning": "Derived modal-base event from 'sometimes' (default weight 0.40)."
+    },
+    {
+      "id": "C_13",
+      "formula": "(P_14 ⟹ P_13)",
+      "translation": "If Alice gets distracted by social media, that is consistent with 'sometimes gets distracted by social media'.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Required modal-pattern constraint: base event implies satisfaction/compatibility with the modal claim."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_15",
+      "translation": "Alice works part-time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Direct explicit assertion (extracted from the sentence about working part-time at the library)."
+    },
+    {
+      "id": "C_15",
+      "formula": "P_16",
+      "translation": "Alice works at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Direct explicit assertion (extracted from the sentence about working part-time at the library)."
+    },
+    {
+      "id": "C_16",
+      "formula": "P_17",
+      "translation": "Her assignments are due every Friday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Explicit assertion; 'every' expresses an absolute schedule claim."
+    },
+    {
+      "id": "C_17",
+      "formula": "P_18",
+      "translation": "Her assignments are due on Friday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Derived modal-base event from 'every' (treated like 'always'; weight 1.0)."
+    },
+    {
+      "id": "C_18",
+      "formula": "(P_18 ⟹ P_17)",
+      "translation": "If her assignments are due on Friday, that is consistent with 'due every Friday'.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Required modal-pattern constraint: base event implies compatibility with the modal claim."
+    },
+    {
+      "id": "C_19",
+      "formula": "(P_17 ⟹ P_18)",
+      "translation": "Due every Friday implies due on Friday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Direct semantic entailment from 'every Friday' to 'on Friday'."
+    },
+    {
+      "id": "C_20",
+      "formula": "P_25",
+      "translation": "Alice rarely studies late at night.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "The modal claim itself is explicitly asserted, so it is certain as a claim."
+    },
+    {
+      "id": "C_21",
+      "formula": "P_26",
+      "translation": "Alice studies late at night.",
+      "llm_weight": 0.2,
+      "evidence": "Sentence 8",
+      "reasoning": "Derived modal-base event from 'rarely'; treated as low frequency/likelihood (not listed in the table; assigned a conservative low weight)."
+    },
+    {
+      "id": "C_22",
+      "formula": "(P_26 ⟹ P_25)",
+      "translation": "If Alice studies late at night, that is consistent with 'rarely studies late at night'.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Required modal-pattern constraint: an occurrence is compatible with the 'rarely' modal claim."
+    },
+    {
+      "id": "C_23",
+      "formula": "P_2",
+      "translation": "Alice is a student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Common-sense taxonomy: a university student is a student; treated as certain."
+    },
+    {
+      "id": "C_24",
+      "formula": "(P_1 ⟹ P_2)",
+      "translation": "If Alice is a university student, then Alice is a student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "High-salience semantic entailment."
+    },
+    {
+      "id": "C_25",
+      "formula": "¬P_3",
+      "translation": "Alice is not a high school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutual-exclusion for education levels: 'university student' excludes 'high school student'."
+    },
+    {
+      "id": "C_26",
+      "formula": "¬P_4",
+      "translation": "Alice is not a middle school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutual-exclusion for education levels: 'university student' excludes 'middle school student'."
+    },
+    {
+      "id": "C_27",
+      "formula": "¬P_5",
+      "translation": "Alice is not an elementary school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutual-exclusion for education levels: 'university student' excludes 'elementary school student'."
+    },
+    {
+      "id": "C_28",
+      "formula": "¬P_19",
+      "translation": "Her assignments are not due every Monday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays: the asserted due day is Friday, excluding other weekday alternatives introduced for the finite domain."
+    },
+    {
+      "id": "C_29",
+      "formula": "¬P_20",
+      "translation": "Her assignments are not due every Tuesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays given 'due every Friday'."
+    },
+    {
+      "id": "C_30",
+      "formula": "¬P_21",
+      "translation": "Her assignments are not due every Wednesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays given 'due every Friday'."
+    },
+    {
+      "id": "C_31",
+      "formula": "¬P_22",
+      "translation": "Her assignments are not due every Thursday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays given 'due every Friday'."
+    },
+    {
+      "id": "C_32",
+      "formula": "¬P_23",
+      "translation": "Her assignments are not due every Saturday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays given 'due every Friday'."
+    },
+    {
+      "id": "C_33",
+      "formula": "¬P_24",
+      "translation": "Her assignments are not due every Sunday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutual-exclusion for weekdays given 'due every Friday'."
+    },
+    {
+      "id": "C_34",
+      "formula": "P_7",
+      "translation": "Alice studies hard.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 2",
+      "reasoning": "Appears in a conditional; not directly asserted as fact, so treated as unknown/neutral."
+    },
+    {
+      "id": "C_35",
+      "formula": "P_8",
+      "translation": "Alice passes her exams.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 2",
+      "reasoning": "Appears in a conditional; not directly asserted as fact, so treated as unknown/neutral."
+    }
+  ]
+}
+```
