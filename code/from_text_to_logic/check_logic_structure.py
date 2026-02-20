@@ -1048,6 +1048,23 @@ def verify_modal_pairs(
             if verbose:
                 log_messages.append(f"        Added constraint: {implication_formula} @1.0")
     
+            
+        # Check 4: P_modal ⟹ P_base @1.0 (if "typically X" then "X" must happen)
+        reverse_implication = f"{modal_id} ⟹ {base_id}"
+        if not constraint_exists(reverse_implication, updated_constraints):
+            new_constraint = create_constraint(
+                constraint_id=get_next_constraint_id(updated_constraints),
+                formula=reverse_implication,
+                translation="If modal pattern holds, the base event occurs",
+                llm_weight=1.0,
+                evidence="Auto-generated",
+                reasoning=f"Modal '{modal_word}' implies the base event occurs (at least sometimes)"
+            )
+            updated_constraints.append(new_constraint)
+            if verbose:
+                log_messages.append(f"        Added constraint: {reverse_implication} @1.0")
+
+    
     return updated_props, updated_constraints, updated_embeddings, log_messages
 
 
