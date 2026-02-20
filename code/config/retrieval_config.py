@@ -42,5 +42,5 @@ TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
 
-PROMPT_EXTRACTION = "prompt_logify_feb7"
+PROMPT_EXTRACTION = "prompt_current"
 PROMPT_TRANSLATION = "prompt_translate"
