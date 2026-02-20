@@ -53,7 +53,7 @@ DATASET_DIR = _script_dir / "dataset"
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DEFAULT_DATASET_PATH = DATASET_DIR / "data_test.json"
-DEFAULT_DOC_IDS = 1
+DEFAULT_DOC_IDS = [1]
 
 @dataclass
 class QueryDebugResult:
