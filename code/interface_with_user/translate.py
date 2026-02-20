@@ -9,9 +9,10 @@ Output: Propositional Formula (verified via NLI)
 Architecture:
 1. Retrieval: SBERT/Hybrid search (Preserved from original)
 2. Modal Opposite Detection: Check if hypothesis contradicts KB via modal antonyms
-3. Generation: LLM generates candidate formula(s)
-4. Verbalization: Python recursively converts Logic -> "Structured English"
-5. Verification: NLI model scores candidates to find the best semantic match
+3. Antonym Contradiction Detection: Check if hypothesis contradicts KB via lexical antonyms
+4. Generation: LLM generates candidate formula(s)
+5. Verbalization: Python recursively converts Logic -> "Structured English"
+6. Verification: NLI model scores candidates to find the best semantic match
 """
 
 import sys
@@ -487,7 +488,202 @@ def detect_modal_opposite(
 
 
 # ==========================================
-# 4. NEURO-SYMBOLIC CORE
+# 4. ANTONYM CONTRADICTION DETECTION
+# ==========================================
+
+# Fallback antonym pairs for cases WordNet misses
+ANTONYM_PAIRS_FALLBACK = {
+    "part-time": ["full-time"],
+    "full-time": ["part-time"],
+    "parttime": ["fulltime", "full-time"],
+    "fulltime": ["parttime", "part-time"],
+    "morning": ["evening", "night", "afternoon"],
+    "evening": ["morning"],
+    "night": ["day", "morning"],
+    "day": ["night"],
+    "hot": ["cold"],
+    "cold": ["hot"],
+    "big": ["small"],
+    "small": ["big"],
+    "open": ["closed", "close"],
+    "closed": ["open"],
+    "close": ["open"],
+    "start": ["end", "finish"],
+    "end": ["start", "begin"],
+    "begin": ["end", "finish"],
+    "finish": ["start", "begin"],
+    "before": ["after"],
+    "after": ["before"],
+    "indoor": ["outdoor"],
+    "outdoor": ["indoor"],
+    "indoors": ["outdoors"],
+    "outdoors": ["indoors"],
+    "online": ["offline"],
+    "offline": ["online"],
+    "public": ["private"],
+    "private": ["public"],
+    "temporary": ["permanent"],
+    "permanent": ["temporary"],
+    "active": ["inactive"],
+    "inactive": ["active"],
+    "visible": ["invisible", "hidden"],
+    "invisible": ["visible"],
+    "hidden": ["visible"],
+    "senior": ["junior"],
+    "junior": ["senior"],
+    "male": ["female"],
+    "female": ["male"],
+    "married": ["single", "unmarried"],
+    "single": ["married"],
+    "unmarried": ["married"],
+    "employed": ["unemployed"],
+    "unemployed": ["employed"],
+}
+
+
+def get_word_antonyms(word: str) -> List[str]:
+    """Get antonyms of a word using WordNet with fallback table."""
+    from nltk.corpus import wordnet as wn
+    
+    antonyms = set()
+    word_lower = word.lower()
+    
+    # Try different formats for WordNet lookup
+    word_underscore = word_lower.replace("-", "_")
+    word_hyphen = word_lower.replace("_", "-")
+    word_nohyphen = word_lower.replace("-", "")
+    
+    # WordNet lookup
+    for word_variant in [word_underscore, word_hyphen, word_lower, word_nohyphen]:
+        for syn in wn.synsets(word_variant):
+            for lemma in syn.lemmas():
+                for antonym in lemma.antonyms():
+                    ant_name = antonym.name().replace("_", "-")
+                    antonyms.add(ant_name.lower())
+    
+    # Fallback table lookup
+    for variant in [word_lower, word_nohyphen, word_hyphen]:
+        if variant in ANTONYM_PAIRS_FALLBACK:
+            antonyms.update(ANTONYM_PAIRS_FALLBACK[variant])
+    
+    return list(antonyms)
+
+
+def detect_antonym_contradiction(
+    query: str,
+    retrieved_chunks: List[Dict],
+    sbert_model,
+    verbose: bool = True
+) -> Optional[Dict[str, Any]]:
+    """
+    Detect if the hypothesis contains a word that is an antonym of a word 
+    in a KB proposition, in the same context.
+    
+    For example:
+    - Hypothesis: "Alice works full-time"
+    - KB has: "Alice works part-time" (P_5)
+    - "full-time" and "part-time" are antonyms
+    - Replacing "full-time" with "part-time" gives high similarity to KB prop
+    - Returns negation of the KB proposition: ¬P_5
+    
+    Args:
+        query: The hypothesis text
+        retrieved_chunks: List of retrieved propositions from KB
+        sbert_model: Loaded SBERT model for embedding comparison
+        verbose: Print debug information
+        
+    Returns:
+        Dict with formula result if antonym contradiction found, None otherwise
+    """
+    nlp = get_spacy_model_singleton()
+    query_lower = query.lower()
+    
+    if verbose:
+        print("  [Antonym Detection] Checking for antonym contradictions...")
+    
+    # Step 1: Extract words to check from the query
+    # Use regex to find hyphenated compounds (SpaCy may tokenize them incorrectly)
+    hyphenated_pattern = re.compile(r'\b[\w]+-[\w]+\b')
+    hyphenated_words = hyphenated_pattern.findall(query_lower)
+    words_to_check = list(hyphenated_words)
+    
+    # Also add content words from SpaCy tokenization
+    query_doc = nlp(query_lower)
+    for token in query_doc:
+        if token.pos_ in ('NOUN', 'VERB', 'ADJ', 'ADV') and len(token.text) >= 3:
+            if token.text not in words_to_check:
+                words_to_check.append(token.text)
+    
+    if verbose:
+        print(f"  [Antonym Detection] Words to check: {words_to_check}")
+    
+    # Step 2: For each word, check if it has antonyms that appear in KB propositions
+    for word in words_to_check:
+        antonyms = get_word_antonyms(word)
+        if not antonyms:
+            continue
+            
+        if verbose:
+            print(f"  [Antonym Detection] Word '{word}' has antonyms: {antonyms}")
+        
+        # Step 3: Check each retrieved proposition for antonym matches
+        for chunk in retrieved_chunks:
+            prop_text = chunk['translation'].lower()
+            
+            for antonym in antonyms:
+                # Check if the antonym appears in the proposition
+                # Handle both hyphenated and non-hyphenated forms
+                antonym_variants = [antonym, antonym.replace("-", ""), antonym.replace("-", " ")]
+                
+                antonym_found = any(variant in prop_text for variant in antonym_variants)
+                
+                if antonym_found:
+                    # Step 4: Verify same context using embedding similarity
+                    # Replace the word in the query with the antonym
+                    modified_query = query_lower.replace(word, antonym)
+                    
+                    # Also try replacing non-hyphenated form if needed
+                    if word.replace("-", "") in query_lower:
+                        modified_query = query_lower.replace(word.replace("-", ""), antonym)
+                    
+                    # Compute embedding similarity
+                    mod_emb = sbert_model.encode(modified_query)
+                    prop_emb = sbert_model.encode(prop_text)
+                    
+                    norm_mod = np.linalg.norm(mod_emb)
+                    norm_prop = np.linalg.norm(prop_emb)
+                    
+                    if norm_mod > 0 and norm_prop > 0:
+                        similarity = float(np.dot(mod_emb, prop_emb) / (norm_mod * norm_prop))
+                    else:
+                        similarity = 0.0
+                    
+                    if verbose:
+                        print(f"  [Antonym Detection] Found antonym pair: '{word}' vs '{antonym}'")
+                        print(f"  [Antonym Detection] Modified query: '{modified_query}'")
+                        print(f"  [Antonym Detection] KB proposition: '{prop_text}'")
+                        print(f"  [Antonym Detection] Context similarity: {similarity:.3f}")
+                    
+                    # High similarity means same context → contradiction
+                    if similarity > 0.90:
+                        prop_id = chunk['id']
+                        
+                        if verbose:
+                            print(f"  [Antonym Detection] ✓ MATCH! Returning ¬{prop_id}")
+                        
+                        return {
+                            "formula": f"¬{prop_id}",
+                            "translation": f"it is not the case that {chunk['translation']}",
+                            "explanation": f"Antonym contradiction: '{word}' contradicts '{antonym}' in KB (similarity: {similarity:.2f})",
+                            "confidence": 1.0,
+                            "antonym_contradiction_detected": True
+                        }
+    
+    return None
+
+
+# ==========================================
+# 5. NEURO-SYMBOLIC CORE
 # ==========================================
 
 def load_nli_model_singleton():
@@ -569,7 +765,7 @@ def translate_query(
     """
     Main Interface Function.
     Replaces the old logic with the Generate -> Verbalize -> Verify loop.
-    Now includes Modal Opposite Detection before LLM generation.
+    Now includes Modal Opposite Detection and Antonym Contradiction Detection before LLM generation.
     """
 
     # 1. Pre-process (Yes/No Handling)
@@ -605,7 +801,7 @@ def translate_query(
             "confidence": 0.5
         }
 
-    # 3. MODAL OPPOSITE DETECTION (NEW STEP)
+    # 3. MODAL OPPOSITE DETECTION
     # Check if hypothesis has a modal word that contradicts a KB proposition
     if verbose:
         print("\nChecking for modal opposites...")
@@ -620,7 +816,22 @@ def translate_query(
             print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
         return modal_opposite_result
 
-    # 4. Build Prompt Variables (matching translate_old.py style)
+    # 4. ANTONYM CONTRADICTION DETECTION (NEW STEP)
+    # Check if hypothesis has a lexical antonym that contradicts a KB proposition
+    if verbose:
+        print("\nChecking for antonym contradictions...")
+
+    antonym_result = detect_antonym_contradiction(query, retrieved, sbert_model, verbose=verbose)
+
+    if antonym_result:
+        # Antonym contradiction found - return immediately without LLM
+        antonym_result["query"] = query
+        antonym_result["original_query"] = original_query
+        if verbose:
+            print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
+        return antonym_result
+
+    # 5. Build Prompt Variables (matching translate_old.py style)
     props_text = ""
     prop_ids = []
     for chunk in retrieved:
@@ -649,7 +860,7 @@ def translate_query(
     # Build the prompt
     prompt = build_prompt(query, props_text, available_ids, query_is_negative)
 
-    # 5. Generate Candidates (Step A)
+    # 6. Generate Candidates (Step A)
     if verbose:
         print("\nStep A: Generating logical candidates...")
 
@@ -674,7 +885,7 @@ def translate_query(
             "confidence": 0.5
         }
 
-    # 6. Verbalize & Verify (Step B & C)
+    # 7. Verbalize & Verify (Step B & C)
     if verbose:
         print("Step B & C: Verbalizing and Verifying with NLI...")
     nli_model = load_nli_model_singleton()
@@ -745,7 +956,7 @@ def translate_query(
 
 
 # ==========================================
-# 5. MAIN ENTRY POINT
+# 6. MAIN ENTRY POINT
 # ==========================================
 
 def main():
