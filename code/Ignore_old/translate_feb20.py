@@ -8,10 +8,9 @@ Output: Propositional Formula (verified via NLI)
 
 Architecture:
 1. Retrieval: SBERT/Hybrid search (Preserved from original)
-2. Modal Opposite Detection: Check if hypothesis contradicts KB via modal antonyms
-3. Generation: LLM generates candidate formula(s)
-4. Verbalization: Python recursively converts Logic -> "Structured English"
-5. Verification: NLI model scores candidates to find the best semantic match
+2. Generation: LLM generates candidate formula(s)
+3. Verbalization: Python recursively converts Logic -> "Structured English"
+4. Verification: NLI model scores candidates to find the best semantic match
 """
 
 import sys
@@ -35,20 +34,11 @@ if str(code_dir) not in sys.path:
 # Import negation detection
 from interface_with_user import negation_detection
 
-# Import modal detection functions from check_logic_structure
-from from_text_to_logic.check_logic_structure import (
-    detect_modal_word,
-    remove_modal_word,
-    get_modal_antonyms,
-    load_spacy_model,
-    MODAL_WORDS
-)
-
 # External Dependencies
 try:
     from openai import OpenAI
     from sentence_transformers import CrossEncoder
-
+    
     # Reuse your existing RAG infrastructure
     from baseline_rag.retriever import (
         load_sbert_model,
@@ -56,14 +46,13 @@ try:
         encode_query,
         compute_cosine_similarity
     )
-
+            
 except ImportError as e:
     print(f"CRITICAL: Missing dependencies.\nError: {e}")
     sys.exit(1)
 
-# Global cache for NLI model and SpaCy model
+# Global cache for NLI model
 _cached_nli_model = None
-_cached_spacy_model = None
 
 # ==========================================
 # 1. INFIX FORMULA PARSER (matches translate_old.py style)
@@ -78,7 +67,7 @@ def tokenize_formula(formula: str) -> List[str]:
     formula = formula.replace('⟺', '<=>').replace('⇔', '<=>').replace('↔', '<=>')
     formula = formula.replace('∧', '&').replace('∨', '|')
     formula = formula.replace('¬', '~').replace('!', '~')
-
+    
     # Pattern: proposition IDs (P_\d+), operators, parentheses
     pattern = r'(P_\d+|<=>|=>|<=|[&|~()])'
     tokens = re.findall(pattern, formula)
@@ -88,9 +77,9 @@ def tokenize_formula(formula: str) -> List[str]:
 def parse_infix_formula(formula_str: str) -> Formula:
     """
     Parse infix formula string into nested tuple structure.
-
+    
     Supports: ¬/~ (NOT), ∧/& (AND), ∨/| (OR), ⟹/=> (IMPLIES), ⟺/<=> (IFF)
-
+    
     Grammar (precedence low to high):
       formula := iff_expr
       iff_expr := implies_expr ('<=>' implies_expr)*
@@ -103,12 +92,12 @@ def parse_infix_formula(formula_str: str) -> Formula:
     tokens = tokenize_formula(formula_str)
     if not tokens:
         raise ValueError(f"Empty formula: {formula_str}")
-
+    
     expr, remaining = _parse_iff(tokens)
-
+    
     if remaining:
         raise ValueError(f"Unexpected tokens after parsing: {remaining}")
-
+    
     return expr
 
 def _parse_implies(tokens: List[str]) -> Tuple[Any, List[str]]:
@@ -130,36 +119,36 @@ def _parse_implies(tokens: List[str]) -> Tuple[Any, List[str]]:
 def _parse_iff(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse IFF (biconditional) expressions."""
     left, tokens = _parse_implies(tokens)
-
+    
     while tokens and tokens[0] == '<=>':
         tokens = tokens[1:]  # consume '<=>'
         right, tokens = _parse_implies(tokens)
         left = ('IFF', left, right)
-
+    
     return left, tokens
 
 
 def _parse_or(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse OR expressions."""
     left, tokens = _parse_and(tokens)
-
+    
     while tokens and tokens[0] == '|':
         tokens = tokens[1:]  # consume '|'
         right, tokens = _parse_and(tokens)
         left = ('OR', left, right)
-
+    
     return left, tokens
 
 
 def _parse_and(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse AND expressions."""
     left, tokens = _parse_not(tokens)
-
+    
     while tokens and tokens[0] == '&':
         tokens = tokens[1:]  # consume '&'
         right, tokens = _parse_not(tokens)
         left = ('AND', left, right)
-
+    
     return left, tokens
 
 
@@ -167,7 +156,7 @@ def _parse_not(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse NOT expressions."""
     if not tokens:
         raise ValueError("Unexpected end of formula")
-
+    
     if tokens[0] == '~':
         tokens = tokens[1:]  # consume '~'
         expr, tokens = _parse_not(tokens)
@@ -180,7 +169,7 @@ def _parse_atom(tokens: List[str]) -> Tuple[Formula, List[str]]:
     """Parse atomic propositions or parenthesized expressions."""
     if not tokens:
         raise ValueError("Unexpected end of formula")
-
+    
     if tokens[0] == '(':
         tokens = tokens[1:]  # consume '('
         expr, tokens = _parse_iff(tokens)
@@ -188,12 +177,12 @@ def _parse_atom(tokens: List[str]) -> Tuple[Formula, List[str]]:
             raise ValueError("Missing closing parenthesis")
         tokens = tokens[1:]  # consume ')'
         return expr, tokens
-
+    
     # Must be a proposition ID
     prop_id = tokens[0]
     if not prop_id.startswith('P_'):
         raise ValueError(f"Invalid proposition ID: {prop_id}")
-
+    
     return prop_id, tokens[1:]
 
 
@@ -203,7 +192,7 @@ def verbalize(formula: Formula, prop_map: Dict[str, str]) -> str:
         if formula not in prop_map:
             raise ValueError(f"Unknown proposition ID: {formula}")
         return prop_map[formula]
-
+    
     op = formula[0]
     if op == "NOT":
         return f"it is not the case that {verbalize(formula[1], prop_map)}"
@@ -236,7 +225,7 @@ def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedd
         translation = prop['translation']
         evidence = prop.get('evidence', '')
         text_to_embed = f"{translation} | Evidence: {evidence[:200]}" if hybrid_embedding and evidence else translation
-
+        
         chunks.append({
             'text': text_to_embed,
             'id': prop['id'],
@@ -253,7 +242,7 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     query_embedding = encode_query(query, sbert_model)
     similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
     top_k_indices = np.argsort(similarities)[::-1][:k]
-
+    
     retrieved = []
     for idx in top_k_indices:
         if similarities[idx] < minimal_similarity:
@@ -383,111 +372,7 @@ def convert_yes_no_to_statement(
 
 
 # ==========================================
-# 3. MODAL OPPOSITE DETECTION
-# ==========================================
-
-def get_spacy_model_singleton():
-    """Load SpaCy model once and cache it."""
-    global _cached_spacy_model
-    if _cached_spacy_model is None:
-        _cached_spacy_model = load_spacy_model()
-    return _cached_spacy_model
-
-
-def detect_modal_opposite(
-    query: str,
-    retrieved_chunks: List[Dict],
-    sbert_model,
-    verbose: bool = True
-) -> Optional[Dict[str, Any]]:
-    """
-    Detect if the hypothesis has a modal word that is the opposite of a KB proposition.
-
-    For example:
-    - Hypothesis: "Alice often studies late at night" (modal: "often")
-    - KB has: "Alice rarely studies late at night" (modal: "rarely")
-    - "often" and "rarely" are antonyms with same base text
-    - Returns negation of the KB proposition: ¬P_27
-
-    Args:
-        query: The hypothesis text
-        retrieved_chunks: List of retrieved propositions from KB
-        sbert_model: Loaded SBERT model for embedding comparison
-        verbose: Print debug information
-
-    Returns:
-        Dict with formula result if modal opposite found, None otherwise
-    """
-    nlp = get_spacy_model_singleton()
-
-    # Check if hypothesis has a modal word
-    hypothesis_modal_info = detect_modal_word(query, nlp)
-
-    if not hypothesis_modal_info:
-        return None
-
-    hyp_modal_word, _ = hypothesis_modal_info
-    hyp_base_text = remove_modal_word(query, hyp_modal_word, nlp)
-    hyp_base_embedding = sbert_model.encode(hyp_base_text)
-    antonyms = get_modal_antonyms(hyp_modal_word)
-
-    if verbose:
-        print(f"  [Modal Detection] Hypothesis modal: '{hyp_modal_word}'")
-        print(f"  [Modal Detection] Base text: '{hyp_base_text}'")
-        print(f"  [Modal Detection] Antonyms: {antonyms}")
-
-    if not antonyms:
-        return None
-
-    # Check each retrieved proposition for modal opposite
-    for chunk in retrieved_chunks:
-        prop_translation = chunk['translation']
-        prop_modal_info = detect_modal_word(prop_translation, nlp)
-
-        if not prop_modal_info:
-            continue
-
-        prop_modal_word, _ = prop_modal_info
-
-        # Is this an antonym modal?
-        if prop_modal_word in antonyms:
-            prop_base_text = remove_modal_word(prop_translation, prop_modal_word, nlp)
-            prop_base_embedding = sbert_model.encode(prop_base_text)
-
-            # Check base text similarity using cosine similarity
-            norm_hyp = np.linalg.norm(hyp_base_embedding)
-            norm_prop = np.linalg.norm(prop_base_embedding)
-
-            if norm_hyp > 0 and norm_prop > 0:
-                similarity = float(np.dot(hyp_base_embedding, prop_base_embedding) / (norm_hyp * norm_prop))
-            else:
-                similarity = 0.0
-
-            if verbose:
-                print(f"  [Modal Detection] Found KB prop with antonym modal '{prop_modal_word}'")
-                print(f"  [Modal Detection] KB base text: '{prop_base_text}'")
-                print(f"  [Modal Detection] Base similarity: {similarity:.3f}")
-
-            if similarity > 0.85:
-                # MODAL OPPOSITE FOUND!
-                prop_id = chunk['id']
-
-                if verbose:
-                    print(f"  [Modal Detection] ✓ MATCH! Returning ¬{prop_id}")
-
-                return {
-                    "formula": f"¬{prop_id}",
-                    "translation": f"it is not the case that {prop_translation}",
-                    "explanation": f"Modal opposite detected: hypothesis '{hyp_modal_word}' contradicts KB '{prop_modal_word}' (base similarity: {similarity:.2f})",
-                    "confidence": 1.0,
-                    "modal_opposite_detected": True
-                }
-
-    return None
-
-
-# ==========================================
-# 4. NEURO-SYMBOLIC CORE
+# 3. NEURO-SYMBOLIC CORE
 # ==========================================
 
 def load_nli_model_singleton():
@@ -503,7 +388,7 @@ def generate_candidates_llm(
     ) -> List[Dict]:
     """Call LLM to get JSON result - handles both single object and candidates list."""
     client, model = get_configured_client(api_key, model)
-
+    
     try:
         response = client.chat.completions.create(
             model=model,
@@ -513,7 +398,7 @@ def generate_candidates_llm(
         )
         content = response.choices[0].message.content
         result = json.loads(content)
-
+        
         if 'candidates' in result:
             return result['candidates']
         elif 'formula' in result:
@@ -521,7 +406,7 @@ def generate_candidates_llm(
         else:
             print(f"  Warning: LLM response missing 'formula' or 'candidates' key")
             return []
-
+            
     except Exception as e:
         print(f"  Warning: LLM generation failed or returned invalid JSON: {e}")
         print(f"  [LLM ERROR] Generation failed: {type(e).__name__}: {e}")
@@ -539,9 +424,9 @@ def build_prompt(query: str, props_text: str, available_ids: str, query_is_negat
     """
     Build the LLM prompt for translating query to propositional formula.
     """
-
+    
     polarity_str = "NEGATIVE (prohibition/restriction)" if query_is_negative else "AFFIRMATIVE"
-
+    
     template = load_prompt_template(PROMPT_TRANSLATION)
     prompt = (
     template
@@ -550,7 +435,7 @@ def build_prompt(query: str, props_text: str, available_ids: str, query_is_negat
     .replace("{available_ids}", available_ids)
     .replace("{polarity_str}", polarity_str)
     )
-
+    
     return prompt
 
 
@@ -569,9 +454,8 @@ def translate_query(
     """
     Main Interface Function.
     Replaces the old logic with the Generate -> Verbalize -> Verify loop.
-    Now includes Modal Opposite Detection before LLM generation.
     """
-
+    
     # 1. Pre-process (Yes/No Handling)
     original_query = query
     if is_yes_no_question(query):
@@ -605,32 +489,17 @@ def translate_query(
             "confidence": 0.5
         }
 
-    # 3. MODAL OPPOSITE DETECTION (NEW STEP)
-    # Check if hypothesis has a modal word that contradicts a KB proposition
-    if verbose:
-        print("\nChecking for modal opposites...")
-
-    modal_opposite_result = detect_modal_opposite(query, retrieved, sbert_model, verbose=verbose)
-
-    if modal_opposite_result:
-        # Modal opposite found - return immediately without LLM
-        modal_opposite_result["query"] = query
-        modal_opposite_result["original_query"] = original_query
-        if verbose:
-            print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
-        return modal_opposite_result
-
-    # 4. Build Prompt Variables (matching translate_old.py style)
+    # 3. Build Prompt Variables (matching translate_old.py style)
     props_text = ""
     prop_ids = []
     for chunk in retrieved:
         prop_id = chunk['id']
         prop_ids.append(prop_id)
-
+        
         # Add polarity annotation
         is_negative = negation_detection.detect_negation_in_proposition(chunk['translation'])
         polarity = "NEGATIVE" if is_negative else "AFFIRMATIVE"
-
+        
         props_text += f"""
     {prop_id}: {chunk['translation']} [Polarity: {polarity}]
     Evidence: {chunk.get('evidence', 'N/A')}
@@ -642,19 +511,19 @@ def translate_query(
 
     # Build prop_map for verbalization
     prop_map = {p['id']: p['translation'].strip(".") for p in retrieved}
-
+    
     # Detect query polarity
     query_is_negative = negation_detection.detect_negation_in_hypothesis(query)
-
+    
     # Build the prompt
     prompt = build_prompt(query, props_text, available_ids, query_is_negative)
 
-    # 5. Generate Candidates (Step A)
+    # 4. Generate Candidates (Step A)
     if verbose:
         print("\nStep A: Generating logical candidates...")
-
+    
     candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
-
+    
     if not candidates:
         return {
             "formula": "ERROR",
@@ -674,14 +543,14 @@ def translate_query(
             "confidence": 0.5
         }
 
-    # 6. Verbalize & Verify (Step B & C)
+    # 5. Verbalize & Verify (Step B & C)
     if verbose:
         print("Step B & C: Verbalizing and Verifying with NLI...")
     nli_model = load_nli_model_singleton()
-
+    
     valid_candidates = []
     verbalized_texts = []
-
+    
     for c in candidates:
         if c.get('formula') == "NONE":
             valid_candidates.append(c)
@@ -706,10 +575,10 @@ def translate_query(
 
     pairs = [(query, v_text) for v_text in verbalized_texts]
     logits = nli_model.predict(pairs)
-
+    
     exp_x = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
     probs = exp_x / np.sum(exp_x, axis=-1, keepdims=True)
-
+    
     best_net_score = -999.0
     best_idx = 0
     debug_trace = []
@@ -718,14 +587,14 @@ def translate_query(
         entailment = float(prob[2])
         contradiction = float(prob[0])
         net_score = entailment - contradiction
-
+        
         debug_trace.append(f"{c['formula']} (Score: {net_score:.2f})")
-
+        
         if verbose:
             print(f"  Cand {i}: {c['formula']}")
             print(f"    -> Verbal: {verbalized_texts[i][:60]}...")
             print(f"    -> Score: {net_score:.2f} (Ent: {entailment:.2f}, Con: {contradiction:.2f})")
-
+            
         if net_score > best_net_score:
             best_net_score = net_score
             best_idx = i
@@ -745,7 +614,7 @@ def translate_query(
 
 
 # ==========================================
-# 5. MAIN ENTRY POINT
+# 4. MAIN ENTRY POINT
 # ==========================================
 
 def main():
