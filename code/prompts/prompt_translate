@@ -1,12 +1,19 @@
 You are a logic translator for Natural Language Inference (NLI). 
-Given a hypothesis and a set of atomic propositions from a document, 
+Given a hypothesis and a set of atomic propositions from a legal document, 
 translate the hypothesis into a propositional formula.
 
 === AVAILABLE PROPOSITIONS ===
 {props_text}
-
 === HYPOTHESIS TO CHECK ===
 "{query}"
+
+=== CRITICAL INSTRUCTIONS ===
+When translating, you MUST:
+1. Read the full proposition information carefully: ID, translation, evidence, and explanation
+2. Pay special attention to modal/frequency terms (rarely ≠ often, sometimes ≠ always)
+3. Distinguish auxiliary propositions by checking the evidence field for "auxiliary proposition for..."
+4. Match semantic meaning, not just keywords - use the explanation to understand intent
+5. Use the reasoning/explanation field to disambiguate between similar-looking propositions
 
 === TASK ===
 Translate the above hypothesis into a propositional formula using ONLY these proposition IDs: {available_ids}
@@ -15,24 +22,6 @@ The formula will be evaluated to determine:
 - TRUE: The hypothesis is entailed (follows from the document)
 - FALSE: The hypothesis is contradicted (negation follows from the document)
 - UNCERTAIN: Neither entailment nor contradiction can be determined
-
-CRITICAL INSTRUCTIONS:
-1. **Read the full proposition information carefully**: Each proposition above includes its ID, translation (natural language meaning), evidence (source in text), and explanation (why it's atomic). Use ALL this information to understand what each proposition means.
-
-2. **Pay attention to modal/frequency terms**: Propositions may contain modal words like "rarely", "often", "sometimes", "typically", "always", "never". These are semantically distinct:
-   - "Alice rarely studies" ≠ "Alice often studies" (opposites)
-   - "Alice sometimes studies" ≠ "Alice always studies" (opposites)
-   - "Alice studies" (base event without modal) ≠ any of the above
-
-3. **Distinguish auxiliary propositions**: Some propositions are auxiliary alternatives (e.g., "Alice is a high school student" when text says "Alice is a university student"). These exist to enable FALSE predictions but are NOT stated in the text. Check the evidence field - if it says "(auxiliary proposition...)", it's an alternative that the text explicitly contradicts.
-
-4. **Match semantic meaning, not just keywords**: Compare the hypothesis meaning with the proposition translations. Consider:
-   - Are the subjects the same? (Alice vs. Bob)
-   - Are the predicates the same? (studies vs. works)
-   - Are the objects/complements the same? (biology vs. computer science, Monday vs. Friday)
-   - Are the modal/frequency terms compatible? (rarely vs. often, sometimes vs. always)
-
-5. **Use the reasoning field**: The explanation tells you WHY each proposition is atomic and what it represents. Use this to disambiguate similar propositions.
 
 === EXAMPLES ===
 
@@ -66,24 +55,38 @@ Hypothesis: "Receiving Party shall notify Disclosing Party in case disclosure is
 If P_29 = "Disclosure is required by law" and P_30 = "Recipient gives notice"
 Output: {{"formula": "P_29 ⟹ P_30", "query_mode": "entailment", "translation": "If legally required to disclose, then must notify", "reasoning": "'In case' creates a conditional - check if implication holds"}}
 
-Example 7 - Modal mismatch (MUST ABSTAIN):
-Hypothesis: "Alice often studies late at night"
-If P_27 = "Alice rarely studies late at night" (evidence: Sentence 8, explanation: "Atomic proposition retaining frequency term 'rarely'")
-And P_29 = "Alice often studies late at night" (evidence: "Sentence 8 (auxiliary modal opposite for 'rarely')", explanation: "Auxiliary modal opposite proposition. Semantically incompatible with 'rarely'")
-Output: {{"formula": "P_29", "query_mode": "entailment", "translation": "Alice often studies late at night", "reasoning": "Found exact match P_29 for the hypothesis with 'often' modality"}}
-NOTE: If only P_27 exists and not P_29, then ABSTAIN with "NONE" because "rarely" ≠ "often"
+Example 7 - Using explanation to detect modal mismatch:
+Hypothesis: "Alice rarely studies in the library"
+Available propositions:
+P_18: Alice studies in the library [Polarity: AFFIRMATIVE]
+    Evidence: "Alice studies in the library often."
+    Explanation: Frequency adverb 'often' indicates high frequency (≥0.60 probability)
+P_19: Alice studies in the library [Polarity: AFFIRMATIVE]
+    Evidence: "Alice rarely studies in the library."
+    Explanation: Frequency adverb 'rarely' indicates low frequency (≤0.25 probability); auxiliary proposition for modal opposite
+Output: {{"formula": "P_19", "query_mode": "entailment", "translation": "Alice rarely studies in the library", "reasoning": "P_19 explanation confirms 'rarely' matches hypothesis semantics; P_18 is modal opposite (often ≠ rarely)"}}
 
-Example 8 - Auxiliary proposition (check evidence):
-Hypothesis: "Alice is a high school student"
-If P_1 = "Alice is a university student" (evidence: "Sentence 0: 'Alice is a university student.'")
-And P_2 = "Alice is a high school student" (evidence: "Sentence 0 (auxiliary proposition for education level)")
-Output: {{"formula": "P_2", "query_mode": "entailment", "translation": "Alice is a high school student", "reasoning": "Found proposition P_2 matching hypothesis text, will check if entailed (expect FALSE since P_2 is auxiliary)"}}
+Example 8 - Using evidence to identify auxiliary propositions:
+Hypothesis: "Assignments are due every Friday"
+Available propositions:
+P_5: Assignments are due every Friday [Polarity: AFFIRMATIVE]
+    Evidence: "Assignments are due every Friday."
+    Explanation: Specifies weekly deadline on Friday
+P_6: Assignments are due every Monday [Polarity: AFFIRMATIVE]
+    Evidence: "Assignments are due every Friday."
+    Explanation: Auxiliary proposition for finite set (weekdays); mutually exclusive with P_5
+Output: {{"formula": "P_5", "query_mode": "entailment", "translation": "Assignments due Friday", "reasoning": "P_5 matches hypothesis; P_6 is auxiliary (different weekday from same evidence)"}}
 
-Example 9 - Different categorical value (MUST ABSTAIN):
-Hypothesis: "Assignments are due every Monday"
-If P_20 = "Alice's assignments are due every Friday" (evidence: "Sentence 7: 'Her assignments are due every Friday.'")
-And P_21 = "Alice's assignments are due every Monday" (evidence: "Sentence 7 (auxiliary proposition for finite weekday domain)")
-Output: {{"formula": "P_21", "query_mode": "entailment", "translation": "Assignments are due every Monday", "reasoning": "Found proposition P_21 matching hypothesis about Monday, will check if entailed (expect FALSE since P_21 is auxiliary)"}}
+Example 9 - Using explanation to avoid false matches:
+Hypothesis: "Alice studies biology"
+Available propositions:
+P_10: Alice studies computer science [Polarity: AFFIRMATIVE]
+    Evidence: "Alice studies computer science."
+    Explanation: Alice's major is computer science
+P_11: Alice studies biology [Polarity: AFFIRMATIVE]
+    Evidence: "Alice studies computer science."
+    Explanation: Auxiliary proposition for finite set (majors); alternative to P_10
+Output: {{"formula": "P_11", "query_mode": "entailment", "translation": "Alice studies biology", "reasoning": "P_11 text matches hypothesis; explanation shows it's auxiliary for different major value"}}
 
 === QUERY MODE ===
 First, determine the QUERY MODE based on the hypothesis wording:
@@ -98,7 +101,7 @@ First, determine the QUERY MODE based on the hypothesis wording:
 
 Query polarity: {polarity_str}
 
-When translating negative queries ("shall not X", "does not Y"):
+When translating negative queries ("shall not X", "only include Y"):
 - If query is NEGATIVE and proposition is AFFIRMATIVE → use negation: ¬P_i
 - If query is NEGATIVE and proposition is NEGATIVE → use directly: P_i
 - If query is AFFIRMATIVE and proposition is AFFIRMATIVE → use directly: P_i
@@ -108,63 +111,43 @@ Examples:
 - Query: "Party shall not disclose" + P_1="Party does not disclose" [NEGATIVE] → Formula: P_1
 - Query: "Info includes only X" + P_2="Info includes X and Y" [AFFIRMATIVE] → Formula: ¬P_2
 
-IMPORTANT: Check the proposition translation text to determine if it's affirmative or negative. Look for "not", "does not", "is not" in the translation.
-
 === TRANSLATION GUIDELINES ===
 
-1. **Read proposition translations first**: Before selecting propositions, read their full translations to understand their meaning.
-
-2. **Match semantic content**:
-   - Subject must match (Alice ≠ Bob, researchers ≠ students)
-   - Predicate must match (studies ≠ works, is ≠ has)
-   - Object must match (computer science ≠ biology, Friday ≠ Monday)
-   - Modal/frequency must be compatible (rarely ≠ often, sometimes ≠ always)
-
-3. **Logical operators**:
-   - "Shall"/"Must" obligations → P_i (mode: entailment)
-   - "Shall not"/"Must not" prohibitions → Check polarity, apply ¬ if needed (mode: entailment)
-   - "May"/"Can" permissions → P_i (mode: consistency)
-   - Conditionals "If A then B" → P_a ⟹ P_b (mode: entailment)
-   - "Some"/"Any" (existential) → P_1 ∨ P_2
-   - "All"/"Every" (universal) → P_1 ∧ P_2
-
-4. **Abstain when no match**: If no proposition semantically matches the hypothesis (different subject, predicate, object, or incompatible modals), return "NONE".
-
-5. **Use auxiliary propositions correctly**: Auxiliary propositions (marked in evidence field) represent alternatives that the text contradicts. They can be used in formulas - the solver will determine they're FALSE based on constraints.
+1. "Shall"/"Must" obligations → Use proposition directly: P_i (mode: entailment)
+2. "Shall not"/"Must not" prohibitions → Check proposition polarity:
+- If proposition is AFFIRMATIVE, apply negation: ¬P_i
+- If proposition is NEGATIVE, use directly: P_i
+- Mode: entailment
+3. "May"/"Can" permissions → Use proposition for the permitted action: P_i (mode: consistency)
+4. Conditionals "If A then B" / "in case" / "when" → Use implication: P_a ⟹ P_b (mode: entailment)
+5. "Some"/"Any" (existential) → Use disjunction: P_1 ∨ P_2
+6. "All"/"Every" (universal) → Use conjunction: P_1 ∧ P_2
 
 IMPORTANT:
 - Choose the SIMPLEST formula that preserves semantic intent
 - ALWAYS match hypothesis polarity with formula polarity
-- Use the full proposition information (translation, evidence, explanation) to make decisions
-- Pay special attention to modal/frequency terms - they create semantic distinctions
+- Check [Polarity: ...] annotations above
+
 
 === ABSTAIN RULE (VERY IMPORTANT) ===
-If the hypothesis cannot be translated to a formula with the AVAILABLE PROPOSITIONS, return:
-{{"formula": "NONE", "query_mode": "entailment", "translation": "No matching proposition", "reasoning": "No matching proposition"}}
+If the hypothesis cannot be translated to a formula with the AVAILABLE PROPOSITIONS,
+return:
+{{"formula": "NONE", "query_mode": "entailment", "translation": "Not matching proposition", "reasoning": "No matching proposition"}}
 
-MUST abstain when:
-1. **Different categorical values with no auxiliary**: 
-   - Hypothesis: "Alice studies biology" but only have "Alice studies computer science" and no auxiliary for biology → ABSTAIN
+Examples (MUST abstain):
+- Hypothesis: "Alice studies biology" and only proposition is "Alice studies computer science" (without auxiliary) → NONE
+- Hypothesis: "Alice is a high school student" and only proposition is "Alice is a student" (too general) → NONE
+- Hypothesis: "Alice has a scholarship" and no proposition mentions scholarships → NONE
+- Hypothesis: "Alice rarely studies" and only P_x with explanation "often indicates high frequency" (modal opposite without auxiliary) → NONE
 
-2. **Missing subject/predicate/object**:
-   - Hypothesis: "Alice has a scholarship" but no proposition mentions scholarships → ABSTAIN
+IMPORTANT: Check the explanation field:
+- If hypothesis has modal term (rarely, often, sometimes, always) and proposition explanation shows opposite modal, check if an auxiliary proposition exists
+- If no auxiliary proposition with matching modal exists, ABSTAIN
 
-3. **Incompatible modals with no auxiliary opposite**:
-   - Hypothesis: "Alice often studies late" but only have "Alice rarely studies late" and no "often" auxiliary → ABSTAIN
-   - NOTE: If an auxiliary modal opposite exists (check evidence for "auxiliary modal opposite"), USE IT
-
-4. **Too generic/specific mismatch**:
-   - Hypothesis: "Alice is a student" but only have "Alice is a university student" → ABSTAIN (too generic)
-   - Hypothesis: "Alice is a graduate student" but only have "Alice is a student" → ABSTAIN (too specific)
-
-DO NOT abstain when:
-1. **Auxiliary propositions exist**: If an auxiliary proposition matches the hypothesis (even if marked as auxiliary in evidence), USE IT. The solver will determine if it's TRUE/FALSE based on constraints.
-
-2. **Negation can be applied**: If hypothesis is negative and proposition is affirmative (or vice versa), use ¬ operator.
 
 === OUTPUT FORMAT ===
 Return ONLY a JSON object (no other text):
 {{"formula": "<formula using {available_ids}>", 
 "query_mode": "<entailment or consistency>", 
 "translation": "<plain English meaning>", 
-"reasoning": "<brief explanation including which propositions were selected and why>"}}
+"reasoning": "<brief explanation>"}}
