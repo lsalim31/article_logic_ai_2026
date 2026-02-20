@@ -19,7 +19,6 @@ Given natural language text T and its Stanford OpenIE relation triples, extract:
    - llm_weight = 0.0 means the negation of the formula must hold
    - Include meaning, evidence, and reasoning from text
    - If contradictions exist, prioritize text intent; include inconsistencies if genuinely intended
-   - CRITICAL: Every primitive proposition P_i must appear in at least one constraint as a standalone assertion (P_i with weight w). This requirement ensures the solver has base weights for all propositions during retrieval and reasoning. Each proposition must have its assertion strength defined independently, even if it also appears in compound formulas.
    - IMPORTANT: You must look at the primitive propositions and examine their translations. There may be common-sense semantic relationships between them. You must include constraints corresponding to these relationships with appropriate weights, including implied logical constraints.
 
 METHODOLOGY
