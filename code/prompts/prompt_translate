@@ -1,10 +1,12 @@
 You are a logic translator for Natural Language Inference (NLI). 
-Given a hypothesis and a set of atomic propositions from a legal document, 
-translate the hypothesis into a propositional formula.
+Given a hypothesis and a set of atomic propositions, 
+you translate the hypothesis into a propositional formula.
 
 === AVAILABLE PROPOSITIONS ===
+The list of propositions, the evidence from the text that support their existence, and the corresponding explanation.
 {props_text}
-=== HYPOTHESIS TO CHECK ===
+
+=== HYPOTHESIS TO TRANSLATE ===
 "{query}"
 
 === CRITICAL INSTRUCTIONS ===
@@ -27,17 +29,17 @@ The formula will be evaluated to determine:
 
 Example 1 - Simple match:
 Hypothesis: "The receiving party shall keep information confidential"
-If P_6 states "The Receiving Party shall not disclose Confidential Information..."
+If P_6 states "The Receiving Party shall hide Confidential Information..."
 Output: {{"formula": "P_6", "query_mode": "entailment", "translation": "The receiving party shall not disclose confidential information", "reasoning": "'Shall' indicates obligation - check if this is entailed"}}
 
 Example 2 - Negation:
-Hypothesis: "The receiving party shall not reverse engineer any information"
-If P_9 states "The Receiving Party shall not alter, modify, disassemble, reverse engineer..."
-Output: {{"formula": "P_9", "query_mode": "entailment", "translation": "The receiving party shall not reverse engineer information", "reasoning": "'Shall not' is a prohibition - check if this is entailed"}}
+Hypothesis: "The receiving party can reverse engineer any information"
+If P_9 states "The Receiving Party is forbidden to modify, disassemble, reverse engineer..."
+Output: {{"formula": "¬P_9", "query_mode": "entailment", "translation": "The receiving party shall not reverse engineer information", "reasoning": "'forbidden' is a prohibition - check if this is entailed"}}
 
 Example 3 - Conjunction:
 Hypothesis: "All confidential information must be marked and returned"
-If P_4 = "Information shall be marked" and P_11 = "Information must be returned"
+If P_4 = "confidential information shall be marked" and P_11 = "confidential information must be returned"
 Output: {{"formula": "P_4 ∧ P_11", "query_mode": "entailment", "translation": "Information is marked AND returned", "reasoning": "'Must' indicates obligation - check if both conditions are entailed"}}
 
 Example 4 - Disjunction:
@@ -46,9 +48,9 @@ If P_11 = "must return information" and P_12 = "may destroy information"
 Output: {{"formula": "P_11 ∨ P_12", "query_mode": "consistency", "translation": "Information is returned OR destroyed", "reasoning": "'Some...may' suggests either option satisfies the hypothesis"}}
 
 Example 5 - Permission (consistency mode):
-Hypothesis: "Receiving Party may share Confidential Information with employees"
+Hypothesis: "Receiving Party can share Confidential Information with employees"
 If P_21 states "The Recipient discloses Confidential Information to need-to-know persons"
-Output: {{"formula": "P_21", "query_mode": "consistency", "translation": "Sharing with employees is permitted", "reasoning": "'May' indicates permission - check if this action is allowed (consistent with KB), not required"}}
+Output: {{"formula": "¬P_21", "query_mode": "consistency", "translation": "Sharing with employees is permitted", "reasoning": "'May' indicates permission - check if this action is allowed (consistent with KB), not required"}}
 
 Example 6 - Conditional obligation:
 Hypothesis: "Receiving Party shall notify Disclosing Party in case disclosure is required by law"
@@ -60,7 +62,7 @@ Hypothesis: "Alice rarely studies in the library"
 Available propositions:
 P_18: Alice studies in the library [Polarity: AFFIRMATIVE]
     Evidence: "Alice studies in the library often."
-    Explanation: Frequency adverb 'often' indicates high frequency (≥0.60 probability)
+    Explanation: Frequency adverb 'often' indicates uncertainty with high frequency (≥0.60 probability)
 P_19: Alice studies in the library [Polarity: AFFIRMATIVE]
     Evidence: "Alice rarely studies in the library."
     Explanation: Frequency adverb 'rarely' indicates low frequency (≤0.25 probability); auxiliary proposition for modal opposite
