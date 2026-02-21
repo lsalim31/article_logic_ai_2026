@@ -1419,9 +1419,9 @@ def generate_finite_domain_auxiliaries(
     sbert_model: SentenceTransformer,
     prop_embeddings: Dict[str, np.ndarray],
     verbose: bool = True
-    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, np.ndarray], List[str]]:
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, np.ndarray], List[str]]:
     """
-    Step 5: Generate auxiliary propositions for finite domains.
+    Step 4: Generate auxiliary propositions for finite domains.
 
     Detects patterns like "X studies computer science" and generates
     auxiliary propositions for alternative values (biology, mathematics, etc.)
@@ -1501,7 +1501,52 @@ def generate_finite_domain_auxiliaries(
                             prop_id=aux_id,
                             translation=aux_text,
                             evidence=f"{prop.get('evidence', '')} (auxiliary proposition for {domain_name} domain)",
-                            explanation=f"Auxiliary proposition for mutual exclusion wit
+                            explanation=f"Auxiliary proposition for mutual exclusion with {prop_id}. Part of finite set: {domain_name}. Mutually exclusive alternative."
+                        )
+                        updated_props.append(aux_prop)
+                        updated_embeddings[aux_id] = sbert_model.encode(aux_text)
+
+                        if verbose:
+                            log_messages.append(f"              Added auxiliary: {aux_id} = '{aux_text}'")
+
+                        # Add negation constraint: ¬P_aux @1.0
+                        negation_formula = f"¬{aux_id}"
+                        if not constraint_exists(negation_formula, updated_constraints):
+                            neg_constraint = create_constraint(
+                                constraint_id=get_next_constraint_id(updated_constraints),
+                                formula=negation_formula,
+                                translation=f"It is not the case that {aux_text}",
+                                llm_weight=1.0,
+                                evidence="Auto-generated",
+                                reasoning="Negation of auxiliary proposition - definitional consequence"
+                            )
+                            updated_constraints.append(neg_constraint)
+                            if verbose:
+                                log_messages.append(f"              Added constraint: {negation_formula} @1.0")
+
+                        # Add mutual exclusion constraint: P_original ⟹ ¬P_aux @1.0
+                        exclusion_formula = f"{prop_id} ⟹ ¬{aux_id}"
+                        if not constraint_exists(exclusion_formula, updated_constraints):
+                            excl_constraint = create_constraint(
+                                constraint_id=get_next_constraint_id(updated_constraints),
+                                formula=exclusion_formula,
+                                translation=domain_config["exclusion_template"].format(
+                                    subject=subject,
+                                    original=value,
+                                    alternative=alt
+                                ),
+                                llm_weight=1.0,
+                                evidence="Auto-generated",
+                                reasoning=f"Mutual exclusion over {domain_name} domain with weight 1.0"
+                            )
+                            updated_constraints.append(excl_constraint)
+                            if verbose:
+                                log_messages.append(f"              Added constraint: {exclusion_formula} @1.0")
+
+                    break  # Don't try other patterns once we found a match
+
+    return updated_props, updated_constraints, updated_embeddings, log_messages
+
 
 
 # =============================================================================

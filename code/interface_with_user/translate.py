@@ -1192,14 +1192,29 @@ def translate_query(
                 all_formulas.append("NONE")
                 if verbose:
                     print(f"    → LLM abstained (NONE)")
-
-        # Majority vote
+        ###########
         formula_counts = Counter(all_formulas)
         winning_formula, vote_count = formula_counts.most_common(1)[0]
         
         if verbose:
             print(f"\n[Adaptive Voting] Vote results: {dict(formula_counts)}")
             print(f"[Adaptive Voting] Winner: {winning_formula} ({vote_count}/{len(all_formulas)} votes)")
+
+        # Handle NONE winning the vote (abstention)
+        if winning_formula == "NONE":
+            voting_confidence = vote_count / len(all_formulas)
+            return {
+                "formula": "NONE",
+                "translation": "",
+                "query": query,
+                "original_query": original_query,
+                "explanation": f"Abstained via voting ({vote_count}/{len(all_formulas)} votes for NONE)",
+                "confidence": 0.5,
+                "sbert_confidence": sbert_confidence,
+                "voting_triggered": True,
+                "voting_confidence": voting_confidence,
+                "vote_counts": dict(formula_counts)
+            }
 
         # Find the result with the winning formula (prefer highest NLI score if tie)
         matching_results = [(w, t, s) for (w, t, s) in all_results 
@@ -1209,6 +1224,7 @@ def translate_query(
             # Pick the one with highest NLI score
             matching_results.sort(key=lambda x: x[2], reverse=True)
             winner, winning_text, best_net_score = matching_results[0]
+
         
         # Update explanation with voting info
         voting_confidence = vote_count / len(all_formulas)
