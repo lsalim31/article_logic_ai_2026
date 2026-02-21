@@ -44,3 +44,6 @@ HARDNESS_CONSTANT = 0.9
 
 PROMPT_EXTRACTION = "prompt_current"
 PROMPT_TRANSLATION = "prompt_translate"
+
+TRIGGER_QUERY = 0.5      # NLI confidence threshold to trigger voting
+ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered

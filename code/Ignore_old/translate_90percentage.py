@@ -13,7 +13,6 @@ Architecture:
 4. Generation: LLM generates candidate formula(s)
 5. Verbalization: Python recursively converts Logic -> "Structured English"
 6. Verification: NLI model scores candidates to find the best semantic match
-7. Adaptive Voting: If NLI confidence < threshold, sample more and vote
 """
 
 import sys
@@ -24,11 +23,9 @@ import argparse
 import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
-from collections import Counter
 
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
-from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY
 
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
@@ -753,82 +750,6 @@ def build_prompt(query: str, props_text: str, available_ids: str, query_is_negat
     return prompt
 
 
-def normalize_formula(formula: str) -> str:
-    """
-    Normalize a formula for comparison purposes.
-    Removes whitespace and normalizes operator symbols.
-    """
-    if formula is None:
-        return "NONE"
-    # Normalize to ASCII operators
-    normalized = formula.replace('⟹', '=>').replace('⇒', '=>').replace('→', '=>')
-    normalized = normalized.replace('⟺', '<=>').replace('⇔', '<=>').replace('↔', '<=>')
-    normalized = normalized.replace('∧', '&').replace('∨', '|')
-    normalized = normalized.replace('¬', '~').replace('!', '~')
-    # Remove whitespace
-    normalized = re.sub(r'\s+', '', normalized)
-    return normalized
-
-
-def select_best_candidate(
-    candidates: List[Dict],
-    query: str,
-    prop_map: Dict[str, str],
-    nli_model,
-    verbose: bool = True
-) -> Tuple[Optional[Dict], str, float]:
-    """
-    Select the best candidate using NLI verification.
-    
-    Returns:
-        Tuple of (winner_candidate, verbalized_text, nli_confidence)
-    """
-    valid_candidates = []
-    verbalized_texts = []
-
-    for c in candidates:
-        if c.get('formula') == "NONE":
-            valid_candidates.append(c)
-            verbalized_texts.append("Not matching proposition")
-            continue
-        try:
-            v_text = verbalize_from_string(c['formula'], prop_map)
-            valid_candidates.append(c)
-            verbalized_texts.append(v_text)
-        except Exception as e:
-            if verbose:
-                print(f"  Skipped invalid formula {c.get('formula')}: {e}")
-            continue
-
-    if not valid_candidates:
-        return None, "", -999.0
-
-    pairs = [(query, v_text) for v_text in verbalized_texts]
-    logits = nli_model.predict(pairs)
-
-    exp_x = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
-    probs = exp_x / np.sum(exp_x, axis=-1, keepdims=True)
-
-    best_net_score = -999.0
-    best_idx = 0
-
-    for i, (prob, c) in enumerate(zip(probs, valid_candidates)):
-        entailment = float(prob[2])
-        contradiction = float(prob[0])
-        net_score = entailment - contradiction
-
-        if verbose:
-            print(f"  Cand {i}: {c['formula']}")
-            print(f"    -> Verbal: {verbalized_texts[i][:60]}...")
-            print(f"    -> Score: {net_score:.2f} (Ent: {entailment:.2f}, Con: {contradiction:.2f})")
-
-        if net_score > best_net_score:
-            best_net_score = net_score
-            best_idx = i
-
-    return valid_candidates[best_idx], verbalized_texts[best_idx], best_net_score
-
-
 def translate_query(
     query: str,
     json_path: str,
@@ -845,7 +766,6 @@ def translate_query(
     Main Interface Function.
     Replaces the old logic with the Generate -> Verbalize -> Verify loop.
     Now includes Modal Opposite Detection and Antonym Contradiction Detection before LLM generation.
-    Also includes adaptive voting when NLI confidence is below threshold.
     """
 
     # 1. Pre-process (Yes/No Handling)
@@ -962,7 +882,7 @@ def translate_query(
             "query": query,
             "original_query": original_query,
             "explanation": "LLM abstained (no matching proposition).",
-"confidence": 0.5
+            "confidence": 0.5
         }
 
     # 7. Verbalize & Verify (Step B & C)
@@ -970,11 +890,24 @@ def translate_query(
         print("Step B & C: Verbalizing and Verifying with NLI...")
     nli_model = load_nli_model_singleton()
 
-    winner, winning_text, best_net_score = select_best_candidate(
-        candidates, query, prop_map, nli_model, verbose=verbose
-    )
+    valid_candidates = []
+    verbalized_texts = []
 
-    if winner is None:
+    for c in candidates:
+        if c.get('formula') == "NONE":
+            valid_candidates.append(c)
+            verbalized_texts.append("Not matching proposition")
+            continue
+        try:
+            v_text = verbalize_from_string(c['formula'], prop_map)
+            valid_candidates.append(c)
+            verbalized_texts.append(v_text)
+        except Exception as e:
+            if verbose:
+                print(f"  Skipped invalid formula {c.get('formula')}: {e}")
+            continue
+
+    if not valid_candidates:
         return {
             "formula": "ERROR",
             "translation": "",
@@ -982,79 +915,43 @@ def translate_query(
             "explanation": "All candidates failed syntax parsing."
         }
 
-    # 8. ADAPTIVE VOTING (NEW STEP)
-    # If confidence is below threshold, sample more candidates and vote
-    if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+    pairs = [(query, v_text) for v_text in verbalized_texts]
+    logits = nli_model.predict(pairs)
+
+    exp_x = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
+    probs = exp_x / np.sum(exp_x, axis=-1, keepdims=True)
+
+    best_net_score = -999.0
+    best_idx = 0
+    debug_trace = []
+
+    for i, (prob, c) in enumerate(zip(probs, valid_candidates)):
+        entailment = float(prob[2])
+        contradiction = float(prob[0])
+        net_score = entailment - contradiction
+
+        debug_trace.append(f"{c['formula']} (Score: {net_score:.2f})")
+
         if verbose:
-            print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
-            print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")
+            print(f"  Cand {i}: {c['formula']}")
+            print(f"    -> Verbal: {verbalized_texts[i][:60]}...")
+            print(f"    -> Score: {net_score:.2f} (Ent: {entailment:.2f}, Con: {contradiction:.2f})")
 
-        # Collect all formulas (first one + additional samples)
-        all_formulas = [normalize_formula(winner['formula'])]
-        all_results = [(winner, winning_text, best_net_score)]
+        if net_score > best_net_score:
+            best_net_score = net_score
+            best_idx = i
 
-        for i in range(ADDITIONAL_LLM_QUERY):
-            if verbose:
-                print(f"  [Voting] Additional call {i+1}/{ADDITIONAL_LLM_QUERY}...")
-            
-            additional_candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
-            
-            if additional_candidates and not (len(additional_candidates) == 1 and additional_candidates[0].get("formula") == "NONE"):
-                add_winner, add_text, add_score = select_best_candidate(
-                    additional_candidates, query, prop_map, nli_model, verbose=False
-                )
-                if add_winner is not None:
-                    all_formulas.append(normalize_formula(add_winner['formula']))
-                    all_results.append((add_winner, add_text, add_score))
-                    if verbose:
-                        print(f"    → Got formula: {add_winner['formula']} (score: {add_score:.2f})")
-            else:
-                # LLM abstained
-                all_formulas.append("NONE")
-                if verbose:
-                    print(f"    → LLM abstained (NONE)")
+    winner = valid_candidates[best_idx]
+    winning_text = verbalized_texts[best_idx]
 
-        # Majority vote
-        formula_counts = Counter(all_formulas)
-        winning_formula, vote_count = formula_counts.most_common(1)[0]
-        
-        if verbose:
-            print(f"\n[Adaptive Voting] Vote results: {dict(formula_counts)}")
-            print(f"[Adaptive Voting] Winner: {winning_formula} ({vote_count}/{len(all_formulas)} votes)")
-
-        # Find the result with the winning formula (prefer highest NLI score if tie)
-        matching_results = [(w, t, s) for (w, t, s) in all_results 
-                           if normalize_formula(w['formula']) == winning_formula]
-        
-        if matching_results:
-            # Pick the one with highest NLI score
-            matching_results.sort(key=lambda x: x[2], reverse=True)
-            winner, winning_text, best_net_score = matching_results[0]
-        
-        # Update explanation with voting info
-        voting_confidence = vote_count / len(all_formulas)
-        explanation = f"Selected via voting ({vote_count}/{len(all_formulas)} votes, NLI: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}"
-        
-        return {
-            "formula": winner['formula'],
-            "translation": winning_text,
-            "query": query,
-            "original_query": original_query,
-            "explanation": explanation,
-            "confidence": best_net_score,
-            "voting_triggered": True,
-            "voting_confidence": voting_confidence,
-            "vote_counts": dict(formula_counts)
-        }
-
-    # No voting needed - return original result
     return {
         "formula": winner['formula'],
         "translation": winning_text,
         "query": query,
         "original_query": original_query,
         "explanation": f"Selected via NLI (Confidence: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}",
-        "confidence": best_net_score
+        "confidence": best_net_score,
+        "debug_trace": debug_trace
     }
 
 
