@@ -73,6 +73,7 @@ class QueryDebugResult:
     query_latency_sec: float
     # Translation/NLI confidence and voting fields
     nli_confidence: Optional[float] = None
+    sbert_confidence: Optional[float] = None
     voting_triggered: bool = False
     voting_confidence: Optional[float] = None
     vote_counts: Optional[Dict[str, int]] = None
@@ -250,9 +251,12 @@ def query_hypothesis(
 
         query_mode = translation_result.get("query_mode", "entailment")
         formula = translation_result.get("formula")
+        
+
 
         # Extract NLI/voting metadata from translation result
         nli_confidence = translation_result.get("confidence")
+        sbert_confidence = translation_result.get("sbert_confidence")
         voting_triggered = translation_result.get("voting_triggered", False)
         voting_confidence = translation_result.get("voting_confidence")
         vote_counts = translation_result.get("vote_counts")
@@ -276,6 +280,7 @@ def query_hypothesis(
                 is_correct=is_correct,
                 query_latency_sec=time.time() - start_time,
                 nli_confidence=nli_confidence,
+                sbert_confidence = sbert_confidence,
                 voting_triggered=voting_triggered,
                 voting_confidence=voting_confidence,
                 vote_counts=vote_counts,
@@ -298,6 +303,7 @@ def query_hypothesis(
                 is_correct=False,
                 query_latency_sec=time.time() - start_time,
                 nli_confidence=nli_confidence,
+                sbert_confidence=sbert_confidence,
                 voting_triggered=voting_triggered,
                 voting_confidence=voting_confidence,
                 vote_counts=vote_counts,
@@ -334,6 +340,7 @@ def query_hypothesis(
             is_correct=is_correct,
             query_latency_sec=time.time() - start_time,
             nli_confidence=nli_confidence,
+            sbert_confidence = sbert_confidence,
             voting_triggered=voting_triggered,
             voting_confidence=voting_confidence,
             vote_counts=vote_counts,
@@ -622,6 +629,8 @@ def run_debug_experiment(
                     print(f"    mode: {result.query_mode}")
                 if result.nli_confidence is not None:
                     print(f"    nli_confidence: {result.nli_confidence:.2f}")
+                if result.sbert_confidence is not None:
+                    print(f"    sbert_confidence: {result.sbert_confidence:.2f}")                                      
                 if result.voting_triggered:
                     print(f"    voting: TRIGGERED (confidence: {result.voting_confidence:.2f}, counts: {result.vote_counts})")
                 if result.explanation:

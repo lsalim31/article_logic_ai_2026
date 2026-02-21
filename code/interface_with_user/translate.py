@@ -856,7 +856,7 @@ def translate_query(
     reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
     max_tokens: int = MAX_TOKENS,
     k: int = SBERT_TOP_K,
-    sbert_model_name: str = "all-MiniLM-L6-v2",
+    sbert_model_name: str = SBERT_MODEL,
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
