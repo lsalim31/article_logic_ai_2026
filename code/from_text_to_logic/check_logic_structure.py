@@ -266,6 +266,9 @@ MODAL_OPPOSITES_FALLBACK: Dict[str, List[str]] = {
     "sometimes": ["always", "never"],
     "occasionally": ["always", "frequently", "constantly"],
     "periodically": ["constantly", "continuously"],
+    "never": ["always", "sometimes", "often", "frequently", "usually"],
+ 
+
     
     # =========================================================================
     # PROBABILITY OPPOSITES
