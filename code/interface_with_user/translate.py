@@ -1078,8 +1078,10 @@ def translate_query(
         "query": query,
         "original_query": original_query,
         "explanation": f"Selected via NLI (Confidence: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}",
-        "confidence": best_net_score
+        "confidence": best_net_score,
+        "sbert_confidence": sbert_confidence
     }
+
 
 
 # ==========================================
