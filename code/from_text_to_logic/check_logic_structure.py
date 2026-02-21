@@ -17,6 +17,21 @@ Usage:
 Usage (Python):
     from from_text_to_logic.check_logic_structure import enrich_logic_structure
     enriched = enrich_logic_structure(logified_path="logified.json", source_path="doc.txt")
+
+    update: Feb 21:
+    Main function: Enrich logified.json with deterministic constraint verification.
+
+    Runs all five enrichment steps:
+    1. verify_modal_pairs - Handle modal words (typically, sometimes, etc.)
+    2. detect_modal_opposites - Add exclusion constraints for modal antonyms
+    3. detect_explicit_negations - Find negations in source text
+    4. generate_finite_domain_auxiliaries - Create auxiliaries for academic majors, roles, etc.
+    5. verify_auxiliary_negatives - Ensure all auxiliaries have proper constraints
+
+    Args:
+    ...
+    
+
 """
 
 import json
@@ -1352,6 +1367,144 @@ def verify_auxiliary_negatives(
 
 
 # =============================================================================
+# FINITE DOMAIN AUXILIARY GENERATION
+# =============================================================================
+
+# Finite domain patterns and their alternatives
+FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
+    "academic_major": {
+        "patterns": [
+            r"(?P<subject>\w+)\s+studies\s+(?P<value>[\w\s]+)",
+            r"(?P<subject>\w+)'s\s+major\s+is\s+(?P<value>[\w\s]+)",
+            r"(?P<subject>\w+)\s+majors?\s+in\s+(?P<value>[\w\s]+)",
+        ],
+        "alternatives": [
+            "biology", "mathematics", "physics", "chemistry",
+            "literature", "history", "psychology", "economics",
+            "computer science", "engineering", "philosophy"
+        ],
+        "template": "{subject} studies {value}.",
+        "exclusion_template": "If {subject} studies {original}, then {subject} does not study {alternative}.",
+    },
+    "job_role": {
+        "patterns": [
+            r"(?P<subject>\w+)\s+is\s+(?:a|an)\s+(?P<value>manager|engineer|analyst|developer|designer|scientist|teacher|professor|doctor|nurse|lawyer)",
+            r"(?P<subject>\w+)\s+works\s+as\s+(?:a|an)\s+(?P<value>[\w\s]+)",
+        ],
+        "alternatives": [
+            "manager", "engineer", "analyst", "developer",
+            "designer", "scientist", "teacher", "professor"
+        ],
+        "template": "{subject} is a {value}.",
+        "exclusion_template": "If {subject} is a {original}, then {subject} is not a {alternative}.",
+    },
+    "department": {
+        "patterns": [
+            r"(?P<subject>\w+)\s+works\s+in\s+(?:the\s+)?(?P<value>[\w\s]+)\s+department",
+        ],
+        "alternatives": [
+            "Engineering", "Marketing", "Sales", "Human Resources",
+            "Finance", "Research", "Operations", "Customer Service"
+        ],
+        "template": "{subject} works in the {value} department.",
+        "exclusion_template": "If {subject} works in {original}, then {subject} does not work in {alternative}.",
+    },
+}
+
+
+def generate_finite_domain_auxiliaries(
+    propositions: List[Dict[str, Any]],
+    constraints: List[Dict[str, Any]],
+    nlp: spacy.Language,
+    sbert_model: SentenceTransformer,
+    prop_embeddings: Dict[str, np.ndarray],
+    verbose: bool = True
+    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, np.ndarray], List[str]]:
+    """
+    Step 5: Generate auxiliary propositions for finite domains.
+
+    Detects patterns like "X studies computer science" and generates
+    auxiliary propositions for alternative values (biology, mathematics, etc.)
+    with appropriate mutual exclusion constraints.
+
+    Args:
+        propositions: List of primitive propositions
+        constraints: List of constraints
+        nlp: Loaded SpaCy model
+        sbert_model: Loaded SBERT model
+        prop_embeddings: Pre-computed proposition embeddings
+        verbose: Print debug information
+
+    Returns:
+        Tuple of (updated_propositions, updated_constraints, updated_embeddings, log_messages)
+    """
+    log_messages = []
+    updated_props = list(propositions)
+    updated_constraints = list(constraints)
+    updated_embeddings = dict(prop_embeddings)
+
+    # Track what domains we've already processed
+    processed_domains = set()
+
+    for prop in propositions:
+        prop_id = prop.get("id", "")
+        translation = prop.get("translation", "")
+        explanation = prop.get("explanation", "").lower()
+
+        # Skip if this is already an auxiliary proposition
+        if "auxiliary" in explanation:
+            continue
+
+        # Try each domain pattern
+        for domain_name, domain_config in FINITE_DOMAIN_PATTERNS.items():
+            for pattern in domain_config["patterns"]:
+                match = re.search(pattern, translation, re.IGNORECASE)
+                if match:
+                    subject = match.group("subject")
+                    value = match.group("value").strip().lower()
+
+                    # Create a unique key for this domain instance
+                    domain_key = f"{domain_name}:{subject}:{value}"
+                    if domain_key in processed_domains:
+                        continue
+                    processed_domains.add(domain_key)
+
+                    if verbose:
+                        log_messages.append(f"[FiniteDomain] {prop_id}: Detected {domain_name} pattern")
+                        log_messages.append(f"              Subject: {subject}, Value: {value}")
+
+                    # Get alternatives (excluding the current value)
+                    alternatives = [
+                        alt for alt in domain_config["alternatives"]
+                        if alt.lower() != value
+                    ]
+
+                    # Limit to 3-4 most common alternatives to avoid explosion
+                    alternatives = alternatives[:4]
+
+                    for alt in alternatives:
+                        # Generate auxiliary proposition text
+                        aux_text = domain_config["template"].format(
+                            subject=subject,
+                            value=alt
+                        )
+
+                        # Check if this auxiliary already exists
+                        if proposition_exists(aux_text, updated_props, sbert_model, updated_embeddings, threshold=0.90):
+                            if verbose:
+                                log_messages.append(f"              Auxiliary '{alt}' already exists, skipping")
+                            continue
+
+                        # Create new auxiliary proposition
+                        aux_id = get_next_prop_id(updated_props)
+                        aux_prop = create_proposition(
+                            prop_id=aux_id,
+                            translation=aux_text,
+                            evidence=f"{prop.get('evidence', '')} (auxiliary proposition for {domain_name} domain)",
+                            explanation=f"Auxiliary proposition for mutual exclusion wit
+
+
+# =============================================================================
 # MAIN ENRICHMENT FUNCTION
 # =============================================================================
 
@@ -1447,7 +1600,23 @@ def enrich_logic_structure(
         for log in logs:
             print(log)
     
-    # Step 4: Verify auxiliary negatives
+    # Step 4.a: Generate finite domain auxiliaries
+    if verbose:
+        print("\n" + "="*60)
+        print("STEP 4: Generating finite domain auxiliaries")
+        print("="*60)
+
+    propositions, constraints, prop_embeddings, logs = generate_finite_domain_auxiliaries(
+        propositions, constraints, nlp, sbert_model, prop_embeddings, verbose
+    )
+    all_logs.extend(logs)
+    if verbose:
+        for log in logs:
+            print(log)
+
+    
+    
+    # Step 4.b: Verify auxiliary negatives
     if verbose:
         print("\n" + "="*60)
         print("STEP 4: Verifying auxiliary negatives")
