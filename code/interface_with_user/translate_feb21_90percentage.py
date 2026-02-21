@@ -544,134 +544,6 @@ ANTONYM_PAIRS_FALLBACK = {
     "unemployed": ["employed"],
 }
 
-# Concessive patterns - signal that a condition does NOT prevent an outcome
-# These require nuanced reasoning and should go to the LLM
-BYPASS_ANTONYM_PATTERNS = [
-    # Standard concessive conjunctions
-    "even if",
-    "even when",
-    "even though",
-    "even as",
-    "even after",
-    "even before",
-    "even while",
-    "although",
-    "though",
-    "albeit",
-    "despite",
-    "in spite of",
-    "notwithstanding",
-    "regardless of",
-    "irrespective of",
-    
-    # Adversative/contrastive conjunctions
-    "however",
-    "nevertheless",
-    "nonetheless",
-    "yet still",
-    "but still",
-    "still",
-    "and yet",
-    "but yet",
-    "all the same",
-    "at the same time",
-    "be that as it may",
-    "having said that",
-    "that said",
-    
-    # Concessive adverbs
-    "admittedly",
-    "granted",
-    "certainly",
-    "of course",
-    "to be sure",
-    "no doubt",
-    
-    # Conditional-concessive
-    "whether or not",
-    "no matter",
-    "no matter what",
-    "no matter how",
-    "no matter when",
-    "no matter where",
-    "no matter who",
-    "regardless",
-    "irregardless",
-    "whatever happens",
-    "whatever the case",
-    "in any case",
-    "in any event",
-    "at any rate",
-    "either way",
-    "one way or another",
-    "come what may",
-    "rain or shine",
-    
-    # Counterfactual/hypothetical markers
-    "would have",
-    "could have",
-    "should have",
-    "might have",
-    "would still",
-    "could still",
-    "if only",
-    "if ever",
-    
-    # Exception markers (complex reasoning needed)
-    "except when",
-    "except if",
-    "except that",
-    "unless",
-    "save for",
-    "but for",
-    "were it not for",
-    "if it were not for",
-    "if not for",
-    
-    # Surprise/unexpectedness markers
-    "surprisingly",
-    "unexpectedly",
-    "contrary to",
-    "against all odds",
-    "against expectations",
-    "paradoxically",
-    "ironically",
-    "oddly enough",
-    "strangely",
-    "curiously",
-    
-    # Temporal-concessive
-    "while still",
-    "whilst",
-    "whereas",
-    "meanwhile",
-    "at the same time as",
-    
-    # Degree/extent concessive
-    "however much",
-    "however hard",
-    "however often",
-    "as much as",
-    "much as",
-    "hard as",
-    "try as",
-    "as though",
-    "as if",
-    
-    # Formal/legal concessive
-    "provided that",
-    "on condition that",
-    "subject to",
-    "without prejudice to",
-    "for all that",
-    "with all due respect",
-    "granting that",
-    "assuming that",
-    "supposing that",
-    "given that",
-]
-
-
 
 def get_word_antonyms(word: str) -> List[str]:
     """Get antonyms of a word using WordNet with fallback table."""
@@ -701,28 +573,6 @@ def get_word_antonyms(word: str) -> List[str]:
     return list(antonyms)
 
 
-def contains_complex_construction(query: str) -> bool:
-    """
-    Check if query contains concessive or complex constructions
-    that require nuanced LLM reasoning rather than simple antonym detection.
-    """
-    query_lower = query.lower()
-    
-    for pattern in BYPASS_ANTONYM_PATTERNS:
-        if pattern in query_lower:
-            return True
-    
-    # Also check for question patterns (should not use antonym detection)
-    if query_lower.strip().endswith("?"):
-        return True
-    
-    # Check for hypothetical "what if" constructions
-    if query_lower.startswith("what if") or query_lower.startswith("what would"):
-        return True
-        
-    return False
-
-
 def detect_antonym_contradiction(
     query: str,
     retrieved_chunks: List[Dict],
@@ -749,11 +599,6 @@ def detect_antonym_contradiction(
     Returns:
         Dict with formula result if antonym contradiction found, None otherwise
     """
-    if contains_complex_construction(query):
-        if verbose:
-            print("  [Antonym Detection] Skipping for LLM- complex construction detected")
-        return None
-    
     nlp = get_spacy_model_singleton()
     query_lower = query.lower()
     

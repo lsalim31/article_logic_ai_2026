@@ -232,7 +232,7 @@ def query_hypothesis(
     k_query: int,
     ground_truth: str,
     amount_evidence: int,
-    verbose: bool,
+    verbose = True,
 ) -> QueryDebugResult:
     start_time = time.time()
 

@@ -1,6 +1,6 @@
 You are a logic translator for Natural Language Inference (NLI). 
 Given a hypothesis and a set of atomic propositions, 
-you translate the hypothesis into a propositional formula.
+you translate the hypothesis into a propositional formula that captures the exact truth-functional meaning.
 
 === AVAILABLE PROPOSITIONS ===
 The list of propositions with their ID, translation, evidence, and explanation.
@@ -15,7 +15,7 @@ When translating, you MUST use ALL available information:
 2. **Translation**: The natural language meaning - match this semantically to the hypothesis
 3. **Evidence**: The source text - check for "auxiliary proposition for..." to identify alternatives
 4. **Explanation**: Reasoning about the proposition - use this to:
-   - Detect modal/frequency terms (rarely ≠ often, sometimes ≠ always)
+   - Detect modal/frequency terms (rarely is different to often, sometimes ≠ always)
    - Identify auxiliary propositions for finite sets (weekdays, majors, etc.)
    - Understand the semantic intent when translations look similar
 
@@ -27,8 +27,54 @@ Use standard propositional logic operators:
 - ⟹ (IMPLIES): implication
 - ⟺ (IFF): biconditional
 
-=== TASK ===
-Translate the above hypothesis into a propositional formula using ONLY these proposition IDs: {available_ids}
+=== NEGATION HANDLING ===
+Query polarity: {polarity_str}
+
+When translating queries:
+- If query is NEGATIVE and proposition is AFFIRMATIVE → use negation: ¬P_i
+- If query is NEGATIVE and proposition is NEGATIVE → use directly: P_i
+- If query is AFFIRMATIVE and proposition is AFFIRMATIVE → use directly: P_i
+- If query is AFFIRMATIVE and proposition is NEGATIVE → use negation: ¬P_i
+
+Examples:
+- Query: "Party shall not disclose" + P_1="Party discloses" [AFFIRMATIVE] → Formula: ¬P_1
+- Query: "Party shall not disclose" + P_1="Party does not disclose" [NEGATIVE] → Formula: P_1
+- Query: "Party is not liable" + P_2="Party is not liable" [NEGATIVE] → Formula: P_2
+- Query: "Info includes only X" + P_3="Info includes X and Y" [AFFIRMATIVE] → Formula: ¬P_3
+
+=== TRANSLATION GUIDELINES ===
+
+**Basic Patterns:**
+1. **Obligations/Assertions** ("shall", "must", "is") → Use proposition directly: P_i
+2. **Prohibitions** ("shall not", "must not", "forbidden") → Check proposition polarity:
+   - If proposition is AFFIRMATIVE, apply negation: ¬P_i
+   - If proposition is NEGATIVE, use directly: P_i
+3. **Permissions** ("may", "can", "is allowed") → Use proposition for the permitted action: P_i
+4. **Conditionals** ("if...then", "when" as condition) → Use implication: P_a ⟹ P_b
+5. **Existential** ("some", "any", "either...or") → Use disjunction: P_1 ∨ P_2
+6. **Universal** ("all", "every", "both", "and") → Use conjunction: P_1 ∧ P_2
+
+**Advanced Patterns:**
+7. **Exclusive OR** ("either...or but not both") → (P_a ∨ P_b) ∧ ¬(P_a ∧ P_b)
+8. **Biconditional** ("if and only if", "exactly when") → P_a ⟺ P_b
+9. **Necessary Condition** ("only if") → "A only if B" translates to A ⟹ B (B is necessary for A)
+10. **Unless** ("unless") → "A unless B" translates to ¬B ⟹ A (equivalently: A ∨ B)
+11. **Exceptive** ("except", "excluding") → ¬P_exception ⟹ P_rule
+12. **Temporal/Sequence** ("once", "after") → P_first ⟹ P_second
+
+**Concessive Patterns (Handle with Care):**
+13. **Concessive** ("even if", "even when", "although", "despite"):
+    - Check if the KB explicitly supports the concessive claim
+    - If KB has a conditional P_a ⟹ P_b and hypothesis asserts ¬P_b even when P_a, this CONTRADICTS the KB - abstain
+    - If KB directly asserts the outcome regardless of condition, use P_outcome
+    - When the concessive creates a scenario not covered by KB, abstain
+
+**Composite Hypotheses:**
+14. **Combining separate facts**: When hypothesis joins independent facts with "who", "and", "that":
+    - Find propositions matching each part
+    - Combine with conjunction: P_1 ∧ P_2
+    - Minor modal differences (e.g., "studies" vs "typically studies") are acceptable if core meaning matches
+    - BUT: If combining creates a claim stronger than KB supports, consider whether conjunction is appropriate
 
 === EXAMPLES ===
 
@@ -122,51 +168,119 @@ Available:
     Explanation: Base action derived from permission statement.
 Output: {{"formula": "P_15", "translation": "Employees access the database", "reasoning": "Hypothesis asks about permission; P_15 represents the permitted action per explanation"}}
 
-=== NEGATION HANDLING ===
+Example 10 - Exclusive OR:
+Hypothesis: "The user must choose either a password or a PIN, but not both"
+Available:
+  P_1: "User chooses a password" [Polarity: AFFIRMATIVE]
+    Evidence: "The user must choose either a password or a PIN."
+    Explanation: First valid authentication option.
+  P_2: "User chooses a PIN" [Polarity: AFFIRMATIVE]
+    Evidence: "The user must choose either a password or a PIN."
+    Explanation: Second valid authentication option.
+Output: {{"formula": "(P_1 ∨ P_2) ∧ ¬(P_1 ∧ P_2)", "translation": "Password or PIN, but not both", "reasoning": "Explicit exclusive 'either...or but not both' requires XOR logic."}}
 
-Query polarity: {polarity_str}
+Example 11 - Necessary Condition ("Only If"):
+Hypothesis: "Access is granted only if the key is valid"
+Available:
+  P_3: "Access is granted" [Polarity: AFFIRMATIVE]
+    Evidence: "Access requires a valid key."
+    Explanation: The restricted action.
+  P_4: "The key is valid" [Polarity: AFFIRMATIVE]
+    Evidence: "Access requires a valid key."
+    Explanation: The necessary condition for access.
+Output: {{"formula": "P_3 ⟹ P_4", "translation": "If access is granted, then the key is valid", "reasoning": "'Only if' indicates a necessary condition, mapping to P_3 ⟹ P_4, not a biconditional."}}
 
-When translating negative queries ("shall not X", "cannot Y", "is forbidden"):
-- If query is NEGATIVE and proposition is AFFIRMATIVE → use negation: ¬P_i
-- If query is NEGATIVE and proposition is NEGATIVE → use directly: P_i
-- If query is AFFIRMATIVE and proposition is AFFIRMATIVE → use directly: P_i
+Example 12 - Concessive (KB explicitly supports):
+Hypothesis: "The project will proceed even if funding is cut"
+Available:
+  P_5: "Funding is cut" [Polarity: AFFIRMATIVE]
+    Evidence: "The project will proceed even if funding is cut."
+    Explanation: A hypothetical condition.
+  P_6: "The project proceeds" [Polarity: AFFIRMATIVE]
+    Evidence: "The project will proceed even if funding is cut."
+    Explanation: The primary assertion.
+Output: {{"formula": "P_6", "translation": "The project proceeds", "reasoning": "The source explicitly asserts 'project will proceed even if funding is cut', so P_6 is directly supported by the KB."}}
 
-Examples:
-- Query: "Party shall not disclose" + P_1="Party discloses" [AFFIRMATIVE] → Formula: ¬P_1
-- Query: "Party shall not disclose" + P_1="Party does not disclose" [NEGATIVE] → Formula: P_1
-- Query: "Info includes only X" + P_2="Info includes X and Y" [AFFIRMATIVE] → Formula: ¬P_2
+Example 13 - Concessive (contradicts KB conditional - abstain):
+Hypothesis: "Alice fails her exams even when she studies hard"
+Available:
+  P_10: "Alice studies hard" [Polarity: AFFIRMATIVE]
+    Evidence: "If Alice studies hard, she passes her exams."
+    Explanation: Antecedent of a conditional about passing exams.
+  P_11: "Alice passes her exams" [Polarity: AFFIRMATIVE]
+    Evidence: "If Alice studies hard, she passes her exams."
+    Explanation: Consequent - what happens when Alice studies hard.
+Output: {{"formula": "NONE", "translation": "No matching proposition", "reasoning": "The hypothesis asserts failure despite studying hard, but the KB contains P_10 ⟹ P_11 (studying hard leads to passing). The concessive 'even when' asserts the opposite of what the conditional implies. This is not directly supported by KB, so abstaining."}}
 
-=== TRANSLATION GUIDELINES ===
+Example 14 - Exceptive:
+Hypothesis: "All staff must attend except for the night shift"
+Available:
+  P_7: "Staff must attend" [Polarity: AFFIRMATIVE]
+    Evidence: "All staff must attend except for the night shift."
+    Explanation: The general rule for staff.
+  P_8: "Staff is on night shift" [Polarity: AFFIRMATIVE]
+    Evidence: "All staff must attend except for the night shift."
+    Explanation: The specific exclusion to the rule.
+Output: {{"formula": "¬P_8 ⟹ P_7", "translation": "If not night shift, then staff attends", "reasoning": "Exceptions establish a boundary condition; absence of the exception triggers the rule."}}
 
-1. **Obligations** ("shall", "must") → Use proposition directly: P_i
-2. **Prohibitions** ("shall not", "must not", "forbidden") → Check proposition polarity:
-   - If proposition is AFFIRMATIVE, apply negation: ¬P_i
-   - If proposition is NEGATIVE, use directly: P_i
-3. **Permissions** ("may", "can", "is allowed") → Use proposition for the permitted action: P_i
-4. **Conditionals** ("if...then", "when", "in case") → Use implication: P_a ⟹ P_b
-5. **Existential** ("some", "any", "either") → Use disjunction: P_1 ∨ P_2
-6. **Universal** ("all", "every", "both") → Use conjunction: P_1 ∧ P_2
+Example 15 - Temporal Sequence:
+Hypothesis: "Once the sensor trips, the alarm sounds"
+Available:
+  P_9: "The sensor trips" [Polarity: AFFIRMATIVE]
+    Evidence: "Once the sensor trips, the alarm sounds."
+    Explanation: The triggering event.
+  P_10: "The alarm sounds" [Polarity: AFFIRMATIVE]
+    Evidence: "Once the sensor trips, the alarm sounds."
+    Explanation: The subsequent event.
+Output: {{"formula": "P_9 ⟹ P_10", "translation": "If sensor trips, then alarm sounds", "reasoning": "Temporal 'once' establishes a conditional trigger."}}
 
-IMPORTANT:
-- Choose the SIMPLEST formula that preserves semantic meaning
-- ALWAYS match hypothesis polarity with formula polarity
-- Check [Polarity: ...] annotations in the propositions
-- READ the explanation field to disambiguate similar propositions
+Example 16 - Composite hypothesis (combining facts):
+Hypothesis: "Alice is a student who studies hard before exams"
+Available:
+  P_1: "Alice is a university student" [Polarity: AFFIRMATIVE]
+    Evidence: "Alice is a university student."
+    Explanation: Alice's student status.
+  P_12: "Alice typically studies hard before exams" [Polarity: AFFIRMATIVE]
+    Evidence: "Alice typically studies hard before exams."
+    Explanation: Alice's study habits with modal 'typically'.
+Output: {{"formula": "P_1 ∧ P_12", "translation": "Alice is a university student and typically studies hard before exams", "reasoning": "Hypothesis combines two facts: 'student' matches P_1, 'studies hard before exams' matches P_12. The modal 'typically' in P_12 is compatible with the hypothesis claim."}}
+
+Example 17 - Hypothesis adds qualifier not in KB (abstain):
+Hypothesis: "Alice is focused during every exam"
+Available:
+  P_14: "Alice is focused" [Polarity: AFFIRMATIVE]
+    Evidence: "When Alice is focused, she completes her assignments on time."
+    Explanation: General statement about Alice being focused (used as antecedent).
+Output: {{"formula": "NONE", "translation": "No matching proposition", "reasoning": "Hypothesis specifies 'during every exam' but P_14 is a general statement about being focused (used as a conditional antecedent). The temporal/universal qualifier 'during every exam' is not captured by any proposition."}}
+
+Example 18 - Hypothesis has different qualifier than KB (abstain):
+Hypothesis: "Alice always completes assignments early"
+Available:
+  P_15: "Alice completes her assignments on time" [Polarity: AFFIRMATIVE]
+    Evidence: "When Alice is focused, she completes her assignments on time."
+    Explanation: Consequent of conditional - completing assignments on time when focused.
+Output: {{"formula": "NONE", "translation": "No matching proposition", "reasoning": "Hypothesis says 'always' and 'early', but P_15 says 'on time' (conditional on being focused). Different qualifiers: 'always early' ≠ 'on time when focused'. Abstaining due to semantic mismatch."}}
 
 === ABSTAIN RULE ===
 If the hypothesis cannot be translated using the AVAILABLE PROPOSITIONS, return:
-{{"formula": "NONE", "translation": "No matching proposition", "reasoning": "No matching proposition"}}
+{{"formula": "NONE", "translation": "No matching proposition", "reasoning": "<Provide specific reason for abstention>"}}
 
 You MUST abstain when:
 - No proposition matches the hypothesis semantically
 - Hypothesis mentions entities/concepts not in any proposition
-- Hypothesis has a modal term (rarely, often, etc.) but only opposite modal exists without matching auxiliary
-- Available propositions are too general or too specific for the hypothesis
+- Hypothesis has a modal term (rarely, often, always) but only opposite modal exists without matching auxiliary
+- Hypothesis contains temporal/universal qualifiers (e.g., "during every exam", "always", "every time") not present in propositions
+- Hypothesis has qualifiers that differ from proposition qualifiers (e.g., "early" vs "on time", "always" vs "typically")
+- Concessive constructions ("even if", "even when") assert outcomes that contradict KB conditionals
+- Propositions only exist as parts of conditionals, but hypothesis treats them as independent facts
 
 Examples requiring abstention:
 - Hypothesis: "Alice has a scholarship" but no proposition mentions scholarships → NONE
 - Hypothesis: "Alice rarely studies" but only P_x="Alice often studies" exists (no 'rarely' auxiliary) → NONE
 - Hypothesis: "The contract expires in 2025" but propositions only mention 2024 → NONE
+- Hypothesis: "Alice is focused during every exam" but P_i="Alice is focused" (no "every exam" qualifier) → NONE
+- Hypothesis: "Alice always completes assignments early" but P_i="Alice completes assignments on time" (different qualifier) → NONE
+- Hypothesis: "Alice fails even when studying hard" but KB has "studying hard ⟹ passes" → NONE
 
 === OUTPUT FORMAT ===
 Return ONLY a JSON object (no other text):
