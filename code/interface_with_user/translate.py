@@ -980,7 +980,7 @@ def translate_query(
             "query": query,
             "original_query": original_query,
             "explanation": "LLM abstained (no matching proposition).",
-"confidence": 0.5
+            "confidence": 0.5
         }
 
     # 7. Verbalize & Verify (Step B & C)
@@ -1066,6 +1066,7 @@ def translate_query(
             "original_query": original_query,
             "explanation": explanation,
             "confidence": best_net_score,
+            "sbert_confidence": sbert_confidence,
             "voting_triggered": True,
             "voting_confidence": voting_confidence,
             "vote_counts": dict(formula_counts)
@@ -1081,7 +1082,6 @@ def translate_query(
         "confidence": best_net_score,
         "sbert_confidence": sbert_confidence
     }
-
 
 
 # ==========================================
