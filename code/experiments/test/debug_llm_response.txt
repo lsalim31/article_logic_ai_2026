@@ -1,0 +1,626 @@
+```json
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alice is a university student.",
+      "evidence": "Sentence 0: \"Alice is a university student.\"",
+      "explanation": "Atomic classification statement about Alice's education status."
+    },
+    {
+      "id": "P_2",
+      "translation": "Alice is a student.",
+      "evidence": "Sentence 0: \"Alice is a university student.\"",
+      "explanation": "Atomic derived category statement (entailed by being a university student)."
+    },
+    {
+      "id": "P_3",
+      "translation": "Alice is a high school student.",
+      "evidence": "Sentence 0 (auxiliary alternative to \"university student\").",
+      "explanation": "Atomic alternative education-level category for mutual exclusion with university student."
+    },
+    {
+      "id": "P_4",
+      "translation": "Alice is a middle school student.",
+      "evidence": "Sentence 0 (auxiliary alternative to \"university student\").",
+      "explanation": "Atomic alternative education-level category for mutual exclusion with university student."
+    },
+    {
+      "id": "P_5",
+      "translation": "Alice is an elementary school student.",
+      "evidence": "Sentence 0 (auxiliary alternative to \"university student\").",
+      "explanation": "Atomic alternative education-level category for mutual exclusion with university student."
+    },
+    {
+      "id": "P_6",
+      "translation": "Alice studies computer science.",
+      "evidence": "Sentence 1: \"She studies computer science.\"",
+      "explanation": "Atomic statement of Alice's field of study."
+    },
+    {
+      "id": "P_7",
+      "translation": "Alice studies biology.",
+      "evidence": "Sentence 1 (auxiliary alternative to \"computer science\").",
+      "explanation": "Atomic alternative major/field for mutual exclusion with computer science."
+    },
+    {
+      "id": "P_8",
+      "translation": "Alice studies mathematics.",
+      "evidence": "Sentence 1 (auxiliary alternative to \"computer science\").",
+      "explanation": "Atomic alternative major/field for mutual exclusion with computer science."
+    },
+    {
+      "id": "P_9",
+      "translation": "Alice studies literature.",
+      "evidence": "Sentence 1 (auxiliary alternative to \"computer science\").",
+      "explanation": "Atomic alternative major/field for mutual exclusion with computer science."
+    },
+    {
+      "id": "P_10",
+      "translation": "Alice studies hard.",
+      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic antecedent clause extracted from a conditional."
+    },
+    {
+      "id": "P_11",
+      "translation": "Alice passes her exams.",
+      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic consequent clause extracted from a conditional."
+    },
+    {
+      "id": "P_12",
+      "translation": "Alice typically studies hard before exams.",
+      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
+      "explanation": "Atomic modal/frequency statement (kept intact as the original modal claim)."
+    },
+    {
+      "id": "P_13",
+      "translation": "Alice studies hard before exams.",
+      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
+      "explanation": "Derived base event by removing the modal word \"typically\" from the original statement."
+    },
+    {
+      "id": "P_14",
+      "translation": "Alice is focused.",
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic antecedent clause extracted from a temporal/conditional construction."
+    },
+    {
+      "id": "P_15",
+      "translation": "Alice completes her assignments on time.",
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic consequent clause extracted from a temporal/conditional construction."
+    },
+    {
+      "id": "P_16",
+      "translation": "Alice completes her assignments.",
+      "evidence": "Sentence 4: \"...she completes her assignments on time.\"",
+      "explanation": "Atomic derived statement: completing assignments on time entails completing assignments."
+    },
+    {
+      "id": "P_17",
+      "translation": "Alice sometimes gets distracted by social media.",
+      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
+      "explanation": "Atomic modal/frequency statement (kept intact as the original modal claim)."
+    },
+    {
+      "id": "P_18",
+      "translation": "Alice gets distracted by social media.",
+      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
+      "explanation": "Derived base event by removing the modal word \"sometimes\"."
+    },
+    {
+      "id": "P_19",
+      "translation": "Alice works part-time at the campus library.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic employment statement with role (part-time) and location (campus library)."
+    },
+    {
+      "id": "P_20",
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic derived statement: working part-time at the campus library entails working at the campus library."
+    },
+    {
+      "id": "P_21",
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic derived statement: working part-time at a place entails working part-time."
+    },
+    {
+      "id": "P_22",
+      "translation": "Alice works full-time at the campus library.",
+      "evidence": "Sentence 6 (auxiliary alternative to \"works part-time at the campus library\").",
+      "explanation": "Atomic alternative employment-status category (full-time) intended as mutually exclusive with part-time at the same job."
+    },
+    {
+      "id": "P_23",
+      "translation": "Her assignments are due every Friday.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
+      "explanation": "Atomic schedule statement specifying a weekday; triggers finite weekday alternatives."
+    },
+    {
+      "id": "P_24",
+      "translation": "Her assignments are due every Monday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_25",
+      "translation": "Her assignments are due every Tuesday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_26",
+      "translation": "Her assignments are due every Wednesday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_27",
+      "translation": "Her assignments are due every Thursday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_28",
+      "translation": "Her assignments are due every Saturday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_29",
+      "translation": "Her assignments are due every Sunday.",
+      "evidence": "Sentence 7 (auxiliary alternative weekday to \"every Friday\").",
+      "explanation": "Atomic alternative due-day proposition for mutual exclusion among weekdays."
+    },
+    {
+      "id": "P_30",
+      "translation": "Alice rarely studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
+      "explanation": "Atomic modal/frequency statement (kept intact as the original modal claim)."
+    },
+    {
+      "id": "P_31",
+      "translation": "Alice studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
+      "explanation": "Derived base event by removing the modal word \"rarely\"."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alice is a university student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Alice is a student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Common-sense entailment from being a university student; with P_1 asserted, this follows."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_3",
+      "translation": "Alice is not a high school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutually exclusive alternative to P_1; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Alice is not a middle school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutually exclusive alternative to P_1; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_5",
+      "translation": "Alice is not an elementary school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Auxiliary mutually exclusive alternative to P_1; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "She studies computer science.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted in the text."
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_7",
+      "translation": "Alice does not study biology.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Auxiliary mutually exclusive alternative major to P_6; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_8",
+      "formula": "¬P_8",
+      "translation": "Alice does not study mathematics.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Auxiliary mutually exclusive alternative major to P_6; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_9",
+      "formula": "¬P_9",
+      "translation": "Alice does not study literature.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Auxiliary mutually exclusive alternative major to P_6; treated as a definitional exclusion."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "Alice studies hard.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 2",
+      "reasoning": "Appears only as the antecedent of a conditional; the text does not assert it occurs, so left uncertain."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "Alice passes her exams.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 2",
+      "reasoning": "Appears only as the consequent of a conditional; the text does not assert it occurs, so left uncertain."
+    },
+    {
+      "id": "C_12",
+      "formula": "(P_10 ⟹ P_11)",
+      "translation": "If Alice studies hard, then she passes her exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated conditional rule."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_12",
+      "translation": "Alice typically studies hard before exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "The modal claim itself is explicitly asserted."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_13",
+      "translation": "Alice studies hard before exams.",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 3",
+      "reasoning": "Derived base event from \"typically\"; typically corresponds to a frequent pattern."
+    },
+    {
+      "id": "C_15",
+      "formula": "(P_13 ⟹ P_12)",
+      "translation": "If Alice studies hard before exams, then it is consistent with the claim that she typically studies hard before exams.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Required modal-pattern constraint: any base occurrence satisfies the modal description."
+    },
+    {
+      "id": "C_16",
+      "formula": "(P_13 ⟹ P_10)",
+      "translation": "If Alice studies hard before exams, then Alice studies hard.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3 (connects to Sentence 2 predicate)",
+      "reasoning": "Studying hard before exams entails studying hard (semantic entailment)."
+    },
+    {
+      "id": "C_17",
+      "formula": "P_14",
+      "translation": "Alice is focused.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 4",
+      "reasoning": "Appears only as the antecedent of a rule-like statement; not asserted as currently true."
+    },
+    {
+      "id": "C_18",
+      "formula": "P_15",
+      "translation": "Alice completes her assignments on time.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 4",
+      "reasoning": "Appears only as the consequent of a rule-like statement; not asserted as currently true."
+    },
+    {
+      "id": "C_19",
+      "formula": "(P_14 ⟹ P_15)",
+      "translation": "When Alice is focused, she completes her assignments on time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Directly stated rule (\"when\" treated as implication)."
+    },
+    {
+      "id": "C_20",
+      "formula": "P_16",
+      "translation": "Alice completes her assignments.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 4",
+      "reasoning": "Not directly asserted; only follows if P_15 holds, so left uncertain as a standalone fact."
+    },
+    {
+      "id": "C_21",
+      "formula": "(P_15 ⟹ P_16)",
+      "translation": "If Alice completes her assignments on time, then Alice completes her assignments.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Completing on time entails completing (semantic entailment)."
+    },
+    {
+      "id": "C_22",
+      "formula": "P_17",
+      "translation": "Alice sometimes gets distracted by social media.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "The modal claim itself is explicitly asserted."
+    },
+    {
+      "id": "C_23",
+      "formula": "P_18",
+      "translation": "Alice gets distracted by social media.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 5",
+      "reasoning": "Derived base event from \"sometimes\"; sometimes corresponds to an occasional pattern."
+    },
+    {
+      "id": "C_24",
+      "formula": "(P_18 ⟹ P_17)",
+      "translation": "If Alice gets distracted by social media, then it is consistent with the claim that she sometimes gets distracted by social media.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Required modal-pattern constraint for \"sometimes\"."
+    },
+    {
+      "id": "C_25",
+      "formula": "P_19",
+      "translation": "She works part-time at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Directly asserted in the text."
+    },
+    {
+      "id": "C_26",
+      "formula": "P_20",
+      "translation": "Alice works at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Entailed by P_19; since P_19 is asserted, this derived statement holds."
+    },
+    {
+      "id": "C_27",
+      "formula": "P_21",
+      "translation": "Alice works part-time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Entailed by P_19; since P_19 is asserted, this derived statement holds."
+    },
+    {
+      "id": "C_28",
+      "formula": "¬P_22",
+      "translation": "Alice does not work full-time at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Auxiliary mutually exclusive alternative to P_19 (part-time vs full-time at the same job)."
+    },
+    {
+      "id": "C_29",
+      "formula": "(P_19 ⟹ P_20)",
+      "translation": "If Alice works part-time at the campus library, then Alice works at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Semantic entailment from the structure of the employment statement."
+    },
+    {
+      "id": "C_30",
+      "formula": "(P_19 ⟹ P_21)",
+      "translation": "If Alice works part-time at the campus library, then Alice works part-time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Semantic entailment from the structure of the employment statement."
+    },
+    {
+      "id": "C_31",
+      "formula": "(P_19 ⟹ ¬P_22)",
+      "translation": "If Alice works part-time at the campus library, then Alice does not work full-time at the campus library.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Mutual exclusion between part-time and full-time at the same position."
+    },
+    {
+      "id": "C_32",
+      "formula": "P_23",
+      "translation": "Her assignments are due every Friday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Directly asserted in the text."
+    },
+    {
+      "id": "C_33",
+      "formula": "¬P_24",
+      "translation": "Her assignments are not due every Monday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_34",
+      "formula": "¬P_25",
+      "translation": "Her assignments are not due every Tuesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_35",
+      "formula": "¬P_26",
+      "translation": "Her assignments are not due every Wednesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_36",
+      "formula": "¬P_27",
+      "translation": "Her assignments are not due every Thursday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_37",
+      "formula": "¬P_28",
+      "translation": "Her assignments are not due every Saturday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_38",
+      "formula": "¬P_29",
+      "translation": "Her assignments are not due every Sunday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Auxiliary mutually exclusive weekday alternative to P_23; treated as definitional exclusion."
+    },
+    {
+      "id": "C_39",
+      "formula": "(P_23 ⟹ ¬P_24)",
+      "translation": "If her assignments are due every Friday, then they are not due every Monday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_40",
+      "formula": "(P_23 ⟹ ¬P_25)",
+      "translation": "If her assignments are due every Friday, then they are not due every Tuesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_41",
+      "formula": "(P_23 ⟹ ¬P_26)",
+      "translation": "If her assignments are due every Friday, then they are not due every Wednesday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_42",
+      "formula": "(P_23 ⟹ ¬P_27)",
+      "translation": "If her assignments are due every Friday, then they are not due every Thursday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_43",
+      "formula": "(P_23 ⟹ ¬P_28)",
+      "translation": "If her assignments are due every Friday, then they are not due every Saturday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_44",
+      "formula": "(P_23 ⟹ ¬P_29)",
+      "translation": "If her assignments are due every Friday, then they are not due every Sunday.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Mutual exclusion among specific weekday schedules."
+    },
+    {
+      "id": "C_45",
+      "formula": "P_30",
+      "translation": "Alice rarely studies late at night.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "The modal claim itself is explicitly asserted."
+    },
+    {
+      "id": "C_46",
+      "formula": "P_31",
+      "translation": "Alice studies late at night.",
+      "llm_weight": 0.2,
+      "evidence": "Sentence 8",
+      "reasoning": "Derived base event from \"rarely\"; rarity implies a low likelihood compared to 'sometimes'."
+    },
+    {
+      "id": "C_47",
+      "formula": "(P_31 ⟹ P_30)",
+      "translation": "If Alice studies late at night, then it is consistent with the claim that she rarely studies late at night.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Required modal-pattern constraint for frequency statements."
+    },
+    {
+      "id": "C_48",
+      "formula": "(P_1 ⟹ P_2)",
+      "translation": "If Alice is a university student, then Alice is a student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Common-sense taxonomic entailment."
+    },
+    {
+      "id": "C_49",
+      "formula": "(P_1 ⟹ ¬P_3)",
+      "translation": "If Alice is a university student, then Alice is not a high school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Mutual exclusion among education levels (as encoded by auxiliaries)."
+    },
+    {
+      "id": "C_50",
+      "formula": "(P_1 ⟹ ¬P_4)",
+      "translation": "If Alice is a university student, then Alice is not a middle school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Mutual exclusion among education levels (as encoded by auxiliaries)."
+    },
+    {
+      "id": "C_51",
+      "formula": "(P_1 ⟹ ¬P_5)",
+      "translation": "If Alice is a university student, then Alice is not an elementary school student.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Mutual exclusion among education levels (as encoded by auxiliaries)."
+    },
+    {
+      "id": "C_52",
+      "formula": "(P_6 ⟹ ¬P_7)",
+      "translation": "If Alice studies computer science, then Alice does not study biology.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Mutual exclusion among majors as encoded by auxiliary alternatives."
+    },
+    {
+      "id": "C_53",
+      "formula": "(P_6 ⟹ ¬P_8)",
+      "translation": "If Alice studies computer science, then Alice does not study mathematics.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Mutual exclusion among majors as encoded by auxiliary alternatives."
+    },
+    {
+      "id": "C_54",
+      "formula": "(P_6 ⟹ ¬P_9)",
+      "translation": "If Alice studies computer science, then Alice does not study literature.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Mutual exclusion among majors as encoded by auxiliary alternatives."
+    }
+  ]
+}
+```

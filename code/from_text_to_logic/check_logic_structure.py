@@ -1374,7 +1374,7 @@ def verify_auxiliary_negatives(
 FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
     "academic_major": {
         "patterns": [
-            r"(?P<subject>\w+)\s+studies\s+(?P<value>[\w\s]+)",
+            r"^(?P<subject>[A-Z][a-z]+)\s+studies\s+(?P<value>(?:computer science|[\w]+))\s*[.]?$",
             r"(?P<subject>\w+)'s\s+major\s+is\s+(?P<value>[\w\s]+)",
             r"(?P<subject>\w+)\s+majors?\s+in\s+(?P<value>[\w\s]+)",
         ],
@@ -1462,6 +1462,18 @@ def generate_finite_domain_auxiliaries(
                 if match:
                     subject = match.group("subject")
                     value = match.group("value").strip().lower()
+
+                    # Skip if subject is a modal word
+                    subject_lower = subject.lower()
+                    if subject_lower in MODAL_WORDS:
+                        if verbose:
+                            log_messages.append(f"[FiniteDomain] Skipping {prop_id}: Subject '{subject}' is a modal word")
+                        continue
+
+                    # Validate subject is a proper noun
+                    if not subject[0].isupper():
+                        continue
+
 
                     # Create a unique key for this domain instance
                     domain_key = f"{domain_name}:{subject}:{value}"
