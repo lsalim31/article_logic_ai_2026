@@ -28,7 +28,7 @@ from collections import Counter
 
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
-from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY
+from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
 
 # Add code directory to Python path
 script_dir = Path(__file__).resolve().parent
@@ -51,7 +51,8 @@ from from_text_to_logic.check_logic_structure import (
 # External Dependencies
 try:
     from openai import OpenAI
-    from sentence_transformers import CrossEncoder
+    from sentence_transformers import CrossEncoder, SentenceTransformer
+
 
     # Reuse your existing RAG infrastructure
     from baseline_rag.retriever import (
@@ -689,12 +690,16 @@ def detect_antonym_contradiction(
 # 5. NEURO-SYMBOLIC CORE
 # ==========================================
 
+sbert_model = SentenceTransformer(SBERT_MODEL)
+
+
 def load_nli_model_singleton():
     global _cached_nli_model
     if _cached_nli_model is None:
         print("  Loading NLI Model (cross-encoder/nli-deberta-v3-large)...")
-        _cached_nli_model = CrossEncoder('cross-encoder/nli-deberta-v3-large')
+        _cached_nli_model = CrossEncoder(NLI_MODEL)
     return _cached_nli_model
+
 
 
 def generate_candidates_llm(
@@ -770,6 +775,20 @@ def normalize_formula(formula: str) -> str:
     return normalized
 
 
+def compute_nli_confidence(original_text: str, back_translated_text: str) -> float:
+    """Compute SBERT-based confidence score between original and back-translated text.
+    
+    Uses cosine similarity of sentence embeddings instead of NLI.
+    This works better for identical/paraphrased sentences where NLI incorrectly
+    returns NEUTRAL with very low confidence.
+    """
+    embeddings = sbert_model.encode([original_text, back_translated_text])
+    similarity = np.dot(embeddings[0], embeddings[1]) / (
+        np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1])
+    )
+    return float(similarity)
+
+
 def select_best_candidate(
     candidates: List[Dict],
     query: str,
@@ -805,7 +824,6 @@ def select_best_candidate(
 
     pairs = [(query, v_text) for v_text in verbalized_texts]
     logits = nli_model.predict(pairs)
-
     exp_x = np.exp(logits - np.max(logits, axis=-1, keepdims=True))
     probs = exp_x / np.sum(exp_x, axis=-1, keepdims=True)
 
@@ -982,9 +1000,15 @@ def translate_query(
             "explanation": "All candidates failed syntax parsing."
         }
 
+    # Compute SBERT confidence for voting trigger decision
+    sbert_confidence = compute_nli_confidence(query, winning_text)
+    if verbose:
+        print(f"  SBERT confidence: {sbert_confidence:.4f} (NLI score: {best_net_score:.4f})")
+
     # 8. ADAPTIVE VOTING (NEW STEP)
-    # If confidence is below threshold, sample more candidates and vote
-    if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+    # If SBERT confidence is below threshold, sample more candidates and vote
+    if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+    #if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
         if verbose:
             print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
             print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")
