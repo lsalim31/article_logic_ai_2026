@@ -945,10 +945,11 @@ def detect_implication_contradiction(
             print(f"    Consequent: {consequent_text}")
 
         # Check 1: Does the hypothesis mention the antecedent condition?
-        antecedent_keywords = set(antecedent_text.replace('.', '').split())
+        antecedent_keywords = set(antecedent_text.replace('.', '').replace(',', '').split())
         antecedent_keywords -= {'alice', 'she', 'her', 'is', 'a', 'an', 'the'}
 
-        query_words = set(query_lower.replace('.', '').split())
+        query_words = set(query_lower.replace('.', '').replace(',', '').split())
+
         antecedent_overlap = len(antecedent_keywords & query_words) / max(len(antecedent_keywords), 1)
 
         if antecedent_overlap < 0.3:
