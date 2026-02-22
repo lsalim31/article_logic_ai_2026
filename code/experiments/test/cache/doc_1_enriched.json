@@ -3,128 +3,134 @@
     {
       "id": "P_1",
       "translation": "Alice is a university student.",
-      "evidence": "Sentence 0: 'Alice is a university student.'",
-      "explanation": "Simple categorical assertion about Alice with no logical connectives or conditions."
+      "evidence": "Sentence 0: \"Alice is a university student.\"",
+      "explanation": "Single predication about Alice's status; no logical connectives or conditions."
     },
     {
       "id": "P_2",
       "translation": "Alice studies computer science.",
-      "evidence": "Sentence 1: 'She studies computer science.'",
-      "explanation": "Single action/relation (studies) with a specific object (computer science)."
+      "evidence": "Sentence 1: \"She studies computer science.\"",
+      "explanation": "Single subject-relation-object claim; no connectives or conditions."
     },
     {
       "id": "P_3",
       "translation": "Alice studies hard.",
-      "evidence": "Sentence 2: 'If Alice studies hard, then she passes her exams.'",
-      "explanation": "Antecedent clause extracted from a conditional; stated without the conditional connective."
+      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic action/state used as a conditional component; stated without connectives when isolated."
     },
     {
       "id": "P_4",
       "translation": "Alice passes her exams.",
-      "evidence": "Sentence 2: 'If Alice studies hard, then she passes her exams.'",
-      "explanation": "Consequent clause extracted from a conditional; stated without the conditional connective."
+      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic outcome used as a conditional component; stated without connectives when isolated."
     },
     {
       "id": "P_5",
       "translation": "Alice typically studies hard before exams.",
-      "evidence": "Sentence 3: 'Alice typically studies hard before exams.'",
-      "explanation": "Atomic proposition including the modal/frequency word 'typically' as it appears in the text."
+      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
+      "explanation": "Contains the modal/frequency word \"typically\"; otherwise a single clause."
     },
     {
       "id": "P_6",
       "translation": "Alice studies hard before exams.",
-      "evidence": "Sentence 3: 'Alice typically studies hard before exams.'",
-      "explanation": "Derived base event from the modal statement by removing 'typically'."
+      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\" (modal removed per rules)",
+      "explanation": "Derived base event by removing the modal word \"typically\"; still a single clause."
     },
     {
       "id": "P_7",
       "translation": "Alice is focused.",
-      "evidence": "Sentence 4: 'When Alice is focused, she completes her assignments on time.'",
-      "explanation": "Condition clause extracted from a 'when' conditional; stated as a standalone clause."
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic state used as a conditional component; no connectives when isolated."
     },
     {
       "id": "P_8",
       "translation": "Alice completes her assignments on time.",
-      "evidence": "Sentence 4: 'When Alice is focused, she completes her assignments on time.'",
-      "explanation": "Result clause extracted from a 'when' conditional; no additional connectives."
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic performance claim used as a conditional component; no connectives when isolated."
     },
     {
       "id": "P_9",
       "translation": "Alice sometimes gets distracted by social media.",
-      "evidence": "Sentence 5: 'Alice sometimes gets distracted by social media.'",
-      "explanation": "Atomic proposition including the modal/frequency word 'sometimes' as stated."
+      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
+      "explanation": "Contains the modal/frequency word \"sometimes\"; otherwise a single clause."
     },
     {
       "id": "P_10",
       "translation": "Alice gets distracted by social media.",
-      "evidence": "Sentence 5: 'Alice sometimes gets distracted by social media.'",
-      "explanation": "Derived base event from the modal statement by removing 'sometimes'."
+      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\" (modal removed per rules)",
+      "explanation": "Derived base event by removing the modal word \"sometimes\"; still a single clause."
     },
     {
       "id": "P_11",
-      "translation": "Alice works part-time at the campus library.",
-      "evidence": "Sentence 6: 'She works part-time at the campus library.'",
-      "explanation": "Single employment relation with role intensity and location; no logical connectives."
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "One attribute of Alice's work; split out to keep an atomic predicate."
     },
     {
       "id": "P_12",
-      "translation": "Her assignments are due every Friday.",
-      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
-      "explanation": "Atomic proposition including the frequency term 'every' as it appears in the text."
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "One location fact about Alice's work; split out to keep an atomic predicate."
     },
     {
       "id": "P_13",
-      "translation": "Her assignments are due Friday.",
-      "evidence": "Sentence 7: 'Her assignments are due every Friday.'",
-      "explanation": "Derived base event from the frequency statement by removing 'every'."
+      "translation": "Alice's assignments are due every Friday.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
+      "explanation": "Contains the modal/frequency word \"every\"; otherwise a single clause."
     },
     {
       "id": "P_14",
-      "translation": "Alice rarely studies late at night.",
-      "evidence": "Sentence 8: 'Alice rarely studies late at night.'",
-      "explanation": "Atomic proposition including the modal/frequency word 'rarely' as stated."
+      "translation": "Alice's assignments are due Friday.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\" (frequency removed per rules)",
+      "explanation": "Derived base event by removing the frequency word \"every\"; still a single clause."
     },
     {
       "id": "P_15",
-      "translation": "Alice studies late at night.",
-      "evidence": "Sentence 8: 'Alice rarely studies late at night.'",
-      "explanation": "Derived base event from the modal statement by removing 'rarely'."
+      "translation": "Alice rarely studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
+      "explanation": "Contains the modal/frequency word \"rarely\"; otherwise a single clause."
     },
     {
       "id": "P_16",
-      "translation": "Alice is a high school student.",
-      "evidence": "Sentence 0: 'Alice is a university student.' (auxiliary proposition for education_level domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: education_level. Mutually exclusive alternative."
+      "translation": "Alice studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\" (modal removed per rules)",
+      "explanation": "Derived base event by removing the modal word \"rarely\"; still a single clause."
     },
     {
       "id": "P_17",
-      "translation": "Alice studies biology.",
-      "evidence": "Sentence 1: 'She studies computer science.' (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+      "translation": "Alice is a high school student.",
+      "evidence": "Sentence 0: \"Alice is a university student.\" (auxiliary proposition for education_level domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: education_level. Mutually exclusive alternative."
     },
     {
       "id": "P_18",
-      "translation": "Alice studies mathematics.",
-      "evidence": "Sentence 1: 'She studies computer science.' (auxiliary proposition for academic_major domain)",
+      "translation": "Alice studies biology.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
       "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
     },
     {
       "id": "P_19",
-      "translation": "Alice studies physics.",
-      "evidence": "Sentence 1: 'She studies computer science.' (auxiliary proposition for academic_major domain)",
+      "translation": "Alice studies mathematics.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
       "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
     },
     {
       "id": "P_20",
-      "translation": "Alice studies chemistry.",
-      "evidence": "Sentence 1: 'She studies computer science.' (auxiliary proposition for academic_major domain)",
+      "translation": "Alice studies physics.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
       "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
     },
     {
       "id": "P_21",
-      "translation": "Alice works full-time.",
-      "evidence": "Sentence 6: 'She works part-time at the campus library.' (auxiliary proposition for employment_type domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_11. Part of finite set: employment_type. Mutually exclusive alternative."
+      "translation": "Alice studies chemistry.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_22",
+      "translation": "Alice completes assignments late.",
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\" (auxiliary proposition for timing_modifier domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_8. Part of finite set: timing_modifier. Mutually exclusive alternative."
     }
   ],
   "constraints": [
@@ -134,7 +140,7 @@
       "translation": "Alice is a university student.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Direct explicit assertion."
+      "reasoning": "Direct assertion in the text."
     },
     {
       "id": "C_2",
@@ -142,7 +148,7 @@
       "translation": "Alice studies computer science.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Direct explicit assertion."
+      "reasoning": "Direct assertion in the text."
     },
     {
       "id": "C_3",
@@ -150,15 +156,15 @@
       "translation": "If Alice studies hard, then she passes her exams.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2",
-      "reasoning": "The conditional relation is explicitly stated."
+      "reasoning": "Explicit conditional stated by the text."
     },
     {
       "id": "C_4",
       "formula": "P_3",
       "translation": "Alice studies hard.",
-      "llm_weight": 0.5,
-      "evidence": "Sentence 2",
-      "reasoning": "Appears as a hypothetical antecedent; the text does not assert it as a fact."
+      "llm_weight": 0.6,
+      "evidence": "Sentence 2, Sentence 3",
+      "reasoning": "Not directly asserted as a standing fact; somewhat supported by the claim that she typically studies hard before exams (which suggests she does study hard in relevant contexts)."
     },
     {
       "id": "C_5",
@@ -166,7 +172,7 @@
       "translation": "Alice passes her exams.",
       "llm_weight": 0.5,
       "evidence": "Sentence 2",
-      "reasoning": "Appears only as a hypothetical consequent; the text does not assert it as a fact."
+      "reasoning": "The text gives a conditional about passing exams but does not assert she actually passes them; left neutral."
     },
     {
       "id": "C_6",
@@ -174,7 +180,7 @@
       "translation": "Alice typically studies hard before exams.",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "The modal claim itself is explicitly asserted."
+      "reasoning": "Modal claim itself is explicitly asserted."
     },
     {
       "id": "C_7",
@@ -182,23 +188,23 @@
       "translation": "Alice studies hard before exams.",
       "llm_weight": 0.75,
       "evidence": "Sentence 3",
-      "reasoning": "Derived base event from 'typically'; 'typically' suggests a high-but-not-certain frequency."
+      "reasoning": "Derived base event from \"typically\"; \"typically\" suggests a high (but not certain) likelihood."
     },
     {
       "id": "C_8",
       "formula": "(P_6 ⟹ P_5)",
-      "translation": "If Alice studies hard before exams, that is consistent with 'Alice typically studies hard before exams.'",
+      "translation": "If Alice studies hard before exams, that is consistent with the claim that she typically studies hard before exams.",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "Required modal-pattern constraint: an occurrence of the base event satisfies the modal characterization."
+      "reasoning": "Required modal-pattern consistency constraint."
     },
     {
       "id": "C_9",
       "formula": "(P_6 ⟹ P_3)",
       "translation": "If Alice studies hard before exams, then Alice studies hard.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 3 (source of 'studies hard before exams') and Sentence 2 (contains 'studies hard')",
-      "reasoning": "Common-sense semantic entailment: studying hard before exams implies studying hard (at least in that context)."
+      "evidence": "Sentence 2, Sentence 3",
+      "reasoning": "Common-sense entailment: studying hard (in a specific context) implies studying hard (in general), though the general statement is less specific."
     },
     {
       "id": "C_10",
@@ -206,7 +212,7 @@
       "translation": "When Alice is focused, she completes her assignments on time.",
       "llm_weight": 1.0,
       "evidence": "Sentence 4",
-      "reasoning": "Explicit 'when' conditional."
+      "reasoning": "Explicit conditional stated by the text (\"When\" treated as implication)."
     },
     {
       "id": "C_11",
@@ -214,7 +220,7 @@
       "translation": "Alice is focused.",
       "llm_weight": 0.5,
       "evidence": "Sentence 4",
-      "reasoning": "Appears only as a condition; the text does not assert she is focused."
+      "reasoning": "Mentioned as a condition but not asserted as currently true; left neutral."
     },
     {
       "id": "C_12",
@@ -222,7 +228,7 @@
       "translation": "Alice completes her assignments on time.",
       "llm_weight": 0.5,
       "evidence": "Sentence 4",
-      "reasoning": "Stated only as the consequent of a conditional; not asserted unconditionally."
+      "reasoning": "Given only as the consequent of a conditional; not asserted unconditionally."
     },
     {
       "id": "C_13",
@@ -230,7 +236,7 @@
       "translation": "Alice sometimes gets distracted by social media.",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "The modal claim itself is explicitly asserted."
+      "reasoning": "Modal claim itself is explicitly asserted."
     },
     {
       "id": "C_14",
@@ -238,82 +244,82 @@
       "translation": "Alice gets distracted by social media.",
       "llm_weight": 0.4,
       "evidence": "Sentence 5",
-      "reasoning": "Derived base event from 'sometimes'; 'sometimes' suggests a low-to-moderate frequency."
+      "reasoning": "Derived base event from \"sometimes\"; indicates occasional occurrence."
     },
     {
       "id": "C_15",
       "formula": "(P_10 ⟹ P_9)",
-      "translation": "If Alice gets distracted by social media, that is consistent with 'Alice sometimes gets distracted by social media.'",
+      "translation": "If Alice gets distracted by social media, that is consistent with the claim that she sometimes gets distracted by social media.",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Required modal-pattern constraint."
+      "reasoning": "Required modal-pattern consistency constraint."
     },
     {
       "id": "C_16",
       "formula": "P_11",
-      "translation": "Alice works part-time at the campus library.",
+      "translation": "Alice works part-time.",
       "llm_weight": 1.0,
       "evidence": "Sentence 6",
-      "reasoning": "Direct explicit assertion."
+      "reasoning": "Directly stated in the text (as part of a single sentence describing her job)."
     },
     {
       "id": "C_17",
       "formula": "P_12",
-      "translation": "Her assignments are due every Friday.",
+      "translation": "Alice works at the campus library.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Frequency claim is explicitly asserted."
+      "evidence": "Sentence 6",
+      "reasoning": "Directly stated in the text (as part of a single sentence describing her job)."
     },
     {
       "id": "C_18",
       "formula": "P_13",
-      "translation": "Her assignments are due Friday.",
-      "llm_weight": 0.95,
+      "translation": "Her assignments are due every Friday.",
+      "llm_weight": 1.0,
       "evidence": "Sentence 7",
-      "reasoning": "Derived base event from 'every Friday'; 'every' is very strong (near-certain) regularity."
+      "reasoning": "Modal/frequency claim itself is explicitly asserted."
     },
     {
       "id": "C_19",
-      "formula": "(P_13 ⟹ P_12)",
-      "translation": "If her assignments are due Friday, that is consistent with 'Her assignments are due every Friday.'",
-      "llm_weight": 1.0,
+      "formula": "P_14",
+      "translation": "Her assignments are due Friday.",
+      "llm_weight": 0.95,
       "evidence": "Sentence 7",
-      "reasoning": "Required modal-pattern constraint for frequency phrasing."
+      "reasoning": "Derived base event from \"every\"; very strong regularity suggests near-certainty for a given Friday."
     },
     {
       "id": "C_20",
-      "formula": "(P_12 ⟹ P_13)",
-      "translation": "If her assignments are due every Friday, then her assignments are due Friday.",
+      "formula": "(P_14 ⟹ P_13)",
+      "translation": "If her assignments are due Friday, that is consistent with the claim that they are due every Friday.",
       "llm_weight": 1.0,
       "evidence": "Sentence 7",
-      "reasoning": "Semantic entailment: 'every Friday' entails 'Friday' (a specific instance of the recurring due day)."
+      "reasoning": "Required modal-pattern consistency constraint."
     },
     {
       "id": "C_21",
-      "formula": "P_14",
+      "formula": "P_15",
       "translation": "Alice rarely studies late at night.",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "The modal claim itself is explicitly asserted."
+      "reasoning": "Modal/frequency claim itself is explicitly asserted."
+    },
+    {
+      "id": "C_22",
+      "formula": "P_16",
+      "translation": "Alice studies late at night.",
+      "llm_weight": 0.2,
+      "evidence": "Sentence 8",
+      "reasoning": "Derived base event from \"rarely\"; suggests low likelihood but possible occurrence."
     },
     {
       "id": "C_23",
-      "formula": "(P_15 ⟹ P_14)",
-      "translation": "If Alice studies late at night, that is consistent with 'Alice rarely studies late at night.'",
+      "formula": "(P_16 ⟹ P_15)",
+      "translation": "If Alice studies late at night, that is consistent with the claim that she rarely studies late at night.",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "Required modal-pattern constraint."
+      "reasoning": "Required modal-pattern consistency constraint."
     },
     {
       "id": "C_24",
-      "formula": "¬P_15",
-      "translation": "Alice does not study late at night.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 8",
-      "reasoning": "Common-sense inference from 'rarely': the usual case is not studying late at night, though exceptions may occur."
-    },
-    {
-      "id": "C_25",
       "formula": "P_6 ⟹ P_5",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -321,7 +327,7 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_26",
+      "id": "C_25",
       "formula": "P_5 ⟹ P_6",
       "translation": "If modal pattern holds, the base event occurs",
       "llm_weight": 1.0,
@@ -329,7 +335,7 @@
       "reasoning": "Modal 'typically' implies the base event occurs (at least sometimes)"
     },
     {
-      "id": "C_27",
+      "id": "C_26",
       "formula": "P_10 ⟹ P_9",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -337,7 +343,7 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_28",
+      "id": "C_27",
       "formula": "P_9 ⟹ P_10",
       "translation": "If modal pattern holds, the base event occurs",
       "llm_weight": 1.0,
@@ -345,168 +351,149 @@
       "reasoning": "Modal 'sometimes' implies the base event occurs (at least sometimes)"
     },
     {
-      "id": "C_29",
-      "formula": "P_15 ⟹ P_14",
+      "id": "C_28",
+      "formula": "P_16 ⟹ P_15",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_30",
-      "formula": "P_14 ⟹ P_15",
+      "id": "C_29",
+      "formula": "P_15 ⟹ P_16",
       "translation": "If modal pattern holds, the base event occurs",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Modal 'rarely' implies the base event occurs (at least sometimes)"
     },
     {
-      "id": "C_31",
-      "formula": "¬P_16",
+      "id": "C_30",
+      "formula": "¬P_17",
       "translation": "It is not the case that Alice is a high school student.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_32",
-      "formula": "P_1 ⟹ ¬P_16",
+      "id": "C_31",
+      "formula": "P_1 ⟹ ¬P_17",
       "translation": "If Alice is a university student, then Alice is not a high school student.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over education_level domain with weight 1.0"
     },
     {
-      "id": "C_33",
-      "formula": "¬P_17",
+      "id": "C_32",
+      "formula": "¬P_18",
       "translation": "It is not the case that Alice studies biology.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_34",
-      "formula": "P_2 ⟹ ¬P_17",
+      "id": "C_33",
+      "formula": "P_2 ⟹ ¬P_18",
       "translation": "If Alice studies computer science, then Alice does not study biology.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_35",
-      "formula": "¬P_18",
+      "id": "C_34",
+      "formula": "¬P_19",
       "translation": "It is not the case that Alice studies mathematics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_36",
-      "formula": "P_2 ⟹ ¬P_18",
+      "id": "C_35",
+      "formula": "P_2 ⟹ ¬P_19",
       "translation": "If Alice studies computer science, then Alice does not study mathematics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_37",
-      "formula": "¬P_19",
+      "id": "C_36",
+      "formula": "¬P_20",
       "translation": "It is not the case that Alice studies physics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_38",
-      "formula": "P_2 ⟹ ¬P_19",
+      "id": "C_37",
+      "formula": "P_2 ⟹ ¬P_20",
       "translation": "If Alice studies computer science, then Alice does not study physics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_39",
-      "formula": "¬P_20",
+      "id": "C_38",
+      "formula": "¬P_21",
       "translation": "It is not the case that Alice studies chemistry.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_40",
-      "formula": "P_2 ⟹ ¬P_20",
+      "id": "C_39",
+      "formula": "P_2 ⟹ ¬P_21",
       "translation": "If Alice studies computer science, then Alice does not study chemistry.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_41",
-      "formula": "¬P_21",
-      "translation": "It is not the case that Alice works full-time.",
+      "id": "C_40",
+      "formula": "¬P_22",
+      "translation": "It is not the case that Alice completes assignments late.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence"
     },
     {
-      "id": "C_42",
-      "formula": "P_11 ⟹ ¬P_21",
-      "translation": "If Alice works part-time, then Alice does not work full-time.",
+      "id": "C_41",
+      "formula": "P_8 ⟹ ¬P_22",
+      "translation": "If Alice completes assignments on time, then Alice does not complete assignments late.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over employment_type domain with weight 1.0"
+      "reasoning": "Mutual exclusion over timing_modifier domain with weight 1.0"
     },
     {
-      "id": "C_43",
-      "formula": "P_3 ⟹ ¬P_17",
+      "id": "C_42",
+      "formula": "P_3 ⟹ ¬P_18",
       "translation": "If Alice studies hard. then not Alice studies biology.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary"
     },
     {
-      "id": "C_44",
-      "formula": "P_3 ⟹ ¬P_18",
+      "id": "C_43",
+      "formula": "P_3 ⟹ ¬P_19",
       "translation": "If Alice studies hard. then not Alice studies mathematics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary"
     },
     {
-      "id": "C_45",
-      "formula": "P_3 ⟹ ¬P_19",
+      "id": "C_44",
+      "formula": "P_3 ⟹ ¬P_20",
       "translation": "If Alice studies hard. then not Alice studies physics.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary"
     },
     {
-      "id": "C_46",
-      "formula": "P_3 ⟹ ¬P_20",
+      "id": "C_45",
+      "formula": "P_3 ⟹ ¬P_21",
       "translation": "If Alice studies hard. then not Alice studies chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_47",
-      "formula": "P_8 ⟹ ¬P_21",
-      "translation": "If Alice completes her assignments on time. then not Alice works full-time.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary"
     }
   ],
-  "_enrichment_log": [
-    {
-      "prop_id": "P_15",
-      "translation": "Alice studies late at night.",
-      "positive_constraint": "C_48",
-      "negative_constraint": "C_24",
-      "nli_score_positive": 0.057449232786893845,
-      "nli_score_negative": 0.44210806488990784,
-      "decision": "keep negative",
-      "removed": "C_48"
-    }
-  ]
+  "_enrichment_log": []
 }

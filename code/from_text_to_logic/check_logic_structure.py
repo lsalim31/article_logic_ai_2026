@@ -1788,8 +1788,16 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
     "alternatives": ["full-time", "part-time"],
     "template": "{subject} works {value}.",
     "exclusion_template": "If {subject} works {original}, then {subject} does not work {alternative}.",
+    },
+    "timing_modifier": {
+        "patterns": [
+            r"(?P<subject>[A-Z][a-z]+)\s+completes\s+[\w\s]+?\s+(?P<value>on time|early|late)[.]?$",
+        ],
+        "alternatives": ["on time", "early", "late"],
+        "template": "{subject} completes assignments {value}.",
+        "exclusion_template": "If {subject} completes assignments {original}, then {subject} does not complete assignments {alternative}.",
     }
-}
+    }
 
 
 def generate_finite_domain_auxiliaries(
