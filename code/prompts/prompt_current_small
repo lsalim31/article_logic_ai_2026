@@ -122,6 +122,13 @@ STEP 4: Double Check and Validation
   If both are present as primitives, include constraints such as P_always ⟹ ¬P_never with weight 1.0
 - Add semantic constraints when high-salience and broadly uncontested in common knowledge. Avoid speculative or domain-specific inferences.
 
+- CONSISTENCY CHECK: Before finalizing, verify that no proposition P_i is asserted both positively (P_i with weight ≥ 0.5) and negatively (¬P_i with weight ≥ 0.5). If you find such a conflict:
+  1. Re-read the source text for that proposition
+  2. Determine the TEXT'S intent (is it asserting the action or prohibiting it?)
+  3. Keep only the constraint that matches the text's intent
+  4. Remove the contradictory constraint
+
+
 GUIDELINES:
 - Use zeroth-order logic only (no quantifiers)
 - Use consistent terminology: "primitive propositions" (matching JSON field `primitive_props`)
