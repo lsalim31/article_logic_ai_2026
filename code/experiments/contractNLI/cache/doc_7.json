@@ -2,530 +2,566 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "This Agreement is a non-disclosure agreement.",
-      "evidence": "Sentence 0 (Title/intro: “NON-DISCLOSURE AGREEMENT”)",
-      "explanation": "Atomic classification of the document; no logical connectives."
+      "translation": "The agreement is made in 2015 between the Company and AHPL.",
+      "evidence": "Sentence 0 (preamble: “THIS AGREEMENT is made on ... 2015 ... and ALEXANDRA HEALTH PTE LTD ...”) ",
+      "explanation": "Atomic assertion about the existence of the agreement and its parties/time, without logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "This Agreement is between the Company and ALEXANDRA HEALTH PTE LTD.",
-      "evidence": "Sentence 0 (intro: “between … (the Company) … and ALEXANDRA HEALTH PTE LTD … (AHPL)”)",
-      "explanation": "Single relational fact about the parties to the agreement."
+      "translation": "The parties may have exchanged certain information.",
+      "evidence": "Sentence 1 (WHEREAS (A): “may have exchanged ... certain information”)",
+      "explanation": "Atomic modal claim (‘may’) about an exchange event."
     },
     {
       "id": "P_3",
-      "translation": "The parties may have exchanged certain information.",
-      "evidence": "Sentence 1 (WHEREAS (A): “may have exchanged … certain information”)",
-      "explanation": "Atomic modal claim about past exchange; contains modality “may”."
+      "translation": "The parties have exchanged certain information.",
+      "evidence": "Sentence 1 (derived from WHEREAS (A))",
+      "explanation": "Derived base event version of P_2 with the modal word removed, as required."
     },
     {
       "id": "P_4",
-      "translation": "The parties have exchanged certain information.",
-      "evidence": "Sentence 1 (derived from WHEREAS (A) modal “may have exchanged”)",
-      "explanation": "Derived base event with the modal removed, as required by the modality rule."
+      "translation": "The parties wish to further exchange certain information.",
+      "evidence": "Sentence 1 (WHEREAS (A): “wish to further exchange certain information”)",
+      "explanation": "Atomic statement of intention; no logical connectives."
     },
     {
       "id": "P_5",
-      "translation": "The parties wish to further exchange certain information.",
-      "evidence": "Sentence 1 (WHEREAS (A): “wish to further exchange … information”)",
-      "explanation": "Atomic statement of intent; no logical operators."
+      "translation": "Each party evaluates the information.",
+      "evidence": "Sentence 1 (WHEREAS (A): “each of them may evaluate such information”)",
+      "explanation": "Atomic statement about evaluation activity (quantifier-free paraphrase)."
     },
     {
       "id": "P_6",
-      "translation": "The information includes trade secrets.",
-      "evidence": "Sentence 1 (WHEREAS (A): “including … trade secrets”)",
-      "explanation": "Single inclusion relation; separated from other included items."
+      "translation": "The purpose is determining the parties’ respective interests in establishing a business relationship between them.",
+      "evidence": "Sentence 1 (WHEREAS (A): “for the purpose of determining their respective interests in establishing a business relationship”)",
+      "explanation": "Atomic statement describing the purpose; no connectives."
     },
     {
       "id": "P_7",
-      "translation": "The information includes proprietary know-how.",
-      "evidence": "Sentence 1 (WHEREAS (A): “including … proprietary know-how”)",
-      "explanation": "Single inclusion relation; separated from other included items."
+      "translation": "The parties wish to define their rights with respect to the information.",
+      "evidence": "Sentence 2 (WHEREAS (B): “wish to define their rights”)",
+      "explanation": "Atomic statement of intention."
     },
     {
       "id": "P_8",
-      "translation": "Each party evaluates the information for determining its interest in establishing a business relationship.",
-      "evidence": "Sentence 1 (WHEREAS (A): “may evaluate … for the purpose of determining … interests in establishing a business relationship”)",
-      "explanation": "Single purpose statement about evaluation; no explicit logical connectives."
+      "translation": "The parties wish to protect the confidentiality of the information.",
+      "evidence": "Sentence 2 (WHEREAS (B): “to protect the confidentiality thereof”)",
+      "explanation": "Atomic statement of intention."
     },
     {
       "id": "P_9",
-      "translation": "The parties wish to define their rights with respect to the information.",
-      "evidence": "Sentence 2 (WHEREAS (B): “wish to define their rights”)",
-      "explanation": "Atomic statement of intent regarding rights definition."
+      "translation": "The Company acknowledges that information relating to the Purpose is highly confidential.",
+      "evidence": "Sentence 3 (WHEREAS (C): “The Company acknowledges that all information or data relating to the Purpose ... is highly confidential”)",
+      "explanation": "Atomic acknowledgement about confidentiality status."
     },
     {
       "id": "P_10",
-      "translation": "The parties wish to protect the confidentiality of the information.",
-      "evidence": "Sentence 2 (WHEREAS (B): “protect the confidentiality thereof”)",
-      "explanation": "Atomic statement of intent regarding confidentiality protection."
+      "translation": "The Company discloses information relating to the Purpose to a third party.",
+      "evidence": "Sentence 3 (WHEREAS (C): “if disclosed ... to a third party”)",
+      "explanation": "Atomic disclosure event statement."
     },
     {
       "id": "P_11",
-      "translation": "The Company acknowledges that information relating to the Purpose is highly confidential.",
-      "evidence": "Sentence 3 (WHEREAS (C): “The Company acknowledges that all information … relating to the Purpose … is highly confidential”)",
-      "explanation": "Single acknowledgement claim; does not encode conditional disclosure consequences."
+      "translation": "AHPL gives express authorization for the disclosure.",
+      "evidence": "Sentence 3 (WHEREAS (C): “without the express authorization of AHPL”)",
+      "explanation": "Atomic authorization status proposition."
     },
     {
       "id": "P_12",
-      "translation": "Unauthorised disclosure of information relating to the Purpose to a third party has a detrimental effect on AHPL's business.",
-      "evidence": "Sentence 3 (WHEREAS (C): “if disclosed … to a third party without … authorization … would have a detrimental effect on the business of AHPL”)",
-      "explanation": "Captures the consequence statement as an atomic claim, leaving conditional structure to constraints."
+      "translation": "The disclosure has a detrimental effect on AHPL’s business.",
+      "evidence": "Sentence 3 (WHEREAS (C): “would have a detrimental effect on the business of AHPL”)",
+      "explanation": "Atomic consequence statement."
     },
     {
       "id": "P_13",
-      "translation": "The Company agrees to be bound by the terms of the Agreement.",
-      "evidence": "Sentence 3 (WHEREAS (C): “the Company hereby agrees to observe and be bound”)",
-      "explanation": "Atomic agreement/commitment statement."
+      "translation": "The Company agrees to observe the terms of the Agreement.",
+      "evidence": "Sentence 3 (WHEREAS (C): “agrees to observe ... the terms”)",
+      "explanation": "Atomic commitment statement."
     },
     {
       "id": "P_14",
-      "translation": "Purpose means discussions and negotiations concerning establishment of a business relationship between the parties.",
-      "evidence": "Sentence 5 (Clause 1.1: “Purpose shall mean … discussions and negotiations … establishment of a business relationship”)",
-      "explanation": "Single definitional statement."
+      "translation": "The Company agrees to be bound by the terms of the Agreement.",
+      "evidence": "Sentence 3 (WHEREAS (C): “be bound by the terms”)",
+      "explanation": "Atomic commitment statement."
     },
     {
       "id": "P_15",
-      "translation": "Labeled information received from the other party is Confidential Information.",
-      "evidence": "Sentence 6 (Clause 1.2(a): information labeled “Confidential” etc.)",
-      "explanation": "Atomic definitional criterion without listing all categories."
+      "translation": "Purpose means discussions between the parties concerning establishment of a business relationship.",
+      "evidence": "Sentence 5 (Clause 1.1: “Purpose shall mean any discussions ... concerning ... establishment of a business relationship”)",
+      "explanation": "Atomic definitional clause (one component of the definition)."
     },
     {
       "id": "P_16",
-      "translation": "Orally disclosed Confidential Information is confirmed in writing within fifteen days after disclosure.",
-      "evidence": "Sentence 6 (Clause 1.2(a): “if disclosed orally, confirmed in writing … within fifteen (15) days”)",
-      "explanation": "Single requirement-like definitional condition, stated without using “if” in the proposition text."
+      "translation": "Purpose means negotiations between the parties concerning establishment of a business relationship.",
+      "evidence": "Sentence 5 (Clause 1.1: “... and negotiations ...”)",
+      "explanation": "Atomic definitional clause (second component of the definition)."
     },
     {
       "id": "P_17",
-      "translation": "Confidential Information remains the sole property of the Discloser.",
-      "evidence": "Sentence 7 (Clause 1.2(b): “shall be and remain the sole property of the Discloser”)",
-      "explanation": "Atomic ownership statement."
+      "translation": "Confidential Information is information labelled confidential in writing at the time of disclosure.",
+      "evidence": "Sentence 6 (Clause 1.2(a): “indicated in writing or labelled ... at the time of disclosure”)",
+      "explanation": "Atomic definitional condition."
     },
     {
       "id": "P_18",
-      "translation": "Information relating to AHPL patients is Confidential Information of AHPL.",
-      "evidence": "Sentence 9 (Clause 1.3: “any information … relating … to the patients of AHPL shall be deemed … Confidential Information”)",
-      "explanation": "Atomic deeming/definition statement."
+      "translation": "Confidential Information is oral information confirmed in writing as confidential within fifteen days after disclosure.",
+      "evidence": "Sentence 6 (Clause 1.2(a): “if disclosed orally, confirmed in writing ... within fifteen (15) days”)",
+      "explanation": "Atomic definitional condition for oral disclosures."
     },
     {
       "id": "P_19",
-      "translation": "The Company ensures AHPL patients are identifiable in Company reports submissions or publications.",
-      "evidence": "Sentence 8 (Clause 1.2(c): “shall ensure that none … can be identified …”)",
-      "explanation": "Atomic positive event formulation used so the prohibition can be represented as a negated constraint."
+      "translation": "Confidential Information remains the sole property of the Discloser.",
+      "evidence": "Sentence 7 (Clause 1.2(b); also Clause 8.1)",
+      "explanation": "Atomic property/ownership rule."
     },
     {
       "id": "P_20",
-      "translation": "Company reports submissions or publications are Confidential Information of AHPL.",
-      "evidence": "Sentence 8 (Clause 1.2(c): “which shall be deemed to be Confidential information of AHPL”)",
-      "explanation": "Atomic classification statement about reports/submissions/publications."
+      "translation": "The Recipient returns Confidential Information to the Discloser on demand.",
+      "evidence": "Sentence 7 (Clause 1.2(b): “returned ... forthwith on demand”)",
+      "explanation": "Atomic return obligation statement."
     },
     {
       "id": "P_21",
-      "translation": "Each party undertakes to maintain the other party's Confidential Information in confidence.",
-      "evidence": "Sentence 10 (Clause 2.1(a): “to maintain the same in confidence”)",
-      "explanation": "Atomic undertaking; separated from the distinct ‘use only for Purpose’ obligation."
+      "translation": "The Recipient returns Confidential Information to the Discloser upon termination of the other party’s services.",
+      "evidence": "Sentence 7 (Clause 1.2(b): “... upon the termination of the other party's services”)",
+      "explanation": "Atomic return obligation statement tied to termination event."
     },
     {
       "id": "P_22",
-      "translation": "Each party undertakes to use the other party's Confidential Information only for the Purpose.",
-      "evidence": "Sentence 10 (Clause 2.1(a): “to use it only for the Purpose”)",
-      "explanation": "Atomic use restriction undertaking."
+      "translation": "AHPL patients can be identified in the Company’s reports submissions or publications.",
+      "evidence": "Sentence 8 (Clause 1.2(c): “shall ensure that none ... can be identified”)",
+      "explanation": "Atomic state of identifiability; used to express a prohibition via constraints."
     },
     {
       "id": "P_23",
-      "translation": "A party makes commercial use of the other party's Confidential Information.",
-      "evidence": "Sentence 11 (Clause 2.1(a)(i): “not to make any commercial use thereof”)",
-      "explanation": "Atomic action; prohibition will be modeled as ¬P_23."
+      "translation": "The Company’s reports submissions or publications are Confidential Information of AHPL.",
+      "evidence": "Sentence 8 (Clause 1.2(c): “shall be deemed to be Confidential information of AHPL”)",
+      "explanation": "Atomic classification statement."
     },
     {
       "id": "P_24",
-      "translation": "A party uses the other party's Confidential Information for the benefit of itself.",
-      "evidence": "Sentence 11 (Clause 2.1(a)(ii): “not to use … for the benefit of itself”)",
-      "explanation": "Atomic action; prohibition will be modeled as ¬P_24."
+      "translation": "Information relating to AHPL patients is Confidential Information of AHPL.",
+      "evidence": "Sentence 10 (Clause 1.3: “any information ... relating ... to the patients of AHPL shall be deemed ... Confidential Information”)",
+      "explanation": "Atomic classification statement."
     },
     {
       "id": "P_25",
-      "translation": "A party uses the other party's Confidential Information for the benefit of a third party.",
-      "evidence": "Sentence 11 (Clause 2.1(a)(ii): “not to use … for the benefit … of any third party”)",
-      "explanation": "Atomic action; prohibition will be modeled as ¬P_25."
+      "translation": "The Recipient maintains the other party’s Confidential Information in confidence.",
+      "evidence": "Sentence 11 (Clause 2.1(a): “to maintain the same in confidence”)",
+      "explanation": "Atomic handling obligation."
     },
     {
       "id": "P_26",
-      "translation": "A party uses Confidential Information to guide or conduct a search of information materials or sources.",
-      "evidence": "Sentence 11 (Clause 2.1(a)(iii): “not to use … for the purpose of guiding or conducting a search …”)",
-      "explanation": "Atomic action; prohibition will be modeled as ¬P_26."
+      "translation": "The Recipient uses the other party’s Confidential Information for the Purpose.",
+      "evidence": "Sentence 11 (Clause 2.1(a): “use it only for the Purpose”)",
+      "explanation": "Atomic use-purpose obligation."
     },
     {
       "id": "P_27",
-      "translation": "A party copies or reproduces the other party's Confidential Information.",
-      "evidence": "Sentence 12 (Clause 2.1(b): “not to copy, reproduce … except as … necessary”)",
-      "explanation": "Atomic action; exception handled via implication constraint."
+      "translation": "The Recipient makes commercial use of the other party’s Confidential Information.",
+      "evidence": "Sentence 12 (Clause 2.1(a)(i): “not to make any commercial use”)",
+      "explanation": "Atomic action; prohibition is represented by constraints."
     },
     {
       "id": "P_28",
-      "translation": "Copying or reproducing Confidential Information is reasonably necessary for the Purpose.",
-      "evidence": "Sentence 12 (Clause 2.1(b): “except as may be reasonably necessary for the Purpose”)",
-      "explanation": "Atomic condition used to express the ‘except as necessary’ structure."
+      "translation": "The Recipient uses the other party’s Confidential Information for the Recipient’s benefit.",
+      "evidence": "Sentence 12 (Clause 2.1(a)(ii): “not to use ... for the benefit of itself”)",
+      "explanation": "Atomic action; prohibition is represented by constraints."
     },
     {
       "id": "P_29",
-      "translation": "Copies reproductions or reductions to writing are the property of the Discloser.",
-      "evidence": "Sentence 12 (Clause 2.1(b): “any copies … shall be the property of the Discloser”)",
-      "explanation": "Atomic property statement about copies."
+      "translation": "The Recipient uses the other party’s Confidential Information for a third party’s benefit.",
+      "evidence": "Sentence 12 (Clause 2.1(a)(ii): “... or of any third (3rd) party ...”)",
+      "explanation": "Atomic action; prohibition is represented by constraints."
     },
     {
       "id": "P_30",
-      "translation": "A party discloses the other party's Confidential Information to its employees.",
-      "evidence": "Sentence 13 (Clause 2.1(c): “not to disclose … to its employees … except … need to know”)",
-      "explanation": "Atomic disclosure event to employees; restrictions modeled with constraints."
+      "translation": "A further agreement with the other party exists.",
+      "evidence": "Sentence 12 (Clause 2.1(a)(ii): “other than pursuant to a further agreement”)",
+      "explanation": "Atomic existence of an additional agreement; used as an exception condition."
     },
     {
       "id": "P_31",
-      "translation": "A party discloses the other party's Confidential Information to third parties.",
-      "evidence": "Sentence 13 (Clause 2.1(c): “not to disclose … to … third parties except … need to know”)",
-      "explanation": "Atomic disclosure event to third parties; restrictions modeled with constraints."
+      "translation": "The Recipient uses the other party’s Confidential Information to guide or conduct a search of information materials or sources.",
+      "evidence": "Sentence 12 (Clause 2.1(a)(iii): “not to use ... for the purpose of guiding ... a search”)",
+      "explanation": "Atomic action; prohibition is represented by constraints."
     },
     {
       "id": "P_32",
-      "translation": "Disclosure recipients need to know the Confidential Information for the Purpose.",
-      "evidence": "Sentence 13 (Clause 2.1(c): “who need to know the same for the Purpose”)",
-      "explanation": "Atomic need-to-know condition."
+      "translation": "The Recipient copies the other party’s Confidential Information.",
+      "evidence": "Sentence 13 (Clause 2.1(b): “not to copy, reproduce or reduce to writing ... except ... necessary”)",
+      "explanation": "Atomic action; constraints express the exception structure."
     },
     {
       "id": "P_33",
-      "translation": "Disclosure recipients are bound by contractual confidentiality obligations.",
-      "evidence": "Sentence 13 (Clause 2.1(c)(i): “are obliged by their contracts …”)",
-      "explanation": "Atomic statement about existence of contractual confidentiality obligations."
+      "translation": "The copying is reasonably necessary for the Purpose.",
+      "evidence": "Sentence 13 (Clause 2.1(b): “except as may be reasonably necessary for the Purpose”)",
+      "explanation": "Atomic necessity condition for copying."
     },
     {
       "id": "P_34",
-      "translation": "The Recipient enforces contractual confidentiality obligations of disclosure recipients.",
-      "evidence": "Sentence 13 (Clause 2.1(c)(ii): “shall enforce such obligations”)",
-      "explanation": "Atomic enforcement undertaking."
+      "translation": "Copies made by the Recipient are the property of the Discloser.",
+      "evidence": "Sentence 13 (Clause 2.1(b): “copies ... shall be the property of the Discloser”)",
+      "explanation": "Atomic ownership statement."
     },
     {
       "id": "P_35",
-      "translation": "The Recipient is responsible for performance of Clause 2 undertakings by its employees or directors.",
-      "evidence": "Sentence 14 (Clause 2.1(d): “to be responsible for the performance … on the part of its employees or directors”)",
-      "explanation": "Atomic responsibility allocation statement."
+      "translation": "The Recipient discloses the other party’s Confidential Information to need-to-know persons for the Purpose.",
+      "evidence": "Sentence 14 (Clause 2.1(c): disclosure permitted only to persons who need to know for the Purpose)",
+      "explanation": "Atomic allowed disclosure pattern (expressed positively)."
     },
     {
       "id": "P_36",
-      "translation": "The Recipient applies security measures and degree of care adequate to protect Confidential Information from unauthorised disclosure copying or use.",
-      "evidence": "Sentence 14 (Clause 2.1(e): “apply thereto no lesser security measures … adequate protection …”)",
-      "explanation": "Atomic security-measures undertaking."
+      "translation": "The Recipient discloses the other party’s Confidential Information to persons who lack a need to know it for the Purpose.",
+      "evidence": "Sentence 14 (Clause 2.1(c): restriction to persons who need to know)",
+      "explanation": "Atomic disallowed disclosure pattern, expressed without negation words."
     },
     {
       "id": "P_37",
-      "translation": "The Company causes its relevant personnel involved in the Purpose to be bound by the terms of the Agreement.",
-      "evidence": "Sentence 15 (Clause 2.2: “shall cause its … to observe or be similarly bound”)",
-      "explanation": "Atomic obligation about binding personnel."
+      "translation": "Need-to-know persons are bound by contractual confidentiality obligations.",
+      "evidence": "Sentence 14 (Clause 2.1(c)(i): “are obliged by their contracts ... not to disclose”)",
+      "explanation": "Atomic contractual-obligation status (paraphrased positively)."
     },
     {
       "id": "P_38",
-      "translation": "The Company is responsible and liable for breaches of the Agreement by its personnel.",
-      "evidence": "Sentence 15 (Clause 2.2: “shall be responsible and held liable … for any breach … by any of its …”)",
-      "explanation": "Atomic liability allocation statement."
+      "translation": "The Recipient enforces confidentiality obligations for need-to-know persons.",
+      "evidence": "Sentence 14 (Clause 2.1(c)(ii): “shall enforce such obligations”)",
+      "explanation": "Atomic enforcement obligation."
     },
     {
       "id": "P_39",
-      "translation": "The Recipient is entitled to disclose Confidential Information when disclosure is required by law.",
-      "evidence": "Sentence 16 (Clause 2.3: “shall be entitled to make any disclosure required by law”)",
-      "explanation": "Atomic entitlement statement; notice/consultation handled separately."
+      "translation": "The Recipient is responsible for performance of Clause 2.1 obligations by its employees or directors.",
+      "evidence": "Sentence 15 (Clause 2.1(d): “to be responsible for the performance ... on the part of its employees or directors”)",
+      "explanation": "Atomic responsibility allocation."
     },
     {
       "id": "P_40",
-      "translation": "The Recipient gives the other party at least two business days notice before the legally required disclosure.",
-      "evidence": "Sentence 16 (Clause 2.3: “shall give … not less than two (2) business days' notice”)",
-      "explanation": "Atomic notice requirement statement."
+      "translation": "The Recipient applies security measures to protect the other party’s Confidential Information.",
+      "evidence": "Sentence 15 (Clause 2.1(e): “apply ... security measures and degree of care”)",
+      "explanation": "Atomic security-measures obligation."
     },
     {
       "id": "P_41",
-      "translation": "The Recipient consults with the Discloser prior to the legally required disclosure.",
-      "evidence": "Sentence 16 (Clause 2.3: “shall consult with the Discloser prior to such disclosure”)",
-      "explanation": "Atomic consultation requirement statement."
+      "translation": "The Recipient’s security measures provide adequate protection from unauthorised disclosure copying or use.",
+      "evidence": "Sentence 15 (Clause 2.1(e): “warrants as providing adequate protection ...”)",
+      "explanation": "Atomic warranty about adequacy of measures."
     },
     {
       "id": "P_42",
-      "translation": "Each party returns documents containing the other party's Confidential Information within one month of completion of the Purpose.",
-      "evidence": "Sentence 17 (Clause 3(a): “within one (1) month of completion of the purpose … return …”)",
-      "explanation": "Atomic return-timing requirement for completion trigger."
+      "translation": "The Company causes its involved personnel to observe the terms of the Agreement.",
+      "evidence": "Sentence 16 (Clause 2.2: “shall cause its directors ... to observe ... the terms”)",
+      "explanation": "Atomic causation/ensuring obligation."
     },
     {
       "id": "P_43",
-      "translation": "Each party returns documents containing the other party's Confidential Information after receipt of a written request.",
-      "evidence": "Sentence 17 (Clause 3(a): “or receipt of a written request … return …”)",
-      "explanation": "Atomic return requirement for written-request trigger."
+      "translation": "The Company is liable for any breach of the Agreement by its involved personnel.",
+      "evidence": "Sentence 16 (Clause 2.2: “shall be responsible and held liable for any breach ... by any of its ...”)",
+      "explanation": "Atomic liability allocation."
     },
     {
       "id": "P_44",
-      "translation": "Each party certifies in writing compliance with the return requirement.",
-      "evidence": "Sentence 17 (Clause 3(a): “certify in writing … that it has complied”)",
-      "explanation": "Atomic certification requirement."
+      "translation": "The Recipient makes a disclosure required by law of the other party’s Confidential Information.",
+      "evidence": "Sentence 17 (Clause 2.3: “entitled to make any disclosure required by law”)",
+      "explanation": "Atomic disclosure event (permission context handled in constraints)."
     },
     {
       "id": "P_45",
-      "translation": "Each party remains bound by Clause 2 undertakings after completion of the Purpose.",
-      "evidence": "Sentence 17 (Clause 3(b): “continue to be bound by the undertakings set out in Clause 2”)",
-      "explanation": "Atomic survival/binding statement."
+      "translation": "The Recipient gives at least two business days’ notice of the required disclosure.",
+      "evidence": "Sentence 17 (Clause 2.3: “shall give ... not less than two (2) business days' notice”)",
+      "explanation": "Atomic notice obligation."
     },
     {
       "id": "P_46",
-      "translation": "Data provided by AHPL to the Company remains the property of AHPL.",
-      "evidence": "Sentence 18 (Clause 4.1: “shall remain … the property of AHPL”)",
-      "explanation": "Atomic ownership statement about data."
+      "translation": "The Recipient consults with the Discloser prior to the required disclosure.",
+      "evidence": "Sentence 17 (Clause 2.3: “shall consult with the Discloser prior to such disclosure”)",
+      "explanation": "Atomic consultation obligation."
     },
     {
       "id": "P_47",
-      "translation": "The Company marks and records AHPL data as AHPL property on all media and documentation.",
-      "evidence": "Sentence 18 (Clause 4.1: “identified, clearly marked and recorded … on all media …”)",
-      "explanation": "Atomic marking/recording obligation."
+      "translation": "The Recipient returns documents containing the other party’s Confidential Information within one month of completion of the Purpose.",
+      "evidence": "Sentence 18 (Clause 3(a): “within one (1) month of completion of the purpose ... return ...”)",
+      "explanation": "Atomic return-timing requirement."
     },
     {
       "id": "P_48",
-      "translation": "The Company takes reasonable precautions and adequate measures to preserve integrity of AHPL data.",
-      "evidence": "Sentence 19 (Clause 4.2: “shall take all reasonable precautions and adequate measures …”)",
-      "explanation": "Atomic precaution/measures obligation."
+      "translation": "The Recipient returns documents containing the other party’s Confidential Information within one month of receipt of a written request.",
+      "evidence": "Sentence 18 (Clause 3(a): “within one (1) month of ... receipt of a written request ... return ...”)",
+      "explanation": "Atomic return-timing requirement."
     },
     {
       "id": "P_49",
-      "translation": "The Company erases AHPL data from its systems when directed by AHPL after termination.",
-      "evidence": "Sentence 20 (Clause 4.3: “shall when directed … erase all data … from the Company’s systems …”)",
-      "explanation": "Atomic erasure obligation triggered by AHPL direction post-termination."
+      "translation": "The Recipient certifies compliance in writing after returning the documents.",
+      "evidence": "Sentence 18 (Clause 3(a): “certify in writing ... that it has complied”)",
+      "explanation": "Atomic certification obligation."
     },
     {
       "id": "P_50",
-      "translation": "AHPL data acquired by the Company is used only for purposes of this Agreement.",
-      "evidence": "Sentence 21 (Clause 4.4: “shall only be used for the purposes of this Agreement”)",
-      "explanation": "Atomic use limitation statement."
+      "translation": "The Recipient remains bound by Clause 2 undertakings after completion of the Purpose.",
+      "evidence": "Sentence 19 (Clause 3(b): “continue to be bound ... notwithstanding the completion of the Purpose”)",
+      "explanation": "Atomic continuing-obligation statement."
     },
     {
       "id": "P_51",
-      "translation": "Further processing of AHPL data requires prior consent of AHPL.",
-      "evidence": "Sentence 21 (Clause 4.4: “shall not be further processed … without the prior consent of AHPL”)",
-      "explanation": "Atomic requirement statement phrased as consent requirement."
+      "translation": "The Recipient remains bound by Clause 2 undertakings after return of the documents.",
+      "evidence": "Sentence 19 (Clause 3(b): “continue to be bound ... notwithstanding ... return of the documents”)",
+      "explanation": "Atomic continuing-obligation statement."
     },
     {
       "id": "P_52",
-      "translation": "Disclosure of AHPL data requires prior consent of AHPL.",
-      "evidence": "Sentence 21 (Clause 4.4: “shall not be … disclosed without the prior consent of AHPL”)",
-      "explanation": "Atomic requirement statement phrased as consent requirement."
+      "translation": "AHPL data provided to the Company remains the property of AHPL.",
+      "evidence": "Sentence 20 (Clause 4.1: “shall remain ... the property of AHPL”)",
+      "explanation": "Atomic data-ownership rule."
     },
     {
       "id": "P_53",
-      "translation": "Transfer of AHPL data to a third party requires prior written consent of AHPL.",
-      "evidence": "Sentence 21 (Clause 4.5: “will not be transferred … without the prior written consent of AHPL”)",
-      "explanation": "Atomic requirement statement phrased as prior written consent requirement."
+      "translation": "The Company marks AHPL data as AHPL property on media and documentation.",
+      "evidence": "Sentence 20 (Clause 4.1: “identified, clearly marked and recorded ... on all media and ... documentation”)",
+      "explanation": "Atomic marking/recording obligation."
     },
     {
       "id": "P_54",
-      "translation": "Use of AHPL data for a commercial or profit-generating purpose requires prior written consent of the provider.",
-      "evidence": "Sentence 21 (Clause 4.5: “shall not use … for any commercial or profit-generating purpose … unless the provider provides … consent”)",
-      "explanation": "Atomic requirement statement phrased as consent requirement."
+      "translation": "The Company takes reasonable precautions to preserve the integrity of AHPL data.",
+      "evidence": "Sentence 21 (Clause 4.2: “shall take all reasonable precautions ... to preserve the integrity”)",
+      "explanation": "Atomic precautions obligation."
     },
     {
       "id": "P_55",
-      "translation": "Upon completion of this Agreement the data is returned to AHPL.",
-      "evidence": "Sentence 21 (Clause 4.5: “Upon completion … data will be either returned to AHPL …”)",
-      "explanation": "Atomic disposition outcome stated separately from the alternative disposal option."
+      "translation": "The Company prevents corruption loss damage or destruction of AHPL data.",
+      "evidence": "Sentence 21 (Clause 4.2: “prevent any corruption or loss, damage or destruction”)",
+      "explanation": "Atomic prevention requirement expressed as an outcome."
     },
     {
       "id": "P_56",
-      "translation": "Upon completion of this Agreement the data is disposed of under the Company's supervision in accordance with applicable laws and AHPL instructions.",
-      "evidence": "Sentence 21 (Clause 4.5: “or disposed of under the Company’s supervision … laws … instructions of AHPL”)",
-      "explanation": "Atomic alternative disposition outcome; exclusivity handled by constraints."
+      "translation": "The Agreement is terminated.",
+      "evidence": "Sentence 22 (Clause 4.3: “In the event of termination of this Agreement”)",
+      "explanation": "Atomic termination event proposition."
     },
     {
       "id": "P_57",
-      "translation": "The parties comply with the Personal Data Protection Act 2012.",
-      "evidence": "Sentence 22 (Clause 4.6: “shall comply … with the Personal Data Protection Act 2012”)",
-      "explanation": "Atomic compliance obligation."
+      "translation": "AHPL directs the Company to erase AHPL data.",
+      "evidence": "Sentence 22 (Clause 4.3: “when directed to do so by AHPL”)",
+      "explanation": "Atomic direction/order event."
     },
     {
       "id": "P_58",
-      "translation": "Each party keeps the existence of this Agreement confidential.",
-      "evidence": "Sentence 24 (Clause 6: “keep the existence … confidential”)",
-      "explanation": "Atomic confidentiality obligation about existence."
+      "translation": "The Company erases AHPL data from the Company’s systems.",
+      "evidence": "Sentence 22 (Clause 4.3: “erase all data ... from the Company’s systems”)",
+      "explanation": "Atomic erasure action."
     },
     {
       "id": "P_59",
-      "translation": "Each party keeps the nature of this Agreement confidential.",
-      "evidence": "Sentence 24 (Clause 6: “keep … nature … confidential”)",
-      "explanation": "Atomic confidentiality obligation about nature."
+      "translation": "The Company instructs its agents and sub-contractors to erase AHPL data.",
+      "evidence": "Sentence 22 (Clause 4.3: “instruct all its agents and sub-contractors to erase all data”)",
+      "explanation": "Atomic instruction action."
     },
     {
       "id": "P_60",
-      "translation": "Use of the name of the other party in publicity advertisement or other disclosure regarding this Agreement requires prior written consent of the other party.",
-      "evidence": "Sentence 24 (Clause 6: “not to use … the name … in any publicity … without the prior written consent”)",
-      "explanation": "Atomic consent-requirement stated without embedding negation in the proposition text."
+      "translation": "The Company uses AHPL data for the purposes of the Agreement.",
+      "evidence": "Sentence 23 (Clause 4.4: “shall only be used for the purposes of this Agreement”)",
+      "explanation": "Atomic permitted-purpose use statement."
     },
     {
       "id": "P_61",
-      "translation": "No licence is granted under intellectual property rights by this Agreement.",
-      "evidence": "Sentence 23 (Clause 5.1: “no licence is hereby granted …”)",
-      "explanation": "Atomic statement about absence of licence grant."
+      "translation": "The Company further processes AHPL data.",
+      "evidence": "Sentence 23 (Clause 4.4: “shall not be further processed ... without ... consent”)",
+      "explanation": "Atomic processing action; restriction handled by constraints."
     },
     {
       "id": "P_62",
-      "translation": "Each party warrants its right to disclose its Confidential Information.",
-      "evidence": "Sentence 23 (Clause 5.2: “Each party warrants its right to disclose its Confidential Information”)",
-      "explanation": "Atomic warranty statement."
+      "translation": "The Company discloses AHPL data.",
+      "evidence": "Sentence 23 (Clause 4.4: “... or disclosed without ... consent”)",
+      "explanation": "Atomic disclosure action; restriction handled by constraints."
     },
     {
       "id": "P_63",
-      "translation": "The Recipient files copyright registrations patent applications or similar registrations of ownership on the Confidential Information.",
-      "evidence": "Sentence 25 (Clause 8.3: “shall not file any … registrations … on the Confidential Information”)",
-      "explanation": "Atomic action; prohibition represented as ¬P_63."
+      "translation": "The Company transfers AHPL data to a third party.",
+      "evidence": "Sentence 24 (Clause 4.5: “will not be transferred ... to any Third ... Party without ... consent”)",
+      "explanation": "Atomic transfer action; restriction handled by constraints."
     },
     {
       "id": "P_64",
-      "translation": "The Recipient assigns registrations and applications to the Discloser.",
-      "evidence": "Sentence 25 (Clause 8.3: “shall assign … such registrations and applications …”)",
-      "explanation": "Atomic assignment action required upon improper filing; linked via implication constraint."
+      "translation": "AHPL gives prior written consent for processing disclosure or transfer of AHPL data.",
+      "evidence": "Sentence 23-24 (Clauses 4.4-4.5: “prior consent” / “prior written consent”)",
+      "explanation": "Atomic consent condition enabling otherwise-restricted actions."
     },
     {
       "id": "P_65",
-      "translation": "This Agreement continues in force from the date hereof until terminated.",
-      "evidence": "Sentence 27 (Clause 11: “shall continue to be in force … until terminated”)",
-      "explanation": "Atomic duration statement for agreement effectiveness."
+      "translation": "The Company uses AHPL data for a commercial or profit-generating purpose.",
+      "evidence": "Sentence 24 (Clause 4.5: “shall not use ... for any commercial or profit-generating purpose ... unless ... consent”)",
+      "explanation": "Atomic commercial-use action; restriction handled by constraints."
     },
     {
       "id": "P_66",
-      "translation": "This Agreement may be terminated by mutual consent.",
-      "evidence": "Sentence 27 (Clause 11: “until terminated by mutual consent …”)",
-      "explanation": "Modal termination-permission statement containing “may” by interpretation of termination mode."
+      "translation": "The Company returns AHPL data to AHPL upon completion of the Agreement.",
+      "evidence": "Sentence 24 (Clause 4.5: “Upon completion ... data will be either returned to AHPL ...”)",
+      "explanation": "Atomic completion/return outcome."
     },
     {
       "id": "P_67",
-      "translation": "This Agreement is terminated by mutual consent.",
-      "evidence": "Sentence 27 (derived from termination modality in Clause 11)",
-      "explanation": "Derived base event with modal removed, as required by the modality rule."
-    },
-    {
-      "id": "P_68",
-      "translation": "This Agreement may be terminated by either party giving at least thirty days prior written notice.",
-      "evidence": "Sentence 27 (Clause 11: “or by either party giving … thirty (30) days’ prior written notice”)",
-      "explanation": "Modal termination-permission statement containing “may” by interpretation of termination mode."
-    },
-    {
-      "id": "P_69",
-      "translation": "This Agreement is terminated by either party giving at least thirty days prior written notice.",
-      "evidence": "Sentence 27 (derived from termination modality in Clause 11)",
-      "explanation": "Derived base event with modal removed, as required by the modality rule."
-    },
-    {
-      "id": "P_70",
-      "translation": "Clauses 1 to 8, 11 to 15 and 17 to 21 survive termination.",
-      "evidence": "Sentence 27 (Clause 11: “shall survive any such termination”)",
-      "explanation": "Atomic survival clause statement."
-    },
-    {
-      "id": "P_71",
-      "translation": "Transfer or assignment of rights obligations or benefits under this Agreement requires prior written consent of the other party.",
-      "evidence": "Sentence 28 (Clause 12(i): “neither party shall transfer or assign … without the prior written consent …”)",
-      "explanation": "Atomic consent-requirement for assignment."
-    },
-    {
-      "id": "P_72",
-      "translation": "A permitted assignee agrees in writing to comply with all terms and conditions of this Agreement.",
-      "evidence": "Sentence 28 (Clause 12(ii): “any permitted assignee … shall agree in writing …”)",
-      "explanation": "Atomic requirement about assignee’s written compliance agreement."
-    },
-    {
-      "id": "P_73",
-      "translation": "The parties use their best endeavours to settle disputes informally by agreement.",
-      "evidence": "Sentence 29 (Clause 15.1: “use their best endeavours to settle … informally”)",
-      "explanation": "Atomic dispute-resolution effort obligation."
-    },
-    {
-      "id": "P_74",
-      "translation": "The parties act in good faith to resolve disputes.",
-      "evidence": "Sentence 29 (Clause 15.1: “shall always act in good faith …”)",
-      "explanation": "Atomic good-faith obligation."
-    },
-    {
-      "id": "P_75",
-      "translation": "The parties cooperate to resolve disputes.",
-      "evidence": "Sentence 29 (Clause 15.1: “co-operate with each other …”)",
-      "explanation": "Atomic cooperation obligation."
-    },
-    {
-      "id": "P_76",
-      "translation": "A party proceeds to litigation or other dispute resolution.",
-      "evidence": "Sentence 29 (Clause 15.2: “no party shall proceed to litigation or any other form … unless … mediation …”)",
-      "explanation": "Atomic action used to encode the ‘no litigation unless mediation efforts’ structure via constraints."
-    },
-    {
-      "id": "P_77",
-      "translation": "The parties make reasonable efforts to resolve disputes through mediation.",
-      "evidence": "Sentence 29 (Clause 15.2: “reasonable efforts … through mediation”)",
-      "explanation": "Atomic mediation-efforts condition used for the litigation gate."
-    },
-    {
-      "id": "P_78",
-      "translation": "Failure to comply with the mediation requirement is deemed to be a breach of this Agreement.",
-      "evidence": "Sentence 29 (Clause 15.2: “Failure to comply … shall be deemed to be a breach”)",
-      "explanation": "Atomic deeming statement about breach."
-    },
-    {
-      "id": "P_79",
-      "translation": "Each party complies with export laws and regulations.",
-      "evidence": "Sentence 30 (Clause 17: “agrees to comply with all export laws and regulations …”)",
+      "translation": "The parties comply with the Personal Data Protection Act 2012.",
+      "evidence": "Sentence 25 (Clause 4.6: “shall comply ... with the Personal Data Protection Act 2012”)",
       "explanation": "Atomic compliance obligation."
     },
     {
+      "id": "P_68",
+      "translation": "No licence is granted under intellectual property rights of either party.",
+      "evidence": "Sentence 26 (Clause 5.1: “no licence is hereby granted ...”)",
+      "explanation": "Atomic IP-rights non-grant statement."
+    },
+    {
+      "id": "P_69",
+      "translation": "Each party warrants its right to disclose its Confidential Information.",
+      "evidence": "Sentence 27 (Clause 5.2: “Each party warrants its right to disclose its Confidential Information”)",
+      "explanation": "Atomic warranty statement."
+    },
+    {
+      "id": "P_70",
+      "translation": "Each party authorises the other party to use its Confidential Information for the Purpose.",
+      "evidence": "Sentence 27 (Clause 5.2: “to authorise the other party to use the same for the Purpose”)",
+      "explanation": "Atomic authorization statement."
+    },
+    {
+      "id": "P_71",
+      "translation": "Each party keeps the existence of this Agreement confidential.",
+      "evidence": "Sentence 28 (Clause 6: “keep the existence ... confidential”)",
+      "explanation": "Atomic confidentiality obligation."
+    },
+    {
+      "id": "P_72",
+      "translation": "Each party keeps the nature of this Agreement confidential.",
+      "evidence": "Sentence 28 (Clause 6: “keep the ... nature ... confidential”)",
+      "explanation": "Atomic confidentiality obligation."
+    },
+    {
+      "id": "P_73",
+      "translation": "A party uses the other party’s name in publicity advertisement or disclosure regarding this Agreement.",
+      "evidence": "Sentence 28 (Clause 6: restriction on use in “any publicity, advertisement or other disclosure”)",
+      "explanation": "Atomic publicity-use action; restriction handled by constraints."
+    },
+    {
+      "id": "P_74",
+      "translation": "The other party gives prior written consent for such publicity use.",
+      "evidence": "Sentence 28 (Clause 6: “without the prior written consent of the other party”)",
+      "explanation": "Atomic consent condition for publicity."
+    },
+    {
+      "id": "P_75",
+      "translation": "Consent is unreasonably withheld.",
+      "evidence": "Sentence 28 (Clause 6: “such consent not to be unreasonably withheld”)",
+      "explanation": "Atomic consent-quality state; used to express a prohibition via constraints."
+    },
+    {
+      "id": "P_76",
+      "translation": "A breach of this Agreement results in irreparable harm to the Discloser.",
+      "evidence": "Sentence 29 (Clause 7: “any breach ... will result in irreparable harm to the Discloser”)",
+      "explanation": "Atomic consequence statement."
+    },
+    {
+      "id": "P_77",
+      "translation": "Monetary damages are an adequate remedy for a breach.",
+      "evidence": "Sentence 29 (Clause 7: “monetary damages may not be an adequate remedy”)",
+      "explanation": "Atomic remedy-adequacy statement; intended to be negated by the text."
+    },
+    {
+      "id": "P_78",
+      "translation": "The party seeking remedy is entitled to seek equitable relief for a breach or threatened breach.",
+      "evidence": "Sentence 29 (Clause 7: “shall be entitled to seek equitable relief ...”)",
+      "explanation": "Atomic entitlement statement."
+    },
+    {
+      "id": "P_79",
+      "translation": "The Recipient files a patent application or copyright registration on the Confidential Information.",
+      "evidence": "Sentence 30 (Clause 8.3: “shall not file any ... registrations ... on the Confidential Information”)",
+      "explanation": "Atomic filing action; prohibition handled by constraints."
+    },
+    {
       "id": "P_80",
-      "translation": "Data information program or deliverable is exported in violation of Export Laws.",
-      "evidence": "Sentence 30 (Clause 17(a): “exported … in violation of Export Laws”)",
-      "explanation": "Atomic prohibited condition; prohibition modeled as ¬P_80."
+      "translation": "The Recipient assigns the filed registration or application to the Discloser.",
+      "evidence": "Sentence 30 (Clause 8.3: “shall assign absolutely to the Discloser such registrations and applications”)",
+      "explanation": "Atomic assignment/remedy action."
     },
     {
       "id": "P_81",
-      "translation": "Data information program or deliverable is used for a purpose prohibited by Export Laws.",
-      "evidence": "Sentence 30 (Clause 17(b): “used for any purposes prohibited by the Export Laws”)",
-      "explanation": "Atomic prohibited condition; prohibition modeled as ¬P_81."
+      "translation": "This Agreement is terminated by mutual consent.",
+      "evidence": "Sentence 32 (Clause 11: “terminated by mutual consent”)",
+      "explanation": "Atomic termination mode statement."
     },
     {
       "id": "P_82",
-      "translation": "The parties have read this Agreement.",
-      "evidence": "Sentence 31 (Clause 18.1: “have read this Agreement”)",
-      "explanation": "Atomic acknowledgment statement."
+      "translation": "A party gives at least thirty days’ prior written notice to terminate this Agreement.",
+      "evidence": "Sentence 32 (Clause 11: “by either party giving ... not less than thirty (30) days’ prior written notice”)",
+      "explanation": "Atomic termination-notice event statement."
     },
     {
       "id": "P_83",
-      "translation": "The parties have understood the provisions of this Agreement.",
-      "evidence": "Sentence 31 (Clause 18.1: “understood its provisions”)",
-      "explanation": "Atomic acknowledgment statement."
+      "translation": "Clauses 1 to 8 survive termination of this Agreement.",
+      "evidence": "Sentence 32 (Clause 11: “The provision of Clauses 1 to 8 ... shall survive ... termination”)",
+      "explanation": "Atomic survival statement."
     },
     {
       "id": "P_84",
-      "translation": "This Agreement constitutes the entire agreement between the parties with respect to its subject matter.",
-      "evidence": "Sentence 31 (Clause 18.1: “constitute the entire agreement … supersedes all prior …”)",
-      "explanation": "Atomic entire-agreement statement (superseding details omitted)."
+      "translation": "A party assigns rights obligations or benefits under this Agreement to a third party.",
+      "evidence": "Sentence 33 (Clause 12(i): restriction on transfer/assignment to any third party)",
+      "explanation": "Atomic assignment action; restriction handled by constraints."
     },
     {
       "id": "P_85",
-      "translation": "This Agreement constitutes a partnership relationship between the parties.",
-      "evidence": "Sentence 32 (Clause 19: “Nothing … shall be deemed to constitute a partnership …”)",
-      "explanation": "Atomic positive form used so the ‘no partnership’ clause can be represented as ¬P_85."
+      "translation": "The other party gives prior written consent to the assignment.",
+      "evidence": "Sentence 33 (Clause 12(i): “without the prior written consent of the other party”)",
+      "explanation": "Atomic consent condition for assignment."
     },
     {
       "id": "P_86",
-      "translation": "A party has authority to act for the other party.",
-      "evidence": "Sentence 32 (Clause 19: “no party shall have any authority to act for … the other party”)",
-      "explanation": "Atomic positive form used so the ‘no authority’ clause can be represented as ¬P_86."
+      "translation": "A permitted assignee agrees in writing to comply with this Agreement.",
+      "evidence": "Sentence 33 (Clause 12(ii): “shall agree in writing to comply ...”)",
+      "explanation": "Atomic written undertaking condition."
     },
     {
       "id": "P_87",
-      "translation": "This Agreement is governed by the laws of the Republic of Singapore.",
-      "evidence": "Sentence 33 (Clause 20.1: “governed by … laws of the Republic of Singapore”)",
-      "explanation": "Atomic governing-law statement."
+      "translation": "The parties make reasonable efforts to resolve disputes through mediation under Singapore Mediation Centre rules.",
+      "evidence": "Sentence 35 (Clause 15.2: “reasonable efforts ... through mediation ... Singapore Mediation Centre”)",
+      "explanation": "Atomic mediation-efforts requirement."
     },
     {
       "id": "P_88",
+      "translation": "A party proceeds to litigation.",
+      "evidence": "Sentence 35 (Clause 15.2: “no party shall proceed to litigation ... unless ... mediation ...”)",
+      "explanation": "Atomic litigation action; restriction handled by constraints."
+    },
+    {
+      "id": "P_89",
+      "translation": "Mediation is unsuccessful.",
+      "evidence": "Sentence 35 (Clause 15.3: “In the event that mediation is unsuccessful ...”)",
+      "explanation": "Atomic mediation outcome event."
+    },
+    {
+      "id": "P_90",
+      "translation": "A party elects arbitration to resolve the dispute.",
+      "evidence": "Sentence 35 (Clause 15.3: dispute resolved by reference to arbitration as elected)",
+      "explanation": "Atomic election statement."
+    },
+    {
+      "id": "P_91",
+      "translation": "A party elects court proceedings to resolve the dispute.",
+      "evidence": "Sentence 35 (Clause 15.3: dispute resolved by court proceedings as elected)",
+      "explanation": "Atomic election statement."
+    },
+    {
+      "id": "P_92",
+      "translation": "The parties keep arbitration proceedings confidential.",
+      "evidence": "Sentence 36 (Clause 15.10: “undertake to keep the arbitration proceedings ... confidential”)",
+      "explanation": "Atomic confidentiality obligation."
+    },
+    {
+      "id": "P_93",
+      "translation": "This Agreement is governed by the laws of the Republic of Singapore.",
+      "evidence": "Sentence 40 (Clause 20.1: “governed ... in accordance with the laws ... Singapore”)",
+      "explanation": "Atomic governing-law statement."
+    },
+    {
+      "id": "P_94",
       "translation": "The parties submit to the non-exclusive jurisdiction of the Courts of the Republic of Singapore.",
-      "evidence": "Sentence 33 (Clause 20.2: “submit … to the non-exclusive jurisdiction …”)",
+      "evidence": "Sentence 40 (Clause 20.2: “submit ... to the non-exclusive jurisdiction ...”)",
       "explanation": "Atomic jurisdiction submission statement."
     }
   ],
@@ -533,978 +569,1058 @@
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "This document is a NON-DISCLOSURE AGREEMENT.",
+      "translation": "The NDA is made between the Company and AHPL in 2015.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Explicitly stated by the title and opening."
+      "reasoning": "Explicitly stated in the preamble."
     },
     {
       "id": "C_2",
       "formula": "P_2",
-      "translation": "The Agreement is between the Company and AHPL.",
+      "translation": "The parties may have exchanged information.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Explicit party identification in the opening paragraph."
+      "evidence": "Sentence 1",
+      "reasoning": "The text asserts the modal claim itself."
     },
     {
       "id": "C_3",
       "formula": "P_3",
-      "translation": "The parties may have exchanged certain information.",
-      "llm_weight": 1.0,
+      "translation": "The parties have exchanged information.",
+      "llm_weight": 0.4,
       "evidence": "Sentence 1",
-      "reasoning": "The text asserts this modal possibility/uncertainty."
+      "reasoning": "Derived base event from 'may have exchanged' with weak certainty (may = 0.40)."
     },
     {
       "id": "C_4",
-      "formula": "P_4",
-      "translation": "The parties have exchanged certain information.",
-      "llm_weight": 0.4,
+      "formula": "P_3 ⟹ P_2",
+      "translation": "Any actual exchange is compatible with the claim that the parties may have exchanged information.",
+      "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Derived base event from “may have exchanged”; “may” indicates weak/uncertain occurrence."
+      "reasoning": "Required modal compatibility constraint for may/base pair."
     },
     {
       "id": "C_5",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "If the parties have exchanged information, that is consistent with the claim that they may have exchanged it.",
+      "formula": "P_4",
+      "translation": "The parties wish to further exchange information.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Logical compatibility constraint required by the modal-pair rule."
+      "reasoning": "Explicit intention stated."
     },
     {
       "id": "C_6",
       "formula": "P_5",
-      "translation": "The parties wish to further exchange certain information.",
-      "llm_weight": 1.0,
+      "translation": "Each party evaluates the information.",
+      "llm_weight": 0.4,
       "evidence": "Sentence 1",
-      "reasoning": "Explicitly stated intent in WHEREAS (A)."
+      "reasoning": "Text uses 'may evaluate', indicating possibility rather than certainty."
     },
     {
       "id": "C_7",
       "formula": "P_6",
-      "translation": "The information includes trade secrets.",
+      "translation": "The purpose is determining interests in establishing a business relationship.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Explicitly included in the description of information."
+      "reasoning": "Stated as the purpose in the recital."
     },
     {
       "id": "C_8",
       "formula": "P_7",
-      "translation": "The information includes proprietary know-how.",
+      "translation": "The parties wish to define their rights with respect to the information.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Explicitly included in the description of information."
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated in WHEREAS (B)."
     },
     {
       "id": "C_9",
       "formula": "P_8",
-      "translation": "The information is evaluated for determining interest in establishing a business relationship.",
+      "translation": "The parties wish to protect confidentiality of the information.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Directly stated purpose of exchange in WHEREAS (A)."
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated in WHEREAS (B)."
     },
     {
       "id": "C_10",
       "formula": "P_9",
-      "translation": "The parties wish to define rights with respect to the information.",
+      "translation": "The Company acknowledges the information relating to the Purpose is highly confidential.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "Explicitly stated in WHEREAS (B)."
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit acknowledgement."
     },
     {
       "id": "C_11",
-      "formula": "P_10",
-      "translation": "The parties wish to protect the confidentiality of the information.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "Explicitly stated in WHEREAS (B)."
+      "formula": "(P_10 ∧ ¬P_11) ⟹ P_9",
+      "translation": "Disclosure to a third party lacking AHPL authorization implies the information is highly confidential.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 3",
+      "reasoning": "The recital links unauthorized third-party disclosure with the information being 'highly confidential'; modeled as a strong implication."
     },
     {
       "id": "C_12",
-      "formula": "P_11",
-      "translation": "The Company acknowledges information relating to the Purpose is highly confidential.",
-      "llm_weight": 1.0,
+      "formula": "(P_10 ∧ ¬P_11) ⟹ P_12",
+      "translation": "Unauthorized third-party disclosure would have a detrimental effect on AHPL’s business.",
+      "llm_weight": 0.9,
       "evidence": "Sentence 3",
-      "reasoning": "Explicit acknowledgment in WHEREAS (C)."
+      "reasoning": "Text states a causal consequence ('would have'), strong but counterfactual/conditional phrasing."
     },
     {
       "id": "C_13",
-      "formula": "P_12",
-      "translation": "Unauthorised third-party disclosure would harm AHPL's business.",
-      "llm_weight": 1.0,
+      "formula": "P_10",
+      "translation": "The Company discloses Purpose-related information to a third party.",
+      "llm_weight": 0.5,
       "evidence": "Sentence 3",
-      "reasoning": "Explicit consequence statement in WHEREAS (C)."
+      "reasoning": "Mentioned in a conditional context; the agreement discusses this scenario rather than asserting it occurs."
     },
     {
       "id": "C_14",
-      "formula": "P_13",
-      "translation": "The Company agrees to observe and be bound by the Agreement.",
-      "llm_weight": 1.0,
+      "formula": "P_11",
+      "translation": "AHPL gives express authorization for the disclosure.",
+      "llm_weight": 0.5,
       "evidence": "Sentence 3",
-      "reasoning": "Explicitly stated commitment."
+      "reasoning": "Authorization is referenced as a condition; not asserted as generally present."
     },
     {
       "id": "C_15",
-      "formula": "P_14",
-      "translation": "Purpose is defined as discussions/negotiations about establishing a business relationship.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 5",
-      "reasoning": "Direct definition in Clause 1.1."
+      "formula": "P_12",
+      "translation": "The disclosure has a detrimental effect on AHPL’s business.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 3",
+      "reasoning": "Stated as a consequence under unauthorized disclosure; not asserted unconditionally."
     },
     {
       "id": "C_16",
-      "formula": "P_15",
-      "translation": "Labeled information received from the other party is Confidential Information.",
+      "formula": "P_13",
+      "translation": "The Company agrees to observe the Agreement terms.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 6",
-      "reasoning": "Direct definition in Clause 1.2(a)."
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit commitment."
     },
     {
       "id": "C_17",
-      "formula": "P_16",
-      "translation": "Oral confidential disclosures are confirmed in writing within 15 days.",
+      "formula": "P_14",
+      "translation": "The Company agrees to be bound by the Agreement terms.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 6",
-      "reasoning": "Explicit requirement embedded in the definition of Confidential Information."
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit commitment."
     },
     {
       "id": "C_18",
-      "formula": "P_17",
-      "translation": "Confidential Information remains the Discloser’s property.",
+      "formula": "P_15",
+      "translation": "Purpose includes discussions concerning establishment of a business relationship.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Explicit in Clause 1.2(b) and reinforced later."
+      "evidence": "Sentence 5",
+      "reasoning": "Definition clause."
     },
     {
       "id": "C_19",
-      "formula": "P_18",
-      "translation": "Information relating to AHPL patients is deemed Confidential Information of AHPL.",
+      "formula": "P_16",
+      "translation": "Purpose includes negotiations concerning establishment of a business relationship.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 9",
-      "reasoning": "Explicit deeming provision in Clause 1.3."
+      "evidence": "Sentence 5",
+      "reasoning": "Definition clause."
     },
     {
       "id": "C_20",
-      "formula": "¬P_19",
-      "translation": "AHPL patients are not identifiable in the Company’s reports/submissions/publications.",
+      "formula": "P_17",
+      "translation": "Confidential Information includes information labelled confidential in writing at disclosure time.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 8",
-      "reasoning": "Clause 1.2(c) requires the Company to ensure none of AHPL’s patients can be identified."
+      "evidence": "Sentence 6",
+      "reasoning": "Definition clause."
     },
     {
       "id": "C_21",
-      "formula": "P_20",
-      "translation": "Company reports/submissions/publications are deemed Confidential Information of AHPL.",
+      "formula": "P_18",
+      "translation": "Confidential Information includes oral information confirmed in writing as confidential within fifteen days.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 8",
-      "reasoning": "Explicit deeming language in Clause 1.2(c)."
+      "evidence": "Sentence 6",
+      "reasoning": "Definition clause."
     },
     {
       "id": "C_22",
-      "formula": "P_21",
-      "translation": "Each party undertakes to maintain the other party’s Confidential Information in confidence.",
+      "formula": "P_19",
+      "translation": "Confidential Information remains the Discloser’s property.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 10",
-      "reasoning": "Explicit undertaking in Clause 2.1(a)."
+      "evidence": "Sentence 7",
+      "reasoning": "Explicitly stated (also reiterated in Clause 8.1)."
     },
     {
       "id": "C_23",
-      "formula": "P_22",
-      "translation": "Each party undertakes to use Confidential Information only for the Purpose.",
+      "formula": "P_20",
+      "translation": "Confidential Information must be returned on demand.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 10",
-      "reasoning": "Explicit undertaking in Clause 2.1(a)."
+      "evidence": "Sentence 7",
+      "reasoning": "Express return requirement."
     },
     {
       "id": "C_24",
-      "formula": "¬P_23",
-      "translation": "No commercial use of the other party’s Confidential Information is allowed.",
+      "formula": "P_21",
+      "translation": "Confidential Information must be returned upon termination of the other party’s services.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 11",
-      "reasoning": "Explicit prohibition in Clause 2.1(a)(i)."
+      "evidence": "Sentence 7",
+      "reasoning": "Express return requirement."
     },
     {
       "id": "C_25",
-      "formula": "¬P_24",
-      "translation": "Use of the other party’s Confidential Information for the party’s own benefit is forbidden (absent further agreement).",
+      "formula": "P_23",
+      "translation": "Company reports/submissions/publications are deemed Confidential Information of AHPL.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 11",
-      "reasoning": "Clause 2.1(a)(ii) states “not to use … for the benefit of itself … other than pursuant to a further agreement.” The base prohibition is explicit."
+      "evidence": "Sentence 8",
+      "reasoning": "Explicit deeming clause."
     },
     {
       "id": "C_26",
-      "formula": "¬P_25",
-      "translation": "Use of the other party’s Confidential Information for the benefit of a third party is forbidden (absent further agreement).",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 11",
-      "reasoning": "Clause 2.1(a)(ii) explicitly prohibits this, except under a further agreement."
+      "formula": "P_22",
+      "translation": "AHPL patients can be identified in the Company’s reports/submissions/publications.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Clause 1.2(c) requires preventing identification; weight 0.0 enforces the negation."
     },
     {
       "id": "C_27",
-      "formula": "¬P_26",
-      "translation": "Using Confidential Information to guide/conduct searches is forbidden.",
+      "formula": "P_24",
+      "translation": "Patient-related information is deemed Confidential Information of AHPL.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 11",
-      "reasoning": "Explicit prohibition in Clause 2.1(a)(iii)."
+      "evidence": "Sentence 10",
+      "reasoning": "Explicit deeming clause overriding other provisions."
     },
     {
       "id": "C_28",
-      "formula": "P_27 ⟹ P_28",
-      "translation": "Any copying/reproduction must be reasonably necessary for the Purpose.",
+      "formula": "P_25",
+      "translation": "Each party must maintain the other party’s Confidential Information in confidence.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 12",
-      "reasoning": "Clause 2.1(b) permits copying only as reasonably necessary; modeled as a necessary condition."
+      "evidence": "Sentence 11",
+      "reasoning": "Express undertaking in Clause 2.1(a)."
     },
     {
       "id": "C_29",
-      "formula": "P_28 ⟹ P_27",
-      "translation": "If copying is reasonably necessary for the Purpose, copying is permitted.",
-      "llm_weight": 0.65,
-      "evidence": "Sentence 12",
-      "reasoning": "The exception implies permission but not an obligation; thus moderate weight."
+      "formula": "P_26",
+      "translation": "Each party must use the other party’s Confidential Information only for the Purpose.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 11",
+      "reasoning": "Express undertaking in Clause 2.1(a)."
     },
     {
       "id": "C_30",
-      "formula": "P_29",
-      "translation": "Copies/reproductions are the property of the Discloser.",
-      "llm_weight": 1.0,
+      "formula": "P_27",
+      "translation": "The Recipient makes commercial use of Confidential Information.",
+      "llm_weight": 0.0,
       "evidence": "Sentence 12",
-      "reasoning": "Explicitly stated in Clause 2.1(b)."
+      "reasoning": "Clause 2.1(a)(i) prohibits commercial use; weight 0.0 enforces ¬P_27."
     },
     {
       "id": "C_31",
-      "formula": "P_30 ⟹ P_32",
-      "translation": "If Confidential Information is disclosed to employees, the recipients must need to know it for the Purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 13",
-      "reasoning": "Clause 2.1(c) limits disclosure to those who need to know for the Purpose."
+      "formula": "P_28",
+      "translation": "The Recipient uses Confidential Information for its own benefit.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 12",
+      "reasoning": "Clause 2.1(a)(ii) prohibits such use absent a further agreement; modeled as prohibited by default."
     },
     {
       "id": "C_32",
-      "formula": "P_31 ⟹ P_32",
-      "translation": "If Confidential Information is disclosed to third parties, the recipients must need to know it for the Purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 13",
-      "reasoning": "Same restriction applies to disclosure to third parties under Clause 2.1(c)."
+      "formula": "P_29",
+      "translation": "The Recipient uses Confidential Information for a third party’s benefit.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 12",
+      "reasoning": "Clause 2.1(a)(ii) prohibits such use absent a further agreement; modeled as prohibited by default."
     },
     {
       "id": "C_33",
-      "formula": "P_30 ⟹ P_33",
-      "translation": "Employee disclosure requires the recipients to be under confidentiality obligations.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 13",
-      "reasoning": "Clause 2.1(c)(i) requires contractual non-disclosure obligations for such recipients."
+      "formula": "(P_28 ∨ P_29) ⟹ P_30",
+      "translation": "Any benefit-use is allowed only pursuant to a further agreement.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 12",
+      "reasoning": "Text specifies an exception condition ('other than pursuant to a further agreement')."
     },
     {
       "id": "C_34",
-      "formula": "P_31 ⟹ P_33",
-      "translation": "Third-party disclosure requires the recipients to be under confidentiality obligations.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 13",
-      "reasoning": "Clause 2.1(c)(i) similarly constrains disclosures to relevant third parties."
+      "formula": "P_30",
+      "translation": "A further agreement exists.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 12",
+      "reasoning": "Mentioned as a possible exception; not asserted to exist generally."
     },
     {
       "id": "C_35",
-      "formula": "P_32",
-      "translation": "Disclosure recipients need to know the Confidential Information for the Purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 13",
-      "reasoning": "This is an explicit condition for permissible disclosure."
+      "formula": "P_31",
+      "translation": "The Recipient uses Confidential Information to guide or conduct a search.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 12",
+      "reasoning": "Clause 2.1(a)(iii) prohibits this use."
     },
     {
       "id": "C_36",
-      "formula": "P_33",
-      "translation": "Disclosure recipients are bound by contractual confidentiality obligations.",
-      "llm_weight": 1.0,
+      "formula": "P_32",
+      "translation": "The Recipient copies Confidential Information.",
+      "llm_weight": 0.5,
       "evidence": "Sentence 13",
-      "reasoning": "Explicit in Clause 2.1(c)(i)."
+      "reasoning": "Copying is restricted but possible under an exception; the text does not assert it occurs."
     },
     {
       "id": "C_37",
-      "formula": "P_34",
-      "translation": "The Recipient enforces the confidentiality obligations of those recipients.",
+      "formula": "P_32 ⟹ P_33",
+      "translation": "Any copying must be reasonably necessary for the Purpose.",
       "llm_weight": 1.0,
       "evidence": "Sentence 13",
-      "reasoning": "Explicit enforcement duty in Clause 2.1(c)(ii)."
+      "reasoning": "‘Except as may be reasonably necessary for the Purpose’ gives a strict condition."
     },
     {
       "id": "C_38",
-      "formula": "P_35",
-      "translation": "The Recipient is responsible for employees/directors under Clause 2.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 14",
-      "reasoning": "Explicit responsibility allocation in Clause 2.1(d)."
+      "formula": "P_33",
+      "translation": "Copying is reasonably necessary for the Purpose.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 13",
+      "reasoning": "This is a condition for permitted copying, not asserted generally."
     },
     {
       "id": "C_39",
-      "formula": "P_36",
-      "translation": "The Recipient applies adequate security measures and care.",
+      "formula": "P_32 ⟹ P_34",
+      "translation": "Copies made are the Discloser’s property.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 14",
-      "reasoning": "Explicit in Clause 2.1(e)."
+      "evidence": "Sentence 13",
+      "reasoning": "Clause 2.1(b) states copies made shall be property of the Discloser."
     },
     {
       "id": "C_40",
-      "formula": "P_37",
-      "translation": "The Company causes relevant personnel to be bound by the Agreement.",
+      "formula": "P_34",
+      "translation": "Copies made by the Recipient are the Discloser’s property.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 15",
-      "reasoning": "Explicit in Clause 2.2."
+      "evidence": "Sentence 13",
+      "reasoning": "Explicit ownership rule."
     },
     {
       "id": "C_41",
-      "formula": "P_38",
-      "translation": "The Company is responsible and liable for personnel breaches.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 15",
-      "reasoning": "Explicit in Clause 2.2."
+      "formula": "P_35",
+      "translation": "Disclosure to need-to-know persons for the Purpose occurs.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 14",
+      "reasoning": "The text permits this restricted disclosure; whether it occurs is context-dependent."
     },
     {
       "id": "C_42",
-      "formula": "P_39",
-      "translation": "The Recipient is entitled to disclose Confidential Information when required by law.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 16",
-      "reasoning": "Explicit entitlement in Clause 2.3."
+      "formula": "P_36",
+      "translation": "Disclosure to persons lacking need-to-know for the Purpose occurs.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 14",
+      "reasoning": "Clause 2.1(c) restricts disclosure to need-to-know; thus this pattern is prohibited."
     },
     {
       "id": "C_43",
-      "formula": "P_39 ⟹ P_40",
-      "translation": "Legally required disclosure comes with at least two business days notice.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 16",
-      "reasoning": "Clause 2.3 couples the entitlement with a mandatory notice requirement."
+      "formula": "P_35 ⟹ P_37",
+      "translation": "If disclosed to need-to-know persons, those persons are contractually bound to confidentiality.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 14",
+      "reasoning": "Clause 2.1(c)(i) requires such persons be obliged by contract; modeled as a strong implication."
     },
     {
       "id": "C_44",
-      "formula": "P_39 ⟹ P_41",
-      "translation": "Legally required disclosure comes with prior consultation with the Discloser.",
+      "formula": "P_37",
+      "translation": "Need-to-know persons are contractually bound to confidentiality.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 16",
-      "reasoning": "Clause 2.3 couples the entitlement with a consultation requirement."
+      "evidence": "Sentence 14",
+      "reasoning": "Stated as a condition attached to permitted disclosure."
     },
     {
       "id": "C_45",
-      "formula": "P_40",
-      "translation": "At least two business days notice is given for legally required disclosure.",
+      "formula": "P_38",
+      "translation": "The Recipient enforces those confidentiality obligations.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 16",
-      "reasoning": "Explicitly required by Clause 2.3."
+      "evidence": "Sentence 14",
+      "reasoning": "Clause 2.1(c)(ii) requires enforcement."
     },
     {
       "id": "C_46",
-      "formula": "P_41",
-      "translation": "The Recipient consults with the Discloser before legally required disclosure.",
+      "formula": "P_39",
+      "translation": "The Recipient is responsible for performance by its employees/directors.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 16",
-      "reasoning": "Explicitly required by Clause 2.3."
+      "evidence": "Sentence 15",
+      "reasoning": "Express responsibility allocation."
     },
     {
       "id": "C_47",
-      "formula": "P_42",
-      "translation": "Return within one month after completion of the Purpose.",
+      "formula": "P_40",
+      "translation": "The Recipient applies security measures to protect the Confidential Information.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 17",
-      "reasoning": "Explicit return requirement in Clause 3(a)."
+      "evidence": "Sentence 15",
+      "reasoning": "Express security-measures obligation."
     },
     {
       "id": "C_48",
-      "formula": "P_43",
-      "translation": "Return after receipt of a written request.",
+      "formula": "P_41",
+      "translation": "The Recipient’s security measures provide adequate protection.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 17",
-      "reasoning": "Explicit return requirement in Clause 3(a)."
+      "evidence": "Sentence 15",
+      "reasoning": "The Recipient warrants adequacy."
     },
     {
       "id": "C_49",
-      "formula": "P_44",
-      "translation": "Written certification of compliance with return requirement.",
+      "formula": "P_42",
+      "translation": "The Company causes its involved personnel to be bound by the Agreement terms.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 17",
-      "reasoning": "Explicit certification requirement in Clause 3(a)."
+      "evidence": "Sentence 16",
+      "reasoning": "Clause 2.2 imposes this requirement on the Company."
     },
     {
       "id": "C_50",
-      "formula": "P_45",
-      "translation": "Undertakings in Clause 2 remain binding after completion/return.",
+      "formula": "P_43",
+      "translation": "The Company is liable for breaches by its involved personnel.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 17",
-      "reasoning": "Explicit in Clause 3(b)."
+      "evidence": "Sentence 16",
+      "reasoning": "Explicit liability clause."
     },
     {
       "id": "C_51",
-      "formula": "P_46",
-      "translation": "AHPL-provided data remains the property of AHPL.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 18",
-      "reasoning": "Explicit in Clause 4.1."
+      "formula": "P_44",
+      "translation": "A legally-required disclosure occurs.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 17",
+      "reasoning": "Clause 2.3 grants entitlement (permission) rather than requiring disclosure; thus uncertain/occasional."
     },
     {
       "id": "C_52",
-      "formula": "P_47",
-      "translation": "The Company marks/records AHPL data as AHPL property.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 18",
-      "reasoning": "Explicit in Clause 4.1."
+      "formula": "P_45",
+      "translation": "Two business days’ notice is given.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 17",
+      "reasoning": "This notice is required conditional on P_44; standalone certainty is low outside that context."
     },
     {
       "id": "C_53",
-      "formula": "P_48",
-      "translation": "The Company takes reasonable precautions and adequate measures to preserve data integrity.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 19",
-      "reasoning": "Explicit in Clause 4.2."
+      "formula": "P_46",
+      "translation": "Consultation with the Discloser occurs prior to disclosure.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 17",
+      "reasoning": "This consultation is required conditional on P_44; standalone certainty is low outside that context."
     },
     {
       "id": "C_54",
-      "formula": "P_49",
-      "translation": "The Company erases AHPL data when directed after termination.",
+      "formula": "P_44 ⟹ P_45",
+      "translation": "Any legally-required disclosure requires at least two business days’ notice.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 20",
-      "reasoning": "Explicit in Clause 4.3."
+      "evidence": "Sentence 17",
+      "reasoning": "Explicit conditional requirement in Clause 2.3."
     },
     {
       "id": "C_55",
-      "formula": "P_50",
-      "translation": "AHPL data is used only for purposes of the Agreement.",
+      "formula": "P_44 ⟹ P_46",
+      "translation": "Any legally-required disclosure requires prior consultation with the Discloser.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "Explicit in Clause 4.4."
+      "evidence": "Sentence 17",
+      "reasoning": "Explicit conditional requirement in Clause 2.3."
     },
     {
       "id": "C_56",
-      "formula": "P_51",
-      "translation": "Further processing requires AHPL's prior consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "Clause 4.4 prohibits further processing absent prior consent; encoded as a consent requirement."
+      "formula": "P_47",
+      "translation": "Documents containing Confidential Information are returned within one month after completion of the Purpose.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 18",
+      "reasoning": "A strong contractual requirement, but triggered by completion; modeled as strong (0.85)."
     },
     {
       "id": "C_57",
-      "formula": "P_52",
-      "translation": "Disclosure requires AHPL's prior consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "Clause 4.4 prohibits disclosure absent prior consent; encoded as a consent requirement."
+      "formula": "P_48",
+      "translation": "Documents containing Confidential Information are returned within one month after written request.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 18",
+      "reasoning": "A strong contractual requirement, but triggered by request; modeled as strong (0.85)."
     },
     {
       "id": "C_58",
-      "formula": "P_53",
-      "translation": "Third-party transfer requires AHPL's prior written consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "Explicit in Clause 4.5."
+      "formula": "P_49",
+      "translation": "The Recipient certifies compliance in writing.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 18",
+      "reasoning": "Part of the return requirement; strong obligation but triggered by returning."
     },
     {
       "id": "C_59",
-      "formula": "P_54",
-      "translation": "Commercial/profit-generating use requires prior written consent of the provider.",
+      "formula": "(P_47 ∨ P_48) ⟹ P_49",
+      "translation": "Returning the documents requires written certification of compliance.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "Explicit in Clause 4.5 (conditional prohibition)."
+      "evidence": "Sentence 18",
+      "reasoning": "Clause 3(a) couples return with written certification."
     },
     {
       "id": "C_60",
-      "formula": "P_55",
-      "translation": "Upon completion, the data is returned to AHPL (one of the stated options).",
-      "llm_weight": 0.5,
-      "evidence": "Sentence 21",
-      "reasoning": "Clause 4.5 states an alternative (“either returned … or disposed”); each alternative alone is not guaranteed."
+      "formula": "P_50",
+      "translation": "Clause 2 undertakings continue after completion of the Purpose.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 19",
+      "reasoning": "Explicit survival of obligations."
     },
     {
       "id": "C_61",
-      "formula": "P_56",
-      "translation": "Upon completion, the data is disposed under Company supervision (one of the stated options).",
-      "llm_weight": 0.5,
-      "evidence": "Sentence 21",
-      "reasoning": "Clause 4.5 provides this as the alternative to returning the data; uncertain which occurs."
+      "formula": "P_51",
+      "translation": "Clause 2 undertakings continue after return of documents.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 19",
+      "reasoning": "Explicit survival of obligations."
     },
     {
       "id": "C_62",
-      "formula": "P_55 ∨ P_56",
-      "translation": "Upon completion, the data is either returned to AHPL or disposed under Company supervision.",
+      "formula": "P_52",
+      "translation": "AHPL-provided data remains AHPL’s property.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 21",
-      "reasoning": "The text explicitly provides a two-way alternative for post-completion disposition."
+      "evidence": "Sentence 20",
+      "reasoning": "Explicit data ownership clause."
     },
     {
       "id": "C_63",
-      "formula": "¬(P_55 ∧ P_56)",
-      "translation": "The data disposition options are treated as mutually exclusive in the ‘either/or’ phrasing.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 21",
-      "reasoning": "“Either … or …” strongly suggests exclusivity, though legal drafting sometimes allows both; hence slightly less than 1.0."
+      "formula": "P_53",
+      "translation": "The Company marks and records AHPL data as AHPL property.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 20",
+      "reasoning": "Explicit marking requirement."
     },
     {
       "id": "C_64",
-      "formula": "P_57",
-      "translation": "The parties comply with the Personal Data Protection Act 2012.",
+      "formula": "P_54",
+      "translation": "The Company takes reasonable precautions to preserve data integrity.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 22",
-      "reasoning": "Explicit in Clause 4.6."
+      "evidence": "Sentence 21",
+      "reasoning": "Explicit precautions obligation."
     },
     {
       "id": "C_65",
-      "formula": "P_58",
-      "translation": "Each party keeps the existence of the Agreement confidential.",
+      "formula": "P_55",
+      "translation": "The Company prevents corruption/loss/damage/destruction of AHPL data.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 24",
-      "reasoning": "Explicit in Clause 6."
+      "evidence": "Sentence 21",
+      "reasoning": "Explicit prevention requirement."
     },
     {
       "id": "C_66",
-      "formula": "P_59",
-      "translation": "Each party keeps the nature of the Agreement confidential.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 24",
-      "reasoning": "Explicit in Clause 6."
+      "formula": "P_56",
+      "translation": "The Agreement is terminated.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 22",
+      "reasoning": "Termination is discussed as a contingency; not asserted to occur."
     },
     {
       "id": "C_67",
-      "formula": "P_60",
-      "translation": "Name use in publicity requires prior written consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 24",
-      "reasoning": "Explicit consent requirement in Clause 6."
+      "formula": "P_57",
+      "translation": "AHPL directs the Company to erase data.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 22",
+      "reasoning": "Direction is contingent on termination and AHPL instruction; not asserted unconditionally."
     },
     {
       "id": "C_68",
-      "formula": "(P_58 ∧ P_59) ⟹ P_60",
-      "translation": "Keeping the Agreement confidential is consistent with requiring consent before name/publicity use.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 24",
-      "reasoning": "Common-sense coherence: confidentiality obligations support a consent gate on publicity/name use."
+      "formula": "P_58",
+      "translation": "The Company erases AHPL data from its systems.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 22",
+      "reasoning": "Required conditional on termination and AHPL direction; not asserted unconditionally."
     },
     {
       "id": "C_69",
-      "formula": "P_61",
-      "translation": "No intellectual property licence is granted by the Agreement.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 23",
-      "reasoning": "Explicit “no licence” language in Clause 5.1 (and similarly Clause 8)."
+      "formula": "P_59",
+      "translation": "The Company instructs agents/sub-contractors to erase AHPL data.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 22",
+      "reasoning": "Required conditional on termination and AHPL direction; not asserted unconditionally."
     },
     {
       "id": "C_70",
-      "formula": "P_62",
-      "translation": "Each party warrants its right to disclose its Confidential Information.",
+      "formula": "(P_56 ∧ P_57) ⟹ P_58",
+      "translation": "Upon termination and AHPL direction, the Company must erase the data.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 23",
-      "reasoning": "Explicit in Clause 5.2."
+      "evidence": "Sentence 22",
+      "reasoning": "Clause 4.3 sets this condition explicitly."
     },
     {
       "id": "C_71",
-      "formula": "¬P_63",
-      "translation": "The Recipient does not file IP registrations on the Confidential Information.",
+      "formula": "(P_56 ∧ P_57) ⟹ P_59",
+      "translation": "Upon termination and AHPL direction, the Company must instruct agents/sub-contractors to erase the data.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 25",
-      "reasoning": "Explicit prohibition in Clause 8.3."
+      "evidence": "Sentence 22",
+      "reasoning": "Clause 4.3 sets this condition explicitly."
     },
     {
       "id": "C_72",
-      "formula": "P_63 ⟹ P_64",
-      "translation": "If the Recipient files such registrations, the Recipient assigns them to the Discloser.",
+      "formula": "P_60",
+      "translation": "AHPL data is used only for Agreement purposes.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 25",
-      "reasoning": "Explicit remedy/assignment obligation in Clause 8.3 upon violation."
+      "evidence": "Sentence 23",
+      "reasoning": "Explicit restriction to Agreement purposes."
     },
     {
       "id": "C_73",
-      "formula": "P_64",
-      "translation": "Registrations/applications are assigned to the Discloser upon such violation.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 25",
-      "reasoning": "Clause 8.3 states the assignment consequence."
+      "formula": "P_61",
+      "translation": "The Company further processes AHPL data.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 23",
+      "reasoning": "Clause 4.4 forbids further processing without prior consent; modeled as prohibited by default."
     },
     {
       "id": "C_74",
-      "formula": "P_65",
-      "translation": "The Agreement continues in force until terminated.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "Explicit duration clause."
+      "formula": "P_62",
+      "translation": "The Company discloses AHPL data.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 23",
+      "reasoning": "Clause 4.4 forbids disclosure without prior consent; modeled as prohibited by default."
     },
     {
       "id": "C_75",
-      "formula": "P_66",
-      "translation": "The Agreement may be terminated by mutual consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "The text lists mutual consent as a termination mode; the modal claim is asserted."
+      "formula": "P_63",
+      "translation": "The Company transfers AHPL data to a third party.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 24",
+      "reasoning": "Clause 4.5 forbids transfer without prior written consent; modeled as prohibited by default."
     },
     {
       "id": "C_76",
-      "formula": "P_67",
-      "translation": "The Agreement is terminated by mutual consent.",
+      "formula": "P_64",
+      "translation": "AHPL gives prior written consent for processing/disclosure/transfer.",
       "llm_weight": 0.4,
-      "evidence": "Sentence 27",
-      "reasoning": "Derived base event from the termination-mode modality; not asserted as having occurred."
+      "evidence": "Sentence 23-24",
+      "reasoning": "Consent is referenced as a possible enabling condition; not asserted to be given generally."
     },
     {
       "id": "C_77",
-      "formula": "P_67 ⟹ P_66",
-      "translation": "If termination by mutual consent occurs, that satisfies the ‘may be terminated by mutual consent’ clause.",
+      "formula": "P_61 ⟹ P_64",
+      "translation": "Further processing requires AHPL prior written consent.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "Modal-pair implication consistency."
+      "evidence": "Sentence 23",
+      "reasoning": "Clause 4.4 ties processing to prior consent."
     },
     {
       "id": "C_78",
-      "formula": "P_68",
-      "translation": "The Agreement may be terminated by 30 days’ prior written notice.",
+      "formula": "P_62 ⟹ P_64",
+      "translation": "Disclosure requires AHPL prior written consent.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "The text lists notice termination as a termination mode; the modal claim is asserted."
+      "evidence": "Sentence 23",
+      "reasoning": "Clause 4.4 ties disclosure to prior consent."
     },
     {
       "id": "C_79",
-      "formula": "P_69",
-      "translation": "The Agreement is terminated by 30 days’ prior written notice.",
-      "llm_weight": 0.4,
-      "evidence": "Sentence 27",
-      "reasoning": "Derived base event; not asserted as having occurred."
+      "formula": "P_63 ⟹ P_64",
+      "translation": "Transfer to a third party requires AHPL prior written consent.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 24",
+      "reasoning": "Clause 4.5 ties transfer to prior written consent."
     },
     {
       "id": "C_80",
-      "formula": "P_69 ⟹ P_68",
-      "translation": "If notice termination occurs, that satisfies the ‘may be terminated by notice’ clause.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "Modal-pair implication consistency."
+      "formula": "P_65",
+      "translation": "The Company uses AHPL data for commercial or profit-generating purposes.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 24",
+      "reasoning": "Clause 4.5 prohibits commercial/profit use absent consent; modeled as prohibited by default."
     },
     {
       "id": "C_81",
-      "formula": "P_70",
-      "translation": "Specified clauses survive termination.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 27",
-      "reasoning": "Explicit survival provision."
+      "formula": "P_65 ⟹ P_64",
+      "translation": "Commercial/profit use requires prior written consent.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 24",
+      "reasoning": "Clause 4.5 provides an exception via prior consent; modeled as strong implication."
     },
     {
       "id": "C_82",
-      "formula": "P_71",
-      "translation": "Assignment/transfer requires prior written consent.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 28",
-      "reasoning": "Explicit in Clause 12(i)."
+      "formula": "P_66",
+      "translation": "Upon completion, the data is returned to AHPL.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 24",
+      "reasoning": "Stated as a completion outcome ('will be either returned...'); strong but completion-dependent."
     },
     {
       "id": "C_83",
-      "formula": "P_72",
-      "translation": "A permitted assignee must agree in writing to comply with the Agreement.",
+      "formula": "P_67",
+      "translation": "The parties comply with the Personal Data Protection Act 2012.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 28",
-      "reasoning": "Explicit in Clause 12(ii)."
+      "evidence": "Sentence 25",
+      "reasoning": "Explicit compliance requirement."
     },
     {
       "id": "C_84",
-      "formula": "P_73",
-      "translation": "The parties use best endeavours to settle disputes informally.",
+      "formula": "P_68",
+      "translation": "No IP licence is granted.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Explicit in Clause 15.1."
+      "evidence": "Sentence 26",
+      "reasoning": "Explicit disclaimer of licence."
     },
     {
       "id": "C_85",
-      "formula": "P_74",
-      "translation": "The parties act in good faith to resolve disputes.",
+      "formula": "P_69",
+      "translation": "Each party warrants its right to disclose its Confidential Information.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Explicit in Clause 15.1."
+      "evidence": "Sentence 27",
+      "reasoning": "Explicit warranty clause."
     },
     {
       "id": "C_86",
-      "formula": "P_75",
-      "translation": "The parties cooperate to resolve disputes.",
+      "formula": "P_70",
+      "translation": "Each party authorises the other to use Confidential Information for the Purpose.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Explicit in Clause 15.1."
+      "evidence": "Sentence 27",
+      "reasoning": "Explicit authorization clause."
     },
     {
       "id": "C_87",
-      "formula": "P_76 ⟹ P_77",
-      "translation": "Proceeding to litigation/dispute resolution requires reasonable mediation efforts first.",
+      "formula": "P_71",
+      "translation": "Each party keeps the existence of the Agreement confidential.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Clause 15.2 conditions litigation/other dispute resolution on prior mediation efforts."
+      "evidence": "Sentence 28",
+      "reasoning": "Explicit confidentiality obligation."
     },
     {
       "id": "C_88",
-      "formula": "(P_76 ∧ ¬P_77) ⟹ P_78",
-      "translation": "Proceeding without mediation efforts constitutes a breach.",
+      "formula": "P_72",
+      "translation": "Each party keeps the nature of the Agreement confidential.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Clause 15.2 states failure to comply is deemed a breach; this encodes the noncompliance pattern."
+      "evidence": "Sentence 28",
+      "reasoning": "Explicit confidentiality obligation."
     },
     {
       "id": "C_89",
-      "formula": "P_77",
-      "translation": "The parties make reasonable efforts to resolve disputes through mediation.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Explicit mediation requirement in Clause 15.2."
+      "formula": "P_73",
+      "translation": "A party uses the other party’s name in publicity regarding the Agreement.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 28",
+      "reasoning": "Clause 6 prohibits such use without prior written consent; modeled as prohibited by default."
     },
     {
       "id": "C_90",
-      "formula": "P_78",
-      "translation": "Failure to comply with mediation is a breach.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 29",
-      "reasoning": "Explicit deeming language in Clause 15.2."
+      "formula": "P_74",
+      "translation": "Prior written consent is given for publicity use.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 28",
+      "reasoning": "Consent is an enabling condition, not generally asserted."
     },
     {
       "id": "C_91",
-      "formula": "P_79",
-      "translation": "Each party complies with export laws and regulations.",
+      "formula": "P_73 ⟹ P_74",
+      "translation": "Any publicity use of the other party’s name requires prior written consent.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 30",
-      "reasoning": "Explicit in Clause 17."
+      "evidence": "Sentence 28",
+      "reasoning": "Directly stated as a condition ('without prior written consent')."
     },
     {
       "id": "C_92",
-      "formula": "¬P_80",
-      "translation": "No export occurs in violation of Export Laws.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 30",
-      "reasoning": "Clause 17(a) prohibits export in violation of Export Laws."
+      "formula": "P_75",
+      "translation": "Consent is unreasonably withheld.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 28",
+      "reasoning": "Clause 6 states consent is not to be unreasonably withheld; weight 0.0 enforces ¬P_75."
     },
     {
       "id": "C_93",
-      "formula": "¬P_81",
-      "translation": "No use occurs for purposes prohibited by Export Laws.",
+      "formula": "P_76",
+      "translation": "Breach causes irreparable harm.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 30",
-      "reasoning": "Clause 17(b) prohibits prohibited end uses."
+      "evidence": "Sentence 29",
+      "reasoning": "Explicit acknowledgement in Clause 7."
     },
     {
       "id": "C_94",
-      "formula": "P_79 ⟹ (¬P_80 ∧ ¬P_81)",
-      "translation": "Compliance with Export Laws implies no violating exports and no prohibited uses.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 30",
-      "reasoning": "Common-sense entailment of ‘comply with export laws’ given the immediately specified prohibitions."
+      "formula": "P_77",
+      "translation": "Monetary damages are an adequate remedy.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 29",
+      "reasoning": "Clause 7 says monetary damages may not be adequate; modeled as negated requirement."
     },
     {
       "id": "C_95",
-      "formula": "P_82",
-      "translation": "The parties have read the Agreement.",
+      "formula": "P_78",
+      "translation": "The party seeking remedy is entitled to equitable relief.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 31",
-      "reasoning": "Explicit acknowledgment in Clause 18.1."
+      "evidence": "Sentence 29",
+      "reasoning": "Explicit entitlement stated."
     },
     {
       "id": "C_96",
-      "formula": "P_83",
-      "translation": "The parties have understood the Agreement’s provisions.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 31",
-      "reasoning": "Explicit acknowledgment in Clause 18.1."
+      "formula": "P_79",
+      "translation": "The Recipient files IP registrations on the Confidential Information.",
+      "llm_weight": 0.0,
+      "evidence": "Sentence 30",
+      "reasoning": "Clause 8.3 prohibits filing; weight 0.0 enforces ¬P_79."
     },
     {
       "id": "C_97",
-      "formula": "P_82 ⟹ P_83",
-      "translation": "Reading the Agreement supports understanding its provisions.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 31",
-      "reasoning": "Plausible semantic link (not logically necessary), and the text asserts both."
+      "formula": "P_80",
+      "translation": "The Recipient assigns such registrations/applications to the Discloser.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 30",
+      "reasoning": "Clause 8.3 requires assignment as a remedy upon violation; not asserted to occur generally."
     },
     {
       "id": "C_98",
-      "formula": "P_84",
-      "translation": "This Agreement is the entire agreement regarding its subject matter.",
+      "formula": "P_79 ⟹ P_80",
+      "translation": "If the Recipient files, the Recipient must assign the filings to the Discloser.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 31",
-      "reasoning": "Explicit entire-agreement clause in Clause 18.1."
+      "evidence": "Sentence 30",
+      "reasoning": "Explicit conditional consequence in Clause 8.3."
     },
     {
       "id": "C_99",
-      "formula": "¬P_85",
-      "translation": "The Agreement does not create a partnership relationship.",
-      "llm_weight": 1.0,
+      "formula": "P_81",
+      "translation": "The Agreement is terminated by mutual consent.",
+      "llm_weight": 0.4,
       "evidence": "Sentence 32",
-      "reasoning": "Explicit ‘no partnership’ language in Clause 19."
+      "reasoning": "A possible termination mode; not asserted to occur."
     },
     {
       "id": "C_100",
-      "formula": "¬P_86",
-      "translation": "No party has authority to act for the other party.",
-      "llm_weight": 1.0,
+      "formula": "P_82",
+      "translation": "A party gives at least 30 days’ prior written notice to terminate.",
+      "llm_weight": 0.4,
       "evidence": "Sentence 32",
-      "reasoning": "Explicit ‘no authority’ language in Clause 19."
+      "reasoning": "A possible termination mode; not asserted to occur."
     },
     {
       "id": "C_101",
-      "formula": "P_85 ⟹ P_86",
-      "translation": "If a partnership relationship existed, authority to act for the other party would typically follow.",
-      "llm_weight": 0.6,
+      "formula": "(P_81 ∨ P_82) ⟹ P_56",
+      "translation": "Termination by mutual consent or by notice implies the Agreement is terminated.",
+      "llm_weight": 1.0,
       "evidence": "Sentence 32",
-      "reasoning": "Common-sense/standard legal implication (partnership/agency often implies authority), but not universally strict."
+      "reasoning": "These are described termination mechanisms."
     },
     {
       "id": "C_102",
-      "formula": "P_87",
-      "translation": "The Agreement is governed by Singapore law.",
+      "formula": "P_83",
+      "translation": "Clauses 1 to 8 survive termination.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 33",
-      "reasoning": "Explicit in Clause 20.1."
+      "evidence": "Sentence 32",
+      "reasoning": "Explicit survival clause."
     },
     {
       "id": "C_103",
-      "formula": "P_88",
-      "translation": "The parties submit to the non-exclusive jurisdiction of Singapore courts.",
+      "formula": "P_56 ⟹ P_83",
+      "translation": "Termination implies survival of Clauses 1 to 8.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 33",
-      "reasoning": "Explicit in Clause 20.2."
+      "evidence": "Sentence 32",
+      "reasoning": "The survival is stated to apply upon termination."
     },
     {
       "id": "C_104",
-      "formula": "P_3 ⟹ P_4",
-      "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Modal 'may' implies the base event occurs (at least sometimes)"
+      "formula": "P_84",
+      "translation": "A party assigns rights/obligations/benefits under the Agreement to a third party.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 33",
+      "reasoning": "Discussed as a restricted action; not asserted to occur."
     },
     {
       "id": "C_105",
-      "formula": "P_28",
-      "translation": "Copying or reproducing Confidential Information is reasonably necessary for the Purpose.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Original modal statement is asserted with certainty"
+      "formula": "P_85",
+      "translation": "The other party gives prior written consent to the assignment.",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 33",
+      "reasoning": "Consent is a condition; not asserted to exist generally."
     },
     {
       "id": "C_106",
-      "formula": "P_28 ⟹ P_28",
-      "translation": "If base event occurs, the modal pattern is satisfied",
+      "formula": "P_84 ⟹ P_85",
+      "translation": "Any assignment requires the other party’s prior written consent.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+      "evidence": "Sentence 33",
+      "reasoning": "Clause 12(i) states assignment cannot occur without prior written consent."
     },
     {
       "id": "C_107",
-      "formula": "P_39 ⟹ P_39",
-      "translation": "If base event occurs, the modal pattern is satisfied",
+      "formula": "P_86",
+      "translation": "A permitted assignee agrees in writing to comply with the Agreement.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+      "evidence": "Sentence 33",
+      "reasoning": "Explicit requirement for permitted assignments."
     },
     {
       "id": "C_108",
-      "formula": "P_40 ⟹ P_40",
-      "translation": "If base event occurs, the modal pattern is satisfied",
+      "formula": "P_87",
+      "translation": "The parties make reasonable mediation efforts under SMC rules.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+      "evidence": "Sentence 35",
+      "reasoning": "Clause 15.2 requires reasonable efforts through mediation before litigation/other dispute resolution."
     },
     {
       "id": "C_109",
-      "formula": "P_41 ⟹ P_41",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+      "formula": "P_88",
+      "translation": "A party proceeds to litigation.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 35",
+      "reasoning": "Litigation is discussed as a restricted step; not asserted to happen."
     },
     {
       "id": "C_110",
-      "formula": "P_66 ⟹ P_67",
-      "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Modal 'may' implies the base event occurs (at least sometimes)"
+      "formula": "P_88 ⟹ P_87",
+      "translation": "Proceeding to litigation requires prior reasonable mediation efforts.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 35",
+      "reasoning": "Clause 15.2 forbids litigation unless mediation efforts have been made; modeled as strong implication."
     },
     {
       "id": "C_111",
-      "formula": "P_68 ⟹ P_69",
+      "formula": "P_89",
+      "translation": "Mediation is unsuccessful.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 35",
+      "reasoning": "A contingency that may occur; not asserted."
+    },
+    {
+      "id": "C_112",
+      "formula": "P_90",
+      "translation": "A party elects arbitration.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 35",
+      "reasoning": "Election is described as an available option after unsuccessful mediation; not asserted to occur."
+    },
+    {
+      "id": "C_113",
+      "formula": "P_91",
+      "translation": "A party elects court proceedings.",
+      "llm_weight": 0.5,
+      "evidence": "Sentence 35",
+      "reasoning": "Election is described as an available option after unsuccessful mediation; not asserted to occur."
+    },
+    {
+      "id": "C_114",
+      "formula": "P_92",
+      "translation": "The parties keep arbitration proceedings confidential.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 36",
+      "reasoning": "Explicit confidentiality undertaking."
+    },
+    {
+      "id": "C_115",
+      "formula": "P_93",
+      "translation": "The Agreement is governed by Singapore law.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 40",
+      "reasoning": "Explicit governing law clause."
+    },
+    {
+      "id": "C_116",
+      "formula": "P_94",
+      "translation": "The parties submit to the non-exclusive jurisdiction of the Singapore courts.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 40",
+      "reasoning": "Explicit jurisdiction clause."
+    },
+    {
+      "id": "C_117",
+      "formula": "P_24 ⟹ P_9",
+      "translation": "Patient-related information being deemed confidential supports the claim that Purpose-related information is highly confidential.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 3 and Sentence 10",
+      "reasoning": "Common-sense/legal coherence: if patient info is deemed confidential, that reinforces the broader confidentiality framing, but it is not a strict logical entailment."
+    },
+    {
+      "id": "C_118",
+      "formula": "P_19 ⟹ P_34",
+      "translation": "If Confidential Information remains the Discloser’s property, copies being Discloser property is consistent.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 7 and Sentence 13",
+      "reasoning": "Salient semantic consistency between general ownership of Confidential Information and ownership of copies."
+    },
+    {
+      "id": "C_119",
+      "formula": "P_2 ⟹ P_3",
       "translation": "If modal pattern holds, the base event occurs",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Modal 'may' implies the base event occurs (at least sometimes)"
     },
     {
-      "id": "C_112",
-      "formula": "P_72 ⟹ P_72",
+      "id": "C_120",
+      "formula": "P_22 ⟹ P_22",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_113",
-      "formula": "P_81",
-      "translation": "Data information program or deliverable is used for a purpose prohibited by Export Laws.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Original modal statement is asserted with certainty"
-    },
-    {
-      "id": "C_114",
-      "formula": "P_81 ⟹ P_81",
+      "id": "C_121",
+      "formula": "P_33 ⟹ P_33",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_115",
-      "formula": "¬P_52",
-      "translation": "It is not the case that Disclosure of AHPL data requires prior consent of AHPL.",
+      "id": "C_122",
+      "formula": "P_44 ⟹ P_44",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_123",
+      "formula": "P_45 ⟹ P_45",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_124",
+      "formula": "P_46 ⟹ P_46",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_125",
+      "formula": "P_86 ⟹ P_86",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_126",
+      "formula": "¬P_64",
+      "translation": "It is not the case that AHPL gives prior written consent for processing disclosure or transfer of AHPL data.",
       "llm_weight": 1.0,
       "evidence": "Sentence 34: explicit negation in source text",
       "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_116",
-      "formula": "¬P_53",
-      "translation": "It is not the case that Transfer of AHPL data to a third party requires prior written consent of AHPL.",
+      "id": "C_127",
+      "formula": "¬P_63",
+      "translation": "It is not the case that The Company transfers AHPL data to a third party.",
       "llm_weight": 1.0,
       "evidence": "Sentence 36: explicit negation in source text",
       "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_117",
-      "formula": "¬P_54",
-      "translation": "It is not the case that Use of AHPL data for a commercial or profit-generating purpose requires prior written consent of the provider.",
+      "id": "C_128",
+      "formula": "¬P_60",
+      "translation": "It is not the case that The Company uses AHPL data for the purposes of the Agreement.",
       "llm_weight": 1.0,
       "evidence": "Sentence 37: explicit negation in source text",
       "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_118",
-      "formula": "¬P_60",
-      "translation": "It is not the case that Use of the name of the other party in publicity advertisement or other disclosure regarding this Agreement requires prior written consent of the other party.",
+      "id": "C_129",
+      "formula": "¬P_73",
+      "translation": "It is not the case that A party uses the other party’s name in publicity advertisement or disclosure regarding this Agreement.",
       "llm_weight": 1.0,
       "evidence": "Sentence 45: explicit negation in source text",
       "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_119",
-      "formula": "¬P_55",
-      "translation": "It is not the case that Upon completion of this Agreement the data is returned to AHPL.",
+      "id": "C_130",
+      "formula": "¬P_77",
+      "translation": "It is not the case that Monetary damages are an adequate remedy for a breach.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
+      "evidence": "Sentence 48: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_120",
-      "formula": "P_46 ⟹ ¬P_55",
-      "translation": "If Data provided by AHPL to the Company remains the property of AHPL. then not Upon completion of this Agreement the data is returned to AHPL.",
+      "id": "C_131",
+      "formula": "¬P_79",
+      "translation": "It is not the case that The Recipient files a patent application or copyright registration on the Confidential Information.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
+      "evidence": "Sentence 56: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
     },
     {
-      "id": "C_121",
-      "formula": "¬P_56",
-      "translation": "It is not the case that Upon completion of this Agreement the data is disposed of under the Company's supervision in accordance with applicable laws and AHPL instructions.",
+      "id": "C_132",
+      "formula": "¬P_75",
+      "translation": "It is not the case that Consent is unreasonably withheld.",
       "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_122",
-      "formula": "P_46 ⟹ ¬P_56",
-      "translation": "If Data provided by AHPL to the Company remains the property of AHPL. then not Upon completion of this Agreement the data is disposed of under the Company's supervision in accordance with applicable laws and AHPL instructions.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
+      "evidence": "Sentence 69: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
     }
   ],
   "_enrichment_log": []
