@@ -1765,14 +1765,14 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
         "template": "{subject} works in the {value} department.",
         "exclusion_template": "If {subject} works in {original}, then {subject} does not work in {alternative}.",
     },
-    "day_of_week": {
-        "patterns": [
-            r"(?P<subject>(?:[A-Z][a-z]+(?:'s)?|[Hh]er|[Hh]is|[Tt]heir)\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
-        ],
-        "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "template": "{subject} are due {value}.",
-        "exclusion_template": "If {subject} are due {original}, then {subject} are not due {alternative}.",
-    },
+    #"day_of_week": {
+    #    "patterns": [
+    #        r"(?P<subject>(?:[A-Z][a-z]+(?:'s)?|[Hh]er|[Hh]is|[Tt]heir)\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+    #    ],
+    #    "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    #    "template": "{subject} are due {value}.",
+    #    "exclusion_template": "If {subject} are due {original}, then {subject} are not due {alternative}.",
+    #},
     "education_level": {
     "patterns": [
         r"(?P<subject>\w+)\s+is\s+a\s+(?P<value>university|college|high school|middle school|graduate)\s+student",
@@ -1789,14 +1789,33 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
     "template": "{subject} works {value}.",
     "exclusion_template": "If {subject} works {original}, then {subject} does not work {alternative}.",
     },
+    #"timing_modifier": {
+    #    "patterns": [
+    #        r"(?P<subject>[A-Z][a-z]+)\s+completes\s+[\w\s]+?\s+(?P<value>on time|early|late)[.]?$",
+    #    ],
+    #    "alternatives": ["on time", "early", "late"],
+    #    "template": "{subject} completes assignments {value}.",
+    #    "exclusion_template": "If {subject} completes assignments {original}, then {subject} does not complete assignments {alternative}.",
+    #},
+    "day_of_week": {
+    "patterns": [
+        r"(?P<subject>[A-Z][\w']+(?:'s)?\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+    ],
+    "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "template": "{subject} are due {value}.",
+    "exclusion_template": "If {subject} are due {original}, then {subject} are not due {alternative}.",
+    },
     "timing_modifier": {
-        "patterns": [
-            r"(?P<subject>[A-Z][a-z]+)\s+completes\s+[\w\s]+?\s+(?P<value>on time|early|late)[.]?$",
-        ],
-        "alternatives": ["on time", "early", "late"],
-        "template": "{subject} completes assignments {value}.",
-        "exclusion_template": "If {subject} completes assignments {original}, then {subject} does not complete assignments {alternative}.",
-    }
+    "patterns": [
+        r"(?P<subject>[A-Z][a-z]+)\s+completes\s+(?:her|his|their)?\s*[\w\s]+?\s+(?P<value>on time|early|late)[.]?$",
+    ],
+    "alternatives": ["on time", "early", "late"],
+    "template": "{subject} completes assignments {value}.",
+    "exclusion_template": "If {subject} completes assignments {original}, then {subject} does not complete assignments {alternative}.",
+    },
+
+    
+    
     }
 
 
