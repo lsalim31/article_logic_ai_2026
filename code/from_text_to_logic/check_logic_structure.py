@@ -263,7 +263,7 @@ MODAL_OPPOSITES_FALLBACK: Dict[str, List[str]] = {
     "repeatedly": ["rarely", "seldom"],
     "commonly": ["rarely", "uncommonly"],
     "usually": ["rarely", "seldom"],
-    "typically": ["rarely", "seldom"],
+    "typically": ["rarely", "seldom", "never"],
     "normally": ["rarely", "seldom"],
     "generally": ["rarely", "seldom"],
     "ordinarily": ["rarely"],
@@ -281,7 +281,7 @@ MODAL_OPPOSITES_FALLBACK: Dict[str, List[str]] = {
     "sometimes": ["always", "never"],
     "occasionally": ["always", "frequently", "constantly"],
     "periodically": ["constantly", "continuously"],
-    "never": ["always", "sometimes", "often", "frequently", "usually"],
+    "never": ["always", "sometimes", "often", "frequently", "usually", "typically"],
  
 
     
