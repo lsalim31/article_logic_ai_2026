@@ -42,7 +42,7 @@ TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
 
-PROMPT_EXTRACTION = "prompt_current"
+PROMPT_EXTRACTION = "prompt_current_small"
 PROMPT_TRANSLATION = "prompt_translate_feb21_90percentage"
 
 
