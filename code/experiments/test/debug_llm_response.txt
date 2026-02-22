@@ -1,3 +1,4 @@
+```json
 {
   "primitive_props": [
     {
@@ -89,30 +90,6 @@
       "translation": "Alice studies late at night.",
       "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
       "explanation": "Derived base event obtained by removing the modal word 'rarely' from P_14."
-    },
-    {
-      "id": "P_16",
-      "translation": "Alice studies biology.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_17",
-      "translation": "Alice studies mathematics.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_18",
-      "translation": "Alice studies physics.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_19",
-      "translation": "Alice studies chemistry.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
     }
   ],
   "constraints": [
@@ -291,151 +268,7 @@
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
       "reasoning": "Modal-pattern constraint required by the methodology."
-    },
-    {
-      "id": "C_23",
-      "formula": "P_6 ⟹ P_5",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_24",
-      "formula": "P_5 ⟹ P_6",
-      "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Modal 'typically' implies the base event occurs (at least sometimes)"
-    },
-    {
-      "id": "C_25",
-      "formula": "P_10 ⟹ P_9",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_26",
-      "formula": "P_9 ⟹ P_10",
-      "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Modal 'sometimes' implies the base event occurs (at least sometimes)"
-    },
-    {
-      "id": "C_27",
-      "formula": "P_15 ⟹ P_14",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_28",
-      "formula": "P_14 ⟹ P_15",
-      "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Modal 'rarely' implies the base event occurs (at least sometimes)"
-    },
-    {
-      "id": "C_29",
-      "formula": "¬P_16",
-      "translation": "It is not the case that Alice studies biology.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_30",
-      "formula": "P_2 ⟹ ¬P_16",
-      "translation": "If Alice studies computer science, then Alice does not study biology.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
-    },
-    {
-      "id": "C_31",
-      "formula": "¬P_17",
-      "translation": "It is not the case that Alice studies mathematics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_32",
-      "formula": "P_2 ⟹ ¬P_17",
-      "translation": "If Alice studies computer science, then Alice does not study mathematics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
-    },
-    {
-      "id": "C_33",
-      "formula": "¬P_18",
-      "translation": "It is not the case that Alice studies physics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_34",
-      "formula": "P_2 ⟹ ¬P_18",
-      "translation": "If Alice studies computer science, then Alice does not study physics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
-    },
-    {
-      "id": "C_35",
-      "formula": "¬P_19",
-      "translation": "It is not the case that Alice studies chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_36",
-      "formula": "P_2 ⟹ ¬P_19",
-      "translation": "If Alice studies computer science, then Alice does not study chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
-    },
-    {
-      "id": "C_37",
-      "formula": "P_3 ⟹ ¬P_16",
-      "translation": "If Alice studies hard. then not Alice studies biology.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_38",
-      "formula": "P_3 ⟹ ¬P_17",
-      "translation": "If Alice studies hard. then not Alice studies mathematics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_39",
-      "formula": "P_3 ⟹ ¬P_18",
-      "translation": "If Alice studies hard. then not Alice studies physics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_40",
-      "formula": "P_3 ⟹ ¬P_19",
-      "translation": "If Alice studies hard. then not Alice studies chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
     }
-  ],
-  "_enrichment_log": []
+  ]
 }
+```

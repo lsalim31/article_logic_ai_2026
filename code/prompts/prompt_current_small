@@ -57,7 +57,6 @@ STEP 2: Construct Primitive Propositions
   - Example: "the cat sometimes eats food" yields:
     * P_1: "the cat sometimes eats food" (original text statement)
     * P_2: "the cat eats food" (derived proposition)
-- Do NOT create auxiliary propositions for finite domains (weekdays, majors, departments, etc.) - this will be handled by a post-processing step
 - Include textual evidence, location, and brief atomicity reasoning
 - The outcome of this step includes a set of primitive propositions {P_1, ..., P_n}
 
@@ -87,13 +86,7 @@ CRITICAL: Every primitive proposition P_i must appear in at least one constraint
   - C_2: P_2 with weight 0.40 (base event has weak frequency)
   - C_3: P_2 ⟹ P_1 with weight 1.0 (if cat eats food, then "sometimes eats food" is satisfied)
 
-- Assign a llm_weight based on linguistic cues using these deterministic defaults (allow ±0.1 adjustment based on local context such as intensifiers or hedges):
-  - 1.0: "must", "cannot", "never", "always" (absolute necessity/prohibition)
-  - 1.0: Original modal statements themselves (the modal claim is certain)
-  - 0.85: "should", "required" (strong obligation/expectation)
-  - 0.65: "usually", "typically", "generally" (frequent/common pattern)
-  - 0.40: "sometimes", "may", "might", "encouraged" (occasional/weak suggestion)
-
+- Assign a llm_weight based on linguistic cues.
 - Include textual evidence, location, and reasoning for each constraint
 - IMPORTANT: You must review each of the primitive propositions and their translations. The translations are often too literal to the text; if there are any obvious relationships between them you MUST include them as constraints with the appropriate weight
 - Semantic inferences must be added as constraints. For example: "P_5: John is a cat" and "P_6: John is an animal" are distinct primitive propositions, but there is the constraint "P_5 ⟹ P_6" with weight 1.0 based on common sense. Add semantic constraints when high-salience and broadly uncontested in common knowledge. Avoid speculative or domain-specific inferences.
@@ -117,10 +110,7 @@ STEP 4: Double Check and Validation
 - Verify all constraints are present and logically accurate
 - Iterate if needed
 - IMPORTANT: After you extract the primitive propositions, you must examine them, their meanings, and identify any logical connections between them. There will usually be constraints among them not specified by the text. Use common-sense to decide.
-- Ensure that modal opposites are represented as explicit constraints when both appear
-  Examples of opposites: always vs never, often vs rarely, usually vs seldom, permitted vs prohibited, required vs forbidden
-  If both are present as primitives, include constraints such as P_always ⟹ ¬P_never with weight 1.0
-- Add semantic constraints when high-salience and broadly uncontested in common knowledge. Avoid speculative or domain-specific inferences.
+ - Add semantic constraints when high-salience and broadly uncontested in common knowledge. Avoid speculative or domain-specific inferences.
 
 - CONSISTENCY CHECK: Before finalizing, verify that no proposition P_i is asserted both positively (P_i with weight ≥ 0.5) and negatively (¬P_i with weight ≥ 0.5). If you find such a conflict:
   1. Re-read the source text for that proposition
