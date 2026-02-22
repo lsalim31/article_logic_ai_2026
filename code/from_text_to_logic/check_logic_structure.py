@@ -1765,6 +1765,30 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
         "template": "{subject} works in the {value} department.",
         "exclusion_template": "If {subject} works in {original}, then {subject} does not work in {alternative}.",
     },
+    "day_of_week": {
+    "patterns": [
+        r"(?P<subject>[\w\s']+?)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+    ],
+    "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "template": "{subject} are due {value}.",
+    "exclusion_template": "If {subject} are due {original}, then {subject} are not due {alternative}.",
+    },
+    "education_level": {
+    "patterns": [
+        r"(?P<subject>\w+)\s+is\s+a\s+(?P<value>university|college|high school|middle school|graduate)\s+student",
+    ],
+    "alternatives": ["university", "college", "high school", "middle school", "graduate"],
+    "template": "{subject} is a {value} student.",
+    "exclusion_template": "If {subject} is a {original} student, then {subject} is not a {alternative} student.",
+    },
+    "employment_type": {
+    "patterns": [
+        r"(?P<subject>\w+)\s+works\s+(?P<value>full-time|part-time)",
+    ],
+    "alternatives": ["full-time", "part-time"],
+    "template": "{subject} works {value}.",
+    "exclusion_template": "If {subject} works {original}, then {subject} does not work {alternative}.",
+    }
 }
 
 
