@@ -672,6 +672,33 @@ BYPASS_ANTONYM_PATTERNS = [
 ]
 
 
+# Semantic contradiction pairs - words that contradict each other in context
+SEMANTIC_CONTRADICTION_PAIRS = {
+    # Pass/fail semantics
+    "fails": ["passes", "pass", "succeeds", "succeed"],
+    "fail": ["passes", "pass", "succeeds", "succeed"],
+    "passes": ["fails", "fail"],
+    "pass": ["fails", "fail"],
+
+    # Complete/miss semantics
+    "misses": ["completes", "complete", "finishes", "finish", "submits", "submit"],
+    "miss": ["completes", "complete", "finishes", "finish", "submits", "submit"],
+    "completes": ["misses", "miss", "skips", "skip"],
+    "complete": ["misses", "miss", "skips", "skip"],
+
+    # Early/on-time/late semantics
+    "early": ["on time", "late"],
+    "late": ["on time", "early"],
+    "on time": ["early", "late"],
+
+    # Success/failure semantics
+    "succeeds": ["fails", "fail"],
+    "succeed": ["fails", "fail"],
+    "wins": ["loses", "lose"],
+    "loses": ["wins", "win"],
+    "lose": ["wins", "win"],
+}
+
 
 def get_word_antonyms(word: str) -> List[str]:
     """Get antonyms of a word using WordNet with fallback table."""
@@ -838,6 +865,146 @@ def detect_antonym_contradiction(
                             "antonym_contradiction_detected": True
                         }
     
+    return None
+
+
+# ==========================================
+# 4b. IMPLICATION CONTRADICTION DETECTION
+# ==========================================
+
+def detect_implication_contradiction(
+    query: str,
+    logified_structure: Dict[str, Any],
+    sbert_model,
+    verbose: bool = True
+) -> Optional[Dict[str, Any]]:
+    """
+    Detect if the hypothesis contradicts an implication in the KB.
+
+    For example:
+    - Hypothesis: "Alice fails her exams even when she studies hard"
+    - KB has: "If Alice studies hard, then she passes her exams" (P_6 ⟹ P_7)
+    - The hypothesis asserts: antecedent (studies hard) AND negation of consequent (fails = ¬passes)
+    - This contradicts the implication, so return ¬(P_6 ⟹ P_7)
+    """
+    query_lower = query.lower()
+
+    if verbose:
+        print("  [Implication Contradiction] Checking for implication contradictions...")
+
+    # Get all hard constraints that are implications
+    hard_constraints = logified_structure.get('hard_constraints', [])
+    primitive_props = logified_structure.get('primitive_props', [])
+
+    # Build prop_id -> translation map
+    prop_map = {p['id']: p['translation'] for p in primitive_props}
+
+    # Find implication constraints (formula contains ⟹ or =>)
+    implications = []
+    for c in hard_constraints:
+        formula = c.get('formula', '')
+        if '⟹' in formula or '=>' in formula:
+            if '⟹' in formula:
+                parts = formula.split('⟹')
+            else:
+                parts = formula.split('=>')
+
+            if len(parts) == 2:
+                antecedent = parts[0].strip()
+                consequent = parts[1].strip()
+
+                # Skip negated consequents (exclusion constraints)
+                if consequent.startswith('¬') or consequent.startswith('~'):
+                    continue
+
+                implications.append({
+                    'constraint_id': c.get('id'),
+                    'formula': formula,
+                    'antecedent': antecedent,
+                    'consequent': consequent,
+                    'translation': c.get('translation', '')
+                })
+
+    if verbose:
+        print(f"  [Implication Contradiction] Found {len(implications)} non-negated implications")
+
+    # For each implication, check if the hypothesis contradicts it
+    for impl in implications:
+        antecedent_id = impl['antecedent']
+        consequent_id = impl['consequent']
+
+        antecedent_text = prop_map.get(antecedent_id, '').lower()
+        consequent_text = prop_map.get(consequent_id, '').lower()
+
+        if not antecedent_text or not consequent_text:
+            continue
+
+        if verbose:
+            print(f"  [Implication Contradiction] Checking: {impl['formula']}")
+            print(f"    Antecedent: {antecedent_text}")
+            print(f"    Consequent: {consequent_text}")
+
+        # Check 1: Does the hypothesis mention the antecedent condition?
+        antecedent_keywords = set(antecedent_text.replace('.', '').split())
+        antecedent_keywords -= {'alice', 'she', 'her', 'is', 'a', 'an', 'the'}
+
+        query_words = set(query_lower.replace('.', '').split())
+        antecedent_overlap = len(antecedent_keywords & query_words) / max(len(antecedent_keywords), 1)
+
+        if antecedent_overlap < 0.3:
+            continue
+
+        if verbose:
+            print(f"    Antecedent overlap: {antecedent_overlap:.2f}")
+
+        # Check 2: Does the hypothesis contain a semantic contradiction to the consequent?
+        consequent_keywords = consequent_text.replace('.', '').split()
+
+        for cons_word in consequent_keywords:
+            if cons_word in ['alice', 'she', 'her', 'is', 'a', 'an', 'the']:
+                continue
+
+            contradictions = SEMANTIC_CONTRADICTION_PAIRS.get(cons_word, [])
+
+            for contra_word in contradictions:
+                if contra_word in query_lower:
+                    if verbose:
+                        print(f"    ✓ Found semantic contradiction: '{contra_word}' contradicts '{cons_word}'")
+
+                    negated_formula = f"¬({impl['formula']})"
+
+                    return {
+                        "formula": negated_formula,
+                        "translation": f"it is not the case that {impl['translation']}",
+                        "explanation": f"Implication contradiction: hypothesis '{contra_word}' contradicts consequent '{cons_word}' of rule {impl['formula']}",
+                        "confidence": 1.0,
+                        "implication_contradiction_detected": True
+                    }
+
+        # Check 3: Qualifier strengthening (e.g., "always early" vs "on time")
+        if "always" in query_lower or "every" in query_lower or "never" in query_lower:
+            cons_emb = sbert_model.encode(consequent_text)
+            query_emb = sbert_model.encode(query_lower)
+
+            similarity = float(np.dot(cons_emb, query_emb) / (np.linalg.norm(cons_emb) * np.linalg.norm(query_emb)))
+
+            if similarity > 0.6:
+                for word in query_lower.split():
+                    contradictions = SEMANTIC_CONTRADICTION_PAIRS.get(word, [])
+                    for contra in contradictions:
+                        if contra in consequent_text:
+                            if verbose:
+                                print(f"    ✓ Found qualifier strengthening: '{word}' vs '{contra}'")
+
+                            negated_formula = f"¬({impl['formula']})"
+                            return {
+                                "formula": negated_formula,
+                                "translation": f"it is not the case that {impl['translation']}",
+                                "explanation": f"Qualifier strengthening contradiction: '{word}' contradicts '{contra}' in rule {impl['formula']}",
+                                "confidence": 1.0,
+                                "implication_contradiction_detected": True
+                            }
+
     return None
 
 
@@ -1083,6 +1250,21 @@ def translate_query(
         if verbose:
             print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
         return antonym_result
+
+    # 4b. IMPLICATION CONTRADICTION DETECTION
+    # Check if hypothesis contradicts an implication in the KB
+    if verbose:
+        print("\nChecking for implication contradictions...")
+
+    impl_result = detect_implication_contradiction(query, logified_structure, sbert_model, verbose=verbose)
+
+    if impl_result:
+        impl_result["query"] = query
+        impl_result["original_query"] = original_query
+        if verbose:
+            print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
+        return impl_result
+
 
     # 5. Build Prompt Variables (matching translate_old.py style)
     props_text = ""
