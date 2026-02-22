@@ -1767,7 +1767,7 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
     },
     "day_of_week": {
         "patterns": [
-            r"(?P<subject>[A-Z][\w\s']+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+            r"(?P<subject>(?:[A-Z][a-z]+(?:'s)?|[Hh]er|[Hh]is|[Tt]heir)\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
         ],
         "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         "template": "{subject} are due {value}.",
