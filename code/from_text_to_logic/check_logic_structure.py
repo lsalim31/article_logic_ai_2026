@@ -44,6 +44,10 @@ import spacy
 import nltk
 from nltk.corpus import wordnet
 
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+import torch
+
+
 # Ensure wordnet is downloaded
 try:
     wordnet.synsets('test')
@@ -769,6 +773,188 @@ def split_into_sentences(text: str, nlp: spacy.Language) -> List[str]:
     """
     doc = nlp(text)
     return [sent.text.strip() for sent in doc.sents]
+
+def detect_and_resolve_conflicts(logic_structure: dict, nli_model, tokenizer, original_text: str, device='cpu') -> dict:
+    """
+    Detect P_i and ¬P_i conflicts and resolve using NLI entailment.
+    
+    Args:
+        logic_structure: The logified structure with primitive_props and constraints
+        nli_model: Loaded NLI model (e.g., roberta-large-mnli)
+        tokenizer: Tokenizer for the NLI model
+        original_text: The source document text
+        device: 'cpu' or 'cuda'
+    
+    Returns:
+        Updated logic_structure with conflicts resolved
+    """
+    import torch
+    import re
+    import copy
+    
+    structure = copy.deepcopy(logic_structure)
+    
+    # Get all constraints (handle both formats)
+    if 'constraints' in structure:
+        constraints = structure['constraints']
+        constraint_key = 'constraints'
+    else:
+        constraints = structure.get('hard_constraints', []) + structure.get('soft_constraints', [])
+        constraint_key = 'split'
+    
+    # Build lookup: prop_id -> translation
+    prop_translations = {p['id']: p['translation'] for p in structure['primitive_props']}
+    
+    # Find simple assertions: P_i or ¬P_i (no implications, conjunctions, etc.)
+    simple_assertion_pattern = re.compile(r'^(¬)?P_(\d+)$')
+    
+    asserted_positive = {}  # prop_id -> constraint
+    asserted_negative = {}  # prop_id -> constraint
+    
+    for c in constraints:
+        formula = c.get('formula', '').strip()
+        match = simple_assertion_pattern.match(formula)
+        if match:
+            is_negated = match.group(1) is not None
+            prop_id = f"P_{match.group(2)}"
+            if is_negated:
+                asserted_negative[prop_id] = c
+            else:
+                asserted_positive[prop_id] = c
+    
+    # Find conflicts
+    conflicts = set(asserted_positive.keys()) & set(asserted_negative.keys())
+    
+    if not conflicts:
+        structure['_conflict_resolution_log'] = []
+        return structure, []
+    
+    resolution_log = []
+    constraints_to_remove = set()
+    
+    for prop_id in conflicts:
+        pos_constraint = asserted_positive[prop_id]
+        neg_constraint = asserted_negative[prop_id]
+        
+        translation = prop_translations.get(prop_id, prop_id)
+        
+        # Get evidence (prefer the one with actual text reference)
+        evidence = pos_constraint.get('evidence', '') or neg_constraint.get('evidence', '')
+        
+        # Extract premise from original text using evidence
+        premise = extract_premise_from_evidence(original_text, evidence)
+        if not premise:
+            premise = original_text[:1000]  # Fallback: use first 1000 chars
+        
+        # Hypotheses
+        hypothesis_pos = translation
+        hypothesis_neg = f"It is not the case that {translation[0].lower()}{translation[1:]}"
+        
+        # Run NLI
+        score_pos = get_nli_entailment_score(premise, hypothesis_pos, nli_model, tokenizer, device)
+        score_neg = get_nli_entailment_score(premise, hypothesis_neg, nli_model, tokenizer, device)
+        
+        # Decide which to keep
+        if score_pos >= score_neg:
+            keep = 'positive'
+            remove_id = neg_constraint['id']
+            constraints_to_remove.add(remove_id)
+        else:
+            keep = 'negative'
+            remove_id = pos_constraint['id']
+            constraints_to_remove.add(remove_id)
+        
+        resolution_log.append({
+            'prop_id': prop_id,
+            'translation': translation,
+            'positive_constraint': pos_constraint['id'],
+            'negative_constraint': neg_constraint['id'],
+            'nli_score_positive': score_pos,
+            'nli_score_negative': score_neg,
+            'decision': f"keep {keep}",
+            'removed': remove_id
+        })
+    
+    # Remove conflicting constraints
+    if constraint_key == 'constraints':
+        structure['constraints'] = [c for c in structure['constraints'] 
+                                    if c['id'] not in constraints_to_remove]
+    else:
+        structure['hard_constraints'] = [c for c in structure.get('hard_constraints', []) 
+                                         if c['id'] not in constraints_to_remove]
+        structure['soft_constraints'] = [c for c in structure.get('soft_constraints', []) 
+                                         if c['id'] not in constraints_to_remove]
+    
+    structure['_conflict_resolution_log'] = resolution_log
+    
+    return structure, resolution_log
+
+
+def extract_premise_from_evidence(original_text: str, evidence: str) -> str:
+    """
+    Extract the relevant sentence(s) from original text based on evidence field.
+    
+    Args:
+        original_text: Full document text
+        evidence: Evidence string like "Sentence 23" or "Sentence 23-24"
+    
+    Returns:
+        Extracted sentence(s) or empty string if not found
+    """
+    import re
+    
+    # Split text into sentences (simple split)
+    sentences = re.split(r'(?<=[.!?])\s+', original_text)
+    
+    # Parse evidence for sentence indices
+    match = re.search(r'Sentence\s+(\d+)(?:\s*[-–]\s*(\d+))?', evidence, re.IGNORECASE)
+    if not match:
+        return ""
+    
+    start_idx = int(match.group(1))
+    end_idx = int(match.group(2)) if match.group(2) else start_idx
+    
+    # Extract sentences (0-based indexing)
+    extracted = []
+    for idx in range(start_idx, min(end_idx + 1, len(sentences))):
+        if 0 <= idx < len(sentences):
+            extracted.append(sentences[idx])
+    
+    return " ".join(extracted)
+
+
+def get_nli_entailment_score(premise: str, hypothesis: str, model, tokenizer, device='cpu') -> float:
+    """
+    Get NLI entailment score for premise -> hypothesis.
+    
+    Args:
+        premise: The premise text
+        hypothesis: The hypothesis text
+        model: NLI model
+        tokenizer: NLI tokenizer
+        device: 'cpu' or 'cuda'
+    
+    Returns:
+        Entailment probability (0.0 to 1.0)
+    """
+    import torch
+    
+    inputs = tokenizer(
+        premise, 
+        hypothesis, 
+        return_tensors='pt', 
+        truncation=True, 
+        max_length=512
+    ).to(device)
+    
+    with torch.no_grad():
+        outputs = model(**inputs)
+        probs = torch.softmax(outputs.logits, dim=-1)
+    
+    # For roberta-large-mnli: [contradiction, neutral, entailment]
+    entailment_score = probs[0, 2].item()
+    
+    return entailment_score
 
 
 # =============================================================================
@@ -1774,6 +1960,16 @@ def enrich_logic_structure(
         print("Loading SBERT model...")
     sbert_model = load_sbert_model()
     
+    
+    # Load NLI model for conflict resolution
+    if verbose:
+        print("Loading NLI model for conflict resolution...")
+    nli_model_name = "roberta-large-mnli"
+    nli_tokenizer = AutoTokenizer.from_pretrained(nli_model_name)
+    nli_model = AutoModelForSequenceClassification.from_pretrained(nli_model_name)
+    nli_model.eval()
+
+    
     # Extract initial data
     propositions = logified.get("primitive_props", [])
     constraints = logified.get("constraints", [])
@@ -1863,6 +2059,45 @@ def enrich_logic_structure(
         "constraints": constraints,
         "_enrichment_log": all_logs
     }
+    
+    
+    # =========================================================================
+    # Step 5: Detect and resolve P_i / ¬P_i conflicts using NLI
+    # =========================================================================
+    if verbose:
+        print("\n" + "="*60)
+        print("STEP 5: Resolving P_i / ¬P_i conflicts via NLI")
+        print("="*60)
+    
+    temp_structure = {
+        "primitive_props": propositions,
+        "constraints": constraints
+    }
+    
+    resolved_structure, logs = detect_and_resolve_conflicts(
+        logic_structure=temp_structure,
+        original_text=source_text,
+        nli_model=nli_model,
+        tokenizer=nli_tokenizer
+    )
+    
+    propositions = resolved_structure["primitive_props"]
+    constraints = resolved_structure["constraints"]
+    all_logs.extend(logs)
+    
+    if verbose:
+        for log in logs:
+            print(log)
+    
+    # Build enriched structure AFTER conflict resolution
+    enriched = {
+        "primitive_props": propositions,
+        "constraints": constraints,
+        "_enrichment_log": all_logs
+    }    
+
+    # =========================================================================
+
     
     # Save output
     if output_path is None:

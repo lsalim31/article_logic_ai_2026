@@ -253,6 +253,11 @@ def assign_weights(
     Returns:
         Dict with {primitive_props, hard_constraints, soft_constraints}
     """
+    
+    # At the top of assign_weights(), after loading the JSON:
+
+    from from_text_to_logic.check_logic_structure import enrich_logic_structure
+    
     # Step 1: Load logified JSON
     if verbose:
         print(f"Loading logified JSON from: {json_path}")
@@ -260,6 +265,19 @@ def assign_weights(
     with open(json_path, 'r', encoding='utf-8') as f:
         logified = json.load(f)
 
+    # Step 1.5: ENRICH the logic structure (modal pairs, finite domains, etc.)
+    if verbose:
+        print("Enriching logic structure...")
+    
+    logified = enrich_logic_structure(
+        logified_path=json_path,
+        source_path=pathfile,
+        output_path=None,  # Don't save intermediate file
+        verbose=verbose
+    )
+    
+    # Now continue with enriched structure
+    
     constraints = logified.get('constraints', [])
     primitive_props = logified.get('primitive_props', [])
 
