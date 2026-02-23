@@ -1391,22 +1391,21 @@ def verify_modal_pairs(
             if verbose:
                 log_messages.append(f"        Added constraint: {implication_formula} @1.0")
     
-            
-        # Check 4: P_modal ⟹ P_base @1.0 (if "typically X" then "X" must happen)
+                    
+        # Check 4: P_modal ⟹ P_base @modal_weight (not @1.0!)
         reverse_implication = f"{modal_id} ⟹ {base_id}"
         if not constraint_exists(reverse_implication, updated_constraints):
             new_constraint = create_constraint(
                 constraint_id=get_next_constraint_id(updated_constraints),
                 formula=reverse_implication,
                 translation="If modal pattern holds, the base event occurs",
-                llm_weight=1.0,
+                llm_weight=modal_weight,  
                 evidence="Auto-generated",
-                reasoning=f"Modal '{modal_word}' implies the base event occurs (at least sometimes)"
+                reasoning=f"Modal '{modal_word}' implies the base event occurs with weight {modal_weight}"
             )
             updated_constraints.append(new_constraint)
             if verbose:
-                log_messages.append(f"        Added constraint: {reverse_implication} @1.0")
-
+                log_messages.append(f"        Added constraint: {reverse_implication} @{modal_weight}")
 
 
     
@@ -1580,27 +1579,14 @@ def detect_explicit_negations(
 def verify_auxiliary_negatives(
     propositions: List[Dict[str, Any]],
     constraints: List[Dict[str, Any]],
+    nlp: spacy.Language,  # Add this parameter
     sbert_model: SentenceTransformer,
     prop_embeddings: Dict[str, np.ndarray],
     verbose: bool = True
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
+
     """
-    Step 4: Verify auxiliary negative constraints.
-    
-    For each proposition marked as auxiliary (in explanation field):
-    - Check if ¬P_aux @1.0 exists
-    - Find the original asserted proposition
-    - Check if P_original ⟹ ¬P_aux @1.0 exists
-    
-    Args:
-        propositions: List of primitive propositions
-        constraints: List of constraints
-        sbert_model: Loaded SBERT model
-        prop_embeddings: Pre-computed proposition embeddings
-        verbose: Print debug information
-        
-    Returns:
-        Tuple of (updated_constraints, log_messages)
+
     """
     log_messages = []
     updated_constraints = list(constraints)
@@ -1630,22 +1616,7 @@ def verify_auxiliary_negatives(
         
         if verbose:
             log_messages.append(f"[Auxiliary] {aux_id}: '{aux_translation}'")
-        
-        # Check 1: ¬P_aux @1.0 exists
-        negation_formula = f"¬{aux_id}"
-        
-        if not constraint_exists(negation_formula, updated_constraints):
-            new_constraint = create_constraint(
-                constraint_id=get_next_constraint_id(updated_constraints),
-                formula=negation_formula,
-                translation=f"It is not the case that {aux_translation}",
-                llm_weight=1.0,
-                evidence="Auto-generated",
-                reasoning="Negation of auxiliary proposition - definitional consequence"
-            )
-            updated_constraints.append(new_constraint)
-            if verbose:
-                log_messages.append(f"            Added constraint: {negation_formula} @1.0")
+
         
         # Check 2: Find original and add P_original ⟹ ¬P_aux @1.0
         # Use pre-computed embedding if available
@@ -1655,8 +1626,8 @@ def verify_auxiliary_negatives(
             aux_embedding = sbert_model.encode(aux_translation)
         
         best_match = None
-        best_score = 0.5  # Minimum threshold
-        
+        best_score = 0.8  # Minimum threshold
+
         for orig_prop in original_props:
             orig_id = orig_prop.get("id", "")
             orig_translation = orig_prop.get("translation", "")
@@ -1672,6 +1643,27 @@ def verify_auxiliary_negatives(
             if score > best_score:
                 best_score = score
                 best_match = orig_prop
+
+        # Before creating the implication, verify the matched proposition 
+        # contains a noun (not "studies hard" which has adverb "hard")
+        if best_match:
+            # Extract what was matched and check if it's a noun
+            orig_translation = best_match.get("translation", "")
+            
+            # Find the value that caused the match (the part after the verb)
+            # For "studies hard" -> "hard", for "studies biology" -> "biology"
+            for domain_name, domain_config in FINITE_DOMAIN_PATTERNS.items():
+                for pattern in domain_config.get("patterns", []):
+                    match = re.search(pattern, orig_translation, re.IGNORECASE)
+                    if match:
+                        value = match.group("value").strip()
+                        doc = nlp(value)
+                        # Skip if value is not a noun (e.g., "hard" is ADV, "biology" is NOUN)
+                        if not any(token.pos_ in ['NOUN', 'PROPN'] for token in doc):
+                            best_match = None  # Invalidate the match
+                        break
+                if best_match is None:
+                    break        
         
         if best_match:
             orig_id = best_match.get("id")
@@ -1736,14 +1728,6 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
         "template": "{subject} works in the {value} department.",
         "exclusion_template": "If {subject} works in {original}, then {subject} does not work in {alternative}.",
     },
-    #"day_of_week": {
-    #    "patterns": [
-    #        r"(?P<subject>(?:[A-Z][a-z]+(?:'s)?|[Hh]er|[Hh]is|[Tt]heir)\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
-    #    ],
-    #    "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    #    "template": "{subject} are due {value}.",
-    #    "exclusion_template": "If {subject} are due {original}, then {subject} are not due {alternative}.",
-    #},
     "education_level": {
         "patterns": [
         r"(?P<subject>\w+)\s+is\s+a\s+(?P<value>university|college|high school|middle school|graduate)\s+student",
@@ -1788,22 +1772,7 @@ def generate_finite_domain_auxiliaries(
     verbose: bool = True
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, np.ndarray], List[str]]:
     """
-    Step 4: Generate auxiliary propositions for finite domains.
 
-    Detects patterns like "X studies computer science" and generates
-    auxiliary propositions for alternative values (biology, mathematics, etc.)
-    with appropriate mutual exclusion constraints.
-
-    Args:
-        propositions: List of primitive propositions
-        constraints: List of constraints
-        nlp: Loaded SpaCy model
-        sbert_model: Loaded SBERT model
-        prop_embeddings: Pre-computed proposition embeddings
-        verbose: Print debug information
-
-    Returns:
-        Tuple of (updated_propositions, updated_constraints, updated_embeddings, log_messages)
     """
     log_messages = []
     updated_props = list(propositions)
@@ -1894,22 +1863,8 @@ def generate_finite_domain_auxiliaries(
                         if verbose:
                             log_messages.append(f"              Added auxiliary: {aux_id} = '{aux_text}'")
 
-                        # Add negation constraint: ¬P_aux @1.0
-                        negation_formula = f"¬{aux_id}"
-                        if not constraint_exists(negation_formula, updated_constraints):
-                            neg_constraint = create_constraint(
-                                constraint_id=get_next_constraint_id(updated_constraints),
-                                formula=negation_formula,
-                                translation=f"It is not the case that {aux_text}",
-                                llm_weight=1.0,
-                                evidence="Auto-generated",
-                                reasoning="Negation of auxiliary proposition - definitional consequence"
-                            )
-                            updated_constraints.append(neg_constraint)
-                            if verbose:
-                                log_messages.append(f"              Added constraint: {negation_formula} @1.0")
 
-                        # Add mutual exclusion constraint: P_original ⟹ ¬P_aux @1.0
+                        
                         exclusion_formula = f"{prop_id} ⟹ ¬{aux_id}"
                         if not constraint_exists(exclusion_formula, updated_constraints):
                             excl_constraint = create_constraint(
@@ -2048,7 +2003,7 @@ def enrich_logic_structure(
         print("="*60)
     
     constraints, logs = verify_auxiliary_negatives(
-        propositions, constraints, sbert_model, prop_embeddings, verbose
+        propositions, constraints, nlp, sbert_model, prop_embeddings, verbose
     )
     all_logs.extend(logs)
     if verbose:

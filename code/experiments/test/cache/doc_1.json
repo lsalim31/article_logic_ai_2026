@@ -28,37 +28,37 @@
       "id": "P_5",
       "translation": "Alice typically studies hard before exams",
       "evidence": "Sentence 3",
-      "explanation": "Modal statement with 'typically' (kept as its own proposition)."
+      "explanation": "Modal statement containing 'typically'."
     },
     {
       "id": "P_6",
       "translation": "Alice studies hard before exams",
       "evidence": "Sentence 3",
-      "explanation": "Base proposition derived by removing 'typically'."
+      "explanation": "Base statement derived by removing the modal 'typically'."
     },
     {
       "id": "P_7",
       "translation": "Alice is focused",
       "evidence": "Sentence 4",
-      "explanation": "Condition extracted from 'When ...'."
+      "explanation": "Condition extracted from a 'When ...' clause."
     },
     {
       "id": "P_8",
       "translation": "Alice completes her assignments on time",
       "evidence": "Sentence 4",
-      "explanation": "Result clause associated with the 'When ...' condition."
+      "explanation": "Result extracted from a 'When ...' clause."
     },
     {
       "id": "P_9",
       "translation": "Alice sometimes gets distracted by social media",
       "evidence": "Sentence 5",
-      "explanation": "Modal statement with 'sometimes' (kept as its own proposition)."
+      "explanation": "Modal statement containing 'sometimes'."
     },
     {
       "id": "P_10",
       "translation": "Alice gets distracted by social media",
       "evidence": "Sentence 5",
-      "explanation": "Base proposition derived by removing 'sometimes'."
+      "explanation": "Base statement derived by removing the modal 'sometimes'."
     },
     {
       "id": "P_11",
@@ -70,19 +70,19 @@
       "id": "P_12",
       "translation": "Alice's assignments are due every Friday",
       "evidence": "Sentence 7",
-      "explanation": "Simple declarative schedule statement treated as atomic."
+      "explanation": "Simple factual statement about schedule."
     },
     {
       "id": "P_13",
       "translation": "Alice rarely studies late at night",
       "evidence": "Sentence 8",
-      "explanation": "Modal statement with 'rarely' (kept as its own proposition)."
+      "explanation": "Modal statement containing 'rarely'."
     },
     {
       "id": "P_14",
       "translation": "Alice studies late at night",
       "evidence": "Sentence 8",
-      "explanation": "Base proposition derived by removing 'rarely'."
+      "explanation": "Base statement derived by removing the modal 'rarely'."
     },
     {
       "id": "P_15",
@@ -140,7 +140,7 @@
       "translation": "Alice is a university student",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Asserted as a plain fact."
+      "reasoning": "Directly asserted as fact."
     },
     {
       "id": "C_2",
@@ -148,15 +148,15 @@
       "translation": "Alice studies computer science",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Asserted as a plain fact."
+      "reasoning": "Directly asserted as fact."
     },
     {
       "id": "C_3",
       "formula": "P_3 ⟹ P_4",
-      "translation": "If Alice studies hard, then she passes her exams",
+      "translation": "If Alice studies hard, then Alice passes her exams",
       "llm_weight": 1.0,
       "evidence": "Sentence 2",
-      "reasoning": "Explicit conditional ('If ... then ...')."
+      "reasoning": "Explicit conditional 'If..., then...'."
     },
     {
       "id": "C_4",
@@ -164,7 +164,7 @@
       "translation": "Alice typically studies hard before exams",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted."
     },
     {
       "id": "C_5",
@@ -172,15 +172,15 @@
       "translation": "Alice studies hard before exams",
       "llm_weight": 0.65,
       "evidence": "Sentence 3",
-      "reasoning": "'typically' maps to weight 0.65 for the base proposition."
+      "reasoning": "Derived base statement from 'typically' (0.65)."
     },
     {
       "id": "C_6",
       "formula": "P_6 ⟹ P_5",
-      "translation": "If Alice studies hard before exams, then the 'typically' statement holds",
+      "translation": "If Alice studies hard before exams, then it matches 'typically studies hard before exams'",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "Required modal-link constraint: base implies modal."
+      "reasoning": "Modal-pattern constraint required by instructions."
     },
     {
       "id": "C_7",
@@ -188,7 +188,7 @@
       "translation": "When Alice is focused, she completes her assignments on time",
       "llm_weight": 1.0,
       "evidence": "Sentence 4",
-      "reasoning": "'When' is treated as a conditional relationship."
+      "reasoning": "'When' treated as an implication."
     },
     {
       "id": "C_8",
@@ -196,7 +196,7 @@
       "translation": "Alice sometimes gets distracted by social media",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted."
     },
     {
       "id": "C_9",
@@ -204,15 +204,15 @@
       "translation": "Alice gets distracted by social media",
       "llm_weight": 0.4,
       "evidence": "Sentence 5",
-      "reasoning": "'sometimes' maps to weight 0.40 for the base proposition."
+      "reasoning": "Derived base statement from 'sometimes' (0.40)."
     },
     {
       "id": "C_10",
       "formula": "P_10 ⟹ P_9",
-      "translation": "If Alice gets distracted by social media, then the 'sometimes' statement holds",
+      "translation": "If Alice gets distracted by social media, then it matches 'sometimes gets distracted by social media'",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Required modal-link constraint: base implies modal."
+      "reasoning": "Modal-pattern constraint required by instructions."
     },
     {
       "id": "C_11",
@@ -220,7 +220,7 @@
       "translation": "Alice works part-time at the campus library",
       "llm_weight": 1.0,
       "evidence": "Sentence 6",
-      "reasoning": "Asserted as a plain fact."
+      "reasoning": "Directly asserted as fact."
     },
     {
       "id": "C_12",
@@ -228,7 +228,7 @@
       "translation": "Alice's assignments are due every Friday",
       "llm_weight": 1.0,
       "evidence": "Sentence 7",
-      "reasoning": "Asserted as a plain scheduling statement."
+      "reasoning": "Directly asserted as fact."
     },
     {
       "id": "C_13",
@@ -236,7 +236,7 @@
       "translation": "Alice rarely studies late at night",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted."
     },
     {
       "id": "C_14",
@@ -244,50 +244,42 @@
       "translation": "Alice studies late at night",
       "llm_weight": 0.25,
       "evidence": "Sentence 8",
-      "reasoning": "'rarely' maps to weight 0.25 for the base proposition."
+      "reasoning": "Derived base statement from 'rarely' (0.25)."
     },
     {
       "id": "C_15",
       "formula": "P_14 ⟹ P_13",
-      "translation": "If Alice studies late at night, then the 'rarely' statement holds",
+      "translation": "If Alice studies late at night, then it matches 'rarely studies late at night'",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "Required modal-link constraint: base implies modal."
+      "reasoning": "Modal-pattern constraint required by instructions."
     },
     {
       "id": "C_16",
       "formula": "P_5 ⟹ P_6",
       "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
+      "llm_weight": 0.7,
       "evidence": "Auto-generated",
-      "reasoning": "Modal 'typically' implies the base event occurs (at least sometimes)"
+      "reasoning": "Modal 'typically' implies the base event occurs with weight 0.7"
     },
     {
       "id": "C_17",
       "formula": "P_9 ⟹ P_10",
       "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
+      "llm_weight": 0.45,
       "evidence": "Auto-generated",
-      "reasoning": "Modal 'sometimes' implies the base event occurs (at least sometimes)"
+      "reasoning": "Modal 'sometimes' implies the base event occurs with weight 0.45"
     },
     {
       "id": "C_18",
       "formula": "P_13 ⟹ P_14",
       "translation": "If modal pattern holds, the base event occurs",
-      "llm_weight": 1.0,
+      "llm_weight": 0.25,
       "evidence": "Auto-generated",
-      "reasoning": "Modal 'rarely' implies the base event occurs (at least sometimes)"
+      "reasoning": "Modal 'rarely' implies the base event occurs with weight 0.25"
     },
     {
       "id": "C_19",
-      "formula": "¬P_15",
-      "translation": "It is not the case that Alice is a high school student.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_20",
       "formula": "P_1 ⟹ ¬P_15",
       "translation": "If Alice is a university student, then Alice is not a high school student.",
       "llm_weight": 1.0,
@@ -295,15 +287,7 @@
       "reasoning": "Mutual exclusion over education_level domain with weight 1.0"
     },
     {
-      "id": "C_21",
-      "formula": "¬P_16",
-      "translation": "It is not the case that Alice studies biology.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_22",
+      "id": "C_20",
       "formula": "P_2 ⟹ ¬P_16",
       "translation": "If Alice studies computer science, then Alice does not study biology.",
       "llm_weight": 1.0,
@@ -311,15 +295,7 @@
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_23",
-      "formula": "¬P_17",
-      "translation": "It is not the case that Alice studies mathematics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_24",
+      "id": "C_21",
       "formula": "P_2 ⟹ ¬P_17",
       "translation": "If Alice studies computer science, then Alice does not study mathematics.",
       "llm_weight": 1.0,
@@ -327,15 +303,7 @@
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_25",
-      "formula": "¬P_18",
-      "translation": "It is not the case that Alice studies physics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_26",
+      "id": "C_22",
       "formula": "P_2 ⟹ ¬P_18",
       "translation": "If Alice studies computer science, then Alice does not study physics.",
       "llm_weight": 1.0,
@@ -343,15 +311,7 @@
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_27",
-      "formula": "¬P_19",
-      "translation": "It is not the case that Alice studies chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_28",
+      "id": "C_23",
       "formula": "P_2 ⟹ ¬P_19",
       "translation": "If Alice studies computer science, then Alice does not study chemistry.",
       "llm_weight": 1.0,
@@ -359,15 +319,7 @@
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
     },
     {
-      "id": "C_29",
-      "formula": "¬P_20",
-      "translation": "It is not the case that Alice completes assignments late.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_30",
+      "id": "C_24",
       "formula": "P_8 ⟹ ¬P_20",
       "translation": "If Alice completes assignments on time, then Alice does not complete assignments late.",
       "llm_weight": 1.0,
@@ -375,15 +327,7 @@
       "reasoning": "Mutual exclusion over timing_modifier domain with weight 1.0"
     },
     {
-      "id": "C_31",
-      "formula": "¬P_21",
-      "translation": "It is not the case that Alice works full-time.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_32",
+      "id": "C_25",
       "formula": "P_11 ⟹ ¬P_21",
       "translation": "If Alice works part-time, then Alice does not work full-time.",
       "llm_weight": 1.0,
@@ -391,60 +335,12 @@
       "reasoning": "Mutual exclusion over employment_type domain with weight 1.0"
     },
     {
-      "id": "C_33",
-      "formula": "¬P_22",
-      "translation": "It is not the case that Alice's assignments are due Monday.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence"
-    },
-    {
-      "id": "C_34",
+      "id": "C_26",
       "formula": "P_12 ⟹ ¬P_22",
       "translation": "If Alice's assignments are due friday, then Alice's assignments are not due Monday.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over day_of_week domain with weight 1.0"
-    },
-    {
-      "id": "C_35",
-      "formula": "P_3 ⟹ ¬P_16",
-      "translation": "If Alice studies hard then not Alice studies biology.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_36",
-      "formula": "P_3 ⟹ ¬P_17",
-      "translation": "If Alice studies hard then not Alice studies mathematics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_37",
-      "formula": "P_3 ⟹ ¬P_18",
-      "translation": "If Alice studies hard then not Alice studies physics.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_38",
-      "formula": "P_3 ⟹ ¬P_19",
-      "translation": "If Alice studies hard then not Alice studies chemistry.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
-    },
-    {
-      "id": "C_39",
-      "formula": "P_8 ⟹ ¬P_21",
-      "translation": "If Alice completes her assignments on time then not Alice works full-time.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary"
     }
   ],
   "_enrichment_log": []
