@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """
-logic_converter.py - LLM-Based Logic Structure Extractor
 
-This module handles Stage 2 of the text-to-logic pipeline:
-converting natural language text (augmented with OpenIE triples) into
-structured propositional logic using an LLM.
+
 """
 
 import json
@@ -23,14 +20,7 @@ class LogicConverter:
                  reasoning_effort: str = REASONING_EFFORT
                  ):
         """
-        Initialize the logic converter with API key and model.
 
-        Args:
-            api_key (str): OpenAI API key (or OpenRouter key starting with sk-or-)
-            model (str): Model to use (default: gpt-5.2)
-            temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
-            max_tokens (int): Maximum tokens in response (default: MAX_TOKENS from config)
-            reasoning_effort (str): Reasoning effort level for GPT-5.2/o3 models (none, low, medium, high, xhigh). Default: medium
         """
         # Detect OpenRouter keys and use appropriate base URL
         # OpenRouter keys start with 'sk-or-v1-'
@@ -68,14 +58,7 @@ class LogicConverter:
 
     def convert(self, text: str, formatted_triples: str) -> Dict[str, Any]:
         """
-        Convert input text to structured logic using OpenIE triples and LLM.
 
-        Args:
-            text (str): Original natural language text
-            formatted_triples (str): Pre-formatted OpenIE triples
-
-        Returns:
-            Dict[str, Any]: JSON structure with primitive props,  constraints, and weights
         """
         try:
             # Format the combined input for the LLM
@@ -232,11 +215,8 @@ class LogicConverter:
 
     def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
-        Save the logic structure to a JSON file.
 
-        Args:
-            logic_structure (Dict[str, Any]): The converted logic structure
-            output_path (str): Path to save the JSON file
+
         """
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(logic_structure, f, indent=2, ensure_ascii=False)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-retrieval_config.py - Configuration for retrieval and NLI filtering
-
-Centralizes all tunable parameters for the query translation pipeline.
+retrieval_config.py 
+Centralizes all tunable parameters.
 """
 
 # SBERT bi-encoder settings (Stage 1: Candidate retrieval)
@@ -28,7 +27,6 @@ ENABLE_NEGATION_WARNINGS = True  # Log warnings for polarity issues
 CONFIDENCE_THRESHOLD_TRUE = 0.55  # TRUE → UNCERTAIN if confidence below this
 MIN_PROPOSIT3ION_WEIGHT = 0.4  # Low weight → low confidence adjustment
 
-
 MAX_COMPLETION_TOKENS = 32000
 MAX_TOKENS = 32000
 TEMPERATURE_LOGIC_CONVERTER = 0.1
@@ -41,10 +39,7 @@ REASONING_MODEL = "gpt-5.2"
 TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
-
 PROMPT_EXTRACTION = "prompt_current_small"
 PROMPT_TRANSLATION = "prompt_translate"
-
-
 TRIGGER_QUERY = 0.8      # NLI confidence threshold to trigger voting
 ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered

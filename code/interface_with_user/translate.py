@@ -2,18 +2,9 @@
 """
 translate.py - Neuro-Symbolic Logic Translator
 
-A drop-in replacement for the previous translation logic.
 Input: User Query + JSON Logified Data
-Output: Propositional Formula (verified via NLI)
+Output: Propositional Formula.
 
-Architecture:
-1. Retrieval: SBERT/Hybrid search (Preserved from original)
-2. Modal Opposite Detection: Check if hypothesis contradicts KB via modal antonyms
-3. Antonym Contradiction Detection: Check if hypothesis contradicts KB via lexical antonyms
-4. Generation: LLM generates candidate formula(s)
-5. Verbalization: Python recursively converts Logic -> "Structured English"
-6. Verification: NLI model scores candidates to find the best semantic match
-7. Adaptive Voting: If NLI confidence < threshold, sample more and vote
 """
 
 import sys
@@ -25,6 +16,19 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
 from collections import Counter
+
+import nltk
+nltk.download('punkt_tab', quiet=True)
+nltk.download('averaged_perceptron_tagger', quiet=True)
+nltk.download('wordnet', quiet=True)
+from nltk.tokenize import word_tokenize
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab')
+    nltk.download('punkt')
+
+
 
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
@@ -66,6 +70,8 @@ except ImportError as e:
     print(f"CRITICAL: Missing dependencies.\nError: {e}")
     sys.exit(1)
 
+sbert_model = SentenceTransformer(SBERT_MODEL)
+
 # Global cache for NLI model and SpaCy model
 _cached_nli_model = None
 _cached_spacy_model = None
@@ -92,18 +98,6 @@ def tokenize_formula(formula: str) -> List[str]:
 
 def parse_infix_formula(formula_str: str) -> Formula:
     """
-    Parse infix formula string into nested tuple structure.
-
-    Supports: ¬/~ (NOT), ∧/& (AND), ∨/| (OR), ⟹/=> (IMPLIES), ⟺/<=> (IFF)
-
-    Grammar (precedence low to high):
-      formula := iff_expr
-      iff_expr := implies_expr ('<=>' implies_expr)*
-      implies_expr := or_expr ('=>' or_expr)*
-      or_expr := and_expr ('|' and_expr)*
-      and_expr := not_expr ('&' not_expr)*
-      not_expr := '~' not_expr | atom
-      atom := '(' formula ')' | prop_id
     """
     tokens = tokenize_formula(formula_str)
     if not tokens:
@@ -293,7 +287,7 @@ def convert_yes_no_to_statement(
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,
     max_tokens: int = MAX_TOKENS
-) -> str:
+    ) -> str:
     """
     Convert a Yes/No question to a declarative statement using an LLM.
     """
@@ -730,8 +724,7 @@ def get_word_antonyms(word: str) -> List[str]:
 
 def contains_complex_construction(query: str) -> bool:
     """
-    Check if query contains concessive or complex constructions
-    that require nuanced LLM reasoning rather than simple antonym detection.
+    
     """
     query_lower = query.lower()
     
@@ -1010,10 +1003,65 @@ def detect_implication_contradiction(
 
 
 # ==========================================
+# 4.c GENERATING VARIATIONS OF THE QUERY
+# ==========================================
+from nltk.corpus import wordnet as wn
+#from nltk import pos_tag, word_tokenize
+
+def expand_query_with_synonyms(query: str, sbert_model, max_variants: int = 5) -> List[str]:
+    """Expand query with SBERT-filtered synonym variants."""
+    variants = [query]
+    
+    nlp = get_spacy_model_singleton()
+    doc = nlp(query)
+    tokens = [token.text for token in doc]
+    
+    for i, token in enumerate(doc):
+        if token.pos_ == 'VERB':
+            # Get ALL WordNet synonyms
+            all_synonyms = set()
+            for syn in wn.synsets(token.text.lower(), pos=wn.VERB):
+                for lemma in syn.lemmas():
+                    synonym = lemma.name().replace('_', ' ')
+                    if synonym.lower() != token.text.lower():
+                        all_synonyms.add(synonym)
+            
+            # Filter with SBERT
+            for synonym in all_synonyms:
+                variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
+                embs = sbert_model.encode([query, variant])
+                sim = np.dot(embs[0], embs[1]) / (np.linalg.norm(embs[0]) * np.linalg.norm(embs[1]))
+                if sim > 0.85:
+                    variants.append(variant)
+    
+    return list(set(variants))[:max_variants]
+
+
+def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K):
+    variants = expand_query_with_synonyms(query, sbert_model)
+    
+    all_results = []
+    for variant in variants:
+        results = retrieve_top_k_propositions(variant, chunks, sbert_model, k=k)
+        all_results.extend(results)
+    
+    # Dedupe by prop_id, keep highest similarity
+    seen = {}
+    for r in all_results:
+        pid = r['id']
+        if pid not in seen or r['similarity'] > seen[pid]['similarity']:
+            seen[pid] = r
+    
+    return sorted(seen.values(), key=lambda x: -x['similarity'])[:k]
+
+
+
+
+
+# ==========================================
 # 5. NEURO-SYMBOLIC CORE
 # ==========================================
 
-sbert_model = SentenceTransformer(SBERT_MODEL)
 
 
 def load_nli_model_singleton():
@@ -1183,10 +1231,7 @@ def translate_query(
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
-    Main Interface Function.
-    Replaces the old logic with the Generate -> Verbalize -> Verify loop.
-    Now includes Modal Opposite Detection and Antonym Contradiction Detection before LLM generation.
-    Also includes adaptive voting when NLI confidence is below threshold.
+
     """
 
     # 1. Pre-process (Yes/No Handling)
@@ -1210,7 +1255,9 @@ def translate_query(
 
     chunks = extract_proposition_chunks(logified_structure)
     sbert_model = load_sbert_model(sbert_model_name)
-    retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
+    #retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
+    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model, k=k)
+
 
     if not retrieved:
         return {

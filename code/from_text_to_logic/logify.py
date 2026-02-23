@@ -26,17 +26,8 @@ from from_text_to_logic.logic_converter import LogicConverter
 
 def extract_text_from_document(file_path: str) -> str:
     """
-    Extract text from various document formats.
 
-    Args:
-        file_path: Path to document file (PDF, DOCX, TXT)
 
-    Returns:
-        Extracted text content
-
-    Raises:
-        ValueError: If file format is not supported
-        FileNotFoundError: If file does not exist
     """
     path = Path(file_path)
 
@@ -93,14 +84,7 @@ class LogifyConverter:
 
     def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = TEMPERATURE_LOGIC_CONVERTER, reasoning_effort: str = REASONING_EFFORT, max_tokens: int = MAX_TOKENS):
         """
-        Initialize the pipeline with both stages.
 
-        Args:
-            api_key (str): OpenAI API key
-            model (str): Model to use (default: gpt-5.2 with extended thinking)
-            temperature (float): Sampling temperature for LLM (default: 0.1, ignored for reasoning models)
-            reasoning_effort (str): Reasoning effort for gpt-5.2/o1/o3 models (default: medium)
-            max_tokens (int): Maximum tokens in response
         """
         # Stage 1: OpenIE extraction
         self.extractor = OpenIEExtractor()
@@ -110,13 +94,7 @@ class LogifyConverter:
 
     def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
         """
-        Convert input text to structured logic using the two-stage pipeline.
 
-        Args:
-            text (str): Input text to convert
-
-        Returns:
-            Dict[str, Any]: JSON structure with primitive props, hard/soft constraints
         """
         # Stage 1: Extract OpenIE triples
         openie_triples = self.extractor.extract_triples(text)
@@ -129,11 +107,7 @@ class LogifyConverter:
 
     def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
-        Save the logic structure to a JSON file.
 
-        Args:
-            logic_structure (Dict[str, Any]): The converted logic structure
-            output_path (str): Path to save the JSON file
         """
         self.converter.save_output(logic_structure, output_path)
 

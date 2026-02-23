@@ -2,35 +2,6 @@
 """
 check_logic_structure.py - Deterministic enrichment of logified JSON
 
-This module reads the LLM-generated logified.json and enriches it by:
-1. Verifying and completing modal pairs (P_modal, P_base, constraints)
-2. Detecting modal opposites and adding exclusion constraints
-3. Detecting explicit negations in source text
-4. Verifying auxiliary negative constraints
-
-Pipeline position:
-    logify.py → logified.json → [THIS FILE] → logified_enriched.json → weights.py
-
-Usage:
-    python check_logic_structure.py logified.json source_document.txt
-    
-Usage (Python):
-    from from_text_to_logic.check_logic_structure import enrich_logic_structure
-    enriched = enrich_logic_structure(logified_path="logified.json", source_path="doc.txt")
-
-    update: Feb 21:
-    Main function: Enrich logified.json with deterministic constraint verification.
-
-    Runs all five enrichment steps:
-    1. verify_modal_pairs - Handle modal words (typically, sometimes, etc.)
-    2. detect_modal_opposites - Add exclusion constraints for modal antonyms
-    3. detect_explicit_negations - Find negations in source text
-    4. generate_finite_domain_auxiliaries - Create auxiliaries for academic majors, roles, etc.
-    5. verify_auxiliary_negatives - Ensure all auxiliaries have proper constraints
-
-    Args:
-    ...
-    
 
 """
 
@@ -1968,22 +1939,7 @@ def enrich_logic_structure(
     verbose: bool = True
 ) -> Dict[str, Any]:
     """
-    Main function: Enrich logified.json with deterministic constraint verification.
-    
-    Runs all four enrichment steps:
-    1. verify_modal_pairs
-    2. detect_modal_opposites
-    3. detect_explicit_negations
-    4. verify_auxiliary_negatives
-    
-    Args:
-        logified_path: Path to logified.json from LLM
-        source_path: Path to source document (PDF, DOCX, TXT)
-        output_path: Path for output (default: logified_enriched.json)
-        verbose: Print debug information
-        
-    Returns:
-        Enriched logified structure dict
+
     """
     # Load inputs
     with open(logified_path, 'r', encoding='utf-8') as f:

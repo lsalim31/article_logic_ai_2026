@@ -1,24 +1,6 @@
 #!/usr/bin/env python3
 """
-Patricio's edits: Jan 31
-weights.py - Constraint Classification via NLI
 
-Classifies constraints from a logified JSON file into hard and soft constraints
-using NLI cross-encoder scores combined with LLM-assigned weights.
-
-Pipeline:
-1. Load {primitive_props, constraints} from logified JSON
-2. For each constraint, retrieve top-k propositions chunks via SBERT
-3. Score (propositions, constraint) pairs using NLI cross-encoder
-4. Compute combined_score = llm_weight × max(nli_entailment)
-5. Classify: combined >= hardness_criterion → hard, else → soft
-
-Usage:
-    python weights.py document.pdf logified.json
-
-Usage (Python):
-    from from_text_to_logic.weights import assign_weights
-    result = assign_weights(pathfile="doc.pdf", json_path="logified.json")
 """
 
 import sys
@@ -237,21 +219,7 @@ def assign_weights(
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
-    Classify constraints into hard and soft using NLI scores.
 
-    Args:
-        pathfile: Path to document file (PDF, DOCX, TXT)
-        json_path: Path to logified JSON file with {primitive_props, constraints}
-        hardness_criterion: Threshold for hard classification (default: 0.85)
-        k: Number of top chunks to retrieve per constraint (default: 10)
-        chunk_size: Tokens per chunk (default: 512)
-        chunk_overlap: Overlapping tokens between chunks (default: 50)
-        sbert_model_name: SBERT model for retrieval
-        nli_model_name: NLI model for scoring
-        verbose: Print progress messages
-
-    Returns:
-        Dict with {primitive_props, hard_constraints, soft_constraints}
     """
     
     # At the top of assign_weights(), after loading the JSON:

@@ -2,8 +2,6 @@
 """
 encoding.py - Convert logified structure to SAT encoding
 
-This module converts the logified JSON structure (propositions,  constraints)
-into a format suitable for PySAT's RC2 MaxSAT solver.
 """
 
 import re

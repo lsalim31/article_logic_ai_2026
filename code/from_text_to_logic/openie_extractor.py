@@ -2,17 +2,7 @@
 """
 openie_extractor.py - OpenIE Relation Triple Extractor
 
-This module handles Stage 1 of the text-to-logic pipeline:
-extracting relation triples from natural language text using Stanford CoreNLP OpenIE.
 
-Uses native Stanza library (latest version) for coreference resolution and
-Stanza's CoreNLPClient for OpenIE extraction.
-
-Key features:
-- Native Python coreference resolution using Stanza 1.7.0+ coref models
-- Stanza Universal Dependencies for enhanced syntactic analysis
-- Dependency-parse fallback using Stanza's native pipeline
-- No confidence scoring (removed for cleaner output)
 """
 
 import os
@@ -557,55 +547,6 @@ class OpenIEExtractor:
                 'resolved_text': text,
                 'original_text': text
             }
-
-    # Before Feb 2. Erase next edit.
-    # def extract_triples_with_coref_info(self, text: str) -> Dict[str, Any]:
-    #     """
-    #     Extract OpenIE triples along with native Stanza coreference chain information.
-
-    #     Provides detailed information about coreference resolution for debugging
-    #     and analysis.
-
-    #     Args:
-    #         text: Input text to extract relations from
-
-    #     Returns:
-    #         Dict containing:
-    #             - 'triples': List of relation triples (no confidence scores)
-    #             - 'coref_chains': List of coreference chains from native Stanza
-    #             - 'resolved_text': Text with pronouns replaced
-    #             - 'original_text': Original input text
-    #     """
-    #     print("Extracting triples with native Stanza coref information...")
-
-    #     if self.client is None:
-    #         raise RuntimeError("CoreNLP client not initialized.")
-
-    #     try:
-    #         # Step 1: Resolve coreferences with native Stanza
-    #         resolved_text, coref_chains = self._resolve_coreferences(text)
-
-    #         # Step 2: Extract triples using standard method
-    #         triples = self.extract_triples(text)
-
-    #         return {
-    #             'triples': triples,
-    #             'coref_chains': coref_chains,
-    #             'resolved_text': resolved_text,
-    #             'original_text': text
-    #         }
-
-    #     except Exception as e:
-    #         print(f"Error extracting triples with coref info: {e}")
-    #         import traceback
-    #         traceback.print_exc()
-    #         return {
-    #             'triples': [],
-    #             'coref_chains': [],
-    #             'resolved_text': text,
-    #             'original_text': text
-    #         }
-
 
 
     def format_triples(self, triples: List[Dict[str, Any]]) -> str:
