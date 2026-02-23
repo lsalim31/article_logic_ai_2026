@@ -1829,6 +1829,12 @@ def generate_finite_domain_auxiliaries(
                 if match:
                     subject = match.group("subject")
                     value = match.group("value").strip().lower()
+                    
+                    doc = nlp(value)
+                    if not any(token.pos_ in ['NOUN', 'PROPN'] for token in doc):
+                        if verbose:
+                            log_messages.append(f"[FiniteDomain] Skipping {prop_id}: Value '{value}' is not a noun")
+                        continue
 
                     # Skip if subject is a modal word
                     subject_lower = subject.lower()
