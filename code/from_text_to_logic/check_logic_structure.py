@@ -1788,10 +1788,10 @@ FINITE_DOMAIN_PATTERNS: Dict[str, Dict[str, Any]] = {
         "alternatives": ["full-time", "part-time"],
         "template": "{subject} works {value}.",
         "exclusion_template": "If {subject} works {original}, then {subject} does not work {alternative}.",
-    },
+    },    
     "day_of_week": {
         "patterns": [
-            r"(?P<subject>[A-Z][\w']+(?:'s)?\s+\w+)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+        r"(?P<subject>.+?)\s+(?:are\s+)?due\s+(?:every\s+)?(?P<value>Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
         ],
         "alternatives": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         "template": "{subject} are due {value}.",
