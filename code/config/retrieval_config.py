@@ -39,7 +39,7 @@ REASONING_MODEL = "gpt-5.2"
 TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
-PROMPT_EXTRACTION = "prompt_current_small"
+PROMPT_EXTRACTION = "prompt_current_micro"
 PROMPT_TRANSLATION = "prompt_translate"
 TRIGGER_QUERY = 0.8      # NLI confidence threshold to trigger voting
 ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered
