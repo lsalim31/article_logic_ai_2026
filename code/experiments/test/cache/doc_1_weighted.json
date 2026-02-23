@@ -4,133 +4,145 @@
       "id": "P_1",
       "translation": "Alice is a university student.",
       "evidence": "Sentence 0: \"Alice is a university student.\"",
-      "explanation": "Simple categorical statement with a single subject and predicate; no logical connectives or modality."
+      "explanation": "Simple subject-copula predicate statement with no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Alice studies computer science.",
-      "evidence": "Sentence 1: \"She studies computer science.\"",
-      "explanation": "Simple subject–predicate statement; no connectives or modality."
+      "translation": "Alice is a student.",
+      "evidence": "Sentence 0: \"Alice is a university student.\"",
+      "explanation": "Atomic categorical statement inferred from the phrase \"university student\"."
     },
     {
       "id": "P_3",
-      "translation": "Alice studies hard.",
-      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
-      "explanation": "Atomic clause extracted from the antecedent of a conditional; no connectives in the clause itself."
+      "translation": "Alice studies computer science.",
+      "evidence": "Sentence 1: \"She studies computer science.\"",
+      "explanation": "Single predicate about Alice’s field of study; no connectives."
     },
     {
       "id": "P_4",
-      "translation": "Alice passes her exams.",
+      "translation": "Alice studies hard.",
       "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
-      "explanation": "Atomic clause extracted from the consequent of a conditional; no connectives in the clause itself."
+      "explanation": "Atomic activity statement extracted as a component of the conditional."
     },
     {
       "id": "P_5",
-      "translation": "Alice typically studies hard before exams.",
-      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
-      "explanation": "Single declarative clause that includes the frequency/modal term \"typically\" (kept as stated)."
+      "translation": "Alice passes her exams.",
+      "evidence": "Sentence 2: \"If Alice studies hard, then she passes her exams.\"",
+      "explanation": "Atomic outcome statement extracted as a component of the conditional."
     },
     {
       "id": "P_6",
-      "translation": "Alice studies hard before exams.",
+      "translation": "Alice typically studies hard before exams.",
       "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
-      "explanation": "Derived base version of P_5 with the modal term removed, as required for modality handling."
+      "explanation": "Atomic modal-frequency claim (contains 'typically') with no logical connectives."
     },
     {
       "id": "P_7",
-      "translation": "Alice is focused.",
-      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
-      "explanation": "Atomic clause extracted from the condition part of a temporal conditional (\"When ...\")."
+      "translation": "Alice studies hard before exams.",
+      "evidence": "Sentence 3: \"Alice typically studies hard before exams.\"",
+      "explanation": "Derived base event by removing the modal-frequency word 'typically'."
     },
     {
       "id": "P_8",
-      "translation": "Alice completes her assignments on time.",
+      "translation": "Alice is focused.",
       "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
-      "explanation": "Atomic clause extracted from the result part of a temporal conditional; no connectives inside the clause."
+      "explanation": "Atomic state statement extracted as the condition component."
     },
     {
       "id": "P_9",
-      "translation": "Alice sometimes gets distracted by social media.",
-      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
-      "explanation": "Single declarative clause including frequency/modal term \"sometimes\" (kept as stated)."
+      "translation": "Alice completes her assignments on time.",
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\"",
+      "explanation": "Atomic achievement statement extracted as the consequent component."
     },
     {
       "id": "P_10",
-      "translation": "Alice gets distracted by social media.",
+      "translation": "Alice sometimes gets distracted by social media.",
       "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
-      "explanation": "Derived base version of P_9 with the modal term removed, as required for modality handling."
+      "explanation": "Atomic modal-frequency claim (contains 'sometimes') with no logical connectives."
     },
     {
       "id": "P_11",
-      "translation": "Alice works part-time at the campus library.",
-      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
-      "explanation": "Single declarative statement combining role and workplace in one predicate; no logical connectives."
+      "translation": "Alice gets distracted by social media.",
+      "evidence": "Sentence 5: \"Alice sometimes gets distracted by social media.\"",
+      "explanation": "Derived base event by removing the modal-frequency word 'sometimes'."
     },
     {
       "id": "P_12",
-      "translation": "Alice's assignments are due every Friday.",
-      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
-      "explanation": "Single declarative clause including frequency term \"every\" (treated as modality/frequency as used in the text)."
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic employment-hours fact separable from the work location."
     },
     {
       "id": "P_13",
-      "translation": "Alice's assignments are due Friday.",
-      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
-      "explanation": "Derived base version of P_12 with the frequency term removed, as required for modality handling."
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 6: \"She works part-time at the campus library.\"",
+      "explanation": "Atomic work-location fact separable from whether it is part-time."
     },
     {
       "id": "P_14",
-      "translation": "Alice rarely studies late at night.",
-      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
-      "explanation": "Single declarative clause including frequency/modal term \"rarely\" (kept as stated)."
+      "translation": "Her assignments are due every Friday.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
+      "explanation": "Atomic frequency/schedule claim (contains 'every') with no logical connectives."
     },
     {
       "id": "P_15",
-      "translation": "Alice studies late at night.",
-      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
-      "explanation": "Derived base version of P_14 with the modal term removed, as required for modality handling."
+      "translation": "Her assignments are due Friday.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
+      "explanation": "Derived base event by removing the frequency word 'every'."
     },
     {
       "id": "P_16",
-      "translation": "Alice is a high school student.",
+      "translation": "Alice has assignments.",
+      "evidence": "Sentence 7: \"Her assignments are due every Friday.\"",
+      "explanation": "Atomic existence statement implied by reference to \"Her assignments\" having due dates."
+    },
+    {
+      "id": "P_17",
+      "translation": "Alice rarely studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
+      "explanation": "Atomic modal-frequency claim (contains 'rarely') with no logical connectives."
+    },
+    {
+      "id": "P_18",
+      "translation": "Alice studies late at night.",
+      "evidence": "Sentence 8: \"Alice rarely studies late at night.\"",
+      "explanation": "Derived base event by removing the modal-frequency word 'rarely'."
+    },
+    {
+      "id": "P_19",
+      "translation": "Alice is a middle school student.",
       "evidence": "Sentence 0: \"Alice is a university student.\" (auxiliary proposition for education_level domain)",
       "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: education_level. Mutually exclusive alternative."
     },
     {
-      "id": "P_17",
+      "id": "P_20",
       "translation": "Alice studies biology.",
       "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_18",
-      "translation": "Alice studies mathematics.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_19",
-      "translation": "Alice studies physics.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
-    },
-    {
-      "id": "P_20",
-      "translation": "Alice studies chemistry.",
-      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_3. Part of finite set: academic_major. Mutually exclusive alternative."
     },
     {
       "id": "P_21",
-      "translation": "Alice completes assignments late.",
-      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\" (auxiliary proposition for timing_modifier domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_8. Part of finite set: timing_modifier. Mutually exclusive alternative."
+      "translation": "Alice studies mathematics.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_3. Part of finite set: academic_major. Mutually exclusive alternative."
     },
     {
       "id": "P_22",
-      "translation": "Alice works full-time.",
-      "evidence": "Sentence 6: \"She works part-time at the campus library.\" (auxiliary proposition for employment_type domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_11. Part of finite set: employment_type. Mutually exclusive alternative."
+      "translation": "Alice studies physics.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_3. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_23",
+      "translation": "Alice studies chemistry.",
+      "evidence": "Sentence 1: \"She studies computer science.\" (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_3. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_24",
+      "translation": "Alice completes assignments late.",
+      "evidence": "Sentence 4: \"When Alice is focused, she completes her assignments on time.\" (auxiliary proposition for timing_modifier domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_9. Part of finite set: timing_modifier. Mutually exclusive alternative."
     }
   ],
   "hard_constraints": [
@@ -143,7 +155,7 @@
       "formula": "P_1",
       "translation": "Alice is a university student.",
       "evidence": "Sentence 0",
-      "reasoning": "Directly asserted as a plain factual statement.",
+      "reasoning": "Directly asserted as a factual statement.",
       "list nli": [
         [
           1.049237198458286e-05,
@@ -151,9 +163,9 @@
           0.9998024106025696
         ],
         [
-          8.237087058660109e-06,
-          0.0010254164226353168,
-          0.9989663362503052
+          8.962176252680365e-06,
+          0.00021208819816820323,
+          0.9997789263725281
         ],
         [
           5.262708327791188e-06,
@@ -169,24 +181,24 @@
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_2",
-      "translation": "Alice studies computer science.",
-      "evidence": "Sentence 1",
-      "reasoning": "Directly asserted as a plain factual statement.",
+      "translation": "Alice is a student.",
+      "evidence": "Sentence 0",
+      "reasoning": "Being a university student entails being a student (definitional/common-sense).",
       "list nli": [
         [
-          3.253143950132653e-05,
-          4.5793498429702595e-05,
-          0.9999216794967651
+          3.122599810012616e-05,
+          0.0033862285781651735,
+          0.996582567691803
         ],
         [
-          3.892821041517891e-05,
-          5.828321445733309e-05,
-          0.9999027252197266
+          0.0002076368691632524,
+          0.0287251528352499,
+          0.9710672497749329
         ],
         [
-          6.235350883798674e-05,
-          3.6794255720451474e-05,
-          0.9999008178710938
+          0.0005844145198352635,
+          0.03838004171848297,
+          0.9610354900360107
         ]
       ]
     },
@@ -196,25 +208,53 @@
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_5",
-      "translation": "Alice typically studies hard before exams.",
-      "evidence": "Sentence 3",
-      "reasoning": "The text explicitly asserts the typicality claim.",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Alice is a university student, then Alice is a student.",
+      "evidence": "Sentence 0",
+      "reasoning": "Semantic implication from the meaning of 'university student'.",
       "list nli": [
         [
-          1.1252133845118806e-05,
-          0.00010687891335692257,
-          0.9998818635940552
+          2.9410943170660175e-05,
+          0.0041881282813847065,
+          0.9957824945449829
         ],
         [
-          1.2199624507047702e-05,
-          0.00018745199486147612,
-          0.9998003840446472
+          0.005313989706337452,
+          0.008900484070181847,
+          0.9857855439186096
         ],
         [
-          1.4110009942669421e-05,
-          0.0002044972061412409,
-          0.9997814297676086
+          0.0023445042315870523,
+          0.015761196613311768,
+          0.981894314289093
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Alice studies computer science.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted.",
+      "list nli": [
+        [
+          3.253143950132653e-05,
+          4.5793498429702595e-05,
+          0.9999216794967651
+        ],
+        [
+          3.688811921165325e-05,
+          5.3064213716425e-05,
+          0.9999099969863892
+        ],
+        [
+          3.892821041517891e-05,
+          5.828321445733309e-05,
+          0.9999027252197266
         ]
       ]
     },
@@ -224,290 +264,10 @@
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_5",
-      "formula": "P_6 ⟹ P_5",
-      "translation": "If Alice studies hard before exams, that is consistent with the claim that she typically studies hard before exams.",
-      "evidence": "Sentence 3",
-      "reasoning": "Required modal-pattern compatibility constraint: an occurrence of the base event satisfies the modal-form description.",
-      "list nli": [
-        [
-          7.606270082760602e-05,
-          0.00011273966083535925,
-          0.9998112320899963
-        ],
-        [
-          0.00010613101039780304,
-          0.0003879405849147588,
-          0.999505877494812
-        ],
-        [
-          6.360714905895293e-05,
-          0.000514376675710082,
-          0.9994220733642578
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_7",
-      "formula": "P_9",
-      "translation": "Alice sometimes gets distracted by social media.",
-      "evidence": "Sentence 5",
-      "reasoning": "The text explicitly asserts the 'sometimes' claim.",
-      "list nli": [
-        [
-          3.155576268909499e-05,
-          4.6800611016806215e-05,
-          0.9999216794967651
-        ],
-        [
-          2.813558603520505e-05,
-          5.4551830544369295e-05,
-          0.9999172687530518
-        ],
-        [
-          5.037604569224641e-05,
-          3.32063136738725e-05,
-          0.9999164342880249
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_9",
-      "formula": "P_10 ⟹ P_9",
-      "translation": "If Alice gets distracted by social media, that is consistent with the claim that she sometimes gets distracted by social media.",
-      "evidence": "Sentence 5",
-      "reasoning": "Required modal-pattern compatibility constraint for 'sometimes'.",
-      "list nli": [
-        [
-          5.4481955885421485e-05,
-          0.0009070774540305138,
-          0.9990384578704834
-        ],
-        [
-          0.0002454082132317126,
-          0.0024790805764496326,
-          0.9972755312919617
-        ],
-        [
-          0.00028378283604979515,
-          0.0037594097666442394,
-          0.9959568381309509
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_11",
-      "formula": "P_14",
-      "translation": "Alice rarely studies late at night.",
-      "evidence": "Sentence 8",
-      "reasoning": "The text explicitly asserts the 'rarely' claim.",
-      "list nli": [
-        [
-          3.675624611787498e-05,
-          5.839655932504684e-05,
-          0.9999048709869385
-        ],
-        [
-          4.9985254008788615e-05,
-          4.896859536529519e-05,
-          0.9999010562896729
-        ],
-        [
-          5.3536925406660885e-05,
-          4.7171390178846195e-05,
-          0.9998992681503296
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_13",
-      "formula": "P_15 ⟹ P_14",
-      "translation": "If Alice studies late at night, that is consistent with the claim that she rarely studies late at night.",
-      "evidence": "Sentence 8",
-      "reasoning": "Required modal-pattern compatibility constraint for 'rarely'.",
-      "list nli": [
-        [
-          0.0006472317036241293,
-          0.0002396390918875113,
-          0.999113142490387
-        ],
-        [
-          0.0007903833757154644,
-          0.0002855957136489451,
-          0.9989239573478699
-        ],
-        [
-          0.0009603471262380481,
-          0.00015221425564959645,
-          0.9988874793052673
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_15",
-      "formula": "P_12",
-      "translation": "Alice's assignments are due every Friday.",
-      "evidence": "Sentence 7",
-      "reasoning": "Directly asserted scheduling statement in the text.",
-      "list nli": [
-        [
-          1.823795355448965e-05,
-          5.2720100939041004e-05,
-          0.9999290704727173
-        ],
-        [
-          2.86205413431162e-05,
-          4.9646685511106625e-05,
-          0.9999216794967651
-        ],
-        [
-          5.1299164624651894e-05,
-          3.248382927267812e-05,
-          0.9999161958694458
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.95,
-      "hardness_constant": 0.9,
-      "id": "C_16",
-      "formula": "P_13",
-      "translation": "Alice's assignments are due Friday.",
-      "evidence": "Sentence 7",
-      "reasoning": "\"Every Friday\" strongly supports the base statement without the frequency term.",
-      "list nli": [
-        [
-          2.6216726837446913e-05,
-          5.260397301753983e-05,
-          0.9999212026596069
-        ],
-        [
-          1.977434840227943e-05,
-          6.385442247847095e-05,
-          0.9999163150787354
-        ],
-        [
-          8.82916065165773e-05,
-          6.989118992350996e-05,
-          0.9998418092727661
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_17",
-      "formula": "P_13 ⟹ P_12",
-      "translation": "If Alice's assignments are due Friday, that is consistent with the claim that they are due every Friday.",
-      "evidence": "Sentence 7",
-      "reasoning": "Required modal-pattern compatibility constraint per the methodology's modal handling rule.",
-      "list nli": [
-        [
-          2.222077819169499e-05,
-          0.0001582978293299675,
-          0.9998194575309753
-        ],
-        [
-          7.951708539621904e-05,
-          0.00014229917724151164,
-          0.9997782111167908
-        ],
-        [
-          0.00017619598656892776,
-          0.0002988600463140756,
-          0.9995249509811401
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.95,
-      "hardness_constant": 0.9,
-      "id": "C_18",
-      "formula": "P_12 ⟹ P_13",
-      "translation": "If Alice's assignments are due every Friday, then Alice's assignments are due Friday.",
-      "evidence": "Sentence 7",
-      "reasoning": "The frequency 'every' strongly implies the non-frequency base phrasing.",
-      "list nli": [
-        [
-          0.0001703140587778762,
-          0.0004898918559774756,
-          0.999339759349823
-        ],
-        [
-          3.571814522729255e-05,
-          0.0006437525153160095,
-          0.9993205070495605
-        ],
-        [
-          0.0007545312400907278,
-          0.00043340754928067327,
-          0.9988120794296265
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_19",
-      "formula": "P_11",
-      "translation": "Alice works part-time at the campus library.",
-      "evidence": "Sentence 6",
-      "reasoning": "Directly asserted fact about Alice's job.",
-      "list nli": [
-        [
-          9.542846964905038e-05,
-          5.1541348511818796e-05,
-          0.9998530149459839
-        ],
-        [
-          0.00010099341307068244,
-          5.203755063121207e-05,
-          0.9998469352722168
-        ],
-        [
-          0.00033120086300186813,
-          3.839471173705533e-05,
-          0.999630331993103
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_20",
-      "formula": "P_3 ⟹ P_4",
+      "formula": "(P_4 ⟹ P_5)",
       "translation": "If Alice studies hard, then she passes her exams.",
       "evidence": "Sentence 2",
-      "reasoning": "Explicit conditional stated in the text.",
+      "reasoning": "Explicit conditional in the text.",
       "list nli": [
         [
           9.565061191096902e-05,
@@ -531,26 +291,54 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_23",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "When Alice is focused, she completes her assignments on time.",
-      "evidence": "Sentence 4",
-      "reasoning": "Explicit 'when' conditional stated in the text.",
+      "id": "C_8",
+      "formula": "P_6",
+      "translation": "Alice typically studies hard before exams.",
+      "evidence": "Sentence 3",
+      "reasoning": "The modal claim itself is explicitly asserted.",
       "list nli": [
         [
-          2.1239917259663343e-05,
-          5.6959201174322516e-05,
-          0.9999217987060547
+          1.1252133845118806e-05,
+          0.00010687891335692257,
+          0.9998818635940552
         ],
         [
-          2.3139464246924035e-05,
-          6.908049545018002e-05,
-          0.9999077320098877
+          2.2084514057496563e-05,
+          0.00014509126776829362,
+          0.9998327493667603
         ],
         [
-          1.6277886970783584e-05,
-          0.00016342666640412062,
-          0.9998202919960022
+          1.4110009942669421e-05,
+          0.0002044972061412409,
+          0.9997814297676086
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_7 ⟹ P_6",
+      "translation": "If Alice studies hard before exams, then it is consistent with the claim that she typically studies hard before exams.",
+      "evidence": "Sentence 3",
+      "reasoning": "Modal-pattern constraint required by the methodology: a base occurrence is compatible with the modal statement.",
+      "list nli": [
+        [
+          6.76197960274294e-05,
+          0.0001427189854439348,
+          0.9997896552085876
+        ],
+        [
+          0.00015375448856502771,
+          0.0005005398998036981,
+          0.9993457198143005
+        ],
+        [
+          7.876598101574928e-05,
+          0.0007157314103096724,
+          0.9992055296897888
         ]
       ]
     },
@@ -559,11 +347,11 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
-      "id": "C_26",
-      "formula": "P_6 ⟹ P_3",
+      "id": "C_11",
+      "formula": "P_7 ⟹ P_4",
       "translation": "If Alice studies hard before exams, then Alice studies hard.",
-      "evidence": "Sentence 3 (studies hard before exams), Sentence 2 (studies hard)",
-      "reasoning": "Common-sense semantic entailment: studying hard before exams is a specific case of studying hard.",
+      "evidence": "Sentence 3",
+      "reasoning": "Studying hard before exams is a specific case of studying hard (semantic entailment).",
       "list nli": [
         [
           0.00044041042565368116,
@@ -587,26 +375,26 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_27",
-      "formula": "¬P_16",
-      "translation": "It is not the case that Alice is a high school student.",
-      "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence",
+      "id": "C_12",
+      "formula": "(P_8 ⟹ P_9)",
+      "translation": "When Alice is focused, she completes her assignments on time.",
+      "evidence": "Sentence 4",
+      "reasoning": "Explicit conditional ('When ...').",
       "list nli": [
         [
-          0.025523042306303978,
-          0.0029119302053004503,
-          0.9715650081634521
+          3.4886681532952935e-05,
+          0.00011359249037923291,
+          0.9998514652252197
         ],
         [
-          0.7654482126235962,
-          0.003287818282842636,
-          0.23126401007175446
+          1.6277886970783584e-05,
+          0.00016342666640412062,
+          0.9998202919960022
         ],
         [
-          0.9788123965263367,
-          0.0013033206341788173,
-          0.019884299486875534
+          4.723051915789256e-06,
+          0.0002485543373040855,
+          0.9997467398643494
         ]
       ]
     },
@@ -615,26 +403,334 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_28",
-      "formula": "P_1 ⟹ ¬P_16",
-      "translation": "If Alice is a university student, then Alice is not a high school student.",
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over education_level domain with weight 1.0",
+      "id": "C_15",
+      "formula": "P_10",
+      "translation": "Alice sometimes gets distracted by social media.",
+      "evidence": "Sentence 5",
+      "reasoning": "The modal claim itself is explicitly asserted.",
       "list nli": [
         [
-          0.01704779639840126,
-          0.023573581129312515,
-          0.9593786001205444
+          3.155576268909499e-05,
+          4.6800611016806215e-05,
+          0.9999216794967651
         ],
         [
-          0.030768966302275658,
-          0.010271850973367691,
-          0.9589592218399048
+          2.813558603520505e-05,
+          5.4551830544369295e-05,
+          0.9999172687530518
         ],
         [
-          0.02710101008415222,
-          0.02089371718466282,
-          0.9520052671432495
+          4.832149716094136e-05,
+          3.610374187701382e-05,
+          0.999915599822998
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "P_11 ⟹ P_10",
+      "translation": "If Alice gets distracted by social media, then it is consistent with the claim that she sometimes gets distracted by social media.",
+      "evidence": "Sentence 5",
+      "reasoning": "Modal-pattern constraint required by the methodology.",
+      "list nli": [
+        [
+          7.987603748915717e-05,
+          0.0021557433065027,
+          0.9977643489837646
+        ],
+        [
+          0.00022986147087067366,
+          0.003244207240641117,
+          0.9965259432792664
+        ],
+        [
+          0.0013715563109144568,
+          0.005933407694101334,
+          0.9926950931549072
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_18",
+      "formula": "P_12",
+      "translation": "Alice works part-time.",
+      "evidence": "Sentence 6",
+      "reasoning": "Directly asserted.",
+      "list nli": [
+        [
+          0.0006517245783470571,
+          8.240174065576866e-05,
+          0.9992658495903015
+        ],
+        [
+          0.005092199891805649,
+          0.00013856831355951726,
+          0.9947691559791565
+        ],
+        [
+          0.006586208939552307,
+          0.0002712022396735847,
+          0.9931426048278809
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_19",
+      "formula": "P_13",
+      "translation": "Alice works at the campus library.",
+      "evidence": "Sentence 6",
+      "reasoning": "Directly asserted.",
+      "list nli": [
+        [
+          9.988591045839712e-05,
+          0.00019461750343907624,
+          0.9997054934501648
+        ],
+        [
+          0.0009094211272895336,
+          8.899277599994093e-05,
+          0.9990015625953674
+        ],
+        [
+          0.0017288574017584324,
+          0.00044518051436170936,
+          0.9978259205818176
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_20",
+      "formula": "P_14",
+      "translation": "Her assignments are due every Friday.",
+      "evidence": "Sentence 7",
+      "reasoning": "The schedule/frequency claim itself is explicitly asserted.",
+      "list nli": [
+        [
+          1.5050163710839115e-05,
+          6.264159310376272e-05,
+          0.9999222755432129
+        ],
+        [
+          3.8891965232323855e-05,
+          3.8990161556284875e-05,
+          0.9999221563339233
+        ],
+        [
+          1.8858145267586224e-05,
+          7.837150769773871e-05,
+          0.9999027252197266
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_21",
+      "formula": "P_15",
+      "translation": "Her assignments are due Friday.",
+      "evidence": "Sentence 7",
+      "reasoning": "Derived base event from 'every'; 'every Friday' strongly supports 'due Friday' as a recurring due-day.",
+      "list nli": [
+        [
+          1.9631164832389913e-05,
+          5.941637937212363e-05,
+          0.9999209642410278
+        ],
+        [
+          2.8553909942274913e-05,
+          5.074977525509894e-05,
+          0.9999207258224487
+        ],
+        [
+          2.8436255888664164e-05,
+          8.089851326076314e-05,
+          0.9998906850814819
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_22",
+      "formula": "P_15 ⟹ P_14",
+      "translation": "If her assignments are due Friday, then it is consistent with the claim that they are due every Friday.",
+      "evidence": "Sentence 7",
+      "reasoning": "Modal/frequency pattern constraint required by the methodology.",
+      "list nli": [
+        [
+          2.3988959583221003e-05,
+          0.00014790627756156027,
+          0.9998281002044678
+        ],
+        [
+          8.719295874470845e-05,
+          0.0001851709239417687,
+          0.9997276663780212
+        ],
+        [
+          0.00016362121095880866,
+          0.00039980755536817014,
+          0.9994365572929382
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_23",
+      "formula": "P_16",
+      "translation": "Alice has assignments.",
+      "evidence": "Sentence 7",
+      "reasoning": "Having due assignments presupposes the existence of assignments.",
+      "list nli": [
+        [
+          1.812946720747277e-05,
+          0.003302093828096986,
+          0.9966797828674316
+        ],
+        [
+          4.0662001993041486e-05,
+          0.008715923875570297,
+          0.9912434816360474
+        ],
+        [
+          4.411785630509257e-05,
+          0.013947012834250927,
+          0.9860088229179382
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_24",
+      "formula": "P_14 ⟹ P_16",
+      "translation": "If her assignments are due every Friday, then Alice has assignments.",
+      "evidence": "Sentence 7",
+      "reasoning": "Semantic presupposition: something cannot be 'due' unless it exists.",
+      "list nli": [
+        [
+          1.5538644220214337e-05,
+          0.0001415719889337197,
+          0.9998428821563721
+        ],
+        [
+          0.00020800656056962907,
+          7.374877168331295e-05,
+          0.9997182488441467
+        ],
+        [
+          0.00013272477372083813,
+          0.00025173506583087146,
+          0.9996155500411987
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_25",
+      "formula": "P_15 ⟹ P_16",
+      "translation": "If her assignments are due Friday, then Alice has assignments.",
+      "evidence": "Sentence 7",
+      "reasoning": "Same presupposition applied to the base due-date statement.",
+      "list nli": [
+        [
+          3.144529910059646e-05,
+          0.0001194292344735004,
+          0.9998490810394287
+        ],
+        [
+          0.00027498070267029107,
+          0.00014645008195657283,
+          0.9995785355567932
+        ],
+        [
+          0.0003029927902389318,
+          0.00015622947830706835,
+          0.9995408058166504
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_26",
+      "formula": "P_9 ⟹ P_16",
+      "translation": "If Alice completes her assignments on time, then Alice has assignments.",
+      "evidence": "Sentence 4",
+      "reasoning": "Completing 'her assignments' presupposes she has assignments.",
+      "list nli": [
+        [
+          0.0001849441759986803,
+          0.0002033757627941668,
+          0.9996116757392883
+        ],
+        [
+          0.02286919578909874,
+          0.0113015566021204,
+          0.9658293128013611
+        ],
+        [
+          0.04231983795762062,
+          0.005480517633259296,
+          0.9521995782852173
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_27",
+      "formula": "P_17",
+      "translation": "Alice rarely studies late at night.",
+      "evidence": "Sentence 8",
+      "reasoning": "The modal claim itself is explicitly asserted.",
+      "list nli": [
+        [
+          3.675624611787498e-05,
+          5.839655932504684e-05,
+          0.9999048709869385
+        ],
+        [
+          4.9985254008788615e-05,
+          4.896859536529519e-05,
+          0.9999010562896729
+        ],
+        [
+          5.3536925406660885e-05,
+          4.7171390178846195e-05,
+          0.9998992681503296
         ]
       ]
     },
@@ -644,7 +740,175 @@
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_29",
-      "formula": "¬P_17",
+      "formula": "P_18 ⟹ P_17",
+      "translation": "If Alice studies late at night, then it is consistent with the claim that she rarely studies late at night.",
+      "evidence": "Sentence 8",
+      "reasoning": "Modal-pattern constraint required by the methodology.",
+      "list nli": [
+        [
+          0.001455347053706646,
+          0.0006529735401272774,
+          0.9978917241096497
+        ],
+        [
+          0.0003228721325285733,
+          0.0018419547704979777,
+          0.9978352189064026
+        ],
+        [
+          0.0015394666697829962,
+          0.0007880479679442942,
+          0.9976724982261658
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_30",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'typically' implies the base event occurs (at least sometimes)",
+      "list nli": [
+        [
+          0.00047773809637874365,
+          0.0019205110147595406,
+          0.9976018071174622
+        ],
+        [
+          0.029213815927505493,
+          0.030698906630277634,
+          0.9400873184204102
+        ],
+        [
+          0.02311718463897705,
+          0.0692797526717186,
+          0.9076030254364014
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_31",
+      "formula": "P_10 ⟹ P_11",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'sometimes' implies the base event occurs (at least sometimes)",
+      "list nli": [
+        [
+          0.00047773809637874365,
+          0.0019205110147595406,
+          0.9976018071174622
+        ],
+        [
+          0.029213815927505493,
+          0.030698906630277634,
+          0.9400873184204102
+        ],
+        [
+          0.02311718463897705,
+          0.0692797526717186,
+          0.9076030254364014
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_32",
+      "formula": "P_17 ⟹ P_18",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'rarely' implies the base event occurs (at least sometimes)",
+      "list nli": [
+        [
+          0.00047773809637874365,
+          0.0019205110147595406,
+          0.9976018071174622
+        ],
+        [
+          0.029213815927505493,
+          0.030698906630277634,
+          0.9400873184204102
+        ],
+        [
+          0.02311718463897705,
+          0.0692797526717186,
+          0.9076030254364014
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_33",
+      "formula": "¬P_19",
+      "translation": "It is not the case that Alice is a middle school student.",
+      "evidence": "Auto-generated",
+      "reasoning": "Negation of auxiliary proposition - definitional consequence",
+      "list nli": [
+        [
+          0.0033001434057950974,
+          0.00012317666551098228,
+          0.9965766072273254
+        ],
+        [
+          0.008781434036791325,
+          0.0011161045404151082,
+          0.9901024103164673
+        ],
+        [
+          0.04898618534207344,
+          0.005410617683082819,
+          0.9456032514572144
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_34",
+      "formula": "P_1 ⟹ ¬P_19",
+      "translation": "If Alice is a university student, then Alice is not a middle school student.",
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over education_level domain with weight 1.0",
+      "list nli": [
+        [
+          0.004057159647345543,
+          0.005235359072685242,
+          0.990707516670227
+        ],
+        [
+          0.08800249546766281,
+          0.7331339120864868,
+          0.17886359989643097
+        ],
+        [
+          0.02014806494116783,
+          0.9160119891166687,
+          0.06383992731571198
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_35",
+      "formula": "¬P_20",
       "translation": "It is not the case that Alice studies biology.",
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence",
@@ -660,9 +924,9 @@
           0.9802245497703552
         ],
         [
-          0.9338332414627075,
-          0.0002505689626559615,
-          0.06591618061065674
+          0.2760688066482544,
+          0.0006552215781994164,
+          0.7232760190963745
         ]
       ]
     },
@@ -671,8 +935,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_30",
-      "formula": "P_2 ⟹ ¬P_17",
+      "id": "C_36",
+      "formula": "P_3 ⟹ ¬P_20",
       "translation": "If Alice studies computer science, then Alice does not study biology.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0",
@@ -699,21 +963,21 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_31",
-      "formula": "¬P_18",
+      "id": "C_37",
+      "formula": "¬P_21",
       "translation": "It is not the case that Alice studies mathematics.",
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence",
       "list nli": [
         [
-          0.00459724385291338,
-          0.00035136876977048814,
-          0.9950514435768127
-        ],
-        [
           0.006059741135686636,
           0.00019336528202984482,
           0.9937468767166138
+        ],
+        [
+          0.011730344034731388,
+          0.0003290864988230169,
+          0.9879405498504639
         ],
         [
           0.031448572874069214,
@@ -727,21 +991,21 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_32",
-      "formula": "P_2 ⟹ ¬P_18",
+      "id": "C_38",
+      "formula": "P_3 ⟹ ¬P_21",
       "translation": "If Alice studies computer science, then Alice does not study mathematics.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0",
       "list nli": [
         [
-          0.0004619838437065482,
-          0.0004939839709550142,
-          0.9990440011024475
-        ],
-        [
           0.0012514193076640368,
           0.00022615166381001472,
           0.9985224604606628
+        ],
+        [
+          0.005100055132061243,
+          0.00039652714622206986,
+          0.994503378868103
         ],
         [
           0.016172301024198532,
@@ -755,8 +1019,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_33",
-      "formula": "¬P_19",
+      "id": "C_39",
+      "formula": "¬P_22",
       "translation": "It is not the case that Alice studies physics.",
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence",
@@ -772,9 +1036,9 @@
           0.9881950616836548
         ],
         [
-          0.865431547164917,
-          0.00028094774461351335,
-          0.13428758084774017
+          0.021928709000349045,
+          0.00035977887455374,
+          0.9777114987373352
         ]
       ]
     },
@@ -783,8 +1047,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_34",
-      "formula": "P_2 ⟹ ¬P_19",
+      "id": "C_40",
+      "formula": "P_3 ⟹ ¬P_22",
       "translation": "If Alice studies computer science, then Alice does not study physics.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0",
@@ -795,9 +1059,9 @@
           0.9975582361221313
         ],
         [
-          0.0008774794987402856,
-          0.0016728248447179794,
-          0.9974496960639954
+          0.006601832807064056,
+          0.0012179577024653554,
+          0.9921802282333374
         ],
         [
           0.09840469062328339,
@@ -811,21 +1075,21 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_35",
-      "formula": "¬P_20",
+      "id": "C_41",
+      "formula": "¬P_23",
       "translation": "It is not the case that Alice studies chemistry.",
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence",
       "list nli": [
         [
-          0.00015213974984362721,
-          4.313384852139279e-05,
-          0.9998047947883606
-        ],
-        [
           0.013707677833735943,
           0.00019332949887029827,
           0.9860990047454834
+        ],
+        [
+          0.0345546156167984,
+          0.00024881219724193215,
+          0.9651965498924255
         ],
         [
           0.1764572560787201,
@@ -839,21 +1103,21 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_36",
-      "formula": "P_2 ⟹ ¬P_20",
+      "id": "C_42",
+      "formula": "P_3 ⟹ ¬P_23",
       "translation": "If Alice studies computer science, then Alice does not study chemistry.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over academic_major domain with weight 1.0",
       "list nli": [
         [
-          0.0015074166003614664,
-          0.0033089451026171446,
-          0.9951836466789246
-        ],
-        [
           0.0052474141120910645,
           0.0004321129235904664,
           0.9943205118179321
+        ],
+        [
+          0.08260487765073776,
+          0.002802303060889244,
+          0.9145928621292114
         ],
         [
           0.952049732208252,
@@ -867,26 +1131,26 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_37",
-      "formula": "¬P_21",
+      "id": "C_43",
+      "formula": "¬P_24",
       "translation": "It is not the case that Alice completes assignments late.",
       "evidence": "Auto-generated",
       "reasoning": "Negation of auxiliary proposition - definitional consequence",
       "list nli": [
         [
-          8.595702820457518e-05,
-          0.00014695637219119817,
-          0.9997671246528625
+          7.313348032766953e-05,
+          0.0003114833089057356,
+          0.9996153116226196
         ],
         [
-          0.0003086186770815402,
-          0.0002630692906677723,
-          0.9994283318519592
+          0.001246139407157898,
+          0.0025679366663098335,
+          0.9961859583854675
         ],
         [
-          0.0003080023161601275,
-          0.0006145221996121109,
-          0.9990774393081665
+          0.0027033176738768816,
+          0.0011419220827519894,
+          0.9961547255516052
         ]
       ]
     },
@@ -895,26 +1159,26 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_38",
-      "formula": "P_8 ⟹ ¬P_21",
+      "id": "C_44",
+      "formula": "P_9 ⟹ ¬P_24",
       "translation": "If Alice completes assignments on time, then Alice does not complete assignments late.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over timing_modifier domain with weight 1.0",
       "list nli": [
         [
-          8.403909305343404e-05,
-          0.00016645423602312803,
-          0.999749481678009
+          8.08780241641216e-05,
+          0.00019672927737701684,
+          0.999722421169281
         ],
         [
-          0.00013167700672056526,
-          0.00029432561132125556,
-          0.9995740056037903
+          0.00010306173498975113,
+          0.0004469773266464472,
+          0.9994499087333679
         ],
         [
-          0.00012291542952880263,
-          0.0004273443773854524,
-          0.9994497895240784
+          6.0809248680016026e-05,
+          0.0009041436715051532,
+          0.999035120010376
         ]
       ]
     },
@@ -923,26 +1187,26 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_39",
-      "formula": "¬P_22",
-      "translation": "It is not the case that Alice works full-time.",
+      "id": "C_45",
+      "formula": "P_2 ⟹ ¬P_19",
+      "translation": "If Alice is a student. then not Alice is a middle school student.",
       "evidence": "Auto-generated",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence",
+      "reasoning": "Mutual exclusion constraint between original and auxiliary",
       "list nli": [
         [
-          0.0027399754617363214,
-          0.0012486223131418228,
-          0.9960113763809204
+          0.00010805451165651903,
+          0.0001591777108842507,
+          0.9997327923774719
         ],
         [
-          0.010363890789449215,
-          0.0012644183589145541,
-          0.9883716702461243
+          0.00031815256807021797,
+          0.00012718756624963135,
+          0.9995546936988831
         ],
         [
-          0.011869818903505802,
-          0.002227724064141512,
-          0.9859024286270142
+          0.00039273122092708945,
+          0.00013716251123696566,
+          0.9994701743125916
         ]
       ]
     },
@@ -951,36 +1215,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_40",
-      "formula": "P_11 ⟹ ¬P_22",
-      "translation": "If Alice works part-time, then Alice does not work full-time.",
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion over employment_type domain with weight 1.0",
-      "list nli": [
-        [
-          0.025170879438519478,
-          0.014875063672661781,
-          0.959954023361206
-        ],
-        [
-          0.02033972181379795,
-          0.11043441295623779,
-          0.8692259192466736
-        ],
-        [
-          0.030650263652205467,
-          0.8692454695701599,
-          0.10010425001382828
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_41",
-      "formula": "P_3 ⟹ ¬P_17",
+      "id": "C_46",
+      "formula": "P_4 ⟹ ¬P_20",
       "translation": "If Alice studies hard. then not Alice studies biology.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary",
@@ -1007,8 +1243,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_42",
-      "formula": "P_3 ⟹ ¬P_18",
+      "id": "C_47",
+      "formula": "P_4 ⟹ ¬P_21",
       "translation": "If Alice studies hard. then not Alice studies mathematics.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary",
@@ -1019,9 +1255,9 @@
           0.9971101880073547
         ],
         [
-          0.011672967113554478,
-          0.0007085970137268305,
-          0.9876184463500977
+          0.0057651326060295105,
+          0.0005235324497334659,
+          0.9937113523483276
         ],
         [
           0.036450959742069244,
@@ -1035,8 +1271,8 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_43",
-      "formula": "P_3 ⟹ ¬P_19",
+      "id": "C_48",
+      "formula": "P_4 ⟹ ¬P_22",
       "translation": "If Alice studies hard. then not Alice studies physics.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary",
@@ -1063,21 +1299,21 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_44",
-      "formula": "P_3 ⟹ ¬P_20",
+      "id": "C_49",
+      "formula": "P_4 ⟹ ¬P_23",
       "translation": "If Alice studies hard. then not Alice studies chemistry.",
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion constraint between original and auxiliary",
       "list nli": [
         [
+          0.0025899005122482777,
+          0.00039495108649134636,
+          0.997015118598938
+        ],
+        [
           0.003079407848417759,
           6.729752931278199e-05,
           0.9968532919883728
-        ],
-        [
-          0.004139469005167484,
-          0.000342691782861948,
-          0.995517909526825
         ],
         [
           0.00406788382679224,
@@ -1085,47 +1321,77 @@
           0.9953593611717224
         ]
       ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
-      "hardness_constant": 0.9,
-      "id": "C_45",
-      "formula": "P_8 ⟹ ¬P_22",
-      "translation": "If Alice completes her assignments on time. then not Alice works full-time.",
-      "evidence": "Auto-generated",
-      "reasoning": "Mutual exclusion constraint between original and auxiliary",
-      "list nli": [
-        [
-          7.607983570778742e-05,
-          7.160417590057477e-05,
-          0.9998522996902466
-        ],
-        [
-          0.00013032667629886419,
-          0.0001246486499439925,
-          0.9997450709342957
-        ],
-        [
-          1.2292219253140502e-05,
-          0.00028209431911818683,
-          0.9997056126594543
-        ]
-      ]
     }
   ],
   "soft_constraints": [
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_4",
+      "translation": "Alice studies hard.",
+      "evidence": "Sentences 2-3",
+      "reasoning": "Not stated as an unconditional fact, but supported by 'typically studies hard before exams'.",
+      "list nli": [
+        [
+          1.172406155092176e-05,
+          0.00015106335922610015,
+          0.9998371601104736
+        ],
+        [
+          4.494200038607232e-05,
+          0.00019451763364486396,
+          0.9997605681419373
+        ],
+        [
+          2.840536762960255e-05,
+          0.000975624774582684,
+          0.9989959597587585
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.5,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.5,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_5",
+      "translation": "Alice passes her exams.",
+      "evidence": "Sentence 2",
+      "reasoning": "Only appears as the consequent of a conditional; the text does not assert it occurs.",
+      "list nli": [
+        [
+          2.0418528947629966e-05,
+          0.0002478615497238934,
+          0.999731719493866
+        ],
+        [
+          1.6951284123933874e-05,
+          0.0002733394503593445,
+          0.9997096657752991
+        ],
+        [
+          2.784285788948182e-05,
+          0.00027767010033130646,
+          0.9996944665908813
+        ]
+      ],
+      "weight": 0.5
+    },
     {
       "llm-weight": 0.8,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.8,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_6",
+      "id": "C_9",
+      "formula": "P_7",
       "translation": "Alice studies hard before exams.",
       "evidence": "Sentence 3",
-      "reasoning": "\"Typically\" indicates a strong but not absolute tendency; the base event is likely but not guaranteed.",
+      "reasoning": "Derived base event from 'typically'; 'typically' indicates a strong but non-certain frequency.",
       "list nli": [
         [
           9.959974704543129e-06,
@@ -1133,9 +1399,9 @@
           0.999800980091095
         ],
         [
-          1.9514594896463677e-05,
-          0.00022363172320183367,
-          0.9997568726539612
+          1.2312468243180774e-05,
+          0.0003221630468033254,
+          0.9996654987335205
         ],
         [
           9.231235708284657e-06,
@@ -1146,49 +1412,78 @@
       "weight": 0.8
     },
     {
-      "llm-weight": 0.8,
+      "llm-weight": 0.5,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.8,
+      "combined=(llm)*(nli)": 0.5,
       "hardness_constant": 0.9,
-      "id": "C_6",
-      "formula": "P_5 ⟹ P_6",
-      "translation": "If Alice typically studies hard before exams, then Alice studies hard before exams (as a likely base behavior).",
-      "evidence": "Sentence 3",
-      "reasoning": "A 'typically' statement supports the base behavior with the same strength as the typicality level.",
+      "id": "C_13",
+      "formula": "P_8",
+      "translation": "Alice is focused.",
+      "evidence": "Sentence 4",
+      "reasoning": "Mentioned only as a condition; no assertion that she is focused.",
       "list nli": [
         [
-          0.0003520158934406936,
-          0.0002972600923385471,
-          0.9993507266044617
+          4.441236887942068e-05,
+          0.001142068998888135,
+          0.9988135099411011
         ],
         [
-          0.000503256858792156,
-          0.0031276957597583532,
-          0.9963690042495728
+          4.845764487981796e-05,
+          0.002052299678325653,
+          0.9978991746902466
         ],
         [
-          0.0009286879794672132,
-          0.0035616736859083176,
-          0.9955096244812012
+          9.31633185246028e-05,
+          0.008778253570199013,
+          0.9911285638809204
         ]
       ],
-      "weight": 0.8
+      "weight": 0.5
+    },
+    {
+      "llm-weight": 0.5,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.5,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_9",
+      "translation": "Alice completes her assignments on time.",
+      "evidence": "Sentence 4",
+      "reasoning": "Mentioned only as a conditional consequent; not asserted unconditionally.",
+      "list nli": [
+        [
+          9.782530469237827e-06,
+          0.0001906956167658791,
+          0.9997995495796204
+        ],
+        [
+          1.2743461411446333e-05,
+          0.0002615740231703967,
+          0.9997256398200989
+        ],
+        [
+          7.185075446614064e-06,
+          0.0002679658937267959,
+          0.999724805355072
+        ]
+      ],
+      "weight": 0.5
     },
     {
       "llm-weight": 0.4,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.4,
       "hardness_constant": 0.9,
-      "id": "C_8",
-      "formula": "P_10",
+      "id": "C_16",
+      "formula": "P_11",
       "translation": "Alice gets distracted by social media.",
       "evidence": "Sentence 5",
-      "reasoning": "\"Sometimes\" indicates the base event occurs occasionally; weaker support than 'typically'.",
+      "reasoning": "'Sometimes' indicates a weak-to-moderate frequency for the base event.",
       "list nli": [
         [
-          0.00041997910011559725,
-          7.384289347101003e-05,
-          0.9995061159133911
+          0.0009617963223718107,
+          8.402959792874753e-05,
+          0.998954176902771
         ],
         [
           0.0011701835319399834,
@@ -1204,44 +1499,15 @@
       "weight": 0.4
     },
     {
-      "llm-weight": 0.4,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.4,
-      "hardness_constant": 0.9,
-      "id": "C_10",
-      "formula": "P_9 ⟹ P_10",
-      "translation": "If Alice sometimes gets distracted by social media, then Alice gets distracted by social media (as an occasional base behavior).",
-      "evidence": "Sentence 5",
-      "reasoning": "A 'sometimes' statement provides limited support that the base event occurs.",
-      "list nli": [
-        [
-          0.00011009488662239164,
-          0.0006294000195339322,
-          0.9992604851722717
-        ],
-        [
-          0.0005564595921896398,
-          0.00036253032158128917,
-          0.999081015586853
-        ],
-        [
-          0.00017314327124040574,
-          0.0009207812836393714,
-          0.9989060163497925
-        ]
-      ],
-      "weight": 0.4
-    },
-    {
       "llm-weight": 0.2,
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.2,
       "hardness_constant": 0.9,
-      "id": "C_12",
-      "formula": "P_15",
+      "id": "C_28",
+      "formula": "P_18",
       "translation": "Alice studies late at night.",
       "evidence": "Sentence 8",
-      "reasoning": "\"Rarely\" indicates low frequency; the base event is weakly supported.",
+      "reasoning": "'Rarely' indicates low frequency/likelihood of the base event.",
       "list nli": [
         [
           6.1569589888677e-05,
@@ -1260,151 +1526,6 @@
         ]
       ],
       "weight": 0.2
-    },
-    {
-      "llm-weight": 0.2,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.2,
-      "hardness_constant": 0.9,
-      "id": "C_14",
-      "formula": "P_14 ⟹ P_15",
-      "translation": "If Alice rarely studies late at night, then Alice studies late at night (as an infrequent base behavior).",
-      "evidence": "Sentence 8",
-      "reasoning": "A 'rarely' statement gives weak support that the base event occurs at all.",
-      "list nli": [
-        [
-          0.002085949294269085,
-          0.0003992460551671684,
-          0.9975148439407349
-        ],
-        [
-          0.0008159340941347182,
-          0.002645215019583702,
-          0.9965388774871826
-        ],
-        [
-          0.000599581515416503,
-          0.0032538059167563915,
-          0.996146559715271
-        ]
-      ],
-      "weight": 0.2
-    },
-    {
-      "llm-weight": 0.7,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.7,
-      "hardness_constant": 0.9,
-      "id": "C_21",
-      "formula": "P_3",
-      "translation": "Alice studies hard.",
-      "evidence": "Sentence 3 (supports studying hard before exams), Sentence 2 (uses \"studies hard\" as a condition)",
-      "reasoning": "Not directly asserted as always true, but supported because she typically studies hard before exams, which suggests she does study hard at least in that context.",
-      "list nli": [
-        [
-          1.172406155092176e-05,
-          0.00015106335922610015,
-          0.9998371601104736
-        ],
-        [
-          2.840536762960255e-05,
-          0.000975624774582684,
-          0.9989959597587585
-        ],
-        [
-          2.567173396528233e-05,
-          0.0012554170098155737,
-          0.9987189769744873
-        ]
-      ],
-      "weight": 0.7
-    },
-    {
-      "llm-weight": 0.5,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.5,
-      "hardness_constant": 0.9,
-      "id": "C_22",
-      "formula": "P_4",
-      "translation": "Alice passes her exams.",
-      "evidence": "Sentence 2",
-      "reasoning": "The text states only a conditional relationship; it does not assert she actually passes, so support is neutral/underdetermined.",
-      "list nli": [
-        [
-          2.0418528947629966e-05,
-          0.0002478615497238934,
-          0.999731719493866
-        ],
-        [
-          9.455781400902197e-05,
-          0.00017802701040636748,
-          0.9997274279594421
-        ],
-        [
-          2.784285788948182e-05,
-          0.00027767010033130646,
-          0.9996944665908813
-        ]
-      ],
-      "weight": 0.5
-    },
-    {
-      "llm-weight": 0.5,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.5,
-      "hardness_constant": 0.9,
-      "id": "C_24",
-      "formula": "P_7",
-      "translation": "Alice is focused.",
-      "evidence": "Sentence 4",
-      "reasoning": "Mentioned as a condition but not asserted to hold; the text provides no direct evidence that she is focused.",
-      "list nli": [
-        [
-          4.041142892674543e-05,
-          0.0012901268200948834,
-          0.9986695051193237
-        ],
-        [
-          4.845764487981796e-05,
-          0.002052299678325653,
-          0.9978991746902466
-        ],
-        [
-          7.93275612522848e-05,
-          0.036640241742134094,
-          0.9632803797721863
-        ]
-      ],
-      "weight": 0.5
-    },
-    {
-      "llm-weight": 0.5,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.5,
-      "hardness_constant": 0.9,
-      "id": "C_25",
-      "formula": "P_8",
-      "translation": "Alice completes her assignments on time.",
-      "evidence": "Sentence 4",
-      "reasoning": "Stated only as the consequent of a 'when' conditional; not asserted as a fact without assuming the condition holds.",
-      "list nli": [
-        [
-          2.8889820896438323e-05,
-          5.945118755334988e-05,
-          0.9999116659164429
-        ],
-        [
-          3.3349911973346025e-05,
-          6.86866624164395e-05,
-          0.9998979568481445
-        ],
-        [
-          3.496914359857328e-05,
-          0.0001509324210928753,
-          0.9998140931129456
-        ]
-      ],
-      "weight": 0.5
     }
   ]
 }

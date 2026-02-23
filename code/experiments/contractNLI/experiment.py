@@ -2,20 +2,6 @@
 """
 experiment code
 
-Debug-focused + metrics-rich experiment runner for ContractNLI-style JSON files.
-
-Simple folder structure in this directory:
-- dataset/   -> dataset files (train/dev/test)
-- cache/          -> cached logified files
-- results/        -> experiment output JSON and optional debug reports
-
-Usage:
-    python experiment_feb20.py --dataset-path dataset/dev.json
-    python experiment_feb20.py --dataset-path dataset/data_test.json --doc-id 3 --hypothesis-key nda-1
-    python experiment_feb20.py --dataset-path dataset/dev.json --doc-ids 3,7,9 --verbose
-
-Environment:
-    OPENROUTER_API_KEY: API key (used if --api-key not provided)
 """
 
 import argparse
@@ -55,6 +41,7 @@ RESULTS_DIR = _script_dir / "results"
 DEFAULT_DATASET_PATH = DATASET_DIR / "dev.json"
 DEFAULT_DOC_IDS = [7]
 
+#DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
 
 
 
