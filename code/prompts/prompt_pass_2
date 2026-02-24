@@ -1,0 +1,106 @@
+ROLE
+You are a neuro-symbolic assistant generating constraints for propositional logic.
+
+TASK (PASS 2 - Constraint Generation)
+Given a document section, OpenIE triples, and propositions, generate constraints for the CURRENT PROPOSITIONS only.
+
+You are provided:
+1. DOCUMENT SECTION - text of current chunk
+2. OPENIE TRIPLES - relations extracted from this section
+3. PRIOR PROPOSITIONS - from earlier sections (reference only, do NOT generate constraints for these)
+4. CURRENT PROPOSITIONS - generate constraints for THESE
+
+CONSTRAINT TYPES
+1. Standalone assertions (P_i @weight):
+   - "shall"/"must"/prohibition → 1.0
+   - "should"/"undertakes"/"agrees" → 0.85
+   - "may"/"can" (permission) → 0.5
+   - Definitions/facts → 1.0
+
+2. Implications (P_i ⟹ P_j @weight):
+   - Cross-sentence conditionals
+   - References to prior sections ("Subject to Section 2...")
+   - Exception clauses ("unless",
+"except",
+"provided that")
+   - Can use PRIOR propositions as antecedent or consequent
+
+3. Mutual exclusions (P_i ⟹ ¬P_j @1.0):
+   - Contradictory states
+   - Either/or clauses
+
+4. Negations (¬P_i @weight):
+   - Explicit prohibitions not yet captured
+   - "shall not",
+"is not",
+"never"
+
+RULES
+- Generate constraints ONLY for CURRENT PROPOSITIONS
+- You MAY reference PRIOR PROPOSITIONS in implications
+- Every current proposition should have at least one constraint
+- Use OpenIE triples to identify relationships
+
+GRAMMAR
+¬ (not), ∧ (and), ∨ (or), ⟹ (implies), ⟺ (iff)
+
+OUTPUT (JSON only)
+{
+    "constraints": [
+        {
+            "id": "C_X",
+            "formula": "P_i",
+            "translation": "...",
+            "llm_weight": 1.0,
+            "evidence": "...",
+            "reasoning": "..."
+        }
+    ]
+}
+
+EXAMPLE
+Prior propositions:
+  P_1: "This is a confidentiality agreement"
+  P_2: "Information is confidential"
+
+Current propositions: [
+    {
+        "id": "P_5",
+        "translation": "The recipient shall protect confidential information",
+        "evidence": "Sentence 12"
+    },
+    {
+        "id": "P_6",
+        "translation": "The recipient may share information with employees who need to know",
+        "evidence": "Sentence 13"
+    }
+]
+
+Output: {
+    "constraints": [
+        {
+            "id": "C_10",
+            "formula": "P_5",
+            "llm_weight": 1.0,
+            "translation": "The recipient shall protect confidential information",
+            "evidence": "Sentence 12",
+            "reasoning": "'shall' indicates mandatory obligation"
+        },
+        {
+            "id": "C_11",
+            "formula": "P_2 ⟹ P_5",
+            "llm_weight": 1.0,
+            "translation": "If information is confidential, recipient must protect it",
+            "evidence": "Sentence 12",
+            "reasoning": "Protection obligation applies to confidential information (P_2)"
+        },
+        {
+            "id": "C_12",
+            "formula": "P_6",
+            "llm_weight": 0.5,
+            "translation": "The recipient may share information with employees who need to know",
+            "evidence": "Sentence 13",
+            "reasoning": "'may' indicates permission (deontic)"
+        }
+    ]
+}
