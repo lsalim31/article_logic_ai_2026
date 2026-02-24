@@ -1,0 +1,121 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Olivia has always been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement containing 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "Olivia has been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Base proposition derived by removing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "Olivia prided herself on her ability to plant and care for beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic claim about Olivia's pride"
+    },
+    {
+      "id": "P_4",
+      "translation": "Olivia has the ability to plant beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Extracted component of 'ability to plant and care for beautiful trees'"
+    },
+    {
+      "id": "P_5",
+      "translation": "Olivia has the ability to care for beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Extracted component of 'ability to plant and care for beautiful trees'"
+    },
+    {
+      "id": "P_6",
+      "translation": "Olivia planted a tree",
+      "evidence": "Sentence 2",
+      "explanation": "Antecedent of the explicit conditional rule"
+    },
+    {
+      "id": "P_7",
+      "translation": "Olivia takes care of the tree she planted",
+      "evidence": "Sentence 2",
+      "explanation": "Consequent of the explicit conditional rule ('take care of it')"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Olivia has always been known for her green thumb",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Original statement with modal 'always' is asserted"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Olivia has been known for her green thumb",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "'always' corresponds to weight 1.0 for the base proposition"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Olivia has been known for her green thumb, then (in the modal pattern) Olivia has always been known for her green thumb",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required linkage constraint between base and modal proposition"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Olivia prided herself on her ability to plant and care for beautiful trees",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Olivia has the ability to plant beautiful trees",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion extracted from the sentence"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "Olivia has the ability to care for beautiful trees",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion extracted from the sentence"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If Olivia planted a tree, then Olivia takes care of the tree she planted",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit rule stated as a conditional ('if ..., then ...')"
+    },
+    {
+      "id": "C_8",
+      "formula": "¬P_7",
+      "translation": "Olivia does not take care of the tree she planted",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit negation ('she won't take care of it')"
+    },
+    {
+      "id": "C_9",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0"
+    }
+  ],
+  "_enrichment_log": []
+}

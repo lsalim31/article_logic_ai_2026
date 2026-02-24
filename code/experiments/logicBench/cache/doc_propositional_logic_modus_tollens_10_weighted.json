@@ -1,0 +1,81 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Elijah has a new job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the explicit conditional ('If Elijah has a new job...')."
+    },
+    {
+      "id": "P_2",
+      "translation": "Elijah will get a raise",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent of the explicit conditional ('...then he will get a raise')."
+    },
+    {
+      "id": "P_3",
+      "translation": "He would not be receiving the raise he had anticipated",
+      "evidence": "Sentence 1",
+      "explanation": "Standalone negated statement (about not receiving an anticipated raise)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Elijah has a new job, then Elijah will get a raise",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional stated in the text.",
+      "list nli": [
+        [
+          0.00021615505102090538,
+          3.587759056244977e-05,
+          0.9997479319572449
+        ],
+        [
+          6.624408342759125e-06,
+          0.00034916496952064335,
+          0.9996441602706909
+        ],
+        [
+          0.0005941968993283808,
+          0.00020397051412146538,
+          0.9992018342018127
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "He would not be receiving the raise he had anticipated",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted negated claim.",
+      "list nli": [
+        [
+          0.0002210850507253781,
+          6.447036867029965e-05,
+          0.9997144341468811
+        ],
+        [
+          0.9966811537742615,
+          0.00029701757011935115,
+          0.0030217308085411787
+        ],
+        [
+          7.357528374996036e-05,
+          0.9987315535545349,
+          0.0011948697501793504
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

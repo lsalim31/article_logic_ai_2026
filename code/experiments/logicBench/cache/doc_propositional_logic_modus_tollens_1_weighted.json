@@ -1,0 +1,292 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "evidence": "Sentence 0",
+      "explanation": "Factual event stated directly."
+    },
+    {
+      "id": "P_2",
+      "translation": "Liam would typically order pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement with 'typically'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Liam would order pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Derived base statement (modal removed) from 'would typically order pizza for dinner'."
+    },
+    {
+      "id": "P_4",
+      "translation": "Liam decided against ordering pizza",
+      "evidence": "Sentence 1",
+      "explanation": "Factual decision stated directly."
+    },
+    {
+      "id": "P_5",
+      "translation": "Liam opted for something else for dinner",
+      "evidence": "Sentence 1",
+      "explanation": "Factual action stated directly ('opted for something else instead')."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "evidence": "Sentence 0",
+      "reasoning": "Plain factual assertion.",
+      "list nli": [
+        [
+          0.008412810042500496,
+          0.00036548019852489233,
+          0.9912216663360596
+        ],
+        [
+          0.012349998578429222,
+          0.0002721172058954835,
+          0.9873778223991394
+        ],
+        [
+          0.9935979843139648,
+          0.0002610775991342962,
+          0.0061409673653542995
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Liam would typically order pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "Original modal ('typically') statement is asserted in the text.",
+      "list nli": [
+        [
+          1.0016176020144485e-05,
+          9.916535782394931e-05,
+          0.9998908042907715
+        ],
+        [
+          4.434341462911107e-06,
+          0.000323199899867177,
+          0.9996724128723145
+        ],
+        [
+          0.00026229480863548815,
+          0.00032608953188173473,
+          0.9994115829467773
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Liam would order pizza for dinner, then Liam would typically order pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "Modal-pattern constraint required by the rules: base implies modal version.",
+      "list nli": [
+        [
+          0.0005173443933017552,
+          0.0035700032021850348,
+          0.9959126114845276
+        ],
+        [
+          0.000590048439335078,
+          0.004285502713173628,
+          0.9951245188713074
+        ],
+        [
+          0.0001332521060248837,
+          0.027567612007260323,
+          0.9722991585731506
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Liam finished his work early for the day, then Liam would typically order pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "The phrase 'which meant that' indicates an explicit consequence from finishing early to the typical-ordering claim.",
+      "list nli": [
+        [
+          2.2403311959351413e-05,
+          0.00012539220915641636,
+          0.999852180480957
+        ],
+        [
+          4.150306267547421e-06,
+          0.0003506725188344717,
+          0.9996451139450073
+        ],
+        [
+          3.773095886572264e-05,
+          0.0003300276002846658,
+          0.9996322393417358
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_4",
+      "translation": "Liam decided against ordering pizza",
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion.",
+      "list nli": [
+        [
+          3.3978649298660457e-06,
+          0.0015173905994743109,
+          0.9984791874885559
+        ],
+        [
+          0.010202144272625446,
+          6.263398245209828e-05,
+          0.9897352457046509
+        ],
+        [
+          0.9962666630744934,
+          0.00016117561608552933,
+          0.003572178538888693
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_5",
+      "translation": "Liam opted for something else for dinner",
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion.",
+      "list nli": [
+        [
+          6.67907006572932e-05,
+          0.00013050097913946956,
+          0.9998027682304382
+        ],
+        [
+          0.00017880229279398918,
+          0.00020096400112379342,
+          0.9996201992034912
+        ],
+        [
+          8.609798896941356e-06,
+          0.037269771099090576,
+          0.962721586227417
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_5 ⟹ ¬P_3",
+      "translation": "If Liam opted for something else for dinner, then Liam would not order pizza for dinner",
+      "evidence": "Sentence 1",
+      "reasoning": "The word 'instead' indicates mutual exclusivity with ordering pizza that day.",
+      "list nli": [
+        [
+          9.741992835188285e-05,
+          0.00041080854134634137,
+          0.999491810798645
+        ],
+        [
+          5.99828599661123e-05,
+          0.0004605912254191935,
+          0.9994794726371765
+        ],
+        [
+          0.00010982398816850036,
+          0.0008881837711669505,
+          0.9990020394325256
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.65,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.65,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Liam would order pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "Base statement supported with strength corresponding to 'typically' (0.65).",
+      "list nli": [
+        [
+          4.769488805322908e-05,
+          4.4636690290644765e-05,
+          0.9999076128005981
+        ],
+        [
+          0.00011858573998324573,
+          2.8531097996165045e-05,
+          0.9998528957366943
+        ],
+        [
+          6.224468961590901e-05,
+          0.9987680315971375,
+          0.0011696630390360951
+        ]
+      ],
+      "weight": 0.65
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'typically' implies the base event occurs with weight 0.7",
+      "list nli": [
+        [
+          0.0007846924127079546,
+          0.006688707508146763,
+          0.992526650428772
+        ],
+        [
+          0.0026317881420254707,
+          0.010421648621559143,
+          0.9869465827941895
+        ],
+        [
+          0.004075179807841778,
+          0.03997466340661049,
+          0.955950140953064
+        ]
+      ],
+      "weight": 0.7
+    }
+  ]
+}

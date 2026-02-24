@@ -1,0 +1,313 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ethan has a passion for cooking",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic character attribute stated directly."
+    },
+    {
+      "id": "P_2",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic past event describing when the passion began."
+    },
+    {
+      "id": "P_3",
+      "translation": "Ethan's grandmother's delectable treats fueled Ethan's passion for cooking",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic causal-style statement (kept as a single proposition without 'if/and/or')."
+    },
+    {
+      "id": "P_4",
+      "translation": "Ethan's grandmother's treats are delectable",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic property of the grandmother's treats."
+    },
+    {
+      "id": "P_5",
+      "translation": "Ethan aspired to become a chef",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic goal/aspiration statement."
+    },
+    {
+      "id": "P_6",
+      "translation": "Ethan pursues the path of becoming a chef",
+      "evidence": "Sentence 1",
+      "explanation": "Condition part extracted from the embedded 'if he pursued this path...'."
+    },
+    {
+      "id": "P_7",
+      "translation": "Ethan makes a delicious cake",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent part extracted from the embedded conditional ('he would make a delicious cake')."
+    },
+    {
+      "id": "P_8",
+      "translation": "The cake is delicious",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic property of the cake, supported by the phrase 'delicious cake' (and OpenIE triple 'cake is delicious')."
+    },
+    {
+      "id": "P_9",
+      "translation": "Ethan believed that if he pursued the path of becoming a chef then he would make a delicious cake",
+      "evidence": "Sentence 1",
+      "explanation": "Belief-report proposition capturing that the conditional is inside Ethan's belief."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Ethan has a passion for cooking",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion.",
+      "list nli": [
+        [
+          1.6555733964196406e-05,
+          9.449015487916768e-05,
+          0.9998888969421387
+        ],
+        [
+          3.072424806305207e-05,
+          0.00011166647163918242,
+          0.9998575448989868
+        ],
+        [
+          7.367682883341331e-06,
+          0.0002636289282236248,
+          0.9997289776802063
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion.",
+      "list nli": [
+        [
+          8.229118066083174e-06,
+          0.00010469746484886855,
+          0.9998871088027954
+        ],
+        [
+          2.9038090360700153e-05,
+          0.00011286252993158996,
+          0.999858021736145
+        ],
+        [
+          5.563736522162799e-06,
+          0.00015207959222607315,
+          0.9998422861099243
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Ethan's grandmother's delectable treats fueled Ethan's passion for cooking",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion.",
+      "list nli": [
+        [
+          1.6104308087960817e-05,
+          7.27541628293693e-05,
+          0.9999111890792847
+        ],
+        [
+          1.0809157174662687e-05,
+          8.938142127590254e-05,
+          0.9998997449874878
+        ],
+        [
+          6.840573769295588e-05,
+          4.351654933998361e-05,
+          0.9998880624771118
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Ethan's grandmother's treats are delectable",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion.",
+      "list nli": [
+        [
+          0.00024275232863146812,
+          0.0002755975292529911,
+          0.999481737613678
+        ],
+        [
+          6.349938485072926e-05,
+          0.0006496506975963712,
+          0.9992868304252625
+        ],
+        [
+          0.0031589295249432325,
+          0.00020563643192872405,
+          0.9966354966163635
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "Ethan aspired to become a chef",
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative assertion.",
+      "list nli": [
+        [
+          1.858982432167977e-05,
+          6.870181823614985e-05,
+          0.9999127388000488
+        ],
+        [
+          1.1590494978008792e-05,
+          0.00017366130487062037,
+          0.9998148083686829
+        ],
+        [
+          4.3490085772646125e-06,
+          0.0002328556147404015,
+          0.9997628331184387
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_9",
+      "translation": "Ethan believed that if he pursued the path of becoming a chef then he would make a delicious cake",
+      "evidence": "Sentence 1",
+      "reasoning": "Belief report is explicitly stated.",
+      "list nli": [
+        [
+          2.5151925001409836e-05,
+          8.349751442437991e-05,
+          0.9998912811279297
+        ],
+        [
+          4.49043363914825e-05,
+          7.084252138156444e-05,
+          0.9998842477798462
+        ],
+        [
+          2.4385060896747746e-05,
+          0.00010026223753811792,
+          0.9998753070831299
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_9 ⟹ (P_6 ⟹ P_7)",
+      "translation": "If Ethan held that belief, then (if he pursues the chef path, he makes a delicious cake)",
+      "evidence": "Sentence 1",
+      "reasoning": "The embedded conditional content is licensed by the belief report.",
+      "list nli": [
+        [
+          4.5463850256055593e-05,
+          7.3453520599287e-05,
+          0.9998810291290283
+        ],
+        [
+          0.00010236044909106568,
+          0.00014491261390503496,
+          0.9997527003288269
+        ],
+        [
+          7.757502316962928e-05,
+          0.0005336811882443726,
+          0.9993886947631836
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If Ethan makes a delicious cake, then the cake is delicious",
+      "evidence": "Sentence 1",
+      "reasoning": "Semantic unpacking of 'makes a delicious cake' (and supported by the OpenIE 'cake is delicious').",
+      "list nli": [
+        [
+          6.331266922643408e-05,
+          0.00012149225221946836,
+          0.9998151659965515
+        ],
+        [
+          0.00012181831698399037,
+          0.0008011697791516781,
+          0.9990769624710083
+        ],
+        [
+          0.0011827087728306651,
+          0.0014160929713398218,
+          0.997401237487793
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "¬P_7",
+      "translation": "Ethan does not make a delicious cake",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit negation: 'he won't make a delicious cake'.",
+      "list nli": [
+        [
+          0.003999193198978901,
+          0.0006181452772580087,
+          0.9953826069831848
+        ],
+        [
+          0.0070038363337516785,
+          0.0005754685844294727,
+          0.9924207329750061
+        ],
+        [
+          0.015433779917657375,
+          0.0006045796908438206,
+          0.9839617013931274
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

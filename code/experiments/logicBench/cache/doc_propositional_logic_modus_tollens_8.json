@@ -1,0 +1,169 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic event about Daniel waking up on a gloomy morning."
+    },
+    {
+      "id": "P_2",
+      "translation": "The morning was gloomy",
+      "evidence": "Sentence 0",
+      "explanation": "Property of the morning described as gloomy."
+    },
+    {
+      "id": "P_3",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Mental-state proposition (realization) stated explicitly."
+    },
+    {
+      "id": "P_4",
+      "translation": "Daniel forgot to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic proposition capturing the forgetting event."
+    },
+    {
+      "id": "P_5",
+      "translation": "Daniel remembered a rule",
+      "evidence": "Sentence 1",
+      "explanation": "Memory/recall event stated explicitly."
+    },
+    {
+      "id": "P_6",
+      "translation": "Daniel gets wet in the rain",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent event from the stated rule (used for the conditional)."
+    },
+    {
+      "id": "P_7",
+      "translation": "Daniel felt worried",
+      "evidence": "Sentence 1",
+      "explanation": "Emotional state explicitly mentioned ('felt a sense of worry')."
+    },
+    {
+      "id": "P_8",
+      "translation": "Daniel managed to stay dry",
+      "evidence": "Sentence 2",
+      "explanation": "Outcome event explicitly mentioned."
+    },
+    {
+      "id": "P_9",
+      "translation": "Daniel did not get wet in the rain",
+      "evidence": "Sentence 2",
+      "explanation": "Natural-language restatement of 'stay dry' as a negated wetness outcome."
+    },
+    {
+      "id": "P_10",
+      "translation": "Daniel was relieved",
+      "evidence": "Sentence 2",
+      "explanation": "Emotional state explicitly mentioned."
+    },
+    {
+      "id": "P_11",
+      "translation": "Daniel did not have to face the consequences of getting wet in the rain",
+      "evidence": "Sentence 2",
+      "explanation": "Negated obligation/experience statement explicitly given ('didn't have to face the consequences')."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted narrative event."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "The morning was gloomy",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted descriptive property."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted realization."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Daniel forgot to take his umbrella",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted forgetting event."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "Daniel remembered a rule",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted remembering event."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_4 ⟹ P_6",
+      "translation": "If Daniel forgot to take his umbrella, then Daniel gets wet in the rain",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional stated as a rule ('if ... he would ...')."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Daniel felt worried",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted emotional reaction."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Daniel managed to stay dry",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted outcome."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Daniel did not get wet in the rain",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Narrative states he stayed dry; represented as explicit negated wetness outcome."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_8 ⟹ P_9",
+      "translation": "If Daniel stayed dry, then Daniel did not get wet in the rain",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2",
+      "reasoning": "Semantic/definitional link: 'stay dry' strongly supports 'not get wet'."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_10",
+      "translation": "Daniel was relieved",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted emotional state."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_11",
+      "translation": "Daniel did not have to face the consequences of getting wet in the rain",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted negated consequence statement."
+    }
+  ],
+  "_enrichment_log": []
+}

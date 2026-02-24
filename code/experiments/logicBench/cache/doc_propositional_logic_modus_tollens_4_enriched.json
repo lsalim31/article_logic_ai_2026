@@ -1,0 +1,99 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Jack had always dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Modal/frequency statement using 'always'."
+    },
+    {
+      "id": "P_2",
+      "translation": "Jack had dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Base proposition derived by removing the modal/frequency word 'always'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Jack envisioned that he would be able to buy a beautiful house",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement about Jack's envisioning (not asserting the house purchase actually occurred)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Jack had won the lottery",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the 'If ...' clause."
+    },
+    {
+      "id": "P_5",
+      "translation": "Jack would have bought a house",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the conditional; phrased as a single atomic claim."
+    },
+    {
+      "id": "P_6",
+      "translation": "Jack purchases a house for now",
+      "evidence": "Sentence 2",
+      "explanation": "Positive base event used so the text's negation can be represented as ¬P_6."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Jack had always dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The modal/frequency claim ('always') is directly asserted in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Jack had dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "'always' is treated as weight 1.0; the base event is strongly supported."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Jack had dreamed of winning the lottery, then Jack had always dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required modal-pattern constraint linking base and modalized proposition (per instructions)."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Jack envisioned that he would be able to buy a beautiful house",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Non-conditional factual statement about Jack's envisioning."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Jack had won the lottery, then Jack would have bought a house",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional stated in the text."
+    },
+    {
+      "id": "C_6",
+      "formula": "¬P_6",
+      "translation": "Jack will not be purchasing any house for now",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct negation asserted by 'won't be purchasing any house for now'."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0"
+    }
+  ],
+  "_enrichment_log": []
+}

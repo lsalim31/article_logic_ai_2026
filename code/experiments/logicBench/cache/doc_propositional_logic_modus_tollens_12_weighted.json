@@ -1,0 +1,301 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Olivia has always been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement containing 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "Olivia has been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Base proposition derived by removing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "Olivia prided herself on her ability to plant and care for beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic claim about Olivia's pride"
+    },
+    {
+      "id": "P_4",
+      "translation": "Olivia has the ability to plant beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Extracted component of 'ability to plant and care for beautiful trees'"
+    },
+    {
+      "id": "P_5",
+      "translation": "Olivia has the ability to care for beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Extracted component of 'ability to plant and care for beautiful trees'"
+    },
+    {
+      "id": "P_6",
+      "translation": "Olivia planted a tree",
+      "evidence": "Sentence 2",
+      "explanation": "Antecedent of the explicit conditional rule"
+    },
+    {
+      "id": "P_7",
+      "translation": "Olivia takes care of the tree she planted",
+      "evidence": "Sentence 2",
+      "explanation": "Consequent of the explicit conditional rule ('take care of it')"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Olivia has always been known for her green thumb",
+      "evidence": "Sentence 0",
+      "reasoning": "Original statement with modal 'always' is asserted",
+      "list nli": [
+        [
+          1.0557517271081451e-05,
+          8.944053843151778e-05,
+          0.9998999834060669
+        ],
+        [
+          1.0265182027069386e-05,
+          9.027670603245497e-05,
+          0.9998995065689087
+        ],
+        [
+          9.465874427405652e-06,
+          0.00010845246288226917,
+          0.9998821020126343
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Olivia has been known for her green thumb",
+      "evidence": "Sentence 0",
+      "reasoning": "'always' corresponds to weight 1.0 for the base proposition",
+      "list nli": [
+        [
+          5.9850453908438794e-06,
+          0.00014339089102577418,
+          0.9998506307601929
+        ],
+        [
+          6.791752639401238e-06,
+          0.00015566452930215746,
+          0.9998375177383423
+        ],
+        [
+          3.0036392217880348e-06,
+          0.000683483318425715,
+          0.999313473701477
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Olivia has been known for her green thumb, then (in the modal pattern) Olivia has always been known for her green thumb",
+      "evidence": "Sentence 0",
+      "reasoning": "Required linkage constraint between base and modal proposition",
+      "list nli": [
+        [
+          0.0012561585754156113,
+          0.003843822982162237,
+          0.9949000477790833
+        ],
+        [
+          0.0012871057260781527,
+          0.004156821873039007,
+          0.9945560693740845
+        ],
+        [
+          0.0012146104127168655,
+          0.004556151572614908,
+          0.9942291975021362
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Olivia prided herself on her ability to plant and care for beautiful trees",
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion",
+      "list nli": [
+        [
+          1.830969085858669e-05,
+          0.0001733669632812962,
+          0.9998083710670471
+        ],
+        [
+          4.256805914337747e-05,
+          0.00022155667829792947,
+          0.9997358918190002
+        ],
+        [
+          1.6088890333776362e-05,
+          0.0002494598156772554,
+          0.9997344613075256
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Olivia has the ability to plant beautiful trees",
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion extracted from the sentence",
+      "list nli": [
+        [
+          9.059323019755539e-06,
+          0.01661379262804985,
+          0.9833770990371704
+        ],
+        [
+          9.106699508265592e-06,
+          0.029036497697234154,
+          0.9709543585777283
+        ],
+        [
+          8.505689038429409e-05,
+          0.7469896674156189,
+          0.252925306558609
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "Olivia has the ability to care for beautiful trees",
+      "evidence": "Sentence 1",
+      "reasoning": "Plain factual assertion extracted from the sentence",
+      "list nli": [
+        [
+          6.767213926650584e-05,
+          0.9332247376441956,
+          0.06670766323804855
+        ],
+        [
+          1.2916715604660567e-05,
+          0.9454286694526672,
+          0.05455836281180382
+        ],
+        [
+          2.207340730819851e-05,
+          0.9605504274368286,
+          0.039427440613508224
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If Olivia planted a tree, then Olivia takes care of the tree she planted",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit rule stated as a conditional ('if ..., then ...')",
+      "list nli": [
+        [
+          0.0009701506933197379,
+          0.0005472410121001303,
+          0.9984826445579529
+        ],
+        [
+          0.001247547217644751,
+          0.00038476494955830276,
+          0.9983677268028259
+        ],
+        [
+          4.6653654862893745e-05,
+          0.0034920484758913517,
+          0.9964613318443298
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "¬P_7",
+      "translation": "Olivia does not take care of the tree she planted",
+      "evidence": "Sentence 3",
+      "reasoning": "Explicit negation ('she won't take care of it')",
+      "list nli": [
+        [
+          0.0027168355882167816,
+          7.39449096727185e-05,
+          0.9972092509269714
+        ],
+        [
+          0.9451837539672852,
+          0.0005038585513830185,
+          0.05431234836578369
+        ],
+        [
+          0.9962647557258606,
+          0.00018065776384901255,
+          0.003554570022970438
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0",
+      "list nli": [
+        [
+          0.004056708887219429,
+          0.004166112281382084,
+          0.9917771816253662
+        ],
+        [
+          0.012130843475461006,
+          0.012072821147739887,
+          0.9757963418960571
+        ],
+        [
+          0.023005656898021698,
+          0.09098511189222336,
+          0.8860092759132385
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

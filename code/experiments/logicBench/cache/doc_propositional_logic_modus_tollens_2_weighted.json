@@ -1,0 +1,247 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella was working hard on her project",
+      "evidence": "Sentence 0",
+      "explanation": "Simple factual statement about Isabella's effort."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finishes her project on time",
+      "evidence": "Sentence 0",
+      "explanation": "Condition clause extracted from the embedded 'if' statement."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent clause extracted from the embedded conditional ('would receive a bonus')."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella knew that if she finished her project on time then she would receive a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Attitude/knowledge statement; kept atomic while also separately representing the underlying conditional."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Negative outcome statement explicitly asserted."
+    },
+    {
+      "id": "P_6",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Desire/hope stated via 'as she had hoped'."
+    },
+    {
+      "id": "P_7",
+      "translation": "Isabella realized that she would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Realization/mental-state statement explicitly asserted."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella was working hard on her project",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted in the text.",
+      "list nli": [
+        [
+          2.9082610126351938e-05,
+          4.764217374031432e-05,
+          0.9999232292175293
+        ],
+        [
+          3.1962499633664265e-05,
+          4.9002923333318904e-05,
+          0.999919056892395
+        ],
+        [
+          1.2591674021678045e-05,
+          7.150758756324649e-05,
+          0.9999158382415771
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_4",
+      "translation": "Isabella knew that if she finished her project on time then she would receive a bonus from her company",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted ('knowing that ...').",
+      "list nli": [
+        [
+          1.0871593076444697e-05,
+          8.4208048065193e-05,
+          0.9999048709869385
+        ],
+        [
+          8.780253665463533e-06,
+          0.00011501689004944637,
+          0.9998761415481567
+        ],
+        [
+          7.501467280235374e-06,
+          0.00014766125241294503,
+          0.9998447895050049
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional ('if ... then she would receive ...').",
+      "list nli": [
+        [
+          1.7160677089123055e-05,
+          8.874863124219701e-05,
+          0.9998940229415894
+        ],
+        [
+          2.154424691980239e-05,
+          0.00014855113113299012,
+          0.999829888343811
+        ],
+        [
+          5.7674560594023205e-06,
+          0.0003024094912689179,
+          0.9996918439865112
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Isabella would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted negative outcome.",
+      "list nli": [
+        [
+          0.003695368068292737,
+          0.0001200548795168288,
+          0.9961845278739929
+        ],
+        [
+          0.0030209163669496775,
+          0.0015182228526100516,
+          0.9954608082771301
+        ],
+        [
+          0.014694646932184696,
+          0.0028065212536603212,
+          0.9824987649917603
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted ('as she had hoped').",
+      "list nli": [
+        [
+          1.5762938346597366e-05,
+          7.676314999116585e-05,
+          0.9999074935913086
+        ],
+        [
+          1.3388346815190744e-05,
+          8.419410733040422e-05,
+          0.9999023675918579
+        ],
+        [
+          1.5169396647252142e-05,
+          9.369335748488083e-05,
+          0.9998911619186401
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7",
+      "translation": "Isabella realized that she would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted ('Isabella realized ...').",
+      "list nli": [
+        [
+          0.0007461413042619824,
+          0.00011719697795342654,
+          0.999136745929718
+        ],
+        [
+          7.5087282311869785e-06,
+          0.0009250410948880017,
+          0.999067485332489
+        ],
+        [
+          0.0019633034244179726,
+          0.00011372371227480471,
+          0.997922956943512
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7 ⟹ P_5",
+      "translation": "If Isabella realized that she would not be receiving a bonus, then Isabella would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "reasoning": "Realization strongly supports the realized proposition, but realization is an attitude report; treated as slightly defeasible.",
+      "list nli": [
+        [
+          1.6586389392614365e-05,
+          0.0004531382001005113,
+          0.9995303153991699
+        ],
+        [
+          0.0013418291928246617,
+          0.002681881655007601,
+          0.9959762692451477
+        ],
+        [
+          0.030408674851059914,
+          0.005907029379159212,
+          0.9636843204498291
+        ]
+      ],
+      "weight": 0.85
+    }
+  ]
+}

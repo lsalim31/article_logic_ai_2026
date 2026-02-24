@@ -1,0 +1,94 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella has a sandwich for her lunch",
+      "evidence": "Sentence 0",
+      "explanation": "Event stated: Isabella decided to have a sandwich for lunch (having it for lunch)."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella takes a bite of the sandwich",
+      "evidence": "Sentence 1",
+      "explanation": "Action described: 'As she took a bite'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella feels completely satisfied",
+      "evidence": "Sentence 1",
+      "explanation": "Mental state described: 'feel completely satisfied'."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella ate a sandwich for lunch",
+      "evidence": "Sentence 2",
+      "explanation": "Condition extracted from the rule: 'if Isabella ate a sandwich for lunch...'."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella does not feel satisfied",
+      "evidence": "Sentence 2",
+      "explanation": "Consequent extracted from the rule: 'she would not feel satisfied'."
+    },
+    {
+      "id": "P_6",
+      "translation": "This was surprising",
+      "evidence": "Sentence 2",
+      "explanation": "Additional factive statement about the situation being surprising."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella has a sandwich for her lunch",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Isabella takes a bite of the sandwich",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Isabella feels completely satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_6",
+      "translation": "This was surprising",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Isabella ate a sandwich for lunch, then Isabella does not feel satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit conditional stated as a rule."
+    }
+  ],
+  "_enrichment_log": [
+    {
+      "prop_id": "P_1",
+      "translation": "Isabella has a sandwich for her lunch",
+      "positive_constraint": "C_1",
+      "negative_constraint": "C_6",
+      "nli_score_positive": 0.9933009147644043,
+      "nli_score_negative": 0.010700871236622334,
+      "decision": "keep positive",
+      "removed": "C_6"
+    }
+  ]
+}

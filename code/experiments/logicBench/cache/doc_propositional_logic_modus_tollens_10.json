@@ -1,0 +1,52 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Elijah has a new job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the explicit conditional ('If Elijah has a new job...')."
+    },
+    {
+      "id": "P_2",
+      "translation": "Elijah will get a raise",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent of the explicit conditional ('...then he will get a raise')."
+    },
+    {
+      "id": "P_3",
+      "translation": "He would not be receiving the raise he had anticipated",
+      "evidence": "Sentence 1",
+      "explanation": "Standalone negated statement (about not receiving an anticipated raise)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Elijah has a new job, then Elijah will get a raise",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional stated in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "He would not be receiving the raise he had anticipated",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted negated claim."
+    }
+  ],
+  "_enrichment_log": [
+    {
+      "prop_id": "P_3",
+      "translation": "He would not be receiving the raise he had anticipated",
+      "positive_constraint": "C_2",
+      "negative_constraint": "C_3",
+      "nli_score_positive": 0.9929426908493042,
+      "nli_score_negative": 0.14466015994548798,
+      "decision": "keep positive",
+      "removed": "C_3"
+    }
+  ]
+}

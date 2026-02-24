@@ -1,0 +1,143 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Benjamin's anticipation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Benjamin is going to the beach",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent extracted from the quoted conditional."
+    },
+    {
+      "id": "P_3",
+      "translation": "Benjamin goes swimming",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the quoted conditional (stated as a simple event)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Benjamin's friends told him something",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement capturing the reported-speech act ('His friends had told him ...')."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted by the narrator.",
+      "list nli": [
+        [
+          2.2562910089618526e-05,
+          7.4378440331202e-05,
+          0.9999030828475952
+        ],
+        [
+          7.0827427407493815e-06,
+          0.00020102383859921247,
+          0.9997919201850891
+        ],
+        [
+          0.0037096457090228796,
+          0.00048574074753560126,
+          0.9958046078681946
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_4",
+      "translation": "Benjamin's friends told him something",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted speech/reporting event.",
+      "list nli": [
+        [
+          2.9391665520961396e-05,
+          0.00012817775132134557,
+          0.9998424053192139
+        ],
+        [
+          5.742900975747034e-05,
+          0.0004914499586448073,
+          0.9994511008262634
+        ],
+        [
+          0.0002221881877630949,
+          0.0004608164308592677,
+          0.9993170499801636
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Benjamin is going to the beach, then Benjamin goes swimming",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional in the quoted content.",
+      "list nli": [
+        [
+          6.666283297818154e-06,
+          0.0005698348395526409,
+          0.9994235038757324
+        ],
+        [
+          0.00035399277112446725,
+          0.00032021847437135875,
+          0.9993257522583008
+        ],
+        [
+          0.0007585802813991904,
+          0.0005598657880909741,
+          0.9986814856529236
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_3",
+      "translation": "Benjamin did not go swimming",
+      "evidence": "Sentence 2",
+      "reasoning": "Direct negation: 'he didn't end up going swimming'.",
+      "list nli": [
+        [
+          0.38278570771217346,
+          0.0003979491302743554,
+          0.6168164014816284
+        ],
+        [
+          0.9831353425979614,
+          0.0012081697350367904,
+          0.015656523406505585
+        ],
+        [
+          0.9927284717559814,
+          0.0007057731272652745,
+          0.00656577805057168
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

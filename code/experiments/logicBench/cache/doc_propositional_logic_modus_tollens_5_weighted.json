@@ -1,0 +1,65 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Sophia has the highest score in the test",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent (condition) of the explicit conditional 'If ... then ...'."
+    },
+    {
+      "id": "P_2",
+      "translation": "Sophia will be awarded a medal for her outstanding performance",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent (result) of the explicit conditional."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated 'If ..., then ...' conditional.",
+      "list nli": [
+        [
+          5.878247975488193e-06,
+          0.00021759085939265788,
+          0.9997765421867371
+        ],
+        [
+          0.00034133761073462665,
+          7.694112719036639e-05,
+          0.9995817542076111
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_1",
+      "translation": "Sophia did not achieve the highest score in the test (i.e., she does not have the highest score in the test)",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negation: 'Sophia didn't achieve the highest score in the test.'",
+      "list nli": [
+        [
+          0.00020697081345133483,
+          0.9974249601364136,
+          0.0023680098820477724
+        ],
+        [
+          0.9935494065284729,
+          0.004210400395095348,
+          0.0022401653695851564
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

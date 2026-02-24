@@ -1,0 +1,63 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Benjamin's anticipation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Benjamin is going to the beach",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent extracted from the quoted conditional."
+    },
+    {
+      "id": "P_3",
+      "translation": "Benjamin goes swimming",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the quoted conditional (stated as a simple event)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Benjamin's friends told him something",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement capturing the reported-speech act ('His friends had told him ...')."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted by the narrator."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_4",
+      "translation": "Benjamin's friends told him something",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted speech/reporting event."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Benjamin is going to the beach, then Benjamin goes swimming",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional in the quoted content."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_3",
+      "translation": "Benjamin did not go swimming",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct negation: 'he didn't end up going swimming'."
+    }
+  ],
+  "_enrichment_log": []
+}

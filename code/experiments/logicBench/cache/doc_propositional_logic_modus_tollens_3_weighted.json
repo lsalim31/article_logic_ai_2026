@@ -1,0 +1,115 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mason decides to leave his job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition extracted from the 'If ...' clause."
+    },
+    {
+      "id": "P_2",
+      "translation": "Mason does not receive any salary",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent extracted from the conditional ('will not receive any salary')."
+    },
+    {
+      "id": "P_3",
+      "translation": "Mason receives his salary",
+      "evidence": "Sentence 1",
+      "explanation": "Explicit factual statement ('Mason still receives his salary')."
+    },
+    {
+      "id": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "evidence": "Sentence 2",
+      "explanation": "Explicit factual statement ('receiving his regular paycheck')."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Mason decides to leave his job, then Mason does not receive any salary",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct conditional stated in the text.",
+      "list nli": [
+        [
+          7.668430043850094e-06,
+          0.0002480176626704633,
+          0.9997443556785583
+        ],
+        [
+          0.000812273588962853,
+          0.002553533762693405,
+          0.9966341853141785
+        ],
+        [
+          0.9862467050552368,
+          9.181210771203041e-05,
+          0.013661432079970837
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Mason receives his salary",
+      "evidence": "Sentence 1",
+      "reasoning": "Asserted as true by the narrative.",
+      "list nli": [
+        [
+          0.0005470368778333068,
+          0.00016348996723536402,
+          0.9992893934249878
+        ],
+        [
+          5.970417259959504e-05,
+          0.994971513748169,
+          0.004968788009136915
+        ],
+        [
+          0.00015157174493651837,
+          0.9976806640625,
+          0.0021677855402231216
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "evidence": "Sentence 2",
+      "reasoning": "Asserted as true by the narrative.",
+      "list nli": [
+        [
+          0.0001900546922115609,
+          0.00489291176199913,
+          0.9949170351028442
+        ],
+        [
+          0.00825729314237833,
+          0.0004468561091925949,
+          0.9912958145141602
+        ],
+        [
+          0.00012262933887541294,
+          0.9978864789009094,
+          0.0019908666145056486
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

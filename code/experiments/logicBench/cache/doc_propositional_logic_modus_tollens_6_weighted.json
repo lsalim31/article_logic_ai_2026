@@ -1,0 +1,437 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "James had always been forgetful",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement with modal frequency word 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "James had been forgetful",
+      "evidence": "Sentence 0",
+      "explanation": "Derived base proposition from P_1 by removing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "James was forgetful about wearing a sweater",
+      "evidence": "Sentence 0",
+      "explanation": "Simple declarative describing the domain of forgetfulness"
+    },
+    {
+      "id": "P_4",
+      "translation": "James forgets to wear a sweater",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the reported 'If ... then ...' statement"
+    },
+    {
+      "id": "P_5",
+      "translation": "James will catch a cold",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the reported 'If ... then ...' statement"
+    },
+    {
+      "id": "P_6",
+      "translation": "His mother repeatedly told James",
+      "evidence": "Sentence 1",
+      "explanation": "Simple declarative extracted from reported speech context (content handled separately as P_4, P_5)"
+    },
+    {
+      "id": "P_7",
+      "translation": "The temperature was dropping",
+      "evidence": "Sentence 2",
+      "explanation": "Environmental fact stated in the narrative"
+    },
+    {
+      "id": "P_8",
+      "translation": "James went about his activities throughout the day",
+      "evidence": "Sentence 2",
+      "explanation": "Narrative event"
+    },
+    {
+      "id": "P_9",
+      "translation": "James was oblivious to the dropping temperature",
+      "evidence": "Sentence 2",
+      "explanation": "Mental-state description stated in the narrative"
+    },
+    {
+      "id": "P_10",
+      "translation": "James returned home hours later",
+      "evidence": "Sentence 3",
+      "explanation": "Narrative event"
+    },
+    {
+      "id": "P_11",
+      "translation": "James did not catch a cold",
+      "evidence": "Sentence 3",
+      "explanation": "Negated outcome explicitly stated"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "James had always been forgetful",
+      "evidence": "Sentence 0",
+      "reasoning": "Original modal statement ('always') is taken as asserted",
+      "list nli": [
+        [
+          2.1535675841732882e-05,
+          5.1505900046322495e-05,
+          0.9999269247055054
+        ],
+        [
+          2.0598648916347884e-05,
+          5.562081059906632e-05,
+          0.999923825263977
+        ],
+        [
+          1.755197263264563e-05,
+          7.127441494958475e-05,
+          0.9999111890792847
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "James had been forgetful",
+      "evidence": "Sentence 0",
+      "reasoning": "Base proposition derived from 'always' gets weight 1.0 (strong universal frequency)",
+      "list nli": [
+        [
+          2.3293423510040157e-05,
+          6.264078547246754e-05,
+          0.9999140501022339
+        ],
+        [
+          6.041678716428578e-05,
+          5.5556203733431175e-05,
+          0.9998840093612671
+        ],
+        [
+          4.515317777986638e-05,
+          7.466521492460743e-05,
+          0.9998801946640015
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If James had been forgetful, then James had always been forgetful",
+      "evidence": "Sentence 0",
+      "reasoning": "Modal-pattern constraint required by the instructions",
+      "list nli": [
+        [
+          0.00016754749231040478,
+          0.00018744914268609136,
+          0.9996449947357178
+        ],
+        [
+          0.00023579744447488338,
+          0.00012779836833942682,
+          0.9996364116668701
+        ],
+        [
+          0.0004737168492283672,
+          6.798418326070532e-05,
+          0.9994582533836365
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "James was forgetful about wearing a sweater",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative claim",
+      "list nli": [
+        [
+          5.9932743170065805e-05,
+          3.208974885637872e-05,
+          0.9999079704284668
+        ],
+        [
+          7.686869503231719e-05,
+          4.540329609881155e-05,
+          0.9998776912689209
+        ],
+        [
+          1.3421506992017385e-05,
+          0.0001261429861187935,
+          0.999860405921936
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If James forgets to wear a sweater, then James will catch a cold",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional reported as the mother's warning",
+      "list nli": [
+        [
+          3.0442659408436157e-05,
+          0.00017521381960250437,
+          0.9997943043708801
+        ],
+        [
+          5.366852565202862e-05,
+          0.00015727910795249045,
+          0.9997890591621399
+        ],
+        [
+          1.8130680473404936e-05,
+          0.00020049656450282782,
+          0.9997814297676086
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "His mother repeatedly told James",
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative claim about repeated telling",
+      "list nli": [
+        [
+          2.9208384148660116e-05,
+          4.656406963476911e-05,
+          0.9999241828918457
+        ],
+        [
+          4.440641714609228e-05,
+          3.784094951697625e-05,
+          0.99991774559021
+        ],
+        [
+          2.3598271582159214e-05,
+          9.089146624319255e-05,
+          0.9998854398727417
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "The temperature was dropping",
+      "evidence": "Sentence 2",
+      "reasoning": "Direct narrative claim",
+      "list nli": [
+        [
+          6.578274769708514e-05,
+          0.00013027992099523544,
+          0.9998039603233337
+        ],
+        [
+          0.00028319130069576204,
+          2.587387280073017e-05,
+          0.9996910095214844
+        ],
+        [
+          0.0004604964633472264,
+          2.071948620141484e-05,
+          0.9995187520980835
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "James went about his activities throughout the day",
+      "evidence": "Sentence 2",
+      "reasoning": "Direct narrative claim",
+      "list nli": [
+        [
+          7.094850298017263e-05,
+          0.0003188622067682445,
+          0.9996102452278137
+        ],
+        [
+          3.515112621244043e-05,
+          0.0009287729044444859,
+          0.9990360736846924
+        ],
+        [
+          0.0019481661729514599,
+          0.002629599068313837,
+          0.9954221844673157
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "James was oblivious to the dropping temperature",
+      "evidence": "Sentence 2",
+      "reasoning": "Direct narrative claim",
+      "list nli": [
+        [
+          3.294279667898081e-05,
+          4.732275920105167e-05,
+          0.9999197721481323
+        ],
+        [
+          2.243898961751256e-05,
+          7.43456112104468e-05,
+          0.9999032020568848
+        ],
+        [
+          3.091039616265334e-05,
+          6.96884817443788e-05,
+          0.9998993873596191
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "James returned home hours later",
+      "evidence": "Sentence 3",
+      "reasoning": "Direct narrative claim",
+      "list nli": [
+        [
+          5.963952571619302e-05,
+          4.157581861363724e-05,
+          0.9998987913131714
+        ],
+        [
+          1.1221611202927306e-05,
+          9.758161468198523e-05,
+          0.9998911619186401
+        ],
+        [
+          8.19707420305349e-05,
+          4.581888788379729e-05,
+          0.9998722076416016
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "James did not catch a cold",
+      "evidence": "Sentence 3",
+      "reasoning": "Direct narrative claim with explicit negation",
+      "list nli": [
+        [
+          5.6875855079852045e-05,
+          0.00035554799251258373,
+          0.9995875954627991
+        ],
+        [
+          3.623965312726796e-05,
+          0.001319619594141841,
+          0.9986441731452942
+        ],
+        [
+          0.0031559644266963005,
+          0.0010557922068983316,
+          0.9957882761955261
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0",
+      "list nli": [
+        [
+          0.00037920253816992044,
+          0.0022044130600988865,
+          0.9974163770675659
+        ],
+        [
+          0.0017842949600890279,
+          0.010283009149134159,
+          0.9879327416419983
+        ],
+        [
+          0.0008805462275631726,
+          0.02069367654621601,
+          0.9784258008003235
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_6 ⟹ P_6",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0023558898828923702,
+          0.0049616489559412,
+          0.9926825165748596
+        ],
+        [
+          0.0020385757088661194,
+          0.010356784798204899,
+          0.9876046180725098
+        ],
+        [
+          0.003339024493470788,
+          0.00941314548254013,
+          0.9872478246688843
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

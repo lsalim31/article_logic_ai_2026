@@ -1,0 +1,105 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella was working hard on her project",
+      "evidence": "Sentence 0",
+      "explanation": "Simple factual statement about Isabella's effort."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finishes her project on time",
+      "evidence": "Sentence 0",
+      "explanation": "Condition clause extracted from the embedded 'if' statement."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent clause extracted from the embedded conditional ('would receive a bonus')."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella knew that if she finished her project on time then she would receive a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Attitude/knowledge statement; kept atomic while also separately representing the underlying conditional."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Negative outcome statement explicitly asserted."
+    },
+    {
+      "id": "P_6",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Desire/hope stated via 'as she had hoped'."
+    },
+    {
+      "id": "P_7",
+      "translation": "Isabella realized that she would not be receiving a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Realization/mental-state statement explicitly asserted."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella was working hard on her project",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_4",
+      "translation": "Isabella knew that if she finished her project on time then she would receive a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted ('knowing that ...')."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional ('if ... then she would receive ...')."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Isabella would not be receiving a bonus",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted negative outcome."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "Isabella hoped to receive a bonus",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted ('as she had hoped')."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_7",
+      "translation": "Isabella realized that she would not be receiving a bonus",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted ('Isabella realized ...')."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7 ⟹ P_5",
+      "translation": "If Isabella realized that she would not be receiving a bonus, then Isabella would not be receiving a bonus",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1",
+      "reasoning": "Realization strongly supports the realized proposition, but realization is an attitude report; treated as slightly defeasible."
+    }
+  ],
+  "_enrichment_log": []
+}
