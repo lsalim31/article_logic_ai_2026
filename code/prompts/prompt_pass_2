@@ -2,13 +2,12 @@ ROLE
 You are a neuro-symbolic assistant generating constraints for propositional logic.
 
 TASK (PASS 2 - Constraint Generation)
-Given a document section, OpenIE triples, and propositions, generate constraints for the CURRENT PROPOSITIONS only.
+Given a document section and propositions, generate constraints for the CURRENT PROPOSITIONS only.
 
 You are provided:
 1. DOCUMENT SECTION - text of current chunk
-2. OPENIE TRIPLES - relations extracted from this section
-3. PRIOR PROPOSITIONS - from earlier sections (reference only, do NOT generate constraints for these)
-4. CURRENT PROPOSITIONS - generate constraints for THESE
+2. PRIOR PROPOSITIONS - from earlier sections (reference only, do NOT generate constraints for these)
+3. CURRENT PROPOSITIONS - generate constraints for THESE
 
 CONSTRAINT TYPES
 1. Standalone assertions (P_i @weight):
@@ -39,7 +38,6 @@ RULES
 - Generate constraints ONLY for CURRENT PROPOSITIONS
 - You MAY reference PRIOR PROPOSITIONS in implications
 - Every current proposition should have at least one constraint
-- Use OpenIE triples to identify relationships
 
 GRAMMAR
 ¬ (not), ∧ (and), ∨ (or), ⟹ (implies), ⟺ (iff)
