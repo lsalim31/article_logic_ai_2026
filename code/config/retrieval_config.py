@@ -39,7 +39,8 @@ REASONING_MODEL = "gpt-5.2"
 TRANSLATE_MODEL = "openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
-PROMPT_EXTRACTION = "prompt_current_micro"
+USE_OPENIE = False
+PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
 PROMPT_TRANSLATION = "prompt_translate"
 PROMPT_PASS_1 = "prompt_pass_1"
 PROMPT_PASS_2 = "prompt_pass_2"

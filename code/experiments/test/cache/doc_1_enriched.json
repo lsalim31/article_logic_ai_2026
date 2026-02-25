@@ -4,85 +4,85 @@
       "id": "P_1",
       "translation": "Alice is a university student",
       "evidence": "Sentence 0",
-      "explanation": "Atomic factual statement."
+      "explanation": "Atomic factual statement"
     },
     {
       "id": "P_2",
       "translation": "Alice studies computer science",
       "evidence": "Sentence 1",
-      "explanation": "Atomic factual statement."
+      "explanation": "Atomic factual statement"
     },
     {
       "id": "P_3",
       "translation": "Alice studies hard",
       "evidence": "Sentence 2",
-      "explanation": "Antecedent extracted from the explicit conditional."
+      "explanation": "Antecedent extracted from an if-then conditional"
     },
     {
       "id": "P_4",
       "translation": "Alice passes her exams",
       "evidence": "Sentence 2",
-      "explanation": "Consequent extracted from the explicit conditional."
+      "explanation": "Consequent extracted from an if-then conditional"
     },
     {
       "id": "P_5",
       "translation": "Alice typically studies hard before exams",
       "evidence": "Sentence 3",
-      "explanation": "Modal statement containing 'typically'."
+      "explanation": "Modal statement with 'typically'"
     },
     {
       "id": "P_6",
       "translation": "Alice studies hard before exams",
       "evidence": "Sentence 3",
-      "explanation": "Base statement derived by removing the modal 'typically'."
+      "explanation": "Derived base proposition (modal removed)"
     },
     {
       "id": "P_7",
       "translation": "Alice is focused",
       "evidence": "Sentence 4",
-      "explanation": "Condition extracted from 'When Alice is focused...'."
+      "explanation": "Condition extracted from 'When ...'"
     },
     {
       "id": "P_8",
       "translation": "Alice completes her assignments on time",
       "evidence": "Sentence 4",
-      "explanation": "Result extracted from the 'when' conditional."
+      "explanation": "Consequent extracted from 'When ...'"
     },
     {
       "id": "P_9",
       "translation": "Alice sometimes gets distracted by social media",
       "evidence": "Sentence 5",
-      "explanation": "Modal statement containing 'sometimes'."
+      "explanation": "Modal statement with 'sometimes'"
     },
     {
       "id": "P_10",
       "translation": "Alice gets distracted by social media",
       "evidence": "Sentence 5",
-      "explanation": "Base statement derived by removing the modal 'sometimes'."
+      "explanation": "Derived base proposition (modal removed)"
     },
     {
       "id": "P_11",
       "translation": "Alice works part-time at the campus library",
       "evidence": "Sentence 6",
-      "explanation": "Atomic factual statement."
+      "explanation": "Atomic factual statement"
     },
     {
       "id": "P_12",
-      "translation": "Her assignments are due every Friday",
+      "translation": "Alice's assignments are due every Friday",
       "evidence": "Sentence 7",
-      "explanation": "Atomic factual statement."
+      "explanation": "Atomic factual statement"
     },
     {
       "id": "P_13",
       "translation": "Alice rarely studies late at night",
       "evidence": "Sentence 8",
-      "explanation": "Modal statement containing 'rarely'."
+      "explanation": "Modal statement with 'rarely'"
     },
     {
       "id": "P_14",
       "translation": "Alice studies late at night",
       "evidence": "Sentence 8",
-      "explanation": "Base statement derived by removing the modal 'rarely'."
+      "explanation": "Derived base proposition (modal removed)"
     },
     {
       "id": "P_15",
@@ -125,6 +125,12 @@
       "translation": "Alice works full-time.",
       "evidence": "Sentence 6 (auxiliary proposition for employment_type domain)",
       "explanation": "Auxiliary proposition for mutual exclusion with P_11. Part of finite set: employment_type. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_22",
+      "translation": "Alice's assignments are due Monday.",
+      "evidence": "Sentence 7 (auxiliary proposition for day_of_week domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_12. Part of finite set: day_of_week. Mutually exclusive alternative."
     }
   ],
   "constraints": [
@@ -134,7 +140,7 @@
       "translation": "Alice is a university student",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Plain asserted fact."
+      "reasoning": "Direct assertion"
     },
     {
       "id": "C_2",
@@ -142,7 +148,7 @@
       "translation": "Alice studies computer science",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Plain asserted fact."
+      "reasoning": "Direct assertion"
     },
     {
       "id": "C_3",
@@ -150,7 +156,7 @@
       "translation": "If Alice studies hard, then she passes her exams",
       "llm_weight": 1.0,
       "evidence": "Sentence 2",
-      "reasoning": "Explicit 'if...then' conditional."
+      "reasoning": "Explicit if-then conditional"
     },
     {
       "id": "C_4",
@@ -158,7 +164,7 @@
       "translation": "Alice typically studies hard before exams",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted"
     },
     {
       "id": "C_5",
@@ -166,15 +172,15 @@
       "translation": "Alice studies hard before exams",
       "llm_weight": 0.65,
       "evidence": "Sentence 3",
-      "reasoning": "'typically' maps to weight 0.65 for the base proposition."
+      "reasoning": "'typically' corresponds to weight 0.65 for the base proposition"
     },
     {
       "id": "C_6",
       "formula": "P_6 ⟹ P_5",
-      "translation": "If Alice studies hard before exams, then the 'typically' statement holds",
+      "translation": "If Alice studies hard before exams, then it is true that she typically studies hard before exams",
       "llm_weight": 1.0,
       "evidence": "Sentence 3",
-      "reasoning": "Modal pattern constraint required by the specification."
+      "reasoning": "Modal pattern constraint required by rules"
     },
     {
       "id": "C_7",
@@ -182,7 +188,7 @@
       "translation": "When Alice is focused, she completes her assignments on time",
       "llm_weight": 1.0,
       "evidence": "Sentence 4",
-      "reasoning": "'When' treated as an implication from condition to outcome."
+      "reasoning": "'When' treated as a conditional"
     },
     {
       "id": "C_8",
@@ -190,7 +196,7 @@
       "translation": "Alice sometimes gets distracted by social media",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted"
     },
     {
       "id": "C_9",
@@ -198,15 +204,15 @@
       "translation": "Alice gets distracted by social media",
       "llm_weight": 0.4,
       "evidence": "Sentence 5",
-      "reasoning": "'sometimes' maps to weight 0.40 for the base proposition."
+      "reasoning": "'sometimes' corresponds to weight 0.40 for the base proposition"
     },
     {
       "id": "C_10",
       "formula": "P_10 ⟹ P_9",
-      "translation": "If Alice gets distracted by social media, then the 'sometimes' statement holds",
+      "translation": "If Alice gets distracted by social media, then it is true that she sometimes gets distracted by social media",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Modal pattern constraint required by the specification."
+      "reasoning": "Modal pattern constraint required by rules"
     },
     {
       "id": "C_11",
@@ -214,15 +220,15 @@
       "translation": "Alice works part-time at the campus library",
       "llm_weight": 1.0,
       "evidence": "Sentence 6",
-      "reasoning": "Plain asserted fact."
+      "reasoning": "Direct assertion"
     },
     {
       "id": "C_12",
       "formula": "P_12",
-      "translation": "Her assignments are due every Friday",
+      "translation": "Alice's assignments are due every Friday",
       "llm_weight": 1.0,
       "evidence": "Sentence 7",
-      "reasoning": "Plain asserted fact."
+      "reasoning": "Direct assertion"
     },
     {
       "id": "C_13",
@@ -230,7 +236,7 @@
       "translation": "Alice rarely studies late at night",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "Original modal statement is taken as asserted."
+      "reasoning": "Original modal statement is asserted"
     },
     {
       "id": "C_14",
@@ -238,15 +244,15 @@
       "translation": "Alice studies late at night",
       "llm_weight": 0.25,
       "evidence": "Sentence 8",
-      "reasoning": "'rarely' maps to weight 0.25 for the base proposition."
+      "reasoning": "'rarely' corresponds to weight 0.25 for the base proposition"
     },
     {
       "id": "C_15",
       "formula": "P_14 ⟹ P_13",
-      "translation": "If Alice studies late at night, then the 'rarely' statement holds",
+      "translation": "If Alice studies late at night, then it is true that she rarely studies late at night",
       "llm_weight": 1.0,
       "evidence": "Sentence 8",
-      "reasoning": "Modal pattern constraint required by the specification."
+      "reasoning": "Modal pattern constraint required by rules"
     },
     {
       "id": "C_16",
@@ -327,6 +333,14 @@
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Mutual exclusion over employment_type domain with weight 1.0"
+    },
+    {
+      "id": "C_26",
+      "formula": "P_12 ⟹ ¬P_22",
+      "translation": "If Alice's assignments are due friday, then Alice's assignments are not due Monday.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over day_of_week domain with weight 1.0"
     }
   ],
   "_enrichment_log": []

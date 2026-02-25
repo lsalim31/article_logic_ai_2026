@@ -10,7 +10,7 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT
+from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, USE_OPENIE, REASONING_MODEL
 
 # Add code directory to Python path for imports to work from any location
 _script_dir = Path(__file__).resolve().parent
@@ -82,7 +82,7 @@ def extract_text_from_document(file_path: str) -> str:
 class LogifyConverter:
     """Orchestrates the two-stage text-to-logic conversion pipeline."""
 
-    def __init__(self, api_key: str, model: str = "gpt-5.2", temperature: float = TEMPERATURE_LOGIC_CONVERTER, reasoning_effort: str = REASONING_EFFORT, max_tokens: int = MAX_TOKENS):
+    def __init__(self, api_key: str, model: str =REASONING_MODEL, temperature: float = TEMPERATURE_LOGIC_CONVERTER, reasoning_effort: str = REASONING_EFFORT, max_tokens: int = MAX_TOKENS):
         """
 
         """
@@ -92,18 +92,32 @@ class LogifyConverter:
         # Stage 2: LLM-based logic conversion
         self.converter = LogicConverter(api_key=api_key, model=model, temperature=temperature, reasoning_effort=reasoning_effort, max_tokens = max_tokens)
 
-    def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
-        """
+    # def convert_text_to_logic(self, text: str) -> Dict[str, Any]:
+    #     """
+    #    Fen 25 before making triples optional
+    #     """
+    #     # Stage 1: Extract OpenIE triples
+    #     openie_triples = self.extractor.extract_triples(text)
+    #     formatted_triples = self.extractor.format_triples_json(openie_triples, indent=-1)
 
-        """
-        # Stage 1: Extract OpenIE triples
-        openie_triples = self.extractor.extract_triples(text)
-        formatted_triples = self.extractor.format_triples_json(openie_triples, indent=-1)
+    #     # Stage 2: Convert to logic using LLM
+    #     logic_structure = self.converter.convert(text, formatted_triples)
 
-        # Stage 2: Convert to logic using LLM
+    #     return logic_structure
+
+
+    def convert_text_to_logic(self, text: str, use_openie: bool = False) -> Dict[str, Any]:
+        if use_openie:
+            openie_triples = self.extractor.extract_triples(text)
+            formatted_triples = self.extractor.format_triples_json(openie_triples, indent=-1)
+        else:
+            formatted_triples = "[]"
+        
         logic_structure = self.converter.convert(text, formatted_triples)
-
         return logic_structure
+
+
+
 
     def save_output(self, logic_structure: Dict[str, Any], output_path: str = "logified.JSON"):
         """
@@ -142,7 +156,7 @@ def main():
     parser.add_argument("--api-key", required=True, help="OpenAI API key")
     parser.add_argument(
         "--model",
-        default="gpt-5.2",
+        default=REASONING_MODEL,
         help="Model to use (default: gpt-5.2). Options: gpt-5.2, o1, gpt-4o, gpt-4-turbo, etc."
     )
     parser.add_argument(
