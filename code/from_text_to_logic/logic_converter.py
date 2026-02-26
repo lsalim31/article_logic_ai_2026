@@ -61,9 +61,12 @@ class LogicConverter:
         # Load prompts
         self._script_dir = os.path.dirname(os.path.abspath(__file__))
         self._prompts_dir = os.path.join(self._script_dir, "..", "prompts")
-
+        
         self.system_prompt = self._load_prompt(PROMPT_EXTRACTION)
-        self.chunk_prompt = self._load_prompt(PROMPT_PASS_1)
+        self.pass1_prompt = self._load_prompt(PROMPT_PASS_1)
+        self.pass2_prompt = self._load_prompt(PROMPT_PASS_2)
+
+        
 
     def _load_prompt(self, prompt_name: str) -> str:
         """
@@ -344,6 +347,20 @@ class LogicConverter:
             raise ValueError("[logic_converter] LLM output missing required key: constraints")
 
         return logic_structure
+    ####
+    def _format_props_for_pass2(self, propositions: List[Dict[str, Any]]) -> str:
+        """
+        Format propositions as JSON for pass 2.
+
+        Args:
+            propositions: List of proposition dictionaries
+
+        Returns:
+            JSON string of propositions
+        """
+        if not propositions:
+            return "[]"
+        return json.dumps(propositions, indent=2, ensure_ascii=False)
 
     def _process_chunk(
         self,
@@ -354,10 +371,9 @@ class LogicConverter:
         chunk_index: int
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], int, int]:
         """
-        Process a single chunk: extract propositions and constraints.
-
-        The LLM is told to start IDs from specific values, so IDs are globally
-        unique without needing renumbering.
+        Process a single chunk using two passes:
+        - Pass 1: Extract propositions
+        - Pass 2: Generate constraints for those propositions
 
         Args:
             chunk_text: Text of current chunk
@@ -371,47 +387,76 @@ class LogicConverter:
         """
         prior_props_text = self._format_prior_props(prior_props)
 
-        user_content = f"""## DOCUMENT SECTION (Chunk {chunk_index}):
-        <<<
-        {chunk_text}
-        >>>
+        # === PASS 1: Extract propositions ===
+        pass1_content = f"""## DOCUMENT SECTION (Chunk {chunk_index}):
+<<<
+{chunk_text}
+>>>
 
-        ## PRIOR PROPOSITIONS (from earlier sections - you may reference these in constraints):
-        {prior_props_text}
+Extract propositions from this chunk.
+- Start proposition IDs from P_{start_prop_id}
+- Extract ALL factual statements, obligations, permissions, and conditions as propositions"""
 
-        Extract propositions and constraints from this chunk.
-        - Start proposition IDs from P_{start_prop_id}
-        - Start constraint IDs from C_{start_constraint_id}
-        - You MAY reference prior propositions in constraint formulas using their exact IDs shown above"""
+        print(f"[logic_converter] Chunk {chunk_index} Pass 1: {len(chunk_text)} chars")
 
-        print(f"[logic_converter] Processing chunk {chunk_index}: {len(chunk_text)} chars, {len(prior_props)} prior props")
-
-        response_text = self._call_llm(self.chunk_prompt, user_content)
-        result = self._parse_json_response(response_text, f"(chunk{chunk_index})")
+        response_text = self._call_llm(self.pass1_prompt, pass1_content)
+        result = self._parse_json_response(response_text, f"(chunk{chunk_index}-pass1)")
 
         chunk_props = result.get('primitive_props', [])
-        chunk_constraints = result.get('constraints', [])
 
-        if not chunk_props and not chunk_constraints:
-            print(f"[logic_converter] WARNING: Chunk {chunk_index} returned no propositions or constraints")
+        if not chunk_props:
+            print(f"[logic_converter] WARNING: Chunk {chunk_index} Pass 1 returned no propositions")
+            return [], [], start_prop_id, start_constraint_id
 
-        print(f"[logic_converter] Chunk {chunk_index}: {len(chunk_props)} props, {len(chunk_constraints)} constraints")
+        print(f"[logic_converter] Chunk {chunk_index} Pass 1: {len(chunk_props)} propositions extracted")
 
-        # Calculate next IDs based on what was returned
+        # Calculate next prop ID
         next_prop_id = start_prop_id
-        next_constraint_id = start_constraint_id
-
         for prop in chunk_props:
             match = re.search(r'P_(\d+)', prop.get('id', ''))
             if match:
                 next_prop_id = max(next_prop_id, int(match.group(1)) + 1)
 
+        # === PASS 2: Generate constraints ===
+        current_props_text = self._format_props_for_pass2(chunk_props)
+
+        pass2_content = f"""## DOCUMENT SECTION (Chunk {chunk_index}):
+        <<<
+        {chunk_text}
+        >>>
+
+        ## PRIOR PROPOSITIONS (from earlier sections - reference only, do NOT generate constraints for these):
+        {prior_props_text}
+
+        ## CURRENT PROPOSITIONS (generate constraints for THESE):
+        {current_props_text}
+
+        Generate constraints for all current propositions. Start constraint IDs from C_{start_constraint_id}.
+        IMPORTANT: Every current proposition MUST have at least one standalone constraint asserting it."""
+
+        print(f"[logic_converter] Chunk {chunk_index} Pass 2: generating constraints for {len(chunk_props)} props")
+
+        response_text = self._call_llm(self.pass2_prompt, pass2_content)
+        result = self._parse_json_response(response_text, f"(chunk{chunk_index}-pass2)")
+
+        chunk_constraints = result.get('constraints', [])
+
+        if not chunk_constraints:
+            print(f"[logic_converter] WARNING: Chunk {chunk_index} Pass 2 returned no constraints")
+
+        print(f"[logic_converter] Chunk {chunk_index} Pass 2: {len(chunk_constraints)} constraints generated")
+
+        # Calculate next constraint ID
+        next_constraint_id = start_constraint_id
         for constraint in chunk_constraints:
             match = re.search(r'C_(\d+)', constraint.get('id', ''))
             if match:
                 next_constraint_id = max(next_constraint_id, int(match.group(1)) + 1)
 
         return chunk_props, chunk_constraints, next_prop_id, next_constraint_id
+    
+
+    #######
 
     def _multi_chunk_convert(self, text: str, formatted_triples: str) -> Dict[str, Any]:
         """
