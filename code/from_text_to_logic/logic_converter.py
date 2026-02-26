@@ -175,6 +175,54 @@ class LogicConverter:
 
         return response_text.strip()
 
+
+    def _repair_json(self, json_text: str) -> str:
+        """
+        Attempt to repair common JSON errors from LLM output.
+
+        Fixes:
+        - Missing quotes around string values (e.g., "key": value instead of "key": "value")
+        - Trailing commas before closing brackets
+        - Single quotes instead of double quotes
+
+        Args:
+            json_text: Potentially malformed JSON string
+
+        Returns:
+            Repaired JSON string (may still be invalid)
+        """
+        repaired = json_text
+
+        # Fix missing opening quote after colon for string values
+        # Pattern: "key": SomeText" -> "key": "SomeText"
+        # Match: colon, optional whitespace, capital letter (start of sentence), text ending with "
+        # This catches: "reasoning": Prohibition is stated..." -> "reasoning": "Prohibition is stated..."
+        repaired = re.sub(
+            r'("[\w_]+"\s*:\s*)([A-Z][^"]*?")',  # Key followed by unquoted value starting with capital
+            r'\1"\2',
+            repaired
+        )
+
+        # Also fix lowercase unquoted strings
+        # Pattern: "key": some text" -> "key": "some text"
+        repaired = re.sub(
+            r'("[\w_]+"\s*:\s*)([a-z][^"]*?")',  # Key followed by unquoted value starting with lowercase
+            r'\1"\2',
+            repaired
+        )
+
+        # Fix trailing commas: ,] -> ] and ,} -> }
+        repaired = re.sub(r',\s*\]', ']', repaired)
+        repaired = re.sub(r',\s*\}', '}', repaired)
+
+        # Fix single quotes (only if not inside a double-quoted string)
+        # This is tricky - simple approach: replace ' with " if it looks like JSON structure
+        # Only do this if there are no double quotes (unlikely for valid JSON)
+        if '"' not in repaired and "'" in repaired:
+            repaired = repaired.replace("'", '"')
+
+        return repaired
+
     def _parse_json_response(self, response_text: str, context: str = "") -> Dict[str, Any]:
         """
         Parse JSON from LLM response, handling markdown fences and errors.
@@ -221,12 +269,21 @@ class LogicConverter:
             try:
                 return json.loads(json_text)
             except json.JSONDecodeError as e2:
-                # Save debug file for inspection
-                debug_file = f"debug_llm_response{context.replace(' ', '_').replace('(', '_').replace(')', '_')}.txt"
-                with open(debug_file, 'w', encoding='utf-8') as f:
-                    f.write(response_text)
-                print(f"[logic_converter] Raw response saved to: {debug_file}")
-                raise ValueError(f"[logic_converter] Failed to parse JSON {context}: {e2}")
+                # Try to repair the JSON before giving up
+                print(f"[logic_converter] Attempting JSON repair {context}...")
+                repaired_text = self._repair_json(json_text)
+
+                try:
+                    result = json.loads(repaired_text)
+                    print(f"[logic_converter] JSON repair successful {context}")
+                    return result
+                except json.JSONDecodeError as e3:
+                    # Save debug file for inspection
+                    debug_file = f"debug_llm_response{context.replace(' ', '_').replace('(', '_').replace(')', '_')}.txt"
+                    with open(debug_file, 'w', encoding='utf-8') as f:
+                        f.write(response_text)
+                    print(f"[logic_converter] Raw response saved to: {debug_file}")
+                    raise ValueError(f"[logic_converter] Failed to parse JSON {context}: {e3}")
 
         # No JSON structure found at all
         debug_file = f"debug_llm_response{context.replace(' ', '_').replace('(', '_').replace(')', '_')}.txt"
@@ -234,6 +291,67 @@ class LogicConverter:
             f.write(response_text)
         print(f"[logic_converter] Raw response saved to: {debug_file}")
         raise ValueError(f"[logic_converter] No JSON structure found in response {context}")
+
+
+    # def _parse_json_response(self, response_text: str, context: str = "") -> Dict[str, Any]:
+    #     """
+    #     Parse JSON from LLM response, handling markdown fences and errors.
+
+    #     Args:
+    #         response_text: Raw response text from LLM
+    #         context: Context string for error messages (e.g., "(chunk0)", "(single-pass)")
+
+    #     Returns:
+    #         Parsed JSON as dictionary
+
+    #     Raises:
+    #         ValueError: If JSON cannot be parsed
+    #     """
+    #     # Try direct parsing first
+    #     try:
+    #         return json.loads(response_text)
+    #     except json.JSONDecodeError as e:
+    #         print(f"[logic_converter] WARNING: JSON parse failed {context}: {e}")
+
+    #     # Try to strip markdown code fences
+    #     cleaned_text = response_text
+    #     if response_text.strip().startswith("```"):
+    #         lines = response_text.strip().split('\n')
+    #         # Remove opening fence (```json or ```)
+    #         if lines[0].startswith("```"):
+    #             lines = lines[1:]
+    #         # Remove closing fence
+    #         if lines and lines[-1].strip() == "```":
+    #             lines = lines[:-1]
+    #         cleaned_text = '\n'.join(lines)
+
+    #         try:
+    #             return json.loads(cleaned_text)
+    #         except json.JSONDecodeError:
+    #             pass  # Fall through to bracket extraction
+
+    #     # Fallback: extract between first { and last }
+    #     if "{" in cleaned_text and "}" in cleaned_text:
+    #         json_start = cleaned_text.find("{")
+    #         json_end = cleaned_text.rfind("}") + 1
+    #         json_text = cleaned_text[json_start:json_end]
+
+    #         try:
+    #             return json.loads(json_text)
+    #         except json.JSONDecodeError as e2:
+    #             # Save debug file for inspection
+    #             debug_file = f"debug_llm_response{context.replace(' ', '_').replace('(', '_').replace(')', '_')}.txt"
+    #             with open(debug_file, 'w', encoding='utf-8') as f:
+    #                 f.write(response_text)
+    #             print(f"[logic_converter] Raw response saved to: {debug_file}")
+    #             raise ValueError(f"[logic_converter] Failed to parse JSON {context}: {e2}")
+
+    #     # No JSON structure found at all
+    #     debug_file = f"debug_llm_response{context.replace(' ', '_').replace('(', '_').replace(')', '_')}.txt"
+    #     with open(debug_file, 'w', encoding='utf-8') as f:
+    #         f.write(response_text)
+    #     print(f"[logic_converter] Raw response saved to: {debug_file}")
+    #     raise ValueError(f"[logic_converter] No JSON structure found in response {context}")
 
     def _split_into_chunks(self, text: str, target_size: int = None) -> List[str]:
         """

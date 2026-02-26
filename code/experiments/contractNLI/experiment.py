@@ -40,7 +40,7 @@ DATASET_DIR = _script_dir / "contract-nli"
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DEFAULT_DATASET_PATH = DATASET_DIR / "dev.json"
-DEFAULT_DOC_IDS = [7]
+DEFAULT_DOC_IDS = [45]
 #DEFAULT_DOC_IDS = [3, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 32, 33, 35, 37, 39]
 
 
