@@ -30,10 +30,9 @@ class LogicConverter:
     """Converts text to structured propositional logic using LLM."""
 
     # Threshold for triggering multi-chunk mode (characters)
-    CHUNK_THRESHOLD = 8000
-
+    CHUNK_THRESHOLD = 4000
     # Target chunk size (characters)
-    CHUNK_TARGET_SIZE = 4000
+    CHUNK_TARGET_SIZE = 2000
 
     def __init__(
         self,
