@@ -250,12 +250,13 @@ class LogicConverter:
         if target_size is None:
             target_size = self.CHUNK_TARGET_SIZE
 
+        # cut start here
         # First, split by double newlines (paragraphs)
         paragraphs = re.split(r'\n\s*\n', text)
         paragraphs = [p.strip() for p in paragraphs if p.strip()]
 
-        if not paragraphs:
-            # No paragraph breaks - split by single newlines
+        # If no double-newline breaks (or only 1 large paragraph), split by single newlines
+        if not paragraphs or (len(paragraphs) == 1 and len(paragraphs[0]) > target_size):
             paragraphs = text.split('\n')
             paragraphs = [p.strip() for p in paragraphs if p.strip()]
 
@@ -263,6 +264,7 @@ class LogicConverter:
             # Still nothing - return as single chunk
             return [text]
 
+        #end cut here
         # Now group paragraphs into chunks
         chunks = []
         current_chunk_parts = []
