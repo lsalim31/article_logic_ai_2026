@@ -47,3 +47,5 @@ PROMPT_PASS_2 = "prompt_pass_2"
 
 TRIGGER_QUERY = 0.8      # NLI confidence threshold to trigger voting
 ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered
+
+USE_ENRICHMENT = False

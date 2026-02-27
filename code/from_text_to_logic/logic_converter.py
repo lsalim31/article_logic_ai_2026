@@ -32,7 +32,7 @@ class LogicConverter:
     # Threshold for triggering multi-chunk mode (characters)
     CHUNK_THRESHOLD = 4000
     # Target chunk size (characters)
-    CHUNK_TARGET_SIZE = 2000
+    CHUNK_TARGET_SIZE = 1500
 
     def __init__(
         self,
