@@ -728,7 +728,7 @@ def main() -> int:
     parser.add_argument(
         "--k-weights",
         type=int,
-        default=10,
+        default=SBERT_TOP_K,
         help="Top-k chunks for weight assignment",
     )
     parser.add_argument(
