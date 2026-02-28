@@ -36,7 +36,8 @@ REASONING_EFFORT = "medium"
 REASONING_EFFORT_TRANSLATE = "medium"
 
 REASONING_MODEL = "gpt-5.2"
-TRANSLATE_MODEL = "openai/gpt-5-nano"
+TRANSLATE_MODEL = "openai/gpt-oss-20b"
+#"openai/gpt-4.1-nano" #"openai/gpt-5-nano"
 
 HARDNESS_CONSTANT = 0.9
 USE_OPENIE = False
