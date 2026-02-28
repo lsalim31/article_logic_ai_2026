@@ -47,7 +47,7 @@ from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
 from config.retrieval_config import (
-    TRANSLATE_MODEL,
+    TRANSLATE_MODEL,DEFAULT_MIN_WORDS,DEFAULT_MAX_WORDS
 )
 
 
@@ -57,7 +57,11 @@ _script_dir = Path(__file__).resolve().parent
 #SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
 
 RESULTS_DIR = _script_dir / "results_directLLM_longNLI"
-SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
+
+DOCNLI_LONG_DIR = f"docnli-long_{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
+
+
+SAMPLE_DATA_PATH = _script_dir / DOCNLI_LONG_DIR / "sample_10.json"
 
 # Default model
 DEFAULT_MODEL = TRANSLATE_MODEL

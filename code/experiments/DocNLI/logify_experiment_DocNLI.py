@@ -40,6 +40,8 @@ from config.retrieval_config import (
     SBERT_TOP_K,
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
+    DEFAULT_MIN_WORDS, 
+    DEFAULT_MAX_WORDS
 )
 
 # old
@@ -55,6 +57,13 @@ from config.retrieval_config import (
 CACHE_DIR = _script_dir / "cache_long_nli"
 RESULTS_DIR = _script_dir / "results_logify_longNLI"
 SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
+
+CACHE_DIR = _script_dir / f"cache__{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
+RESULTS_DIR = _script_dir / f"results__{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
+DOCNLI_LONG_DIR = f"docnli-long_{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
+SAMPLE_DATA_PATH = _script_dir / DOCNLI_LONG_DIR / "sample_10.json"
+
+
 
 
 @dataclass

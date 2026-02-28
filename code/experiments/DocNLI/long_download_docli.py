@@ -26,6 +26,7 @@ Usage:
 
 import copy
 import json
+import sys
 import random
 from pathlib import Path
 from datetime import datetime
@@ -45,18 +46,24 @@ except Exception as e:
     DATASETS_ERROR = str(e)
 
 
-# Paths
+# Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
-DOCNLI_LONG_DIR = _script_dir / "docnli-long"
-GOLD_OUTPUT_PATH = DOCNLI_LONG_DIR / "gold_balanced.json"
+_code_dir = _script_dir.parent.parent
+if str(_code_dir) not in sys.path:
+    sys.path.insert(0, str(_code_dir))
+
+from config.retrieval_config import DEFAULT_MIN_WORDS, DEFAULT_MAX_WORDS
 
 # Default filter criteria
-DEFAULT_MIN_WORDS = 800
-DEFAULT_MAX_WORDS = 1200
+
 DEFAULT_MIN_HYPOTHESES = 5
 DEFAULT_MIN_BALANCE_SCORE = 0.8
 DEFAULT_NUM_PREMISES = 10
 
+# Paths
+_script_dir = Path(__file__).resolve().parent
+DOCNLI_LONG_DIR = _script_dir / f"docnli-long_{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS }"
+GOLD_OUTPUT_PATH = DOCNLI_LONG_DIR / "gold_balanced.json"
 
 def count_words(text: str) -> int:
     """Count words in text."""

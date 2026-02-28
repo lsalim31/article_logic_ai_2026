@@ -50,3 +50,5 @@ TRIGGER_QUERY = 0.8      # NLI confidence threshold to trigger voting
 ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered
 
 USE_ENRICHMENT = False
+DEFAULT_MIN_WORDS = 100
+DEFAULT_MAX_WORDS = 400
