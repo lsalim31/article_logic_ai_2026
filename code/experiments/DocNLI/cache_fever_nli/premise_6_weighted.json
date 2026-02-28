@@ -1,0 +1,109 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mercedes-Benz is a global automobile manufacturer",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual classification of Mercedes-Benz"
+    },
+    {
+      "id": "P_2",
+      "translation": "Mercedes-Benz is a division of Daimler AG",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual relation between Mercedes-Benz and Daimler AG"
+    },
+    {
+      "id": "P_3",
+      "translation": "Daimler AG is a German company",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual classification of Daimler AG inferred from the appositive phrase 'the German company Daimler AG'"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Mercedes-Benz is a global automobile manufacturer",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct factual statement",
+      "list nli": [
+        [
+          7.973114406922832e-06,
+          0.0003430579090490937,
+          0.999648928642273
+        ],
+        [
+          2.984156026286655e-06,
+          0.000669020926579833,
+          0.9993280172348022
+        ],
+        [
+          0.0007360388990491629,
+          0.9936356544494629,
+          0.005628252401947975
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Mercedes-Benz is a division of Daimler AG",
+      "evidence": "Sentence 0",
+      "reasoning": "Direct factual statement",
+      "list nli": [
+        [
+          5.789741408079863e-06,
+          0.0006678103818558156,
+          0.9993264675140381
+        ],
+        [
+          4.804041964234784e-06,
+          0.0009304126142524183,
+          0.9990647435188293
+        ],
+        [
+          0.0002824686816893518,
+          0.9958987832069397,
+          0.003818789729848504
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Daimler AG is a German company",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit descriptive factual claim",
+      "list nli": [
+        [
+          5.051263542554807e-06,
+          0.007984071038663387,
+          0.9920108914375305
+        ],
+        [
+          0.0003556264564394951,
+          0.9352588653564453,
+          0.06438542157411575
+        ],
+        [
+          0.0004649700131267309,
+          0.9941474199295044,
+          0.005387657321989536
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

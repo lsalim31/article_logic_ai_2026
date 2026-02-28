@@ -1,0 +1,109 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Smriti Mandhana was born on 18 July 1996",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual claim about birth date"
+    },
+    {
+      "id": "P_2",
+      "translation": "Smriti Mandhana is an Indian cricketer",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual claim about profession/nationality"
+    },
+    {
+      "id": "P_3",
+      "translation": "Smriti Mandhana plays for the Indian women's cricket team",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual claim about team membership"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Smriti Mandhana was born on 18 July 1996",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual statement",
+      "list nli": [
+        [
+          0.015920840203762054,
+          9.395780944032595e-05,
+          0.9839852452278137
+        ],
+        [
+          0.016427865251898766,
+          9.079784649657086e-05,
+          0.9834813475608826
+        ],
+        [
+          0.0008880721870809793,
+          0.9921775460243225,
+          0.006934489589184523
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Smriti Mandhana is an Indian cricketer",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual statement",
+      "list nli": [
+        [
+          0.0006681809900328517,
+          4.2752082663355395e-05,
+          0.9992890357971191
+        ],
+        [
+          0.0005887839361093938,
+          0.9605376720428467,
+          0.038873590528964996
+        ],
+        [
+          0.0005524830194190145,
+          0.9939703941345215,
+          0.005477077793329954
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Smriti Mandhana plays for the Indian women's cricket team",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual statement",
+      "list nli": [
+        [
+          3.181703868904151e-05,
+          9.969300299417228e-05,
+          0.9998685121536255
+        ],
+        [
+          6.544469215441495e-06,
+          0.00033345998963341117,
+          0.9996600151062012
+        ],
+        [
+          0.0036537235137075186,
+          0.9831581115722656,
+          0.013188091106712818
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

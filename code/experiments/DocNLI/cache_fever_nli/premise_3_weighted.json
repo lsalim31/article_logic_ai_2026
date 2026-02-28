@@ -1,0 +1,143 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Weill Cornell Medicine is the biomedical research unit of Cornell University",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual relation (part-of/role) extracted from the appositive description."
+    },
+    {
+      "id": "P_2",
+      "translation": "Weill Cornell Medicine is the medical school of Cornell University",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual relation (institutional role) extracted from the appositive description."
+    },
+    {
+      "id": "P_3",
+      "translation": "Cornell University is a private university",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual attribute of Cornell University."
+    },
+    {
+      "id": "P_4",
+      "translation": "Cornell University is an Ivy League university",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual classification of Cornell University."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Weill Cornell Medicine is the biomedical research unit of Cornell University",
+      "evidence": "Sentence 0",
+      "reasoning": "Plain factual statement asserted directly.",
+      "list nli": [
+        [
+          3.1303825380746275e-05,
+          0.0006924592307768762,
+          0.9992762207984924
+        ],
+        [
+          1.27688372231205e-05,
+          0.0019744769670069218,
+          0.9980127811431885
+        ],
+        [
+          0.9833356142044067,
+          0.0016224749851971865,
+          0.015041912905871868
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Weill Cornell Medicine is the medical school of Cornell University",
+      "evidence": "Sentence 0",
+      "reasoning": "Plain factual statement asserted directly.",
+      "list nli": [
+        [
+          5.7817269407678396e-05,
+          0.0005909254541620612,
+          0.9993512034416199
+        ],
+        [
+          1.7547667084727436e-05,
+          0.001846546190790832,
+          0.9981359243392944
+        ],
+        [
+          0.9586458206176758,
+          0.0030790455639362335,
+          0.03827520087361336
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Cornell University is a private university",
+      "evidence": "Sentence 0",
+      "reasoning": "Plain factual statement asserted directly.",
+      "list nli": [
+        [
+          2.8264295906410553e-05,
+          6.128322274889797e-05,
+          0.9999104738235474
+        ],
+        [
+          3.451119482633658e-05,
+          6.429114000638947e-05,
+          0.9999011754989624
+        ],
+        [
+          0.00024287690757773817,
+          0.9962014555931091,
+          0.0035556971561163664
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Cornell University is an Ivy League university",
+      "evidence": "Sentence 0",
+      "reasoning": "Plain factual statement asserted directly.",
+      "list nli": [
+        [
+          4.0055206227407325e-06,
+          0.0001988333824556321,
+          0.9997971653938293
+        ],
+        [
+          3.0486032756016357e-06,
+          0.00034450090606696904,
+          0.9996525049209595
+        ],
+        [
+          0.9851675629615784,
+          0.00029257297865115106,
+          0.014539932832121849
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

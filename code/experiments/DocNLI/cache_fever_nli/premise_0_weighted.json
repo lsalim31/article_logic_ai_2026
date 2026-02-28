@@ -1,0 +1,65 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Matthew Staton Bomer was born on October 11, 1977",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic biographical fact extracted from the parenthetical birth information"
+    },
+    {
+      "id": "P_2",
+      "translation": "Matthew Staton Bomer is an American actor",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic classification statement"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Matthew Staton Bomer was born on October 11, 1977",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual statement",
+      "list nli": [
+        [
+          0.0003111841215286404,
+          3.2136926165549085e-05,
+          0.9996566772460938
+        ],
+        [
+          0.00494522275403142,
+          0.9782832860946655,
+          0.016771500930190086
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Matthew Staton Bomer is an American actor",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual statement",
+      "list nli": [
+        [
+          0.00014662201283499599,
+          4.666519453166984e-05,
+          0.9998067021369934
+        ],
+        [
+          0.0022889687679708004,
+          0.9870971441268921,
+          0.01061389222741127
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

@@ -1,0 +1,143 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Nina Jacobson was born in 1965",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic biographical fact"
+    },
+    {
+      "id": "P_2",
+      "translation": "Nina Jacobson is an American film executive",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic occupational/nationality description"
+    },
+    {
+      "id": "P_3",
+      "translation": "Until July 2006, Nina Jacobson was president of the Buena Vista Motion Pictures Group",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic role claim with an explicit end time"
+    },
+    {
+      "id": "P_4",
+      "translation": "Buena Vista Motion Pictures Group is a subsidiary of The Walt Disney Company",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic corporate-relationship fact"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Nina Jacobson was born in 1965",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual statement",
+      "list nli": [
+        [
+          4.213131978758611e-05,
+          4.1588205931475386e-05,
+          0.9999163150787354
+        ],
+        [
+          4.470044586923905e-05,
+          4.7124780394369736e-05,
+          0.9999082088470459
+        ],
+        [
+          0.0007866857922635972,
+          0.9925999641418457,
+          0.006613477598875761
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Nina Jacobson is an American film executive",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual statement",
+      "list nli": [
+        [
+          0.00010028148972196504,
+          7.932290463941172e-05,
+          0.9998204112052917
+        ],
+        [
+          3.5103039408568293e-06,
+          0.0013308721827343106,
+          0.9986655712127686
+        ],
+        [
+          0.002184538170695305,
+          2.1228914192761295e-05,
+          0.9977942705154419
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Until July 2006, Nina Jacobson was president of the Buena Vista Motion Pictures Group",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual statement about a past role and timeframe",
+      "list nli": [
+        [
+          3.546476364135742e-05,
+          3.6862289562122896e-05,
+          0.9999276399612427
+        ],
+        [
+          1.3513395970221609e-05,
+          0.00010362162720412016,
+          0.9998828172683716
+        ],
+        [
+          9.207019320456311e-05,
+          0.00014836061745882034,
+          0.9997596144676208
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Buena Vista Motion Pictures Group is a subsidiary of The Walt Disney Company",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual statement",
+      "list nli": [
+        [
+          6.336889327940298e-06,
+          0.0002411716995993629,
+          0.9997524619102478
+        ],
+        [
+          0.0012298737419769168,
+          0.00039863737765699625,
+          0.9983715415000916
+        ],
+        [
+          0.0021661489736288786,
+          0.0004155245260335505,
+          0.9974182844161987
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

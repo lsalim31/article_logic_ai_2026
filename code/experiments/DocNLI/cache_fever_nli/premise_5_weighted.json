@@ -1,0 +1,109 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Vera Ellen Wang was born on June 27, 1949",
+      "evidence": "Sentence 0",
+      "explanation": "Factual biographical birth-date statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Vera Ellen Wang is an American fashion designer",
+      "evidence": "Sentence 0",
+      "explanation": "Factual occupational/nationality description"
+    },
+    {
+      "id": "P_3",
+      "translation": "Vera Ellen Wang is based in New York City",
+      "evidence": "Sentence 0",
+      "explanation": "Factual location/base statement"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Vera Ellen Wang was born on June 27, 1949",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual claim",
+      "list nli": [
+        [
+          3.44667823810596e-05,
+          3.9759728679200634e-05,
+          0.9999257326126099
+        ],
+        [
+          9.082233009394258e-05,
+          2.5455250579398125e-05,
+          0.9998836517333984
+        ],
+        [
+          0.004146109335124493,
+          0.9806566834449768,
+          0.015197169966995716
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Vera Ellen Wang is an American fashion designer",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual claim",
+      "list nli": [
+        [
+          9.427006261830684e-06,
+          0.00018524589540902525,
+          0.9998053908348083
+        ],
+        [
+          0.00028569099958986044,
+          3.555785588105209e-05,
+          0.9996787309646606
+        ],
+        [
+          0.0007640436524525285,
+          0.992599368095398,
+          0.006636579521000385
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Vera Ellen Wang is based in New York City",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit factual claim",
+      "list nli": [
+        [
+          3.74787523469422e-05,
+          8.092484495136887e-05,
+          0.9998816251754761
+        ],
+        [
+          4.471700776775833e-06,
+          0.0003180732892360538,
+          0.9996774196624756
+        ],
+        [
+          0.00246053421869874,
+          0.9867375493049622,
+          0.010801943950355053
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}
