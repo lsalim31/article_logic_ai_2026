@@ -16,6 +16,9 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Union, Tuple, Optional
 from collections import Counter
+from nltk.tokenize import sent_tokenize
+
+
 
 import nltk
 nltk.download('punkt_tab', quiet=True)
@@ -1217,6 +1220,477 @@ def select_best_candidate(
 
     return valid_candidates[best_idx], verbalized_texts[best_idx], best_net_score
 
+"""
+feb 20, 2026. The following function was working and getting 100% with test, and 95% with small sentences. The issue is
+that if the query has several sentences. Then, it failed badly. I updated for a new function. Keeping the old one until, 
+we know the new one perform similarly.
+"""
+#
+# def translate_query(
+#     query: str,
+#     json_path: str,
+#     api_key: str,
+#     model: str = TRANSLATE_MODEL,
+#     temperature: float = TEMPERATURE_TRANSLATE,
+#     reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
+#     max_tokens: int = MAX_TOKENS,
+#     k: int = SBERT_TOP_K,
+#     sbert_model_name: str = SBERT_MODEL,
+#     verbose: bool = True
+#     ) -> Dict[str, Any]:
+#     """
+
+#     """
+
+#     # 1. Pre-process (Yes/No Handling)
+#     original_query = query
+#     if is_yes_no_question(query):
+#         if verbose:
+#             print(f"Detected Yes/No question. Converting...")
+#         try:
+#             query = convert_yes_no_to_statement(query, api_key, model)
+#             if verbose:
+#                 print(f"  → Statement: {query}")
+#         except:
+#             if verbose:
+#                 print("  → Conversion failed, proceeding with original.")
+
+#     # 2. Retrieval
+#     if verbose:
+#         print(f"Loading propositions from: {json_path}")
+#     with open(json_path, 'r', encoding='utf-8') as f:
+#         logified_structure = json.load(f)
+
+#     chunks = extract_proposition_chunks(logified_structure)
+#     sbert_model = load_sbert_model(sbert_model_name)
+#     #retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
+#     retrieved = retrieve_with_expanded_query(query, chunks, sbert_model, k=k)
+
+
+#     if not retrieved:
+#         return {
+#             "formula": "NONE",
+#             "translation": "No relevant props",
+#             "query": query,
+#             "original_query": original_query,
+#             "explanation": "No documents found.",
+#             "confidence": 0.5
+#         }
+
+#     # 3. MODAL OPPOSITE DETECTION
+#     # Check if hypothesis has a modal word that contradicts a KB proposition
+#     if verbose:
+#         print("\nChecking for modal opposites...")
+
+#     modal_opposite_result = detect_modal_opposite(query, retrieved, sbert_model, verbose=verbose)
+
+#     if modal_opposite_result:
+#         # Modal opposite found - return immediately without LLM
+#         modal_opposite_result["query"] = query
+#         modal_opposite_result["original_query"] = original_query
+#         if verbose:
+#             print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
+#         return modal_opposite_result
+
+#     # 4. ANTONYM CONTRADICTION DETECTION (NEW STEP)
+#     # Check if hypothesis has a lexical antonym that contradicts a KB proposition
+#     if verbose:
+#         print("\nChecking for antonym contradictions...")
+
+#     antonym_result = detect_antonym_contradiction(query, retrieved, sbert_model, verbose=verbose)
+
+#     if antonym_result:
+#         # Antonym contradiction found - return immediately without LLM
+#         antonym_result["query"] = query
+#         antonym_result["original_query"] = original_query
+#         if verbose:
+#             print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
+#         return antonym_result
+
+#     # 4b. IMPLICATION CONTRADICTION DETECTION
+#     # Check if hypothesis contradicts an implication in the KB
+#     if verbose:
+#         print("\nChecking for implication contradictions...")
+
+#     impl_result = detect_implication_contradiction(query, logified_structure, sbert_model, verbose=verbose)
+
+#     if impl_result:
+#         impl_result["query"] = query
+#         impl_result["original_query"] = original_query
+#         if verbose:
+#             print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
+#         return impl_result
+
+
+#     # 5. Build Prompt Variables (matching translate_old.py style)
+#     props_text = ""
+#     prop_ids = []
+#     for chunk in retrieved:
+#         prop_id = chunk['id']
+#         prop_ids.append(prop_id)
+
+#         # Add polarity annotation
+#         is_negative = negation_detection.detect_negation_in_proposition(chunk['translation'])
+#         polarity = "NEGATIVE" if is_negative else "AFFIRMATIVE"
+
+#         props_text += f"""
+#     {prop_id}: {chunk['translation']} [Polarity: {polarity}]
+#     Evidence: {chunk.get('evidence', 'N/A')}
+#     Explanation: {chunk.get('explanation', 'N/A')}
+#     """
+
+#     # Create available IDs string (no ellipsis text in ID list)
+#     available_ids = ", ".join(prop_ids[:10])
+
+#     # Build prop_map for verbalization
+#     prop_map = {p['id']: p['translation'].strip(".") for p in retrieved}
+
+#     # Detect query polarity
+#     query_is_negative = negation_detection.detect_negation_in_hypothesis(query)
+
+#     # Build the prompt
+#     prompt = build_prompt(query, props_text, available_ids, query_is_negative)
+
+#     # 6. Generate Candidates (Step A)
+#     if verbose:
+#         print("\nStep A: Generating logical candidates...")
+
+#     candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
+
+#     if not candidates:
+#         return {
+#             "formula": "ERROR",
+#             "translation": "",
+#             "query": query,
+#             "explanation": "LLM failed to generate valid candidates."
+#         }
+
+#     # If model abstained, return UNCERTAIN
+#     if len(candidates) == 1 and candidates[0].get("formula") == "NONE":
+#         return {
+#             "formula": "NONE",
+#             "translation": candidates[0].get("translation", "Not matching proposition"),
+#             "query": query,
+#             "original_query": original_query,
+#             "explanation": "LLM abstained (no matching proposition).",
+#             "confidence": 0.5
+#         }
+
+#     # 7. Verbalize & Verify (Step B & C)
+#     if verbose:
+#         print("Step B & C: Verbalizing and Verifying with NLI...")
+#     nli_model = load_nli_model_singleton()
+
+#     winner, winning_text, best_net_score = select_best_candidate(
+#         candidates, query, prop_map, nli_model, verbose=verbose
+#     )
+
+#     if winner is None:
+#         return {
+#             "formula": "ERROR",
+#             "translation": "",
+#             "query": query,
+#             "explanation": "All candidates failed syntax parsing."
+#         }
+
+#     # Compute SBERT confidence for voting trigger decision
+#     sbert_confidence = compute_nli_confidence(query, winning_text)
+#     if verbose:
+#         print(f"  SBERT confidence: {sbert_confidence:.4f} (NLI score: {best_net_score:.4f})")
+
+#     # 8. ADAPTIVE VOTING (NEW STEP)
+#     # If SBERT confidence is below threshold, sample more candidates and vote
+#     if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+#     #if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+#         if verbose:
+#             print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
+#             print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")
+
+#         # Collect all formulas (first one + additional samples)
+#         all_formulas = [normalize_formula(winner['formula'])]
+#         all_results = [(winner, winning_text, best_net_score)]
+
+#         for i in range(ADDITIONAL_LLM_QUERY):
+#             if verbose:
+#                 print(f"  [Voting] Additional call {i+1}/{ADDITIONAL_LLM_QUERY}...")
+            
+#             additional_candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
+            
+#             if additional_candidates and not (len(additional_candidates) == 1 and additional_candidates[0].get("formula") == "NONE"):
+#                 add_winner, add_text, add_score = select_best_candidate(
+#                     additional_candidates, query, prop_map, nli_model, verbose=False
+#                 )
+#                 if add_winner is not None:
+#                     all_formulas.append(normalize_formula(add_winner['formula']))
+#                     all_results.append((add_winner, add_text, add_score))
+#                     if verbose:
+#                         print(f"    → Got formula: {add_winner['formula']} (score: {add_score:.2f})")
+#             else:
+#                 # LLM abstained
+#                 all_formulas.append("NONE")
+#                 if verbose:
+#                     print(f"    → LLM abstained (NONE)")
+#         ###########
+#         formula_counts = Counter(all_formulas)
+#         winning_formula, vote_count = formula_counts.most_common(1)[0]
+        
+#         if verbose:
+#             print(f"\n[Adaptive Voting] Vote results: {dict(formula_counts)}")
+#             print(f"[Adaptive Voting] Winner: {winning_formula} ({vote_count}/{len(all_formulas)} votes)")
+
+#         # Handle NONE winning the vote (abstention)
+#         if winning_formula == "NONE":
+#             voting_confidence = vote_count / len(all_formulas)
+#             return {
+#                 "formula": "NONE",
+#                 "translation": "",
+#                 "query": query,
+#                 "original_query": original_query,
+#                 "explanation": f"Abstained via voting ({vote_count}/{len(all_formulas)} votes for NONE)",
+#                 "confidence": 0.5,
+#                 "sbert_confidence": sbert_confidence,
+#                 "voting_triggered": True,
+#                 "voting_confidence": voting_confidence,
+#                 "vote_counts": dict(formula_counts)
+#             }
+
+#         # Find the result with the winning formula (prefer highest NLI score if tie)
+#         matching_results = [(w, t, s) for (w, t, s) in all_results 
+#                            if normalize_formula(w['formula']) == winning_formula]
+        
+#         if matching_results:
+#             # Pick the one with highest NLI score
+#             matching_results.sort(key=lambda x: x[2], reverse=True)
+#             winner, winning_text, best_net_score = matching_results[0]
+
+        
+#         # Update explanation with voting info
+#         voting_confidence = vote_count / len(all_formulas)
+#         explanation = f"Selected via voting ({vote_count}/{len(all_formulas)} votes, NLI: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}"
+        
+#         return {
+#             "formula": winner['formula'],
+#             "translation": winning_text,
+#             "query": query,
+#             "original_query": original_query,
+#             "explanation": explanation,
+#             "confidence": best_net_score,
+#             "sbert_confidence": sbert_confidence,
+#             "voting_triggered": True,
+#             "voting_confidence": voting_confidence,
+#             "vote_counts": dict(formula_counts)
+#         }
+
+#     # No voting needed - return original result
+#     return {
+#         "formula": winner['formula'],
+#         "translation": winning_text,
+#         "query": query,
+#         "original_query": original_query,
+#         "explanation": f"Selected via NLI (Confidence: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}",
+#         "confidence": best_net_score,
+#         "sbert_confidence": sbert_confidence
+#     }
+
+
+# ==========================================
+# NEW: HYPOTHESIS DECOMPOSITION
+# ==========================================
+
+
+def is_multi_sentence_hypothesis(query: str, min_words_per_sentence: int = 3) -> bool:
+    """
+    Check if hypothesis has multiple sentences.
+    
+    Args:
+        query: The hypothesis text
+        min_words_per_sentence: Minimum words to count as a real sentence
+        
+    Returns:
+        True if hypothesis contains multiple meaningful sentences
+    """
+    sentences = sent_tokenize(query)
+    # Filter out very short "sentences" (punctuation artifacts, fragments)
+    meaningful_sentences = [s for s in sentences if len(s.split()) >= min_words_per_sentence]
+    return len(meaningful_sentences) > 1
+
+
+def decompose_hypothesis(
+    query: str,
+    api_key: str,
+    model: str = TRANSLATE_MODEL,
+    temperature: float = 0.0,
+    verbose: bool = True
+) -> List[str]:
+    """
+    Decompose a multi-sentence hypothesis into atomic claims.
+    
+    Each atomic claim should be a single, independently verifiable statement.
+    
+    Args:
+        query: The multi-sentence hypothesis
+        api_key: API key for LLM
+        model: Model to use for decomposition
+        temperature: Sampling temperature (0 for deterministic)
+        verbose: Print debug information
+        
+    Returns:
+        List of atomic claims. If decomposition fails, returns [query] (original).
+    """
+    prompt = f"""Decompose this hypothesis into independent atomic claims.
+
+    RULES:
+    1. Each claim should be a SINGLE, verifiable factual statement
+    2. Preserve all specific details (names, numbers, dates, quotes)
+    3. Do NOT add information not in the original
+    4. Do NOT interpret or summarize - just split into atomic facts
+    5. Each claim should be self-contained (include subject references)
+
+    EXAMPLE:
+    Hypothesis: "John was born in 1990 in Paris. He studied physics at MIT and graduated in 2012."
+    Claims:
+    - "John was born in 1990"
+    - "John was born in Paris"  
+    - "John studied physics at MIT"
+    - "John graduated in 2012"
+
+    Now decompose this hypothesis:
+    "{query}"
+
+    Return JSON only:
+    {{"claims": ["claim1", "claim2", ...]}}
+    """
+
+    try:
+        client, model_name = get_configured_client(api_key, model)
+        
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=temperature,
+            response_format={"type": "json_object"}
+        )
+        
+        content = response.choices[0].message.content
+        result = json.loads(content)
+        
+        claims = result.get("claims", [])
+        
+        if not claims:
+            if verbose:
+                print("  [Decomposition] No claims extracted, using original")
+            return [query]
+        
+        # Filter out empty or very short claims
+        claims = [c.strip() for c in claims if c.strip() and len(c.split()) >= 3]
+        
+        if verbose:
+            print(f"  [Decomposition] Extracted {len(claims)} atomic claims:")
+            for i, claim in enumerate(claims):
+                print(f"    {i+1}. {claim[:80]}{'...' if len(claim) > 80 else ''}")
+        
+        return claims if claims else [query]
+        
+    except Exception as e:
+        if verbose:
+            print(f"  [Decomposition] Failed: {e}, using original hypothesis")
+        return [query]
+
+
+def aggregate_claim_results(
+    claim_results: List[Dict[str, Any]],
+    original_query: str,
+    verbose: bool = True
+) -> Dict[str, Any]:
+    """
+    Aggregate results from multiple claim translations into a single result.
+    
+    Aggregation Logic:
+    - If ANY claim returns "NONE" → overall "NONE" (incomplete verification)
+    - If ANY claim returns "ERROR" → overall "ERROR"
+    - Otherwise → conjoin all formulas with AND: (F1) ∧ (F2) ∧ ...
+    
+    Args:
+        claim_results: List of translation results for each claim
+        original_query: The original multi-sentence hypothesis
+        verbose: Print debug information
+        
+    Returns:
+        Aggregated translation result
+    """
+    formulas = []
+    failed_claims = []
+    error_claims = []
+    
+    for i, result in enumerate(claim_results):
+        formula = result.get("formula", "")
+        claim_text = result.get("query", f"claim_{i}")
+        
+        if formula == "NONE":
+            failed_claims.append(claim_text)
+        elif formula == "ERROR":
+            error_claims.append(claim_text)
+        elif formula:
+            formulas.append(formula)
+    
+    if verbose:
+        print(f"\n  [Aggregation] Results: {len(formulas)} matched, {len(failed_claims)} NONE, {len(error_claims)} ERROR")
+    
+    # If any claim had an error, propagate error
+    if error_claims:
+        return {
+            "formula": "ERROR",
+            "translation": "",
+            "query": original_query,
+            "explanation": f"Translation error on claims: {error_claims[:2]}",
+            "decomposed": True,
+            "claim_count": len(claim_results),
+            "matched_count": len(formulas),
+            "failed_claims": error_claims
+        }
+    
+    # If any claim wasn't found, we can't verify the full hypothesis
+    if failed_claims:
+        return {
+            "formula": "NONE",
+            "translation": "Incomplete match - some claims not found in KB",
+            "query": original_query,
+            "original_query": original_query,
+            "explanation": f"Could not match {len(failed_claims)}/{len(claim_results)} claims to KB",
+            "confidence": 0.5,
+            "decomposed": True,
+            "claim_count": len(claim_results),
+            "matched_count": len(formulas),
+            "failed_claims": failed_claims[:3]  # Include first few for debugging
+        }
+    
+    # All claims matched - conjoin formulas
+    if len(formulas) == 1:
+        combined_formula = formulas[0]
+    else:
+        # Wrap each formula in parentheses and join with AND
+        combined_formula = " ∧ ".join(f"({f})" for f in formulas)
+    
+    # Aggregate confidence (use minimum - weakest link)
+    confidences = [r.get("confidence", 0.5) for r in claim_results if isinstance(r.get("confidence"), (int, float))]
+    min_confidence = min(confidences) if confidences else 0.5
+    
+    if verbose:
+        print(f"  [Aggregation] Combined formula: {combined_formula[:100]}{'...' if len(combined_formula) > 100 else ''}")
+    
+    return {
+        "formula": combined_formula,
+        "translation": f"All {len(formulas)} claims verified",
+        "query": original_query,
+        "original_query": original_query,
+        "explanation": f"Decomposed into {len(formulas)} claims, all matched to KB",
+        "confidence": min_confidence,
+        "decomposed": True,
+        "claim_count": len(claim_results),
+        "matched_count": len(formulas),
+        "claim_formulas": formulas
+    }
+
 
 def translate_query(
     query: str,
@@ -1228,261 +1702,91 @@ def translate_query(
     max_tokens: int = MAX_TOKENS,
     k: int = SBERT_TOP_K,
     sbert_model_name: str = SBERT_MODEL,
-    verbose: bool = True
-    ) -> Dict[str, Any]:
+    verbose: bool = True,
+    enable_decomposition: bool = True,
+    _is_recursive: bool = False  # Internal flag to prevent infinite recursion
+) -> Dict[str, Any]:
     """
-
+    Enhanced translate_query with hypothesis decomposition support.
+    
+    This is a wrapper around the original translate_query that adds
+    decomposition for multi-sentence hypotheses.
+    
+    Args:
+        query: Natural language hypothesis
+        json_path: Path to logified JSON
+        api_key: API key for LLM
+        model: LLM model for translation
+        temperature: Sampling temperature
+        reasoning_effort: Reasoning effort for reasoning models
+        max_tokens: Maximum tokens
+        k: Number of propositions to retrieve
+        sbert_model_name: SBERT model for retrieval
+        verbose: Print debug information
+        enable_decomposition: Enable hypothesis decomposition (can disable for testing)
+        _is_recursive: Internal flag - do not set manually
+        
+    Returns:
+        Translation result dict with formula, explanation, etc.
     """
-
-    # 1. Pre-process (Yes/No Handling)
-    original_query = query
-    if is_yes_no_question(query):
+    
+    # Check if decomposition should be applied
+    if enable_decomposition and not _is_recursive and is_multi_sentence_hypothesis(query):
         if verbose:
-            print(f"Detected Yes/No question. Converting...")
-        try:
-            query = convert_yes_no_to_statement(query, api_key, model)
+            print(f"\n[Decomposition] Multi-sentence hypothesis detected ({len(sent_tokenize(query))} sentences)")
+        
+        # Decompose into atomic claims
+        claims = decompose_hypothesis(query, api_key, model, verbose=verbose)
+        
+        # If decomposition yielded multiple claims, translate each
+        if len(claims) > 1:
             if verbose:
-                print(f"  → Statement: {query}")
-        except:
+                print(f"\n[Decomposition] Translating {len(claims)} claims independently...")
+            
+            claim_results = []
+            for i, claim in enumerate(claims):
+                if verbose:
+                    print(f"\n{'='*60}")
+                    print(f"[Claim {i+1}/{len(claims)}]: {claim[:70]}{'...' if len(claim) > 70 else ''}")
+                    print('='*60)
+                
+                # Recursive call with single claim (set _is_recursive to prevent re-decomposition)
+                result = translate_query_decomposed(
+                    query=claim,
+                    json_path=json_path,
+                    api_key=api_key,
+                    model=model,
+                    temperature=temperature,
+                    reasoning_effort=reasoning_effort,
+                    max_tokens=max_tokens,
+                    k=k,
+                    sbert_model_name=sbert_model_name,
+                    verbose=verbose,
+                    enable_decomposition=enable_decomposition,
+                    _is_recursive=True  # Prevent infinite recursion
+                )
+                claim_results.append(result)
+            
+            # Aggregate all claim results
+            return aggregate_claim_results(claim_results, query, verbose)
+        else:
             if verbose:
-                print("  → Conversion failed, proceeding with original.")
-
-    # 2. Retrieval
-    if verbose:
-        print(f"Loading propositions from: {json_path}")
-    with open(json_path, 'r', encoding='utf-8') as f:
-        logified_structure = json.load(f)
-
-    chunks = extract_proposition_chunks(logified_structure)
-    sbert_model = load_sbert_model(sbert_model_name)
-    #retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
-    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model, k=k)
-
-
-    if not retrieved:
-        return {
-            "formula": "NONE",
-            "translation": "No relevant props",
-            "query": query,
-            "original_query": original_query,
-            "explanation": "No documents found.",
-            "confidence": 0.5
-        }
-
-    # 3. MODAL OPPOSITE DETECTION
-    # Check if hypothesis has a modal word that contradicts a KB proposition
-    if verbose:
-        print("\nChecking for modal opposites...")
-
-    modal_opposite_result = detect_modal_opposite(query, retrieved, sbert_model, verbose=verbose)
-
-    if modal_opposite_result:
-        # Modal opposite found - return immediately without LLM
-        modal_opposite_result["query"] = query
-        modal_opposite_result["original_query"] = original_query
-        if verbose:
-            print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
-        return modal_opposite_result
-
-    # 4. ANTONYM CONTRADICTION DETECTION (NEW STEP)
-    # Check if hypothesis has a lexical antonym that contradicts a KB proposition
-    if verbose:
-        print("\nChecking for antonym contradictions...")
-
-    antonym_result = detect_antonym_contradiction(query, retrieved, sbert_model, verbose=verbose)
-
-    if antonym_result:
-        # Antonym contradiction found - return immediately without LLM
-        antonym_result["query"] = query
-        antonym_result["original_query"] = original_query
-        if verbose:
-            print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
-        return antonym_result
-
-    # 4b. IMPLICATION CONTRADICTION DETECTION
-    # Check if hypothesis contradicts an implication in the KB
-    if verbose:
-        print("\nChecking for implication contradictions...")
-
-    impl_result = detect_implication_contradiction(query, logified_structure, sbert_model, verbose=verbose)
-
-    if impl_result:
-        impl_result["query"] = query
-        impl_result["original_query"] = original_query
-        if verbose:
-            print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
-        return impl_result
-
-
-    # 5. Build Prompt Variables (matching translate_old.py style)
-    props_text = ""
-    prop_ids = []
-    for chunk in retrieved:
-        prop_id = chunk['id']
-        prop_ids.append(prop_id)
-
-        # Add polarity annotation
-        is_negative = negation_detection.detect_negation_in_proposition(chunk['translation'])
-        polarity = "NEGATIVE" if is_negative else "AFFIRMATIVE"
-
-        props_text += f"""
-    {prop_id}: {chunk['translation']} [Polarity: {polarity}]
-    Evidence: {chunk.get('evidence', 'N/A')}
-    Explanation: {chunk.get('explanation', 'N/A')}
-    """
-
-    # Create available IDs string (no ellipsis text in ID list)
-    available_ids = ", ".join(prop_ids[:10])
-
-    # Build prop_map for verbalization
-    prop_map = {p['id']: p['translation'].strip(".") for p in retrieved}
-
-    # Detect query polarity
-    query_is_negative = negation_detection.detect_negation_in_hypothesis(query)
-
-    # Build the prompt
-    prompt = build_prompt(query, props_text, available_ids, query_is_negative)
-
-    # 6. Generate Candidates (Step A)
-    if verbose:
-        print("\nStep A: Generating logical candidates...")
-
-    candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
-
-    if not candidates:
-        return {
-            "formula": "ERROR",
-            "translation": "",
-            "query": query,
-            "explanation": "LLM failed to generate valid candidates."
-        }
-
-    # If model abstained, return UNCERTAIN
-    if len(candidates) == 1 and candidates[0].get("formula") == "NONE":
-        return {
-            "formula": "NONE",
-            "translation": candidates[0].get("translation", "Not matching proposition"),
-            "query": query,
-            "original_query": original_query,
-            "explanation": "LLM abstained (no matching proposition).",
-            "confidence": 0.5
-        }
-
-    # 7. Verbalize & Verify (Step B & C)
-    if verbose:
-        print("Step B & C: Verbalizing and Verifying with NLI...")
-    nli_model = load_nli_model_singleton()
-
-    winner, winning_text, best_net_score = select_best_candidate(
-        candidates, query, prop_map, nli_model, verbose=verbose
+                print("[Decomposition] Single claim after decomposition, using standard translation")
+    
+    # Standard translation (single sentence or recursive call)
+    return translate_query(
+        query=query,
+        json_path=json_path,
+        api_key=api_key,
+        model=model,
+        temperature=temperature,
+        reasoning_effort=reasoning_effort,
+        max_tokens=max_tokens,
+        k=k,
+        sbert_model_name=sbert_model_name,
+        verbose=verbose
     )
 
-    if winner is None:
-        return {
-            "formula": "ERROR",
-            "translation": "",
-            "query": query,
-            "explanation": "All candidates failed syntax parsing."
-        }
-
-    # Compute SBERT confidence for voting trigger decision
-    sbert_confidence = compute_nli_confidence(query, winning_text)
-    if verbose:
-        print(f"  SBERT confidence: {sbert_confidence:.4f} (NLI score: {best_net_score:.4f})")
-
-    # 8. ADAPTIVE VOTING (NEW STEP)
-    # If SBERT confidence is below threshold, sample more candidates and vote
-    if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
-    #if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
-        if verbose:
-            print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
-            print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")
-
-        # Collect all formulas (first one + additional samples)
-        all_formulas = [normalize_formula(winner['formula'])]
-        all_results = [(winner, winning_text, best_net_score)]
-
-        for i in range(ADDITIONAL_LLM_QUERY):
-            if verbose:
-                print(f"  [Voting] Additional call {i+1}/{ADDITIONAL_LLM_QUERY}...")
-            
-            additional_candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
-            
-            if additional_candidates and not (len(additional_candidates) == 1 and additional_candidates[0].get("formula") == "NONE"):
-                add_winner, add_text, add_score = select_best_candidate(
-                    additional_candidates, query, prop_map, nli_model, verbose=False
-                )
-                if add_winner is not None:
-                    all_formulas.append(normalize_formula(add_winner['formula']))
-                    all_results.append((add_winner, add_text, add_score))
-                    if verbose:
-                        print(f"    → Got formula: {add_winner['formula']} (score: {add_score:.2f})")
-            else:
-                # LLM abstained
-                all_formulas.append("NONE")
-                if verbose:
-                    print(f"    → LLM abstained (NONE)")
-        ###########
-        formula_counts = Counter(all_formulas)
-        winning_formula, vote_count = formula_counts.most_common(1)[0]
-        
-        if verbose:
-            print(f"\n[Adaptive Voting] Vote results: {dict(formula_counts)}")
-            print(f"[Adaptive Voting] Winner: {winning_formula} ({vote_count}/{len(all_formulas)} votes)")
-
-        # Handle NONE winning the vote (abstention)
-        if winning_formula == "NONE":
-            voting_confidence = vote_count / len(all_formulas)
-            return {
-                "formula": "NONE",
-                "translation": "",
-                "query": query,
-                "original_query": original_query,
-                "explanation": f"Abstained via voting ({vote_count}/{len(all_formulas)} votes for NONE)",
-                "confidence": 0.5,
-                "sbert_confidence": sbert_confidence,
-                "voting_triggered": True,
-                "voting_confidence": voting_confidence,
-                "vote_counts": dict(formula_counts)
-            }
-
-        # Find the result with the winning formula (prefer highest NLI score if tie)
-        matching_results = [(w, t, s) for (w, t, s) in all_results 
-                           if normalize_formula(w['formula']) == winning_formula]
-        
-        if matching_results:
-            # Pick the one with highest NLI score
-            matching_results.sort(key=lambda x: x[2], reverse=True)
-            winner, winning_text, best_net_score = matching_results[0]
-
-        
-        # Update explanation with voting info
-        voting_confidence = vote_count / len(all_formulas)
-        explanation = f"Selected via voting ({vote_count}/{len(all_formulas)} votes, NLI: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}"
-        
-        return {
-            "formula": winner['formula'],
-            "translation": winning_text,
-            "query": query,
-            "original_query": original_query,
-            "explanation": explanation,
-            "confidence": best_net_score,
-            "sbert_confidence": sbert_confidence,
-            "voting_triggered": True,
-            "voting_confidence": voting_confidence,
-            "vote_counts": dict(formula_counts)
-        }
-
-    # No voting needed - return original result
-    return {
-        "formula": winner['formula'],
-        "translation": winning_text,
-        "query": query,
-        "original_query": original_query,
-        "explanation": f"Selected via NLI (Confidence: {best_net_score:.2f}). LLM Reasoning: {winner.get('reasoning', '')}",
-        "confidence": best_net_score,
-        "sbert_confidence": sbert_confidence
-    }
 
 
 # ==========================================
