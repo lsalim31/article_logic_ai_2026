@@ -56,8 +56,10 @@ from baseline_rag import config as rag_config
 #RESULTS_DIR = _script_dir / "results_rag_DocNLI"
 #SAMPLE_DATA_PATH = _script_dir / "doc-nli" / "sample_100.json"
 
-RESULTS_DIR = _script_dir / "results_rag_FeverNLI"
-SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+#few
+#RESULTS_DIR = _script_dir / "results_rag_FeverNLI"
+#SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+
 
 
 # =============================================================================

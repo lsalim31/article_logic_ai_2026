@@ -46,22 +46,18 @@ from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
-from logic_solver import LogicSolver
 from config.retrieval_config import (
-    HARDNESS_CONSTANT,
-    MAX_TOKENS,
-    REASONING_EFFORT,
-    REASONING_MODEL,
-    SBERT_TOP_K,
-    TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
 )
 
 
 # Paths
 _script_dir = Path(__file__).resolve().parent
-RESULTS_DIR = _script_dir / "results_direct_llm_FeverNLI"
-SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+#RESULTS_DIR = _script_dir / "results_direct_llm_FeverNLI"
+#SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+
+RESULTS_DIR = _script_dir / "results_directLLM_longNLI"
+SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
 
 # Default model
 DEFAULT_MODEL = TRANSLATE_MODEL

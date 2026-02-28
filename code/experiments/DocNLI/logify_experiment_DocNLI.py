@@ -42,15 +42,19 @@ from config.retrieval_config import (
     TRANSLATE_MODEL,
 )
 
-# Paths
+# old
 #CACHE_DIR = _script_dir / "cache"
 #RESULTS_DIR = _script_dir / "results_logify_DocNLI"
 #SAMPLE_DATA_PATH = _script_dir / "doc-nli" / "sample_100.json"
 
-#new
-CACHE_DIR = _script_dir / "cache_fever_nli"
-RESULTS_DIR = _script_dir / "results_logify_FeverNLI"
-SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+# fewer
+#CACHE_DIR = _script_dir / "cache_fever_nli"
+#RESULTS_DIR = _script_dir / "results_logify_FeverNLI"
+#SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
+
+CACHE_DIR = _script_dir / "cache_long_nli"
+RESULTS_DIR = _script_dir / "results_logify_longNLI"
+SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
 
 
 @dataclass
