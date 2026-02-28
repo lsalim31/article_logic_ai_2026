@@ -54,9 +54,9 @@ from config.retrieval_config import (
 #RESULTS_DIR = _script_dir / "results_logify_FeverNLI"
 #SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
 
-CACHE_DIR = _script_dir / "cache_long_nli"
-RESULTS_DIR = _script_dir / "results_logify_longNLI"
-SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
+#CACHE_DIR = _script_dir / "cache_long_nli"
+#RESULTS_DIR = _script_dir / "results_logify_longNLI"
+#SAMPLE_DATA_PATH = _script_dir / "docnli-long" / "sample_10.json"
 
 CACHE_DIR = _script_dir / f"cache__{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
 RESULTS_DIR = _script_dir / f"results__{DEFAULT_MIN_WORDS}_{DEFAULT_MAX_WORDS}"
@@ -670,6 +670,7 @@ def main() -> int:
     parser.add_argument(
         "--verbose",
         action="store_true",
+        default=True,
         help="Enable detailed output",
     )
 
