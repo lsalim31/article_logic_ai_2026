@@ -39,9 +39,10 @@ from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REA
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
 SUBSET_TOP_K_RETRIEVAL = 50
-SUBSET_NUM_CLUSTERS = 5
-SUBSET_TOP_PER_CLUSTER = 2
-SUBSET_ENTAILMENT_THRESHOLD = 0.8
+SUBSET_NUM_CLUSTERS = 1
+SUBSET_TOP_PER_CLUSTER = 5
+SUBSET_ENTAILMENT_THRESHOLD = 0.3
+MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 
 
 # Add code directory to Python path
@@ -1018,7 +1019,7 @@ def detect_implication_contradiction(
 from nltk.corpus import wordnet as wn
 #from nltk import pos_tag, word_tokenize
 
-def expand_query_with_synonyms(query: str, sbert_model, max_variants: int = 5) -> List[str]:
+def expand_query_with_synonyms(query: str, sbert_model, max_variants: int = MAX_VARIANTS) -> List[str]:
     """Expand query with SBERT-filtered synonym variants."""
     variants = [query]
     
