@@ -38,7 +38,6 @@ except LookupError:
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
-
 SUBSET_TOP_K_RETRIEVAL = 50
 SUBSET_NUM_CLUSTERS = 5
 SUBSET_TOP_PER_CLUSTER = 2
@@ -1070,14 +1069,7 @@ def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K):
 # NEW: SUBSET ENTAILMENT CANDIDATE GENERATION
 # ==========================================
 
-from sklearn.cluster import KMeans
-from itertools import combinations
 
-# Config parameters (add to config/retrieval_config.py later)
-SUBSET_TOP_K_RETRIEVAL = 50
-SUBSET_NUM_CLUSTERS = 5
-SUBSET_TOP_PER_CLUSTER = 2
-SUBSET_ENTAILMENT_THRESHOLD = 0.8
 
 
 def cluster_propositions(chunks: List[Dict], sbert_model, n_clusters: int = SUBSET_NUM_CLUSTERS) -> np.ndarray:
@@ -1690,6 +1682,9 @@ def translate_query_single(
             "confidence": 0.5
         }
 
+    # Build prop_map for verbalization (needed for NLI verification)
+    prop_map = {p['id']: p['translation'].strip(".") for p in chunks_for_subset}
+
     # 7. Verbalize & Verify (Step B & C)
     if verbose:
         print("Step B & C: Verbalizing and Verifying with NLI...")
@@ -1728,11 +1723,14 @@ def translate_query_single(
             if verbose:
                 print(f"  [Voting] Additional call {i+1}/{ADDITIONAL_LLM_QUERY}...")
             
-            additional_candidates = generate_candidates_llm(prompt, api_key, model, temperature=temperature)
+            # Use new subset entailment approach instead of old prompt-based generation
+            additional_candidates = generate_candidates_via_subset_entailment(
+                query, chunks_for_subset, sbert_model, api_key, model, verbose=True
+            )
             
             if additional_candidates and not (len(additional_candidates) == 1 and additional_candidates[0].get("formula") == "NONE"):
                 add_winner, add_text, add_score = select_best_candidate(
-                    additional_candidates, query, prop_map, nli_model, verbose=False
+                    additional_candidates, query, prop_map, nli_model, verbose=True
                 )
                 if add_winner is not None:
                     all_formulas.append(normalize_formula(add_winner['formula']))
