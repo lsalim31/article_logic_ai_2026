@@ -1,0 +1,755 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The Afghan government will investigate reports of civilian casualties in a recent NATO bombing",
+      "evidence": "Sentence 0",
+      "explanation": "Future-directed action stated in the report"
+    },
+    {
+      "id": "P_2",
+      "translation": "The office of President Hamid Karzai said that the Afghan government will investigate reports of civilian casualties in a recent NATO bombing",
+      "evidence": "Sentence 0",
+      "explanation": "Attribution to Karzai's office"
+    },
+    {
+      "id": "P_3",
+      "translation": "Karzai appointed a delegation to investigate the bombing",
+      "evidence": "Sentence 1",
+      "explanation": "Appointment action stated as fact"
+    },
+    {
+      "id": "P_4",
+      "translation": "The bombing occurred in Kunar province",
+      "evidence": "Sentence 1",
+      "explanation": "Location of the bombing"
+    },
+    {
+      "id": "P_5",
+      "translation": "Reports say that four children were killed in the incident",
+      "evidence": "Sentence 2",
+      "explanation": "Claim is hedged by 'According to reports'"
+    },
+    {
+      "id": "P_6",
+      "translation": "Reports say that a woman was killed in the incident",
+      "evidence": "Sentence 2",
+      "explanation": "Claim is hedged by 'According to reports'"
+    },
+    {
+      "id": "P_7",
+      "translation": "Reports say that a man was killed in the incident",
+      "evidence": "Sentence 2",
+      "explanation": "Claim is hedged by 'According to reports'"
+    },
+    {
+      "id": "P_8",
+      "translation": "The president's office said that reports say that four children were killed in the incident",
+      "evidence": "Sentence 2",
+      "explanation": "Attribution to the president's office"
+    },
+    {
+      "id": "P_9",
+      "translation": "NATO forces are led by the United States",
+      "evidence": "Sentence 3",
+      "explanation": "Leadership relation stated as fact"
+    },
+    {
+      "id": "P_10",
+      "translation": "NATO forces have been battling the Taliban in Afghanistan for a decade",
+      "evidence": "Sentence 3",
+      "explanation": "Long-running conflict claim"
+    },
+    {
+      "id": "P_11",
+      "translation": "The Taliban has al Qaeda allies",
+      "evidence": "Sentence 3",
+      "explanation": "Alliance relation stated as fact"
+    },
+    {
+      "id": "P_12",
+      "translation": "NATO forces have been battling al Qaeda allies in Afghanistan for a decade",
+      "evidence": "Sentence 3",
+      "explanation": "Long-running conflict claim"
+    },
+    {
+      "id": "P_13",
+      "translation": "Al Qaeda carried out terrorist attacks on New York in 2001",
+      "evidence": "Sentence 3",
+      "explanation": "Historical event claim"
+    },
+    {
+      "id": "P_14",
+      "translation": "Al Qaeda carried out terrorist attacks on Washington in 2001",
+      "evidence": "Sentence 3",
+      "explanation": "Historical event claim"
+    },
+    {
+      "id": "P_15",
+      "translation": "A U.S. invasion deposed the Taliban",
+      "evidence": "Sentence 4",
+      "explanation": "Causal/historical claim stated as fact"
+    },
+    {
+      "id": "P_16",
+      "translation": "The Taliban ruled most of Afghanistan before the 2001 attacks",
+      "evidence": "Sentence 4",
+      "explanation": "Historical governance claim"
+    },
+    {
+      "id": "P_17",
+      "translation": "The Taliban regrouped as a guerrilla movement",
+      "evidence": "Sentence 4",
+      "explanation": "Characterization of later Taliban organization"
+    },
+    {
+      "id": "P_18",
+      "translation": "The Taliban has been battling allied troops",
+      "evidence": "Sentence 4",
+      "explanation": "Ongoing conflict claim"
+    },
+    {
+      "id": "P_19",
+      "translation": "The Taliban has been battling Karzai's government",
+      "evidence": "Sentence 4",
+      "explanation": "Ongoing conflict claim"
+    },
+    {
+      "id": "P_20",
+      "translation": "Ties between Karzai and the United States were already strained",
+      "evidence": "Sentence 5",
+      "explanation": "State of diplomatic ties"
+    },
+    {
+      "id": "P_21",
+      "translation": "Ties between Karzai and the United States have been further tested",
+      "evidence": "Sentence 5",
+      "explanation": "Change in diplomatic situation"
+    },
+    {
+      "id": "P_22",
+      "translation": "Incidents occurred in which civilians were killed",
+      "evidence": "Sentence 5",
+      "explanation": "Existence of incidents involving civilian deaths"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "The Afghan government will investigate reports of civilian casualties in a recent NATO bombing",
+      "evidence": "Sentence 0",
+      "reasoning": "Stated directly as a planned action",
+      "list nli": [
+        [
+          1.8920309230452403e-05,
+          5.930093539063819e-05,
+          0.9999217987060547
+        ],
+        [
+          1.8738988728728145e-05,
+          6.552642298629507e-05,
+          0.9999157190322876
+        ],
+        [
+          1.27900239021983e-05,
+          7.151304453145713e-05,
+          0.9999157190322876
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "The office of President Hamid Karzai said that the Afghan government will investigate reports of civilian casualties in a recent NATO bombing",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit attribution statement",
+      "list nli": [
+        [
+          2.5757663024705835e-05,
+          9.464005415793508e-05,
+          0.9998795986175537
+        ],
+        [
+          6.302597466856241e-05,
+          7.895245653344318e-05,
+          0.999858021736145
+        ],
+        [
+          1.5586534573230892e-05,
+          0.00013127362763043493,
+          0.9998531341552734
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Karzai appointed a delegation to investigate the bombing",
+      "evidence": "Sentence 1",
+      "reasoning": "Factual past-tense report",
+      "list nli": [
+        [
+          1.8970886230817996e-05,
+          5.792068623122759e-05,
+          0.9999231100082397
+        ],
+        [
+          1.4958834071876481e-05,
+          7.46458099456504e-05,
+          0.9999103546142578
+        ],
+        [
+          7.3456199061183725e-06,
+          0.00010612092592054978,
+          0.9998865127563477
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "The bombing occurred in Kunar province",
+      "evidence": "Sentence 1",
+      "reasoning": "Stated directly",
+      "list nli": [
+        [
+          2.4784736524452455e-05,
+          4.646916568162851e-05,
+          0.9999287128448486
+        ],
+        [
+          2.8506981834652834e-05,
+          4.494453969527967e-05,
+          0.9999265670776367
+        ],
+        [
+          4.0595416066935286e-05,
+          3.656782428151928e-05,
+          0.9999228715896606
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "Reports say that four children were killed in the incident",
+      "evidence": "Sentence 2",
+      "reasoning": "Claim about what reports say (not direct assertion of deaths)",
+      "list nli": [
+        [
+          2.2723050278727897e-05,
+          4.559232547762804e-05,
+          0.9999316930770874
+        ],
+        [
+          2.8899428798467852e-05,
+          4.169820385868661e-05,
+          0.9999294281005859
+        ],
+        [
+          2.9686001653317362e-05,
+          4.25092875957489e-05,
+          0.9999277591705322
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Reports say that a woman was killed in the incident",
+      "evidence": "Sentence 2",
+      "reasoning": "Claim about what reports say (not direct assertion of deaths)",
+      "list nli": [
+        [
+          2.4462826331728138e-05,
+          4.528589124674909e-05,
+          0.9999302625656128
+        ],
+        [
+          4.273753074812703e-05,
+          3.3262349461438134e-05,
+          0.9999239444732666
+        ],
+        [
+          3.883968020090833e-05,
+          4.054309465573169e-05,
+          0.9999206066131592
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Reports say that a man was killed in the incident",
+      "evidence": "Sentence 2",
+      "reasoning": "Claim about what reports say (not direct assertion of deaths)",
+      "list nli": [
+        [
+          3.029480103577953e-05,
+          3.9497139368904755e-05,
+          0.9999302625656128
+        ],
+        [
+          2.5429073502891697e-05,
+          4.602713670465164e-05,
+          0.9999285936355591
+        ],
+        [
+          2.474181746947579e-05,
+          4.784334305441007e-05,
+          0.9999274015426636
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "The president's office said that reports say that four children were killed in the incident",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit attribution statement",
+      "list nli": [
+        [
+          2.2893214918440208e-05,
+          4.424666258273646e-05,
+          0.9999328851699829
+        ],
+        [
+          2.4977662178571336e-05,
+          5.529974805540405e-05,
+          0.9999197721481323
+        ],
+        [
+          1.1401973097235896e-05,
+          7.132461905712262e-05,
+          0.9999172687530518
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "NATO forces are led by the United States",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          2.5496310627204366e-05,
+          5.648076694342308e-05,
+          0.9999179840087891
+        ],
+        [
+          1.5658160918974318e-05,
+          8.00554480520077e-05,
+          0.9999042749404907
+        ],
+        [
+          4.244806041242555e-05,
+          6.537595618283376e-05,
+          0.9998921155929565
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "NATO forces have been battling the Taliban in Afghanistan for a decade",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          2.6985751901520416e-05,
+          4.1503371903672814e-05,
+          0.9999314546585083
+        ],
+        [
+          2.9378819817793556e-05,
+          4.274956154404208e-05,
+          0.9999278783798218
+        ],
+        [
+          4.5426546421367675e-05,
+          3.2116298825712875e-05,
+          0.9999223947525024
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "The Taliban has al Qaeda allies",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          2.523854527680669e-05,
+          9.200366184813902e-05,
+          0.999882698059082
+        ],
+        [
+          9.049247455550358e-05,
+          3.277010910096578e-05,
+          0.9998767375946045
+        ],
+        [
+          8.734488801565021e-05,
+          5.581283039646223e-05,
+          0.9998568296432495
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_12",
+      "translation": "NATO forces have been battling al Qaeda allies in Afghanistan for a decade",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          3.6227509554009885e-05,
+          3.532177652232349e-05,
+          0.9999284744262695
+        ],
+        [
+          3.734218989848159e-05,
+          3.6913053918397054e-05,
+          0.9999257326126099
+        ],
+        [
+          5.78421531827189e-05,
+          3.497860234347172e-05,
+          0.9999071359634399
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_13",
+      "translation": "Al Qaeda carried out terrorist attacks on New York in 2001",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          6.876159750390798e-05,
+          8.720268670003861e-05,
+          0.999843955039978
+        ],
+        [
+          1.2068661817465909e-05,
+          0.0001908230478875339,
+          0.9997971653938293
+        ],
+        [
+          4.3134681618539616e-05,
+          0.00020621548173949122,
+          0.9997506737709045
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_14",
+      "translation": "Al Qaeda carried out terrorist attacks on Washington in 2001",
+      "evidence": "Sentence 3",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          6.20425125816837e-05,
+          4.37542621511966e-05,
+          0.9998941421508789
+        ],
+        [
+          1.2190632332931273e-05,
+          0.00017137767281383276,
+          0.9998164772987366
+        ],
+        [
+          0.00011658380390144885,
+          8.956077363109216e-05,
+          0.9997938275337219
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_15",
+      "translation": "A U.S. invasion deposed the Taliban",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          4.24751742684748e-05,
+          8.102004358079284e-05,
+          0.9998764991760254
+        ],
+        [
+          4.1603467252571136e-05,
+          0.00012150614202255383,
+          0.9998369216918945
+        ],
+        [
+          0.0003329397295601666,
+          0.00022734439698979259,
+          0.9994396567344666
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_16",
+      "formula": "P_16",
+      "translation": "The Taliban ruled most of Afghanistan before the 2001 attacks",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          5.078534013591707e-05,
+          6.804739678045735e-05,
+          0.9998811483383179
+        ],
+        [
+          2.7779442461906e-05,
+          0.00010335705883335322,
+          0.9998688697814941
+        ],
+        [
+          6.306477007456124e-05,
+          8.909246389521286e-05,
+          0.9998477697372437
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "P_17",
+      "translation": "The Taliban regrouped as a guerrilla movement",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          5.782057996839285e-05,
+          3.5156514059053734e-05,
+          0.9999070167541504
+        ],
+        [
+          7.731607183814049e-05,
+          2.8787659175577573e-05,
+          0.9998939037322998
+        ],
+        [
+          5.368403799366206e-05,
+          5.999720451654866e-05,
+          0.9998862743377686
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_18",
+      "formula": "P_18",
+      "translation": "The Taliban has been battling allied troops",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          3.0797324143350124e-05,
+          9.329880413133651e-05,
+          0.9998759031295776
+        ],
+        [
+          7.00017626513727e-05,
+          5.420595334726386e-05,
+          0.9998757839202881
+        ],
+        [
+          5.180911102797836e-05,
+          7.302110316231847e-05,
+          0.9998751878738403
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_19",
+      "formula": "P_19",
+      "translation": "The Taliban has been battling Karzai's government",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          3.082987677771598e-05,
+          3.8309095543809235e-05,
+          0.9999308586120605
+        ],
+        [
+          2.3041402528178878e-05,
+          5.613756366074085e-05,
+          0.9999208450317383
+        ],
+        [
+          3.837042095256038e-05,
+          4.6821944124531e-05,
+          0.9999147653579712
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_20",
+      "formula": "P_20",
+      "translation": "Ties between Karzai and the United States were already strained",
+      "evidence": "Sentence 5",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          2.9988410460646264e-05,
+          4.8172212700592354e-05,
+          0.9999217987060547
+        ],
+        [
+          3.223801468266174e-05,
+          5.057613816461526e-05,
+          0.9999171495437622
+        ],
+        [
+          5.118645276525058e-05,
+          3.29402755596675e-05,
+          0.9999158382415771
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_21",
+      "formula": "P_21",
+      "translation": "Ties between Karzai and the United States have been further tested",
+      "evidence": "Sentence 5",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          4.823815106647089e-05,
+          3.817590186372399e-05,
+          0.9999135732650757
+        ],
+        [
+          2.3655751647311263e-05,
+          7.660955452593043e-05,
+          0.9998997449874878
+        ],
+        [
+          1.2003300980722997e-05,
+          0.0001394707360304892,
+          0.999848484992981
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_22",
+      "formula": "P_22",
+      "translation": "Incidents occurred in which civilians were killed",
+      "evidence": "Sentence 5",
+      "reasoning": "Stated directly as fact",
+      "list nli": [
+        [
+          2.2496431483887136e-05,
+          4.577029176289216e-05,
+          0.9999316930770874
+        ],
+        [
+          2.2890450054546818e-05,
+          4.682003418565728e-05,
+          0.9999302625656128
+        ],
+        [
+          2.3754266294417903e-05,
+          4.617703962139785e-05,
+          0.9999300241470337
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

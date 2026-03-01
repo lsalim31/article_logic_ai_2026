@@ -1,0 +1,907 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Thousands of followers of Muqtada al-Sadr rallied in Baghdad on Thursday",
+      "evidence": "Sentence 0",
+      "explanation": "Event claim about a rally, with time and location."
+    },
+    {
+      "id": "P_2",
+      "translation": "The rally marked the sixth anniversary of the fall of Saddam Hussein's regime",
+      "evidence": "Sentence 0",
+      "explanation": "Purpose/commemoration claim about what the rally was for."
+    },
+    {
+      "id": "P_3",
+      "translation": "Saddam Hussein's regime fell",
+      "evidence": "Sentence 0",
+      "explanation": "Background historical fact referenced by 'anniversary of the fall'."
+    },
+    {
+      "id": "P_4",
+      "translation": "Demonstrators burned an American flag at a rally in Baghdad on Thursday",
+      "evidence": "Sentence 1",
+      "explanation": "Action performed by demonstrators at the rally."
+    },
+    {
+      "id": "P_5",
+      "translation": "The followers rallied at Firdous Square",
+      "evidence": "Sentence 2",
+      "explanation": "Location claim for the rally."
+    },
+    {
+      "id": "P_6",
+      "translation": "Hussein's statue was pulled down at Firdous Square",
+      "evidence": "Sentence 2",
+      "explanation": "Event claim tied to Firdous Square via 'where'."
+    },
+    {
+      "id": "P_7",
+      "translation": "Hussein's statue was pulled down on April 9, 2003",
+      "evidence": "Sentence 2",
+      "explanation": "Date claim for the statue being pulled down."
+    },
+    {
+      "id": "P_8",
+      "translation": "The U.S. invaded Iraq",
+      "evidence": "Sentence 2",
+      "explanation": "Historical event referenced as a temporal anchor."
+    },
+    {
+      "id": "P_9",
+      "translation": "Hussein's statue was pulled down shortly after the U.S. invasion of Iraq",
+      "evidence": "Sentence 2",
+      "explanation": "Temporal-relation claim ('shortly after') treated as atomic."
+    },
+    {
+      "id": "P_10",
+      "translation": "The protesters carried Iraqi flags",
+      "evidence": "Sentence 3",
+      "explanation": "One item in a list; split into an atomic proposition."
+    },
+    {
+      "id": "P_11",
+      "translation": "The protesters carried religious banners",
+      "evidence": "Sentence 3",
+      "explanation": "One item in a list; split into an atomic proposition."
+    },
+    {
+      "id": "P_12",
+      "translation": "The protesters carried posters for Muqtada al-Sadr",
+      "evidence": "Sentence 3",
+      "explanation": "One item in a list; split into an atomic proposition."
+    },
+    {
+      "id": "P_13",
+      "translation": "The protesters chanted religious songs",
+      "evidence": "Sentence 4",
+      "explanation": "Action claim about chanting."
+    },
+    {
+      "id": "P_14",
+      "translation": "Hazem al-Araji is a senior aide to Muqtada al-Sadr",
+      "evidence": "Sentence 5",
+      "explanation": "Role/identity claim in apposition."
+    },
+    {
+      "id": "P_15",
+      "translation": "Muqtada al-Sadr is a radical Shiite cleric",
+      "evidence": "Sentence 0, Sentence 5",
+      "explanation": "Descriptive identity claim about al-Sadr."
+    },
+    {
+      "id": "P_16",
+      "translation": "Hazem al-Araji called on the Iraqi government to release all Sadrist detainees",
+      "evidence": "Sentence 5",
+      "explanation": "Speech-act claim ('called on') about requesting an action."
+    },
+    {
+      "id": "P_17",
+      "translation": "Some Sadrist detainees are inside U.S. prisons",
+      "evidence": "Sentence 5",
+      "explanation": "Existential content extracted from 'inside U.S. ... prisons'."
+    },
+    {
+      "id": "P_18",
+      "translation": "Some Sadrist detainees are inside Iraqi prisons",
+      "evidence": "Sentence 5",
+      "explanation": "Existential content extracted from '... and Iraqi prisons'."
+    },
+    {
+      "id": "P_19",
+      "translation": "The rally filled Baghdad streets",
+      "evidence": "Sentence 6",
+      "explanation": "Headline-style claim; treated as a factual assertion."
+    },
+    {
+      "id": "P_20",
+      "translation": "Hazem al-Araji told the crowd to shout out loud",
+      "evidence": "Sentence 7",
+      "explanation": "Reported instruction; treated as a factual speech-act."
+    },
+    {
+      "id": "P_21",
+      "translation": "Hazem al-Araji told the crowd to let Black Zone residents hear them",
+      "evidence": "Sentence 7",
+      "explanation": "Reported instruction; split from a coordination."
+    },
+    {
+      "id": "P_22",
+      "translation": "Hazem al-Araji told the crowd to let Bush supporters hear them",
+      "evidence": "Sentence 7",
+      "explanation": "Reported instruction; split from a coordination."
+    },
+    {
+      "id": "P_23",
+      "translation": "Some people live inside the Black Zone",
+      "evidence": "Sentence 7",
+      "explanation": "Existential content extracted from 'those who live inside the Black Zone'."
+    },
+    {
+      "id": "P_24",
+      "translation": "Some people are Bush supporters",
+      "evidence": "Sentence 7",
+      "explanation": "Existential content extracted from 'Bush supporters'."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Thousands of followers of Muqtada al-Sadr rallied in Baghdad on Thursday",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          1.9386172425583936e-05,
+          6.282108370214701e-05,
+          0.99991774559021
+        ],
+        [
+          5.155447797733359e-05,
+          3.715204002219252e-05,
+          0.9999113082885742
+        ],
+        [
+          2.6512250769883394e-05,
+          7.63618663768284e-05,
+          0.9998971223831177
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "The rally marked the sixth anniversary of the fall of Saddam Hussein's regime",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          1.9341941879247315e-05,
+          5.6311644584639e-05,
+          0.9999243021011353
+        ],
+        [
+          2.3531605620519258e-05,
+          5.2355979278218e-05,
+          0.9999240636825562
+        ],
+        [
+          2.2085170712671243e-05,
+          5.635780325974338e-05,
+          0.9999215602874756
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Saddam Hussein's regime fell",
+      "evidence": "Sentence 0",
+      "reasoning": "Presupposed/entailed by stating an anniversary of the fall; also treated as asserted context.",
+      "list nli": [
+        [
+          5.57128332729917e-05,
+          8.495792280882597e-05,
+          0.9998593330383301
+        ],
+        [
+          5.6135097111109644e-05,
+          0.0001869962434284389,
+          0.9997568726539612
+        ],
+        [
+          0.00013554170436691493,
+          0.00034905027132481337,
+          0.9995154142379761
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If the rally marked the sixth anniversary of the fall, then Saddam Hussein's regime fell",
+      "evidence": "Sentence 0",
+      "reasoning": "An anniversary of an event implies the event occurred.",
+      "list nli": [
+        [
+          0.00013951148139312863,
+          9.936698916135356e-05,
+          0.999761164188385
+        ],
+        [
+          0.00016820176097098738,
+          9.554863208904862e-05,
+          0.9997362494468689
+        ],
+        [
+          0.00020185927860438824,
+          0.0001637021341593936,
+          0.9996343851089478
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Demonstrators burned an American flag at a rally in Baghdad on Thursday",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          0.0001692940277280286,
+          3.510984606691636e-05,
+          0.9997956156730652
+        ],
+        [
+          0.0009441691800020635,
+          0.00014956951781641692,
+          0.9989062547683716
+        ],
+        [
+          0.0036123129539191723,
+          0.00012262123345863074,
+          0.9962651133537292
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "The followers rallied at Firdous Square",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          3.470147930784151e-05,
+          4.1452622099313885e-05,
+          0.999923825263977
+        ],
+        [
+          2.4700517315068282e-05,
+          5.240561949904077e-05,
+          0.9999228715896606
+        ],
+        [
+          3.1475661671720445e-05,
+          4.601786349667236e-05,
+          0.999922513961792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6",
+      "translation": "Hussein's statue was pulled down at Firdous Square",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          2.415387825749349e-05,
+          6.185745587572455e-05,
+          0.9999139308929443
+        ],
+        [
+          9.44207567954436e-06,
+          9.872159716906026e-05,
+          0.9998918771743774
+        ],
+        [
+          0.00014917545195203274,
+          3.7618097849190235e-05,
+          0.9998132586479187
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_7",
+      "translation": "Hussein's statue was pulled down on April 9, 2003",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          5.410044832387939e-05,
+          3.0836326914140955e-05,
+          0.9999150037765503
+        ],
+        [
+          9.788940587895922e-06,
+          8.514894580002874e-05,
+          0.9999051094055176
+        ],
+        [
+          5.900996984564699e-05,
+          4.754144174512476e-05,
+          0.9998934268951416
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_8",
+      "translation": "The U.S. invaded Iraq",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly referenced as a factual historical event.",
+      "list nli": [
+        [
+          0.0003588931285776198,
+          0.0002129765780409798,
+          0.9994280934333801
+        ],
+        [
+          0.0019989844877272844,
+          7.723036105744541e-05,
+          0.997923731803894
+        ],
+        [
+          0.009199446067214012,
+          0.0006767616141587496,
+          0.9901238083839417
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_9",
+      "translation": "Hussein's statue was pulled down shortly after the U.S. invasion of Iraq",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted temporal relation.",
+      "list nli": [
+        [
+          1.3067563486401923e-05,
+          8.600141882197931e-05,
+          0.9999009370803833
+        ],
+        [
+          0.00019128168059978634,
+          6.20674982201308e-05,
+          0.9997466206550598
+        ],
+        [
+          0.0003671018348541111,
+          3.545027720974758e-05,
+          0.9995974898338318
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_9 ⟹ P_8",
+      "translation": "If the statue was pulled down shortly after the U.S. invasion, then the U.S. invasion occurred",
+      "evidence": "Sentence 2",
+      "reasoning": "A 'shortly after' relation presupposes occurrence of the referenced event.",
+      "list nli": [
+        [
+          0.0030591050162911415,
+          0.001110727316699922,
+          0.9958301186561584
+        ],
+        [
+          0.004430556669831276,
+          0.0012918030843138695,
+          0.9942776560783386
+        ],
+        [
+          0.016585202887654305,
+          0.0031410304363816977,
+          0.9802737236022949
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_10",
+      "translation": "The protesters carried Iraqi flags",
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          4.02235564251896e-05,
+          3.457349885138683e-05,
+          0.9999252557754517
+        ],
+        [
+          3.147287861793302e-05,
+          4.6567292883992195e-05,
+          0.9999219179153442
+        ],
+        [
+          4.3168631236767396e-05,
+          4.688851549872197e-05,
+          0.9999098777770996
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_11",
+      "translation": "The protesters carried religious banners",
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          3.2131909392774105e-05,
+          4.3096879380755126e-05,
+          0.9999247789382935
+        ],
+        [
+          3.819634366664104e-05,
+          3.734705751412548e-05,
+          0.9999244213104248
+        ],
+        [
+          3.6893874494126067e-05,
+          4.022490975330584e-05,
+          0.9999228715896606
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_12",
+      "translation": "The protesters carried posters for Muqtada al-Sadr",
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          5.963030707789585e-05,
+          3.4026259527308866e-05,
+          0.9999063014984131
+        ],
+        [
+          1.2462661288736854e-05,
+          8.219899609684944e-05,
+          0.9999053478240967
+        ],
+        [
+          7.395825377898291e-05,
+          5.589390275417827e-05,
+          0.9998701810836792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_13",
+      "translation": "The protesters chanted religious songs",
+      "evidence": "Sentence 4",
+      "reasoning": "Directly asserted factual report.",
+      "list nli": [
+        [
+          3.5234545066487044e-05,
+          5.3190098697086796e-05,
+          0.9999115467071533
+        ],
+        [
+          1.1095980880782008e-05,
+          7.818514131940901e-05,
+          0.9999107122421265
+        ],
+        [
+          2.4437364118057303e-05,
+          6.723285332554951e-05,
+          0.9999083280563354
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_16",
+      "formula": "P_14",
+      "translation": "Hazem al-Araji is a senior aide to Muqtada al-Sadr",
+      "evidence": "Sentence 5",
+      "reasoning": "Directly asserted descriptive fact.",
+      "list nli": [
+        [
+          3.121546978945844e-05,
+          4.626939698937349e-05,
+          0.999922513961792
+        ],
+        [
+          2.8282538551138714e-05,
+          5.88534094276838e-05,
+          0.9999128580093384
+        ],
+        [
+          5.3107229177840054e-05,
+          5.235727803665213e-05,
+          0.9998944997787476
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "P_15",
+      "translation": "Muqtada al-Sadr is a radical Shiite cleric",
+      "evidence": "Sentence 0, Sentence 5",
+      "reasoning": "Directly asserted descriptive fact.",
+      "list nli": [
+        [
+          6.898661467857892e-06,
+          0.00018515189003665,
+          0.9998080134391785
+        ],
+        [
+          6.524697255372303e-06,
+          0.00026381370844319463,
+          0.9997296929359436
+        ],
+        [
+          3.207629333701334e-06,
+          0.00043898005969822407,
+          0.9995577931404114
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_18",
+      "formula": "P_16",
+      "translation": "Hazem al-Araji called on the Iraqi government to release all Sadrist detainees",
+      "evidence": "Sentence 5",
+      "reasoning": "Directly asserted report of a call/request.",
+      "list nli": [
+        [
+          3.033214306924492e-05,
+          6.638329796260223e-05,
+          0.9999033212661743
+        ],
+        [
+          0.0006441518198698759,
+          0.00033660882036201656,
+          0.9990192651748657
+        ],
+        [
+          0.0010375616839155555,
+          0.00020887635764665902,
+          0.998753547668457
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_19",
+      "formula": "P_17",
+      "translation": "Some Sadrist detainees are inside U.S. prisons",
+      "evidence": "Sentence 5",
+      "reasoning": "Directly asserted contextual detail about where detainees are held.",
+      "list nli": [
+        [
+          3.614737215684727e-05,
+          5.6525801483076066e-05,
+          0.999907374382019
+        ],
+        [
+          0.00012602114293258637,
+          3.3013606298482046e-05,
+          0.9998409748077393
+        ],
+        [
+          0.00016570457955822349,
+          2.2911903215572238e-05,
+          0.9998113512992859
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_20",
+      "formula": "P_18",
+      "translation": "Some Sadrist detainees are inside Iraqi prisons",
+      "evidence": "Sentence 5",
+      "reasoning": "Directly asserted contextual detail about where detainees are held.",
+      "list nli": [
+        [
+          0.00010245478915749118,
+          5.8065936173079535e-05,
+          0.9998394250869751
+        ],
+        [
+          0.00027815508656203747,
+          6.377299723681062e-05,
+          0.9996581077575684
+        ],
+        [
+          0.0008109027403406799,
+          9.658734779804945e-05,
+          0.9990925788879395
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_21",
+      "formula": "P_19",
+      "translation": "The rally filled Baghdad streets",
+      "evidence": "Sentence 6",
+      "reasoning": "Presented as an asserted headline/summary statement.",
+      "list nli": [
+        [
+          5.929444796493044e-06,
+          0.00024706669501028955,
+          0.9997469782829285
+        ],
+        [
+          0.0003277127107139677,
+          2.180094270443078e-05,
+          0.9996504783630371
+        ],
+        [
+          3.071578248636797e-05,
+          0.0003243334358558059,
+          0.9996449947357178
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_22",
+      "formula": "P_20",
+      "translation": "Hazem al-Araji told the crowd to shout out loud",
+      "evidence": "Sentence 7",
+      "reasoning": "Directly asserted report of what he told the crowd.",
+      "list nli": [
+        [
+          4.9931641115108505e-05,
+          7.008662214502692e-05,
+          0.9998799562454224
+        ],
+        [
+          7.953873137012124e-05,
+          4.6586155804106966e-05,
+          0.9998738765716553
+        ],
+        [
+          0.00015873198572080582,
+          3.722511974046938e-05,
+          0.9998040795326233
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_23",
+      "formula": "P_21",
+      "translation": "Hazem al-Araji told the crowd to let Black Zone residents hear them",
+      "evidence": "Sentence 7",
+      "reasoning": "Directly asserted report of what he told the crowd.",
+      "list nli": [
+        [
+          1.798685480025597e-05,
+          0.00013106391998007894,
+          0.999850869178772
+        ],
+        [
+          8.188669016817585e-05,
+          0.00013325423060450703,
+          0.9997848868370056
+        ],
+        [
+          0.0002533987571951002,
+          0.00010518728231545538,
+          0.9996414184570312
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_24",
+      "formula": "P_22",
+      "translation": "Hazem al-Araji told the crowd to let Bush supporters hear them",
+      "evidence": "Sentence 7",
+      "reasoning": "Directly asserted report of what he told the crowd.",
+      "list nli": [
+        [
+          3.3857213566079736e-05,
+          6.219803617568687e-05,
+          0.9999039173126221
+        ],
+        [
+          0.00022026633087079972,
+          0.00011519109830260277,
+          0.9996645450592041
+        ],
+        [
+          0.0003912898537237197,
+          0.00010473731526872143,
+          0.9995039701461792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_25",
+      "formula": "P_23",
+      "translation": "Some people live inside the Black Zone",
+      "evidence": "Sentence 7",
+      "reasoning": "Implied existence by referring to 'those who live inside the Black Zone'.",
+      "list nli": [
+        [
+          0.0006115217111073434,
+          0.00024371582549065351,
+          0.9991447925567627
+        ],
+        [
+          0.002615954028442502,
+          0.00024047147599048913,
+          0.997143566608429
+        ],
+        [
+          0.006927261594682932,
+          0.0003267516731284559,
+          0.9927459359169006
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_26",
+      "formula": "P_24",
+      "translation": "Some people are Bush supporters",
+      "evidence": "Sentence 7",
+      "reasoning": "Implied existence by referencing 'Bush supporters' as a group.",
+      "list nli": [
+        [
+          6.442002631956711e-05,
+          6.204177043400705e-05,
+          0.9998735189437866
+        ],
+        [
+          3.736633152584545e-05,
+          8.974519732873887e-05,
+          0.9998729228973389
+        ],
+        [
+          5.455841892398894e-05,
+          7.338445720961317e-05,
+          0.999872088432312
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_27",
+      "formula": "P_9 ⟹ P_9",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010742954909801483,
+          0.004189980216324329,
+          0.9947356581687927
+        ],
+        [
+          0.003994048107415438,
+          0.010459093376994133,
+          0.9855468273162842
+        ],
+        [
+          0.010657845064997673,
+          0.022086281329393387,
+          0.9672558903694153
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

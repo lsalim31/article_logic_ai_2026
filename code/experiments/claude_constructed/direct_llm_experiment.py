@@ -53,10 +53,8 @@ from config.retrieval_config import (
 
 # Paths
 _script_dir = Path(__file__).resolve().parent
-#RESULTS_DIR = _script_dir / "results_direct_llm_FeverNLI"
-#SAMPLE_DATA_PATH = _script_dir / "fever-nli" / "sample_10.json"
 
-RESULTS_DIR = _script_dir / "results_directLLM_longNLI"
+RESULTS_DIR = _script_dir / "results_directLLM"
 DOCNLI_LONG_DIR = "dataset"
 SAMPLE_DATA_PATH = _script_dir / "dataset" / "data_test.json"
 
