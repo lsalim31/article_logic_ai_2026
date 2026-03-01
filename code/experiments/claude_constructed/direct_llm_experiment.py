@@ -42,6 +42,9 @@ _code_dir = _script_dir.parent.parent
 if str(_code_dir) not in sys.path:
     sys.path.insert(0, str(_code_dir))
 
+# Paths
+_script_dir = Path(__file__).resolve().parent
+
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
@@ -51,12 +54,11 @@ from config.retrieval_config import (
 )
 
 
-# Paths
-_script_dir = Path(__file__).resolve().parent
+
 
 RESULTS_DIR = _script_dir / "results_directLLM"
 DOCNLI_LONG_DIR = "dataset"
-SAMPLE_DATA_PATH = _script_dir / "dataset" / "data_test.json"
+SAMPLE_DATA_PATH = _script_dir / "dataset" / "gold_balanced.json"
 
 
 # Default model

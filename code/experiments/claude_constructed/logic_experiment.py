@@ -61,7 +61,7 @@ from config.retrieval_config import (
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DOCNLI_LONG_DIR = "dataset"
-SAMPLE_DATA_PATH = _script_dir / "dataset" / "data_test.json"
+SAMPLE_DATA_PATH = _script_dir / "dataset" / "gold_balanced.json"
 
 
 
