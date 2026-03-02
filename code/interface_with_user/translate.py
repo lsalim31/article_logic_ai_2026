@@ -263,7 +263,7 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     """
     if verbose:
         print(f"""
-              \n # FUNCTION: retrieve_top_k_propositions.
+              \n #FUNCTION: retrieve_top_k_propositions.
               \n PARAMETERS: k={SBERT_TOP_K}, minimal_similarity={SBERT_MIN_SIMILARITY}, number of chunks = {len(chunks)}
               """
               )
@@ -285,7 +285,7 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     return retrieved
 
 
-def is_yes_no_question(query: str) -> bool:
+def is_yes_no_question(query: str, verbose=True) -> bool:
     """Preserved: Detect yes/no questions."""
     if verbose:
         print(f"\n Detected Yes/No question. Converting...")
@@ -1040,25 +1040,39 @@ def detect_implication_contradiction(
 from nltk.corpus import wordnet as wn
 #from nltk import pos_tag, word_tokenize
 
-def expand_query_with_synonyms(query: str, sbert_model=SBERT_MODEL, max_variants: int = MAX_VARIANTS) -> List[str]:
+
+    
+def expand_query_with_synonyms(
+    query: str, 
+    sbert_model, 
+    max_variants: int = MAX_VARIANTS, 
+    similarity_threshold: float = 0.85,
+    verbose: bool = True
+) -> List[str]:
     """Expand query with SBERT-filtered synonym variants."""
     
     if verbose:
-        print( f"""
-              \n FUNCTION: expand_query_with_synonyms
-              """)
+        print(f"\n FUNCTION: expand_query_with_synonyms")
     
-    variants = [query]
+    variants = [(query, 1.0)]  # Store (variant, similarity) tuples
     
     nlp = get_spacy_model_singleton()
     doc = nlp(query)
     tokens = [token.text for token in doc]
     
+    # Encode query once outside the loop
+    query_embedding = sbert_model.encode([query], normalize_embeddings=True)[0]
+    
     for i, token in enumerate(doc):
-        if token.pos_ == 'VERB':
+        # Process VERBS, NOUNS, and ADJECTIVES
+        if token.pos_ in ('VERB', 'NOUN', 'ADJ'):
+            # Map spaCy POS to WordNet POS
+            pos_map = {'VERB': wn.VERB, 'NOUN': wn.NOUN, 'ADJ': wn.ADJ}
+            wn_pos = pos_map[token.pos_]
+            
             # Get ALL WordNet synonyms
             all_synonyms = set()
-            for syn in wn.synsets(token.text.lower(), pos=wn.VERB):
+            for syn in wn.synsets(token.text.lower(), pos=wn_pos):
                 for lemma in syn.lemmas():
                     synonym = lemma.name().replace('_', ' ')
                     if synonym.lower() != token.text.lower():
@@ -1067,17 +1081,21 @@ def expand_query_with_synonyms(query: str, sbert_model=SBERT_MODEL, max_variants
             # Filter with SBERT
             for synonym in all_synonyms:
                 variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
-                embs = sbert_model.encode([query, variant])
-                sim = np.dot(embs[0], embs[1]) / (np.linalg.norm(embs[0]) * np.linalg.norm(embs[1]))
-                if sim > 0.85:
-                    variants.append(variant)
+                variant_embedding = sbert_model.encode([variant], normalize_embeddings=True)[0]
+                sim = float(np.dot(query_embedding, variant_embedding))
+                
+                if sim > similarity_threshold:
+                    variants.append((variant, sim))
+    
+    # Sort by similarity (descending) and take top max_variants
+    variants.sort(key=lambda x: x[1], reverse=True)
+    best_variants = [v[0] for v in variants[:max_variants]]
     
     if verbose:
-        print(f"We found {len(variants)} variants larger than 0.85. We will select only {max_variants}")
+        print(f"  Found {len(variants)} variants above {similarity_threshold}. Returning top {len(best_variants)}.")
         
-    # Warning? Are we taking the best ones?
-    return list(set(variants))[:max_variants]
-    
+    return best_variants
+
 
 
 def retrieve_with_expanded_query(query, chunks, sbert_model =SBERT_MODEL, k=SBERT_TOP_K, verbose =True):
@@ -1284,7 +1302,7 @@ def llm_write_formula_from_subsets(
     hypothesis: str,
     qualifying_subsets: List[Tuple[List[Dict], float]],
     api_key: str,
-    model_name: TRANSLATE_MODEL,
+    model_name: str = TRANSLATE_MODEL,
     verbose: bool = True
 ) -> Dict:
     """
