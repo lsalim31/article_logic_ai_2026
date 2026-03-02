@@ -7,7 +7,7 @@ Centralizes all tunable parameters.
 # SBERT bi-encoder settings (Stage 1: Candidate retrieval)
 SBERT_MODEL = "all-MiniLM-L6-v2"
 SBERT_TOP_K = 50  # Increased from 20 for broader recall
-SBERT_MIN_SIMILARITY = 0.3  # Minimum cosine similarity threshold
+SBERT_MIN_SIMILARITY = 0.1  # Minimum cosine similarity threshold
 
 # NLI cross-encoder settings (Stage 2: Semantic filtering)
 NLI_MODEL = "cross-encoder/nli-deberta-v3-large"
@@ -36,8 +36,9 @@ REASONING_EFFORT = "medium"
 REASONING_EFFORT_TRANSLATE = "medium"
 
 REASONING_MODEL = "gpt-5.2"
-TRANSLATE_MODEL = "openai/gpt-oss-20b"
+TRANSLATE_MODEL = "openai/gpt-5-nano"
 #"openai/gpt-4.1-nano" #"openai/gpt-5-nano"
+#anthropic/claude-1
 
 HARDNESS_CONSTANT = 0.9
 USE_OPENIE = False

@@ -257,8 +257,17 @@ def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedd
     return chunks
 
 
-def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = SBERT_TOP_K, minimal_similarity = SBERT_MIN_SIMILARITY) -> List[Dict]:
-    """Preserved (simplified): Retrieve relevant chunks using SBERT."""
+def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = SBERT_TOP_K, minimal_similarity = SBERT_MIN_SIMILARITY, verbose=True) -> List[Dict]:
+    """
+    Preserved (simplified): Retrieve relevant chunks using SBERT.
+    """
+    if verbose:
+        print(f"""
+              \n # FUNCTION: retrieve_top_k_propositions.
+              \n PARAMETERS: k={SBERT_TOP_K}, minimal_similarity={SBERT_MIN_SIMILARITY}, number of chunks = {len(chunks)}
+              """
+              )
+    
     chunk_embeddings = encode_chunks(chunks, sbert_model)
     query_embedding = encode_query(query, sbert_model)
     similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
@@ -271,20 +280,27 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
         retrieved.append(chunk)
+    if verbose:
+        print(f"Total retrieved {len(retrieved)}")    
     return retrieved
 
 
 def is_yes_no_question(query: str) -> bool:
     """Preserved: Detect yes/no questions."""
+    if verbose:
+        print(f"\n Detected Yes/No question. Converting...")
     starters = ['is ', 'are ', 'was ', 'were ', 'will ', 'would ', 'should ', 'could ', 'can ', 'may ', 'must ', 'does ', 'do ', 'did ']
     return any(query.lower().strip().startswith(s) for s in starters)
 
 
-def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
+def get_configured_client(api_key: str, model) -> Tuple[OpenAI, str]:
     """Helper to configure OpenAI client for OpenRouter if needed."""
     if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
         client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
         if not model.startswith('openai/'):
+            print("FUNCTION: get_configured_client. Not model")
+            return client, " "
+        
             model = f'openai/{model}'
     else:
         client = OpenAI(api_key=api_key)
@@ -297,11 +313,16 @@ def convert_yes_no_to_statement(
     model: str = REASONING_MODEL,
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,
-    max_tokens: int = MAX_TOKENS
+    max_tokens: int = MAX_TOKENS,
+    verbose = True
     ) -> str:
     """
     Convert a Yes/No question to a declarative statement using an LLM.
     """
+    if verbose:
+        print(f"\n #FUNCTION: convert_yes_no_to_statement")
+        
+        
     prompt = f"""Convert the following Yes/No question into a declarative statement that expresses what the question is asking about.
 
     EXAMPLES:
@@ -1019,8 +1040,14 @@ def detect_implication_contradiction(
 from nltk.corpus import wordnet as wn
 #from nltk import pos_tag, word_tokenize
 
-def expand_query_with_synonyms(query: str, sbert_model, max_variants: int = MAX_VARIANTS) -> List[str]:
+def expand_query_with_synonyms(query: str, sbert_model=SBERT_MODEL, max_variants: int = MAX_VARIANTS) -> List[str]:
     """Expand query with SBERT-filtered synonym variants."""
+    
+    if verbose:
+        print( f"""
+              \n FUNCTION: expand_query_with_synonyms
+              """)
+    
     variants = [query]
     
     nlp = get_spacy_model_singleton()
@@ -1045,16 +1072,34 @@ def expand_query_with_synonyms(query: str, sbert_model, max_variants: int = MAX_
                 if sim > 0.85:
                     variants.append(variant)
     
+    if verbose:
+        print(f"We found {len(variants)} variants larger than 0.85. We will select only {max_variants}")
+        
+    # Warning? Are we taking the best ones?
     return list(set(variants))[:max_variants]
+    
 
 
-def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K):
+def retrieve_with_expanded_query(query, chunks, sbert_model =SBERT_MODEL, k=SBERT_TOP_K, verbose =True):
+    """
+    Nothing retrieved
+    """
+    len_chunks  = len(chunks)
+    if verbose:
+        print( f"""
+              \n FUNCTION: retrieve_with_expanded_query. 
+              \n PARAMETERS: {len_chunks} chunks
+              """)
     variants = expand_query_with_synonyms(query, sbert_model)
+    
     
     all_results = []
     for variant in variants:
         results = retrieve_top_k_propositions(variant, chunks, sbert_model, k=k)
         all_results.extend(results)
+    
+    if verbose:
+        print( f"\n Total of {len(all_results)} retrievals")
     
     # Dedupe by prop_id, keep highest similarity
     seen = {}
@@ -1239,7 +1284,7 @@ def llm_write_formula_from_subsets(
     hypothesis: str,
     qualifying_subsets: List[Tuple[List[Dict], float]],
     api_key: str,
-    model: str,
+    model_name: TRANSLATE_MODEL,
     verbose: bool = True
 ) -> Dict:
     """
@@ -1256,6 +1301,10 @@ def llm_write_formula_from_subsets(
         Dict with formula, reasoning, translation (same format as generate_candidates_llm)
     """
     # Format subsets for prompt
+    
+    if verbose:
+        print("FUNCTION: llm_write_formula_from_subsets")
+    
     subsets_text = ""
     for subset_chunks, score in qualifying_subsets:
         ids = [c['id'] for c in subset_chunks]
@@ -1267,24 +1316,24 @@ def llm_write_formula_from_subsets(
     
     prompt = f"""The following proposition subsets entail the hypothesis:
 
-{subsets_text}
+    {subsets_text}
 
-Hypothesis: "{hypothesis}"
+    Hypothesis: "{hypothesis}"
 
-Write a propositional logic formula using these proposition IDs (P_1, P_2, etc.) that captures when the hypothesis is entailed.
+    Write a propositional logic formula using these proposition IDs (P_1, P_2, etc.) that captures when the hypothesis is entailed.
 
-Rules:
-- Use & for AND, | for OR, ~ for NOT
-- Prefer simpler formulas (if one subset is sufficient, use just that)
-- Output ONLY the formula, nothing else
+    Rules:
+    - Use & for AND, | for OR, ~ for NOT
+    - Prefer simpler formulas (if one subset is sufficient, use just that)
+    - Output ONLY the formula, nothing else
 
-Formula:"""
+    Formula:"""
 
     if verbose:
-        print("  Asking LLM to write formula from qualifying subsets...")
+        print("  Asking LLM to write formula from qualifying subsets using {prompt}")
     
     # Get LLM client
-    client, actual_model = get_configured_client(api_key, model)
+    client, actual_model = get_configured_client(api_key, model_name)
     
     response = client.chat.completions.create(
         model=actual_model,
@@ -1324,7 +1373,7 @@ def generate_candidates_via_subset_entailment(
     Pipeline:
     1. Cluster retrieved propositions (for diversity)
     2. Select top-2 from each cluster
-    3. Brute force check all subsets for NLI entailment
+    3. Check all subsets for NLI entailment
     4. If qualifying subsets found → LLM writes formula
     5. If none found → return NONE
     
@@ -1342,12 +1391,12 @@ def generate_candidates_via_subset_entailment(
         or [{"formula": "NONE"}] if no qualifying subsets
     """
     if verbose:
-        print("\n[Subset Entailment] Starting candidate generation...")
-        print(f"  Input: {len(chunks)} retrieved propositions")
+        print("\n FUNCTION: generate_candidates_via_subset_entailment")
+        print(f"  Input: {len(chunks)} retrieved propositions for {query}")
     
     # Step 1: Cluster propositions
     if verbose:
-        print("\n[Step 1] Clustering propositions...")
+        print("\n --> Step 1: Clustering propositions...")
     
     cluster_labels = cluster_propositions(chunks, sbert_model, n_clusters=SUBSET_NUM_CLUSTERS)
     n_clusters = len(np.unique(cluster_labels))
@@ -1357,7 +1406,7 @@ def generate_candidates_via_subset_entailment(
     
     # Step 2: Select diverse propositions
     if verbose:
-        print("\n[Step 2] Selecting diverse propositions...")
+        print("\n --> Step 2: Selecting diverse propositions...")
     
     diverse_chunks = select_diverse_propositions(chunks, cluster_labels, top_per_cluster=SUBSET_TOP_PER_CLUSTER)
     
@@ -1368,7 +1417,7 @@ def generate_candidates_via_subset_entailment(
     
     # Step 3: Find entailing subsets
     if verbose:
-        print("\n[Step 3] Finding entailing subsets...")
+        print("\n --> Step 3 Finding entailing subsets.")
     
     nli_model = load_nli_model_singleton()
     qualifying_subsets = find_entailing_subsets(
@@ -1379,18 +1428,18 @@ def generate_candidates_via_subset_entailment(
     # Step 4: Generate formula or return NONE
     if not qualifying_subsets:
         if verbose:
-            print("\n[Subset Entailment] No qualifying subsets found, returning NONE")
+            print("\n --> Subset Entailment. No qualifying subsets found, returning NONE")
         return [{"formula": "NONE", "reasoning": "No subset entails the hypothesis", "translation": ""}]
     
     if verbose:
-        print("\n[Step 4] Generating formula from qualifying subsets...")
+        print("\n -->Step 4: Generating formula from qualifying subsets...")
     
     candidate = llm_write_formula_from_subsets(
         query, qualifying_subsets, api_key, model, verbose=verbose
     )
     
     if verbose:
-        print(f"\n[Subset Entailment] Done. Formula: {candidate['formula']}")
+        print(f"\n Subset Entailment Done. Formula: {candidate['formula']}")
     
     return [candidate]
 
@@ -1565,6 +1614,7 @@ def translate_query_single(
     json_path: str,
     api_key: str,
     model: str = TRANSLATE_MODEL,
+    model_reasonig: str = REASONING_MODEL,
     temperature: float = TEMPERATURE_TRANSLATE,
     reasoning_effort: str = REASONING_EFFORT_TRANSLATE,
     max_tokens: int = MAX_TOKENS,
@@ -1573,43 +1623,54 @@ def translate_query_single(
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
-
+    TO ADD
     """
-
+    print(f"""\n#FUNCTION: translate_query_single
+          \nPARAMETERS: query = {query}, 
+    json_path: {json_path},
+    api_key: {api_key},
+    model: str = {model},
+    temperature ={temperature} 
+    k = {k}
+    sbert_model_name = {sbert_model_name},
+    verbose = {verbose}
+          """)
     # 1. Pre-process (Yes/No Handling)
     original_query = query
     if is_yes_no_question(query):
-        if verbose:
-            print(f"Detected Yes/No question. Converting...")
         try:
-            query = convert_yes_no_to_statement(query, api_key, model)
+            query = convert_yes_no_to_statement(query, api_key, model_reasonig)
             if verbose:
                 print(f"  → Statement: {query}")
         except:
             if verbose:
                 print("  → Conversion failed, proceeding with original.")
-
+    else:
+        print(f"is_yes_no_question routine not used")
+            
     # 2. Retrieval
+    
     if verbose:
-        print(f"Loading propositions from: {json_path}")
+        print(f"\n \n Starting retrieval. Loading propositions from: {json_path}")
     with open(json_path, 'r', encoding='utf-8') as f:
         logified_structure = json.load(f)
 
     chunks = extract_proposition_chunks(logified_structure)
     sbert_model = load_sbert_model(sbert_model_name)
-    #retrieved = retrieve_top_k_propositions(query, chunks, sbert_model, k=k)
-    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model, k=k)
-
+    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model_name, k=k)
 
     if not retrieved:
+        print(f"Nothing retrieved")
         return {
             "formula": "NONE",
             "translation": "No relevant props",
             "query": query,
             "original_query": original_query,
             "explanation": "No documents found.",
-            "confidence": 0.5
+            "confidence": -1
         }
+
+    print(f" We finished retrieved with {len(chunks)} chunks")
 
     # 3. MODAL OPPOSITE DETECTION
     # Check if hypothesis has a modal word that contradicts a KB proposition
@@ -1661,10 +1722,10 @@ def translate_query_single(
         print("\nGenerating candidates via subset entailment...")
 
     # Need more propositions for clustering - re-retrieve with higher k
-    chunks_for_subset = retrieve_with_expanded_query(query, chunks, sbert_model, k=SUBSET_TOP_K_RETRIEVAL)
+    chunks_for_subset = retrieve_with_expanded_query(query, chunks, sbert_model_name, k=SUBSET_TOP_K_RETRIEVAL)
 
     candidates = generate_candidates_via_subset_entailment(
-        query, chunks_for_subset, sbert_model, api_key, model, verbose=verbose
+        query, chunks_for_subset, sbert_model, api_key, model_reasonig, verbose=verbose
     )
 
     ####
@@ -1730,7 +1791,7 @@ def translate_query_single(
             
             # Use new subset entailment approach instead of old prompt-based generation
             additional_candidates = generate_candidates_via_subset_entailment(
-                query, chunks_for_subset, sbert_model, api_key, model, verbose=True
+                query, chunks_for_subset, sbert_model, api_key, model_reasonig, verbose=True
             )
             
             if additional_candidates and not (len(additional_candidates) == 1 and additional_candidates[0].get("formula") == "NONE"):
@@ -2027,6 +2088,7 @@ def translate_query(
     Main entry point with hypothesis decomposition support.
     """
     
+    print("starting translate_query")
     # Check if decomposition should be applied
     if enable_decomposition and is_multi_sentence_hypothesis(query):
         if verbose:
@@ -2073,6 +2135,7 @@ def translate_query(
                 print("[Decomposition] Single claim after decomposition, using standard translation ", )
     
     # Standard translation (single sentence)
+    print( f"Using translate_query_single for: {query}")
     return translate_query_single(
         query=query,
         json_path=json_path,
