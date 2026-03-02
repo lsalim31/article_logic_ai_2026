@@ -41,7 +41,7 @@ from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_M
 SUBSET_TOP_K_RETRIEVAL = 50
 SUBSET_NUM_CLUSTERS = 1
 SUBSET_TOP_PER_CLUSTER = 5
-SUBSET_ENTAILMENT_THRESHOLD = 0.3
+SUBSET_ENTAILMENT_THRESHOLD = 0.001
 MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 
 
@@ -1157,6 +1157,10 @@ def compute_subset_entailment_score(
     # NLI score
     # CrossEncoder returns [contradiction, entailment, neutral] for nli-deberta-v3-base
     nli_scores = nli_model.predict([(premise_text, hypothesis)])[0]
+    
+    # DEBUG: Print raw NLI output
+    print(f"    [DEBUG] Raw NLI scores: {nli_scores}, type: {type(nli_scores)}")
+
     
     if isinstance(nli_scores, np.ndarray) and len(nli_scores) == 3:
         # Softmax to get probabilities
