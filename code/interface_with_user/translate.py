@@ -1038,8 +1038,6 @@ def detect_implication_contradiction(
 # 4.c GENERATING VARIATIONS OF THE QUERY
 # ==========================================
 from nltk.corpus import wordnet as wn
-#from nltk import pos_tag, word_tokenize
-
 
     
 def expand_query_with_synonyms(
@@ -1061,7 +1059,7 @@ def expand_query_with_synonyms(
     tokens = [token.text for token in doc]
     
     # Encode query once outside the loop
-    query_embedding = sbert_model.encode([query], normalize_embeddings=True)[0]
+    query_embedding = sbert_model.encode(query)  # 
     
     for i, token in enumerate(doc):
         # Process VERBS, NOUNS, and ADJECTIVES
@@ -1081,8 +1079,9 @@ def expand_query_with_synonyms(
             # Filter with SBERT
             for synonym in all_synonyms:
                 variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
-                variant_embedding = sbert_model.encode([variant], normalize_embeddings=True)[0]
-                sim = float(np.dot(query_embedding, variant_embedding))
+                variant_embedding = sbert_model.encode(variant)
+                sim = np.dot(query_embedding, variant_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(variant_embedding))
+
                 
                 if sim > similarity_threshold:
                     variants.append((variant, sim))
@@ -1236,8 +1235,9 @@ def compute_subset_entailment_score(
         nli_entailment = 0.0
     
     # SBERT similarity (handles identity/near-identity case)
-    embeddings = sbert_model.encode([premise_text, hypothesis], normalize_embeddings=True)
-    sbert_sim = float(np.dot(embeddings[0], embeddings[1]))
+    embeddings = sbert_model.encode([premise_text, hypothesis])
+    sbert_sim = np.dot(embeddings[0], embeddings[1]) / (np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1]))
+
     
     # Return max of both scores
     return max(nli_entailment, sbert_sim)
@@ -1551,13 +1551,16 @@ def normalize_formula(formula: str) -> str:
     return normalized
 
 
-def compute_nli_confidence(original_text: str, back_translated_text: str) -> float:
+def compute_nli_confidence(original_text: str, back_translated_text: str, verbose =True) -> float:
     """Compute SBERT-based confidence score between original and back-translated text.
     
     Uses cosine similarity of sentence embeddings instead of NLI.
     This works better for identical/paraphrased sentences where NLI incorrectly
     returns NEUTRAL with very low confidence.
     """
+    if verbose:
+        print("#FUNCTION: compute_nli_confidence")
+    
     embeddings = sbert_model.encode([original_text, back_translated_text])
     similarity = np.dot(embeddings[0], embeddings[1]) / (
         np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1])
