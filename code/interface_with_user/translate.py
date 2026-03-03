@@ -1301,12 +1301,12 @@ def find_entailing_subsets(
     
     return qualifying
 
-
 def llm_write_formula_from_subsets(
     hypothesis: str,
     qualifying_subsets: List[Tuple[List[Dict], float]],
     api_key: str,
     model_name: str = TRANSLATE_MODEL,
+    max_subsets: int = 2,
     verbose: bool = True
 ) -> Dict:
     """
@@ -1316,40 +1316,59 @@ def llm_write_formula_from_subsets(
         hypothesis: The hypothesis text
         qualifying_subsets: List of (subset_chunks, score) tuples
         api_key: API key for LLM
-        model: Model name
+        model_name: Model name
+        max_subsets: Maximum number of top subsets to consider
         verbose: Print progress
         
     Returns:
         Dict with formula, reasoning, translation (same format as generate_candidates_llm)
     """
-    # Format subsets for prompt
-    
     if verbose:
         print("FUNCTION: llm_write_formula_from_subsets")
     
+    # Sort by score descending and take top subsets
+    qualifying_subsets = sorted(qualifying_subsets, key=lambda x: x[1], reverse=True)[:max_subsets]
+    
+    # Collect unique propositions from top subsets
+    unique_props = {}
+    for subset_chunks, score in qualifying_subsets:
+        for chunk in subset_chunks:
+            prop_id = chunk['id']
+            if prop_id not in unique_props:
+                unique_props[prop_id] = chunk['translation']
+    
+    # Format propositions list
+    props_text = ""
+    for prop_id, translation in sorted(unique_props.items()):
+        props_text += f"  - {prop_id}: \"{translation}\"\n"
+    
+    # Format subset combinations (IDs and scores only)
     subsets_text = ""
     for subset_chunks, score in qualifying_subsets:
         ids = [c['id'] for c in subset_chunks]
-        texts = [c['translation'] for c in subset_chunks]
-        
         ids_str = ", ".join(ids)
-        texts_str = " AND ".join(texts)
-        subsets_text += f"  - {{{ids_str}}}: \"{texts_str}\" (score: {score:.2f})\n"
+        subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
-    prompt = f"""The following proposition subsets entail the hypothesis:
+    prompt = f"""
+    You are expert in Natural language inference.
+    Given these propositions:
 
-    {subsets_text}
+{props_text}
 
-    Hypothesis: "{hypothesis}"
+The following subsets entail the hypothesis:
 
-    Write a propositional logic formula using these proposition IDs (P_1, P_2, etc.) that captures when the hypothesis is entailed.
+{subsets_text}
 
-    Rules:
-    - Use & for AND, | for OR, ~ for NOT
-    - Prefer simpler formulas (if one subset is sufficient, use just that)
-    - Output ONLY the formula, nothing else
+Hypothesis: "{hypothesis}"
 
-    Formula:"""
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+
+Rules:
+- Use & for AND, | for OR, ~ for NOT
+- Prefer simpler formulas (if one subset is sufficient, use just that)
+- If you find the formula, output ONLY the formula, nothing else
+- If you cannot find the formula, output only None"
+Formula:"""
 
     if verbose:
         print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
@@ -1368,7 +1387,7 @@ def llm_write_formula_from_subsets(
     if verbose:
         print(f"  LLM generated formula: {formula}")
     
-    # Build translation text from the first (best qualifying subset
+    # Build translation text from the first (best) qualifying subset
     best_subset, best_score = qualifying_subsets[0]
     translation = " AND ".join([c['translation'] for c in best_subset])
     
@@ -1380,6 +1399,86 @@ def llm_write_formula_from_subsets(
         "reasoning": f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
         "translation": translation
     }
+
+# Being replaced
+# def llm_write_formula_from_subsets(
+#     hypothesis: str,
+#     qualifying_subsets: List[Tuple[List[Dict], float]],
+#     api_key: str,
+#     model_name: str = TRANSLATE_MODEL,
+#     verbose: bool = True
+# ) -> Dict:
+#     """
+#     Ask LLM to write a formula from qualifying subsets.
+    
+#     Args:
+#         hypothesis: The hypothesis text
+#         qualifying_subsets: List of (subset_chunks, score) tuples
+#         api_key: API key for LLM
+#         model: Model name
+#         verbose: Print progress
+        
+#     Returns:
+#         Dict with formula, reasoning, translation (same format as generate_candidates_llm)
+#     """
+#     # Format subsets for prompt
+    
+#     if verbose:
+#         print("FUNCTION: llm_write_formula_from_subsets")
+    
+#     subsets_text = ""
+#     for subset_chunks, score in qualifying_subsets:
+#         ids = [c['id'] for c in subset_chunks]
+#         texts = [c['translation'] for c in subset_chunks]
+        
+#         ids_str = ", ".join(ids)
+#         texts_str = " AND ".join(texts)
+#         subsets_text += f"  - {{{ids_str}}}: \"{texts_str}\" (score: {score:.2f})\n"
+    
+#     prompt = f"""The following proposition subsets entail the hypothesis:
+
+#     {subsets_text}
+
+#     Hypothesis: "{hypothesis}"
+
+#     Write a propositional logic formula using these proposition IDs (P_1, P_2, etc.) that captures when the hypothesis is entailed.
+
+#     Rules:
+#     - Use & for AND, | for OR, ~ for NOT
+#     - Prefer simpler formulas (if one subset is sufficient, use just that)
+#     - Output ONLY the formula, nothing else
+
+#     Formula:"""
+
+#     if verbose:
+#         print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
+    
+#     # Get LLM client
+#     client, actual_model = get_configured_client(api_key, model_name)
+    
+#     response = client.chat.completions.create(
+#         model=actual_model,
+#         messages=[{"role": "user", "content": prompt}],
+#         temperature=0
+#     )
+    
+#     formula = response.choices[0].message.content.strip()
+    
+#     if verbose:
+#         print(f"  LLM generated formula: {formula}")
+    
+#     # Build translation text from the first (best qualifying subset
+#     best_subset, best_score = qualifying_subsets[0]
+#     translation = " AND ".join([c['translation'] for c in best_subset])
+    
+#     if verbose:
+#         print(f"Initial {hypothesis}. Final {translation}. Formula {formula}")
+    
+#     return {
+#         "formula": formula,
+#         "reasoning": f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
+#         "translation": translation
+#     }
 
 
 def generate_candidates_via_subset_entailment(
