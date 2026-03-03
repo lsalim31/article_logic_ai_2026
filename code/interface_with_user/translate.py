@@ -1349,8 +1349,7 @@ def llm_write_formula_from_subsets(
         ids_str = ", ".join(ids)
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
-    prompt = f"""
-    You are expert in Natural language inference.
+    prompt = f"""You are expert in Natural language inference.
     Given these propositions:
 
 {props_text}
@@ -1361,13 +1360,13 @@ The following subsets entail the hypothesis:
 
 Hypothesis: "{hypothesis}"
 
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
 
 Rules:
 - Use & for AND, | for OR, ~ for NOT
 - Prefer simpler formulas (if one subset is sufficient, use just that)
 - If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only None"
+- If you cannot find the formula, output only "NONE"
 Formula:"""
 
     if verbose:

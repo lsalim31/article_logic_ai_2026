@@ -79,9 +79,9 @@ Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['recalls', 'implying', 'feared', 'failing', 'drug', 'test', 'more', 'losing', 'lewis']
   [Antonym Detection] Word 'recalls' has antonyms: ['forget', 'issue']
-  [Antonym Detection] Word 'failing' has antonyms: ['passing', 'pass', 'manage', 'succeed']
+  [Antonym Detection] Word 'failing' has antonyms: ['manage', 'pass', 'succeed', 'passing']
   [Antonym Detection] Word 'more' has antonyms: ['fewer', 'less']
-  [Antonym Detection] Word 'losing' has antonyms: ['break-even', 'gain', 'win', 'profit', 'keep', 'find']
+  [Antonym Detection] Word 'losing' has antonyms: ['keep', 'win', 'gain', 'find', 'profit', 'break-even']
 
 Checking for implication contradictions...
   [Implication Contradiction] Checking for implication contradictions...
@@ -237,8 +237,7 @@ nli_entailment and Sbert scores: 0.990839421749115, 0.06408710032701492
 
  -->Step 4: Generating formula from qualifying subsets...
 FUNCTION: llm_write_formula_from_subsets
-Asking LLM to write formula from qualifying subsets using Prompt = 
-    You are expert in Natural language inference.
+Asking LLM to write formula from qualifying subsets using Prompt = You are expert in Natural language inference.
     Given these propositions:
 
   - P_20: "Hazem al-Araji told the crowd to shout out loud"
@@ -256,23 +255,16 @@ The following subsets entail the hypothesis:
 
 Hypothesis: "Huey recalls Francis implying Johnson feared failing the drug test more than losing to Carl Lewis."
 
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
 
 Rules:
 - Use & for AND, | for OR, ~ for NOT
 - Prefer simpler formulas (if one subset is sufficient, use just that)
 - If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only None"
+- If you cannot find the formula, output only "NONE"
 Formula:
-  LLM generated formula: None
-Initial Huey recalls Francis implying Johnson feared failing the drug test more than losing to Carl Lewis.. Final Saddam Hussein's regime fell AND Hazem al-Araji told the crowd to let Black Zone residents hear them AND Hazem al-Araji told the crowd to shout out loud AND Some people live inside the Black Zone AND Hazem al-Araji told the crowd to let Bush supporters hear them. Formula None
-
-END  generate_candidates_via_subset_entailment done. Formula: None
-Step B & C: Verbalizing and Verifying with NLI...
-  Skipped invalid formula None: Empty formula: None
   [?] hyp 1: pred=None (None) gt=entailment
-      formula: ERROR
-      error (translate_error): ERROR: LLM failed to generate a valid formula
+      error (runtime_error): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
 starting translate_query
 Using translate_query_single for: Because she hosted him in 1980, Huey recognized Francis in Seoul and he greeted her warmly.
 
@@ -526,12 +518,12 @@ Checking for modal opposites...
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['clean-claim', 'doubted', 'clean', 'claim', 'noting', 'talk', 'suggested', 'reason', 'pass', 'testing']
-  [Antonym Detection] Word 'clean' has antonyms: ['unfairly', 'unclean', 'dirty']
+  [Antonym Detection] Word 'clean' has antonyms: ['unclean', 'dirty', 'unfairly']
   [Antonym Detection] Word 'claim' has antonyms: ['forfeit', 'disclaim']
   [Antonym Detection] Word 'noting' has antonyms: ['ignore']
   [Antonym Detection] Word 'talk' has antonyms: ['keep-quiet']
   [Antonym Detection] Word 'suggested' has antonyms: ['contraindicate']
-  [Antonym Detection] Word 'pass' has antonyms: ['be-born', 'fail', 'failing', 'running']
+  [Antonym Detection] Word 'pass' has antonyms: ['be-born', 'running', 'fail', 'failing']
 
 Checking for implication contradictions...
   [Implication Contradiction] Checking for implication contradictions...
@@ -757,7 +749,7 @@ Checking for modal opposites...
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['cbc-tv', 'said', 'working', 'cbc', 'treating', 'canadian', 'athletes', 'olympics']
-  [Antonym Detection] Word 'working' has antonyms: ['malfunction', 'idle']
+  [Antonym Detection] Word 'working' has antonyms: ['idle', 'malfunction']
 
 Checking for implication contradictions...
   [Implication Contradiction] Checking for implication contradictions...
@@ -1097,7 +1089,7 @@ Checking for modal opposites...
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['testified', 'unknown', 'person', 'injected', 'steroids', 'directly', 'testing', 'room']
-  [Antonym Detection] Word 'unknown' has antonyms: ['acquaintance', 'known']
+  [Antonym Detection] Word 'unknown' has antonyms: ['known', 'acquaintance']
   [Antonym Detection] Word 'directly' has antonyms: ['indirectly']
 
 Checking for implication contradictions...
@@ -1254,8 +1246,7 @@ nli_entailment and Sbert scores: 0.0009844761807471514, 0.08020536601543427
 
  -->Step 4: Generating formula from qualifying subsets...
 FUNCTION: llm_write_formula_from_subsets
-Asking LLM to write formula from qualifying subsets using Prompt = 
-    You are expert in Natural language inference.
+Asking LLM to write formula from qualifying subsets using Prompt = You are expert in Natural language inference.
     Given these propositions:
 
   - P_23: "Some people live inside the Black Zone"
@@ -1270,23 +1261,16 @@ The following subsets entail the hypothesis:
 
 Hypothesis: "Francis testified that an unknown person injected steroids directly into Johnson’s urine sample in the testing room."
 
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
 
 Rules:
 - Use & for AND, | for OR, ~ for NOT
 - Prefer simpler formulas (if one subset is sufficient, use just that)
 - If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only None"
+- If you cannot find the formula, output only "NONE"
 Formula:
-  LLM generated formula: None
-Initial Francis testified that an unknown person injected steroids directly into Johnson’s urine sample in the testing room.. Final The U.S. invaded Iraq. Formula None
-
-END  generate_candidates_via_subset_entailment done. Formula: None
-Step B & C: Verbalizing and Verifying with NLI...
-  Skipped invalid formula None: Empty formula: None
   [?] hyp 6: pred=None (None) gt=not_entailment
-      formula: ERROR
-      error (translate_error): ERROR: LLM failed to generate a valid formula
+      error (runtime_error): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
   Premise accuracy: 2/4 = 50.00%
   Logify: 0.00s (cached: True)
 
@@ -1437,15 +1421,15 @@ Within translate_query_single, we finished retrieved with 21 chunks
 Checking for modal opposites...
   [Modal Detection] Hypothesis modal: 'permitted'
   [Modal Detection] Base text: 'Perkins the criminal threatening case to continue while eliminating the felon - in - possession firearm charge against Brown.'
-  [Modal Detection] Antonyms: ['forbidden', 'banned', 'prohibited']
+  [Modal Detection] Antonyms: ['banned', 'forbidden', 'prohibited']
 
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['felon-in', 'perkins', 'permitted', 'criminal', 'threatening', 'case', 'continue', 'eliminating', 'felon', 'possession', 'firearm', 'charge']
-  [Antonym Detection] Word 'permitted' has antonyms: ['prevent', 'disallow', 'forbid']
+  [Antonym Detection] Word 'permitted' has antonyms: ['disallow', 'prevent', 'forbid']
   [Antonym Detection] Word 'continue' has antonyms: ['discontinue']
   [Antonym Detection] Word 'eliminating' has antonyms: ['necessitate']
-  [Antonym Detection] Word 'charge' has antonyms: ['calm', 'discharge', 'pay-cash']
+  [Antonym Detection] Word 'charge' has antonyms: ['calm', 'pay-cash', 'discharge']
 
 Checking for implication contradictions...
   [Implication Contradiction] Checking for implication contradictions...
@@ -1812,8 +1796,7 @@ nli_entailment and Sbert scores: 0.15949483215808868, 0.0838155448436737
 
  -->Step 4: Generating formula from qualifying subsets...
 FUNCTION: llm_write_formula_from_subsets
-Asking LLM to write formula from qualifying subsets using Prompt = 
-    You are expert in Natural language inference.
+Asking LLM to write formula from qualifying subsets using Prompt = You are expert in Natural language inference.
     Given these propositions:
 
   - P_14: "Marion Bartoli leveled the second set"
@@ -1830,23 +1813,16 @@ The following subsets entail the hypothesis:
 
 Hypothesis: "Tierney's intent to appeal shows state officials disputed Perkins's conclusion that the amendment contained no restrictions for felons."
 
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
 
 Rules:
 - Use & for AND, | for OR, ~ for NOT
 - Prefer simpler formulas (if one subset is sufficient, use just that)
 - If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only None"
+- If you cannot find the formula, output only "NONE"
 Formula:
-  LLM generated formula: None
-Initial Tierney's intent to appeal shows state officials disputed Perkins's conclusion that the amendment contained no restrictions for felons.. Final Marion Bartoli leveled the second set AND Maria Sharapova was the top seed AND Angelique Kerber opened a 3-0 advantage in the deciding set. Formula None
-
-END  generate_candidates_via_subset_entailment done. Formula: None
-Step B & C: Verbalizing and Verifying with NLI...
-  Skipped invalid formula None: Empty formula: None
   [?] hyp 3: pred=None (None) gt=entailment
-      formula: ERROR
-      error (translate_error): ERROR: LLM failed to generate a valid formula
+      error (runtime_error): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
 starting translate_query
 Using translate_query_single for: The judge upheld the firearm possession charge and dismissed all allegations of criminal threatening against Brown.
 
@@ -1923,7 +1899,7 @@ Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['judge', 'upheld', 'possession', 'charge', 'dismissed', 'allegations', 'criminal', 'threatening']
   [Antonym Detection] Word 'upheld' has antonyms: ['discontinue']
-  [Antonym Detection] Word 'charge' has antonyms: ['calm', 'discharge', 'pay-cash']
+  [Antonym Detection] Word 'charge' has antonyms: ['calm', 'pay-cash', 'discharge']
   [Antonym Detection] Word 'dismissed' has antonyms: ['hire']
 
 Checking for implication contradictions...
@@ -2305,8 +2281,7 @@ nli_entailment and Sbert scores: 0.00015883632295299321, 0.11090793460607529
 
  -->Step 4: Generating formula from qualifying subsets...
 FUNCTION: llm_write_formula_from_subsets
-Asking LLM to write formula from qualifying subsets using Prompt = 
-    You are expert in Natural language inference.
+Asking LLM to write formula from qualifying subsets using Prompt = You are expert in Natural language inference.
     Given these propositions:
 
   - P_13: "Angelique Kerber led 3-0 in the second set"
@@ -2322,23 +2297,16 @@ The following subsets entail the hypothesis:
 
 Hypothesis: "Prosecutors conceded the amendment explicitly bans felons from gun ownership, and Perkins agreed with that interpretation."
 
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that captures the meaning of the hypothesis.
+Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
 
 Rules:
 - Use & for AND, | for OR, ~ for NOT
 - Prefer simpler formulas (if one subset is sufficient, use just that)
 - If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only None"
+- If you cannot find the formula, output only "NONE"
 Formula:
-  LLM generated formula: None
-Initial Prosecutors conceded the amendment explicitly bans felons from gun ownership, and Perkins agreed with that interpretation.. Final Angelique Kerber held on in the deciding set AND Angelique Kerber led 3-0 in the second set AND Angelique Kerber opened a 3-0 advantage in the deciding set. Formula None
-
-END  generate_candidates_via_subset_entailment done. Formula: None
-Step B & C: Verbalizing and Verifying with NLI...
-  Skipped invalid formula None: Empty formula: None
   [?] hyp 6: pred=None (None) gt=not_entailment
-      formula: ERROR
-      error (translate_error): ERROR: LLM failed to generate a valid formula
+      error (runtime_error): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
   Premise accuracy: 2/4 = 50.00%
   Logify: 0.00s (cached: True)
 
@@ -2642,9 +2610,9 @@ Checking for modal opposites...
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['attended', 'event', 'mainly', 'gather', 'material', 'autobiography', 'chapter', 'discusses', 'steroids', 'confront']
-  [Antonym Detection] Word 'attended' has antonyms: ['unaccompanied', 'miss']
+  [Antonym Detection] Word 'attended' has antonyms: ['miss', 'unaccompanied']
   [Antonym Detection] Word 'gather' has antonyms: ['spread']
-  [Antonym Detection] Word 'material' has antonyms: ['insubstantial', 'incorporeal', 'immaterial']
+  [Antonym Detection] Word 'material' has antonyms: ['immaterial', 'incorporeal', 'insubstantial']
   [Antonym Detection] Word 'confront' has antonyms: ['avoid']
 
 Checking for implication contradictions...
@@ -3084,14 +3052,14 @@ Within translate_query_single, we finished retrieved with 22 chunks
 Checking for modal opposites...
   [Modal Detection] Hypothesis modal: 'never'
   [Modal Detection] Base text: 'Johnson told reporters he used steroids and that his Olympic gold medal from Seoul was taken away.'
-  [Modal Detection] Antonyms: ['usually', 'frequently', 'often', 'typically', 'sometimes', 'always']
+  [Modal Detection] Antonyms: ['frequently', 'often', 'always', 'sometimes', 'typically', 'usually']
 
 Checking for antonym contradictions...
   [Antonym Detection] Checking for antonym contradictions...
   [Antonym Detection] Words to check: ['told', 'reporters', 'never', 'used', 'steroids', 'olympic', 'gold', 'medal', 'taken', 'away']
   [Antonym Detection] Word 'never' has antonyms: ['ever']
   [Antonym Detection] Word 'used' has antonyms: ['misused']
-  [Antonym Detection] Word 'taken' has antonyms: ['give', 'obviate', 'abstain', 'refuse', 'disclaim']
+  [Antonym Detection] Word 'taken' has antonyms: ['disclaim', 'obviate', 'give', 'abstain', 'refuse']
   [Antonym Detection] Word 'away' has antonyms: ['home']
 
 Checking for implication contradictions...
@@ -3624,4 +3592,4 @@ Hypotheses evaluated: 14
 Correct predictions: 7
 Overall accuracy: 50.00%
 Total errors: 4
-Results saved to: /home/logify/article_logic_ai_2026/code/experiments/claude_constructed/results/experiment_20260303_011909.json
+Results saved to: /home/logify/article_logic_ai_2026/code/experiments/claude_constructed/results/experiment_20260303_013209.json
