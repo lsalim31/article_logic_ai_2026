@@ -1,0 +1,52 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/logify/article_logic_ai_2026/code/from_text_to_logic/logic_converter.py", line 644, in convert
+    return self._single_pass(text, formatted_triples)
+  File "/home/logify/article_logic_ai_2026/code/from_text_to_logic/logic_converter.py", line 455, in _single_pass
+    response_text = self._call_llm(self.system_prompt, combined_input)
+  File "/home/logify/article_logic_ai_2026/code/from_text_to_logic/logic_converter.py", line 170, in _call_llm
+    response = self.client.chat.completions.create(**api_params)
+  File "/opt/python/3.10/lib/python3.10/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/python/3.10/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1150, in create
+    return self._post(
+  File "/opt/python/3.10/lib/python3.10/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/opt/python/3.10/lib/python3.10/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/logify/article_logic_ai_2026/code/experiments/claude_constructed/logic_experiment.py", line 688, in main
+    run_experiment(
+  File "/home/logify/article_logic_ai_2026/code/experiments/claude_constructed/logic_experiment.py", line 470, in run_experiment
+    logify_result = logify_premise(
+  File "/home/logify/article_logic_ai_2026/code/experiments/claude_constructed/logic_experiment.py", line 164, in logify_premise
+    logic_structure = converter.convert_text_to_logic(text)
+  File "/home/logify/article_logic_ai_2026/code/from_text_to_logic/logify.py", line 116, in convert_text_to_logic
+    logic_structure = self.converter.convert(text, formatted_triples)
+  File "/home/logify/article_logic_ai_2026/code/from_text_to_logic/logic_converter.py", line 649, in convert
+    raise RuntimeError(f"[logic_converter] Error in LLM conversion: {e}")
+RuntimeError: [logic_converter] Error in LLM conversion: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Loading data from /home/logify/article_logic_ai_2026/code/experiments/claude_constructed/dataset/gold_balanced.json...
+  Loaded 3 premises with 18 total hypotheses
+
+[1/3] Premise 0: 242 words, 6 hypotheses
+    [LOGIFY] Converting premise 0 to logic...
+Initializing OpenIE Extractor with native Stanza...
+Initializing native Stanza coreference pipeline...
+  ✓ Native Stanza coref initialized
+Initializing Stanza dependency parse pipeline...
+  ✓ Stanza depparse initialized
+Initializing CoreNLP client for OpenIE...
+  ✓ CoreNLP OpenIE client initialized
+
+Initialization complete:
+  - Native Stanza coref: True
+  - Stanza depparse fallback: True
+  - CoreNLP port: 9000
+[logic_converter] Single-pass mode (document size: 1397 chars)
+CoreNLP client closed.
+Error: [logic_converter] Error in LLM conversion: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}

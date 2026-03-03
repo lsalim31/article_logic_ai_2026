@@ -4,52 +4,45 @@ translate.py - Neuro-Symbolic Logic Translator
 
 Input: User Query + JSON Logified Data
 Output: Propositional Formula.
-
 """
 
-import sys
-import os
-import re
-import json
-import argparse
-import numpy as np
-from pathlib import Path
-from typing import Dict, List, Any, Union, Tuple, Optional
-from collections import Counter
-from nltk.tokenize import sent_tokenize
-from sklearn.cluster import KMeans
-from itertools import combinations
-
-
-
-import nltk
-nltk.download('punkt_tab', quiet=True)
-nltk.download('averaged_perceptron_tagger', quiet=True)
-nltk.download('wordnet', quiet=True)
-from nltk.tokenize import word_tokenize
 try:
-    nltk.data.find('tokenizers/punkt_tab')
-except LookupError:
-    nltk.download('punkt_tab')
-    nltk.download('punkt')
+    import sys
+    import os
+    import re
+    import json
+    import argparse
+    import numpy as np
+    from pathlib import Path
+    from typing import Dict, List, Any, Union, Tuple, Optional
+    from collections import Counter
+    from nltk.tokenize import sent_tokenize
+    from sklearn.cluster import KMeans
+    from itertools import combinations
+    from openai import OpenAI
+    from sentence_transformers import CrossEncoder, SentenceTransformer
 
+    import nltk
+    nltk.download('punkt_tab', quiet=True)
+    nltk.download('averaged_perceptron_tagger', quiet=True)
+    nltk.download('wordnet', quiet=True)
+    from nltk.tokenize import word_tokenize
+    from nltk.corpus import wordnet as wn
+    try:
+        nltk.data.find('tokenizers/punkt_tab')
+    except LookupError:
+        nltk.download('punkt_tab')
+        nltk.download('punkt')
+
+except ImportError as e:
+    print(f"CRITICAL: Missing dependencies.\nError: {e}")
+    sys.exit(1)
 
 
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
-SUBSET_TOP_K_RETRIEVAL = 50
-SUBSET_NUM_CLUSTERS = 1
-SUBSET_TOP_PER_CLUSTER = 5
-SUBSET_ENTAILMENT_THRESHOLD = 0.3
-MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
-
-
-# Add code directory to Python path
-script_dir = Path(__file__).resolve().parent
-code_dir = script_dir.parent
-if str(code_dir) not in sys.path:
-    sys.path.insert(0, str(code_dir))
+from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS 
 
 # Import negation detection
 from interface_with_user import negation_detection
@@ -63,23 +56,24 @@ from from_text_to_logic.check_logic_structure import (
     MODAL_WORDS
 )
 
-# External Dependencies
-try:
-    from openai import OpenAI
-    from sentence_transformers import CrossEncoder, SentenceTransformer
+# Reuse your existing RAG infrastructure
+from baseline_rag.retriever import (
+    load_sbert_model,
+    encode_chunks,
+    encode_query,
+    compute_cosine_similarity
+)
+
+# ==========================================
+# 0. Set up  
+# ==========================================
 
 
-    # Reuse your existing RAG infrastructure
-    from baseline_rag.retriever import (
-        load_sbert_model,
-        encode_chunks,
-        encode_query,
-        compute_cosine_similarity
-    )
-
-except ImportError as e:
-    print(f"CRITICAL: Missing dependencies.\nError: {e}")
-    sys.exit(1)
+# Add code directory to Python path
+script_dir = Path(__file__).resolve().parent
+code_dir = script_dir.parent
+if str(code_dir) not in sys.path:
+    sys.path.insert(0, str(code_dir))
 
 sbert_model = SentenceTransformer(SBERT_MODEL)
 
@@ -87,8 +81,19 @@ sbert_model = SentenceTransformer(SBERT_MODEL)
 _cached_nli_model = None
 _cached_spacy_model = None
 
+
+def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
+    """Helper to configure OpenAI client for OpenRouter if needed."""
+    if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
+        client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
+        if not model.startswith('openai/'):
+            model = f'openai/{model}'
+    else:
+        client = OpenAI(api_key=api_key)
+    return client, model
+
 # ==========================================
-# 1. INFIX FORMULA PARSER (matches translate_old.py style)
+# 1. INFIX FORMULA PARSER 
 # ==========================================
 
 Formula = Union[str, Tuple[str, ...]]
@@ -291,19 +296,6 @@ def is_yes_no_question(query: str, verbose=True) -> bool:
         print(f"\n Detected Yes/No question. Converting...")
     starters = ['is ', 'are ', 'was ', 'were ', 'will ', 'would ', 'should ', 'could ', 'can ', 'may ', 'must ', 'does ', 'do ', 'did ']
     return any(query.lower().strip().startswith(s) for s in starters)
-
-
-def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
-    """Helper to configure OpenAI client for OpenRouter if needed."""
-    if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
-        client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
-        if not model.startswith('openai/'):
-            model = f'openai/{model}'
-    else:
-        client = OpenAI(api_key=api_key)
-    return client, model
-
-
 
 def convert_yes_no_to_statement(
     query: str,
@@ -892,7 +884,7 @@ def detect_antonym_contradiction(
 
 
 # ==========================================
-# 4b. IMPLICATION CONTRADICTION DETECTION
+# 5. IMPLICATION CONTRADICTION DETECTION
 # ==========================================
 
 def detect_implication_contradiction(
@@ -1033,11 +1025,10 @@ def detect_implication_contradiction(
 
 
 # ==========================================
-# 4.c GENERATING VARIATIONS OF THE QUERY
+# 6. GENERATING VARIATIONS OF THE QUERY
 # ==========================================
-from nltk.corpus import wordnet as wn
 
-    
+ 
 def expand_query_with_synonyms(
     query: str, 
     sbert_model, 
@@ -1045,60 +1036,47 @@ def expand_query_with_synonyms(
     similarity_threshold: float = 0.85,
     verbose: bool = True
 ) -> List[str]:
-    """Expand query with SBERT-filtered synonym variants."""
-    
+    """
+    Expand query with SBERT-filtered synonym variants.
+    """
     if verbose:
-        print(f"\n#FUNCTION: expand_query_with_synonyms")
-    
-    variants = [(query, 1.0)]  # Store (variant, similarity) tuples
-    
+        print(f"\n#FUNCTION: expand_query_with_synonyms")    
+    variants = [(query, 1.0)]  # Store (variant, similarity) tuples   
     nlp = get_spacy_model_singleton()
     doc = nlp(query)
-    tokens = [token.text for token in doc]
-    
+    tokens = [token.text for token in doc]   
     # Encode query once outside the loop
-    query_embedding = sbert_model.encode(query)  # 
-    
+    query_embedding = sbert_model.encode(query)  #    
     for i, token in enumerate(doc):
         # Process VERBS, NOUNS, and ADJECTIVES
         if token.pos_ in ('VERB', 'NOUN', 'ADJ'):
             # Map spaCy POS to WordNet POS
             pos_map = {'VERB': wn.VERB, 'NOUN': wn.NOUN, 'ADJ': wn.ADJ}
-            wn_pos = pos_map[token.pos_]
-            
+            wn_pos = pos_map[token.pos_]            
             # Get ALL WordNet synonyms
             all_synonyms = set()
             for syn in wn.synsets(token.text.lower(), pos=wn_pos):
                 for lemma in syn.lemmas():
                     synonym = lemma.name().replace('_', ' ')
                     if synonym.lower() != token.text.lower():
-                        all_synonyms.add(synonym)
-            
+                        all_synonyms.add(synonym)            
             # Filter with SBERT
             for synonym in all_synonyms:
                 variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
                 variant_embedding = sbert_model.encode(variant)
                 sim = np.dot(query_embedding, variant_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(variant_embedding))
-
-                
                 if sim > similarity_threshold:
-                    variants.append((variant, sim))
-    
+                    variants.append((variant, sim)) 
     # Sort by similarity (descending) and take top max_variants
     variants.sort(key=lambda x: x[1], reverse=True)
-    best_variants = [v[0] for v in variants[:max_variants]]
-    
+    best_variants = [v[0] for v in variants[:max_variants]]  
     if verbose:
-        print(f" Found {len(variants)} variants above {similarity_threshold} within expand_query_with_synonyms. Returning top {len(best_variants)}.")
-        
+        print(f" Found {len(variants)} variants above {similarity_threshold} within expand_query_with_synonyms. Returning top {len(best_variants)}.")      
     return best_variants
-
-
-
 
 def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K, verbose =True):
     """
-    sbert_model is loaded before
+    
     """
     len_chunks  = len(chunks)
     if verbose:
@@ -1107,32 +1085,24 @@ def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K, verb
               \nPARAMETERS: {len_chunks} chunks
               """)
     variants = expand_query_with_synonyms(query, sbert_model)
-    
-    
     all_results = []
     for variant in variants:
         results = retrieve_top_k_propositions(variant, chunks, sbert_model, k=k)
         all_results.extend(results)
-    
     if verbose:
         print( f"\n Total of {len(all_results)} retrievals")
-    
     # Dedupe by prop_id, keep highest similarity
     seen = {}
     for r in all_results:
         pid = r['id']
         if pid not in seen or r['similarity'] > seen[pid]['similarity']:
             seen[pid] = r
-    
     return sorted(seen.values(), key=lambda x: -x['similarity'])[:k]
 
 
 # ==========================================
-# NEW: SUBSET ENTAILMENT CANDIDATE GENERATION
+# 7: DETECT SUBSETS OF PROPOSITIONS THAT IMPLY THE QUERY
 # ==========================================
-
-
-
 
 def cluster_propositions(chunks: List[Dict], sbert_model, n_clusters: int = SUBSET_NUM_CLUSTERS) -> np.ndarray:
     """
@@ -1156,10 +1126,8 @@ def cluster_propositions(chunks: List[Dict], sbert_model, n_clusters: int = SUBS
     
     # K-means clustering (normalized embeddings → cosine distance)
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-    cluster_labels = kmeans.fit_predict(embeddings)
-    
+    cluster_labels = kmeans.fit_predict(embeddings)    
     return cluster_labels
-
 
 def select_diverse_propositions(
     chunks: List[Dict], 
@@ -1178,30 +1146,27 @@ def select_diverse_propositions(
         List of diverse proposition dicts
     """
     selected = []
-    unique_clusters = np.unique(cluster_labels)
-    
+    unique_clusters = np.unique(cluster_labels)   
     for cluster_id in unique_clusters:
         # Get chunks in this cluster
         cluster_chunks = [
             (i, chunks[i]) for i in range(len(chunks)) 
             if cluster_labels[i] == cluster_id
-        ]
-        
+        ]        
         # Sort by similarity (highest first)
         cluster_chunks.sort(key=lambda x: x[1].get('similarity', 0), reverse=True)
         
         # Take top N
         for _, chunk in cluster_chunks[:top_per_cluster]:
-            selected.append(chunk)
-    
+            selected.append(chunk)    
     return selected
-
 
 def compute_subset_entailment_score(
     premise_text: str, 
     hypothesis: str, 
     nli_model, 
-    sbert_model
+    sbert_model, 
+    verbose:bool =True
 ) -> float:
     """
     Compute entailment score using NLI and SBERT (handles identity case).
@@ -1217,12 +1182,12 @@ def compute_subset_entailment_score(
     """
     # NLI score
     # CrossEncoder returns [contradiction, entailment, neutral] for nli-deberta-v3-base
-    nli_scores = nli_model.predict([(premise_text, hypothesis)])[0]
-    
+    if verbose:
+        print(f"#FUNCTION: compute_subset_entailment_score")    
+    nli_scores = nli_model.predict([(premise_text, hypothesis)])[0]    
     # DEBUG: Print raw NLI output
-    print(f"Raw NLI scores: {nli_scores}, type: {type(nli_scores)}")
-
-    
+    if verbose:
+        print(f"Raw NLI scores: {nli_scores}, type: {type(nli_scores)}")  
     if isinstance(nli_scores, np.ndarray) and len(nli_scores) == 3:
         # Softmax to get probabilities
         exp_scores = np.exp(nli_scores - np.max(nli_scores))
@@ -1231,14 +1196,12 @@ def compute_subset_entailment_score(
     elif isinstance(nli_scores, (int, float)):
         nli_entailment = float(nli_scores)
     else:
-        nli_entailment = 0.0
-    
+        nli_entailment = 0.0    
     # SBERT similarity (handles identity/near-identity case)
     embeddings = sbert_model.encode([premise_text, hypothesis])
     sbert_sim = np.dot(embeddings[0], embeddings[1]) / (np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1]))
-
-    print(f"nli_entailment and Sbert scores: {nli_entailment}, {sbert_sim}")
-    
+    if verbose:
+        print(f"nli_entailment and Sbert scores: {nli_entailment}, {sbert_sim}")
     # Return max of both scores
     return max(nli_entailment, sbert_sim)
 
@@ -1266,15 +1229,13 @@ def find_entailing_subsets(
         List of (subset_chunks, score) tuples for qualifying subsets
     """
     qualifying = []
-    total_subsets = 2 ** len(chunks) - 1
-    
+    total_subsets = 2 ** len(chunks) - 1 
     if verbose:
         print(f"""  
               #FUNCTION: find_entailing_subsets
               #PARAMETERS:
               Checking {total_subsets} subsets for entailment (threshold={threshold})...
-              """)
-    
+              """)   
     checked = 0
     for size in range(1, len(chunks) + 1):
         for idx_combo in combinations(range(len(chunks)), size):
@@ -1294,8 +1255,7 @@ def find_entailing_subsets(
                 qualifying.append((subset_chunks, score))
                 if verbose:
                     ids = [c['id'] for c in subset_chunks]
-                    print(f"    Found qualifying subset: {ids} (score={score:.3f})")
-    
+                    print(f"    Found qualifying subset: {ids} (score={score:.3f})")   
     if verbose:
         print(f"  Found {len(qualifying)} qualifying subsets")
     
@@ -1349,25 +1309,26 @@ def llm_write_formula_from_subsets(
         ids_str = ", ".join(ids)
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
-    prompt = f"""You are expert in Natural language inference.
-    Given these propositions:
+    prompt = f"""
+    # ROLE: You are expert in Natural language inference.
+    # TASK: Given the propositions:
+    {props_text}
+    The following sets 
+    {subsets_text}
+    are believed to imply the hypothesis: "{hypothesis}". Here, the score is between 0 and 1 and it reflects our confidence on the implication, with 1 being the higher. 
+    
+    Your task is to write a propositional logic formula that means the same than the hypothesis by following the next rule.
 
-{props_text}
+    # RULES:
+    - Use ONLY above proposition IDs
+    - Use & for AND, | for OR, ~ for NOT
+    - Think carefully about the proposition and hypothesis.
+    - Prefer simpler formulas (if one subset is sufficient, use just that)
+    - If you find the formula, output ONLY the formula, nothing else
+    - If you cannot find the formula, output only "NONE"
 
-The following subsets entail the hypothesis:
-
-{subsets_text}
-
-Hypothesis: "{hypothesis}"
-
-Think carefully about the proposition and hypothesis. Then, write a propositional logic formula using these proposition IDs that means the same than the hypothesis.
-
-Rules:
-- Use & for AND, | for OR, ~ for NOT
-- Prefer simpler formulas (if one subset is sufficient, use just that)
-- If you find the formula, output ONLY the formula, nothing else
-- If you cannot find the formula, output only "NONE"
-Formula:"""
+    #OUTPUT
+    Formula:"""
 
     if verbose:
         print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
@@ -1398,87 +1359,6 @@ Formula:"""
         "reasoning": f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
         "translation": translation
     }
-
-# Being replaced
-# def llm_write_formula_from_subsets(
-#     hypothesis: str,
-#     qualifying_subsets: List[Tuple[List[Dict], float]],
-#     api_key: str,
-#     model_name: str = TRANSLATE_MODEL,
-#     verbose: bool = True
-# ) -> Dict:
-#     """
-#     Ask LLM to write a formula from qualifying subsets.
-    
-#     Args:
-#         hypothesis: The hypothesis text
-#         qualifying_subsets: List of (subset_chunks, score) tuples
-#         api_key: API key for LLM
-#         model: Model name
-#         verbose: Print progress
-        
-#     Returns:
-#         Dict with formula, reasoning, translation (same format as generate_candidates_llm)
-#     """
-#     # Format subsets for prompt
-    
-#     if verbose:
-#         print("FUNCTION: llm_write_formula_from_subsets")
-    
-#     subsets_text = ""
-#     for subset_chunks, score in qualifying_subsets:
-#         ids = [c['id'] for c in subset_chunks]
-#         texts = [c['translation'] for c in subset_chunks]
-        
-#         ids_str = ", ".join(ids)
-#         texts_str = " AND ".join(texts)
-#         subsets_text += f"  - {{{ids_str}}}: \"{texts_str}\" (score: {score:.2f})\n"
-    
-#     prompt = f"""The following proposition subsets entail the hypothesis:
-
-#     {subsets_text}
-
-#     Hypothesis: "{hypothesis}"
-
-#     Write a propositional logic formula using these proposition IDs (P_1, P_2, etc.) that captures when the hypothesis is entailed.
-
-#     Rules:
-#     - Use & for AND, | for OR, ~ for NOT
-#     - Prefer simpler formulas (if one subset is sufficient, use just that)
-#     - Output ONLY the formula, nothing else
-
-#     Formula:"""
-
-#     if verbose:
-#         print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
-    
-#     # Get LLM client
-#     client, actual_model = get_configured_client(api_key, model_name)
-    
-#     response = client.chat.completions.create(
-#         model=actual_model,
-#         messages=[{"role": "user", "content": prompt}],
-#         temperature=0
-#     )
-    
-#     formula = response.choices[0].message.content.strip()
-    
-#     if verbose:
-#         print(f"  LLM generated formula: {formula}")
-    
-#     # Build translation text from the first (best qualifying subset
-#     best_subset, best_score = qualifying_subsets[0]
-#     translation = " AND ".join([c['translation'] for c in best_subset])
-    
-#     if verbose:
-#         print(f"Initial {hypothesis}. Final {translation}. Formula {formula}")
-    
-#     return {
-#         "formula": formula,
-#         "reasoning": f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
-#         "translation": translation
-#     }
-
 
 def generate_candidates_via_subset_entailment(
     query: str,
