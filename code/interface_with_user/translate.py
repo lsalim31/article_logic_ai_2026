@@ -41,7 +41,7 @@ from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_M
 SUBSET_TOP_K_RETRIEVAL = 50
 SUBSET_NUM_CLUSTERS = 1
 SUBSET_TOP_PER_CLUSTER = 5
-SUBSET_ENTAILMENT_THRESHOLD = 0.5
+SUBSET_ENTAILMENT_THRESHOLD = 0.3
 MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 
 
@@ -1445,19 +1445,22 @@ def generate_candidates_via_subset_entailment(
         print("\n --> Step 3 Finding entailing subsets.")
     
     nli_model = load_nli_model_singleton()
-    qualifying_subsets = find_entailing_subsets(
+    potential_qualifying_subsets = find_entailing_subsets(
         query, diverse_chunks, nli_model, sbert_model, 
         threshold=SUBSET_ENTAILMENT_THRESHOLD, verbose=verbose
     )
     
     # Step 4: Generate formula or return NONE
-    if not qualifying_subsets:
+    if not potential_qualifying_subsets:
         if verbose:
             print("\n --> Subset Entailment. No qualifying subsets found, returning NONE")
         return [{"formula": "NONE", "reasoning": "No subset entails the hypothesis", "translation": ""}]
     
     if verbose:
         print("\n -->Step 4: Generating formula from qualifying subsets...")
+    
+    potential_qualifying_subsets.sort(key=lambda x: x[1], reverse=True)
+    qualifying_subsets = potential_qualifying_subsets[:2]
     
     candidate = llm_write_formula_from_subsets(
         query, qualifying_subsets, api_key, model, verbose=verbose
