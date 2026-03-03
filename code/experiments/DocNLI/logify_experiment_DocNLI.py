@@ -4,10 +4,6 @@ experiment_logify_DocNLI.py
 
 Experiment: Evaluate Logify on DocNLI dataset.
 
-Usage:
-    python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY
-    python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY --premise-id 0
-    python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY --limit 5
 """
 
 import argparse
