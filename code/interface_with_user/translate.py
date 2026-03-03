@@ -41,7 +41,7 @@ from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_M
 SUBSET_TOP_K_RETRIEVAL = 50
 SUBSET_NUM_CLUSTERS = 1
 SUBSET_TOP_PER_CLUSTER = 5
-SUBSET_ENTAILMENT_THRESHOLD = 0.001
+SUBSET_ENTAILMENT_THRESHOLD = 0.5
 MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 
 
@@ -263,8 +263,8 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
     """
     if verbose:
         print(f"""
-              \n #FUNCTION: retrieve_top_k_propositions.
-              \n PARAMETERS: k={SBERT_TOP_K}, minimal_similarity={SBERT_MIN_SIMILARITY}, number of chunks = {len(chunks)}
+              \n#FUNCTION: retrieve_top_k_propositions.
+              \nPARAMETERS: k={SBERT_TOP_K}, minimal_similarity={SBERT_MIN_SIMILARITY}, number of chunks = {len(chunks)}
               """
               )
     
@@ -293,18 +293,16 @@ def is_yes_no_question(query: str, verbose=True) -> bool:
     return any(query.lower().strip().startswith(s) for s in starters)
 
 
-def get_configured_client(api_key: str, model) -> Tuple[OpenAI, str]:
+def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
     """Helper to configure OpenAI client for OpenRouter if needed."""
     if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
         client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
         if not model.startswith('openai/'):
-            print("FUNCTION: get_configured_client. Not model")
-            return client, " "
-        
             model = f'openai/{model}'
     else:
         client = OpenAI(api_key=api_key)
     return client, model
+
 
 
 def convert_yes_no_to_statement(
@@ -1050,7 +1048,7 @@ def expand_query_with_synonyms(
     """Expand query with SBERT-filtered synonym variants."""
     
     if verbose:
-        print(f"\n FUNCTION: expand_query_with_synonyms")
+        print(f"\n#FUNCTION: expand_query_with_synonyms")
     
     variants = [(query, 1.0)]  # Store (variant, similarity) tuples
     
@@ -1091,21 +1089,22 @@ def expand_query_with_synonyms(
     best_variants = [v[0] for v in variants[:max_variants]]
     
     if verbose:
-        print(f"  Found {len(variants)} variants above {similarity_threshold}. Returning top {len(best_variants)}.")
+        print(f" Found {len(variants)} variants above {similarity_threshold} within expand_query_with_synonyms. Returning top {len(best_variants)}.")
         
     return best_variants
 
 
 
-def retrieve_with_expanded_query(query, chunks, sbert_model =SBERT_MODEL, k=SBERT_TOP_K, verbose =True):
+
+def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K, verbose =True):
     """
-    Nothing retrieved
+    sbert_model is loaded before
     """
     len_chunks  = len(chunks)
     if verbose:
         print( f"""
-              \n FUNCTION: retrieve_with_expanded_query. 
-              \n PARAMETERS: {len_chunks} chunks
+              \nFUNCTION: retrieve_with_expanded_query. 
+              \nPARAMETERS: {len_chunks} chunks
               """)
     variants = expand_query_with_synonyms(query, sbert_model)
     
@@ -1221,7 +1220,7 @@ def compute_subset_entailment_score(
     nli_scores = nli_model.predict([(premise_text, hypothesis)])[0]
     
     # DEBUG: Print raw NLI output
-    print(f"    [DEBUG] Raw NLI scores: {nli_scores}, type: {type(nli_scores)}")
+    print(f"Raw NLI scores: {nli_scores}, type: {type(nli_scores)}")
 
     
     if isinstance(nli_scores, np.ndarray) and len(nli_scores) == 3:
@@ -1238,6 +1237,7 @@ def compute_subset_entailment_score(
     embeddings = sbert_model.encode([premise_text, hypothesis])
     sbert_sim = np.dot(embeddings[0], embeddings[1]) / (np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1]))
 
+    print(f"nli_entailment and Sbert scores: {nli_entailment}, {sbert_sim}")
     
     # Return max of both scores
     return max(nli_entailment, sbert_sim)
@@ -1269,7 +1269,11 @@ def find_entailing_subsets(
     total_subsets = 2 ** len(chunks) - 1
     
     if verbose:
-        print(f"  Checking {total_subsets} subsets for entailment (threshold={threshold})...")
+        print(f"""  
+              #FUNCTION: find_entailing_subsets
+              #PARAMETERS:
+              Checking {total_subsets} subsets for entailment (threshold={threshold})...
+              """)
     
     checked = 0
     for size in range(1, len(chunks) + 1):
@@ -1348,7 +1352,7 @@ def llm_write_formula_from_subsets(
     Formula:"""
 
     if verbose:
-        print("  Asking LLM to write formula from qualifying subsets using {prompt}")
+        print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
     
     # Get LLM client
     client, actual_model = get_configured_client(api_key, model_name)
@@ -1364,9 +1368,12 @@ def llm_write_formula_from_subsets(
     if verbose:
         print(f"  LLM generated formula: {formula}")
     
-    # Build translation text from the first (best) qualifying subset
+    # Build translation text from the first (best qualifying subset
     best_subset, best_score = qualifying_subsets[0]
     translation = " AND ".join([c['translation'] for c in best_subset])
+    
+    if verbose:
+        print(f"Initial {hypothesis}. Final {translation}. Formula {formula}")
     
     return {
         "formula": formula,
@@ -1457,7 +1464,7 @@ def generate_candidates_via_subset_entailment(
     )
     
     if verbose:
-        print(f"\n Subset Entailment Done. Formula: {candidate['formula']}")
+        print(f"\n generate_candidates_via_subset_entailment done. Formula: {candidate['formula']}")
     
     return [candidate]
 
@@ -1646,7 +1653,8 @@ def translate_query_single(
     """
     TO ADD
     """
-    print(f"""\n#FUNCTION: translate_query_single
+    print(f"""\n#############################
+          \nFUNCTION: translate_query_single
           \nPARAMETERS: query = {query}, 
     json_path: {json_path},
     api_key: {api_key},
@@ -1678,7 +1686,7 @@ def translate_query_single(
 
     chunks = extract_proposition_chunks(logified_structure)
     sbert_model = load_sbert_model(sbert_model_name)
-    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model_name, k=k)
+    retrieved = retrieve_with_expanded_query(query, chunks, sbert_model, k=k)
 
     if not retrieved:
         print(f"Nothing retrieved")
@@ -1691,7 +1699,7 @@ def translate_query_single(
             "confidence": -1
         }
 
-    print(f" We finished retrieved with {len(chunks)} chunks")
+    print(f"Within translate_query_single, we finished retrieved with {len(chunks)} chunks")
 
     # 3. MODAL OPPOSITE DETECTION
     # Check if hypothesis has a modal word that contradicts a KB proposition
@@ -1743,7 +1751,7 @@ def translate_query_single(
         print("\nGenerating candidates via subset entailment...")
 
     # Need more propositions for clustering - re-retrieve with higher k
-    chunks_for_subset = retrieve_with_expanded_query(query, chunks, sbert_model_name, k=SUBSET_TOP_K_RETRIEVAL)
+    chunks_for_subset = retrieve_with_expanded_query(query, chunks, sbert_model, k)
 
     candidates = generate_candidates_via_subset_entailment(
         query, chunks_for_subset, sbert_model, api_key, model_reasonig, verbose=verbose
