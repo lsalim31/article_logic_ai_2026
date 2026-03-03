@@ -1312,12 +1312,20 @@ def llm_write_formula_from_subsets(
     prompt = f"""
     # ROLE: You are expert in Natural language inference.
     # TASK: Given the propositions:
-    {props_text}
-    The following sets 
-    {subsets_text}
-    are believed to imply the hypothesis: "{hypothesis}". Here, the score is between 0 and 1 and it reflects our confidence on the implication, with 1 being the higher. 
     
-    Your task is to write a propositional logic formula that means the same than the hypothesis by following the next rule.
+    {props_text}
+    
+    The following sets 
+    
+    {subsets_text}
+    
+    are believed to imply the following hypothesis: 
+    
+    "{hypothesis}". 
+    
+    Here, the score is between 0 and 1 and it reflects our confidence on the implication, with 1 being the higher. 
+    
+    Your task is to write a propositional logic formula equivalent to the hypothesis by following the next rule.
 
     # RULES:
     - Use ONLY above proposition IDs
@@ -1331,7 +1339,7 @@ def llm_write_formula_from_subsets(
     Formula:"""
 
     if verbose:
-        print(f"Asking LLM to write formula from qualifying subsets using Prompt = {prompt}")
+        print(f"Asking LLM to write formula from qualifying subsets using Prompt: \n {prompt}")
     
     # Get LLM client
     client, actual_model = get_configured_client(api_key, model_name)
