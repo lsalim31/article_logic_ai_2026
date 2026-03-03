@@ -1464,7 +1464,7 @@ def generate_candidates_via_subset_entailment(
     )
     
     if verbose:
-        print(f"\n generate_candidates_via_subset_entailment done. Formula: {candidate['formula']}")
+        print(f"\nEND  generate_candidates_via_subset_entailment done. Formula: {candidate['formula']}")
     
     return [candidate]
 
