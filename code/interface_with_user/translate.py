@@ -44,6 +44,8 @@ from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATUR
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
 from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS 
 
+ON_EXPAND_QUERY_SYN = True
+
 # Import negation detection
 from interface_with_user import negation_detection
 
@@ -1034,45 +1036,49 @@ def expand_query_with_synonyms(
     sbert_model, 
     max_variants: int = MAX_VARIANTS, 
     similarity_threshold: float = 0.85,
-    verbose: bool = True
+    verbose: bool = True, 
+    on_expand_query_with_synonums: bool = ON_EXPAND_QUERY_SYN
 ) -> List[str]:
     """
     Expand query with SBERT-filtered synonym variants.
     """
-    if verbose:
-        print(f"\n#FUNCTION: expand_query_with_synonyms")    
-    variants = [(query, 1.0)]  # Store (variant, similarity) tuples   
-    nlp = get_spacy_model_singleton()
-    doc = nlp(query)
-    tokens = [token.text for token in doc]   
-    # Encode query once outside the loop
-    query_embedding = sbert_model.encode(query)  #    
-    for i, token in enumerate(doc):
-        # Process VERBS, NOUNS, and ADJECTIVES
-        if token.pos_ in ('VERB', 'NOUN', 'ADJ'):
-            # Map spaCy POS to WordNet POS
-            pos_map = {'VERB': wn.VERB, 'NOUN': wn.NOUN, 'ADJ': wn.ADJ}
-            wn_pos = pos_map[token.pos_]            
-            # Get ALL WordNet synonyms
-            all_synonyms = set()
-            for syn in wn.synsets(token.text.lower(), pos=wn_pos):
-                for lemma in syn.lemmas():
-                    synonym = lemma.name().replace('_', ' ')
-                    if synonym.lower() != token.text.lower():
-                        all_synonyms.add(synonym)            
-            # Filter with SBERT
-            for synonym in all_synonyms:
-                variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
-                variant_embedding = sbert_model.encode(variant)
-                sim = np.dot(query_embedding, variant_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(variant_embedding))
-                if sim > similarity_threshold:
-                    variants.append((variant, sim)) 
-    # Sort by similarity (descending) and take top max_variants
-    variants.sort(key=lambda x: x[1], reverse=True)
-    best_variants = [v[0] for v in variants[:max_variants]]  
-    if verbose:
-        print(f" Found {len(variants)} variants above {similarity_threshold} within expand_query_with_synonyms. Returning top {len(best_variants)}.")      
-    return best_variants
+    if on_expand_query_with_synonums:
+        if verbose:
+            print(f"\n#FUNCTION: expand_query_with_synonyms")    
+        variants = [(query, 1.0)]  # Store (variant, similarity) tuples   
+        nlp = get_spacy_model_singleton()
+        doc = nlp(query)
+        tokens = [token.text for token in doc]   
+        # Encode query once outside the loop
+        query_embedding = sbert_model.encode(query)  #    
+        for i, token in enumerate(doc):
+            # Process VERBS, NOUNS, and ADJECTIVES
+            if token.pos_ in ('VERB', 'NOUN', 'ADJ'):
+                # Map spaCy POS to WordNet POS
+                pos_map = {'VERB': wn.VERB, 'NOUN': wn.NOUN, 'ADJ': wn.ADJ}
+                wn_pos = pos_map[token.pos_]            
+                # Get ALL WordNet synonyms
+                all_synonyms = set()
+                for syn in wn.synsets(token.text.lower(), pos=wn_pos):
+                    for lemma in syn.lemmas():
+                        synonym = lemma.name().replace('_', ' ')
+                        if synonym.lower() != token.text.lower():
+                            all_synonyms.add(synonym)            
+                # Filter with SBERT
+                for synonym in all_synonyms:
+                    variant = ' '.join(tokens[:i] + [synonym] + tokens[i+1:])
+                    variant_embedding = sbert_model.encode(variant)
+                    sim = np.dot(query_embedding, variant_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(variant_embedding))
+                    if sim > similarity_threshold:
+                        variants.append((variant, sim)) 
+        # Sort by similarity (descending) and take top max_variants
+        variants.sort(key=lambda x: x[1], reverse=True)
+        best_variants = [v[0] for v in variants[:max_variants]]  
+        if verbose:
+            print(f" Found {len(variants)} variants above {similarity_threshold} within expand_query_with_synonyms. Returning top {len(best_variants)}.")      
+        return best_variants
+    else:
+        return [query]
 
 def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K, verbose =True):
     """
@@ -1267,7 +1273,7 @@ def llm_write_formula_from_subsets(
     api_key: str,
     model_name: str = TRANSLATE_MODEL,
     max_subsets: int = 2,
-    verbose: bool = True
+    verbose: bool = True, 
 ) -> Dict:
     """
     Ask LLM to write a formula from qualifying subsets.
@@ -1646,7 +1652,6 @@ def translate_query_single(
           \nFUNCTION: translate_query_single
           \nPARAMETERS: query = {query}, 
     json_path: {json_path},
-    api_key: {api_key},
     model: str = {model},
     temperature ={temperature} 
     k = {k}
