@@ -1620,15 +1620,14 @@ def normalize_formula(formula: str) -> str:
     return normalized
 
 
-def compute_nli_confidence(original_text: str, back_translated_text: str, verbose =True) -> float:
+def compute_sbert_confidence(original_text: str, back_translated_text: str, verbose =True) -> float:
     """Compute SBERT-based confidence score between original and back-translated text.
     
-    Uses cosine similarity of sentence embeddings instead of NLI.
     This works better for identical/paraphrased sentences where NLI incorrectly
     returns NEUTRAL with very low confidence.
     """
     if verbose:
-        print("\n#FUNCTION: compute_nli_confidence")
+        print("\n#FUNCTION: compute_sbert_confidence")
     
     embeddings = sbert_model.encode([original_text, back_translated_text])
     similarity = np.dot(embeddings[0], embeddings[1]) / (
@@ -1859,7 +1858,7 @@ def translate_query_single(
         }
 
     # Compute SBERT confidence for voting trigger decision
-    sbert_confidence = compute_nli_confidence(query, winning_text)
+    sbert_confidence = compute_sbert_confidence(query, winning_text)
     if verbose:
         print(f"  SBERT confidence: {sbert_confidence:.4f} (NLI score: {best_net_score:.4f})")
 
