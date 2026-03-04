@@ -1089,7 +1089,7 @@ def retrieve_with_expanded_query(query, chunks, sbert_model, k=SBERT_TOP_K, verb
     len_chunks  = len(chunks)
     if verbose:
         print( f"""
-              \nFUNCTION: retrieve_with_expanded_query. 
+              \n#FUNCTION: retrieve_with_expanded_query. 
               \nPARAMETERS: {len_chunks} chunks
               """)
     variants = expand_query_with_synonyms(query, sbert_model)
@@ -1195,7 +1195,7 @@ def compute_subset_entailment_score(
     # NLI score
     # CrossEncoder returns [contradiction, entailment, neutral] for nli-deberta-v3-base
     if verbose:
-        print(f"#FUNCTION: compute_subset_entailment_score")    
+        print(f"\n #FUNCTION: compute_subset_entailment_score")    
     nli_scores = nli_model.predict([(premise_text, hypothesis)])[0]    
     # DEBUG: Print raw NLI output
     if verbose:
@@ -1224,8 +1224,7 @@ def find_entailing_subsets(
     nli_model,
     sbert_model,
     threshold: float = SUBSET_ENTAILMENT_THRESHOLD,
-    verbose: bool = True
-) -> List[Tuple[List[Dict], float]]:
+    verbose: bool = True) -> List[Tuple[List[Dict], float]]:
     """
     Find all subsets of propositions (with optional negations) that entail the hypothesis.
     
@@ -1247,13 +1246,12 @@ def find_entailing_subsets(
         Each chunk in subset_chunks has 'negated': True/False field added
     """
     
-    
     qualifying = []
     n = len(chunks)
     total_combinations = 3 ** n - 1  # Exclude empty combination
     
     if verbose:
-        print(f"""  
+        print(f"""\n  
               #FUNCTION: find_entailing_subsets
               #PARAMETERS:
               Checking {total_combinations} combinations for entailment (threshold={threshold})...
@@ -1302,6 +1300,8 @@ def find_entailing_subsets(
         
         if score >= threshold:
             qualifying.append((subset_chunks, score))
+            print(f"DEBUG: Added qualifying subset with score {score} >= threshold {threshold}")
+
             if verbose:
                 # Build formula string for display
                 formula_parts = []
@@ -1314,9 +1314,11 @@ def find_entailing_subsets(
                 print(f"    Found qualifying: {formula_str} (score={score:.3f})")
     
     if verbose:
-        print(f"  Found {len(qualifying)} qualifying combinations")
-    
+        print(f"find_entailing_subsets returning {len(qualifying)} qualifying subsets")
+
+    print(f"DEBUG: find_entailing_subsets returning {len(qualifying)} qualifying subsets")
     return qualifying
+
 
 
 def llm_write_formula_from_subsets(
@@ -1342,7 +1344,7 @@ def llm_write_formula_from_subsets(
         Dict with formula, reasoning, translation (same format as generate_candidates_llm)
     """
     if verbose:
-        print("FUNCTION: llm_write_formula_from_subsets")
+        print("\n#FUNCTION: llm_write_formula_from_subsets")
     
     # Sort by score descending and take top subsets
     qualifying_subsets = sorted(qualifying_subsets, key=lambda x: x[1], reverse=True)[:max_subsets]
@@ -1379,7 +1381,7 @@ def llm_write_formula_from_subsets(
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
     prompt = f"""
-    # ROLE: You are expert in Natural language inference.
+    # ROLE: You are expert in Natural language inference and logic
     # TASK: Given the propositions:
     
     {props_text}
@@ -1394,7 +1396,7 @@ def llm_write_formula_from_subsets(
     
     Here, the score is between 0 and 1 and it reflects our confidence on the implication, with 1 being the higher. 
     
-    Your task is to write a propositional logic formula equivalent to the hypothesis by following the next rule.
+    Your task is to write a propositional logic formula equivalent to the hypothesis by following the next rules3.
 
     # RULES:
     - Use ONLY above proposition IDs
@@ -1471,7 +1473,7 @@ def generate_candidates_via_subset_entailment(
         or [{"formula": "NONE"}] if no qualifying subsets
     """
     if verbose:
-        print("\n FUNCTION: generate_candidates_via_subset_entailment")
+        print("\n #FUNCTION: generate_candidates_via_subset_entailment")
         print(f"  Input: {len(chunks)} retrieved propositions for {query}")
     
     # Step 1: Cluster propositions
@@ -1520,6 +1522,8 @@ def generate_candidates_via_subset_entailment(
         query, diverse_chunks, nli_model, sbert_model, 
         threshold=SUBSET_ENTAILMENT_THRESHOLD, verbose=verbose
     )
+    if verbose:
+        print("\n ---> End Step 3")
     
     # Step 4: Generate formula or return NONE
     if not potential_qualifying_subsets:
@@ -1545,7 +1549,7 @@ def generate_candidates_via_subset_entailment(
 
 
 # ==========================================
-# 5. NEURO-SYMBOLIC CORE
+# 8. NEURO-SYMBOLIC CORE
 # ==========================================
 
 
@@ -1640,7 +1644,7 @@ def compute_nli_confidence(original_text: str, back_translated_text: str, verbos
     returns NEUTRAL with very low confidence.
     """
     if verbose:
-        print("#FUNCTION: compute_nli_confidence")
+        print("\n#FUNCTION: compute_nli_confidence")
     
     embeddings = sbert_model.encode([original_text, back_translated_text])
     similarity = np.dot(embeddings[0], embeddings[1]) / (
@@ -1727,8 +1731,8 @@ def translate_query_single(
     """
     TO ADD
     """
-    print(f"""\n#############################
-          \nFUNCTION: translate_query_single
+    print(f"""\n
+          \n#FUNCTION: translate_query_single
           \nPARAMETERS: query = {query}, 
     json_path: {json_path},
     model: str = {model},
@@ -1974,7 +1978,7 @@ def translate_query_single(
 
 
 # ==========================================
-# NEW: HYPOTHESIS DECOMPOSITION
+# 9. HYPOTHESIS DECOMPOSITION
 # ==========================================
 
 
@@ -2190,7 +2194,7 @@ def translate_query(
     Main entry point with hypothesis decomposition support.
     """
     
-    print("starting translate_query")
+    print(20*"#", f"\nFUNCTION: translate_query : {query}")
     # Check if decomposition should be applied
     if enable_decomposition and is_multi_sentence_hypothesis(query):
         if verbose:
@@ -2237,7 +2241,7 @@ def translate_query(
                 print("[Decomposition] Single claim after decomposition, using standard translation ", )
     
     # Standard translation (single sentence)
-    print( f"Using translate_query_single for: {query}")
+    print( f"Multi-sentence hypothesis not detected")
     return translate_query_single(
         query=query,
         json_path=json_path,
@@ -2254,7 +2258,7 @@ def translate_query(
 
 
 # ==========================================
-# 6. MAIN ENTRY POINT
+# 10 MAIN ENTRY POINT
 # ==========================================
 
 def main():
