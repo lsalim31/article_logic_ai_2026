@@ -1031,6 +1031,7 @@ def detect_implication_contradiction(
 # 6. GENERATING VARIATIONS OF THE QUERY
 # ==========================================
 
+
  
 def expand_query_with_synonyms(
     query: str, 
@@ -1142,10 +1143,10 @@ def select_diverse_propositions(
     top_per_cluster: int = SUBSET_TOP_PER_CLUSTER
 ) -> List[Dict]:
     """
-    Select top-N propositions from each cluster by similarity score.
+    Select top-N propositions from each cluster by hybrid score (max of SBERT and NLI).
     
     Args:
-        chunks: List of proposition dicts with 'similarity' field
+        chunks: List of proposition dicts with 'similarity' and 'hybrid_score' fields
         cluster_labels: Cluster assignment for each chunk
         top_per_cluster: How many to select from each cluster
         
@@ -1160,13 +1161,17 @@ def select_diverse_propositions(
             (i, chunks[i]) for i in range(len(chunks)) 
             if cluster_labels[i] == cluster_id
         ]        
-        # Sort by similarity (highest first)
-        cluster_chunks.sort(key=lambda x: x[1].get('similarity', 0), reverse=True)
+        # Sort by hybrid_score if available, otherwise fall back to similarity
+        cluster_chunks.sort(
+            key=lambda x: x[1].get('hybrid_score', x[1].get('similarity', 0)), 
+            reverse=True
+        )
         
         # Take top N
         for _, chunk in cluster_chunks[:top_per_cluster]:
             selected.append(chunk)    
     return selected
+
 
 def compute_subset_entailment_score(
     premise_text: str, 
@@ -1478,6 +1483,22 @@ def generate_candidates_via_subset_entailment(
     
     if verbose:
         print(f"  Formed {n_clusters} clusters")
+    
+    # Compute hybrid scores (max of SBERT similarity and NLI entailment)
+    nli_model = load_nli_model_singleton()
+    for chunk in chunks:
+        premise = chunk['translation']
+        nli_scores = nli_model.predict([(premise, query)])[0]
+        if isinstance(nli_scores, np.ndarray) and len(nli_scores) == 3:
+            exp_scores = np.exp(nli_scores - np.max(nli_scores))
+            probs = exp_scores / exp_scores.sum()
+            nli_entailment = probs[1]
+        else:
+            nli_entailment = 0.0
+        
+        sbert_sim = chunk.get('similarity', 0)
+        chunk['hybrid_score'] = max(sbert_sim, nli_entailment)
+
     
     # Step 2: Select diverse propositions
     if verbose:
