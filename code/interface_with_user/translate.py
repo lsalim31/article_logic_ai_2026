@@ -1517,15 +1517,18 @@ def generate_candidates_via_subset_entailment(
     if verbose:
         print("\n --> Step 3 Finding entailing subsets.")
     
-    nli_model = load_nli_model_singleton()
+    #nli_model = load_nli_model_singleton()
     potential_qualifying_subsets = find_entailing_subsets(
         query, diverse_chunks, nli_model, sbert_model, 
         threshold=SUBSET_ENTAILMENT_THRESHOLD, verbose=verbose
     )
+    
     if verbose:
         print("\n ---> End Step 3")
     
     # Step 4: Generate formula or return NONE
+    print(f"\n DEBUG: After find_entailing_subsets, got {len(potential_qualifying_subsets)} subsets \n")
+
     if not potential_qualifying_subsets:
         if verbose:
             print("\n --> Subset Entailment. No qualifying subsets found, returning NONE")
