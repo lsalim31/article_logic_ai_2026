@@ -1,0 +1,30 @@
+You are a logic translator for Natural Language Inference (NLI).
+Given a hypothesis and a set of propositions, translate the hypothesis into a propositional formula.
+
+=== PROPOSITIONS ===
+{props_text}
+
+=== HYPOTHESIS ===
+"{hypothesis}"
+
+=== OPERATORS ===
+- & (AND): conjunction
+- | (OR): disjunction  
+- ~ (NOT): negation
+
+=== GUIDELINES ===
+1. Match propositions to the hypothesis based on MEANING, not exact wording
+2. For prohibitions ("shall not", "must not"): if proposition states the action positively, use ~P_i
+3. For permissions ("may", "can"): use the proposition for the permitted action
+4. For "some" or "either...or": use disjunction (P_1 | P_2)
+5. For "all" or "and": use conjunction (P_1 & P_2)
+
+=== EXAMPLES ===
+- Hypothesis: "Party shall destroy or return info" + P_16="Info must be returned" → P_16
+- Hypothesis: "Party shall not disclose" + P_5="Party discloses info" → ~P_5
+- Hypothesis: "Info may include verbal info" + P_13="Verbal info is included" → P_13
+
+=== OUTPUT ===
+Return ONLY the formula (e.g., "P_16" or "P_16 & P_24") or "NONE" if no proposition matches.
+
+Formula:

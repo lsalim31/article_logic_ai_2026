@@ -43,9 +43,7 @@ except ImportError as e:
 from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REASONING_EFFORT, SBERT_TOP_K, SBERT_MIN_SIMILARITY, ENABLE_HYBRID_EMBEDDING
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
-from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS 
-
-ON_EXPAND_QUERY_SYN = True
+from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS, MAX_SYNONYMS, ON_EXPAND_QUERY_SYN
 
 # Import negation detection
 from interface_with_user import negation_detection
@@ -1036,7 +1034,7 @@ def detect_implication_contradiction(
 def expand_query_with_synonyms(
     query: str, 
     sbert_model, 
-    max_variants: int = MAX_VARIANTS, 
+    max_variants: int = MAX_SYNONYMS, 
     similarity_threshold: float = 0.85,
     verbose: bool = True, 
     on_expand_query_with_synonums: bool = ON_EXPAND_QUERY_SYN
@@ -1380,34 +1378,17 @@ def llm_write_formula_from_subsets(
         ids_str = ", ".join(formula_parts)
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
-    prompt = f"""
-    # ROLE: You are expert in Natural language inference and logic
-    # TASK: Given the propositions:
-    
-    {props_text}
-    
-    The following sets 
-    
-    {subsets_text}
-    
-    are believed to imply the following hypothesis: 
-    
-    "{hypothesis}". 
-    
-    Here, the score is between 0 and 1 and it reflects our confidence on the implication, with 1 being the higher. 
-    
-    Your task is to write a propositional logic formula equivalent to the hypothesis by following the next rules3.
+    # Load prompt template from file
+    prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts', 'prompt_translate_new')
+    with open(prompt_path, 'r') as f:
+        prompt_template = f.read()
 
-    # RULES:
-    - Use ONLY above proposition IDs
-    - Use & for AND, | for OR, ~ for NOT
-    - Think carefully about the proposition and hypothesis.
-    - Prefer simpler formulas (if one subset is sufficient, use just that)
-    - If you find the formula, output ONLY the formula, nothing else
-    - If you cannot find the formula, output only "NONE"
-
-    #OUTPUT
-    Formula:"""
+    prompt = prompt_template.format(
+        props_text=props_text,
+        subsets_text=subsets_text,
+        hypothesis=hypothesis
+    )
+    
 
     if verbose:
         print(f"Asking LLM to write formula from qualifying subsets using Prompt: \n {prompt}")
