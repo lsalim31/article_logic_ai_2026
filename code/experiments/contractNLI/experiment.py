@@ -742,6 +742,7 @@ def main() -> int:
     parser.add_argument(
         "--verbose",
         action="store_true",
+        default=True,
         help="Enable detailed debugging output",
     )
     parser.add_argument(
@@ -756,8 +757,9 @@ def main() -> int:
     )
     parser.add_argument(
         "--include-raw",
-        action="store_true",
+        default=True,
         help="Include full raw fields in markdown debug report",
+        
     )
 
     args = parser.parse_args()
