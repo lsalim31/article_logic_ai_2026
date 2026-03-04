@@ -21,6 +21,7 @@ try:
     from itertools import combinations
     from openai import OpenAI
     from sentence_transformers import CrossEncoder, SentenceTransformer
+    from itertools import product
 
     import nltk
     nltk.download('punkt_tab', quiet=True)
@@ -1221,7 +1222,12 @@ def find_entailing_subsets(
     verbose: bool = True
 ) -> List[Tuple[List[Dict], float]]:
     """
-    Find all subsets of propositions that entail the hypothesis above threshold.
+    Find all subsets of propositions (with optional negations) that entail the hypothesis.
+    
+    Tests all 3^n combinations where each proposition can be:
+    - Positive (P_i)
+    - Negated (~P_i)  
+    - Absent
     
     Args:
         hypothesis: The hypothesis text
@@ -1233,39 +1239,80 @@ def find_entailing_subsets(
         
     Returns:
         List of (subset_chunks, score) tuples for qualifying subsets
+        Each chunk in subset_chunks has 'negated': True/False field added
     """
+    
+    
     qualifying = []
-    total_subsets = 2 ** len(chunks) - 1 
+    n = len(chunks)
+    total_combinations = 3 ** n - 1  # Exclude empty combination
+    
     if verbose:
         print(f"""  
               #FUNCTION: find_entailing_subsets
               #PARAMETERS:
-              Checking {total_subsets} subsets for entailment (threshold={threshold})...
-              """)   
+              Checking {total_combinations} combinations for entailment (threshold={threshold})...
+              (3^{n} combinations: each prop can be positive, negated, or absent)
+              """)
+    
     checked = 0
-    for size in range(1, len(chunks) + 1):
-        for idx_combo in combinations(range(len(chunks)), size):
-            subset_chunks = [chunks[i] for i in idx_combo]
-            
-            # Combine proposition texts
-            combined_premise = " ".join([c['translation'] for c in subset_chunks])
-            
-            # Compute entailment score
-            score = compute_subset_entailment_score(combined_premise, hypothesis, nli_model, sbert_model)
-            
-            checked += 1
-            if verbose and checked % 200 == 0:
-                print(f"    Checked {checked}/{total_subsets} subsets...")
-            
-            if score >= threshold:
-                qualifying.append((subset_chunks, score))
-                if verbose:
-                    ids = [c['id'] for c in subset_chunks]
-                    print(f"    Found qualifying subset: {ids} (score={score:.3f})")   
+    
+    # Generate all 3^n combinations
+    # 0 = absent, 1 = positive, 2 = negated
+    for combo in product([0, 1, 2], repeat=n):
+        # Skip empty combination (all zeros)
+        if all(c == 0 for c in combo):
+            continue
+        
+        subset_chunks = []
+        premise_parts = []
+        
+        for i, choice in enumerate(combo):
+            if choice == 0:
+                # Absent - skip this proposition
+                continue
+            elif choice == 1:
+                # Positive
+                chunk_copy = chunks[i].copy()
+                chunk_copy['negated'] = False
+                subset_chunks.append(chunk_copy)
+                premise_parts.append(chunks[i]['translation'])
+            elif choice == 2:
+                # Negated
+                chunk_copy = chunks[i].copy()
+                chunk_copy['negated'] = True
+                subset_chunks.append(chunk_copy)
+                # Prepend negation to the text
+                premise_parts.append("It is not the case that " + chunks[i]['translation'])
+        
+        # Combine premise parts
+        combined_premise = " ".join(premise_parts)
+        
+        # Compute entailment score
+        score = compute_subset_entailment_score(combined_premise, hypothesis, nli_model, sbert_model)
+        
+        checked += 1
+        if verbose and checked % 200 == 0:
+            print(f"    Checked {checked}/{total_combinations} combinations...")
+        
+        if score >= threshold:
+            qualifying.append((subset_chunks, score))
+            if verbose:
+                # Build formula string for display
+                formula_parts = []
+                for chunk in subset_chunks:
+                    if chunk['negated']:
+                        formula_parts.append(f"~{chunk['id']}")
+                    else:
+                        formula_parts.append(chunk['id'])
+                formula_str = " & ".join(formula_parts)
+                print(f"    Found qualifying: {formula_str} (score={score:.3f})")
+    
     if verbose:
-        print(f"  Found {len(qualifying)} qualifying subsets")
+        print(f"  Found {len(qualifying)} qualifying combinations")
     
     return qualifying
+
 
 def llm_write_formula_from_subsets(
     hypothesis: str,
@@ -1295,24 +1342,35 @@ def llm_write_formula_from_subsets(
     # Sort by score descending and take top subsets
     qualifying_subsets = sorted(qualifying_subsets, key=lambda x: x[1], reverse=True)[:max_subsets]
     
-    # Collect unique propositions from top subsets
+    # Collect unique propositions from top subsets (track negation status)
     unique_props = {}
     for subset_chunks, score in qualifying_subsets:
         for chunk in subset_chunks:
             prop_id = chunk['id']
             if prop_id not in unique_props:
-                unique_props[prop_id] = chunk['translation']
+                unique_props[prop_id] = {
+                    'translation': chunk['translation'],
+                    'negated': chunk.get('negated', False)
+                }
     
-    # Format propositions list
+    # Format propositions list (show negation in text)
     props_text = ""
-    for prop_id, translation in sorted(unique_props.items()):
-        props_text += f"  - {prop_id}: \"{translation}\"\n"
+    for prop_id, info in sorted(unique_props.items()):
+        if info['negated']:
+            props_text += f"  - ~{prop_id}: \"It is NOT the case that {info['translation']}\"\n"
+        else:
+            props_text += f"  - {prop_id}: \"{info['translation']}\"\n"
     
-    # Format subset combinations (IDs and scores only)
+    # Format subset combinations (IDs with negation symbols and scores)
     subsets_text = ""
     for subset_chunks, score in qualifying_subsets:
-        ids = [c['id'] for c in subset_chunks]
-        ids_str = ", ".join(ids)
+        formula_parts = []
+        for c in subset_chunks:
+            if c.get('negated', False):
+                formula_parts.append(f"~{c['id']}")
+            else:
+                formula_parts.append(c['id'])
+        ids_str = ", ".join(formula_parts)
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
     prompt = f"""
