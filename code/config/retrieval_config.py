@@ -33,6 +33,7 @@ TEMPERATURE_TRANSLATE = 0.3
 ############################################
 
 PROMPT_TRANSLATION = "prompt_translate"
+PROMPT_TRANSLATION_NO_SUBSET = "prompt_traslate_no_subset"
 
 # For the multi-sentence unit
 PROMPT_PASS_1 = "prompt_pass_1"
