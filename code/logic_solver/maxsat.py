@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""
-maxsat.py - Interface to PySAT RC2 MaxSAT solver
-
-This module provides the interface for checking entailment and consistency
-using the RC2 MaxSAT solver from PySAT.
-"""
 
 from typing import Dict, List, Tuple, Any, Optional
 from pysat.formula import WCNF
