@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-"""
-logic_converter.py - Chunk-Based Text-to-Logic Converter
-
-Simplified approach:
-- Split document into chunks by paragraph/character boundaries
-- For each chunk: extract propositions + constraints (with prior props as context)
-- No sentence index mapping required
-- IDs are globally unique from the start (no renumbering needed)
-"""
 
 import json
 import re
