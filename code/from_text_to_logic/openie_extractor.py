@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""
-openie_extractor.py - OpenIE Relation Triple Extractor
 
-
-"""
 
 import os
 import requests
