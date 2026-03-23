@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-check_logic_structure.py - Deterministic enrichment of logified JSON
-
-
-"""
 
 import json
 import re
