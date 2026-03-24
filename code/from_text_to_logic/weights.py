@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 """
+Assign weights to logical constraints and split them into hard and soft constraints.
 
+Purpose:
+- Scores constraints using retrieval/NLI-based support from extracted propositions.
+- Enriches the logic structure and produces a weighted reasoning-ready JSON file.
+
+Inputs:
+- Path to the original document.
+- Path to a logified JSON file.
+- Threshold and retrieval/model configuration.
+
+Outputs:
+- A dictionary with primitive propositions, hard constraints, and soft constraints.
+- A saved *_weighted.json file.
 """
 
 import sys

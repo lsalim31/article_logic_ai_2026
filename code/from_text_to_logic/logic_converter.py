@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 """
-logic_converter.py - Chunk-Based Text-to-Logic Converter
+Convert natural-language text into a structured propositional logic representation.
 
-Simplified approach:
-- Split document into chunks by paragraph/character boundaries
-- For each chunk: extract propositions + constraints (with prior props as context)
-- No sentence index mapping required
-- IDs are globally unique from the start (no renumbering needed)
+Purpose:
+- Uses an LLM to extract primitive propositions and logical constraints.
+- Supports prompt loading, chunking, JSON repair, and response parsing.
+
+Inputs:
+- Source text.
+- Optional OpenIE triples as formatted JSON text.
+- API key and model configuration.
+
+Outputs:
+- A dictionary containing the structured logic representation,
+  including primitive propositions and constraints.
 """
 
 import json

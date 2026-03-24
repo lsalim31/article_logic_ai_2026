@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """
-openie_extractor.py - OpenIE Relation Triple Extractor
+Extract relation triples from text using Stanza and Stanford CoreNLP OpenIE.
 
+Purpose:
+- Resolves coreference, extracts OpenIE triples, and provides dependency-parse fallback.
+- Prepares relational structure that can assist downstream logic conversion.
 
+Inputs:
+- Raw text.
+- Optional configuration for memory, timeout, language, and server endpoint.
+
+Outputs:
+- Extracted relation triples.
+- Coreference-resolved text and related metadata.
 """
 
 import os

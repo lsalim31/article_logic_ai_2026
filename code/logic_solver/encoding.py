@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-encoding.py - Convert logified structure to SAT encoding
-
-"""
 
 import re
 from typing import Dict, List, Tuple, Any, Optional

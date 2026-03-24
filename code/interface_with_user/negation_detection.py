@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""
-Negation detection for query translation.
 
-Detects negations/prohibitions in hypotheses and propositions to ensure
-correct polarity in generated formulas.
-"""
 
 import re
 from typing import List, Dict, Tuple, Optional

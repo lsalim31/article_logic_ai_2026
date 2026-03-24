@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 """
-check_logic_structure.py - Deterministic enrichment of logified JSON
+Post-process and enrich a logified logic structure.
 
+Purpose:
+- Validates and augments the raw logic JSON produced by logification.
+- Detects modal conflicts, negations, and auxiliary logical relations.
 
+Inputs:
+- Path to a logified JSON file.
+- Path to the original source document.
+- Optional output path and verbosity flag.
+
+Outputs:
+- An enriched logic structure as a Python dictionary.
+- Optionally writes the enriched structure to disk.
 """
 
 import json

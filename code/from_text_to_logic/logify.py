@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 """
+Entry point for converting documents or raw text into logic JSON.
 
+Purpose:
+- Reads text from TXT, PDF, or DOCX files.
+- Orchestrates optional OpenIE extraction and LLM-based logic conversion.
+- Saves the resulting logic structure to disk.
+
+Inputs:
+- A file path or raw text string.
+- API key, model settings, and optional output path.
+
+Outputs:
+- A structured logic dictionary.
+- A saved JSON file containing the logified result.
 """
 
 import json

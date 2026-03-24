@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""
-translate.py - Neuro-Symbolic Logic Translator
-
-Input: User Query + JSON Logified Data
-Output: Propositional Formula.
-"""
 
 try:
     import sys
