@@ -1,4 +1,21 @@
 #!/usr/bin/env python3
+"""
+Translate a natural-language query into a propositional formula over a logified knowledge base.
+
+Purpose:
+- Retrieves relevant propositions from the logified JSON.
+- Generates candidate logical formulas using LLM-based reasoning.
+- Verifies candidates with semantic scoring and returns the best translation.
+
+Inputs:
+- Natural-language query.
+- Path to a logified JSON file.
+- API key and model/retrieval configuration.
+
+Outputs:
+- A dictionary containing the selected formula, explanation, confidence,
+  and related translation metadata.
+"""
 
 try:
     import sys
