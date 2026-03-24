@@ -1,4 +1,20 @@
 #!/usr/bin/env python3
+"""
+Convert natural-language text into a structured propositional logic representation.
+
+Purpose:
+- Uses an LLM to extract primitive propositions and logical constraints.
+- Supports prompt loading, chunking, JSON repair, and response parsing.
+
+Inputs:
+- Source text.
+- Optional OpenIE triples as formatted JSON text.
+- API key and model configuration.
+
+Outputs:
+- A dictionary containing the structured logic representation,
+  including primitive propositions and constraints.
+"""
 
 import json
 import re
