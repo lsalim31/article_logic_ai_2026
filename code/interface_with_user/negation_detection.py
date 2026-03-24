@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
+"""
+Utilities for detecting negation and polarity mismatches in translated queries.
 
+Purpose:
+- Identifies negative wording in hypotheses and propositions.
+- Checks whether a generated logical formula matches the query's polarity.
+- Optionally suggests or applies a negation correction.
+
+Inputs:
+- Hypothesis text.
+- Proposition translations.
+- Generated logical formula.
+- Retrieved proposition metadata.
+
+Outputs:
+- Boolean negation signals.
+- Polarity validation results.
+- Optional corrected logical formula and explanation.
+"""
 
 import re
 from typing import List, Dict, Tuple, Optional
