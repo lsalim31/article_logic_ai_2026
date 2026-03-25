@@ -119,7 +119,7 @@ class LogifyConverter:
     #     return logic_structure
 
 
-    def convert_text_to_logic(self, text: str, use_openie: bool = False) -> Dict[str, Any]:
+    def convert_text_to_logic(self, text: str, use_openie: bool = USE_OPENIE) -> Dict[str, Any]:
         if use_openie:
             openie_triples = self.extractor.extract_triples(text)
             formatted_triples = self.extractor.format_triples_json(openie_triples, indent=-1)
