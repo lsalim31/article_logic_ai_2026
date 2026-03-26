@@ -16,7 +16,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
-_code_dir = _script_dir.parent.parent
+_code_dir = _script_dir.parent.parent / "code"
 if str(_code_dir) not in sys.path:
     sys.path.insert(0, str(_code_dir))
 
