@@ -247,15 +247,19 @@ def assign_weights(
         logified = json.load(f)
 
     # Step 1.5: ENRICH the logic structure (modal pairs, finite domains, etc.)
-    if verbose:
-        print("Enriching logic structure...")
-    
-    logified = enrich_logic_structure(
-        logified_path=json_path,
-        source_path=pathfile,
-        output_path=None,  # Don't save intermediate file
-        verbose=verbose
-    )
+    if USE_ENRICHMENT:
+        if verbose:
+            print("Enriching logic structure...")
+
+        logified = enrich_logic_structure(
+            logified_path=json_path,
+            source_path=pathfile,
+            output_path=None,  # Don't save intermediate file
+            verbose=verbose
+        )
+    else:
+        if verbose:
+            print("Skipping enrichment (USE_ENRICHMENT=False)")
     
     # Now continue with enriched structure
     
