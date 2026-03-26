@@ -27,7 +27,7 @@ from config.retrieval_config import (
     TEMPERATURE_LOGIC_CONVERTER,
     REASONING_EFFORT,
     PROMPT_EXTRACTION,
-    TRANSLATE_MODEL,
+    REASONING_MODEL,
     PROMPT_PASS_1,
     PROMPT_PASS_2
 )
@@ -44,7 +44,7 @@ class LogicConverter:
     def __init__(
         self,
         api_key: str,
-        model: str = TRANSLATE_MODEL,
+        model: str = REASONING_MODEL,
         temperature: float = TEMPERATURE_LOGIC_CONVERTER,
         max_tokens: int = MAX_TOKENS,
         reasoning_effort: str = REASONING_EFFORT
