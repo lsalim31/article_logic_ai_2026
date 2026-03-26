@@ -170,7 +170,7 @@ def main():
     parser.add_argument(
         "--model",
         default=REASONING_MODEL,
-        help="Model to use (default: gpt-5.2). Options: gpt-5.2, o1, gpt-4o, gpt-4-turbo, etc."
+        help=f"Model to use (default: {REASONING_MODEL}). Options: gpt-5.2, o1, gpt-4o, gpt-4-turbo, etc."
     )
     parser.add_argument(
         "--temperature",
