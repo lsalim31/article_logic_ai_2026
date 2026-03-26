@@ -45,7 +45,7 @@ from baseline_rag.retriever import (
 )
 from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
-from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL 
+from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL 
 
 
 ################
@@ -227,8 +227,8 @@ def assign_weights(
     k: int = 10,
     chunk_size: int = 512,
     chunk_overlap: int = 50,
-    sbert_model_name: str = "all-MiniLM-L6-v2",
-    nli_model_name: str = "cross-encoder/nli-deberta-v3-large",
+    sbert_model_name: str = SBERT_MODEL,
+    nli_model_name: str = NLI_MODEL,
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
