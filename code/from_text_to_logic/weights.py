@@ -45,7 +45,7 @@ from baseline_rag.retriever import (
 )
 from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
-from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL 
+from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL, USE_ENRICHMENT 
 
 
 ################
