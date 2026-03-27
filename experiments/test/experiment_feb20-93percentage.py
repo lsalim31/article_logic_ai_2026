@@ -16,9 +16,12 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
-_code_dir = _script_dir.parent.parent 
-if str(_code_dir) not in sys.path:
-    sys.path.insert(0, str(_code_dir))
+_repo_root = _script_dir.parent.parent
+_code_dir = _repo_root / "code"
+
+for p in (_repo_root, _code_dir):
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
