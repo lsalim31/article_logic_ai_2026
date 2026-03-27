@@ -22,13 +22,21 @@ from typing import Any, Dict, List, Optional, Tuple
 
 
 # Add code directory to Python path
-_script_dir = Path(__file__).resolve().parent
+#_script_dir = Path(__file__).resolve().parent
 #_code_dir = _script_dir.parent.parent
 #if str(_code_dir) not in sys.path:
 #    sys.path.insert(0, str(_code_dir))
     
-_code_dir = _script_dir.parent.parent / "code"  # /workspace/repo/code
-sys.path.insert(0, str(_code_dir))
+#_code_dir = _script_dir.parent.parent / "code"  # /workspace/repo/code
+#sys.path.insert(0, str(_code_dir))
+
+_script_dir = Path(__file__).resolve().parent
+_repo_root = _script_dir.parent.parent          # /workspace/repo
+_code_dir = _repo_root / "code"                 # /workspace/repo/code
+
+sys.path.insert(0, str(_repo_root))   # For experiments.* imports
+sys.path.insert(0, str(_code_dir))    # For from_text_to_logic.* imports
+
 
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
