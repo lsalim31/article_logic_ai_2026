@@ -1391,7 +1391,7 @@ def llm_write_formula_from_subsets(
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
     # Load prompt template from file
-    prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts', 'prompt_translate_new')
+    prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts', PROMPT_TRANSLATION)
     with open(prompt_path, 'r') as f:
         prompt_template = f.read()
 
