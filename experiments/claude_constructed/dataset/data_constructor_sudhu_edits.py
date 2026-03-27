@@ -34,7 +34,7 @@ MAX_PREMISE_WORDS = 400
 SEED = 42
 
 OUTPUT_DIR = _script_dir
-LOCAL_DATA_PATH = _code_dir / "experiments" / "DocNLI" / "docnli-long_100_400" / "sample_10.json"
+LOCAL_DATA_PATH = _script_dir.parent.parent.parent / "experiments" / "DocNLI" / "docnli-long_100_400" / "sample_10.json"
 
 
 def get_diverse_premises(num_premises: int) -> list:
