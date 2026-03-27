@@ -7,10 +7,7 @@ Given text T extract:
 2. CONSTRAINTS (C_1, C_2, ...) - propositional formulas with llm_weight (0-1)
 
 RULES
-- Propositions must be simple declaratives (no "if",
-"when",
-"and",
-"or")
+- Propositions must be simple declaratives that are atomic; they must not have connectives in them (.e.g. they cannot be conditionals or be negations). 
 - Extract conditionals as separate propositions + implication constraint
 - Modal words (may, should, typically, sometimes, rarely): create TWO propositions:
   * P_modal: original with modal word
