@@ -2,10 +2,10 @@
 
 ## Summary
 - Total: 20
-- Correct: 17
-- Incorrect: 3
+- Correct: 16
+- Incorrect: 4
 - Errors: 0
-- Avg latency (sec): 21.878
+- Avg latency (sec): 11.433
 
 ## Detailed Results
 
@@ -21,7 +21,7 @@
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
 - Error Type: None
-- Latency (sec): 15.552
+- Latency (sec): 12.440
 
 ---
 
@@ -37,7 +37,7 @@
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
 - Error Type: None
-- Latency (sec): 9.485
+- Latency (sec): 7.168
 
 ---
 
@@ -53,7 +53,7 @@
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
 - Error Type: None
-- Latency (sec): 1.255
+- Latency (sec): 1.340
 
 ---
 
@@ -63,13 +63,13 @@
 - Prediction: FALSE
 - Correct: True
 - Confidence: 0
-- Formula: P_24 ∨ P_23 ∨ P_25 ∨ P_22
+- Formula: (P_24 ∨ P_23 ∨ P_25 ∨ P_22) ∧ ¬P_2
 - Query Mode: entailment
 - Evidence Spans Count: 1
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 103.634
+- Latency (sec): 16.982
 
 ---
 
@@ -85,7 +85,7 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 18.111
+- Latency (sec): 16.609
 
 ---
 
@@ -101,7 +101,7 @@
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 1.112
+- Latency (sec): 1.132
 
 ---
 
@@ -117,7 +117,7 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 7.737
+- Latency (sec): 10.715
 
 ---
 
@@ -133,7 +133,7 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 9.162
+- Latency (sec): 4.955
 
 ---
 
@@ -149,7 +149,7 @@
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 15.054
+- Latency (sec): 10.356
 
 ---
 
@@ -165,7 +165,7 @@
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 7.452
+- Latency (sec): 9.862
 
 ---
 
@@ -181,7 +181,7 @@
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
 - Error Type: None
-- Latency (sec): 15.891
+- Latency (sec): 9.645
 
 ---
 
@@ -197,7 +197,7 @@
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 16.053
+- Latency (sec): 10.460
 
 ---
 
@@ -213,7 +213,7 @@
 - Explanation: Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)
 - Error: None
 - Error Type: None
-- Latency (sec): 17.448
+- Latency (sec): 9.671
 
 ---
 
@@ -229,28 +229,12 @@
 - Explanation: Query is contradicted by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 13.670
+- Latency (sec): 21.982
 
 ---
 
 ### Doc 1 / test-45
 - Hypothesis: Alice hates playing volleyball on her free time.
-- Ground Truth: FALSE
-- Prediction: FALSE
-- Correct: True
-- Confidence: 0
-- Formula: ¬P_15
-- Query Mode: entailment
-- Evidence Spans Count: 1
-- Explanation: Query is contradicted by the knowledge base
-- Error: None
-- Error Type: None
-- Latency (sec): 28.654
-
----
-
-### Doc 1 / test-46
-- Hypothesis: Alice is usually competitive.
 - Ground Truth: FALSE
 - Prediction: NOT MENTIONED
 - Correct: False
@@ -261,7 +245,23 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 25.825
+- Latency (sec): 21.228
+
+---
+
+### Doc 1 / test-46
+- Hypothesis: Alice is usually competitive.
+- Ground Truth: UNCERTAIN
+- Prediction: NOT MENTIONED
+- Correct: False
+- Confidence: 1
+- Formula: NONE
+- Query Mode: entailment
+- Evidence Spans Count: 1
+- Explanation: No matching proposition for hypothesis
+- Error: None
+- Error Type: None
+- Latency (sec): 20.604
 
 ---
 
@@ -277,7 +277,7 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 87.935
+- Latency (sec): 16.797
 
 ---
 
@@ -293,7 +293,7 @@
 - Explanation: No matching proposition for hypothesis
 - Error: None
 - Error Type: None
-- Latency (sec): 9.542
+- Latency (sec): 10.022
 
 ---
 
@@ -309,22 +309,22 @@
 - Explanation: Query is consistent but not entailed by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 17.281
+- Latency (sec): 15.523
 
 ---
 
 ### Doc 1 / test-50
-- Hypothesis: Alice is free on Sundays.
+- Hypothesis: Alice usually studies late at night.
 - Ground Truth: UNCERTAIN
-- Prediction: NOT MENTIONED
+- Prediction: FALSE
 - Correct: False
-- Confidence: 1
-- Formula: NONE
+- Confidence: 0
+- Formula: ¬P_13
 - Query Mode: entailment
 - Evidence Spans Count: 1
-- Explanation: No matching proposition for hypothesis
+- Explanation: Query is contradicted by the knowledge base
 - Error: None
 - Error Type: None
-- Latency (sec): 16.717
+- Latency (sec): 1.162
 
 ---
