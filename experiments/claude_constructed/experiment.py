@@ -34,12 +34,12 @@ for p in (_repo_root, _code_dir):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from code.from_text_to_logic.logify import LogifyConverter
-from code.from_text_to_logic.weights import assign_weights
-from code.interface_with_user.translate import translate_query
-from code.from_text_to_logic.check_logic_structure import enrich_logic_structure
-from code.logic_solver import LogicSolver
-from code.config.retrieval_config import (
+from from_text_to_logic.logify import LogifyConverter
+from from_text_to_logic.weights import assign_weights
+from interface_with_user.translate import translate_query
+from from_text_to_logic.check_logic_structure import enrich_logic_structure
+from logic_solver import LogicSolver
+from config.retrieval_config import (
     HARDNESS_CONSTANT,
     MAX_TOKENS,
     REASONING_EFFORT,
