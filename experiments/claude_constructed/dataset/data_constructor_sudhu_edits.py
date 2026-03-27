@@ -20,7 +20,7 @@ from openai import OpenAI
 
 # Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
-_code_dir = _script_dir.parent.parent.parent  # Go up 3 levels: dataset -> claude_constructed -> experiments -> code
+_code_dir = _script_dir.parent.parent.parent / "code"  # Go up 3 levels: dataset -> claude_constructed -> experiments -> code
 if str(_code_dir) not in sys.path:
     sys.path.insert(0, str(_code_dir))    
 
