@@ -32,7 +32,7 @@ TEMPERATURE_TRANSLATE = 0.3
 #
 ############################################
 
-PROMPT_TRANSLATION = "prompt_translate"
+PROMPT_TRANSLATION = "prompt_translate_new"
 
 # For the multi-sentence unit
 PROMPT_PASS_1 = "prompt_pass_1"
@@ -81,7 +81,7 @@ MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 USE_OPENIE = False
 
 HARDNESS_CONSTANT = 0.9
-PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
+PROMPT_EXTRACTION = "prompt_long_openIE_Agn_nomodality"
 
 USE_ENRICHMENT = True
 USE_SUBSET = False
