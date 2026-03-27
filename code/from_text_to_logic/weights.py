@@ -36,14 +36,14 @@ if str(_script_dir) not in sys.path:
 import numpy as np
 
 # Reuse existing infrastructure
-from baseline_rag.chunker import chunk_document
-from baseline_rag.retriever import (
+from experiments.baseline_rag.chunker import chunk_document
+from experiments.baseline_rag.retriever import (
     load_sbert_model,
     encode_chunks,
     encode_query,
     compute_cosine_similarity
 )
-from baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
+from experiments.baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
 from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL, USE_ENRICHMENT 
 
