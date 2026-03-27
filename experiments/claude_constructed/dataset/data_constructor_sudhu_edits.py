@@ -89,13 +89,14 @@ def generate_hypotheses(premise: str, api_key: str, model: str = REASONING_MODEL
 
 The system works by:
 1. Extracting atomic propositions from the premise (simple declarative statements like "X said Y", "X did Y", "X is Y")
-2. Stripping modal words (should, must, typically, sometimes) from propositions
-3. Matching hypothesis text to these propositions using semantic similarity
-4. Using a logic solver to check entailment
+2. Matching hypothesis text to these propositions using semantic similarity
+3. Using a logic solver to check entailment
 
-Given the following premise, generate exactly {HYPOTHESES_PER_LABEL * 2} single-sentence hypotheses:
-- {HYPOTHESES_PER_LABEL} ENTAILMENT hypotheses: Statements that can be verified as TRUE by combining 1-3 facts from the premise
-- {HYPOTHESES_PER_LABEL} NOT_ENTAILMENT hypotheses: Statements that are FALSE or UNVERIFIABLE from the premise
+Given the following premise, generate exactly {HYPOTHESES_PER_LABEL * 4} single-sentence hypotheses:
+- {HYPOTHESES_PER_LABEL} ENTAILMENT hypotheses: Statements that are definitely TRUE based on the premise
+- {HYPOTHESES_PER_LABEL} CONTRADICTION hypotheses: Statements that are definitely FALSE based on the premise
+- {HYPOTHESES_PER_LABEL} UNCERTAIN hypotheses: Statements that COULD be true or false - the premise is consistent with both
+- {HYPOTHESES_PER_LABEL} NOT_MENTIONED hypotheses: Statements about topics completely UNRELATED to the premise
 
 ═══════════════════════════════════════════════════════════════════════════════
 CRITICAL RULES FOR ENTAILMENT HYPOTHESES:
@@ -104,58 +105,83 @@ CRITICAL RULES FOR ENTAILMENT HYPOTHESES:
 1. USE EXPLICIT FACTS ONLY
    ✓ Good: "Huey said she knew Francis since 1980"
    ✓ Good: "Francis told Huey that Johnson feared the drug test"
-   ✓ Good: "The amendment was approved by voters in November 1987"
    ✗ Bad: "Huey recalls Francis implying..." (inference, not stated)
-   ✗ Bad: "The text suggests that..." (meta-commentary)
 
 2. REFERENCE WHAT WAS SAID, DONE, OR REPORTED
-   ✓ Good: "X said that Y", "X testified that Y", "X stated that Y"
-   ✓ Good: "X did Y", "X went to Y", "X worked at Y"
-   ✗ Bad: "X implied that Y", "X suggested that Y", "X believed that Y" (unless explicitly stated)
+   ✓ Good: "X said that Y", "X testified that Y", "X did Y"
+   ✗ Bad: "X implied that Y", "X believed that Y" (unless explicitly stated)
 
-3. COMBINE FACTS FROM DIFFERENT PARTS OF THE PREMISE
-   ✓ Good: "Because [FACT from sentence 2], [FACT from sentence 5]"
-   ✓ Good: "[Person] did [action1] and also [action2]"
-   This tests the system's ability to combine multiple propositions.
+3. COMBINE FACTS NATURALLY
+   ✓ Good: "X and Y" - both facts stated
+   ✓ Good: "X, who did Y" - relative clause combining facts
+   ✓ Good: "The [noun] that [fact1] also [fact2]"
 
 4. USE NAMES, DATES, AND NUMBERS EXACTLY AS STATED
    ✓ Good: Use "NBC-TV" if the text says "NBC-TV"
    ✗ Bad: Paraphrase "NBC-TV" as "a television network"
 
 ═══════════════════════════════════════════════════════════════════════════════
-CRITICAL RULES FOR NOT_ENTAILMENT HYPOTHESES:
+CRITICAL RULES FOR CONTRADICTION HYPOTHESES:
 ═══════════════════════════════════════════════════════════════════════════════
 
 1. USE LEXICALLY DISTINGUISHABLE ERRORS (the system uses word matching)
    ✓ Good: Wrong proper nouns: "CBC-TV" instead of "NBC-TV"
-   ✓ Good: Wrong numbers/dates: "1985" instead of "1980", "3 minutes" instead of "5 minutes"
-   ✓ Good: Wrong names: "Johnson" instead of "Lewis", "Smith" instead of "Francis"
-   ✓ Good: Negated actions: "rejected" instead of "approved", "denied" instead of "confirmed"
-   
+   ✓ Good: Wrong numbers/dates: "1985" instead of "1980"
+   ✓ Good: Wrong names: "Johnson" instead of "Lewis"
+   ✓ Good: Negated actions: "rejected" instead of "approved"
+
 2. AVOID SUBTLE SEMANTIC SHIFTS
-   ✗ Bad: "injected into the sample" vs "slipped into the beverage" (too similar lexically)
    ✗ Bad: Changing only one adjective or adverb
-   The system uses semantic similarity, so lexically similar phrases get matched incorrectly.
+   ✗ Bad: Synonyms that are lexically similar
 
-3. TYPES OF NOT_ENTAILMENT TO INCLUDE:
-   - CONTRADICTIONS: Directly negate or reverse a stated fact
-   - WRONG ENTITIES: Swap names, organizations, locations
-   - WRONG VALUES: Change dates, numbers, quantities
-   - FABRICATIONS: Add claims or outcomes not mentioned at all
-   - WRONG ATTRIBUTIONS: Attribute statements to the wrong person
+3. TYPES OF CONTRADICTION TO INCLUDE:
+   - Directly negate or reverse a stated fact
+   - Swap names, organizations, locations
+   - Change dates, numbers, quantities
+   - Attribute statements to the wrong person
 
-4. MAKE ERRORS OBVIOUS AT THE WORD LEVEL
-   ✓ Good: "Lewis said he used steroids" (wrong person - it was Johnson who admitted it)
-   ✓ Good: "The legislation was signed into law" (fabrication - it was only introduced)
-   ✓ Good: "Huey worked for CBS" (wrong organization - she worked for NBC)
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR UNCERTAIN HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+The premise NEITHER confirms NOR denies these. Both true and false are possible.
+
+1. USE UNDERSPECIFIED ASPECTS
+   ✓ Good: "Huey met Francis at a restaurant" (they met, but location not specified)
+   ✓ Good: "Johnson was nervous during the interview" (interview happened, emotion not stated)
+
+2. COMBINE KNOWN FACTS WITH UNKNOWN DETAILS
+   ✓ Good: "Francis warned Huey before the test" (both exist, warning not mentioned)
+   ✓ Good: "The committee met twice before approving" (approval happened, count unknown)
+
+3. WHAT MAKES IT UNCERTAIN (NOT CONTRADICTION):
+   - The premise doesn't rule it out
+   - It's plausible given what's stated
+   - Adding this fact wouldn't create a logical contradiction
+
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR NOT_MENTIONED HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+Statements about COMPLETELY DIFFERENT topics with no connection to the premise.
+
+1. INTRODUCE ENTIRELY NEW ENTITIES
+   ✓ Good: "The European Central Bank raised interest rates in March"
+   ✓ Good: "Toyota announced a recall of 500,000 vehicles"
+
+2. ENSURE ZERO LEXICAL OVERLAP WITH KEY PREMISE TERMS
+   - Different people, organizations, places
+   - Different domains entirely
+
+3. MAKE THEM REALISTIC STANDALONE STATEMENTS
+   ✓ Good: Sounds like a real news headline or fact
 
 ═══════════════════════════════════════════════════════════════════════════════
 FORMATTING REQUIREMENTS:
 ═══════════════════════════════════════════════════════════════════════════════
 
 - Each hypothesis must be ONE SINGLE SENTENCE (10-30 words)
-- No periods except at the end
-- Cover DIFFERENT aspects of the premise (don't cluster around one fact)
+- Cover DIFFERENT aspects of the premise
 - Use simple, direct language
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -168,21 +194,36 @@ OUTPUT FORMAT (respond with this exact JSON structure):
 ═══════════════════════════════════════════════════════════════════════════════
 {{
     "entailment": [
-        "First entailment hypothesis that combines or restates explicit facts.",
-        "Second entailment hypothesis using different facts from the premise.",
-        "Third entailment hypothesis covering another aspect of the premise.",
-        "Fourth entailment hypothesis with exact names/dates/numbers from text.",
-        "Fifth entailment hypothesis combining facts from different sentences."
+        "First entailment combining explicit facts naturally.",
+        "Second entailment using different facts from the premise.",
+        "Third entailment covering another aspect of the premise.",
+        "Fourth entailment with exact names/dates/numbers from text.",
+        "Fifth entailment combining facts about the same entity."
     ],
-    "not_entailment": [
-        "First not_entailment with wrong proper noun (person, org, or place).",
-        "Second not_entailment with wrong date, number, or quantity.",
-        "Third not_entailment that negates or reverses a stated fact.",
-        "Fourth not_entailment with fabricated claim not in the premise.",
-        "Fifth not_entailment attributing a statement to the wrong person."
+    "contradiction": [
+        "First contradiction with wrong proper noun.",
+        "Second contradiction with wrong date or number.",
+        "Third contradiction that negates a stated fact.",
+        "Fourth contradiction with wrong attribution.",
+        "Fifth contradiction that reverses an outcome."
+    ],
+    "uncertain": [
+        "First uncertain: known event with unspecified detail.",
+        "Second uncertain: plausible extension of stated facts.",
+        "Third uncertain: combines known entities in unconfirmed way.",
+        "Fourth uncertain: reasonable detail not explicitly stated.",
+        "Fifth uncertain: underspecified aspect of confirmed event."
+    ],
+    "not_mentioned": [
+        "First not_mentioned: entirely different people and organizations.",
+        "Second not_mentioned: unrelated domain or topic.",
+        "Third not_mentioned: different events and places.",
+        "Fourth not_mentioned: no lexical overlap with premise.",
+        "Fifth not_mentioned: realistic but completely irrelevant fact."
     ]
 }}
 """
+
 
     response = client.chat.completions.create(
         model=model,
