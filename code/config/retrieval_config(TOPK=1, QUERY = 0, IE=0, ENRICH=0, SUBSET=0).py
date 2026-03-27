@@ -38,7 +38,7 @@ PROMPT_TRANSLATION = "prompt_translate"
 PROMPT_PASS_1 = "prompt_pass_1"
 PROMPT_PASS_2 = "prompt_pass_2"
 
-SBERT_TOP_K = 50  # Increased from 20 for broader recall
+SBERT_TOP_K = 150  # Increased from 20 for broader recall
 SBERT_MIN_SIMILARITY = 0.1  # Minimum cosine similarity threshold
 
 # NLI cross-encoder settings (Stage 2: Semantic filtering)
@@ -59,7 +59,7 @@ CONFIDENCE_THRESHOLD_TRUE = 0.55  # TRUE → UNCERTAIN if confidence below this
 MIN_PROPOSIT3ION_WEIGHT = 0.4  # Low weight → low confidence adjustment
 
 #Enrich query
-ON_EXPAND_QUERY_SYN = True
+ON_EXPAND_QUERY_SYN = False
 MAX_SYNONYMS = 3
 
 #Adaptative voting
@@ -83,9 +83,9 @@ USE_OPENIE = False
 HARDNESS_CONSTANT = 0.9
 PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
 
-USE_ENRICHMENT = True
-USE_SUBSET = True
-DIRECT_RETRIEVAL_MULTIPLIER = 3
+USE_ENRICHMENT = False
+USE_SUBSET = False
+DIRECT_RETRIEVAL_MULTIPLIER = 2
 DEFAULT_MIN_WORDS = 100
 DEFAULT_MAX_WORDS = 400
 
