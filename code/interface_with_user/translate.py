@@ -293,8 +293,8 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
 
     retrieved = []
     for idx in top_k_indices:
-        # if similarities[idx] < minimal_similarity:
-        #     break
+         if similarities[idx] < minimal_similarity:
+             break
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
         retrieved.append(chunk)
