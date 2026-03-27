@@ -75,7 +75,7 @@ MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 
 ############################################
 #
-# USED IN LOGIGY
+# USED IN LOGIFY
 #
 ############################################
 USE_OPENIE = False
