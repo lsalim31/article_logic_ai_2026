@@ -39,7 +39,7 @@ PROMPT_PASS_1 = "prompt_pass_1"
 PROMPT_PASS_2 = "prompt_pass_2"
 
 SBERT_TOP_K = 50  # Increased from 20 for broader recall
-SBERT_MIN_SIMILARITY = 0.85  # Minimum cosine similarity threshold
+SBERT_MIN_SIMILARITY = 0.05  # Minimum cosine similarity threshold
 
 # NLI cross-encoder settings (Stage 2: Semantic filtering)
 NLI_ENTAILMENT_THRESHOLD = 0.5  # Min P(entailment) to keep proposition
