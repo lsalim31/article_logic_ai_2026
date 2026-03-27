@@ -289,8 +289,8 @@ def main():
     )
     parser.add_argument(
         "--output-name",
-        default="gold_balanced.json",
-        help="Output filename (default: gold_balanced.json)",
+        default="gold_balanced_sudhu_edit.json",
+        help="Output filename (default: gold_balanced_sudhu_edit.json)",
     )
     args = parser.parse_args()
 
