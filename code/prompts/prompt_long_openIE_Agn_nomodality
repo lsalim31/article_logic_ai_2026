@@ -144,15 +144,15 @@ OUTPUT JSON
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "The researcher enters the laboratory",
+      "translation": "A researcher enters the laboratory",
       "evidence": "Sentence 0: 'Before entering the laboratory...'",
-      "explanation": "Atomic action extracted from conditional 'Before entering...'. Simple declarative with no connectives."
+      "explanation": "Atomic action extracted from conditional 'Before entering...'. Simple declarative with no connectives or modals."
     },
     {
       "id": "P_2",
       "translation": "The researcher wears protective equipment",
       "evidence": "Sentence 0: '...must wear protective equipment...'",
-      "explanation": "Atomic safety action. Simple declarative with no connectives."
+      "explanation": "Atomic safety action. Modal 'must' stripped; strength captured in constraint weight."
     },
     {
       "id": "P_3",
@@ -162,486 +162,261 @@ OUTPUT JSON
     },
     {
       "id": "P_4",
-      "translation": "The researcher completes an experiment",
+      "translation": "A researcher completes an experiment",
       "evidence": "Sentence 1: 'After completing an experiment...'",
-      "explanation": "Atomic event extracted from conditional 'After completing...'. Simple declarative with no connectives."
+      "explanation": "Atomic event extracted from conditional 'After completing...'. Simple declarative."
     },
     {
       "id": "P_5",
       "translation": "The workspace is cleaned",
       "evidence": "Sentence 1: '...the workspace must be cleaned...'",
-      "explanation": "Atomic post-experiment state. Simple declarative with no connectives."
+      "explanation": "Atomic post-experiment state. Modal 'must' stripped."
     },
     {
       "id": "P_6",
       "translation": "All chemicals are properly stored",
       "evidence": "Sentence 1: '...and all chemicals must be properly stored'",
-      "explanation": "Atomic safety state. Simple declarative with no connectives."
+      "explanation": "Atomic safety state. Modal 'must' stripped."
     },
     {
       "id": "P_7",
       "translation": "The fume hood is running",
       "evidence": "Sentence 2: 'While the fume hood is running...'",
-      "explanation": "Atomic equipment state extracted from conditional 'While...'. Simple declarative with no connectives."
+      "explanation": "Atomic equipment state extracted from conditional 'While...'. Simple declarative."
     },
     {
       "id": "P_8",
       "translation": "The ventilation system is turned off",
       "evidence": "Sentence 2: '...cannot be turned off'",
-      "explanation": "Atomic system state (prohibited action). Simple declarative with no connectives."
+      "explanation": "Atomic system state. Modal 'cannot' stripped; prohibition captured in constraint."
     },
     {
       "id": "P_9",
       "translation": "An undergraduate student is in their first month in the lab",
       "evidence": "Sentence 3: '...during their first month...'",
-      "explanation": "Atomic temporal condition. Simple declarative with no connectives."
+      "explanation": "Atomic temporal condition. Simple declarative."
     },
     {
       "id": "P_10",
-      "translation": "A senior researcher typically supervises the undergraduate student",
+      "translation": "A senior researcher supervises the undergraduate student",
       "evidence": "Sentence 3: 'Senior researchers typically supervise...'",
-      "explanation": "Original modal statement with 'typically'. The text asserts this pattern with certainty."
+      "explanation": "Atomic supervision event. Modal 'typically' stripped; frequency captured in constraint weight."
     },
     {
       "id": "P_11",
-      "translation": "A senior researcher supervises the undergraduate student",
-      "evidence": "Sentence 3: 'Senior researchers typically supervise...'",
-      "explanation": "Derived proposition from P_10 by removing 'typically'. Represents base supervision event."
+      "translation": "Supervision of first-month undergraduates is enforced",
+      "evidence": "Sentence 3: '...though this is not always enforced'",
+      "explanation": "Atomic enforcement state. Modal 'always' stripped."
     },
     {
       "id": "P_12",
-      "translation": "Lab equipment should be inspected weekly",
+      "translation": "Lab equipment is inspected weekly",
       "evidence": "Sentence 4: 'Lab equipment should be inspected weekly...'",
-      "explanation": "Original modal statement with 'should'. The text asserts this recommendation with certainty."
+      "explanation": "Atomic inspection event. Modal 'should' stripped; expectation captured in constraint weight."
     },
     {
       "id": "P_13",
-      "translation": "Lab equipment is inspected weekly",
-      "evidence": "Sentence 4: 'Lab equipment should be inspected weekly...'",
-      "explanation": "Derived proposition from P_12 by removing 'should'. Represents base inspection event."
+      "translation": "An item of lab equipment is low-risk",
+      "evidence": "Sentence 4: '...for low-risk items'",
+      "explanation": "Atomic classification property. Simple declarative."
     },
     {
       "id": "P_14",
-      "translation": "An item of lab equipment is low-risk",
-      "evidence": "Sentence 4: '...for low-risk items'",
-      "explanation": "Atomic classification property. Simple declarative with no connectives."
+      "translation": "Low-risk lab equipment is inspected monthly",
+      "evidence": "Sentence 4: '...monthly inspections are generally acceptable...'",
+      "explanation": "Atomic inspection event. Modal 'generally' stripped; acceptability captured in constraint weight."
     },
     {
       "id": "P_15",
-      "translation": "Low-risk lab equipment is generally inspected monthly",
-      "evidence": "Sentence 4: '...monthly inspections are generally acceptable...'",
-      "explanation": "Original modal statement with 'generally'. The text asserts this acceptability pattern with certainty."
+      "translation": "A chemical spill occurs",
+      "evidence": "Sentence 5: 'If a chemical spill occurs...'",
+      "explanation": "Atomic emergency event extracted from conditional 'If...'. Simple declarative."
     },
     {
       "id": "P_16",
-      "translation": "Low-risk lab equipment is inspected monthly",
-      "evidence": "Sentence 4: '...monthly inspections are generally acceptable...'",
-      "explanation": "Derived proposition from P_15 by removing 'generally'. Represents base monthly inspection event."
+      "translation": "The area is evacuated immediately",
+      "evidence": "Sentence 5: '...must be evacuated immediately...'",
+      "explanation": "Atomic emergency response. Modal 'must' stripped."
     },
     {
       "id": "P_17",
-      "translation": "A chemical spill occurs",
-      "evidence": "Sentence 5: 'If a chemical spill occurs...'",
-      "explanation": "Atomic emergency event extracted from conditional 'If...'. Simple declarative with no connectives."
+      "translation": "The safety officer is notified within 5 minutes",
+      "evidence": "Sentence 5: '...must be notified within 5 minutes'",
+      "explanation": "Atomic emergency communication. Modal 'must' stripped."
     },
     {
       "id": "P_18",
-      "translation": "The area is evacuated immediately",
-      "evidence": "Sentence 5: '...must be evacuated immediately...'",
-      "explanation": "Atomic required emergency response. Simple declarative with no connectives."
+      "translation": "Researchers attend monthly safety meetings",
+      "evidence": "Sentence 6: 'Researchers are encouraged to attend...'",
+      "explanation": "Atomic attendance event. Modal 'encouraged' stripped; weak obligation captured in constraint weight."
     },
     {
       "id": "P_19",
-      "translation": "The safety officer is notified within 5 minutes",
-      "evidence": "Sentence 5: '...must be notified within 5 minutes'",
-      "explanation": "Atomic required emergency communication. Simple declarative with no connectives."
+      "translation": "The researcher is experienced personnel",
+      "evidence": "Sentence 6: '...not mandatory for experienced personnel'",
+      "explanation": "Atomic status classification. Simple declarative."
     },
     {
       "id": "P_20",
-      "translation": "Researchers are encouraged to attend monthly safety meetings",
-      "evidence": "Sentence 6: 'Researchers are encouraged to attend...'",
-      "explanation": "Original modal statement with 'encouraged'. The text asserts this encouragement with certainty."
+      "translation": "Attendance at safety meetings is mandatory for the researcher",
+      "evidence": "Sentence 6: '...attendance is not mandatory...'",
+      "explanation": "Atomic obligation state. Negation handled in constraint."
     },
     {
       "id": "P_21",
-      "translation": "Researchers attend monthly safety meetings",
-      "evidence": "Sentence 6: 'Researchers are encouraged to attend...'",
-      "explanation": "Derived proposition from P_20 by removing 'encouraged'. Represents base attendance event."
+      "translation": "An experiment involves hazardous materials",
+      "evidence": "Sentence 7: '...experiments involving hazardous materials...'",
+      "explanation": "Atomic experiment classification. Simple declarative."
     },
     {
       "id": "P_22",
-      "translation": "The researcher is experienced personnel",
-      "evidence": "Sentence 6: '...not mandatory for experienced personnel'",
-      "explanation": "Atomic status classification. Simple declarative with no connectives."
+      "translation": "The experiment is conducted with a partner present",
+      "evidence": "Sentence 7: '...should be conducted with a partner present...'",
+      "explanation": "Atomic partnership state. Modal 'should' stripped."
     },
     {
       "id": "P_23",
-      "translation": "An experiment involves hazardous materials",
-      "evidence": "Sentence 7: '...experiments involving hazardous materials...'",
-      "explanation": "Atomic experiment classification. Simple declarative with no connectives."
+      "translation": "The lab director believes partner presence is required for hazardous experiments",
+      "evidence": "Sentence 7: 'The lab director believes that...'",
+      "explanation": "Atomic belief attribution. Simple declarative."
     },
     {
       "id": "P_24",
-      "translation": "The experiment should be conducted with a partner present",
-      "evidence": "Sentence 7: '...should be conducted with a partner present...'",
-      "explanation": "Original modal statement with 'should'. The text asserts this safety recommendation with certainty."
+      "translation": "A researcher works after hours",
+      "evidence": "Sentence 7: '...researchers working after hours...'",
+      "explanation": "Atomic temporal working condition. Simple declarative."
     },
     {
       "id": "P_25",
-      "translation": "The experiment is conducted with a partner present",
-      "evidence": "Sentence 7: '...should be conducted with a partner present...'",
-      "explanation": "Derived proposition from P_24 by removing 'should'. Represents base partnership event."
-    },
-    {
-      "id": "P_26",
-      "translation": "A researcher works after hours",
-      "evidence": "Sentence 7: '...researchers working after hours...'",
-      "explanation": "Atomic temporal working condition. Simple declarative with no connectives."
-    },
-    {
-      "id": "P_27",
-      "translation": "A researcher sometimes works alone",
-      "evidence": "Sentence 7: '...sometimes work alone'",
-      "explanation": "Original modal statement with 'sometimes'. The text asserts this occasional pattern with certainty."
-    },
-    {
-      "id": "P_28",
       "translation": "A researcher works alone",
       "evidence": "Sentence 7: '...sometimes work alone'",
-      "explanation": "Derived proposition from P_27 by removing 'sometimes'. Represents base solo work event."
+      "explanation": "Atomic solo work event. Modal 'sometimes' stripped; frequency captured in constraint weight."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "The researcher enters the laboratory",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
+      "translation": "If a researcher enters the laboratory, they wear protective equipment and sign the safety logbook",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Original statement condition has weight 1.0"
+      "reasoning": "'Must' indicates absolute requirement; weight 1.0"
     },
     {
       "id": "C_2",
-      "formula": "P_2",
-      "translation": "The researcher wears protective equipment",
+      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
+      "translation": "If a researcher completes an experiment, the workspace is cleaned and all chemicals are properly stored",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Original statement with 'must' has weight 1.0"
+      "evidence": "Sentence 1",
+      "reasoning": "'Must' indicates absolute requirement; weight 1.0"
     },
     {
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "The researcher signs the safety logbook",
+      "formula": "P_7 ⟹ ¬P_8",
+      "translation": "If the fume hood is running, the ventilation system is not turned off",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Original statement with 'must' has weight 1.0"
+      "evidence": "Sentence 2",
+      "reasoning": "'Cannot' indicates absolute prohibition; weight 1.0"
     },
     {
       "id": "C_4",
-      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
-      "translation": "If a researcher enters the laboratory, they must wear protective equipment and sign the safety logbook",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "The word 'must' in conditional context indicates weight 1.0"
+      "formula": "P_9 ⟹ P_10",
+      "translation": "If an undergraduate is in their first month, a senior researcher supervises them",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 3",
+      "reasoning": "'Typically' indicates usual but not absolute occurrence; weight 0.65"
     },
     {
       "id": "C_5",
-      "formula": "P_4",
-      "translation": "The researcher completes an experiment",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Original statement condition has weight 1.0"
+      "formula": "P_11",
+      "translation": "Supervision of first-month undergraduates is enforced",
+      "llm_weight": 0.60,
+      "evidence": "Sentence 3",
+      "reasoning": "'Not always enforced' indicates inconsistent enforcement; weight ~0.60"
     },
     {
       "id": "C_6",
-      "formula": "P_5",
-      "translation": "The workspace is cleaned",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Original statement with 'must' has weight 1.0"
-    },
-    {
-      "id": "C_7",
-      "formula": "P_6",
-      "translation": "All chemicals are properly stored",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Original statement with 'must' has weight 1.0"
-    },
-    {
-      "id": "C_8",
-      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
-      "translation": "If a researcher completes an experiment, the workspace must be cleaned and all chemicals must be properly stored",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "The word 'must' in conditional context indicates weight 1.0"
-    },
-    {
-      "id": "C_9",
-      "formula": "P_7",
-      "translation": "The fume hood is running",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "Original statement condition has weight 1.0"
-    },
-    {
-      "id": "C_10",
-      "formula": "P_7 ⟹ ¬P_8",
-      "translation": "If the fume hood is running, the ventilation system cannot be turned off",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "The word 'cannot' in conditional context indicates weight 1.0 for prohibition"
-    },
-    {
-      "id": "C_11",
-      "formula": "P_9",
-      "translation": "An undergraduate student is in their first month in the lab",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 3",
-      "reasoning": "Original statement condition has weight 1.0"
-    },
-    {
-      "id": "C_12",
-      "formula": "P_10",
-      "translation": "A senior researcher typically supervises the undergraduate student",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 3",
-      "reasoning": "Original modal statement is asserted with certainty - the pattern itself is definite"
-    },
-    {
-      "id": "C_13",
-      "formula": "P_11",
-      "translation": "A senior researcher supervises the undergraduate student",
-      "llm_weight": 0.65,
-      "evidence": "Sentence 3",
-      "reasoning": "Derived base event from 'typically' has weight 0.65 indicating usual but not absolute occurrence"
-    },
-    {
-      "id": "C_14",
-      "formula": "P_11 ⟹ P_10",
-      "translation": "If a senior researcher supervises, then the typical pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 3",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
-    },
-    {
-      "id": "C_15",
-      "formula": "P_9 ⟹ P_10",
-      "translation": "If an undergraduate is in their first month, a senior researcher typically supervises them",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 3",
-      "reasoning": "Conditional linking temporal condition to modal supervision pattern with weight 1.0"
-    },
-    {
-      "id": "C_16",
       "formula": "P_12",
-      "translation": "Lab equipment should be inspected weekly",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "Original modal statement is asserted with certainty - the recommendation itself is definite"
-    },
-    {
-      "id": "C_17",
-      "formula": "P_13",
       "translation": "Lab equipment is inspected weekly",
       "llm_weight": 0.85,
       "evidence": "Sentence 4",
-      "reasoning": "Derived base event from 'should' has weight 0.85 indicating strong expectation"
+      "reasoning": "'Should' indicates strong expectation; weight 0.85"
     },
     {
-      "id": "C_18",
-      "formula": "P_13 ⟹ P_12",
-      "translation": "If lab equipment is inspected weekly, then the 'should' recommendation is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
-    },
-    {
-      "id": "C_19",
-      "formula": "P_14",
-      "translation": "An item of lab equipment is low-risk",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "Original classification property has weight 1.0"
-    },
-    {
-      "id": "C_20",
-      "formula": "P_15",
-      "translation": "Low-risk lab equipment is generally inspected monthly",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "Original modal statement is asserted with certainty - the general acceptability itself is definite"
-    },
-    {
-      "id": "C_21",
-      "formula": "P_16",
-      "translation": "Low-risk lab equipment is inspected monthly",
+      "id": "C_7",
+      "formula": "P_13 ⟹ P_14",
+      "translation": "If equipment is low-risk, it is inspected monthly",
       "llm_weight": 0.65,
       "evidence": "Sentence 4",
-      "reasoning": "Derived base event from 'generally' has weight 0.65 indicating typical but not absolute occurrence"
+      "reasoning": "'Generally acceptable' indicates typical practice; weight 0.65"
     },
     {
-      "id": "C_22",
-      "formula": "P_16 ⟹ P_15",
-      "translation": "If low-risk equipment is inspected monthly, then the 'generally acceptable' statement holds",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
-    },
-    {
-      "id": "C_23",
-      "formula": "P_14 ⟹ P_15",
-      "translation": "If equipment is low-risk, monthly inspections are generally acceptable",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 4",
-      "reasoning": "Conditional linking risk classification to modal acceptability pattern with weight 1.0"
-    },
-    {
-      "id": "C_24",
-      "formula": "P_17",
-      "translation": "A chemical spill occurs",
+      "id": "C_8",
+      "formula": "P_15 ⟹ (P_16 ∧ P_17)",
+      "translation": "If a chemical spill occurs, the area is evacuated immediately and the safety officer is notified within 5 minutes",
       "llm_weight": 1.0,
       "evidence": "Sentence 5",
-      "reasoning": "Original statement condition has weight 1.0"
+      "reasoning": "'Must' in emergency context indicates absolute requirement; weight 1.0"
     },
     {
-      "id": "C_25",
+      "id": "C_9",
       "formula": "P_18",
-      "translation": "The area is evacuated immediately",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 5",
-      "reasoning": "Original statement with 'must' has weight 1.0"
-    },
-    {
-      "id": "C_26",
-      "formula": "P_19",
-      "translation": "The safety officer is notified within 5 minutes",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 5",
-      "reasoning": "Original statement with 'must' has weight 1.0"
-    },
-    {
-      "id": "C_27",
-      "formula": "P_17 ⟹ (P_18 ∧ P_19)",
-      "translation": "If a chemical spill occurs, the area must be evacuated immediately and the safety officer must be notified within 5 minutes",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 5",
-      "reasoning": "Emergency 'must' in conditional context indicates weight 1.0"
-    },
-    {
-      "id": "C_28",
-      "formula": "P_20",
-      "translation": "Researchers are encouraged to attend monthly safety meetings",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 6",
-      "reasoning": "Original modal statement is asserted with certainty - the encouragement itself is definite"
-    },
-    {
-      "id": "C_29",
-      "formula": "P_21",
       "translation": "Researchers attend monthly safety meetings",
       "llm_weight": 0.40,
       "evidence": "Sentence 6",
-      "reasoning": "Derived base event from 'encouraged' has weight 0.40 indicating weak obligation"
+      "reasoning": "'Encouraged' indicates weak suggestion; weight 0.40"
     },
     {
-      "id": "C_30",
-      "formula": "P_21 ⟹ P_20",
-      "translation": "If researchers attend, then the encouragement statement is satisfied",
+      "id": "C_10",
+      "formula": "P_19 ⟹ ¬P_20",
+      "translation": "If the researcher is experienced personnel, attendance is not mandatory for them",
       "llm_weight": 1.0,
       "evidence": "Sentence 6",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
+      "reasoning": "Explicit exemption stated; weight 1.0"
     },
     {
-      "id": "C_31",
-      "formula": "P_22",
-      "translation": "The researcher is experienced personnel",
-      "llm_weight": 1.0,
+      "id": "C_11",
+      "formula": "¬P_19 ⟹ P_20",
+      "translation": "If the researcher is not experienced personnel, attendance is mandatory",
+      "llm_weight": 0.70,
       "evidence": "Sentence 6",
-      "reasoning": "Original status classification has weight 1.0"
+      "reasoning": "Implied from exemption structure; weight 0.70 (not explicitly stated)"
     },
     {
-      "id": "C_32",
+      "id": "C_12",
       "formula": "P_23",
-      "translation": "An experiment involves hazardous materials",
+      "translation": "The lab director believes partner presence is required for hazardous experiments",
       "llm_weight": 1.0,
       "evidence": "Sentence 7",
-      "reasoning": "Original experiment classification has weight 1.0"
+      "reasoning": "Belief attribution is factually stated; weight 1.0"
     },
     {
-      "id": "C_33",
-      "formula": "P_24",
-      "translation": "The experiment should be conducted with a partner present",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Original modal statement is asserted with certainty - the recommendation itself is definite"
-    },
-    {
-      "id": "C_34",
-      "formula": "P_25",
-      "translation": "The experiment is conducted with a partner present",
+      "id": "C_13",
+      "formula": "P_21 ⟹ P_22",
+      "translation": "If an experiment involves hazardous materials, it is conducted with a partner present",
       "llm_weight": 0.85,
       "evidence": "Sentence 7",
-      "reasoning": "Derived base event from 'should' has weight 0.85 indicating strong expectation"
+      "reasoning": "'Should' indicates strong expectation per lab director's belief; weight 0.85"
     },
     {
-      "id": "C_35",
-      "formula": "P_25 ⟹ P_24",
-      "translation": "If the experiment is conducted with a partner present, then the 'should' recommendation is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
-    },
-    {
-      "id": "C_36",
-      "formula": "P_23 ⟹ P_24",
-      "translation": "If an experiment involves hazardous materials, it should be conducted with a partner present",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Conditional linking hazardous classification to modal safety recommendation with weight 1.0"
-    },
-    {
-      "id": "C_37",
-      "formula": "P_26",
-      "translation": "A researcher works after hours",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Original temporal condition has weight 1.0"
-    },
-    {
-      "id": "C_38",
-      "formula": "P_27",
-      "translation": "A researcher sometimes works alone",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Original modal statement is asserted with certainty - the occasional pattern itself is definite"
-    },
-    {
-      "id": "C_39",
-      "formula": "P_28",
-      "translation": "A researcher works alone",
+      "id": "C_14",
+      "formula": "P_24 ⟹ P_25",
+      "translation": "If a researcher works after hours, they work alone",
       "llm_weight": 0.40,
       "evidence": "Sentence 7",
-      "reasoning": "Derived base event from 'sometimes' has weight 0.40 indicating occasional weak frequency"
+      "reasoning": "'Sometimes' indicates occasional occurrence; weight 0.40"
     },
     {
-      "id": "C_40",
-      "formula": "P_28 ⟹ P_27",
-      "translation": "If a researcher works alone, then it is true that they sometimes work alone",
+      "id": "C_15",
+      "formula": "P_25 ⟹ ¬P_22",
+      "translation": "If a researcher works alone, the experiment is not conducted with a partner present",
       "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "If base event occurs, it is logically consistent with and satisfies the modal pattern claim"
-    },
-    {
-      "id": "C_41",
-      "formula": "P_26 ⟹ P_27",
-      "translation": "If a researcher works after hours, they sometimes work alone",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 7",
-      "reasoning": "Conditional linking after-hours work to modal solo work pattern with weight 1.0"
+      "evidence": "Semantic relationship",
+      "reasoning": "Logical mutual exclusion: working alone contradicts having partner present; weight 1.0"
     }
   ]
 }
+
 
 
 EXEMPLAR 2 (FINITE-SET AUXILIARY PROPOSITIONS)
@@ -671,37 +446,37 @@ OUTPUT JSON
       "id": "P_2",
       "translation": "The team meeting is scheduled for Monday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_3",
       "translation": "The team meeting is scheduled for Wednesday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_4",
       "translation": "The team meeting is scheduled for Thursday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_5",
       "translation": "The team meeting is scheduled for Friday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_6",
       "translation": "The team meeting is scheduled for Saturday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_7",
       "translation": "The team meeting is scheduled for Sunday",
       "evidence": "Sentence 0 (auxiliary proposition for finite weekday domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays. Mutually exclusive alternative."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: weekdays."
     },
     {
       "id": "P_8",
@@ -719,19 +494,19 @@ OUTPUT JSON
       "id": "P_10",
       "translation": "Sarah works in the Marketing department",
       "evidence": "Sentence 1 (auxiliary proposition for department domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department for mutual exclusion."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department."
     },
     {
       "id": "P_11",
       "translation": "Sarah works in the Sales department",
       "evidence": "Sentence 1 (auxiliary proposition for department domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department for mutual exclusion."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department."
     },
     {
       "id": "P_12",
       "translation": "Sarah works in the Human Resources department",
       "evidence": "Sentence 1 (auxiliary proposition for department domain)",
-      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department for mutual exclusion."
+      "explanation": "Auxiliary proposition for mutual exclusion with P_9. High-salience alternative department."
     }
   ],
   "constraints": [
@@ -741,7 +516,7 @@ OUTPUT JSON
       "translation": "The team meeting is scheduled for Tuesday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Original statement has weight 1.0"
+      "reasoning": "Factual assertion stated directly; weight 1.0"
     },
     {
       "id": "C_2",
@@ -749,159 +524,88 @@ OUTPUT JSON
       "translation": "The team meeting is not scheduled for Monday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
       "id": "C_3",
-      "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If meeting is on Tuesday, then it is not on Monday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_4",
       "formula": "¬P_3",
       "translation": "The team meeting is not scheduled for Wednesday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
-      "id": "C_5",
-      "formula": "P_1 ⟹ ¬P_3",
-      "translation": "If meeting is on Tuesday, then it is not on Wednesday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_6",
+      "id": "C_4",
       "formula": "¬P_4",
       "translation": "The team meeting is not scheduled for Thursday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
-      "id": "C_7",
-      "formula": "P_1 ⟹ ¬P_4",
-      "translation": "If meeting is on Tuesday, then it is not on Thursday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_8",
+      "id": "C_5",
       "formula": "¬P_5",
       "translation": "The team meeting is not scheduled for Friday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
-      "id": "C_9",
-      "formula": "P_1 ⟹ ¬P_5",
-      "translation": "If meeting is on Tuesday, then it is not on Friday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_10",
+      "id": "C_6",
       "formula": "¬P_6",
       "translation": "The team meeting is not scheduled for Saturday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
-      "id": "C_11",
-      "formula": "P_1 ⟹ ¬P_6",
-      "translation": "If meeting is on Tuesday, then it is not on Saturday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_12",
+      "id": "C_7",
       "formula": "¬P_7",
       "translation": "The team meeting is not scheduled for Sunday",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_1 (Tuesday); weight 1.0"
     },
     {
-      "id": "C_13",
-      "formula": "P_1 ⟹ ¬P_7",
-      "translation": "If meeting is on Tuesday, then it is not on Sunday",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Mutual exclusion of weekdays with weight 1.0"
-    },
-    {
-      "id": "C_14",
+      "id": "C_8",
       "formula": "P_8",
       "translation": "The team meeting is scheduled for 3 PM",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "Original statement has weight 1.0"
+      "reasoning": "Factual assertion stated directly; weight 1.0"
     },
     {
-      "id": "C_15",
+      "id": "C_9",
       "formula": "P_9",
       "translation": "Sarah works in the Engineering department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Original statement has weight 1.0"
+      "reasoning": "Factual assertion stated directly; weight 1.0"
     },
     {
-      "id": "C_16",
+      "id": "C_10",
       "formula": "¬P_10",
       "translation": "Sarah does not work in the Marketing department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_9 (Engineering); weight 1.0"
     },
     {
-      "id": "C_17",
-      "formula": "P_9 ⟹ ¬P_10",
-      "translation": "If Sarah works in Engineering, then she does not work in Marketing",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
-    },
-    {
-      "id": "C_18",
+      "id": "C_11",
       "formula": "¬P_11",
       "translation": "Sarah does not work in the Sales department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
+      "reasoning": "Mutual exclusion with P_9 (Engineering); weight 1.0"
     },
     {
-      "id": "C_19",
-      "formula": "P_9 ⟹ ¬P_11",
-      "translation": "If Sarah works in Engineering, then she does not work in Sales",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
-    },
-    {
-      "id": "C_20",
+      "id": "C_12",
       "formula": "¬P_12",
       "translation": "Sarah does not work in the Human Resources department",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "Negation of auxiliary proposition - definitional consequence with weight 1.0"
-    },
-    {
-      "id": "C_21",
-      "formula": "P_9 ⟹ ¬P_12",
-      "translation": "If Sarah works in Engineering, then she does not work in Human Resources",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Mutual exclusion of departments with weight 1.0"
+      "reasoning": "Mutual exclusion with P_9 (Engineering); weight 1.0"
     }
   ]
 }
+
