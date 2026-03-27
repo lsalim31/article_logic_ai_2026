@@ -1,0 +1,494 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alice is a university student",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement."
+    },
+    {
+      "id": "P_2",
+      "translation": "Alice studies computer science",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual statement."
+    },
+    {
+      "id": "P_3",
+      "translation": "Alice studies hard",
+      "evidence": "Sentence 2",
+      "explanation": "Condition extracted from an explicit conditional."
+    },
+    {
+      "id": "P_4",
+      "translation": "Alice passes her exams",
+      "evidence": "Sentence 2",
+      "explanation": "Consequent extracted from an explicit conditional."
+    },
+    {
+      "id": "P_5",
+      "translation": "Alice typically studies hard before exams",
+      "evidence": "Sentence 3",
+      "explanation": "Modal statement with 'typically'."
+    },
+    {
+      "id": "P_6",
+      "translation": "Alice studies hard before exams",
+      "evidence": "Sentence 3",
+      "explanation": "Base statement derived by removing the modal 'typically'."
+    },
+    {
+      "id": "P_7",
+      "translation": "Alice is focused",
+      "evidence": "Sentence 4",
+      "explanation": "Condition extracted from a 'when' clause."
+    },
+    {
+      "id": "P_8",
+      "translation": "Alice completes her assignments on time",
+      "evidence": "Sentence 4",
+      "explanation": "Consequent extracted from a 'when' clause."
+    },
+    {
+      "id": "P_9",
+      "translation": "Alice sometimes gets distracted by social media",
+      "evidence": "Sentence 5",
+      "explanation": "Modal statement with 'sometimes'."
+    },
+    {
+      "id": "P_10",
+      "translation": "Alice gets distracted by social media",
+      "evidence": "Sentence 5",
+      "explanation": "Base statement derived by removing the modal 'sometimes'."
+    },
+    {
+      "id": "P_11",
+      "translation": "Alice works part-time at the campus library",
+      "evidence": "Sentence 6",
+      "explanation": "Atomic factual statement."
+    },
+    {
+      "id": "P_12",
+      "translation": "Alice's assignments are due every Friday",
+      "evidence": "Sentence 7",
+      "explanation": "Atomic factual statement."
+    },
+    {
+      "id": "P_13",
+      "translation": "Alice rarely studies late at night",
+      "evidence": "Sentence 8",
+      "explanation": "Modal statement with 'rarely'."
+    },
+    {
+      "id": "P_14",
+      "translation": "Alice studies late at night",
+      "evidence": "Sentence 8",
+      "explanation": "Base statement derived by removing the modal 'rarely'."
+    },
+    {
+      "id": "P_15",
+      "translation": "Alice likes to play volleyball with her friends",
+      "evidence": "Sentence 9",
+      "explanation": "Atomic preference statement split from a conjunction."
+    },
+    {
+      "id": "P_16",
+      "translation": "Alice likes to play board games with her friends",
+      "evidence": "Sentence 9",
+      "explanation": "Atomic preference statement split from a conjunction."
+    },
+    {
+      "id": "P_17",
+      "translation": "Alice is usually not competitive",
+      "evidence": "Sentence 10",
+      "explanation": "Modal statement with 'usually'."
+    },
+    {
+      "id": "P_18",
+      "translation": "Alice is not competitive",
+      "evidence": "Sentence 10",
+      "explanation": "Base statement derived by removing the modal 'usually'."
+    },
+    {
+      "id": "P_19",
+      "translation": "Alice is playing on her Sunday volleyball league",
+      "evidence": "Sentence 10",
+      "explanation": "Condition extracted from an 'unless' clause."
+    },
+    {
+      "id": "P_20",
+      "translation": "Alice is competitive",
+      "evidence": "Sentence 10",
+      "explanation": "Consequent inferred from the 'unless' exception phrasing."
+    },
+    {
+      "id": "P_21",
+      "translation": "Alice is a high school student.",
+      "evidence": "Sentence 0 (auxiliary proposition for education_level domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_1. Part of finite set: education_level. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_22",
+      "translation": "Alice studies biology.",
+      "evidence": "Sentence 1 (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_23",
+      "translation": "Alice studies mathematics.",
+      "evidence": "Sentence 1 (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_24",
+      "translation": "Alice studies physics.",
+      "evidence": "Sentence 1 (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_25",
+      "translation": "Alice studies chemistry.",
+      "evidence": "Sentence 1 (auxiliary proposition for academic_major domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_2. Part of finite set: academic_major. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_26",
+      "translation": "Alice completes assignments late.",
+      "evidence": "Sentence 4 (auxiliary proposition for timing_modifier domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_8. Part of finite set: timing_modifier. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_27",
+      "translation": "Alice works full-time.",
+      "evidence": "Sentence 6 (auxiliary proposition for employment_type domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_11. Part of finite set: employment_type. Mutually exclusive alternative."
+    },
+    {
+      "id": "P_28",
+      "translation": "Alice's assignments are due Monday.",
+      "evidence": "Sentence 7 (auxiliary proposition for day_of_week domain)",
+      "explanation": "Auxiliary proposition for mutual exclusion with P_12. Part of finite set: day_of_week. Mutually exclusive alternative."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alice is a university student",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Direct factual assertion."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Alice studies computer science",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct factual assertion."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Alice studies hard, then Alice passes her exams",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit conditional statement."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Alice typically studies hard before exams",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Original modal claim is asserted."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "Alice studies hard before exams",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 3",
+      "reasoning": "'typically' maps to weight 0.65 for the base proposition."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If Alice studies hard before exams, then it is true that Alice typically studies hard before exams",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Required modal linkage constraint."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If Alice is focused, then Alice completes her assignments on time",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Conditional expressed with 'when'."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_9",
+      "translation": "Alice sometimes gets distracted by social media",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Original modal claim is asserted."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_10",
+      "translation": "Alice gets distracted by social media",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 5",
+      "reasoning": "'sometimes' maps to weight 0.40 for the base proposition."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10 ⟹ P_9",
+      "translation": "If Alice gets distracted by social media, then it is true that Alice sometimes gets distracted by social media",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Required modal linkage constraint."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "Alice works part-time at the campus library",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Direct factual assertion."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_12",
+      "translation": "Alice's assignments are due every Friday",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Direct factual assertion."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_13",
+      "translation": "Alice rarely studies late at night",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Original modal claim is asserted."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_14",
+      "translation": "Alice studies late at night",
+      "llm_weight": 0.25,
+      "evidence": "Sentence 8",
+      "reasoning": "'rarely' maps to weight 0.25 for the base proposition."
+    },
+    {
+      "id": "C_15",
+      "formula": "P_14 ⟹ P_13",
+      "translation": "If Alice studies late at night, then it is true that Alice rarely studies late at night",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 8",
+      "reasoning": "Required modal linkage constraint."
+    },
+    {
+      "id": "C_16",
+      "formula": "P_15",
+      "translation": "Alice likes to play volleyball with her friends",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 9",
+      "reasoning": "Direct preference assertion."
+    },
+    {
+      "id": "C_17",
+      "formula": "P_16",
+      "translation": "Alice likes to play board games with her friends",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 9",
+      "reasoning": "Direct preference assertion."
+    },
+    {
+      "id": "C_18",
+      "formula": "P_17",
+      "translation": "Alice is usually not competitive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 10",
+      "reasoning": "Original modal claim is asserted."
+    },
+    {
+      "id": "C_19",
+      "formula": "P_18",
+      "translation": "Alice is not competitive",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 10",
+      "reasoning": "'usually' maps to weight 0.65 for the base proposition."
+    },
+    {
+      "id": "C_20",
+      "formula": "P_18 ⟹ P_17",
+      "translation": "If Alice is not competitive, then it is true that Alice is usually not competitive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 10",
+      "reasoning": "Required modal linkage constraint."
+    },
+    {
+      "id": "C_21",
+      "formula": "P_19 ⟹ P_20",
+      "translation": "If Alice is playing on her Sunday volleyball league, then Alice is competitive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 10",
+      "reasoning": "'Unless' introduces an exception condition; this captures the stated exception behavior."
+    },
+    {
+      "id": "C_22",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.7,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'typically' implies the base event occurs with weight 0.7"
+    },
+    {
+      "id": "C_23",
+      "formula": "P_9 ⟹ P_10",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.45,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'sometimes' implies the base event occurs with weight 0.45"
+    },
+    {
+      "id": "C_24",
+      "formula": "P_13 ⟹ P_14",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.25,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'rarely' implies the base event occurs with weight 0.25"
+    },
+    {
+      "id": "C_25",
+      "formula": "P_17 ⟹ P_18",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.7,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'usually' implies the base event occurs with weight 0.7"
+    },
+    {
+      "id": "C_26",
+      "formula": "P_1 ⟹ ¬P_21",
+      "translation": "If Alice is a university student, then Alice is not a high school student.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over education_level domain with weight 1.0"
+    },
+    {
+      "id": "C_27",
+      "formula": "P_2 ⟹ ¬P_22",
+      "translation": "If Alice studies computer science, then Alice does not study biology.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
+    },
+    {
+      "id": "C_28",
+      "formula": "P_2 ⟹ ¬P_23",
+      "translation": "If Alice studies computer science, then Alice does not study mathematics.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
+    },
+    {
+      "id": "C_29",
+      "formula": "P_2 ⟹ ¬P_24",
+      "translation": "If Alice studies computer science, then Alice does not study physics.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
+    },
+    {
+      "id": "C_30",
+      "formula": "P_2 ⟹ ¬P_25",
+      "translation": "If Alice studies computer science, then Alice does not study chemistry.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over academic_major domain with weight 1.0"
+    },
+    {
+      "id": "C_31",
+      "formula": "P_8 ⟹ ¬P_26",
+      "translation": "If Alice completes assignments on time, then Alice does not complete assignments late.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over timing_modifier domain with weight 1.0"
+    },
+    {
+      "id": "C_32",
+      "formula": "P_11 ⟹ ¬P_27",
+      "translation": "If Alice works part-time, then Alice does not work full-time.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over employment_type domain with weight 1.0"
+    },
+    {
+      "id": "C_33",
+      "formula": "P_12 ⟹ ¬P_28",
+      "translation": "If Alice's assignments are due friday, then Alice's assignments are not due Monday.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion over day_of_week domain with weight 1.0"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_5: 'Alice typically studies hard before exams' has modal 'typically'",
+    "        Base text: 'Alice studies hard before exams'",
+    "        Found existing base: P_6",
+    "[Modal] P_9: 'Alice sometimes gets distracted by social media' has modal 'sometimes'",
+    "        Base text: 'Alice gets distracted by social media'",
+    "        Found existing base: P_10",
+    "[Modal] P_13: 'Alice rarely studies late at night' has modal 'rarely'",
+    "        Base text: 'Alice studies late at night'",
+    "        Found existing base: P_14",
+    "[Modal] P_17: 'Alice is usually not competitive' has modal 'usually'",
+    "        Base text: 'Alice is not competitive'",
+    "        Found existing base: P_18",
+    "[Opposite] P_5: 'typically' has antonyms ['seldom', 'rarely', 'never']",
+    "[Opposite] P_9: 'sometimes' has antonyms ['always', 'never']",
+    "[Opposite] P_13: 'rarely' has antonyms ['often']",
+    "[Opposite] P_17: 'usually' has antonyms ['seldom', 'rarely']",
+    "[Negation] Sentence 10: Found negation of 'is'",
+    "           Affirmative clause: 'She is usually competitive , unless she is playing on her Sunday volleyball league .'",
+    "           No matching proposition found",
+    "[FiniteDomain] P_1: Detected education_level pattern",
+    "              Subject: Alice, Value: university",
+    "              Auxiliary 'college' already exists, skipping",
+    "              Auxiliary 'high school' already exists, skipping",
+    "              Auxiliary 'middle school' already exists, skipping",
+    "              Auxiliary 'graduate' already exists, skipping",
+    "[FiniteDomain] P_2: Detected academic_major pattern",
+    "              Subject: Alice, Value: computer science",
+    "              Auxiliary 'biology' already exists, skipping",
+    "              Auxiliary 'mathematics' already exists, skipping",
+    "              Auxiliary 'physics' already exists, skipping",
+    "              Auxiliary 'chemistry' already exists, skipping",
+    "[FiniteDomain] Skipping P_3: Value 'hard' is not a noun",
+    "[FiniteDomain] P_8: Detected timing_modifier pattern",
+    "              Subject: Alice, Value: on time",
+    "              Auxiliary 'early' already exists, skipping",
+    "              Auxiliary 'late' already exists, skipping",
+    "[FiniteDomain] P_11: Detected employment_type pattern",
+    "              Subject: Alice, Value: part-time",
+    "              Auxiliary 'full-time' already exists, skipping",
+    "[FiniteDomain] P_12: Detected day_of_week pattern",
+    "              Subject: Alice's assignments, Value: friday",
+    "              Auxiliary 'Monday' already exists, skipping",
+    "              Auxiliary 'Tuesday' already exists, skipping",
+    "              Auxiliary 'Wednesday' already exists, skipping",
+    "              Auxiliary 'Thursday' already exists, skipping",
+    "[Auxiliary] Found 8 auxiliary propositions",
+    "[Auxiliary] P_21: 'Alice is a high school student.'",
+    "[Auxiliary] P_22: 'Alice studies biology.'",
+    "[Auxiliary] P_23: 'Alice studies mathematics.'",
+    "[Auxiliary] P_24: 'Alice studies physics.'",
+    "[Auxiliary] P_25: 'Alice studies chemistry.'",
+    "[Auxiliary] P_26: 'Alice completes assignments late.'",
+    "[Auxiliary] P_27: 'Alice works full-time.'",
+    "[Auxiliary] P_28: 'Alice's assignments are due Monday.'"
+  ]
+}
