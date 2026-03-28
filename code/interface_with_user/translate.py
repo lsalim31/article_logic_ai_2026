@@ -99,7 +99,8 @@ def get_configured_client(api_key: str, model: str) -> Tuple[OpenAI, str]:
     """Helper to configure OpenAI client for OpenRouter if needed."""
     if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
         client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
-        if not model.startswith('openai/'):
+        # Only add openai/ prefix for OpenAI models without a provider prefix
+        if '/' not in model:
             model = f'openai/{model}'
     else:
         client = OpenAI(api_key=api_key)
@@ -355,12 +356,13 @@ def convert_yes_no_to_statement(
 
     if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
         client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
-        if not model.startswith('openai/'):
+        # Only add openai/ prefix for OpenAI models without a provider prefix
+        if '/' not in model:
             model = f'openai/{model}'
     else:
         client = OpenAI(api_key=api_key)
 
-    base_model = model.replace("openai/", "")
+    base_model = model.replace("openai/", "").replace("deepseek/", "")
     is_reasoning_model = base_model.startswith("gpt-5") or base_model.startswith("o1") or base_model.startswith("o3")
 
     if is_reasoning_model:
