@@ -53,10 +53,12 @@ class LogicConverter:
         # Detect OpenRouter keys and use appropriate base URL
         if api_key.startswith('sk-or-v1-') or api_key.startswith('sk-or-'):
             self.client = OpenAI(api_key=api_key, base_url='https://openrouter.ai/api/v1')
-            if not model.startswith('openai/'):
+            # Only add openai/ prefix for OpenAI models without a provider prefix
+            if '/' not in model:
                 model = f'openai/{model}'
         else:
-            self.client = OpenAI(api_key=api_key)
+            self.client = OpenAI(api_key=api_key) 
+
 
         self.model = model
         self.temperature = temperature
