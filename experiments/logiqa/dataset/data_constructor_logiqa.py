@@ -109,21 +109,25 @@ def filter_samples(samples: list, num_samples: int) -> list:
 
 def convert_to_binary_format(samples: list) -> dict:
     """
-    Convert LogiQA multiple choice to binary yes/no format.
+    Convert LogiQA multiple choice to balanced binary yes/no format.
 
     For each sample:
     - premise = context + question
     - correct option -> hypothesis with label "yes"
-    - incorrect options -> hypotheses with label "no"
+    - ONE randomly selected incorrect option -> hypothesis with label "no"
+
+    This creates a balanced dataset with equal yes/no distribution.
     """
+    random.seed(SEED)
+
     dataset = {
         "metadata": {
-            "source": "LogiQA2 (converted to binary yes/no format)",
+            "source": "LogiQA2 (converted to balanced binary yes/no format)",
             "original_source": str(LOGIQA_DATA_PATH),
-            "generation_method": "Multiple choice to binary conversion",
+            "generation_method": "Multiple choice to balanced binary conversion (1 yes + 1 no per sample)",
             "conversion_rules": {
                 "correct_answer": "yes",
-                "incorrect_answers": "no"
+                "one_random_incorrect": "no"
             },
             "filter_criteria": {
                 "min_words": MIN_CONTEXT_WORDS,
@@ -131,10 +135,10 @@ def convert_to_binary_format(samples: list) -> dict:
             },
             "creation_timestamp": datetime.now().isoformat(),
             "num_samples": len(samples),
-            "num_hypotheses": len(samples) * 4,  # 4 options per sample
+            "num_hypotheses": len(samples) * 2,  # 2 options per sample (1 yes + 1 no)
             "label_distribution": {
                 "yes": len(samples),       # 1 correct per sample
-                "no": len(samples) * 3     # 3 incorrect per sample
+                "no": len(samples)         # 1 incorrect per sample (balanced)
             }
         },
         "samples": []
@@ -163,25 +167,31 @@ def convert_to_binary_format(samples: list) -> dict:
             "qa_pairs": []
         }
 
-        # Add hypotheses from options
-        for opt_idx, option in enumerate(options):
-            is_correct = (opt_idx == correct_idx)
-            label = "yes" if is_correct else "no"
+        # Add the correct answer (yes)
+        correct_option = options[correct_idx]
+        hypothesis_text = f"The answer is: {correct_option}"
+        sample_data["qa_pairs"].append({
+            "question": hypothesis_text,
+            "answer": "yes",
+            "option_index": correct_idx,
+            "is_correct_answer": True
+        })
 
-            # Frame the option as a statement/hypothesis
-            # The question typically asks "which of the following..." so options are already statements
-            hypothesis_text = f"The answer is: {option}"
-
-            sample_data["qa_pairs"].append({
-                "question": hypothesis_text,
-                "answer": label,
-                "option_index": opt_idx,
-                "is_correct_answer": is_correct
-            })
+        # Select ONE random incorrect option (no)
+        incorrect_indices = [idx for idx in range(len(options)) if idx != correct_idx]
+        selected_incorrect_idx = random.choice(incorrect_indices)
+        incorrect_option = options[selected_incorrect_idx]
+        hypothesis_text = f"The answer is: {incorrect_option}"
+        sample_data["qa_pairs"].append({
+            "question": hypothesis_text,
+            "answer": "no",
+            "option_index": selected_incorrect_idx,
+            "is_correct_answer": False
+        })
 
         dataset["samples"].append(sample_data)
 
-        print(f"  Sample {i}: {len(options)} hypotheses (1 yes, {len(options)-1} no)")
+        print(f"  Sample {i}: 2 hypotheses (1 yes, 1 no) - balanced")
 
     return dataset
 
