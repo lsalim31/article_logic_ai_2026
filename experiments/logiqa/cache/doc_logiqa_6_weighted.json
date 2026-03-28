@@ -1,0 +1,313 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Permits for the discharge of chemicals into a waterway are issued.",
+      "evidence": "Sentence 0: \"When permits for the discharge of chemicals into a waterway are issued\"",
+      "explanation": "This is an atomic existence/occurrence claim about permits being issued, with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "Each permit is issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day.",
+      "evidence": "Sentence 0: \"they are issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day\"",
+      "explanation": "This is a single declarative specification about how permits are expressed; it contains no conditional or explicit logical connective."
+    },
+    {
+      "id": "P_3",
+      "translation": "The discharge-limit figures are calculated separately for each chemical for which a permit is issued.",
+      "evidence": "Sentence 1: \"These figures, calculated separately for each chemical for which a permit is issued\"",
+      "explanation": "This is an atomic statement about how figures are calculated (separately per chemical)."
+    },
+    {
+      "id": "P_4",
+      "translation": "The discharge-limit figures are based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.",
+      "evidence": "Sentence 1: \"are based on an estimate of the effect of the dilution of the chemical by the amount of water flowing through the waterway\"",
+      "explanation": "This is an atomic statement describing the basis for the figures; it does not require decomposition into smaller logical parts for this task."
+    },
+    {
+      "id": "P_5",
+      "translation": "Chemicals are discharged into the waterway under the permits.",
+      "evidence": "Sentence 2: \"chemicals discharged under the permits\"",
+      "explanation": "This is an atomic claim that such discharges occur under permits (needed to connect permits to potential effects)."
+    },
+    {
+      "id": "P_6",
+      "translation": "Chemicals discharged under the permits adversely affect the waterway.",
+      "evidence": "Sentence 2: \"protected against being adversely affected by chemicals discharged under the permits\"",
+      "explanation": "This is a positive, atomic adverse-effect claim; the text asserts protection against this, which will be represented as a negation in constraints rather than as a negated primitive."
+    },
+    {
+      "id": "P_7",
+      "translation": "The estimate of dilution effect used to set the discharge-limit figures is accurate for the waterway.",
+      "evidence": "Sentence 1 (implicit): \"based on an estimate of the effect of the dilution\"",
+      "explanation": "This is an implicit atomic assumption about the correctness of the estimate, needed for the argument from 'based on an estimate' to 'protected'."
+    },
+    {
+      "id": "P_8",
+      "translation": "The amount of water flowing through the waterway during permitted discharges is the amount assumed in the dilution estimate.",
+      "evidence": "Sentence 1 (implicit): \"by the amount of water flowing through the waterway\"",
+      "explanation": "This is an implicit atomic assumption linking the real flow conditions to the flow conditions used in the estimate."
+    },
+    {
+      "id": "P_9",
+      "translation": "Adverse effects of the chemicals in the waterway depend on how much the chemicals are diluted by the water flow.",
+      "evidence": "Sentence 1-2 (implicit link): estimate of dilution is used, then conclusion about protection",
+      "explanation": "This is an implicit atomic assumption that dilution is the relevant/sufficient factor for whether adverse effects occur (so that a dilution-based limit can ensure protection)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If such permits are issued, they specify allowable pounds per day for each chemical.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly stated as a general rule about how permits are issued.",
+      "list nli": [
+        [
+          2.0459983716136776e-05,
+          5.7363442465430126e-05,
+          0.9999221563339233
+        ],
+        [
+          2.371696609770879e-05,
+          7.857107266318053e-05,
+          0.9998977184295654
+        ],
+        [
+          8.705374784767628e-05,
+          4.273111335351132e-05,
+          0.9998701810836792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_1 ⟹ P_3",
+      "translation": "If such permits are issued, the figures are calculated separately for each permitted chemical.",
+      "evidence": "Sentence 1 (continuing discussion of the permit figures introduced in Sentence 0)",
+      "reasoning": "The phrase 'These figures' refers back to the permit figures and states how they are calculated.",
+      "list nli": [
+        [
+          8.919012179831043e-05,
+          4.691977665061131e-05,
+          0.999863862991333
+        ],
+        [
+          0.00046883043251000345,
+          5.707183663616888e-05,
+          0.9994741082191467
+        ],
+        [
+          0.0005862281541340053,
+          3.669468787848018e-05,
+          0.9993770718574524
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_4",
+      "translation": "If such permits are issued, the figures are based on an estimate of dilution effects given water flow.",
+      "evidence": "Sentence 1 (continuing discussion of the permit figures introduced in Sentence 0)",
+      "reasoning": "The text states that the (permit) figures are based on a dilution estimate.",
+      "list nli": [
+        [
+          4.214850559947081e-05,
+          8.653080294607207e-05,
+          0.9998712539672852
+        ],
+        [
+          0.00016440819308627397,
+          7.549010479124263e-05,
+          0.999760091304779
+        ],
+        [
+          0.0008807688718661666,
+          6.635238969465718e-05,
+          0.9990528225898743
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "(P_2 ∧ P_4 ∧ P_5 ∧ P_7 ∧ P_8 ∧ P_9) ⟹ ¬P_6",
+      "translation": "If permitted discharge amounts are set using an accurate dilution estimate that matches actual water flow, and dilution determines harm, then permitted discharges do not adversely affect the waterway.",
+      "evidence": "Sentence 1-2",
+      "reasoning": "The conclusion ('therefore protected') depends on the dilution-based limits actually ensuring safety. That requires (at minimum) that the estimate and assumed flow correspond to reality and that dilution is the key determinant of adverse effects.",
+      "list nli": [
+        [
+          0.00022168918803799897,
+          0.00010068783740280196,
+          0.9996776580810547
+        ],
+        [
+          0.0002755887107923627,
+          8.107734902296215e-05,
+          0.9996433258056641
+        ],
+        [
+          0.00037328049074858427,
+          0.00015819414693396538,
+          0.9994685053825378
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_6",
+      "translation": "The waterway is not adversely affected by chemicals discharged under the permits.",
+      "evidence": "Sentence 2: \"The waterway is therefore protected against being adversely affected by chemicals discharged under the permits.\"",
+      "reasoning": "This is the argument's stated conclusion; 'protected against being adversely affected' directly supports the negation of adverse effect.",
+      "list nli": [
+        [
+          0.00013359526928979903,
+          2.891113399527967e-05,
+          0.9998375177383423
+        ],
+        [
+          0.00045733380829915404,
+          7.005567022133619e-05,
+          0.9994726777076721
+        ],
+        [
+          0.0006343983695842326,
+          7.920324424048886e-05,
+          0.9992864727973938
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_2",
+      "translation": "Each permit is issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          2.1644149455823936e-05,
+          5.1964816520921886e-05,
+          0.9999263286590576
+        ],
+        [
+          5.7164525060215965e-05,
+          3.156993989250623e-05,
+          0.9999113082885742
+        ],
+        [
+          1.4201835256244522e-05,
+          7.686076423851773e-05,
+          0.9999089241027832
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0014795605093240738,
+          0.00018599259783513844,
+          0.9983344674110413
+        ],
+        [
+          0.003119648667052388,
+          0.0009699537768028677,
+          0.9959104061126709
+        ],
+        [
+          0.006567939650267363,
+          0.0022912430576980114,
+          0.9911409020423889
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "The amount of water flowing through the waterway during permitted discharges is the amount assumed in the dilution estimate.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          4.238720066496171e-05,
+          4.964453910361044e-05,
+          0.9999079704284668
+        ],
+        [
+          3.673736864584498e-05,
+          7.989763253135607e-05,
+          0.9998832941055298
+        ],
+        [
+          6.927222420927137e-05,
+          6.0003480029990897e-05,
+          0.9998706579208374
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_8 ⟹ P_8",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0014795605093240738,
+          0.00018599259783513844,
+          0.9983344674110413
+        ],
+        [
+          0.003119648667052388,
+          0.0009699537768028677,
+          0.9959104061126709
+        ],
+        [
+          0.006567939650267363,
+          0.0022912430576980114,
+          0.9911409020423889
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

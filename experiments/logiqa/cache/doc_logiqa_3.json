@@ -1,0 +1,389 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mark Twain listened to a pastor's speech in a church.",
+      "evidence": "Sentence 0: \"Mark Twain once listened to a pastor's speech in a church.\"",
+      "explanation": "This is an atomic event description with a single main predicate (listened) and no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "Mark Twain felt the pastor was touching.",
+      "evidence": "Sentence 1: \"At first he felt that the pastor was touching\"",
+      "explanation": "This is an atomic mental-state attribution; it does not contain conditionals or connectives."
+    },
+    {
+      "id": "P_3",
+      "translation": "Mark Twain prepared to donate.",
+      "evidence": "Sentence 1: \"and prepared to donate.\"",
+      "explanation": "This is a single intention/preparation claim (prepared) with no logical operators."
+    },
+    {
+      "id": "P_4",
+      "translation": "The pastor finished speaking after ten minutes.",
+      "evidence": "Sentence 2: \"After ten minutes, the pastor had not finished speaking\"",
+      "explanation": "The underlying atomic proposition is 'the pastor finished speaking after ten minutes'; the text asserts its negation, which will be handled as a constraint."
+    },
+    {
+      "id": "P_5",
+      "translation": "Mark Twain became a little impatient.",
+      "evidence": "Sentence 2: \"and he became a little impatient\"",
+      "explanation": "This is a single psychological-state change with no additional structure."
+    },
+    {
+      "id": "P_6",
+      "translation": "Mark Twain decided to donate some change.",
+      "evidence": "Sentence 2: \"so he decided to donate only some change.\"",
+      "explanation": "This is an atomic decision statement; the quantification 'some change' is part of the object, not a logical connective."
+    },
+    {
+      "id": "P_7",
+      "translation": "The pastor finished speaking after another ten minutes.",
+      "evidence": "Sentence 3: \"After another ten minutes, the pastor hadn't finished speaking\"",
+      "explanation": "The atomic content is 'the pastor finished speaking after another ten minutes'; the text asserts its negation, which will be represented by a constraint."
+    },
+    {
+      "id": "P_8",
+      "translation": "Mark Twain decided to refrain from donating.",
+      "evidence": "Sentence 3: \"so he decided not to donate a penny.\"",
+      "explanation": "This is an atomic decision claim expressed without using logical negation in the proposition text (using 'refrain')."
+    },
+    {
+      "id": "P_9",
+      "translation": "The phenomenon described is called the over-limit effect.",
+      "evidence": "Sentence 4: \"is called over-limit effect.\"",
+      "explanation": "This is an atomic naming/classification statement."
+    },
+    {
+      "id": "P_10",
+      "translation": "The over-limit effect involves excessive stimulation.",
+      "evidence": "Sentence 4: \"this phenomenon of excessive stimulation\"",
+      "explanation": "This is a single attribute/aspect claim about the phenomenon."
+    },
+    {
+      "id": "P_11",
+      "translation": "The over-limit effect involves long-lasting action.",
+      "evidence": "Sentence 4: \"and long-lasting action\"",
+      "explanation": "This is a single attribute/aspect claim; the conjunction in the text is handled via constraints."
+    },
+    {
+      "id": "P_12",
+      "translation": "The over-limit effect causes extreme psychological impatience.",
+      "evidence": "Sentence 4: \"caused extreme psychological impatientness\"",
+      "explanation": "This is one atomic causal consequence statement."
+    },
+    {
+      "id": "P_13",
+      "translation": "The over-limit effect causes extreme psychological resistance.",
+      "evidence": "Sentence 4: \"or resistance\"",
+      "explanation": "This is another atomic causal consequence statement; the 'or' relation is handled via constraints."
+    },
+    {
+      "id": "P_14",
+      "translation": "The Ice Bucket Challenge project aimed at helping patients with amyotrophic lateral sclerosis.",
+      "evidence": "Sentence 5: \"The current Ice Bucket Challenge project aimed at helping patients with amyotrophic lateral sclerosis\"",
+      "explanation": "This is a single aim/purpose attribution to the project."
+    },
+    {
+      "id": "P_15",
+      "translation": "The Ice Bucket Challenge involves excessive entertainment.",
+      "evidence": "Sentence 5: \"due to excessive entertainment\"",
+      "explanation": "This is an atomic characterization; causal/conditional force will be represented with constraints."
+    },
+    {
+      "id": "P_16",
+      "translation": "The Ice Bucket Challenge is alert to the over-limit effect.",
+      "evidence": "Sentence 5: \"should also be alert to this effect\"",
+      "explanation": "The base proposition is a simple state ('is alert'); the deontic 'should' is captured by constraint weight rather than inside the proposition."
+    },
+    {
+      "id": "P_17",
+      "translation": "The transnational relay starts with the show.",
+      "evidence": "Sentence 6: \"Start with the show\"",
+      "explanation": "This is an atomic property about how the relay begins; the imperative mood is handled by constraint weighting."
+    },
+    {
+      "id": "P_18",
+      "translation": "The transnational relay ends with the show.",
+      "evidence": "Sentence 6: \"but do not end with the show\"",
+      "explanation": "The atomic content is 'ends with the show'; the text prescribes its negation via constraints."
+    },
+    {
+      "id": "P_19",
+      "translation": "The transnational relay stays with the true spirit of charity.",
+      "evidence": "Sentence 6: \"stay With the true spirit of charity\"",
+      "explanation": "This is an atomic recommended/desired property stated as a single clause."
+    },
+    {
+      "id": "P_20",
+      "translation": "The transnational relay is a star video collection.",
+      "evidence": "Sentence 6: \"not just the star video collection\"",
+      "explanation": "The atomic content is 'is a star video collection'; the text advises against it via constraints."
+    },
+    {
+      "id": "P_21",
+      "translation": "The transnational relay is complete.",
+      "evidence": "Sentence 6: \"this transnational relay can be considered complete.\"",
+      "explanation": "This is an atomic status/classification claim ('is complete'); the modal 'can be considered' is handled by weight."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Mark Twain listened to a pastor's speech in a church.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Mark Twain felt the pastor was touching.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Because he felt the pastor was touching, he prepared to donate.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1",
+      "reasoning": "The text presents the feeling and preparation in immediate causal sequence ('...touching and prepared to donate')."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Mark Twain prepared to donate.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_4",
+      "translation": "After ten minutes, the pastor had not finished speaking.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "The text explicitly states non-completion at ten minutes."
+    },
+    {
+      "id": "C_6",
+      "formula": "¬P_4 ⟹ P_5",
+      "translation": "When the pastor had not finished after ten minutes, Mark Twain became a little impatient.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Stated as a direct consequence in the narrative."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "Because he became impatient, he decided to donate only some change.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "The sentence links impatience to the reduced-donation decision ('so he decided...')."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_6",
+      "translation": "Mark Twain decided to donate some change.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_9",
+      "formula": "¬P_7",
+      "translation": "After another ten minutes, the pastor had not finished speaking.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "The text explicitly states non-completion again."
+    },
+    {
+      "id": "C_10",
+      "formula": "¬P_7 ⟹ P_8",
+      "translation": "When the pastor still had not finished after another ten minutes, Mark Twain decided to refrain from donating.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Stated as a direct consequence ('so he decided...')."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_8",
+      "translation": "Mark Twain decided to refrain from donating.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Direct narrative assertion."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_8 ⟹ ¬P_6",
+      "translation": "His later decision to refrain from donating overrides the earlier decision to donate some change.",
+      "llm_weight": 0.75,
+      "evidence": "Sentences 2-3",
+      "reasoning": "The story describes a change of mind over time; propositional logic lacks time, so this exclusivity is encoded with reduced confidence."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_9",
+      "translation": "This phenomenon is called the over-limit effect.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Explicit definitional naming."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_9 ⟹ P_10",
+      "translation": "The over-limit effect involves excessive stimulation.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Presented as part of the definition of the phenomenon."
+    },
+    {
+      "id": "C_15",
+      "formula": "P_9 ⟹ P_11",
+      "translation": "The over-limit effect involves long-lasting action.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Presented as part of the definition of the phenomenon."
+    },
+    {
+      "id": "C_16",
+      "formula": "P_9 ⟹ (P_12 ∨ P_13)",
+      "translation": "The over-limit effect leads to extreme psychological impatience or resistance.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "The sentence explicitly uses an 'or' construction; at least one of the two outcomes is entailed by the wording."
+    },
+    {
+      "id": "C_17",
+      "formula": "(P_10 ∧ P_11 ∧ (P_12 ∨ P_13)) ⟹ P_9",
+      "translation": "A pattern of excessive stimulation plus long-lasting action producing extreme impatience or resistance qualifies as an over-limit effect.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 4",
+      "reasoning": "This reverses the definitional phrasing into a sufficient-condition rule; strongly suggested but definitional directionality can be interpreted, so slightly < 1."
+    },
+    {
+      "id": "C_18",
+      "formula": "P_14",
+      "translation": "The Ice Bucket Challenge aimed at helping ALS patients.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Direct statement of the project's aim."
+    },
+    {
+      "id": "C_19",
+      "formula": "P_15",
+      "translation": "The Ice Bucket Challenge involves excessive entertainment.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 5",
+      "reasoning": "The clause 'due to excessive entertainment' attributes excessive entertainment to the project context."
+    },
+    {
+      "id": "C_20",
+      "formula": "P_15 ⟹ P_10",
+      "translation": "Excessive entertainment counts as excessive stimulation (in the relevant sense).",
+      "llm_weight": 0.8,
+      "evidence": "Sentences 4-5",
+      "reasoning": "The passage links entertainment excess to the same 'over-limit effect' mechanism defined via excessive stimulation; this is a reasonable mapping but not stated verbatim."
+    },
+    {
+      "id": "C_21",
+      "formula": "(P_14 ∧ P_15) ⟹ P_16",
+      "translation": "Given its charitable aim and the risk from excessive entertainment, the Ice Bucket Challenge is to be alert to the over-limit effect.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 5",
+      "reasoning": "The sentence expresses a strong recommendation ('should also be alert') tied to excessive entertainment."
+    },
+    {
+      "id": "C_22",
+      "formula": "P_16 ⟹ P_9",
+      "translation": "Being alert to 'this effect' presupposes the over-limit effect (as the named phenomenon).",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 5 (refers back to Sentence 4)",
+      "reasoning": "Anaphora ('this effect') points to the over-limit effect just defined."
+    },
+    {
+      "id": "C_23",
+      "formula": "P_17",
+      "translation": "Start with the show.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 6",
+      "reasoning": "Imperative guidance is treated as a strongly suggested condition rather than a factual claim."
+    },
+    {
+      "id": "C_24",
+      "formula": "¬P_18",
+      "translation": "Do not end with the show.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 6",
+      "reasoning": "Explicit prohibition in the guidance ('do not end')."
+    },
+    {
+      "id": "C_25",
+      "formula": "P_19",
+      "translation": "Stay with the true spirit of charity.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 6",
+      "reasoning": "Strong directive about what the relay should embody."
+    },
+    {
+      "id": "C_26",
+      "formula": "¬P_20",
+      "translation": "The relay is not merely a star video collection.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 6",
+      "reasoning": "The phrase 'not just the star video collection' rejects framing the relay as (only) that."
+    },
+    {
+      "id": "C_27",
+      "formula": "(P_17 ∧ ¬P_18 ∧ P_19 ∧ ¬P_20) ⟹ P_21",
+      "translation": "If it starts as a show but does not end as a show, keeps the true spirit of charity, and is not merely a star-video collection, then the relay can be considered complete.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 6",
+      "reasoning": "The passage presents these as sufficient conditions for considering the relay complete; 'can be considered' slightly weakens from necessity."
+    },
+    {
+      "id": "C_28",
+      "formula": "P_21 ⟹ P_19",
+      "translation": "Completeness of the relay entails maintaining the true spirit of charity.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 6",
+      "reasoning": "Implied normative interpretation: 'complete' in the author's sense includes genuine charity spirit, though this is not stated as a strict logical necessity."
+    },
+    {
+      "id": "C_29",
+      "formula": "P_5",
+      "translation": "Mark Twain became a little impatient.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_30",
+      "formula": "P_5 ⟹ P_5",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_5: 'Mark Twain became a little impatient.' has modal 'little'",
+    "        Base text: 'Mark Twain became a impatient.'",
+    "        Found existing base: P_5",
+    "        Added constraint: P_5 @1.0",
+    "        Added constraint: P_5 ⟹ P_5 @1.0",
+    "[Negation] Sentence 2: Found negation of 'finished'",
+    "           Affirmative clause: 'After ten minutes , the pastor had finished speaking , and he became a little impatient'",
+    "           Matched to: P_7",
+    "[Negation] Sentence 3: Found negation of 'finished'",
+    "           Affirmative clause: 'After another ten minutes , the pastor had finished speaking'",
+    "           Matched to: P_7",
+    "[Negation] Sentence 6: Found negation of 'end'",
+    "           Affirmative clause: 'do end with the show , stay With the true spirit of charity , just the star video collection ,'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

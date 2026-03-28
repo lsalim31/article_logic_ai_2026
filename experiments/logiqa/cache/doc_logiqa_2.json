@@ -1,0 +1,110 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "MetroBank made ten loans to small companies.",
+      "evidence": "Sentence 0: \"MetroBank made loans to ten small companies\"",
+      "explanation": "This is an atomic factual claim about an action and its recipients/quantity, with no logical connective structure."
+    },
+    {
+      "id": "P_2",
+      "translation": "The loan amounts ranged from $1,000 to $100,000.",
+      "evidence": "Sentence 0: \"in amounts ranging from $1, 000 to $100, 000\"",
+      "explanation": "This is a single descriptive fact about the amounts; it is not a logical combination of smaller propositions in the text."
+    },
+    {
+      "id": "P_3",
+      "translation": "Each of the ten loans had a graduated payment plan.",
+      "evidence": "Sentence 1: \"These ten loans all had graduated payment plans\"",
+      "explanation": "This is a single property attribution to the set of loans; it does not contain explicit connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The scheduled monthly loan payment increased slightly each month.",
+      "evidence": "Sentence 1: \"the scheduled monthly loan payment increased slightly each month\"",
+      "explanation": "This is an atomic claim about the behavior of scheduled payments over time as stated."
+    },
+    {
+      "id": "P_5",
+      "translation": "Each loan had a five-year term.",
+      "evidence": "Sentence 1: \"over the five-year term of the loan\"",
+      "explanation": "This is a single factual attribute (term length) and does not decompose into connectives."
+    },
+    {
+      "id": "P_6",
+      "translation": "The average payment received by MetroBank for the ten loans decreased by the end of the five-year term.",
+      "evidence": "Sentence 2: \"the average payment received by MetroBank for these ten loans had decreased by the end of the five-year term\"",
+      "explanation": "This is an atomic claim about the trend in average received payments by a specified time."
+    },
+    {
+      "id": "P_7",
+      "translation": "There was an apparent discrepancy in the statements about the loans.",
+      "evidence": "Sentence 3: \"most helps to resolve the apparent discrepancy\"",
+      "explanation": "This is an explicit meta-claim in the question stem about the relationship among prior statements, expressed without connectives."
+    },
+    {
+      "id": "P_8",
+      "translation": "A true statement could help resolve the apparent discrepancy.",
+      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
+      "explanation": "This captures the question’s existence/possibility premise (that some truth would resolve the discrepancy) as a standalone claim."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If each loan had a graduated payment plan, then the scheduled monthly payment increased slightly each month.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"graduated payment plans, i.e., the scheduled monthly loan payment increased slightly each month\"",
+      "reasoning": "The text uses \"i.e.\" to define/explain the graduated payment plan in terms of the monthly scheduled increase, making the implication effectively required."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_4 ∧ P_5",
+      "translation": "The scheduled monthly payment increased slightly each month over a five-year term.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"increased slightly each month over the five-year term of the loan\"",
+      "reasoning": "Sentence 1 directly states both features as facts about the loans; treating them jointly reflects the intended combined description."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4 ∧ P_6 ⟹ P_7",
+      "translation": "If scheduled monthly payments increased each month, yet the average received payment decreased by the end, then the statements appear discrepant.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1 + Sentence 2 + Sentence 3 (\"Nonetheless\" + \"apparent discrepancy\")",
+      "reasoning": "The question explicitly frames these facts as an \"apparent discrepancy\"; the link is strongly suggested but still depends on the reader’s assumption that scheduled increases would normally raise received averages."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If there is an apparent discrepancy, then some true statement could help resolve it.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
+      "reasoning": "The question format presupposes a resolvable discrepancy and that at least one candidate statement would help; however, without answer choices, this remains a weaker, meta-level inference."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_8",
+      "translation": "A true statement could help resolve the apparent discrepancy.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_8 ⟹ P_8",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_8: 'A true statement could help resolve the apparent discrepancy.' has modal 'could'",
+    "        Base text: 'A true statement help resolve the apparent discrepancy.'",
+    "        Found existing base: P_8",
+    "        Added constraint: P_8 @1.0",
+    "        Added constraint: P_8 ⟹ P_8 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

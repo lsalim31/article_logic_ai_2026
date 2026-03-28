@@ -1,0 +1,226 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "MetroBank made ten loans to small companies.",
+      "evidence": "Sentence 0: \"MetroBank made loans to ten small companies\"",
+      "explanation": "This is an atomic factual claim about an action and its recipients/quantity, with no logical connective structure."
+    },
+    {
+      "id": "P_2",
+      "translation": "The loan amounts ranged from $1,000 to $100,000.",
+      "evidence": "Sentence 0: \"in amounts ranging from $1, 000 to $100, 000\"",
+      "explanation": "This is a single descriptive fact about the amounts; it is not a logical combination of smaller propositions in the text."
+    },
+    {
+      "id": "P_3",
+      "translation": "Each of the ten loans had a graduated payment plan.",
+      "evidence": "Sentence 1: \"These ten loans all had graduated payment plans\"",
+      "explanation": "This is a single property attribution to the set of loans; it does not contain explicit connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The scheduled monthly loan payment increased slightly each month.",
+      "evidence": "Sentence 1: \"the scheduled monthly loan payment increased slightly each month\"",
+      "explanation": "This is an atomic claim about the behavior of scheduled payments over time as stated."
+    },
+    {
+      "id": "P_5",
+      "translation": "Each loan had a five-year term.",
+      "evidence": "Sentence 1: \"over the five-year term of the loan\"",
+      "explanation": "This is a single factual attribute (term length) and does not decompose into connectives."
+    },
+    {
+      "id": "P_6",
+      "translation": "The average payment received by MetroBank for the ten loans decreased by the end of the five-year term.",
+      "evidence": "Sentence 2: \"the average payment received by MetroBank for these ten loans had decreased by the end of the five-year term\"",
+      "explanation": "This is an atomic claim about the trend in average received payments by a specified time."
+    },
+    {
+      "id": "P_7",
+      "translation": "There was an apparent discrepancy in the statements about the loans.",
+      "evidence": "Sentence 3: \"most helps to resolve the apparent discrepancy\"",
+      "explanation": "This is an explicit meta-claim in the question stem about the relationship among prior statements, expressed without connectives."
+    },
+    {
+      "id": "P_8",
+      "translation": "A true statement could help resolve the apparent discrepancy.",
+      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
+      "explanation": "This captures the question’s existence/possibility premise (that some truth would resolve the discrepancy) as a standalone claim."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If each loan had a graduated payment plan, then the scheduled monthly payment increased slightly each month.",
+      "evidence": "Sentence 1: \"graduated payment plans, i.e., the scheduled monthly loan payment increased slightly each month\"",
+      "reasoning": "The text uses \"i.e.\" to define/explain the graduated payment plan in terms of the monthly scheduled increase, making the implication effectively required.",
+      "list nli": [
+        [
+          5.714582948712632e-05,
+          4.582447581924498e-05,
+          0.9998970031738281
+        ],
+        [
+          0.0001375938591081649,
+          6.591797136934474e-05,
+          0.999796450138092
+        ],
+        [
+          0.00010737225238699466,
+          0.00013766635674983263,
+          0.9997549653053284
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_4 ∧ P_5",
+      "translation": "The scheduled monthly payment increased slightly each month over a five-year term.",
+      "evidence": "Sentence 1: \"increased slightly each month over the five-year term of the loan\"",
+      "reasoning": "Sentence 1 directly states both features as facts about the loans; treating them jointly reflects the intended combined description.",
+      "list nli": [
+        [
+          1.16266646728036e-05,
+          7.617608207510784e-05,
+          0.9999121427536011
+        ],
+        [
+          6.787230813642964e-05,
+          2.3853064703871496e-05,
+          0.9999082088470459
+        ],
+        [
+          6.158741598483175e-05,
+          3.6528577766148373e-05,
+          0.9999018907546997
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_8",
+      "translation": "A true statement could help resolve the apparent discrepancy.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          2.1460777134052478e-05,
+          8.609038195572793e-05,
+          0.9998924732208252
+        ],
+        [
+          3.9915452362038195e-05,
+          8.877895015757531e-05,
+          0.9998712539672852
+        ],
+        [
+          9.15530381462304e-06,
+          0.000124324593343772,
+          0.9998664855957031
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_8 ⟹ P_8",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.003403400769457221,
+          0.01187901385128498,
+          0.9847175478935242
+        ],
+        [
+          0.020419619977474213,
+          0.03393789008259773,
+          0.9456424713134766
+        ],
+        [
+          0.031149720773100853,
+          0.04974808171391487,
+          0.9191021919250488
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4 ∧ P_6 ⟹ P_7",
+      "translation": "If scheduled monthly payments increased each month, yet the average received payment decreased by the end, then the statements appear discrepant.",
+      "evidence": "Sentence 1 + Sentence 2 + Sentence 3 (\"Nonetheless\" + \"apparent discrepancy\")",
+      "reasoning": "The question explicitly frames these facts as an \"apparent discrepancy\"; the link is strongly suggested but still depends on the reader’s assumption that scheduled increases would normally raise received averages.",
+      "list nli": [
+        [
+          1.5135092326090671e-05,
+          0.0001574914058437571,
+          0.9998273849487305
+        ],
+        [
+          9.23423795029521e-05,
+          8.570845966460183e-05,
+          0.9998219609260559
+        ],
+        [
+          2.3350157789536752e-05,
+          0.00017625866166781634,
+          0.9998003840446472
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If there is an apparent discrepancy, then some true statement could help resolve it.",
+      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
+      "reasoning": "The question format presupposes a resolvable discrepancy and that at least one candidate statement would help; however, without answer choices, this remains a weaker, meta-level inference.",
+      "list nli": [
+        [
+          2.2668627934763208e-05,
+          5.746493843616918e-05,
+          0.9999198913574219
+        ],
+        [
+          4.050017014378682e-05,
+          5.3921052312944084e-05,
+          0.9999055862426758
+        ],
+        [
+          2.5798937713261694e-05,
+          7.087413541739807e-05,
+          0.9999033212661743
+        ]
+      ],
+      "weight": 0.75
+    }
+  ]
+}

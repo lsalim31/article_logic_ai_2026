@@ -1,0 +1,95 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "People generally think left-handed people are more likely to have operational accidents than right-handed people.",
+      "evidence": "Sentence 0: \"People generally think that left-handed people are more likely to have operational accidents than right-handed people\"",
+      "explanation": "This is a single claim about a general belief comparing accident likelihoods between two groups; it contains no explicit logical connectives that can be separated into smaller truth-evaluable parts."
+    },
+    {
+      "id": "P_2",
+      "translation": "The belief that left-handed people are more likely to have operational accidents than right-handed people is a misunderstanding.",
+      "evidence": "Sentence 0: \"which is a misunderstanding.\"",
+      "explanation": "This is an atomic evaluation of the belief described earlier; it is not itself a compound conditional or conjunction."
+    },
+    {
+      "id": "P_3",
+      "translation": "Most household-chores accidents involve right-handed people.",
+      "evidence": "Sentence 1: \"In fact, most household chores range from fire burns to cut fingers from right-handed people.\"",
+      "explanation": "This is the core factual assertion offered in the second sentence (a majority claim about who is involved in household-chores accidents)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Some household-chores accidents are fire burns.",
+      "evidence": "Sentence 1: \"range from fire burns\"",
+      "explanation": "This is an example-type claim included in the description of household-chores accidents; it is a simple declarative clause."
+    },
+    {
+      "id": "P_5",
+      "translation": "Some household-chores accidents are cut fingers.",
+      "evidence": "Sentence 1: \"to cut fingers\"",
+      "explanation": "This is another example-type claim included in the description of household-chores accidents; it is a simple declarative clause."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_2 ⟹ ¬P_1",
+      "translation": "If the belief is a misunderstanding, then the belief is false.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: the author calls the belief \"a misunderstanding\"",
+      "reasoning": "Calling a belief a misunderstanding typically signals rejection of that belief, though in principle one could label something a misunderstanding without fully formalizing its negation; hence high but not absolute weight."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "The claim that most household-chores accidents involve right-handed people supports the claim that the earlier belief is a misunderstanding.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1 begins with \"In fact,\" immediately after Sentence 0 concludes \"which is a misunderstanding.\"",
+      "reasoning": "The discourse marker \"In fact\" indicates the author intends P_3 to function as evidence for P_2, but the inference is not deductively guaranteed (household-chores accidents vs operational accidents, and 'most' vs 'more likely')."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_1",
+      "translation": "People generally think left-handed people are more likely to have operational accidents than right-handed people.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_1 ⟹ P_1",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_2",
+      "translation": "The belief that left-handed people are more likely to have operational accidents than right-handed people is a misunderstanding.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'People generally think left-handed people are more likely to have operational accidents than right-handed people.' has modal 'generally'",
+    "        Base text: 'People think left - handed people are more likely to have operational accidents than right - handed people.'",
+    "        Found existing base: P_1",
+    "[Modal] P_2: 'The belief that left-handed people are more likely to have operational accidents than right-handed people is a misunderstanding.' has modal 'likely'",
+    "        Base text: 'The belief that left - handed people are more to have operational accidents than right - handed people is a misunderstanding.'",
+    "        Found existing base: P_2",
+    "[Opposite] P_1: 'generally' has antonyms ['rarely', 'seldom']",
+    "[Opposite] P_2: 'likely' has antonyms ['unlikely', 'improbable']",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

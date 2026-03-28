@@ -1,0 +1,208 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "People generally think left-handed people are more likely to have operational accidents than right-handed people.",
+      "evidence": "Sentence 0: \"People generally think that left-handed people are more likely to have operational accidents than right-handed people\"",
+      "explanation": "This is a single claim about a general belief comparing accident likelihoods between two groups; it contains no explicit logical connectives that can be separated into smaller truth-evaluable parts."
+    },
+    {
+      "id": "P_2",
+      "translation": "The belief that left-handed people are more likely to have operational accidents than right-handed people is a misunderstanding.",
+      "evidence": "Sentence 0: \"which is a misunderstanding.\"",
+      "explanation": "This is an atomic evaluation of the belief described earlier; it is not itself a compound conditional or conjunction."
+    },
+    {
+      "id": "P_3",
+      "translation": "Most household-chores accidents involve right-handed people.",
+      "evidence": "Sentence 1: \"In fact, most household chores range from fire burns to cut fingers from right-handed people.\"",
+      "explanation": "This is the core factual assertion offered in the second sentence (a majority claim about who is involved in household-chores accidents)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Some household-chores accidents are fire burns.",
+      "evidence": "Sentence 1: \"range from fire burns\"",
+      "explanation": "This is an example-type claim included in the description of household-chores accidents; it is a simple declarative clause."
+    },
+    {
+      "id": "P_5",
+      "translation": "Some household-chores accidents are cut fingers.",
+      "evidence": "Sentence 1: \"to cut fingers\"",
+      "explanation": "This is another example-type claim included in the description of household-chores accidents; it is a simple declarative clause."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1",
+      "translation": "People generally think left-handed people are more likely to have operational accidents than right-handed people.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          0.00015174418513197452,
+          0.00010618627857184038,
+          0.9997420907020569
+        ],
+        [
+          0.00032163868308998644,
+          7.684886077186093e-05,
+          0.9996015429496765
+        ],
+        [
+          0.0001167870286735706,
+          0.9964805245399475,
+          0.0034027015790343285
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_1 ⟹ P_1",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.00612763874232769,
+          0.0016343541210517287,
+          0.9922379851341248
+        ],
+        [
+          0.0028038034215569496,
+          0.005797179415822029,
+          0.9913990497589111
+        ],
+        [
+          0.012142123654484749,
+          0.014043837785720825,
+          0.9738140106201172
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_2",
+      "translation": "The belief that left-handed people are more likely to have operational accidents than right-handed people is a misunderstanding.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          2.8249834940652363e-05,
+          0.00012675713514909148,
+          0.999845027923584
+        ],
+        [
+          6.386276800185442e-05,
+          0.00020275096176192164,
+          0.9997333884239197
+        ],
+        [
+          4.058715421706438e-05,
+          0.00023724873608443886,
+          0.9997221827507019
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.00612763874232769,
+          0.0016343541210517287,
+          0.9922379851341248
+        ],
+        [
+          0.0028038034215569496,
+          0.005797179415822029,
+          0.9913990497589111
+        ],
+        [
+          0.012142123654484749,
+          0.014043837785720825,
+          0.9738140106201172
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_2 ⟹ ¬P_1",
+      "translation": "If the belief is a misunderstanding, then the belief is false.",
+      "evidence": "Sentence 0: the author calls the belief \"a misunderstanding\"",
+      "reasoning": "Calling a belief a misunderstanding typically signals rejection of that belief, though in principle one could label something a misunderstanding without fully formalizing its negation; hence high but not absolute weight.",
+      "list nli": [
+        [
+          6.162103090900928e-05,
+          0.0001307487691519782,
+          0.9998076558113098
+        ],
+        [
+          0.00043560427729971707,
+          0.0009158788598142564,
+          0.9986485838890076
+        ],
+        [
+          0.0007674128864891827,
+          0.0010027079842984676,
+          0.9982299208641052
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "The claim that most household-chores accidents involve right-handed people supports the claim that the earlier belief is a misunderstanding.",
+      "evidence": "Sentence 1 begins with \"In fact,\" immediately after Sentence 0 concludes \"which is a misunderstanding.\"",
+      "reasoning": "The discourse marker \"In fact\" indicates the author intends P_3 to function as evidence for P_2, but the inference is not deductively guaranteed (household-chores accidents vs operational accidents, and 'most' vs 'more likely').",
+      "list nli": [
+        [
+          0.00013134366599842906,
+          4.855671795667149e-05,
+          0.9998201727867126
+        ],
+        [
+          0.00016213308845181018,
+          6.128541281213984e-05,
+          0.9997765421867371
+        ],
+        [
+          0.00027126100030727684,
+          4.711067958851345e-05,
+          0.9996815919876099
+        ]
+      ],
+      "weight": 0.75
+    }
+  ]
+}

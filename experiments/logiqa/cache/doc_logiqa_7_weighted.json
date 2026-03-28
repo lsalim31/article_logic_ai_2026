@@ -1,0 +1,165 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A gift is a living gift.",
+      "evidence": "Sentence 0: \"Living gifts refer to ...\"",
+      "explanation": "This is the target classification statement (whether something counts as a living gift) and is not a logical connective."
+    },
+    {
+      "id": "P_2",
+      "translation": "The donor donates money to children.",
+      "evidence": "Sentence 0: \"... donation of money to children ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (children)."
+    },
+    {
+      "id": "P_3",
+      "translation": "The donor donates money to grandchildren.",
+      "evidence": "Sentence 0: \"... donation of money to ... grandchildren ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (grandchildren)."
+    },
+    {
+      "id": "P_4",
+      "translation": "The donor donates money to other relatives.",
+      "evidence": "Sentence 0: \"... donation of money to ... other relatives ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (other relatives)."
+    },
+    {
+      "id": "P_5",
+      "translation": "The donor is alive at the time of the donation.",
+      "evidence": "Sentence 0: \"... when the donor decides to live ...\"",
+      "explanation": "Captures the condition that the gift is made during the donor's lifetime; stated as a simple declarative clause."
+    },
+    {
+      "id": "P_6",
+      "translation": "The money is used for vacations.",
+      "evidence": "Sentence 0: \"... or to use it for vacations ...\"",
+      "explanation": "Atomic usage purpose for the money (vacations)."
+    },
+    {
+      "id": "P_7",
+      "translation": "The money is used for the establishment of trust funds.",
+      "evidence": "Sentence 0: \"... and the establishment of trust funds.\"",
+      "explanation": "Atomic usage purpose for the money (establishing trust funds)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "((P_2 ∨ P_3 ∨ P_4) ∧ P_5) ⟹ P_1",
+      "translation": "Donating money to children, grandchildren, or other relatives while the donor is alive implies it is a living gift.",
+      "evidence": "Sentence 0: \"Living gifts refer to the donation of money to children, grandchildren and other relatives when the donor decides to live\"",
+      "reasoning": "This is presented as a definitional characterization ('refer to'), strongly suggesting sufficiency; slight down-weight because of awkward phrasing ('decides to live').",
+      "list nli": [
+        [
+          0.0001512973103672266,
+          0.0005208383081480861,
+          0.9993278980255127
+        ],
+        [
+          0.00016544453683309257,
+          0.0006958934827707708,
+          0.999138593673706
+        ],
+        [
+          5.3405230573844165e-05,
+          0.0009904842590913177,
+          0.9989560842514038
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "(P_6 ∧ P_7) ⟹ P_1",
+      "translation": "Using the money for vacations and establishing trust funds implies it is a living gift.",
+      "evidence": "Sentence 0: \"... or to use it for vacations and the establishment of trust funds.\"",
+      "reasoning": "The text lists this as an alternative ('or') description, but the exact intended structure is less clear (whether these are examples/uses of the donated money or a separate category), so the implication is weaker.",
+      "list nli": [
+        [
+          0.00015766051365062594,
+          0.00017468928126618266,
+          0.9996676445007324
+        ],
+        [
+          0.00018713499594014138,
+          0.0002725346712395549,
+          0.9995403289794922
+        ],
+        [
+          0.0004462941433303058,
+          0.000359569356078282,
+          0.9991940855979919
+        ]
+      ],
+      "weight": 0.75
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ (P_2 ∨ P_3 ∨ P_4 ∨ P_6 ∨ P_7)",
+      "translation": "If something is a living gift, it involves donating/using money in one of the described ways (to relatives and/or for the listed uses).",
+      "evidence": "Sentence 0: \"Living gifts refer to ...\" (entire definition sentence)",
+      "reasoning": "A definition often suggests necessity as well as sufficiency, but because the sentence mixes recipients, timing, and purposes with 'or'/'and' in a potentially non-exhaustive way, necessity is uncertain.",
+      "list nli": [
+        [
+          0.00024882471188902855,
+          0.0031219362281262875,
+          0.9966291785240173
+        ],
+        [
+          0.0001066012991941534,
+          0.004179554991424084,
+          0.9957138299942017
+        ],
+        [
+          0.00032626776373945177,
+          0.0051643396727740765,
+          0.9945093989372253
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "(P_2 ∨ P_3 ∨ P_4) ⟹ P_5",
+      "translation": "Donations of this type (to children/grandchildren/other relatives as living gifts) occur while the donor is alive.",
+      "evidence": "Sentence 0: \"... donation of money to children, grandchildren and other relatives when the donor decides to live ...\"",
+      "reasoning": "Interpreting the 'when' clause as attaching to the donation-to-relatives portion; however, the grammar is unclear, so this is only moderately supported.",
+      "list nli": [
+        [
+          0.00022523781808558851,
+          0.0003507553192321211,
+          0.9994239807128906
+        ],
+        [
+          0.00014310363621916622,
+          0.0007932636071927845,
+          0.9990636706352234
+        ],
+        [
+          6.568213575519621e-05,
+          0.001173822209239006,
+          0.998760461807251
+        ]
+      ],
+      "weight": 0.6
+    }
+  ]
+}

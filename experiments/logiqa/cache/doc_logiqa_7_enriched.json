@@ -1,0 +1,83 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A gift is a living gift.",
+      "evidence": "Sentence 0: \"Living gifts refer to ...\"",
+      "explanation": "This is the target classification statement (whether something counts as a living gift) and is not a logical connective."
+    },
+    {
+      "id": "P_2",
+      "translation": "The donor donates money to children.",
+      "evidence": "Sentence 0: \"... donation of money to children ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (children)."
+    },
+    {
+      "id": "P_3",
+      "translation": "The donor donates money to grandchildren.",
+      "evidence": "Sentence 0: \"... donation of money to ... grandchildren ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (grandchildren)."
+    },
+    {
+      "id": "P_4",
+      "translation": "The donor donates money to other relatives.",
+      "evidence": "Sentence 0: \"... donation of money to ... other relatives ...\"",
+      "explanation": "Atomic donation relation with a specific recipient class (other relatives)."
+    },
+    {
+      "id": "P_5",
+      "translation": "The donor is alive at the time of the donation.",
+      "evidence": "Sentence 0: \"... when the donor decides to live ...\"",
+      "explanation": "Captures the condition that the gift is made during the donor's lifetime; stated as a simple declarative clause."
+    },
+    {
+      "id": "P_6",
+      "translation": "The money is used for vacations.",
+      "evidence": "Sentence 0: \"... or to use it for vacations ...\"",
+      "explanation": "Atomic usage purpose for the money (vacations)."
+    },
+    {
+      "id": "P_7",
+      "translation": "The money is used for the establishment of trust funds.",
+      "evidence": "Sentence 0: \"... and the establishment of trust funds.\"",
+      "explanation": "Atomic usage purpose for the money (establishing trust funds)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "((P_2 ∨ P_3 ∨ P_4) ∧ P_5) ⟹ P_1",
+      "translation": "Donating money to children, grandchildren, or other relatives while the donor is alive implies it is a living gift.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"Living gifts refer to the donation of money to children, grandchildren and other relatives when the donor decides to live\"",
+      "reasoning": "This is presented as a definitional characterization ('refer to'), strongly suggesting sufficiency; slight down-weight because of awkward phrasing ('decides to live')."
+    },
+    {
+      "id": "C_2",
+      "formula": "(P_6 ∧ P_7) ⟹ P_1",
+      "translation": "Using the money for vacations and establishing trust funds implies it is a living gift.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 0: \"... or to use it for vacations and the establishment of trust funds.\"",
+      "reasoning": "The text lists this as an alternative ('or') description, but the exact intended structure is less clear (whether these are examples/uses of the donated money or a separate category), so the implication is weaker."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_1 ⟹ (P_2 ∨ P_3 ∨ P_4 ∨ P_6 ∨ P_7)",
+      "translation": "If something is a living gift, it involves donating/using money in one of the described ways (to relatives and/or for the listed uses).",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0: \"Living gifts refer to ...\" (entire definition sentence)",
+      "reasoning": "A definition often suggests necessity as well as sufficiency, but because the sentence mixes recipients, timing, and purposes with 'or'/'and' in a potentially non-exhaustive way, necessity is uncertain."
+    },
+    {
+      "id": "C_4",
+      "formula": "(P_2 ∨ P_3 ∨ P_4) ⟹ P_5",
+      "translation": "Donations of this type (to children/grandchildren/other relatives as living gifts) occur while the donor is alive.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"... donation of money to children, grandchildren and other relatives when the donor decides to live ...\"",
+      "reasoning": "Interpreting the 'when' clause as attaching to the donation-to-relatives portion; however, the grammar is unclear, so this is only moderately supported."
+    }
+  ],
+  "_enrichment_log": [
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

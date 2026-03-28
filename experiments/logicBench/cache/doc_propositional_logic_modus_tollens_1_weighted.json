@@ -1,0 +1,196 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Liam finished his work early for the day.",
+      "evidence": "Sentence 0: 'Liam had finished his work early for the day...'",
+      "explanation": "This is a single event/state attribution about Liam and does not contain any logical connective or conditional structure."
+    },
+    {
+      "id": "P_2",
+      "translation": "Liam ordered pizza for dinner on this particular day.",
+      "evidence": "Sentence 0: '...he would typically have ordered pizza for dinner.'; Sentence 1: '...he decided against ordering pizza...'",
+      "explanation": "This is an atomic action claim (ordering pizza for dinner) anchored to the particular day; negation is handled in constraints rather than inside the proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Liam chose something else for dinner on this particular day.",
+      "evidence": "Sentence 1: '...opted for something else instead.'",
+      "explanation": "This is a single choice/action claim about Liam for dinner; it is stated without connectives or negation."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Liam finished his work early for the day.",
+      "evidence": "Sentence 0: 'Liam had finished his work early for the day...'",
+      "reasoning": "This is directly asserted as fact in the text.",
+      "list nli": [
+        [
+          0.9955594539642334,
+          6.923206092324108e-05,
+          0.004371393471956253
+        ],
+        [
+          8.169534703483805e-05,
+          0.9985184073448181,
+          0.001399978413246572
+        ],
+        [
+          0.9996826648712158,
+          2.1333933545975015e-05,
+          0.00029601738788187504
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "¬P_2",
+      "translation": "On this particular day, he decided against ordering pizza.",
+      "evidence": "Sentence 1: '...he decided against ordering pizza...'",
+      "reasoning": "This is explicitly stated for the particular day, so it is treated as a definite negation of ordering pizza that day.",
+      "list nli": [
+        [
+          3.4761727874865755e-05,
+          0.0008728298707865179,
+          0.9990924596786499
+        ],
+        [
+          0.0015639417106285691,
+          6.298916559899226e-05,
+          0.9983730316162109
+        ],
+        [
+          0.999971866607666,
+          6.1358414313872345e-06,
+          2.206754288636148e-05
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "On this particular day, he opted for something else instead.",
+      "evidence": "Sentence 1: '...opted for something else instead.'",
+      "reasoning": "This is explicitly stated as what he did on that day.",
+      "list nli": [
+        [
+          1.4532070053974167e-05,
+          0.9987303614616394,
+          0.0012551643885672092
+        ],
+        [
+          0.9998672008514404,
+          1.6671572666382417e-05,
+          0.00011609860666794702
+        ],
+        [
+          0.9999573230743408,
+          8.564280506107025e-06,
+          3.40367914759554e-05
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_3 ⟹ ¬P_2",
+      "translation": "If he chose something else for dinner, then he did not order pizza for dinner.",
+      "evidence": "Sentence 1: '...opted for something else instead.' (implies non-pizza by 'instead')",
+      "reasoning": "Common-sense/linguistic implication of 'instead' is strong but could be context-dependent (e.g., multiple items), so it is slightly below 1.0.",
+      "list nli": [
+        [
+          6.53499155305326e-05,
+          8.532440551789477e-05,
+          0.9998493194580078
+        ],
+        [
+          5.36483530595433e-05,
+          0.00014521086995955557,
+          0.9998012185096741
+        ],
+        [
+          0.0014467081055045128,
+          0.0008499674731865525,
+          0.9977033734321594
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Finishing work early meant he would typically have ordered pizza for dinner.",
+      "evidence": "Sentence 0: '...which meant that he would typically have ordered pizza for dinner.'",
+      "reasoning": "The word 'typically' indicates a strong tendency but not a strict rule, so the implication is weighted below 1.0.",
+      "list nli": [
+        [
+          2.9575381631730124e-05,
+          5.1796632760670036e-05,
+          0.9999185800552368
+        ],
+        [
+          1.4363483387569431e-05,
+          9.598663746146485e-05,
+          0.999889612197876
+        ],
+        [
+          0.7655121684074402,
+          0.00021761454991064966,
+          0.23427021503448486
+        ]
+      ],
+      "weight": 0.75
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_2 ⟹ ¬P_3",
+      "translation": "If he ordered pizza for dinner, then he did not choose something else for dinner.",
+      "evidence": "Sentence 1: '...opted for something else instead.' (suggests mutual exclusivity with pizza choice)",
+      "reasoning": "Dinner choice is ordinarily exclusive between 'pizza' and 'something else', but edge cases exist (ordering pizza plus other food), so the exclusivity is high-confidence but not absolute.",
+      "list nli": [
+        [
+          0.0030165703501552343,
+          0.0039282627403736115,
+          0.9930551648139954
+        ],
+        [
+          0.016387570649385452,
+          0.019977649673819542,
+          0.963634729385376
+        ],
+        [
+          0.9999001026153564,
+          1.5922278180369176e-05,
+          8.389495633309707e-05
+        ]
+      ],
+      "weight": 0.85
+    }
+  ]
+}
