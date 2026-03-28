@@ -1,0 +1,372 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid",
+      "evidence": "Sentence 0",
+      "explanation": "Event claimed by Charlie Francis"
+    },
+    {
+      "id": "P_2",
+      "translation": "Johnson might test positive",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement with 'might' from worry"
+    },
+    {
+      "id": "P_3",
+      "translation": "Johnson tests positive",
+      "evidence": "Sentence 0",
+      "explanation": "Base event derived from P_2"
+    },
+    {
+      "id": "P_4",
+      "translation": "Johnson worried about testing positive",
+      "evidence": "Sentence 0",
+      "explanation": "Event of worry told by Francis"
+    },
+    {
+      "id": "P_5",
+      "translation": "Francis bragged about Johnson's preparations for a showdown against Carl Lewis",
+      "evidence": "Sentence 1",
+      "explanation": "Statement by Lynda Huey"
+    },
+    {
+      "id": "P_6",
+      "translation": "Huey knew Francis since 1980",
+      "evidence": "Sentence 2",
+      "explanation": "Fact about Huey's acquaintance with Francis"
+    },
+    {
+      "id": "P_7",
+      "translation": "Francis and Angella Taylor Issajenko stayed at Huey's home",
+      "evidence": "Sentence 2",
+      "explanation": "Event mentioned by Huey"
+    },
+    {
+      "id": "P_8",
+      "translation": "Huey saw Francis on a practice track at Seoul",
+      "evidence": "Sentence 3",
+      "explanation": "Observation by Huey"
+    },
+    {
+      "id": "P_9",
+      "translation": "Francis greeted Huey as an old friend",
+      "evidence": "Sentence 3",
+      "explanation": "Event during their meeting"
+    },
+    {
+      "id": "P_10",
+      "translation": "Ben might perform well in the race",
+      "evidence": "Sentence 4",
+      "explanation": "Modal statement with 'might' from conversation"
+    },
+    {
+      "id": "P_11",
+      "translation": "Ben performs well in the race",
+      "evidence": "Sentence 4",
+      "explanation": "Base event derived from P_10"
+    },
+    {
+      "id": "P_12",
+      "translation": "Ben is more afraid of failing the drug test than he is of Carl Lewis",
+      "evidence": "Sentence 4",
+      "explanation": "Statement by Charlie Francis as reported by Huey"
+    },
+    {
+      "id": "P_13",
+      "translation": "Johnson was clean at the Olympics",
+      "evidence": "Sentence 5",
+      "explanation": "Claim by Francis mentioned by Huey"
+    },
+    {
+      "id": "P_14",
+      "translation": "Johnson was taking stanozolol before the Games",
+      "evidence": "Sentence 6",
+      "explanation": "Positive form of 'not taking' from testimony"
+    },
+    {
+      "id": "P_15",
+      "translation": "A mysterious person might have slipped something into Johnson's beverage",
+      "evidence": "Sentence 6",
+      "explanation": "Modal statement with 'might' from testimony"
+    },
+    {
+      "id": "P_16",
+      "translation": "A mysterious person slipped something into Johnson's beverage",
+      "evidence": "Sentence 6",
+      "explanation": "Base event derived from P_15"
+    },
+    {
+      "id": "P_17",
+      "translation": "Francis must have had some reason",
+      "evidence": "Sentence 7",
+      "explanation": "Modal statement with 'must' by Huey"
+    },
+    {
+      "id": "P_18",
+      "translation": "Francis had some reason",
+      "evidence": "Sentence 7",
+      "explanation": "Base event derived from P_17"
+    },
+    {
+      "id": "P_19",
+      "translation": "Ben may not pass the test",
+      "evidence": "Sentence 7",
+      "explanation": "Modal statement with 'may not' by Huey"
+    },
+    {
+      "id": "P_20",
+      "translation": "Ben passes the test",
+      "evidence": "Sentence 7",
+      "explanation": "Base event derived from P_19"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_2",
+      "translation": "Johnson might test positive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Modal claim asserted with certainty"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Johnson tests positive",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 0",
+      "reasoning": "Base event for 'might', weight 0.40 for epistemic possibility"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Johnson tests positive, then he might test positive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Modal pattern constraint: base event satisfies modal claim"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_2",
+      "translation": "If Johnson worried about testing positive, then he might test positive",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Worry implies belief in possibility"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_10",
+      "translation": "Ben might perform well in the race",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Modal claim asserted with certainty"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_11",
+      "translation": "Ben performs well in the race",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 4",
+      "reasoning": "Base event for 'might', weight 0.40 for epistemic possibility"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_11 ⟹ P_10",
+      "translation": "If Ben performs well, then he might perform well",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Modal pattern constraint"
+    },
+    {
+      "id": "C_8",
+      "formula": "¬P_14",
+      "translation": "Johnson was not taking stanozolol before the Games",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "From Francis's testimony, explicitly stated"
+    },
+    {
+      "id": "C_9",
+      "formula": "P_15",
+      "translation": "A mysterious person might have slipped something into Johnson's beverage",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Modal claim asserted with certainty in testimony"
+    },
+    {
+      "id": "C_10",
+      "formula": "P_16",
+      "translation": "A mysterious person slipped something into Johnson's beverage",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 6",
+      "reasoning": "Base event for 'might', weight 0.40 for epistemic possibility"
+    },
+    {
+      "id": "C_11",
+      "formula": "P_16 ⟹ P_15",
+      "translation": "If a mysterious person slipped something, then he might have slipped something",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Modal pattern constraint"
+    },
+    {
+      "id": "C_12",
+      "formula": "P_17",
+      "translation": "Francis must have had some reason",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Modal claim asserted with certainty by Huey"
+    },
+    {
+      "id": "C_13",
+      "formula": "P_18",
+      "translation": "Francis had some reason",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Base event for 'must', weight 1.0 for necessity"
+    },
+    {
+      "id": "C_14",
+      "formula": "P_18 ⟹ P_17",
+      "translation": "If Francis had some reason, then he must have had some reason",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Modal pattern constraint"
+    },
+    {
+      "id": "C_15",
+      "formula": "P_19",
+      "translation": "Ben may not pass the test",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Modal claim asserted with certainty in Huey's statement"
+    },
+    {
+      "id": "C_16",
+      "formula": "P_20",
+      "translation": "Ben passes the test",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 7",
+      "reasoning": "Base event for 'may not', weight 0.40 for epistemic possibility"
+    },
+    {
+      "id": "C_17",
+      "formula": "P_20 ⟹ P_19",
+      "translation": "If Ben passes the test, then he may not pass the test",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "Modal pattern constraint as per rules"
+    },
+    {
+      "id": "C_18",
+      "formula": "P_18 ⟹ P_19",
+      "translation": "If Francis had some reason, then Ben may not pass the test",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7",
+      "reasoning": "From Huey's statement: having reason to think implies the content of thought"
+    },
+    {
+      "id": "C_19",
+      "formula": "P_1",
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_20",
+      "formula": "P_1 ⟹ P_1",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_21",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.45,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'might' implies the base event occurs with weight 0.45"
+    },
+    {
+      "id": "C_22",
+      "formula": "P_10 ⟹ P_11",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.45,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'might' implies the base event occurs with weight 0.45"
+    },
+    {
+      "id": "C_23",
+      "formula": "P_15 ⟹ P_16",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.45,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'might' implies the base event occurs with weight 0.45"
+    },
+    {
+      "id": "C_24",
+      "formula": "P_17 ⟹ P_18",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'must' implies the base event occurs with weight 1.0"
+    },
+    {
+      "id": "C_25",
+      "formula": "P_19 ⟹ P_19",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid' has modal 'banned'",
+    "        Base text: 'Ben Johnson 's urine sample at the Seoul Olympics was spiked with a steroid'",
+    "        Found existing base: P_1",
+    "[Modal] P_2: 'Johnson might test positive' has modal 'might'",
+    "        Base text: 'Johnson test positive'",
+    "        Found existing base: P_3",
+    "[Modal] P_10: 'Ben might perform well in the race' has modal 'might'",
+    "        Base text: 'Ben perform well in the race'",
+    "        Found existing base: P_11",
+    "[Modal] P_15: 'A mysterious person might have slipped something into Johnson's beverage' has modal 'might'",
+    "        Base text: 'A mysterious person have slipped something into Johnson 's beverage'",
+    "        Found existing base: P_16",
+    "[Modal] P_17: 'Francis must have had some reason' has modal 'must'",
+    "        Base text: 'Francis have had some reason'",
+    "        Found existing base: P_18",
+    "[Modal] P_19: 'Ben may not pass the test' has modal 'may'",
+    "        Base text: 'Ben not pass the test'",
+    "        Found existing base: P_19",
+    "        Added constraint: P_1 @1.0",
+    "        Added constraint: P_1 ⟹ P_1 @1.0",
+    "        Added constraint: P_2 ⟹ P_3 @0.45",
+    "        Added constraint: P_10 ⟹ P_11 @0.45",
+    "        Added constraint: P_15 ⟹ P_16 @0.45",
+    "        Added constraint: P_17 ⟹ P_18 @1.0",
+    "        Added constraint: P_19 ⟹ P_19 @1.0",
+    "[Opposite] P_1: 'banned' has antonyms ['permitted', 'allowed', 'required']",
+    "[Negation] Sentence 9: Found negation of 'taking'",
+    "           Affirmative clause: 'that Johnson was taking the steroid , stanozolol , before the Games and that a mysterious person might have slipped something into Johnson 's beverage in the drug - testing area before the sprinter gave his urine specimen'",
+    "           No matching proposition found",
+    "[Negation] Sentence 10: Found negation of 'pass'",
+    "           Affirmative clause: 'Ben may pass the test'",
+    "           Matched to: P_19",
+    "           Added constraint: ¬P_19 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions",
+    {
+      "prop_id": "P_19",
+      "translation": "Ben may not pass the test",
+      "positive_constraint": "C_15",
+      "negative_constraint": "C_26",
+      "nli_score_positive": 0.5258165597915649,
+      "nli_score_negative": 0.007786717265844345,
+      "decision": "keep positive",
+      "removed": "C_26"
+    }
+  ]
+}

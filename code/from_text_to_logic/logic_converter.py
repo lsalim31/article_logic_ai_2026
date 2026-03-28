@@ -145,6 +145,7 @@ class LogicConverter:
         )
 
         # Build API call parameters based on model type
+        
         if is_reasoning_model:
             if is_openrouter:
                 # OpenRouter format - combine system + user, use extra_body
@@ -158,9 +159,33 @@ class LogicConverter:
                         "reasoning": {
                             "effort": self.reasoning_effort,
                             "enabled": True
+                        },
+                        "provider": {
+                            "order": ["DeepSeek", "Together", "Fireworks"],
+                            "ignore": ["Azure"],
+                            "allow_fallbacks": True
                         }
                     }
                 }
+
+        
+        # if is_reasoning_model:
+        #     if is_openrouter:
+        #         # OpenRouter format - combine system + user, use extra_body
+        #         api_params = {
+        #             "model": self.model,
+        #             "messages": [
+        #                 {"role": "user", "content": prompt + "\n\n" + user_content}
+        #             ],
+        #             "max_tokens": self.max_tokens,
+        #             "extra_body": {
+        #                 "reasoning": {
+        #                     "effort": self.reasoning_effort,
+        #                     "enabled": True, 
+        #                     "max_tokens": MAX_TOKENS
+        #                 }
+        #             }
+        #         }
             else:
                 # Direct OpenAI API format
                 api_params = {
