@@ -47,19 +47,19 @@ NLI_CONTRADICTION_THRESHOLD = 0.5  # Min P(contradiction) to keep proposition
 NLI_BATCH_SIZE = 32  # Batch size for efficient inference
 
 # Feature flags
-ENABLE_NLI_FILTERING = True  # Set False to disable NLI filtering
-ENABLE_HYBRID_EMBEDDING = True  # Embed translation + evidence together
+ENABLE_NLI_FILTERING = False  # Set False to disable NLI filtering
+ENABLE_HYBRID_EMBEDDING = False  # Embed translation + evidence together
 
 # Negation handling (Fix 1 from negation_fix_proposal.md)
-ENABLE_AUTO_NEGATION_CORRECTION = True  # Auto-correct polarity mismatches
+ENABLE_AUTO_NEGATION_CORRECTION = False  # Auto-correct polarity mismatches
 ENABLE_NEGATION_WARNINGS = True  # Log warnings for polarity issues
 
 # Confidence thresholds (for future use in experiments)
 CONFIDENCE_THRESHOLD_TRUE = 0.55  # TRUE → UNCERTAIN if confidence below this
-MIN_PROPOSIT3ION_WEIGHT = 0.4  # Low weight → low confidence adjustment
+MIN_PROPOSIT3ION_WEIGHT = 0.3  # Low weight → low confidence adjustment
 
 #Enrich query
-ON_EXPAND_QUERY_SYN = True
+ON_EXPAND_QUERY_SYN = False
 MAX_SYNONYMS = 3
 
 #Adaptative voting
