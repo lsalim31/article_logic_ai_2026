@@ -22,7 +22,7 @@ from openai import OpenAI
 _script_dir = Path(__file__).resolve().parent
 _code_dir = _script_dir.parent.parent.parent / "code"  # Go up 3 levels: dataset -> claude_constructed -> experiments -> code
 if str(_code_dir) not in sys.path:
-    sys.path.insert(0, str(_code_dir))    
+    sys.path.insert(0, str(_code_dir))
 
 from config.retrieval_config import REASONING_MODEL
 
@@ -39,9 +39,9 @@ LOCAL_DATA_PATH = _script_dir.parent.parent.parent / "experiments" / "DocNLI" / 
 
 def get_diverse_premises(num_premises: int) -> list:
     """Load DocNLI from local JSON file and select diverse premises."""
-    
+
     print(f"Loading DocNLI from local file: {LOCAL_DATA_PATH}")
-    
+
     with open(LOCAL_DATA_PATH, 'r') as f:
         data = json.load(f)
 
@@ -259,13 +259,13 @@ def create_dataset(num_premises: int, api_key: str) -> dict:
             },
             "download_timestamp": datetime.now().isoformat(),
             "num_premises": len(premises),
-            "num_examples": len(premises) * HYPOTHESES_PER_LABEL * 2,
+            "num_examples": len(premises) * HYPOTHESES_PER_LABEL * 4,
             "label_distribution": {
                 "entailment": len(premises) * HYPOTHESES_PER_LABEL,
-                "not_entailment": len(premises) * HYPOTHESES_PER_LABEL
+                "not_entailment": len(premises) * HYPOTHESES_PER_LABEL * 3
             },
-            "entailment_percentage": 50.0,
-            "avg_hypotheses_per_premise": HYPOTHESES_PER_LABEL * 2,
+            "entailment_percentage": 25.0,
+            "avg_hypotheses_per_premise": HYPOTHESES_PER_LABEL * 4,
             "is_single_sentence": True
         },
         "premises": []
@@ -280,12 +280,19 @@ def create_dataset(num_premises: int, api_key: str) -> dict:
         try:
             hyps = generate_hypotheses(p['premise'], api_key)
 
+            # Merge the 3 non-entailment categories
+            not_entailment_hyps = (
+                hyps.get('contradiction', []) +
+                hyps.get('uncertain', []) +
+                hyps.get('not_mentioned', [])
+            )
+
             premise_data = {
                 "premise_id": i,
                 "premise": p['premise'],
                 "premise_word_count": p['premise_words'],
                 "num_entailment": len(hyps['entailment']),
-                "num_not_entailment": len(hyps['not_entailment']),
+                "num_not_entailment": len(not_entailment_hyps),
                 "hypotheses": []
             }
 
@@ -294,16 +301,16 @@ def create_dataset(num_premises: int, api_key: str) -> dict:
                 premise_data['hypotheses'].append({
                     "hypothesis": h,
                     "label": "entailment",
-                    "original_idx": i * (HYPOTHESES_PER_LABEL * 2) + j
+                    "original_idx": i * (HYPOTHESES_PER_LABEL * 4) + j
                 })
                 print(f"  ✅ Entailment: {h[:60]}...")
 
-            # Add not_entailment hypotheses
-            for j, h in enumerate(hyps['not_entailment']):
+            # Add not_entailment hypotheses (contradiction + uncertain + not_mentioned)
+            for j, h in enumerate(not_entailment_hyps):
                 premise_data['hypotheses'].append({
                     "hypothesis": h,
                     "label": "not_entailment",
-                    "original_idx": i * (HYPOTHESES_PER_LABEL * 2) + len(hyps['entailment']) + j
+                    "original_idx": i * (HYPOTHESES_PER_LABEL * 4) + len(hyps['entailment']) + j
                 })
                 print(f"  ❌ Not_entailment: {h[:60]}...")
 
@@ -366,3 +373,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
