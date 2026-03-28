@@ -14,12 +14,12 @@ NLI_MODEL = "cross-encoder/nli-deberta-v3-large"
 MAX_COMPLETION_TOKENS = 42000
 MAX_TOKENS = 42000
 
-REASONING_MODEL = "deepseek/deepseek-r1"
+REASONING_MODEL = "gpt-5.2"
 REASONING_EFFORT = "medium"
 TEMPERATURE_LOGIC_CONVERTER = 0.1
 
 
-TRANSLATE_MODEL = "deepseek/deepseek-chat"
+TRANSLATE_MODEL = "openai/gpt-5-nano"
 REASONING_EFFORT_TRANSLATE = "medium"
 TEMPERATURE_TRANSLATE = 0.3
 
