@@ -124,11 +124,20 @@ class LogicConverter:
         """
         # Determine if this is a reasoning model (GPT-5.x, o1, o3, etc.)
         base_model = self.model.replace("openai/", "")
+        # is_reasoning_model = (
+        #     base_model.startswith("gpt-5") or
+        #     base_model.startswith("o1") or
+        #     base_model.startswith("o3")
+        # )
+
         is_reasoning_model = (
             base_model.startswith("gpt-5") or
             base_model.startswith("o1") or
-            base_model.startswith("o3")
+            base_model.startswith("o3") or
+            "deepseek-r1" in base_model or
+            "deepseek/deepseek-r1" in self.model
         )
+
 
         is_openrouter = (
             self.api_key.startswith('sk-or-v1-') or
@@ -176,13 +185,20 @@ class LogicConverter:
             }
 
         # Make API call
+        
+        
         response = self.client.chat.completions.create(**api_params)
         response_text = response.choices[0].message.content
-
+        
+        if response_text is None:
+            # Try reasoning_content for reasoning models
+            response_text = getattr(response.choices[0].message, 'reasoning_content', None)
+        
         if response_text is None:
             raise ValueError("[logic_converter] LLM returned empty response")
 
         return response_text.strip()
+    
 
 
     def _repair_json(self, json_text: str) -> str:

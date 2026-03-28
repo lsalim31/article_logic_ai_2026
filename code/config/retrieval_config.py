@@ -32,14 +32,14 @@ TEMPERATURE_TRANSLATE = 0.3
 #
 ############################################
 
-PROMPT_TRANSLATION = "prompt_translate_new"
+PROMPT_TRANSLATION = "prompt_translate"
 
 # For the multi-sentence unit
 PROMPT_PASS_1 = "prompt_pass_1"
 PROMPT_PASS_2 = "prompt_pass_2"
 
-SBERT_TOP_K = 50  # Increased from 20 for broader recall
-SBERT_MIN_SIMILARITY = 0  # Minimum cosine similarity threshold
+SBERT_TOP_K = 10  # Increased from 20 for broader recall
+SBERT_MIN_SIMILARITY = 0.1 # Minimum cosine similarity threshold
 
 # NLI cross-encoder settings (Stage 2: Semantic filtering)
 NLI_ENTAILMENT_THRESHOLD = 0.5  # Min P(entailment) to keep proposition
@@ -52,7 +52,7 @@ ENABLE_HYBRID_EMBEDDING = False  # Embed translation + evidence together
 
 # Negation handling (Fix 1 from negation_fix_proposal.md)
 ENABLE_AUTO_NEGATION_CORRECTION = False  # Auto-correct polarity mismatches
-ENABLE_NEGATION_WARNINGS = True  # Log warnings for polarity issues
+ENABLE_NEGATION_WARNINGS = False  # Log warnings for polarity issues
 
 # Confidence thresholds (for future use in experiments)
 CONFIDENCE_THRESHOLD_TRUE = 0.55  # TRUE → UNCERTAIN if confidence below this
@@ -64,9 +64,9 @@ MAX_SYNONYMS = 3
 
 #Adaptative voting
 TRIGGER_QUERY = 0.8      # NLI confidence threshold to trigger voting
-ADDITIONAL_LLM_QUERY = 4  # Number of extra LLM calls when triggered
+ADDITIONAL_LLM_QUERY = 1  # Number of extra LLM calls when triggered
 
-SUBSET_TOP_K_RETRIEVAL = 20
+SUBSET_TOP_K_RETRIEVAL = 10
 SUBSET_NUM_CLUSTERS = 3
 SUBSET_TOP_PER_CLUSTER = 2
 SUBSET_ENTAILMENT_THRESHOLD = 0.5
@@ -81,7 +81,8 @@ MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 USE_OPENIE = False
 
 HARDNESS_CONSTANT = 0.9
-PROMPT_EXTRACTION = "prompt_long_openIE_Agn_nomodality"
+PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
+#"prompt_long_openIE_Agn_nomodality"
 
 USE_ENRICHMENT = False
 USE_SUBSET = False
