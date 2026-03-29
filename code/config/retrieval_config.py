@@ -14,7 +14,7 @@ _config_dir = Path(__file__).resolve().parent
 _profiles_dir = _config_dir / "profiles"
 
 # Allow override via environment variable or default to 'default.yaml'
-_profile_name = os.environ.get("CONFIG_PROFILE", "default.yaml")
+_profile_name = os.environ.get("CONFIG_PROFILE", "default_openAI.yaml")
 _profile_path = _profiles_dir / _profile_name
 
 # Global config storage

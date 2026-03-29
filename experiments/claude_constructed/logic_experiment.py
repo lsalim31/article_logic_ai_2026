@@ -8,6 +8,18 @@ Usage:
     python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY
     python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY --premise-id 0
     python experiment_logify_DocNLI.py --api-key $OPENROUTER_API_KEY --limit 5
+    
+# Use default config
+    python logic_experiment.py --api-key $OPENROUTER_API_KEY
+
+# Use specific config
+    python logic_experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_openAI.yaml
+
+    python logic_experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_deepseek.yaml
+
+    python logic_experiment.py --api-key $OPENROUTER_API_KEY --config profiles/topk1_query0_IE_0_enrich_0_subset_0.yaml
+    
+    
 """
 
 import argparse
@@ -20,16 +32,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-
-# Add code directory to Python path
-#_script_dir = Path(__file__).resolve().parent
-#_code_dir = _script_dir.parent.parent
-#if str(_code_dir) not in sys.path:
-#    sys.path.insert(0, str(_code_dir))
-    
-#_code_dir = _script_dir.parent.parent / "code"  # /workspace/repo/code
-#sys.path.insert(0, str(_code_dir))
-
+# Setup paths FIRST 
 _script_dir = Path(__file__).resolve().parent
 _repo_root = _script_dir.parent.parent          # /workspace/repo
 _code_dir = _repo_root / "code"                 # /workspace/repo/code
@@ -37,12 +40,29 @@ _code_dir = _repo_root / "code"                 # /workspace/repo/code
 sys.path.insert(0, str(_repo_root))   # For experiments.* imports
 sys.path.insert(0, str(_code_dir))    # For from_text_to_logic.* imports
 
+_pre_parser = argparse.ArgumentParser(add_help=False)
+_pre_parser.add_argument("--config", type=str, default=None)
+_pre_args, _ = _pre_parser.parse_known_args()
+
+# Load config if specified
+# Load config if specified
+if _pre_args.config:
+    from config.retrieval_config import load_config, _profiles_dir
+    
+    config_path = Path(_pre_args.config)
+    # If relative path, look in the profiles directory
+    if not config_path.is_absolute():
+        config_path = _profiles_dir / config_path.name
+    
+    load_config(config_path)
+
 
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
 from logic_solver import LogicSolver
+
 from config.retrieval_config import (
     HARDNESS_CONSTANT,
     MAX_TOKENS,
@@ -50,10 +70,10 @@ from config.retrieval_config import (
     REASONING_MODEL,
     SBERT_TOP_K,
     TEMPERATURE_LOGIC_CONVERTER,
-    TRANSLATE_MODEL,
-    DEFAULT_MIN_WORDS, 
-    DEFAULT_MAX_WORDS
+    TRANSLATE_MODEL
 )
+
+
 
 # old
 #CACHE_DIR = _script_dir / "cache"
@@ -427,6 +447,7 @@ def run_experiment(
     results_payload = {
         "metadata": {
             "timestamp": timestamp,
+            "config_profile": config_path,
             "data_path": str(data_path),
             "logify_model": REASONING_MODEL,
             "query_model": query_model,
@@ -684,6 +705,13 @@ def main() -> int:
         default=True,
         help="Enable detailed output",
     )
+    
+    parser.add_argument(
+    "--config",
+    type=str,
+    default=None,
+    help="Path to YAML config profile (e.g., profiles/default_openAI.yaml)"
+)
 
     args = parser.parse_args()
 
@@ -695,10 +723,15 @@ def main() -> int:
         print(f"Error: Data not found: {args.data_path}")
         return 1
 
+    if not args.config:
+        print("Error: No configuration file. Select one in /code/config/profiles")
+        return 1
+    
     try:
         run_experiment(
             api_key=args.api_key,
             data_path=args.data_path,
+            config_path=args.config,
             query_model=args.query_model,
             temperature=args.temperature,
             reasoning_effort=args.reasoning_effort,
