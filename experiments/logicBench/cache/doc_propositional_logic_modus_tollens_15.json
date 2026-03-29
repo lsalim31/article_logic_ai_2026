@@ -1,0 +1,156 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Henry typically forgets his wallet",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement implied by 'notorious for forgetting' (habitual/typical behavior)."
+    },
+    {
+      "id": "P_2",
+      "translation": "Henry forgets his wallet",
+      "evidence": "Sentence 0",
+      "explanation": "Base (non-modal) version of the habitual claim."
+    },
+    {
+      "id": "P_3",
+      "translation": "On that day, Henry forgot his wallet",
+      "evidence": "Sentence 1",
+      "explanation": "Factual event describing the particular day referenced in the story."
+    },
+    {
+      "id": "P_4",
+      "translation": "On that day, Henry was supposed to buy lunch",
+      "evidence": "Sentence 1",
+      "explanation": "Modal/deontic statement using 'supposed to'."
+    },
+    {
+      "id": "P_5",
+      "translation": "On that day, Henry buys lunch",
+      "evidence": "Sentence 1",
+      "explanation": "Base (non-modal) version corresponding to 'was supposed to buy lunch'."
+    },
+    {
+      "id": "P_6",
+      "translation": "On that day, Henry is able to buy lunch",
+      "evidence": "Sentence 3",
+      "explanation": "Ability statement; used so that 'not able to buy lunch' can be represented as ¬P_6 in constraints."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Henry typically forgets his wallet",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The text asserts this characterization directly (treated as the original modal statement)."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Henry forgets his wallet",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 0",
+      "reasoning": "Derived base statement from a 'typically'/habitual claim (0.65)."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Henry forgets his wallet, then Henry typically forgets his wallet",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required modal-link constraint: P_base ⟹ P_modal."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "On that day, Henry forgot his wallet",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated as a factual event about the referenced day."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "On that day, Henry was supposed to buy lunch",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Original modal/deontic statement is asserted by the text."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "On that day, Henry buys lunch",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1",
+      "reasoning": "Base statement derived from 'supposed to' (treated like 'should' = 0.85)."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_5 ⟹ P_4",
+      "translation": "If Henry buys lunch that day, then he was supposed to buy lunch that day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Required modal-link constraint: P_base ⟹ P_modal."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_3 ⟹ ¬P_6",
+      "translation": "If on that day Henry forgot his wallet, then on that day Henry is not able to buy lunch",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit rule/conditional stated in the text."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_6",
+      "translation": "On that day, Henry is able to buy lunch",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Explicitly stated outcome ('he was still able to buy lunch')."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.7,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'typically' implies the base event occurs with weight 0.7"
+    },
+    {
+      "id": "C_11",
+      "formula": "P_4 ⟹ P_4",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'Henry typically forgets his wallet' has modal 'typically'",
+    "        Base text: 'Henry forgets his wallet'",
+    "        Found existing base: P_2",
+    "[Modal] P_4: 'On that day, Henry was supposed to buy lunch' has modal 'supposed'",
+    "        Base text: 'On that day, Henry was to buy lunch'",
+    "        Found existing base: P_4",
+    "        Added constraint: P_1 ⟹ P_2 @0.7",
+    "        Added constraint: P_4 ⟹ P_4 @1.0",
+    "[Opposite] P_1: 'typically' has antonyms ['rarely', 'never', 'seldom']",
+    "[Negation] Sentence 2: Found negation of 'be'",
+    "           Affirmative clause: 'According to the rule , if Henry forgot his wallet , then he would be able to buy lunch .'",
+    "           Matched to: P_3",
+    "           Added constraint: ¬P_3 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions",
+    {
+      "prop_id": "P_3",
+      "translation": "On that day, Henry forgot his wallet",
+      "positive_constraint": "C_4",
+      "negative_constraint": "C_12",
+      "nli_score_positive": 0.22058498859405518,
+      "nli_score_negative": 0.007821456529200077,
+      "decision": "keep positive",
+      "removed": "C_12"
+    }
+  ]
+}

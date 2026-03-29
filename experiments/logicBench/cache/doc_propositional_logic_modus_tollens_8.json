@@ -1,0 +1,138 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual event about Daniel waking up and the morning being gloomy"
+    },
+    {
+      "id": "P_2",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic mental-state report (realization)"
+    },
+    {
+      "id": "P_3",
+      "translation": "Daniel forgot to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic fact extracted from the realization content"
+    },
+    {
+      "id": "P_4",
+      "translation": "Daniel remembered a rule",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic fact about remembering (rule content handled separately as conditional)"
+    },
+    {
+      "id": "P_5",
+      "translation": "Daniel gets wet in the rain",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic consequent referenced by the remembered rule"
+    },
+    {
+      "id": "P_6",
+      "translation": "Daniel felt a sense of worry",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic emotional-state report"
+    },
+    {
+      "id": "P_7",
+      "translation": "Daniel managed to stay dry",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual outcome"
+    },
+    {
+      "id": "P_8",
+      "translation": "Daniel was relieved",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic emotional-state report"
+    },
+    {
+      "id": "P_9",
+      "translation": "Daniel has to face the consequences of getting wet in the rain",
+      "evidence": "Sentence 2",
+      "explanation": "Positive (non-negated) version of 'didn't have to face the consequences'"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual event"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual mental state"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Daniel forgot to take his umbrella",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated (as content of what he realized)"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Daniel remembered a rule",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated factual event"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_5",
+      "translation": "If Daniel forgot to take his umbrella, then Daniel gets wet in the rain",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional rule stated in the text"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Daniel felt a sense of worry",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated factual emotional state"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Daniel managed to stay dry",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated factual outcome"
+    },
+    {
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Daniel was relieved",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated factual emotional state"
+    },
+    {
+      "id": "C_9",
+      "formula": "¬P_9",
+      "translation": "Daniel does not have to face the consequences of getting wet in the rain",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated negation ('didn't have to face') represented as ¬ of a positive primitive proposition"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'have'",
+    "           Affirmative clause: 'that he did have to face the consequences of getting wet in the rain'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

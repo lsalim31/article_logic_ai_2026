@@ -1,0 +1,205 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella had been working hard on her project",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Isabella's effort."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finished her project on time",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent event extracted from the embedded conditional; not asserted as having occurred."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent event extracted from the embedded conditional."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella fails to receive a bonus from her company",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement capturing the narrative outcome ('wouldn't be receiving a bonus') without using explicit logical negation in the proposition text."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement describing Isabella's prior expectation/hope."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella had been working hard on her project",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact.",
+      "list nli": [
+        [
+          1.3438208043226041e-05,
+          6.604835652979091e-05,
+          0.9999204874038696
+        ],
+        [
+          8.615595106675755e-06,
+          9.518580918665975e-05,
+          0.9998961687088013
+        ],
+        [
+          1.6926805983530357e-05,
+          0.00010207557352259755,
+          0.9998810291290283
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finished her project on time, then Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional embedded in the text ('if she finished it on time, she would receive a bonus').",
+      "list nli": [
+        [
+          3.1793140806257725e-05,
+          9.86553932307288e-05,
+          0.9998695850372314
+        ],
+        [
+          3.278770236647688e-05,
+          0.00013266551832202822,
+          0.9998345375061035
+        ],
+        [
+          5.8318173614679836e-06,
+          0.0003980259643867612,
+          0.9995961785316467
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Isabella fails to receive a bonus from her company",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated narrative outcome ('wouldn't be receiving a bonus').",
+      "list nli": [
+        [
+          0.00010881593334488571,
+          8.215072011807933e-05,
+          0.9998090863227844
+        ],
+        [
+          0.0010688340989872813,
+          8.72780365170911e-05,
+          0.9988439083099365
+        ],
+        [
+          0.010692103765904903,
+          0.00011745133815566078,
+          0.9891904592514038
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated as background to her disappointment ('as she had hoped').",
+      "list nli": [
+        [
+          1.4618335626437329e-05,
+          7.01966491760686e-05,
+          0.9999151229858398
+        ],
+        [
+          1.0174791896133684e-05,
+          0.00010935574391623959,
+          0.9998804330825806
+        ],
+        [
+          6.432964437408373e-05,
+          7.760590233374387e-05,
+          0.999858021736145
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "If Isabella fails to receive a bonus from her company, then Isabella does not receive a bonus from her company",
+      "evidence": "Sentence 1",
+      "reasoning": "Definitional relation: 'fails to receive a bonus' entails 'does not receive a bonus'.",
+      "list nli": [
+        [
+          0.0007376660942099988,
+          0.015523544512689114,
+          0.9837387800216675
+        ],
+        [
+          0.03147166222333908,
+          0.013867701403796673,
+          0.9546606540679932
+        ],
+        [
+          0.5760830640792847,
+          0.043974827975034714,
+          0.37994205951690674
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "¬P_3 ⟹ P_4",
+      "translation": "If Isabella does not receive a bonus from her company, then Isabella fails to receive a bonus from her company",
+      "evidence": "Sentence 1",
+      "reasoning": "Definitional relation in the reverse direction to align P_4 with the negation of P_3.",
+      "list nli": [
+        [
+          0.0022184362169355154,
+          0.011834746226668358,
+          0.9859468340873718
+        ],
+        [
+          0.01685095578432083,
+          0.002821496222168207,
+          0.9803275465965271
+        ],
+        [
+          0.06596884876489639,
+          0.0035698257852345705,
+          0.9304613471031189
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

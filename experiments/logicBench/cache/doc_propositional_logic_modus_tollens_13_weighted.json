@@ -1,0 +1,248 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Jackson decided to have a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic decision statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Jackson ate a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Implied action from deciding to have pizza for dinner; used as antecedent for the conditional"
+    },
+    {
+      "id": "P_3",
+      "translation": "Jackson knew that eating the slice of pizza would leave him unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic knowledge-ascription summarizing the reported conditional expectation"
+    },
+    {
+      "id": "P_4",
+      "translation": "Jackson felt unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic outcome statement (phrased without negation as 'unsatisfied')"
+    },
+    {
+      "id": "P_5",
+      "translation": "Jackson felt completely satisfied",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual outcome statement"
+    },
+    {
+      "id": "P_6",
+      "translation": "Jackson felt satisfied afterwards",
+      "evidence": "Sentence 2",
+      "explanation": "Weaker base satisfaction claim entailed by 'completely satisfied'"
+    },
+    {
+      "id": "P_7",
+      "translation": "Jackson was surprised",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic affective reaction stated by 'to his surprise'"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Jackson decided to have a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual event",
+      "list nli": [
+        [
+          0.00010977867350447923,
+          3.307224687887356e-05,
+          0.9998571872711182
+        ],
+        [
+          0.00011118861584691331,
+          3.3861753763630986e-05,
+          0.9998549222946167
+        ],
+        [
+          0.0008032808545976877,
+          6.408459012163803e-05,
+          0.9991326928138733
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Jackson knew that eating the slice of pizza would leave him unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated knowledge claim",
+      "list nli": [
+        [
+          6.48709392407909e-05,
+          3.673764513223432e-05,
+          0.9998984336853027
+        ],
+        [
+          0.0002725449448917061,
+          6.652016600128263e-05,
+          0.9996609687805176
+        ],
+        [
+          0.002638440579175949,
+          7.727507181698456e-05,
+          0.9972842931747437
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_5",
+      "translation": "Jackson felt completely satisfied",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated factual outcome ('actually felt')",
+      "list nli": [
+        [
+          9.080554445972666e-05,
+          3.489788650767878e-05,
+          0.9998742341995239
+        ],
+        [
+          0.00011902039841515943,
+          4.7739213187014684e-05,
+          0.9998332262039185
+        ],
+        [
+          0.00012685843103099614,
+          0.9515432119369507,
+          0.04832998290657997
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_7",
+      "translation": "Jackson was surprised",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated reaction ('to his surprise')",
+      "list nli": [
+        [
+          0.00038224199670366943,
+          0.00014433017349801958,
+          0.9994733929634094
+        ],
+        [
+          0.0008393519674427807,
+          0.0004933698219247162,
+          0.9986672401428223
+        ],
+        [
+          0.0007899773772805929,
+          0.0005430608289316297,
+          0.9986670017242432
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "If Jackson felt completely satisfied, then Jackson felt satisfied afterwards",
+      "evidence": "Sentence 2",
+      "reasoning": "Semantic strengthening: 'completely satisfied' entails 'satisfied'",
+      "list nli": [
+        [
+          0.0007365825586020947,
+          0.00010102654778165743,
+          0.9991624355316162
+        ],
+        [
+          0.0008371977601200342,
+          0.00033905552118085325,
+          0.9988237023353577
+        ],
+        [
+          0.0011834892211481929,
+          5.832719762111083e-05,
+          0.9987581968307495
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.65,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.65,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_2",
+      "translation": "Jackson ate a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "reasoning": "Plausible but not explicitly stated; inferred from deciding to have pizza for dinner and subsequent discussion of consequences",
+      "list nli": [
+        [
+          0.0005649792728945613,
+          8.895133214537054e-05,
+          0.9993460774421692
+        ],
+        [
+          0.0008468470186926425,
+          5.9332473028916866e-05,
+          0.9990938901901245
+        ],
+        [
+          0.00026375046581961215,
+          0.01226655300706625,
+          0.9874696731567383
+        ]
+      ],
+      "weight": 0.65
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Jackson ate the slice of pizza for dinner, then Jackson felt unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional content is explicitly reported as something he 'knew'; treated as a strong (but potentially defeasible) rule rather than a guaranteed fact about the world",
+      "list nli": [
+        [
+          0.0001549219450680539,
+          4.487829937716015e-05,
+          0.9998002648353577
+        ],
+        [
+          0.0008937071543186903,
+          0.00011700280447257683,
+          0.9989892840385437
+        ],
+        [
+          0.002424319041892886,
+          0.0003504966734908521,
+          0.9972251653671265
+        ]
+      ],
+      "weight": 0.85
+    }
+  ]
+}

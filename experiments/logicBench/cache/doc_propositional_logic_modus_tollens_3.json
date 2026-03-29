@@ -1,0 +1,71 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mason decides to leave his job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the explicit conditional."
+    },
+    {
+      "id": "P_2",
+      "translation": "Mason receives salary",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic base proposition used to represent the salary-receipt predicate (the text asserts its negation in the conditional consequent)."
+    },
+    {
+      "id": "P_3",
+      "translation": "Mason receives his salary",
+      "evidence": "Sentence 1",
+      "explanation": "Factual assertion that Mason receives salary (stated explicitly)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "evidence": "Sentence 2",
+      "explanation": "Factual assertion that Mason receives a regular paycheck."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ ¬P_2",
+      "translation": "If Mason decides to leave his job, then Mason does not receive salary",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional; the consequent is expressed as a negation over the atomic salary-receipt proposition."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Mason receives his salary",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct factual statement."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Direct factual statement."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 0: Found negation of 'receive'",
+    "           Affirmative clause: 'If Mason decides to leave his job , he will receive any salary .'",
+    "           Matched to: P_3",
+    "           Added constraint: ¬P_3 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions",
+    {
+      "prop_id": "P_3",
+      "translation": "Mason receives his salary",
+      "positive_constraint": "C_2",
+      "negative_constraint": "C_4",
+      "nli_score_positive": 0.9892751574516296,
+      "nli_score_negative": 0.019219471141695976,
+      "decision": "keep positive",
+      "removed": "C_4"
+    }
+  ]
+}

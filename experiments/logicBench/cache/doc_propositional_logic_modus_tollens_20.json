@@ -1,0 +1,112 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Lucas decided to skip breakfast one morning",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual action/decision described in the narrative"
+    },
+    {
+      "id": "P_2",
+      "translation": "Lucas skipped breakfast one morning",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic event corresponding to the described decision to skip breakfast"
+    },
+    {
+      "id": "P_3",
+      "translation": "Skipping breakfast makes Lucas feel tired during the day",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic causal/content statement embedded under 'knowing that it would make him feel tired'"
+    },
+    {
+      "id": "P_4",
+      "translation": "Lucas knows that skipping breakfast makes him feel tired during the day",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic knowledge-ascription ('despite knowing that ...')"
+    },
+    {
+      "id": "P_5",
+      "translation": "Lucas feels tired during the day",
+      "evidence": "Sentence 0",
+      "explanation": "Base state referenced by 'feel tired during the day' (kept non-negated as required)"
+    },
+    {
+      "id": "P_6",
+      "translation": "Lucas is surprised",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic affective state indicated by 'to his surprise'"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Lucas decided to skip breakfast one morning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual event"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Lucas skipped breakfast one morning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Narrative indicates he carried out skipping breakfast"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Lucas knows that skipping breakfast makes him feel tired during the day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Knowledge is directly asserted ('despite knowing')"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Skipping breakfast makes Lucas feel tired during the day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The content of what he knows is presented as a definite expectation in the story context"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "If Lucas knows that skipping breakfast makes him tired, then skipping breakfast makes him tired (content entailment)",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Bridges the knowledge-ascription to its propositional content"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_3 ⟹ (P_2 ⟹ P_5)",
+      "translation": "If skipping breakfast makes Lucas tired, then if Lucas skipped breakfast, Lucas feels tired during the day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Represents the causal expectation as an implication from skipping breakfast to tiredness"
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_5",
+      "translation": "Lucas does not feel tired during the day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated outcome ('he didn't feel tired at all')"
+    },
+    {
+      "id": "C_8",
+      "formula": "P_6",
+      "translation": "Lucas is surprised",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated affective reaction ('to his surprise')"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'feel'",
+    "           Affirmative clause: 'However , to his surprise , he did feel tired at all .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

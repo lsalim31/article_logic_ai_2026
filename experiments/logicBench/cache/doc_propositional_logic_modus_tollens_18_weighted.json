@@ -1,0 +1,447 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "John is always a hardworking individual",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic modal-frequency claim using 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "John is a hardworking individual",
+      "evidence": "Sentence 0",
+      "explanation": "Base (non-modal) version of the 'always' statement"
+    },
+    {
+      "id": "P_3",
+      "translation": "John believed that having a good job would give him the financial stability he desired",
+      "evidence": "Sentence 0",
+      "explanation": "Factual report of John's belief (belief stated as an atomic attitude proposition)"
+    },
+    {
+      "id": "P_4",
+      "translation": "John has a good job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent content extracted from a believed conditional ('having a good job')"
+    },
+    {
+      "id": "P_5",
+      "translation": "John has the financial stability he desires",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent content extracted from a believed conditional ('financial stability he desired')"
+    },
+    {
+      "id": "P_6",
+      "translation": "John was convinced that if he had a good job, he would have the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "explanation": "Factual report of John's conviction (attitude proposition)"
+    },
+    {
+      "id": "P_7",
+      "translation": "John has the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent content extracted from the believed conditional about investing means"
+    },
+    {
+      "id": "P_8",
+      "translation": "John believed that investing in stocks would be a smart financial decision",
+      "evidence": "Sentence 1",
+      "explanation": "Factual report of John's belief (attitude proposition)"
+    },
+    {
+      "id": "P_9",
+      "translation": "Investing in stocks is a smart financial decision",
+      "evidence": "Sentence 1",
+      "explanation": "Belief content stated (not asserted as fact; extracted from 'he believed would be')"
+    },
+    {
+      "id": "P_10",
+      "translation": "John was dedicated",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual claim from 'Despite his dedication...'"
+    },
+    {
+      "id": "P_11",
+      "translation": "John made efforts",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual claim from '...and efforts...'"
+    },
+    {
+      "id": "P_12",
+      "translation": "John is able to invest in stocks",
+      "evidence": "Sentence 2",
+      "explanation": "Positive ability proposition used so that the text's 'couldn't invest' can be represented as a negated constraint"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "John is always a hardworking individual",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit 'always' statement asserted in the text",
+      "list nli": [
+        [
+          2.1813260900671594e-05,
+          4.711210567620583e-05,
+          0.9999310970306396
+        ],
+        [
+          2.038103593804408e-05,
+          5.069920371170156e-05,
+          0.9999289512634277
+        ],
+        [
+          3.495541386655532e-05,
+          3.8263737224042416e-05,
+          0.9999268054962158
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "John is a hardworking individual",
+      "evidence": "Sentence 0",
+      "reasoning": "Base proposition derived from 'always'; 'always' treated as maximal strength",
+      "list nli": [
+        [
+          2.6047891878988594e-05,
+          4.375287244329229e-05,
+          0.9999301433563232
+        ],
+        [
+          1.9241702830186114e-05,
+          5.208639777265489e-05,
+          0.9999287128448486
+        ],
+        [
+          3.862607991322875e-05,
+          3.863683377858251e-05,
+          0.9999227523803711
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If John is hardworking, then John is always hardworking",
+      "evidence": "Sentence 0",
+      "reasoning": "Required modal-pattern constraint per instructions",
+      "list nli": [
+        [
+          0.0003666026168502867,
+          0.00021505588665604591,
+          0.9994183778762817
+        ],
+        [
+          0.00041151861660182476,
+          0.0003654332831501961,
+          0.999222993850708
+        ],
+        [
+          3.9113714592531323e-05,
+          0.0007835503784008324,
+          0.9991772770881653
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "John believed that having a good job would give him the financial stability he desired",
+      "evidence": "Sentence 0",
+      "reasoning": "Factual report of John's belief",
+      "list nli": [
+        [
+          1.6275451343972236e-05,
+          6.051297896192409e-05,
+          0.9999232292175293
+        ],
+        [
+          2.485564436938148e-05,
+          5.634340413962491e-05,
+          0.9999188184738159
+        ],
+        [
+          2.4212991775129922e-05,
+          7.319699216168374e-05,
+          0.999902606010437
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "John was convinced that if he had a good job, he would have the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of John's conviction",
+      "list nli": [
+        [
+          1.2012642400804907e-05,
+          7.309424108825624e-05,
+          0.9999148845672607
+        ],
+        [
+          3.080342139583081e-05,
+          6.340627442114055e-05,
+          0.9999058246612549
+        ],
+        [
+          4.7245644964277744e-05,
+          4.849328252021223e-05,
+          0.9999042749404907
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_8",
+      "translation": "John believed that investing in stocks would be a smart financial decision",
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of John's belief",
+      "list nli": [
+        [
+          2.731193853833247e-05,
+          4.3591349822236225e-05,
+          0.9999290704727173
+        ],
+        [
+          2.6769921532832086e-05,
+          5.051640982856043e-05,
+          0.9999227523803711
+        ],
+        [
+          1.4685955648019444e-05,
+          7.570313027827069e-05,
+          0.9999096393585205
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "John was dedicated",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated ('Despite his dedication...')",
+      "list nli": [
+        [
+          2.202289215347264e-05,
+          8.130046626320109e-05,
+          0.9998966455459595
+        ],
+        [
+          7.68170430092141e-05,
+          5.5790111218811944e-05,
+          0.99986732006073
+        ],
+        [
+          0.00014323891082312912,
+          0.00010907471005339175,
+          0.9997476935386658
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "John made efforts",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated ('...and efforts...')",
+      "list nli": [
+        [
+          6.406023021554574e-05,
+          4.70764389319811e-05,
+          0.9998888969421387
+        ],
+        [
+          1.4314923646452371e-05,
+          0.00010371387907071039,
+          0.9998819828033447
+        ],
+        [
+          2.5968474801629782e-05,
+          0.00014300843758974224,
+          0.999830961227417
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "¬P_12",
+      "translation": "John is not able to invest in stocks",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit 'couldn't invest in stocks' (treated as a definite negation of ability)",
+      "list nli": [
+        [
+          3.678150096675381e-05,
+          6.75938863423653e-05,
+          0.9998955726623535
+        ],
+        [
+          0.00013845950888935477,
+          0.00012385807349346578,
+          0.9997376799583435
+        ],
+        [
+          0.0009584550862200558,
+          0.0003012358502019197,
+          0.9987403750419617
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0",
+      "list nli": [
+        [
+          0.00020442239474505186,
+          0.0009725196869112551,
+          0.9988229870796204
+        ],
+        [
+          0.0007629427709616721,
+          0.005545117426663637,
+          0.9936919212341309
+        ],
+        [
+          0.00047833070857450366,
+          0.028401685878634453,
+          0.9711199402809143
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.4,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If John has a good job, then John has the financial stability he desires",
+      "evidence": "Sentence 0",
+      "reasoning": "Conditional appears as the content of John's belief rather than an asserted fact about the world",
+      "list nli": [
+        [
+          1.1272289157204796e-05,
+          0.0001254848757525906,
+          0.9998632669448853
+        ],
+        [
+          1.2682734450208955e-05,
+          0.00012887490447610617,
+          0.9998583793640137
+        ],
+        [
+          2.4747469069552608e-05,
+          0.00011798084597103298,
+          0.9998573064804077
+        ]
+      ],
+      "weight": 0.4
+    },
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.4,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_4 ⟹ P_7",
+      "translation": "If John has a good job, then John has the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional appears as the content of John's conviction rather than an asserted fact about the world",
+      "list nli": [
+        [
+          1.9201916074962355e-05,
+          0.00010970130097121,
+          0.9998711347579956
+        ],
+        [
+          1.5186839846137445e-05,
+          0.0001536016643512994,
+          0.9998311996459961
+        ],
+        [
+          4.2985950130969286e-05,
+          0.00014614015526603907,
+          0.9998108744621277
+        ]
+      ],
+      "weight": 0.4
+    },
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.4,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Investing in stocks is a smart financial decision",
+      "evidence": "Sentence 1",
+      "reasoning": "Presented as something John believed; not asserted as objectively true",
+      "list nli": [
+        [
+          1.9397257347009145e-05,
+          5.596287883236073e-05,
+          0.9999246597290039
+        ],
+        [
+          3.790130722336471e-05,
+          3.855629256577231e-05,
+          0.999923586845398
+        ],
+        [
+          2.1027130060247146e-05,
+          6.753025809302926e-05,
+          0.9999114274978638
+        ]
+      ],
+      "weight": 0.4
+    }
+  ]
+}

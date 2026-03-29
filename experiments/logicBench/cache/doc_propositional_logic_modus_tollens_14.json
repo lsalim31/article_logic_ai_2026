@@ -1,0 +1,165 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is an avid book collector",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic descriptive fact about Scarlett"
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett had always dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement containing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Base version of P_2 with 'always' removed"
+    },
+    {
+      "id": "P_4",
+      "translation": "Scarlett has a cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic fact implied by 'her cherished collection'"
+    },
+    {
+      "id": "P_5",
+      "translation": "Scarlett believed she would keep a rare book that she stumbled upon",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic attitude report (belief) stated in the narrative"
+    },
+    {
+      "id": "P_6",
+      "translation": "Scarlett stumbled upon a rare book",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the 'if' clause (inside the belief report)"
+    },
+    {
+      "id": "P_7",
+      "translation": "Scarlett decided to keep the rare book",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent action extracted from the belief content"
+    },
+    {
+      "id": "P_8",
+      "translation": "Scarlett made the rare book part of her literary treasures",
+      "evidence": "Sentence 1",
+      "explanation": "Second consequent action extracted from the belief content"
+    },
+    {
+      "id": "P_9",
+      "translation": "Scarlett found a book one day",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic event described in the narrative"
+    },
+    {
+      "id": "P_10",
+      "translation": "Scarlett decided to exclude the book from her collection",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic action capturing 'decided not to keep it' without using negation"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Scarlett is an avid book collector",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated descriptive fact"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Scarlett had always dreamt of finding a rare book to add to her cherished collection",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Original modal statement ('always') is asserted in the text"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Derived base proposition; 'always' corresponds to weight 1.0"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Scarlett dreamt of finding a rare book, then Scarlett had always dreamt of finding a rare book (modal-pattern constraint)",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required linkage for modal/base pair per instructions"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Scarlett has a cherished collection",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly described as 'her cherished collection'"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "Scarlett believed she would keep a rare book that she stumbled upon",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of Scarlett's belief"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If Scarlett stumbled upon a rare book, then Scarlett decided to keep the rare book",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 1",
+      "reasoning": "This implication is presented as the content of Scarlett's belief rather than an objective law; given moderate support (not explicitly guaranteed to occur)"
+    },
+    {
+      "id": "C_8",
+      "formula": "P_6 ⟹ P_8",
+      "translation": "If Scarlett stumbled upon a rare book, then Scarlett made the rare book part of her literary treasures",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 1",
+      "reasoning": "Also part of the stated belief content; moderate support"
+    },
+    {
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Scarlett found a book one day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated narrative event"
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "Scarlett decided to exclude the book from her collection",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated narrative decision ('decided not to keep it') expressed without negation"
+    },
+    {
+      "id": "C_11",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_2: 'Scarlett had always dreamt of finding a rare book to add to her cherished collection' has modal 'always'",
+    "        Base text: 'Scarlett had dreamt of finding a rare book to add to her cherished collection'",
+    "        Found existing base: P_2",
+    "        Added constraint: P_2 ⟹ P_2 @1.0",
+    "[Opposite] P_2: 'always' has antonyms ['never']",
+    "[Negation] Sentence 2: Found negation of 'keep'",
+    "           Affirmative clause: 'to keep it in her collection'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

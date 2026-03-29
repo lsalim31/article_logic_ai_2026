@@ -1,0 +1,170 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Olivia had always been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Modal/frequency claim using 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "Olivia had been known for her green thumb",
+      "evidence": "Sentence 0",
+      "explanation": "Base proposition derived by removing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "Olivia prided herself on her ability to plant beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic attitude statement (pride) about planting ability"
+    },
+    {
+      "id": "P_4",
+      "translation": "Olivia prided herself on her ability to care for beautiful trees",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic attitude statement (pride) about caring ability"
+    },
+    {
+      "id": "P_5",
+      "translation": "Olivia planted a tree",
+      "evidence": "Sentence 2",
+      "explanation": "Antecedent extracted from the conditional rule"
+    },
+    {
+      "id": "P_6",
+      "translation": "Olivia would undoubtedly take care of the tree she planted",
+      "evidence": "Sentence 2",
+      "explanation": "Modal claim using 'undoubtedly'"
+    },
+    {
+      "id": "P_7",
+      "translation": "Olivia takes care of the tree she planted",
+      "evidence": "Sentence 2",
+      "explanation": "Base proposition derived by removing 'undoubtedly'"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Olivia had always been known for her green thumb",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The narrative asserts this 'always' claim."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Olivia had been known for her green thumb",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Base event derived from an 'always' statement; treated as fully supported here."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Olivia had been known for her green thumb, then Olivia had always been known for her green thumb (modal-pattern link)",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required modal-pattern constraint per instructions."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Olivia prided herself on her ability to plant beautiful trees",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Stated as a fact in the text."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Olivia prided herself on her ability to care for beautiful trees",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Stated as a fact in the text."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Olivia would undoubtedly take care of the tree she planted",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "The rule is explicitly given with a strong certainty marker ('undoubtedly')."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Olivia takes care of the tree she planted",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Base proposition derived from 'undoubtedly'; treated as fully supported given the certainty phrasing."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_7 ⟹ P_6",
+      "translation": "If Olivia takes care of the tree she planted, then Olivia would undoubtedly take care of the tree she planted (modal-pattern link)",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Required modal-pattern constraint per instructions."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If Olivia would undoubtedly take care of the tree she planted, then Olivia takes care of the tree she planted",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Strengthened modal statement entails the non-modal base event."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "If Olivia planted a tree, then Olivia would undoubtedly take care of it",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit conditional rule stated in the text."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0"
+    },
+    {
+      "id": "C_13",
+      "formula": "P_6 ⟹ P_6",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'Olivia had always been known for her green thumb' has modal 'always'",
+    "        Base text: 'Olivia had been known for her green thumb'",
+    "        Found existing base: P_2",
+    "[Modal] P_6: 'Olivia would undoubtedly take care of the tree she planted' has modal 'undoubtedly'",
+    "        Base text: 'Olivia would take care of the tree she planted'",
+    "        Found existing base: P_6",
+    "        Added constraint: P_1 ⟹ P_2 @1.0",
+    "        Added constraint: P_6 ⟹ P_6 @1.0",
+    "[Opposite] P_1: 'always' has antonyms ['never']",
+    "[Opposite] P_6: 'undoubtedly' has antonyms ['doubtfully']",
+    "[Negation] Sentence 3: Found negation of 'take'",
+    "           Affirmative clause: 'However , she wo take care of it .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions",
+    {
+      "prop_id": "P_7",
+      "translation": "Olivia takes care of the tree she planted",
+      "positive_constraint": "C_7",
+      "negative_constraint": "C_11",
+      "nli_score_positive": 0.11475838720798492,
+      "nli_score_negative": 0.006644512061029673,
+      "decision": "keep positive",
+      "removed": "C_11"
+    }
+  ]
+}

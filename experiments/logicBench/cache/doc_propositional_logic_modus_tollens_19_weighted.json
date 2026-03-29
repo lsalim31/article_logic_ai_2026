@@ -1,0 +1,179 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Ethan's passion beginning early"
+    },
+    {
+      "id": "P_2",
+      "translation": "Ethan's passion for cooking was fueled by his grandmother's delectable treats",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic causal/factual statement about what fueled Ethan's passion"
+    },
+    {
+      "id": "P_3",
+      "translation": "Ethan aspired to become a chef",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual statement about Ethan's aspiration"
+    },
+    {
+      "id": "P_4",
+      "translation": "Ethan pursued this path",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the embedded 'if' clause"
+    },
+    {
+      "id": "P_5",
+      "translation": "Ethan will make a delicious cake",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the embedded 'if' clause; also used to represent the later negated claim without using negation inside the proposition"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact",
+      "list nli": [
+        [
+          3.310670217615552e-05,
+          5.459907333715819e-05,
+          0.9999122619628906
+        ],
+        [
+          9.864146704785526e-06,
+          0.00010287923942087218,
+          0.999887228012085
+        ],
+        [
+          5.563736522162799e-06,
+          0.00015207959222607315,
+          0.9998422861099243
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Ethan's passion for cooking was fueled by his grandmother's delectable treats",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact",
+      "list nli": [
+        [
+          3.38899226335343e-05,
+          3.976844163844362e-05,
+          0.9999263286590576
+        ],
+        [
+          3.3204381907125935e-05,
+          4.1898918425431475e-05,
+          0.999924898147583
+        ],
+        [
+          5.7743531215237454e-05,
+          4.482833173824474e-05,
+          0.9998973608016968
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Ethan aspired to become a chef",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated narrative fact",
+      "list nli": [
+        [
+          9.217531624017283e-05,
+          3.1268198654288426e-05,
+          0.9998764991760254
+        ],
+        [
+          1.1413846550567541e-05,
+          0.00011953690409427509,
+          0.9998689889907837
+        ],
+        [
+          4.778714355779812e-06,
+          0.0002241907495772466,
+          0.9997710585594177
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_5",
+      "translation": "Ethan will not make a delicious cake",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated negation ('won't') with certainty; encoded as ¬P_5 since propositions cannot contain negation",
+      "list nli": [
+        [
+          0.9616764187812805,
+          0.0006293689948506653,
+          0.037694238126277924
+        ],
+        [
+          0.987255334854126,
+          0.0002907649031840265,
+          0.01245382521301508
+        ],
+        [
+          0.9970698356628418,
+          0.00018847563478630036,
+          0.0027415838558226824
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.4,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Ethan pursued this path, then Ethan will make a delicious cake",
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional appears under 'believing that', so treated as a weaker (belief-based) implication rather than an asserted fact",
+      "list nli": [
+        [
+          2.690163819352165e-05,
+          6.0194121033418924e-05,
+          0.9999128580093384
+        ],
+        [
+          3.4519067412475124e-05,
+          0.0001518962235422805,
+          0.9998136162757874
+        ],
+        [
+          5.268643144518137e-05,
+          0.00015052188246045262,
+          0.9997968077659607
+        ]
+      ],
+      "weight": 0.4
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual event about Daniel waking up and the morning being gloomy"
+    },
+    {
+      "id": "P_2",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic mental-state report (realization)"
+    },
+    {
+      "id": "P_3",
+      "translation": "Daniel forgot to take his umbrella",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic fact extracted from the realization content"
+    },
+    {
+      "id": "P_4",
+      "translation": "Daniel remembered a rule",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic fact about remembering (rule content handled separately as conditional)"
+    },
+    {
+      "id": "P_5",
+      "translation": "Daniel gets wet in the rain",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic consequent referenced by the remembered rule"
+    },
+    {
+      "id": "P_6",
+      "translation": "Daniel felt a sense of worry",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic emotional-state report"
+    },
+    {
+      "id": "P_7",
+      "translation": "Daniel managed to stay dry",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual outcome"
+    },
+    {
+      "id": "P_8",
+      "translation": "Daniel was relieved",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic emotional-state report"
+    },
+    {
+      "id": "P_9",
+      "translation": "Daniel has to face the consequences of getting wet in the rain",
+      "evidence": "Sentence 2",
+      "explanation": "Positive (non-negated) version of 'didn't have to face the consequences'"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Daniel woke up on a gloomy morning",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual event",
+      "list nli": [
+        [
+          8.820733637548983e-05,
+          4.6344783186214045e-05,
+          0.9998654127120972
+        ],
+        [
+          3.1915878935251385e-05,
+          0.00011630647350102663,
+          0.9998517036437988
+        ],
+        [
+          3.277100404375233e-05,
+          0.0002138348645530641,
+          0.9997534155845642
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Daniel realized that he had forgotten to take his umbrella",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual mental state",
+      "list nli": [
+        [
+          2.4303391910507344e-05,
+          5.909344326937571e-05,
+          0.9999165534973145
+        ],
+        [
+          1.6200458048842847e-05,
+          7.079342321958393e-05,
+          0.9999129772186279
+        ],
+        [
+          1.065627748175757e-05,
+          8.533769869245589e-05,
+          0.9999040365219116
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Daniel forgot to take his umbrella",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated (as content of what he realized)",
+      "list nli": [
+        [
+          3.118722452200018e-05,
+          7.422680937452242e-05,
+          0.9998946189880371
+        ],
+        [
+          7.630325853824615e-06,
+          0.00010830630344571546,
+          0.9998840093612671
+        ],
+        [
+          6.989858775341418e-06,
+          0.0001488260895712301,
+          0.9998441934585571
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Daniel remembered a rule",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated factual event",
+      "list nli": [
+        [
+          4.1308256186312065e-05,
+          7.324846228584647e-05,
+          0.9998854398727417
+        ],
+        [
+          2.5154915419989266e-05,
+          0.00015147139492910355,
+          0.9998233914375305
+        ],
+        [
+          2.839306580426637e-05,
+          0.00038121678517200053,
+          0.9995904564857483
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_5",
+      "translation": "If Daniel forgot to take his umbrella, then Daniel gets wet in the rain",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional rule stated in the text",
+      "list nli": [
+        [
+          7.823537089279853e-06,
+          0.00023007193522062153,
+          0.9997621178627014
+        ],
+        [
+          3.20438016387925e-06,
+          0.00030807615257799625,
+          0.9996887445449829
+        ],
+        [
+          0.00013360106095205992,
+          0.0003124897484667599,
+          0.9995538592338562
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Daniel felt a sense of worry",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated factual emotional state",
+      "list nli": [
+        [
+          5.451796096167527e-05,
+          0.00033259691554121673,
+          0.9996128678321838
+        ],
+        [
+          0.00028938654577359557,
+          0.0001970800367416814,
+          0.9995135068893433
+        ],
+        [
+          0.0002019235398620367,
+          0.0003031942469533533,
+          0.9994949102401733
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Daniel managed to stay dry",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated factual outcome",
+      "list nli": [
+        [
+          8.165309554897249e-05,
+          9.408078039996326e-05,
+          0.9998243451118469
+        ],
+        [
+          4.027207614853978e-05,
+          0.00035841227509081364,
+          0.9996013045310974
+        ],
+        [
+          0.001894723391160369,
+          0.0004436320159584284,
+          0.9976615905761719
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Daniel was relieved",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated factual emotional state",
+      "list nli": [
+        [
+          2.654920353961643e-05,
+          0.00014161458238959312,
+          0.9998317956924438
+        ],
+        [
+          0.00011569404159672558,
+          0.00012713448086287826,
+          0.9997572302818298
+        ],
+        [
+          0.0005288095562718809,
+          5.6487173424102366e-05,
+          0.9994146823883057
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "¬P_9",
+      "translation": "Daniel does not have to face the consequences of getting wet in the rain",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated negation ('didn't have to face') represented as ¬ of a positive primitive proposition",
+      "list nli": [
+        [
+          4.2718820623122156e-05,
+          0.00047012936556711793,
+          0.9994871616363525
+        ],
+        [
+          1.5674986570957117e-05,
+          0.0013351001543924212,
+          0.9986492991447449
+        ],
+        [
+          0.03305943310260773,
+          0.000632289913482964,
+          0.9663082361221313
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

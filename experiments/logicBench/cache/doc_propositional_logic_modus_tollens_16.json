@@ -1,0 +1,46 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is late for work",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the conditional statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett receives a warning",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent outcome in the conditional statement"
+    },
+    {
+      "id": "P_3",
+      "translation": "Today Scarlett receives a warning",
+      "evidence": "Sentence 1",
+      "explanation": "Positive atomic version of the negated factual claim about today"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is late for work, then she will receive a warning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional stated as a definite consequence"
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Today, Scarlett did not receive a warning",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit factual negation; represented as negation over the positive atomic proposition"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receive'",
+    "           Affirmative clause: 'Today , Scarlett did receive a warning .'",
+    "           Matched to: P_3",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

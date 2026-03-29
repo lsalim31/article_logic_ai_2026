@@ -1,0 +1,185 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Benjamin's anticipation"
+    },
+    {
+      "id": "P_2",
+      "translation": "Benjamin anticipated his trip to the beach for weeks",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement specifying the duration of anticipation"
+    },
+    {
+      "id": "P_3",
+      "translation": "Benjamin's friends told him a rule about going to the beach and swimming",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual statement about what the friends communicated"
+    },
+    {
+      "id": "P_4",
+      "translation": "Benjamin is going to the beach",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent extracted from the quoted conditional"
+    },
+    {
+      "id": "P_5",
+      "translation": "Benjamin will go swimming",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the quoted conditional"
+    },
+    {
+      "id": "P_6",
+      "translation": "Benjamin went swimming",
+      "evidence": "Sentence 2",
+      "explanation": "Base positive event used so that the explicit negation can be represented as a constraint"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual claim",
+      "list nli": [
+        [
+          3.0048362532397732e-05,
+          0.00010697662946768105,
+          0.9998629093170166
+        ],
+        [
+          1.4822006960457657e-05,
+          0.00024766873684711754,
+          0.9997374415397644
+        ],
+        [
+          0.0004146549617871642,
+          0.0001376894215354696,
+          0.9994476437568665
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Benjamin anticipated his trip to the beach for weeks",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated factual claim",
+      "list nli": [
+        [
+          1.6524625607416965e-05,
+          7.565326814074069e-05,
+          0.9999078512191772
+        ],
+        [
+          4.463992081582546e-05,
+          5.661536124534905e-05,
+          0.9998987913131714
+        ],
+        [
+          0.00010154397750739008,
+          2.407647843938321e-05,
+          0.9998743534088135
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Benjamin's friends told him a rule about going to the beach and swimming",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated factual claim about a communication",
+      "list nli": [
+        [
+          0.0008440183592028916,
+          0.00035975503851659596,
+          0.9987962245941162
+        ],
+        [
+          0.0025176953058689833,
+          8.91702002263628e-05,
+          0.9973931312561035
+        ],
+        [
+          0.002854358870536089,
+          0.00010080849460791796,
+          0.9970448613166809
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_6",
+      "translation": "Benjamin did not end up going swimming",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated factual negation; represented as negation of the positive atomic proposition",
+      "list nli": [
+        [
+          4.2447827581781894e-05,
+          4.6169843699317425e-05,
+          0.9999114274978638
+        ],
+        [
+          0.0009102862095460296,
+          2.6375621018814854e-05,
+          0.9990633130073547
+        ],
+        [
+          0.000990646774880588,
+          2.5593702957849018e-05,
+          0.9989836812019348
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Benjamin is going to the beach, then Benjamin will go swimming",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional, but presented as reported speech (friends' statement), so modeled with slightly less than full certainty",
+      "list nli": [
+        [
+          6.016081533744e-05,
+          0.00038764841156080365,
+          0.9995521903038025
+        ],
+        [
+          5.066769062977983e-06,
+          0.0006023215246386826,
+          0.9993926286697388
+        ],
+        [
+          2.5321525754407048e-05,
+          0.000685004168190062,
+          0.9992896318435669
+        ]
+      ],
+      "weight": 0.85
+    }
+  ]
+}

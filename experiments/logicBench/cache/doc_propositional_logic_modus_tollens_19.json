@@ -1,0 +1,82 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Ethan's passion beginning early"
+    },
+    {
+      "id": "P_2",
+      "translation": "Ethan's passion for cooking was fueled by his grandmother's delectable treats",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic causal/factual statement about what fueled Ethan's passion"
+    },
+    {
+      "id": "P_3",
+      "translation": "Ethan aspired to become a chef",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual statement about Ethan's aspiration"
+    },
+    {
+      "id": "P_4",
+      "translation": "Ethan pursued this path",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the embedded 'if' clause"
+    },
+    {
+      "id": "P_5",
+      "translation": "Ethan will make a delicious cake",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the embedded 'if' clause; also used to represent the later negated claim without using negation inside the proposition"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Ethan's passion for cooking ignited at a young age",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Ethan's passion for cooking was fueled by his grandmother's delectable treats",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Ethan aspired to become a chef",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated narrative fact"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Ethan pursued this path, then Ethan will make a delicious cake",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional appears under 'believing that', so treated as a weaker (belief-based) implication rather than an asserted fact"
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_5",
+      "translation": "Ethan will not make a delicious cake",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated negation ('won't') with certainty; encoded as ¬P_5 since propositions cannot contain negation"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'make'",
+    "           Affirmative clause: 'However , he wo make a delicious cake .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Theodore has a pet dog",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the conditional statement."
+    },
+    {
+      "id": "P_2",
+      "translation": "Theodore takes his pet dog out for a walk",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent action described in the conditional statement."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Theodore has a pet dog, then Theodore takes it out for a walk",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional ('If ..., he will ...') stated in the text.",
+      "list nli": [
+        [
+          0.002069982001557946,
+          0.008708585053682327,
+          0.989221453666687
+        ],
+        [
+          0.00014367203402798623,
+          0.9900583624839783,
+          0.009797966107726097
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Theodore does not take his dog out for a walk",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negation ('he would not take his dog out for a walk'); represented as negation of the corresponding atomic proposition.",
+      "list nli": [
+        [
+          0.0012422936270013452,
+          0.0006803747965022922,
+          0.9980772733688354
+        ],
+        [
+          0.9999635219573975,
+          7.862149686843622e-06,
+          2.8618138458114117e-05
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

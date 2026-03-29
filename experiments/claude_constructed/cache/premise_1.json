@@ -1,0 +1,203 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Convicted felons may own guns",
+      "evidence": "Sentence 0: 'even convicted felons may own guns'",
+      "explanation": "Modal statement with 'may' in legal context, asserted by judge's ruling"
+    },
+    {
+      "id": "P_2",
+      "translation": "Convicted felons own guns",
+      "evidence": "Derived from Sentence 0: base event without modal word",
+      "explanation": "Base form of P_1 for modal pattern"
+    },
+    {
+      "id": "P_3",
+      "translation": "The charge of possession of a firearm by a felon against Edward Brown was dismissed",
+      "evidence": "'dismissed a charge of possession of a firearm by a felon against Edward Brown'",
+      "explanation": "Factual event from the judge's ruling"
+    },
+    {
+      "id": "P_4",
+      "translation": "Amendment backers did not intend to allow felons to own guns",
+      "evidence": "'Prosecutors had argued that the amendment's backers did not intend to allow felons to own guns'",
+      "explanation": "Statement from prosecutors' argument, not affirmed by judge"
+    },
+    {
+      "id": "P_5",
+      "translation": "Nothing in the amendment indicated intent to restrict felons",
+      "evidence": "'the judge said nothing in the amendment indicated such an intent'",
+      "explanation": "Judge's statement contradicting prosecutors' argument"
+    },
+    {
+      "id": "P_6",
+      "translation": "Maine's right to keep and bear arms amendment is the most broad and least restrictive",
+      "evidence": "'Maine's right to keep and bear arms amendment is the most broad and least restrictive of any of the 43 similar state amendments'",
+      "explanation": "Judge's descriptive statement about the amendment"
+    },
+    {
+      "id": "P_7",
+      "translation": "The case will be appealed",
+      "evidence": "'Attorney General James E. Tierney said Saturday that the case would be appealed'",
+      "explanation": "Statement by Attorney General about future action"
+    },
+    {
+      "id": "P_8",
+      "translation": "Attorney General thinks the judge is wrong",
+      "evidence": "'adding, ``With all due respect to Justice Perkins, we think he is wrong.''''",
+      "explanation": "AG's opinion expressed in the text"
+    },
+    {
+      "id": "P_9",
+      "translation": "Every citizen has a right to keep and bear arms",
+      "evidence": "'The amendment declared, ``Every citizen has a right to keep and bear arms''",
+      "explanation": "Content of the constitutional amendment"
+    },
+    {
+      "id": "P_10",
+      "translation": "The right to keep and bear arms shall never be questioned",
+      "evidence": "'and this right shall never be questioned.''",
+      "explanation": "Part of the amendment declaration"
+    },
+    {
+      "id": "P_11",
+      "translation": "There is no rational connection between Brown's previous conviction and his ownership of a firearm",
+      "evidence": "'saying ``there is simply no rational connection'' between Brown's previous conviction and his ownership of a firearm.'",
+      "explanation": "Judge's reasoning for dismissing the gun possession charge"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Convicted felons may own guns",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: ruling asserted by judge",
+      "reasoning": "Modal claim with deontic 'may' in legal context, stated with certainty in the ruling"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Convicted felons own guns",
+      "llm_weight": 1.0,
+      "evidence": "Derived from Sentence 0",
+      "reasoning": "For deontic 'may', base event has weight 1.0 as per modal pattern rules"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If convicted felons own guns, then they may own guns",
+      "llm_weight": 1.0,
+      "evidence": "Modal pattern from Sentence 0",
+      "reasoning": "Standard modal pattern constraint ensuring base implies modal claim"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "The gun possession charge against Edward Brown was dismissed",
+      "llm_weight": 1.0,
+      "evidence": "Factual event described in the text",
+      "reasoning": "Clearly stated factual statement with no modality"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "Nothing in the amendment indicated intent to restrict felons",
+      "llm_weight": 1.0,
+      "evidence": "Judge's statement reported in the text",
+      "reasoning": "Asserted as part of judge's reasoning, treated as factual in context"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Maine's right to keep and bear arms amendment is the most broad and least restrictive",
+      "llm_weight": 1.0,
+      "evidence": "Judge's quote in the text",
+      "reasoning": "Descriptive statement asserted by judge"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "The case will be appealed",
+      "llm_weight": 1.0,
+      "evidence": "Attorney General's statement",
+      "reasoning": "Future action stated by authoritative source"
+    },
+    {
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Attorney General thinks the judge is wrong",
+      "llm_weight": 1.0,
+      "evidence": "AG's direct quote",
+      "reasoning": "Opinion expressed clearly in the text"
+    },
+    {
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Every citizen has a right to keep and bear arms",
+      "llm_weight": 1.0,
+      "evidence": "Amendment declaration quoted in the text",
+      "reasoning": "Constitutional provision stated as fact"
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "The right to keep and bear arms shall never be questioned",
+      "llm_weight": 1.0,
+      "evidence": "Amendment declaration quoted in the text",
+      "reasoning": "Part of the amendment, stated with 'shall never', implying high certainty"
+    },
+    {
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "There is no rational connection between Brown's previous conviction and his ownership of a firearm",
+      "llm_weight": 1.0,
+      "evidence": "Judge's reasoning quoted in the text",
+      "reasoning": "Asserted as part of the rationale for dismissal"
+    },
+    {
+      "id": "C_12",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 0.5,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'may' implies the base event occurs with weight 0.5"
+    },
+    {
+      "id": "C_13",
+      "formula": "P_10 ⟹ P_10",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_14",
+      "formula": "¬P_4",
+      "translation": "It is not the case that Amendment backers did not intend to allow felons to own guns",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'Convicted felons may own guns' has modal 'may'",
+    "        Base text: 'Convicted felons own guns'",
+    "        Found existing base: P_2",
+    "[Modal] P_10: 'The right to keep and bear arms shall never be questioned' has modal 'never'",
+    "        Base text: 'The right to keep and bear arms shall be questioned'",
+    "        Found existing base: P_10",
+    "        Added constraint: P_1 ⟹ P_2 @0.5",
+    "        Added constraint: P_10 ⟹ P_10 @1.0",
+    "[Opposite] P_10: 'never' has antonyms ['often', 'typically', 'usually', 'sometimes', 'always', 'frequently']",
+    "[Negation] Sentence 2: Found negation of 'intend'",
+    "           Affirmative clause: 'that the amendment 's backers did intend to allow felons to own guns'",
+    "           Matched to: P_4",
+    "           Added constraint: ¬P_4 @1.0",
+    "[Negation] Sentence 9: Found negation of 'questioned'",
+    "           Affirmative clause: 'this right shall be questioned'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Jack always dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement with modal/frequency term 'always'."
+    },
+    {
+      "id": "P_2",
+      "translation": "Jack dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Base (non-modal) version derived by removing 'always'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Jack envisioned a future where he would be able to buy a beautiful house",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual claim about Jack's envisioning."
+    },
+    {
+      "id": "P_4",
+      "translation": "Jack won the lottery",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent extracted from the conditional 'If Jack had won the lottery...'."
+    },
+    {
+      "id": "P_5",
+      "translation": "Jack bought a house",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the conditional '...he would have bought a house'."
+    },
+    {
+      "id": "P_6",
+      "translation": "Jack is purchasing a house for now",
+      "evidence": "Sentence 2",
+      "explanation": "Positive atomic proposition used so the text's negation can be represented as a constraint."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Jack always dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "reasoning": "Statement is asserted in the text; 'always' treated as certainty-level modal.",
+      "list nli": [
+        [
+          0.0001604481803951785,
+          2.9552236810559407e-05,
+          0.9998100399971008
+        ],
+        [
+          5.025606242270442e-06,
+          0.00025491861742921174,
+          0.9997400641441345
+        ],
+        [
+          0.0024166791699826717,
+          4.7219673433573917e-05,
+          0.9975360631942749
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Jack dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "reasoning": "Derived base statement from an 'always' claim; treated as strongly supported.",
+      "list nli": [
+        [
+          1.753065225784667e-05,
+          9.944794146576896e-05,
+          0.9998830556869507
+        ],
+        [
+          0.01506795547902584,
+          0.00010631153418216854,
+          0.9848257899284363
+        ],
+        [
+          0.017518067732453346,
+          0.00018434718367643654,
+          0.9822975397109985
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Jack dreamed of winning the lottery, then Jack always dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "reasoning": "Modal-pattern constraint required by the specification for modal/base pairs.",
+      "list nli": [
+        [
+          0.0005201325984671712,
+          0.0036858785897493362,
+          0.9957939386367798
+        ],
+        [
+          0.0024581318721175194,
+          0.015806900337338448,
+          0.9817349314689636
+        ],
+        [
+          0.1296626329421997,
+          0.17717245221138,
+          0.6931648850440979
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Jack envisioned a future where he would be able to buy a beautiful house",
+      "evidence": "Sentence 0",
+      "reasoning": "Factual claim about Jack's mental state is explicitly stated.",
+      "list nli": [
+        [
+          4.288659692974761e-05,
+          5.404250987339765e-05,
+          0.9999030828475952
+        ],
+        [
+          9.435857646167278e-05,
+          5.487859380082227e-05,
+          0.9998507499694824
+        ],
+        [
+          9.670127474237233e-05,
+          0.00011580627324292436,
+          0.9997875094413757
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Jack won the lottery, then Jack bought a house",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional (counterfactual form) expressed in the text.",
+      "list nli": [
+        [
+          2.7945910915150307e-05,
+          5.1788476412184536e-05,
+          0.9999202489852905
+        ],
+        [
+          7.996309432201087e-05,
+          0.00014956221275497228,
+          0.99977046251297
+        ],
+        [
+          2.5494944566162303e-05,
+          0.000215972337173298,
+          0.9997585415840149
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "¬P_6",
+      "translation": "Jack is not purchasing any house for now",
+      "evidence": "Sentence 2",
+      "reasoning": "Negated factual claim explicitly stated ('won't be purchasing any house for now').",
+      "list nli": [
+        [
+          0.0018444478046149015,
+          0.0008334674639627337,
+          0.997322142124176
+        ],
+        [
+          0.0010466931853443384,
+          0.9283133745193481,
+          0.07063999772071838
+        ],
+        [
+          0.9928975105285645,
+          0.002065551932901144,
+          0.005036951974034309
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0",
+      "list nli": [
+        [
+          0.00024057773407548666,
+          0.0013824119232594967,
+          0.9983769655227661
+        ],
+        [
+          0.0005163237801752985,
+          0.007052222732454538,
+          0.9924314022064209
+        ],
+        [
+          0.0015709626022726297,
+          0.018107138574123383,
+          0.9803219437599182
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

@@ -1,0 +1,467 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Convicted felons may own guns",
+      "evidence": "Sentence 0: 'even convicted felons may own guns'",
+      "explanation": "Modal statement with 'may' in legal context, asserted by judge's ruling"
+    },
+    {
+      "id": "P_2",
+      "translation": "Convicted felons own guns",
+      "evidence": "Derived from Sentence 0: base event without modal word",
+      "explanation": "Base form of P_1 for modal pattern"
+    },
+    {
+      "id": "P_3",
+      "translation": "The charge of possession of a firearm by a felon against Edward Brown was dismissed",
+      "evidence": "'dismissed a charge of possession of a firearm by a felon against Edward Brown'",
+      "explanation": "Factual event from the judge's ruling"
+    },
+    {
+      "id": "P_4",
+      "translation": "Amendment backers did not intend to allow felons to own guns",
+      "evidence": "'Prosecutors had argued that the amendment's backers did not intend to allow felons to own guns'",
+      "explanation": "Statement from prosecutors' argument, not affirmed by judge"
+    },
+    {
+      "id": "P_5",
+      "translation": "Nothing in the amendment indicated intent to restrict felons",
+      "evidence": "'the judge said nothing in the amendment indicated such an intent'",
+      "explanation": "Judge's statement contradicting prosecutors' argument"
+    },
+    {
+      "id": "P_6",
+      "translation": "Maine's right to keep and bear arms amendment is the most broad and least restrictive",
+      "evidence": "'Maine's right to keep and bear arms amendment is the most broad and least restrictive of any of the 43 similar state amendments'",
+      "explanation": "Judge's descriptive statement about the amendment"
+    },
+    {
+      "id": "P_7",
+      "translation": "The case will be appealed",
+      "evidence": "'Attorney General James E. Tierney said Saturday that the case would be appealed'",
+      "explanation": "Statement by Attorney General about future action"
+    },
+    {
+      "id": "P_8",
+      "translation": "Attorney General thinks the judge is wrong",
+      "evidence": "'adding, ``With all due respect to Justice Perkins, we think he is wrong.''''",
+      "explanation": "AG's opinion expressed in the text"
+    },
+    {
+      "id": "P_9",
+      "translation": "Every citizen has a right to keep and bear arms",
+      "evidence": "'The amendment declared, ``Every citizen has a right to keep and bear arms''",
+      "explanation": "Content of the constitutional amendment"
+    },
+    {
+      "id": "P_10",
+      "translation": "The right to keep and bear arms shall never be questioned",
+      "evidence": "'and this right shall never be questioned.''",
+      "explanation": "Part of the amendment declaration"
+    },
+    {
+      "id": "P_11",
+      "translation": "There is no rational connection between Brown's previous conviction and his ownership of a firearm",
+      "evidence": "'saying ``there is simply no rational connection'' between Brown's previous conviction and his ownership of a firearm.'",
+      "explanation": "Judge's reasoning for dismissing the gun possession charge"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Convicted felons may own guns",
+      "evidence": "Sentence 0: ruling asserted by judge",
+      "reasoning": "Modal claim with deontic 'may' in legal context, stated with certainty in the ruling",
+      "list nli": [
+        [
+          0.0002702306373976171,
+          4.498125781537965e-05,
+          0.9996848106384277
+        ],
+        [
+          1.672299185884185e-05,
+          0.0003266597632318735,
+          0.9996566772460938
+        ],
+        [
+          0.00884587224572897,
+          4.320412699598819e-05,
+          0.9911109209060669
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Convicted felons own guns",
+      "evidence": "Derived from Sentence 0",
+      "reasoning": "For deontic 'may', base event has weight 1.0 as per modal pattern rules",
+      "list nli": [
+        [
+          0.00011707434168783948,
+          4.158588490099646e-05,
+          0.9998413324356079
+        ],
+        [
+          5.079798211227171e-05,
+          0.0001777154247974977,
+          0.9997715353965759
+        ],
+        [
+          0.004572646226733923,
+          4.287804404157214e-05,
+          0.9953845143318176
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If convicted felons own guns, then they may own guns",
+      "evidence": "Modal pattern from Sentence 0",
+      "reasoning": "Standard modal pattern constraint ensuring base implies modal claim",
+      "list nli": [
+        [
+          0.00022401691239792854,
+          0.0010640182299539447,
+          0.9987119436264038
+        ],
+        [
+          0.0025882080662995577,
+          0.00013835063145961612,
+          0.9972733855247498
+        ],
+        [
+          0.0002218545851064846,
+          0.0026702024042606354,
+          0.9971079230308533
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "The gun possession charge against Edward Brown was dismissed",
+      "evidence": "Factual event described in the text",
+      "reasoning": "Clearly stated factual statement with no modality",
+      "list nli": [
+        [
+          0.00019233673810958862,
+          3.730933531187475e-05,
+          0.9997703433036804
+        ],
+        [
+          0.0007219763938337564,
+          3.77179603674449e-05,
+          0.9992402791976929
+        ],
+        [
+          0.0008306082454510033,
+          0.0008092305506579578,
+          0.9983600974082947
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "Nothing in the amendment indicated intent to restrict felons",
+      "evidence": "Judge's statement reported in the text",
+      "reasoning": "Asserted as part of judge's reasoning, treated as factual in context",
+      "list nli": [
+        [
+          1.740871084621176e-05,
+          7.493748125853017e-05,
+          0.9999076128005981
+        ],
+        [
+          6.448207568610087e-05,
+          0.00016636037616990507,
+          0.9997691512107849
+        ],
+        [
+          0.00016078435874078423,
+          0.00010193297930527478,
+          0.9997373223304749
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Maine's right to keep and bear arms amendment is the most broad and least restrictive",
+      "evidence": "Judge's quote in the text",
+      "reasoning": "Descriptive statement asserted by judge",
+      "list nli": [
+        [
+          6.826209573773667e-05,
+          6.85997583786957e-05,
+          0.9998631477355957
+        ],
+        [
+          0.0001353303960058838,
+          2.9867529519833624e-05,
+          0.9998347759246826
+        ],
+        [
+          0.0002979617565870285,
+          5.097816028865054e-05,
+          0.9996510744094849
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "The case will be appealed",
+      "evidence": "Attorney General's statement",
+      "reasoning": "Future action stated by authoritative source",
+      "list nli": [
+        [
+          3.333142740302719e-05,
+          3.6608144000638276e-05,
+          0.9999300241470337
+        ],
+        [
+          2.4671851861057803e-05,
+          4.540406371233985e-05,
+          0.9999299049377441
+        ],
+        [
+          2.219134330516681e-05,
+          4.9713482439983636e-05,
+          0.9999281167984009
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Attorney General thinks the judge is wrong",
+      "evidence": "AG's direct quote",
+      "reasoning": "Opinion expressed clearly in the text",
+      "list nli": [
+        [
+          4.249617995810695e-05,
+          3.6694422306027263e-05,
+          0.9999208450317383
+        ],
+        [
+          4.3637897761072963e-05,
+          3.590479900594801e-05,
+          0.9999204874038696
+        ],
+        [
+          7.561669190181419e-05,
+          3.186547110090032e-05,
+          0.9998924732208252
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Every citizen has a right to keep and bear arms",
+      "evidence": "Amendment declaration quoted in the text",
+      "reasoning": "Constitutional provision stated as fact",
+      "list nli": [
+        [
+          0.0001266331091756001,
+          0.0005370977451093495,
+          0.999336302280426
+        ],
+        [
+          1.2239783245604485e-05,
+          0.0011727545643225312,
+          0.9988150596618652
+        ],
+        [
+          0.0010822637705132365,
+          0.001202296931296587,
+          0.9977154731750488
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "The right to keep and bear arms shall never be questioned",
+      "evidence": "Amendment declaration quoted in the text",
+      "reasoning": "Part of the amendment, stated with 'shall never', implying high certainty",
+      "list nli": [
+        [
+          1.984818300115876e-05,
+          6.769689207430929e-05,
+          0.9999125003814697
+        ],
+        [
+          3.094872226938605e-05,
+          8.6535896116402e-05,
+          0.9998824596405029
+        ],
+        [
+          0.00021712682791985571,
+          0.00047395832370966673,
+          0.9993089437484741
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "There is no rational connection between Brown's previous conviction and his ownership of a firearm",
+      "evidence": "Judge's reasoning quoted in the text",
+      "reasoning": "Asserted as part of the rationale for dismissal",
+      "list nli": [
+        [
+          5.166304617887363e-05,
+          8.300977060571313e-05,
+          0.9998652935028076
+        ],
+        [
+          0.00015059663564898074,
+          6.904660403961316e-05,
+          0.9997803568840027
+        ],
+        [
+          6.660081271547824e-05,
+          0.00045696322922594845,
+          0.9994764924049377
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_10 ⟹ P_10",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010960681829601526,
+          0.0039325556717813015,
+          0.9949713945388794
+        ],
+        [
+          0.002861099084839225,
+          0.005054951645433903,
+          0.9920839071273804
+        ],
+        [
+          0.0015399402473121881,
+          0.006702248007059097,
+          0.9917578101158142
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "¬P_4",
+      "translation": "It is not the case that Amendment backers did not intend to allow felons to own guns",
+      "evidence": "Sentence 2: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          2.878406667150557e-05,
+          4.6703153202543035e-05,
+          0.9999245405197144
+        ],
+        [
+          0.00010877674503717571,
+          0.000183956726687029,
+          0.9997072815895081
+        ],
+        [
+          0.0002650032693054527,
+          0.00017283603665418923,
+          0.9995622038841248
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.5,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.5,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'may' implies the base event occurs with weight 0.5",
+      "list nli": [
+        [
+          0.00011724221258191392,
+          0.0007873376016505063,
+          0.9990954399108887
+        ],
+        [
+          0.0025118133053183556,
+          0.0031419547740370035,
+          0.9943462014198303
+        ],
+        [
+          0.0002376455086050555,
+          0.007675031200051308,
+          0.9920873045921326
+        ]
+      ],
+      "weight": 0.5
+    }
+  ]
+}

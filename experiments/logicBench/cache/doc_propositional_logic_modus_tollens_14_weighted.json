@@ -1,0 +1,378 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is an avid book collector",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic descriptive fact about Scarlett"
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett had always dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Modal statement containing 'always'"
+    },
+    {
+      "id": "P_3",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Base version of P_2 with 'always' removed"
+    },
+    {
+      "id": "P_4",
+      "translation": "Scarlett has a cherished collection",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic fact implied by 'her cherished collection'"
+    },
+    {
+      "id": "P_5",
+      "translation": "Scarlett believed she would keep a rare book that she stumbled upon",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic attitude report (belief) stated in the narrative"
+    },
+    {
+      "id": "P_6",
+      "translation": "Scarlett stumbled upon a rare book",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent condition extracted from the 'if' clause (inside the belief report)"
+    },
+    {
+      "id": "P_7",
+      "translation": "Scarlett decided to keep the rare book",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent action extracted from the belief content"
+    },
+    {
+      "id": "P_8",
+      "translation": "Scarlett made the rare book part of her literary treasures",
+      "evidence": "Sentence 1",
+      "explanation": "Second consequent action extracted from the belief content"
+    },
+    {
+      "id": "P_9",
+      "translation": "Scarlett found a book one day",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic event described in the narrative"
+    },
+    {
+      "id": "P_10",
+      "translation": "Scarlett decided to exclude the book from her collection",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic action capturing 'decided not to keep it' without using negation"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Scarlett is an avid book collector",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated descriptive fact",
+      "list nli": [
+        [
+          1.1942576747969724e-05,
+          7.686387107241899e-05,
+          0.9999111890792847
+        ],
+        [
+          2.616366145957727e-05,
+          6.270652374951169e-05,
+          0.9999110698699951
+        ],
+        [
+          1.0847373232536484e-05,
+          8.680907194502652e-05,
+          0.9999023675918579
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Scarlett had always dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "reasoning": "Original modal statement ('always') is asserted in the text",
+      "list nli": [
+        [
+          2.9144213840481825e-05,
+          4.294791506254114e-05,
+          0.9999278783798218
+        ],
+        [
+          1.0851143088075332e-05,
+          8.063612040132284e-05,
+          0.999908447265625
+        ],
+        [
+          2.26227621169528e-05,
+          7.064461533445865e-05,
+          0.9999067783355713
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection",
+      "evidence": "Sentence 0",
+      "reasoning": "Derived base proposition; 'always' corresponds to weight 1.0",
+      "list nli": [
+        [
+          1.67132184287766e-05,
+          0.00011119699775008485,
+          0.999872088432312
+        ],
+        [
+          6.817298526584636e-06,
+          0.0003600027703214437,
+          0.9996331930160522
+        ],
+        [
+          0.0008376635378226638,
+          3.343172647873871e-05,
+          0.9991288781166077
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Scarlett dreamt of finding a rare book, then Scarlett had always dreamt of finding a rare book (modal-pattern constraint)",
+      "evidence": "Sentence 0",
+      "reasoning": "Required linkage for modal/base pair per instructions",
+      "list nli": [
+        [
+          0.010860301554203033,
+          0.007763325236737728,
+          0.9813763499259949
+        ],
+        [
+          0.007785184308886528,
+          0.014093942008912563,
+          0.9781208634376526
+        ],
+        [
+          0.018445393070578575,
+          0.003662794828414917,
+          0.9778918027877808
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4",
+      "translation": "Scarlett has a cherished collection",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly described as 'her cherished collection'",
+      "list nli": [
+        [
+          1.52136462929775e-05,
+          0.00013419972674455494,
+          0.9998505115509033
+        ],
+        [
+          2.8247035515960306e-05,
+          0.00015419218107126653,
+          0.9998175501823425
+        ],
+        [
+          7.256501703523099e-06,
+          0.0002877394435927272,
+          0.9997050166130066
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "Scarlett believed she would keep a rare book that she stumbled upon",
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of Scarlett's belief",
+      "list nli": [
+        [
+          1.3025075531913899e-05,
+          0.00018127048679161817,
+          0.999805748462677
+        ],
+        [
+          1.4657689462183043e-05,
+          0.0002855788334272802,
+          0.9996998310089111
+        ],
+        [
+          7.741819899820257e-06,
+          0.000327609566738829,
+          0.9996646642684937
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Scarlett found a book one day",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated narrative event",
+      "list nli": [
+        [
+          6.504369230242446e-05,
+          6.275015039136633e-05,
+          0.9998722076416016
+        ],
+        [
+          2.0158591723884456e-05,
+          0.0001332974061369896,
+          0.9998465776443481
+        ],
+        [
+          0.0005722069763578475,
+          0.0018353841733187437,
+          0.9975923895835876
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "Scarlett decided to exclude the book from her collection",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated narrative decision ('decided not to keep it') expressed without negation",
+      "list nli": [
+        [
+          0.00010925421520369127,
+          5.415505074779503e-05,
+          0.9998365640640259
+        ],
+        [
+          0.0005109444609843194,
+          6.234558532014489e-05,
+          0.9994267225265503
+        ],
+        [
+          0.003839187789708376,
+          0.00014222935715224594,
+          0.9960185885429382
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0038246638141572475,
+          0.01645517349243164,
+          0.9797201752662659
+        ],
+        [
+          0.005225711036473513,
+          0.019178176298737526,
+          0.9755961894989014
+        ],
+        [
+          0.013210847973823547,
+          0.06137223169207573,
+          0.925416886806488
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.65,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.65,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "If Scarlett stumbled upon a rare book, then Scarlett decided to keep the rare book",
+      "evidence": "Sentence 1",
+      "reasoning": "This implication is presented as the content of Scarlett's belief rather than an objective law; given moderate support (not explicitly guaranteed to occur)",
+      "list nli": [
+        [
+          0.0004669128975365311,
+          0.0003444133617449552,
+          0.9991887211799622
+        ],
+        [
+          0.0012528043007478118,
+          0.00026683538453653455,
+          0.9984803795814514
+        ],
+        [
+          0.00019173964392393827,
+          0.0019766425248235464,
+          0.9978316426277161
+        ]
+      ],
+      "weight": 0.65
+    },
+    {
+      "llm-weight": 0.65,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.65,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_6 ⟹ P_8",
+      "translation": "If Scarlett stumbled upon a rare book, then Scarlett made the rare book part of her literary treasures",
+      "evidence": "Sentence 1",
+      "reasoning": "Also part of the stated belief content; moderate support",
+      "list nli": [
+        [
+          7.84460426075384e-05,
+          0.00032147602178156376,
+          0.9996001124382019
+        ],
+        [
+          5.75402555114124e-05,
+          0.0003681692760437727,
+          0.9995742440223694
+        ],
+        [
+          0.00024448384647257626,
+          0.0003017342824023217,
+          0.9994537234306335
+        ]
+      ],
+      "weight": 0.65
+    }
+  ]
+}

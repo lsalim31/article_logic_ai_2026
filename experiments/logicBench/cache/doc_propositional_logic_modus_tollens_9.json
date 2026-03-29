@@ -1,0 +1,40 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Theodore has a pet dog",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the conditional statement."
+    },
+    {
+      "id": "P_2",
+      "translation": "Theodore takes his pet dog out for a walk",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent action described in the conditional statement."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Theodore has a pet dog, then Theodore takes it out for a walk",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional ('If ..., he will ...') stated in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Theodore does not take his dog out for a walk",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negation ('he would not take his dog out for a walk'); represented as negation of the corresponding atomic proposition."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'take'",
+    "           Affirmative clause: 'However , he would take his dog out for a walk .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

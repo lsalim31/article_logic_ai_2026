@@ -1,0 +1,109 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Jack always dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement with modal/frequency term 'always'."
+    },
+    {
+      "id": "P_2",
+      "translation": "Jack dreamed of winning the lottery",
+      "evidence": "Sentence 0",
+      "explanation": "Base (non-modal) version derived by removing 'always'."
+    },
+    {
+      "id": "P_3",
+      "translation": "Jack envisioned a future where he would be able to buy a beautiful house",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual claim about Jack's envisioning."
+    },
+    {
+      "id": "P_4",
+      "translation": "Jack won the lottery",
+      "evidence": "Sentence 1",
+      "explanation": "Antecedent extracted from the conditional 'If Jack had won the lottery...'."
+    },
+    {
+      "id": "P_5",
+      "translation": "Jack bought a house",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent extracted from the conditional '...he would have bought a house'."
+    },
+    {
+      "id": "P_6",
+      "translation": "Jack is purchasing a house for now",
+      "evidence": "Sentence 2",
+      "explanation": "Positive atomic proposition used so the text's negation can be represented as a constraint."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Jack always dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Statement is asserted in the text; 'always' treated as certainty-level modal."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Jack dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Derived base statement from an 'always' claim; treated as strongly supported."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Jack dreamed of winning the lottery, then Jack always dreamed of winning the lottery",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Modal-pattern constraint required by the specification for modal/base pairs."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "Jack envisioned a future where he would be able to buy a beautiful house",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Factual claim about Jack's mental state is explicitly stated."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Jack won the lottery, then Jack bought a house",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit conditional (counterfactual form) expressed in the text."
+    },
+    {
+      "id": "C_6",
+      "formula": "¬P_6",
+      "translation": "Jack is not purchasing any house for now",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Negated factual claim explicitly stated ('won't be purchasing any house for now')."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'Jack always dreamed of winning the lottery' has modal 'always'",
+    "        Base text: 'Jack dreamed of winning the lottery'",
+    "        Found existing base: P_2",
+    "        Added constraint: P_1 ⟹ P_2 @1.0",
+    "[Opposite] P_1: 'always' has antonyms ['never']",
+    "[Negation] Sentence 2: Found negation of 'purchasing'",
+    "           Affirmative clause: 'But he wo be purchasing any house for now .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

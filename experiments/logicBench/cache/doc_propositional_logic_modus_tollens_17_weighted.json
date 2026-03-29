@@ -1,0 +1,255 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alexander decided to go for a walk in the park",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic event describing Alexander's decision"
+    },
+    {
+      "id": "P_2",
+      "translation": "Alexander is fully aware that the walk would soon tire him out",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic mental-state claim about Alexander's awareness"
+    },
+    {
+      "id": "P_3",
+      "translation": "The walk would soon tire Alexander out",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic claim about the expected effect of the walk"
+    },
+    {
+      "id": "P_4",
+      "translation": "Alexander will get tired soon",
+      "evidence": "Sentence 1",
+      "explanation": "Positive (non-negated) version of the claim needed to represent the negation in a constraint"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alexander decided to go for a walk in the park",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual event",
+      "list nli": [
+        [
+          2.4612947527202778e-05,
+          0.00011270299728494138,
+          0.9998626708984375
+        ],
+        [
+          3.7989313568687066e-05,
+          0.00010523742093937472,
+          0.99985671043396
+        ],
+        [
+          0.0008721351623535156,
+          0.005796500947326422,
+          0.9933313727378845
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Alexander is fully aware that the walk would soon tire him out",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual description of Alexander's awareness",
+      "list nli": [
+        [
+          5.1240447646705434e-05,
+          4.7683020966360345e-05,
+          0.9999010562896729
+        ],
+        [
+          5.2789586334256455e-05,
+          0.00010080188076244667,
+          0.999846339225769
+        ],
+        [
+          0.00010424690844956785,
+          7.068702689139172e-05,
+          0.9998250603675842
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "The walk would soon tire Alexander out",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted in the narrative as what Alexander is aware of",
+      "list nli": [
+        [
+          1.213663381349761e-05,
+          9.605890954844654e-05,
+          0.9998917579650879
+        ],
+        [
+          3.5907378332922235e-06,
+          0.0009054031688719988,
+          0.9990910291671753
+        ],
+        [
+          4.594579149852507e-05,
+          0.9957749247550964,
+          0.004179123789072037
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If the walk would soon tire Alexander out, then Alexander will get tired soon",
+      "evidence": "Sentence 0",
+      "reasoning": "Being tired out soon entails getting tired soon",
+      "list nli": [
+        [
+          0.00019457499729469419,
+          0.0007776177953928709,
+          0.9990278482437134
+        ],
+        [
+          6.83445477989153e-06,
+          0.0011007701978087425,
+          0.9988923668861389
+        ],
+        [
+          0.00017544662114232779,
+          0.0014039203524589539,
+          0.9984205961227417
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_4",
+      "translation": "Alexander will not get tired soon",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negation stated in the text",
+      "list nli": [
+        [
+          0.00393277732655406,
+          0.00013142164971213788,
+          0.9959357976913452
+        ],
+        [
+          0.9996066689491272,
+          0.00018013519002124667,
+          0.00021319222287274897
+        ],
+        [
+          0.999868631362915,
+          5.286708983476274e-05,
+          7.847085362300277e-05
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0021073748357594013,
+          0.00389308319427073,
+          0.9939996004104614
+        ],
+        [
+          0.014980125240981579,
+          0.04342924430966377,
+          0.9415906071662903
+        ],
+        [
+          0.04837319999933243,
+          0.140413299202919,
+          0.811213493347168
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0021073748357594013,
+          0.00389308319427073,
+          0.9939996004104614
+        ],
+        [
+          0.014980125240981579,
+          0.04342924430966377,
+          0.9415906071662903
+        ],
+        [
+          0.04837319999933243,
+          0.140413299202919,
+          0.811213493347168
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_4 ⟹ P_4",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0021073748357594013,
+          0.00389308319427073,
+          0.9939996004104614
+        ],
+        [
+          0.014980125240981579,
+          0.04342924430966377,
+          0.9415906071662903
+        ],
+        [
+          0.04837319999933243,
+          0.140413299202919,
+          0.811213493347168
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

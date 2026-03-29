@@ -1,0 +1,115 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mason decides to leave his job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the explicit conditional."
+    },
+    {
+      "id": "P_2",
+      "translation": "Mason receives salary",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic base proposition used to represent the salary-receipt predicate (the text asserts its negation in the conditional consequent)."
+    },
+    {
+      "id": "P_3",
+      "translation": "Mason receives his salary",
+      "evidence": "Sentence 1",
+      "explanation": "Factual assertion that Mason receives salary (stated explicitly)."
+    },
+    {
+      "id": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "evidence": "Sentence 2",
+      "explanation": "Factual assertion that Mason receives a regular paycheck."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ ¬P_2",
+      "translation": "If Mason decides to leave his job, then Mason does not receive salary",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional; the consequent is expressed as a negation over the atomic salary-receipt proposition.",
+      "list nli": [
+        [
+          0.002783637261018157,
+          0.03639548644423485,
+          0.9608208537101746
+        ],
+        [
+          0.3005192279815674,
+          0.0028161730151623487,
+          0.696664571762085
+        ],
+        [
+          0.7602672576904297,
+          0.0010392597177997231,
+          0.2386934757232666
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Mason receives his salary",
+      "evidence": "Sentence 1",
+      "reasoning": "Direct factual statement.",
+      "list nli": [
+        [
+          0.0005470368778333068,
+          0.00016348996723536402,
+          0.9992893934249878
+        ],
+        [
+          0.0001859373733168468,
+          0.9748858213424683,
+          0.024928178638219833
+        ],
+        [
+          5.970417259959504e-05,
+          0.994971513748169,
+          0.004968788009136915
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Mason receives his regular paycheck",
+      "evidence": "Sentence 2",
+      "reasoning": "Direct factual statement.",
+      "list nli": [
+        [
+          0.0001900546922115609,
+          0.00489291176199913,
+          0.9949170351028442
+        ],
+        [
+          6.141524499980733e-05,
+          0.006892552599310875,
+          0.9930459856987
+        ],
+        [
+          0.00825729314237833,
+          0.0004468561091925949,
+          0.9912958145141602
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

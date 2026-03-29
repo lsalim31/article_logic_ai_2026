@@ -1,0 +1,110 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Jackson decided to have a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic decision statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Jackson ate a slice of pizza for dinner",
+      "evidence": "Sentence 0",
+      "explanation": "Implied action from deciding to have pizza for dinner; used as antecedent for the conditional"
+    },
+    {
+      "id": "P_3",
+      "translation": "Jackson knew that eating the slice of pizza would leave him unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic knowledge-ascription summarizing the reported conditional expectation"
+    },
+    {
+      "id": "P_4",
+      "translation": "Jackson felt unsatisfied afterwards",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic outcome statement (phrased without negation as 'unsatisfied')"
+    },
+    {
+      "id": "P_5",
+      "translation": "Jackson felt completely satisfied",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual outcome statement"
+    },
+    {
+      "id": "P_6",
+      "translation": "Jackson felt satisfied afterwards",
+      "evidence": "Sentence 2",
+      "explanation": "Weaker base satisfaction claim entailed by 'completely satisfied'"
+    },
+    {
+      "id": "P_7",
+      "translation": "Jackson was surprised",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic affective reaction stated by 'to his surprise'"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Jackson decided to have a slice of pizza for dinner",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual event"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Jackson knew that eating the slice of pizza would leave him unsatisfied afterwards",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated knowledge claim"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_5",
+      "translation": "Jackson felt completely satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated factual outcome ('actually felt')"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_7",
+      "translation": "Jackson was surprised",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicitly stated reaction ('to his surprise')"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_2",
+      "translation": "Jackson ate a slice of pizza for dinner",
+      "llm_weight": 0.65,
+      "evidence": "Sentence 0",
+      "reasoning": "Plausible but not explicitly stated; inferred from deciding to have pizza for dinner and subsequent discussion of consequences"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "If Jackson felt completely satisfied, then Jackson felt satisfied afterwards",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Semantic strengthening: 'completely satisfied' entails 'satisfied'"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Jackson ate the slice of pizza for dinner, then Jackson felt unsatisfied afterwards",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional content is explicitly reported as something he 'knew'; treated as a strong (but potentially defeasible) rule rather than a guaranteed fact about the world"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'feel'",
+    "           Affirmative clause: 'that if he ate the slice of pizza , he would feel satisfied afterwards'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

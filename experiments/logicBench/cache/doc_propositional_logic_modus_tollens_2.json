@@ -1,0 +1,90 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella had been working hard on her project",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual statement about Isabella's effort."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finished her project on time",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent event extracted from the embedded conditional; not asserted as having occurred."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent event extracted from the embedded conditional."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella fails to receive a bonus from her company",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement capturing the narrative outcome ('wouldn't be receiving a bonus') without using explicit logical negation in the proposition text."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella hoped to receive a bonus",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement describing Isabella's prior expectation/hope."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella had been working hard on her project",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly stated narrative fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finished her project on time, then Isabella receives a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional embedded in the text ('if she finished it on time, she would receive a bonus')."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Isabella fails to receive a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated narrative outcome ('wouldn't be receiving a bonus')."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Isabella hoped to receive a bonus",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly stated as background to her disappointment ('as she had hoped')."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "If Isabella fails to receive a bonus from her company, then Isabella does not receive a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Definitional relation: 'fails to receive a bonus' entails 'does not receive a bonus'."
+    },
+    {
+      "id": "C_6",
+      "formula": "¬P_3 ⟹ P_4",
+      "translation": "If Isabella does not receive a bonus from her company, then Isabella fails to receive a bonus from her company",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Definitional relation in the reverse direction to align P_4 with the negation of P_3."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receiving'",
+    "           Affirmative clause: 'that she would be receiving a bonus as she had hoped'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

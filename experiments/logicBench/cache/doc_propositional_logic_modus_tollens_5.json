@@ -1,0 +1,40 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Sophia has the highest score in the test",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the conditional statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Sophia will be awarded a medal for her outstanding performance",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent in the conditional statement"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional ('If..., then ...') stated as a factual rule"
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_1",
+      "translation": "Sophia does not have the highest score in the test",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negated factual claim ('Sophia didn't achieve the highest score') expressed with certainty"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'achieve'",
+    "           Affirmative clause: 'However , unfortunately , Sophia did achieve the highest score in the test .'",
+    "           Matched to: P_1",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

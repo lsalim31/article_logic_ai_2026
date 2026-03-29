@@ -1,0 +1,193 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "John is always a hardworking individual",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic modal-frequency claim using 'always'"
+    },
+    {
+      "id": "P_2",
+      "translation": "John is a hardworking individual",
+      "evidence": "Sentence 0",
+      "explanation": "Base (non-modal) version of the 'always' statement"
+    },
+    {
+      "id": "P_3",
+      "translation": "John believed that having a good job would give him the financial stability he desired",
+      "evidence": "Sentence 0",
+      "explanation": "Factual report of John's belief (belief stated as an atomic attitude proposition)"
+    },
+    {
+      "id": "P_4",
+      "translation": "John has a good job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent content extracted from a believed conditional ('having a good job')"
+    },
+    {
+      "id": "P_5",
+      "translation": "John has the financial stability he desires",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent content extracted from a believed conditional ('financial stability he desired')"
+    },
+    {
+      "id": "P_6",
+      "translation": "John was convinced that if he had a good job, he would have the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "explanation": "Factual report of John's conviction (attitude proposition)"
+    },
+    {
+      "id": "P_7",
+      "translation": "John has the means to invest in stocks",
+      "evidence": "Sentence 1",
+      "explanation": "Consequent content extracted from the believed conditional about investing means"
+    },
+    {
+      "id": "P_8",
+      "translation": "John believed that investing in stocks would be a smart financial decision",
+      "evidence": "Sentence 1",
+      "explanation": "Factual report of John's belief (attitude proposition)"
+    },
+    {
+      "id": "P_9",
+      "translation": "Investing in stocks is a smart financial decision",
+      "evidence": "Sentence 1",
+      "explanation": "Belief content stated (not asserted as fact; extracted from 'he believed would be')"
+    },
+    {
+      "id": "P_10",
+      "translation": "John was dedicated",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual claim from 'Despite his dedication...'"
+    },
+    {
+      "id": "P_11",
+      "translation": "John made efforts",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic factual claim from '...and efforts...'"
+    },
+    {
+      "id": "P_12",
+      "translation": "John is able to invest in stocks",
+      "evidence": "Sentence 2",
+      "explanation": "Positive ability proposition used so that the text's 'couldn't invest' can be represented as a negated constraint"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "John is always a hardworking individual",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit 'always' statement asserted in the text"
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "John is a hardworking individual",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Base proposition derived from 'always'; 'always' treated as maximal strength"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If John is hardworking, then John is always hardworking",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Required modal-pattern constraint per instructions"
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3",
+      "translation": "John believed that having a good job would give him the financial stability he desired",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Factual report of John's belief"
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "John was convinced that if he had a good job, he would have the means to invest in stocks",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of John's conviction"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_8",
+      "translation": "John believed that investing in stocks would be a smart financial decision",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Factual report of John's belief"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If John has a good job, then John has the financial stability he desires",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 0",
+      "reasoning": "Conditional appears as the content of John's belief rather than an asserted fact about the world"
+    },
+    {
+      "id": "C_8",
+      "formula": "P_4 ⟹ P_7",
+      "translation": "If John has a good job, then John has the means to invest in stocks",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 1",
+      "reasoning": "Conditional appears as the content of John's conviction rather than an asserted fact about the world"
+    },
+    {
+      "id": "C_9",
+      "formula": "P_9",
+      "translation": "Investing in stocks is a smart financial decision",
+      "llm_weight": 0.4,
+      "evidence": "Sentence 1",
+      "reasoning": "Presented as something John believed; not asserted as objectively true"
+    },
+    {
+      "id": "C_10",
+      "formula": "P_10",
+      "translation": "John was dedicated",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated ('Despite his dedication...')"
+    },
+    {
+      "id": "C_11",
+      "formula": "P_11",
+      "translation": "John made efforts",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly stated ('...and efforts...')"
+    },
+    {
+      "id": "C_12",
+      "formula": "¬P_12",
+      "translation": "John is not able to invest in stocks",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit 'couldn't invest in stocks' (treated as a definite negation of ability)"
+    },
+    {
+      "id": "C_13",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If modal pattern holds, the base event occurs",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Modal 'always' implies the base event occurs with weight 1.0"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_1: 'John is always a hardworking individual' has modal 'always'",
+    "        Base text: 'John is a hardworking individual'",
+    "        Found existing base: P_2",
+    "        Added constraint: P_1 ⟹ P_2 @1.0",
+    "[Opposite] P_1: 'always' has antonyms ['never']",
+    "[Negation] Sentence 2: Found negation of 'invest'",
+    "           Affirmative clause: 'where he could invest in stocks'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

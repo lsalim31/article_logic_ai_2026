@@ -1,0 +1,81 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is late for work",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition in the conditional statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett receives a warning",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent outcome in the conditional statement"
+    },
+    {
+      "id": "P_3",
+      "translation": "Today Scarlett receives a warning",
+      "evidence": "Sentence 1",
+      "explanation": "Positive atomic version of the negated factual claim about today"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is late for work, then she will receive a warning",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional stated as a definite consequence",
+      "list nli": [
+        [
+          7.549937890871661e-06,
+          0.0002663313352968544,
+          0.9997261166572571
+        ],
+        [
+          7.693713996559381e-06,
+          0.0003323491255287081,
+          0.9996600151062012
+        ],
+        [
+          0.0003317676018923521,
+          0.00037449519732035697,
+          0.9992936849594116
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Today, Scarlett did not receive a warning",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit factual negation; represented as negation over the positive atomic proposition",
+      "list nli": [
+        [
+          0.000859149091411382,
+          0.0002747155958786607,
+          0.9988662004470825
+        ],
+        [
+          0.9999644756317139,
+          7.108341378625482e-06,
+          2.8403661417542025e-05
+        ],
+        [
+          0.9999644756317139,
+          8.01771238911897e-06,
+          2.7497997507452965e-05
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

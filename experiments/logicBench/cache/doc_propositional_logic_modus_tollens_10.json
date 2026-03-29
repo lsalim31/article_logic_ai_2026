@@ -1,0 +1,60 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Elijah has a new job",
+      "evidence": "Sentence 0",
+      "explanation": "Antecedent condition extracted from the 'If ... then ...' statement"
+    },
+    {
+      "id": "P_2",
+      "translation": "Elijah will get a raise",
+      "evidence": "Sentence 0",
+      "explanation": "Consequent outcome in the conditional"
+    },
+    {
+      "id": "P_3",
+      "translation": "Elijah is receiving the raise he had anticipated",
+      "evidence": "Sentence 1",
+      "explanation": "Positive (non-negated) version of the negated claim 'would not be receiving the raise he had anticipated'"
+    },
+    {
+      "id": "P_4",
+      "translation": "Elijah had anticipated a raise",
+      "evidence": "Sentence 1",
+      "explanation": "Factual past-mental-state claim implied by 'the raise he had anticipated'"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Elijah has a new job, then he will get a raise",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Explicit conditional stated in the text"
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Elijah is not receiving the raise he had anticipated",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Explicit negation ('would not be receiving') expressed in the text"
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Elijah had anticipated a raise",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Stated as a past anticipation ('had anticipated')"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receiving'",
+    "           Affirmative clause: 'However , he would be receiving the raise he had anticipated .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

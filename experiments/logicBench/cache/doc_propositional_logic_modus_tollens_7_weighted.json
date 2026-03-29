@@ -1,0 +1,201 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella decided to have a sandwich for her lunch",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic factual event about Isabella's lunch decision"
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella took a bite of the sandwich",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual action described in the narrative"
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella feels completely satisfied",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic factual mental state ('felt completely satisfied')"
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella ate a sandwich for lunch",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic antecedent mentioned inside the stated rule ('if Isabella ate a sandwich for lunch')"
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella decided to have a sandwich for her lunch",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly stated factual event",
+      "list nli": [
+        [
+          0.0001631884224480018,
+          8.197909482987598e-05,
+          0.9997548460960388
+        ],
+        [
+          1.586200960446149e-05,
+          0.0010072282748296857,
+          0.9989769458770752
+        ],
+        [
+          2.339317688893061e-05,
+          0.9950443506240845,
+          0.00493227131664753
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Isabella took a bite of the sandwich",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated factual event",
+      "list nli": [
+        [
+          2.2473403078038245e-05,
+          0.0001773433032212779,
+          0.9998001456260681
+        ],
+        [
+          0.00018163568165618926,
+          8.658460137667134e-05,
+          0.999731719493866
+        ],
+        [
+          0.0014559562550857663,
+          0.008802798576653004,
+          0.9897412061691284
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Isabella feels completely satisfied",
+      "evidence": "Sentence 1",
+      "reasoning": "Explicitly stated factual mental state",
+      "list nli": [
+        [
+          9.311006579082459e-05,
+          3.895649206242524e-05,
+          0.9998679161071777
+        ],
+        [
+          5.9679874539142475e-05,
+          7.671148341614753e-05,
+          0.9998636245727539
+        ],
+        [
+          0.0005615020636469126,
+          9.616638999432325e-05,
+          0.9993422627449036
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied",
+      "evidence": "Sentence 2",
+      "reasoning": "Explicit rule stated as a conditional with a negated consequent",
+      "list nli": [
+        [
+          0.006909746676683426,
+          0.00010151687456527725,
+          0.9929887652397156
+        ],
+        [
+          0.8788418769836426,
+          0.014045821502804756,
+          0.1071123406291008
+        ],
+        [
+          0.9970947504043579,
+          0.0005975568783469498,
+          0.0023076690267771482
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "¬P_4",
+      "translation": "It is not the case that Isabella ate a sandwich for lunch",
+      "evidence": "Sentence 2: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.017303651198744774,
+          0.002913659904152155,
+          0.9797826409339905
+        ],
+        [
+          0.9824821949005127,
+          0.0017082978738471866,
+          0.015809424221515656
+        ],
+        [
+          0.9993706345558167,
+          0.0003611940483096987,
+          0.00026821167557500303
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Isabella took a bite of the sandwich, then Isabella ate a sandwich for lunch",
+      "evidence": "Sentence 1",
+      "reasoning": "Taking a bite strongly supports that she ate a sandwich for lunch (inference, not directly stated as 'ate')",
+      "list nli": [
+        [
+          0.0011017326032742858,
+          0.0002861394896171987,
+          0.9986121654510498
+        ],
+        [
+          0.00010553057654760778,
+          0.00589646166190505,
+          0.9939980506896973
+        ],
+        [
+          0.0002510207996238023,
+          0.007656482979655266,
+          0.9920924305915833
+        ]
+      ],
+      "weight": 0.85
+    }
+  ]
+}
