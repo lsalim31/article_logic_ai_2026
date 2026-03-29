@@ -1,0 +1,86 @@
+# default.yaml - Baseline configuration for Logify experiments
+
+############################################
+# ALL MODELS AND THEIR PARAMETERS
+############################################
+models:
+  sbert: "all-MiniLM-L6-v2"
+  nli: "cross-encoder/nli-deberta-v3-large"
+  reasoning: "gpt-5.2"
+  translate: "openai/gpt-5-nano"
+
+tokens:
+  max_completion_tokens: 42000
+  max_tokens: 42000
+
+reasoning:
+  effort: "medium"
+  effort_translate: "medium"
+  temperature_logic_converter: 0.1
+  temperature_translate: 0.3
+
+############################################
+# USED IN TRANSLATE
+############################################
+prompts:
+  translation: "prompt_translate"
+  pass_1: "prompt_pass_1"
+  pass_2: "prompt_pass_2"
+  extraction: "prompt_long_openIE_Agn_nomodality"
+
+retrieval:
+  sbert_top_k: 10
+  sbert_min_similarity: 0.1
+  hardness_constant: 0.9
+  direct_retrieval_multiplier: 1
+
+nli:
+  entailment_threshold: 0.5
+  contradiction_threshold: 0.5
+  batch_size: 32
+
+############################################
+# FEATURE FLAGS
+############################################
+features:
+  use_openie: false
+  use_enrichment: false
+  use_subset: false
+  enable_nli_filtering: false
+  enable_hybrid_embedding: false
+  enable_auto_negation_correction: false
+  enable_negation_warnings: false
+  expand_query_synonyms: false
+
+synonyms:
+  max_synonyms: 3
+
+############################################
+# ADAPTIVE VOTING
+############################################
+voting:
+  trigger_query: 0.8
+  additional_llm_query: 1
+
+############################################
+# SUBSET CONFIGURATION
+############################################
+subset:
+  top_k_retrieval: 10
+  num_clusters: 3
+  top_per_cluster: 2
+  entailment_threshold: 0.5
+
+############################################
+# CONFIDENCE THRESHOLDS
+############################################
+confidence:
+  threshold_true: 0.55
+  min_proposition_weight: 0.3
+
+############################################
+# DOCUMENT LIMITS
+############################################
+document:
+  default_min_words: 100
+  default_max_words: 400
