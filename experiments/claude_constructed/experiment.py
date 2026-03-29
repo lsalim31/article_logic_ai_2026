@@ -48,6 +48,70 @@ from config.retrieval_config import (
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
 )
+from config import retrieval_config
+
+
+def get_full_retrieval_config() -> Dict[str, Any]:
+    """
+    Export ALL configuration values from retrieval_config.py for reproducibility.
+    This ensures experiment results contain the complete configuration state.
+    """
+    return {
+        # Models
+        "SBERT_MODEL": retrieval_config.SBERT_MODEL,
+        "NLI_MODEL": retrieval_config.NLI_MODEL,
+        "REASONING_MODEL": retrieval_config.REASONING_MODEL,
+        "TRANSLATE_MODEL": retrieval_config.TRANSLATE_MODEL,
+        # Token limits
+        "MAX_COMPLETION_TOKENS": retrieval_config.MAX_COMPLETION_TOKENS,
+        "MAX_TOKENS": retrieval_config.MAX_TOKENS,
+        # Reasoning settings
+        "REASONING_EFFORT": retrieval_config.REASONING_EFFORT,
+        "TEMPERATURE_LOGIC_CONVERTER": retrieval_config.TEMPERATURE_LOGIC_CONVERTER,
+        "REASONING_EFFORT_TRANSLATE": retrieval_config.REASONING_EFFORT_TRANSLATE,
+        "TEMPERATURE_TRANSLATE": retrieval_config.TEMPERATURE_TRANSLATE,
+        # Prompts
+        "PROMPT_TRANSLATION": retrieval_config.PROMPT_TRANSLATION,
+        "PROMPT_PASS_1": retrieval_config.PROMPT_PASS_1,
+        "PROMPT_PASS_2": retrieval_config.PROMPT_PASS_2,
+        "PROMPT_EXTRACTION": retrieval_config.PROMPT_EXTRACTION,
+        # SBERT settings
+        "SBERT_TOP_K": retrieval_config.SBERT_TOP_K,
+        "SBERT_MIN_SIMILARITY": retrieval_config.SBERT_MIN_SIMILARITY,
+        # NLI settings
+        "NLI_ENTAILMENT_THRESHOLD": retrieval_config.NLI_ENTAILMENT_THRESHOLD,
+        "NLI_CONTRADICTION_THRESHOLD": retrieval_config.NLI_CONTRADICTION_THRESHOLD,
+        "NLI_BATCH_SIZE": retrieval_config.NLI_BATCH_SIZE,
+        # Feature flags
+        "ENABLE_NLI_FILTERING": retrieval_config.ENABLE_NLI_FILTERING,
+        "ENABLE_HYBRID_EMBEDDING": retrieval_config.ENABLE_HYBRID_EMBEDDING,
+        "ENABLE_AUTO_NEGATION_CORRECTION": retrieval_config.ENABLE_AUTO_NEGATION_CORRECTION,
+        "ENABLE_NEGATION_WARNINGS": retrieval_config.ENABLE_NEGATION_WARNINGS,
+        # Confidence thresholds
+        "CONFIDENCE_THRESHOLD_TRUE": retrieval_config.CONFIDENCE_THRESHOLD_TRUE,
+        "MIN_PROPOSITION_WEIGHT": retrieval_config.MIN_PROPOSIT3ION_WEIGHT,
+        # Query expansion
+        "ON_EXPAND_QUERY_SYN": retrieval_config.ON_EXPAND_QUERY_SYN,
+        "MAX_SYNONYMS": retrieval_config.MAX_SYNONYMS,
+        # Adaptive voting
+        "TRIGGER_QUERY": retrieval_config.TRIGGER_QUERY,
+        "ADDITIONAL_LLM_QUERY": retrieval_config.ADDITIONAL_LLM_QUERY,
+        # Subset/clustering settings
+        "SUBSET_TOP_K_RETRIEVAL": retrieval_config.SUBSET_TOP_K_RETRIEVAL,
+        "SUBSET_NUM_CLUSTERS": retrieval_config.SUBSET_NUM_CLUSTERS,
+        "SUBSET_TOP_PER_CLUSTER": retrieval_config.SUBSET_TOP_PER_CLUSTER,
+        "SUBSET_ENTAILMENT_THRESHOLD": retrieval_config.SUBSET_ENTAILMENT_THRESHOLD,
+        "MAX_VARIANTS": retrieval_config.MAX_VARIANTS,
+        # Logify settings
+        "USE_OPENIE": retrieval_config.USE_OPENIE,
+        "HARDNESS_CONSTANT": retrieval_config.HARDNESS_CONSTANT,
+        "USE_ENRICHMENT": retrieval_config.USE_ENRICHMENT,
+        "USE_SUBSET": retrieval_config.USE_SUBSET,
+        "DIRECT_RETRIEVAL_MULTIPLIER": retrieval_config.DIRECT_RETRIEVAL_MULTIPLIER,
+        "DEFAULT_MIN_WORDS": retrieval_config.DEFAULT_MIN_WORDS,
+        "DEFAULT_MAX_WORDS": retrieval_config.DEFAULT_MAX_WORDS,
+    }
+
 
 # Directory configuration
 CACHE_DIR = _script_dir / "cache"
@@ -470,6 +534,7 @@ def run_experiment(
             "limit": limit,
             "data_metadata": metadata,
         },
+        "retrieval_config": get_full_retrieval_config(),
         "premise_metrics": [],
         "results": [],
     }
