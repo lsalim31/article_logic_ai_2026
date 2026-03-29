@@ -45,7 +45,6 @@ _pre_parser.add_argument("--config", type=str, default=None)
 _pre_args, _ = _pre_parser.parse_known_args()
 
 # Load config if specified
-# Load config if specified
 if _pre_args.config:
     from config.retrieval_config import load_config, _profiles_dir
     
@@ -402,6 +401,7 @@ def query_hypothesis(
 def run_experiment(
     api_key: str,
     data_path: Path = SAMPLE_DATA_PATH,
+    config_path: Optional[str] = None,
     query_model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,

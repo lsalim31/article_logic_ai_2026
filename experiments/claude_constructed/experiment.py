@@ -12,6 +12,14 @@ Usage:
     python experiment.py --api-key $OPENROUTER_API_KEY --premise-id 0
     python experiment.py --api-key $OPENROUTER_API_KEY --limit 5
     python experiment.py --api-key $OPENROUTER_API_KEY --verbose
+    
+# Use specific config
+    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_openAI.yaml
+
+    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_deepseek.yaml
+
+    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/topk1_query0_IE_0_enrich_0_subset_0.yaml
+        
 """
 
 import argparse
@@ -25,6 +33,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 
+
 # Add code directory to Python path
 _script_dir = Path(__file__).resolve().parent
 _repo_root = _script_dir.parent.parent
@@ -34,11 +43,29 @@ for p in (_repo_root, _code_dir):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+_pre_parser = argparse.ArgumentParser(add_help=False)
+_pre_parser.add_argument("--config", type=str, default=None)
+_pre_args, _ = _pre_parser.parse_known_args()
+
+# Load config if specified
+if _pre_args.config:
+    from config.retrieval_config import load_config, _profiles_dir
+    
+    config_path = Path(_pre_args.config)
+    # If relative path, look in the profiles directory
+    if not config_path.is_absolute():
+        config_path = _profiles_dir / config_path.name
+    
+    load_config(config_path)
+
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
 from logic_solver import LogicSolver
+
+from config import retrieval_config
+
 from config.retrieval_config import (
     HARDNESS_CONSTANT,
     MAX_TOKENS,
@@ -48,7 +75,13 @@ from config.retrieval_config import (
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
 )
-from config import retrieval_config
+
+
+# Directory configuration
+CACHE_DIR = _script_dir / "cache"
+RESULTS_DIR = _script_dir / "results"
+DATASET_DIR = _script_dir / "dataset"
+DEFAULT_DATASET_PATH = DATASET_DIR / "gold_balanced_sudhu_edit.json"
 
 
 def get_full_retrieval_config() -> Dict[str, Any]:
@@ -89,7 +122,7 @@ def get_full_retrieval_config() -> Dict[str, Any]:
         "ENABLE_NEGATION_WARNINGS": retrieval_config.ENABLE_NEGATION_WARNINGS,
         # Confidence thresholds
         "CONFIDENCE_THRESHOLD_TRUE": retrieval_config.CONFIDENCE_THRESHOLD_TRUE,
-        "MIN_PROPOSITION_WEIGHT": retrieval_config.MIN_PROPOSIT3ION_WEIGHT,
+        "MIN_PROPOSITION_WEIGHT": retrieval_config.MIN_PROPOSITION_WEIGHT,
         # Query expansion
         "ON_EXPAND_QUERY_SYN": retrieval_config.ON_EXPAND_QUERY_SYN,
         "MAX_SYNONYMS": retrieval_config.MAX_SYNONYMS,
@@ -113,11 +146,6 @@ def get_full_retrieval_config() -> Dict[str, Any]:
     }
 
 
-# Directory configuration
-CACHE_DIR = _script_dir / "cache"
-RESULTS_DIR = _script_dir / "results"
-DATASET_DIR = _script_dir / "dataset"
-DEFAULT_DATASET_PATH = DATASET_DIR / "gold_balanced_sudhu_edit.json"
 
 
 @dataclass
@@ -451,6 +479,7 @@ def query_hypothesis(
 def run_experiment(
     api_key: str,
     data_path: Path = DEFAULT_DATASET_PATH,
+    config_path: Optional[str] = None,
     query_model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,
@@ -520,6 +549,7 @@ def run_experiment(
         "metadata": {
             "timestamp": timestamp,
             "data_path": str(data_path),
+            "config_profile": config_path,
             "logify_model": REASONING_MODEL,
             "query_model": query_model,
             "temperature": temperature,
@@ -808,6 +838,13 @@ def main() -> int:
         help="Enable detailed output",
     )
 
+    parser.add_argument(
+    "--config",
+    type=str,
+    default=None,
+    help="Path to YAML config profile (e.g., profiles/default_openAI.yaml)"
+    )
+
     args = parser.parse_args()
 
     if not args.api_key:
@@ -818,10 +855,15 @@ def main() -> int:
         print(f"Error: Data not found: {args.data_path}")
         return 1
 
+    if not args.config:
+        print("Error: No configuration file. Select one in /code/config/profiles")
+        return 1
+
     try:
         run_experiment(
             api_key=args.api_key,
             data_path=args.data_path,
+            config_path=args.config,
             query_model=args.query_model,
             temperature=args.temperature,
             reasoning_effort=args.reasoning_effort,
