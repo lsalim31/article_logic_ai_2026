@@ -81,8 +81,8 @@ MAX_VARIANTS = SUBSET_NUM_CLUSTERS*SUBSET_TOP_PER_CLUSTER
 USE_OPENIE = False
 
 HARDNESS_CONSTANT = 0.9
-PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
-#"prompt_long_openIE_Agn_nomodality"
+# PROMPT_EXTRACTION = "prompt_current_micro_notOpenIE"
+PROMPT_EXTRACTION = "prompt_long_openIE_Agn_nomodality"
 
 USE_ENRICHMENT = False
 USE_SUBSET = False
