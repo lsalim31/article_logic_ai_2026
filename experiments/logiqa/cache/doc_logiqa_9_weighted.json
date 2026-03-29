@@ -1,0 +1,149 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "There are photos of the US military abusing prisoners.",
+      "evidence": "Sentence 0: \"Referring to the photos of the US military abusing prisoners\"",
+      "explanation": "This is an atomic existence claim about photos depicting a specific event; it contains no logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "The US military abuses prisoners.",
+      "evidence": "Sentence 0: \"photos of the US military abusing prisoners\"",
+      "explanation": "This is a simple event/state claim; it is the depicted action itself without connectives."
+    },
+    {
+      "id": "P_3",
+      "translation": "You want to be caught on the spot doing something stupid.",
+      "evidence": "Sentence 0: \"if you don't want to be caught on the spot doing something stupid\"",
+      "explanation": "This is a single attitude/state (wanting) toward a specific situation; negation is handled in constraints, not inside the proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "You do something stupid.",
+      "evidence": "Sentence 0: \"doing something stupid\" / \"you don't do anything stupid\"",
+      "explanation": "This is an atomic action claim; the universal wording \"anything\" is not represented with quantifiers, so it is captured as a single propositional action."
+    },
+    {
+      "id": "P_5",
+      "translation": "You are caught on the spot doing something stupid.",
+      "evidence": "Sentence 0: \"be caught on the spot doing something stupid\"",
+      "explanation": "This is an atomic situation/event description; internal structure (caught + doing) is not further decomposed here, but semantic constraints can relate it to other propositions."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "¬P_3 ⟹ ¬P_4",
+      "translation": "If you don't want to be caught on the spot doing something stupid, you don't do anything stupid.",
+      "evidence": "Sentence 0: \"if you don't want to be caught on the spot doing something stupid, you don't do anything stupid\"",
+      "reasoning": "This is the main explicit conditional statement being quoted; it is stated directly as a rule/advice.",
+      "list nli": [
+        [
+          0.001461012288928032,
+          0.0013332916423678398,
+          0.9972056746482849
+        ],
+        [
+          0.0006090952083468437,
+          0.0036652972921729088,
+          0.9957256317138672
+        ],
+        [
+          0.010253828018903732,
+          0.003447079798206687,
+          0.9862990975379944
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_4",
+      "translation": "Being caught on the spot doing something stupid entails that you did something stupid.",
+      "evidence": "Sentence 0: \"caught on the spot doing something stupid\"",
+      "reasoning": "This is a strong commonsense semantic entailment from the meaning of \"caught ... doing X\"; minor uncertainty remains due to possible false accusation/mistake.",
+      "list nli": [
+        [
+          0.001510684029199183,
+          0.001443404471501708,
+          0.9970459342002869
+        ],
+        [
+          0.0007933432352729142,
+          0.008075340650975704,
+          0.9911312460899353
+        ],
+        [
+          0.021833742037415504,
+          0.01741834357380867,
+          0.9607478976249695
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If there are photos of the US military abusing prisoners, then the US military abuses prisoners.",
+      "evidence": "Sentence 0: \"photos of the US military abusing prisoners\"",
+      "reasoning": "Photos depicting an event strongly suggest the event occurred, but the text does not guarantee authenticity (could be staged/misinterpreted), so weight is high but not 1.0.",
+      "list nli": [
+        [
+          0.0001930857979459688,
+          0.00462106429040432,
+          0.995185911655426
+        ],
+        [
+          0.024149902164936066,
+          0.010734296403825283,
+          0.9651157855987549
+        ],
+        [
+          0.02906656451523304,
+          0.9179506897926331,
+          0.05298279598355293
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_3",
+      "translation": "It is not the case that You want to be caught on the spot doing something stupid.",
+      "evidence": "Sentence 0: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.0007030696724541485,
+          0.0009766957955434918,
+          0.9983201622962952
+        ],
+        [
+          0.0028816109988838434,
+          0.0032638816628605127,
+          0.9938545227050781
+        ],
+        [
+          0.0008093953947536647,
+          0.019881322979927063,
+          0.9793093204498291
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

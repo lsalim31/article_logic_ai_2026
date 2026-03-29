@@ -2,107 +2,107 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "The candidate for the legislature is an independent candidate.",
-      "evidence": "Sentence 0: \"the independent candidate for the legislature\"",
-      "explanation": "This is an atomic classification of the candidate; it is not a logical connective or a negation."
+      "translation": "The independent candidate wins the election.",
+      "evidence": "Sentence 0: \"...cannot possibly be an effective legislator is she wins.\"",
+      "explanation": "This is an atomic event claim (win vs. not win) with no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "The independent candidate for the legislature wins the election.",
-      "evidence": "Sentence 0: \"if she wins\"",
-      "explanation": "This is a single event-like claim (winning) and contains no logical connectives."
+      "translation": "The independent candidate is an elected official.",
+      "evidence": "Sentence 0: \"Because an elected official needs the support of a political party to be effective...\" (used as the relevant status if she wins)",
+      "explanation": "This is a single status attribution (elected official) without embedded conditions."
     },
     {
       "id": "P_3",
-      "translation": "The independent candidate for the legislature is an effective legislator.",
-      "evidence": "Sentence 0: \"be an effective legislator\"",
-      "explanation": "This is an atomic evaluative claim about the candidate’s effectiveness."
+      "translation": "The independent candidate has the support of a political party.",
+      "evidence": "Sentence 0: \"...needs the support of a political party to be effective...\" (support is the key property under discussion for the independent candidate)",
+      "explanation": "This is a single relation (has support) without negation or connectives."
     },
     {
       "id": "P_4",
-      "translation": "The independent candidate for the legislature is an ineffective legislator.",
-      "evidence": "Sentence 0: \"cannot possibly be an effective legislator\" (recast as ineffectiveness without explicit negation)",
-      "explanation": "The text asserts inability to be effective; representing this as 'ineffective' avoids embedding negation inside the primitive."
+      "translation": "The independent candidate is an effective legislator.",
+      "evidence": "Sentence 0: \"...cannot possibly be an effective legislator...\"",
+      "explanation": "This is a single evaluative property (effective legislator) that can be negated in constraints."
     },
     {
       "id": "P_5",
-      "translation": "The independent candidate for the legislature has the support of a political party.",
-      "evidence": "Sentence 0: \"support of a political party\" (as the relevant property being discussed)",
-      "explanation": "This is an atomic support-status claim needed to express the argument’s stated requirement about effectiveness."
+      "translation": "The independent candidate is independent.",
+      "evidence": "Sentence 0: \"...the independent candidate for the legislature...\"",
+      "explanation": "This is an atomic classification statement (independent) with no connectives."
     },
     {
       "id": "P_6",
-      "translation": "Our current legislator has the support of a political party.",
-      "evidence": "Sentence 1: \"our current legislator, who has the support of a political party\"",
-      "explanation": "This is a single factual claim about the current legislator’s party support."
+      "translation": "The independent candidate is a legislator.",
+      "evidence": "Sentence 0: \"...independent candidate for the legislature...\" and \"...effective legislator if she wins\"",
+      "explanation": "This is a single role/property attribution (is a legislator), separated from any conditional like winning."
     },
     {
       "id": "P_7",
-      "translation": "Our current legislator is effective.",
-      "evidence": "Sentence 1: \"ought to have been effective\"",
-      "explanation": "This is an atomic effectiveness predicate attributed (as an expectation) to the current legislator."
+      "translation": "The current legislator has the support of a political party.",
+      "evidence": "Sentence 1: \"...our current legislator, who has the support of a political party...\"",
+      "explanation": "This is a single relation claim (has support) without negation or connectives."
     },
     {
       "id": "P_8",
-      "translation": "Our current legislator is ineffective.",
-      "evidence": "Sentence 1: \"he has not been\" (recast as ineffectiveness without explicit negation)",
-      "explanation": "The text asserts lack of effectiveness; representing this as 'ineffective' avoids embedding negation inside the primitive."
+      "translation": "The current legislator is effective.",
+      "evidence": "Sentence 1: \"...ought to have been effective, but he has not been.\"",
+      "explanation": "This is a single property (effective) that can be denied via negation in constraints."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.95,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
+      "combined=(llm)*(nli)": 0.95,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "((P_2 ∧ P_3) ⟹ P_5)",
-      "translation": "If the independent candidate wins and is effective, then she has political party support.",
-      "evidence": "Sentence 0: \"an elected official needs the support of a political party to be effective\" + \"if she wins\"",
-      "reasoning": "P explicitly states party support is required for effectiveness; applying it to the case where she wins (and thus would be an elected official) yields this necessity constraint.",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "The independent candidate needs political party support to be effective.",
+      "evidence": "Sentence 0: \"...needs the support of a political party to be effective...\"",
+      "reasoning": "“Needs X to be Y” strongly expresses X as a necessary condition for Y; modeled as effectiveness implying support.",
       "list nli": [
         [
-          6.0009937442373484e-05,
-          5.900405813008547e-05,
-          0.9998810291290283
+          5.114843952469528e-05,
+          0.0002398387441644445,
+          0.9997089505195618
         ],
         [
-          5.13482082169503e-05,
-          0.00012492586392909288,
-          0.9998237490653992
+          0.0002839085063897073,
+          4.103541868971661e-05,
+          0.9996750354766846
         ],
         [
-          2.1526406271732412e-05,
-          0.00018159608589485288,
-          0.9997969269752502
+          0.001176115358248353,
+          0.00010586476855678484,
+          0.9987180233001709
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.9,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
+      "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
       "id": "C_2",
-      "formula": "(P_7 ⟹ P_6)",
-      "translation": "If the current legislator is effective, then he has political party support.",
-      "evidence": "Sentence 0: \"an elected official needs the support of a political party to be effective\"",
-      "reasoning": "The stated requirement is general for elected officials; the current legislator is treated as an elected official in the discussion.",
+      "formula": "P_5 ⟹ ¬P_3",
+      "translation": "If the candidate is independent, the candidate lacks political party support.",
+      "evidence": "Sentence 0: \"...the independent candidate...\" together with the discussion of needing party support",
+      "reasoning": "In ordinary political usage, an “independent candidate” is not backed by a political party; the argument relies on that assumption.",
       "list nli": [
         [
-          8.506506128469482e-05,
-          4.843871283810586e-05,
-          0.9998664855957031
+          0.000434244197094813,
+          0.0064842053689062595,
+          0.9930816292762756
         ],
         [
-          2.6091363906743936e-05,
-          0.00011014717165380716,
-          0.9998637437820435
+          0.007173995487391949,
+          0.0008521166164427996,
+          0.991973876953125
         ],
         [
-          1.094404433388263e-05,
-          0.0001519294746685773,
-          0.9998370409011841
+          0.0025651270989328623,
+          0.009436157532036304,
+          0.9879987239837646
         ]
       ]
     },
@@ -112,25 +112,25 @@
       "combined=(llm)*(nli)": 0.95,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "(P_1 ⟹ ¬P_5)",
-      "translation": "If the candidate is independent, then she does not have political party support.",
-      "evidence": "Sentence 0: \"independent candidate\" + discussion of needing party support",
-      "reasoning": "In standard usage, an independent candidate is not supported by a political party; the argument relies on this link though it is not stated as a definition.",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If the independent candidate wins, the independent candidate is an elected official.",
+      "evidence": "Sentence 0: P links winning the legislature race to being an elected official/legislator.",
+      "reasoning": "Winning an election for the legislature normally makes the winner an elected official; this is presupposed by P’s reasoning.",
       "list nli": [
         [
-          3.005079270224087e-05,
-          0.00019606512796599418,
-          0.9997739195823669
+          0.00014145024761091918,
+          0.00015129760140553117,
+          0.9997072815895081
         ],
         [
-          4.5555287215393037e-05,
-          0.0009732345934025943,
-          0.9989811778068542
+          0.0041728634387254715,
+          0.0003583687066566199,
+          0.9954687356948853
         ],
         [
-          0.00416991300880909,
-          0.0035068639554083347,
-          0.9923231601715088
+          0.044779062271118164,
+          0.00877291802316904,
+          0.9464479684829712
         ]
       ]
     },
@@ -140,53 +140,53 @@
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "((P_2 ∧ P_1) ⟹ P_4)",
-      "translation": "If the independent candidate wins and is independent, then she is an ineffective legislator.",
-      "evidence": "Sentence 0: \"the independent candidate ... cannot possibly be an effective legislator if she wins\"",
-      "reasoning": "This is P’s explicit conclusion (expressed with maximal strength: 'cannot possibly').",
+      "formula": "P_1 ⟹ ¬P_4",
+      "translation": "If the independent candidate wins, the independent candidate is not an effective legislator.",
+      "evidence": "Sentence 0: \"...cannot possibly be an effective legislator if she wins.\"",
+      "reasoning": "This is stated as P’s conclusion with maximal certainty (“cannot possibly”).",
       "list nli": [
         [
-          0.00012282906391192228,
-          0.00025292724603787065,
-          0.9996242523193359
+          0.0010197137016803026,
+          0.0002695881121326238,
+          0.9987107515335083
         ],
         [
-          0.003686749143525958,
-          0.0004047877446282655,
-          0.9959084987640381
+          0.00205191015265882,
+          9.618877083994448e-05,
+          0.9978519678115845
         ],
         [
-          0.02683454006910324,
-          0.002592972479760647,
-          0.9705725312232971
+          0.0022751372307538986,
+          0.0002784837852232158,
+          0.9974464178085327
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.9,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 1.0,
+      "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
       "id": "C_5",
-      "formula": "P_6",
-      "translation": "The current legislator has the support of a political party.",
-      "evidence": "Sentence 1: \"our current legislator, who has the support of a political party\"",
-      "reasoning": "Q states this as a fact about the current legislator.",
+      "formula": "P_1 ⟹ P_6",
+      "translation": "If the independent candidate wins, the independent candidate is a legislator.",
+      "evidence": "Sentence 0: \"...candidate for the legislature...\" plus the conditional discussion of being an effective legislator upon winning.",
+      "reasoning": "Winning a legislative election entails becoming a legislator in the intended setting.",
       "list nli": [
         [
-          2.3701531972619705e-05,
-          5.2447467169258744e-05,
-          0.999923825263977
+          0.0002641318424139172,
+          0.00012008230987703428,
+          0.9996157884597778
         ],
         [
-          1.2545376193884294e-05,
-          0.0001160727406386286,
-          0.9998713731765747
+          0.0009148939861916006,
+          0.00020094956562388688,
+          0.9988841414451599
         ],
         [
-          0.01840762048959732,
-          0.00036298128543421626,
-          0.9812294244766235
+          0.0049133445136249065,
+          0.0033689322881400585,
+          0.9917176961898804
         ]
       ]
     },
@@ -196,81 +196,25 @@
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_6",
-      "formula": "P_8",
-      "translation": "The current legislator has been ineffective.",
-      "evidence": "Sentence 1: \"but he has not been\"",
-      "reasoning": "Q asserts that the current legislator has not been effective.",
+      "formula": "P_7",
+      "translation": "The current legislator has the support of a political party.",
+      "evidence": "Sentence 1: \"...our current legislator, who has the support of a political party...\"",
+      "reasoning": "Q asserts this as a fact about the current legislator.",
       "list nli": [
         [
-          0.0004885645466856658,
-          3.599837145884521e-05,
-          0.9994754195213318
+          1.3516648323275149e-05,
+          0.00018153191194869578,
+          0.9998049139976501
         ],
         [
-          0.01755819097161293,
-          5.881895776838064e-05,
-          0.9823830127716064
+          0.009172494523227215,
+          0.000389389373594895,
+          0.9904381632804871
         ],
         [
-          0.00046218017814680934,
-          0.9937313199043274,
-          0.0058064223267138
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.95,
-      "hardness_constant": 0.9,
-      "id": "C_7",
-      "formula": "¬(P_3 ∧ P_4)",
-      "translation": "The independent candidate is not both effective and ineffective.",
-      "evidence": "Sentence 0: effectiveness vs inability-to-be-effective framing",
-      "reasoning": "Common-sense exclusivity of 'effective' vs 'ineffective' for the same agent in the same respect.",
-      "list nli": [
-        [
-          0.0012617595493793488,
-          0.0012664394453167915,
-          0.997471809387207
-        ],
-        [
-          0.08549431711435318,
-          0.004451276268810034,
-          0.9100543260574341
-        ],
-        [
-          0.3113231360912323,
-          0.019403299316763878,
-          0.6692735552787781
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.95,
-      "hardness_constant": 0.9,
-      "id": "C_8",
-      "formula": "¬(P_7 ∧ P_8)",
-      "translation": "The current legislator is not both effective and ineffective.",
-      "evidence": "Sentence 1: \"ought to have been effective\" contrasted with \"has not been\"",
-      "reasoning": "Common-sense exclusivity of 'effective' vs 'ineffective' for the same agent in the same respect.",
-      "list nli": [
-        [
-          0.007249707356095314,
-          0.00036692191497422755,
-          0.9923834204673767
-        ],
-        [
-          0.00950166117399931,
-          0.00034813350066542625,
-          0.9901502132415771
-        ],
-        [
-          0.8433744311332703,
-          0.07809391617774963,
-          0.07853160798549652
+          0.8570858836174011,
+          0.0028901537880301476,
+          0.14002397656440735
         ]
       ]
     },
@@ -279,59 +223,87 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_10",
-      "formula": "¬P_3",
-      "translation": "It is not the case that The independent candidate for the legislature is an effective legislator.",
+      "id": "C_7",
+      "formula": "¬P_8",
+      "translation": "The current legislator is not effective.",
+      "evidence": "Sentence 1: \"...but he has not been.\"",
+      "reasoning": "Q asserts non-effectiveness directly.",
+      "list nli": [
+        [
+          0.0023933295160531998,
+          3.974348510382697e-05,
+          0.9975669384002686
+        ],
+        [
+          0.002766617340967059,
+          4.397739394335076e-05,
+          0.997189462184906
+        ],
+        [
+          0.9920210242271423,
+          0.000556501152459532,
+          0.007422443013638258
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "¬P_4",
+      "translation": "It is not the case that The independent candidate is an effective legislator.",
       "evidence": "Sentence 0: explicit negation in source text",
       "reasoning": "Explicit negation detected in source text - hard constraint",
       "list nli": [
         [
-          0.00028767233015969396,
-          7.369340164586902e-05,
-          0.9996386766433716
+          0.0004849652759730816,
+          9.91450942819938e-05,
+          0.9994158744812012
         ],
         [
-          0.0004489575221668929,
-          9.584496729075909e-05,
-          0.9994551539421082
+          0.000881808577105403,
+          0.00014102323621045798,
+          0.9989771842956543
         ],
         [
-          0.0005793050513602793,
-          0.00015705022087786347,
-          0.9992635846138
+          0.0019004747737199068,
+          0.0001447662798454985,
+          0.9979547262191772
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.75,
+      "llm-weight": 0.65,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.75,
+      "combined=(llm)*(nli)": 0.65,
       "hardness_constant": 0.9,
-      "id": "C_9",
-      "formula": "(P_6 ⟹ P_7)",
-      "translation": "If the current legislator has political party support, then he is effective.",
-      "evidence": "Sentence 1: \"By your reasoning, our current legislator, who has the support of a political party, ought to have been effective\"",
-      "reasoning": "Q attributes this conditional to P’s reasoning, but the 'ought' language signals it is presented as an expectation/inference rather than a strict entailment from P’s stated necessity claim.",
+      "id": "C_8",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If a legislator has the support of a political party, the legislator is effective.",
+      "evidence": "Sentence 1: \"By your reasoning... who has the support of a political party, ought to have been effective...\"",
+      "reasoning": "Q attributes this (sufficiency) principle to P’s reasoning, but P’s original claim more naturally states necessity, not sufficiency; thus the weight is moderate.",
       "list nli": [
         [
-          1.0202170415141154e-05,
-          0.00010584986739559099,
-          0.9998838901519775
+          2.687528103706427e-05,
+          0.00015648048429284245,
+          0.9998167157173157
         ],
         [
-          0.0005251712282188237,
-          5.1401475502643734e-05,
-          0.9994235038757324
+          0.0015893328236415982,
+          0.00041441444773226976,
+          0.9979962706565857
         ],
         [
-          0.00043697241926565766,
-          0.00014407988055609167,
-          0.9994189739227295
+          0.005500085186213255,
+          0.0004902444197796285,
+          0.9940097332000732
         ]
       ],
-      "weight": 0.75
+      "weight": 0.65
     }
   ]
 }

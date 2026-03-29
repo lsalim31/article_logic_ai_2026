@@ -2,109 +2,96 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "MetroBank made ten loans to small companies.",
-      "evidence": "Sentence 0: \"MetroBank made loans to ten small companies\"",
-      "explanation": "This is an atomic factual claim about an action and its recipients/quantity, with no logical connective structure."
+      "translation": "MetroBank made loans to ten small companies.",
+      "evidence": "Sentence 0: 'MetroBank made loans to ten small companies...'",
+      "explanation": "Atomic fact asserting an action and its recipients; no logical connective or conditional structure remains."
     },
     {
       "id": "P_2",
-      "translation": "The loan amounts ranged from $1,000 to $100,000.",
-      "evidence": "Sentence 0: \"in amounts ranging from $1, 000 to $100, 000\"",
-      "explanation": "This is a single descriptive fact about the amounts; it is not a logical combination of smaller propositions in the text."
+      "translation": "Each of the ten loan amounts was between $1,000 and $100,000.",
+      "evidence": "Sentence 0: '...in amounts ranging from $1, 000 to $100, 000.'",
+      "explanation": "Atomic descriptive claim about the amounts of the ten loans; it is not a combination of separate truth-evaluable clauses in the text."
     },
     {
       "id": "P_3",
       "translation": "Each of the ten loans had a graduated payment plan.",
-      "evidence": "Sentence 1: \"These ten loans all had graduated payment plans\"",
-      "explanation": "This is a single property attribution to the set of loans; it does not contain explicit connectives."
+      "evidence": "Sentence 1: 'These ten loans all had graduated payment plans...'",
+      "explanation": "Atomic property attribution to the ten loans."
     },
     {
       "id": "P_4",
-      "translation": "The scheduled monthly loan payment increased slightly each month.",
-      "evidence": "Sentence 1: \"the scheduled monthly loan payment increased slightly each month\"",
-      "explanation": "This is an atomic claim about the behavior of scheduled payments over time as stated."
+      "translation": "The scheduled monthly loan payment increased slightly each month over the five-year term.",
+      "evidence": "Sentence 1: '...the scheduled monthly loan payment increased slightly each month over the five-year term of the loan.'",
+      "explanation": "Atomic statement about the schedule pattern; while it contains a temporal phrase, it does not contain logical connectives/conditionals needing further decomposition."
     },
     {
       "id": "P_5",
-      "translation": "Each loan had a five-year term.",
-      "evidence": "Sentence 1: \"over the five-year term of the loan\"",
-      "explanation": "This is a single factual attribute (term length) and does not decompose into connectives."
+      "translation": "The term of the loan was five years.",
+      "evidence": "Sentence 1: '...over the five-year term of the loan.'",
+      "explanation": "Atomic duration claim referenced by the payment-schedule description."
     },
     {
       "id": "P_6",
       "translation": "The average payment received by MetroBank for the ten loans decreased by the end of the five-year term.",
-      "evidence": "Sentence 2: \"the average payment received by MetroBank for these ten loans had decreased by the end of the five-year term\"",
-      "explanation": "This is an atomic claim about the trend in average received payments by a specified time."
+      "evidence": "Sentence 2: '...the average payment received by MetroBank for these ten loans had decreased by the end of the five-year term.'",
+      "explanation": "Atomic empirical outcome claim about average received payments at the end of the term."
     },
     {
       "id": "P_7",
-      "translation": "There was an apparent discrepancy in the statements about the loans.",
-      "evidence": "Sentence 3: \"most helps to resolve the apparent discrepancy\"",
-      "explanation": "This is an explicit meta-claim in the question stem about the relationship among prior statements, expressed without connectives."
+      "translation": "The payments received by MetroBank matched the scheduled payments.",
+      "evidence": "Implied by the 'apparent discrepancy' framing across Sentences 1-2 (scheduled payments rise, yet average received falls).",
+      "explanation": "Atomic bridging assumption typically needed for the schedule (what should be paid) to determine what is received; it is not stated but is the natural implicit premise behind calling it a discrepancy."
     },
     {
       "id": "P_8",
-      "translation": "A true statement could help resolve the apparent discrepancy.",
-      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
-      "explanation": "This captures the question’s existence/possibility premise (that some truth would resolve the discrepancy) as a standalone claim."
+      "translation": "The average payment received by MetroBank for the ten loans increased by the end of the five-year term.",
+      "evidence": "Implied expectation from Sentence 1 contrasted with Sentence 2 ('Nonetheless... decreased').",
+      "explanation": "Atomic expected-outcome proposition used to represent what the rising scheduled payments would suggest absent other factors."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_3 ⟹ P_4",
-      "translation": "If each loan had a graduated payment plan, then the scheduled monthly payment increased slightly each month.",
+      "translation": "Having a graduated payment plan implies the scheduled monthly payment increases over time.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"graduated payment plans, i.e., the scheduled monthly loan payment increased slightly each month\"",
-      "reasoning": "The text uses \"i.e.\" to define/explain the graduated payment plan in terms of the monthly scheduled increase, making the implication effectively required."
+      "evidence": "Sentence 1: '...had graduated payment plans, i.e., the scheduled monthly loan payment increased slightly each month...'",
+      "reasoning": "The phrase 'i.e.' signals an intended definitional/explicative equivalence; at minimum it guarantees the implication."
     },
     {
       "id": "C_2",
-      "formula": "P_4 ∧ P_5",
-      "translation": "The scheduled monthly payment increased slightly each month over a five-year term.",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "The described month-by-month increase occurred over a five-year loan term.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"increased slightly each month over the five-year term of the loan\"",
-      "reasoning": "Sentence 1 directly states both features as facts about the loans; treating them jointly reflects the intended combined description."
+      "evidence": "Sentence 1: '...increased slightly each month over the five-year term of the loan.'",
+      "reasoning": "The five-year term is explicitly the horizon over which the monthly increases are stated to occur."
     },
     {
       "id": "C_3",
-      "formula": "P_4 ∧ P_6 ⟹ P_7",
-      "translation": "If scheduled monthly payments increased each month, yet the average received payment decreased by the end, then the statements appear discrepant.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 1 + Sentence 2 + Sentence 3 (\"Nonetheless\" + \"apparent discrepancy\")",
-      "reasoning": "The question explicitly frames these facts as an \"apparent discrepancy\"; the link is strongly suggested but still depends on the reader’s assumption that scheduled increases would normally raise received averages."
+      "formula": "(P_4 ∧ P_7) ⟹ P_8",
+      "translation": "If received payments match a schedule that increases each month, then the average payment received increases by the end of the term.",
+      "llm_weight": 0.75,
+      "evidence": "Sentences 1-2 juxtaposition: rising scheduled payments vs. decreased average received.",
+      "reasoning": "This captures the common-sense mechanism behind the stated 'apparent discrepancy': rising scheduled payments would normally lead to rising received payments if borrowers pay as scheduled. Weight is <1 because averaging across loans and timing effects could complicate the inference in edge cases."
     },
     {
       "id": "C_4",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "If there is an apparent discrepancy, then some true statement could help resolve it.",
-      "llm_weight": 0.75,
-      "evidence": "Sentence 3: \"Which one of the following, if true, most helps to resolve the apparent discrepancy\"",
-      "reasoning": "The question format presupposes a resolvable discrepancy and that at least one candidate statement would help; however, without answer choices, this remains a weaker, meta-level inference."
+      "formula": "P_6 ⟹ ¬P_8",
+      "translation": "If the average payment received decreased by the end of the term, then it did not increase by the end of the term.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2: '...average payment received ... had decreased by the end...'",
+      "reasoning": "In ordinary usage, 'decreased by the end' conflicts with 'increased by the end' for the same comparison point. Slight uncertainty remains because one might interpret 'decreased' relative to some earlier subperiod rather than the very start."
     },
     {
       "id": "C_5",
-      "formula": "P_8",
-      "translation": "A true statement could help resolve the apparent discrepancy.",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "Original modal statement is asserted with certainty"
-    },
-    {
-      "id": "C_6",
-      "formula": "P_8 ⟹ P_8",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+      "formula": "¬(P_4 ∧ P_6)",
+      "translation": "It is unexpected for scheduled monthly payments to rise each month while the average payment received falls by the end of the term.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 2 begins with 'Nonetheless,' indicating tension with Sentence 1.",
+      "reasoning": "'Nonetheless' marks an apparent discrepancy rather than a strict logical impossibility; real-world factors (defaults, prepayments, refinancing, deferred payments) can allow both to be true."
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_8: 'A true statement could help resolve the apparent discrepancy.' has modal 'could'",
-    "        Base text: 'A true statement help resolve the apparent discrepancy.'",
-    "        Found existing base: P_8",
-    "        Added constraint: P_8 @1.0",
-    "        Added constraint: P_8 ⟹ P_8 @1.0",
     "[Auxiliary] Found 0 auxiliary propositions"
   ]
 }

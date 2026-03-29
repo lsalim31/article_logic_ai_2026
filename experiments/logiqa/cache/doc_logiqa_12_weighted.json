@@ -1,0 +1,241 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A major art theft from a museum occurred.",
+      "evidence": "Sentence 0: \"A major art theft from a museum\"",
+      "explanation": "This is a single event-claim (that such a theft occurred) and does not contain logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "The theft was remarkable.",
+      "evidence": "Sentence 0: \"was remarkable\"",
+      "explanation": "This is an atomic predication about the theft and cannot be decomposed into simpler truth-evaluable parts without adding structure not in the text."
+    },
+    {
+      "id": "P_3",
+      "translation": "The pieces stolen had been carefully selected.",
+      "evidence": "Sentence 0: \"the pieces stolen clearly had been carefully selected\"",
+      "explanation": "This is a simple declarative claim about the stolen pieces; it has no embedded conditionals or connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The criterion for selection was greatest estimated market value.",
+      "evidence": "Sentence 1: \"The criterion for selection ... greatest estimated market value\"",
+      "explanation": "This states one specific candidate criterion; the text denies it, but the proposition itself is kept non-negated so negation can be represented in constraints."
+    },
+    {
+      "id": "P_5",
+      "translation": "The theft was carried out to suit the taste of an individual collector.",
+      "evidence": "Sentence 2: \"the theft was specifically carried out to suit the taste of some individual collector\"",
+      "explanation": "This is a single purpose/intention claim (no explicit logical connectives)."
+    },
+    {
+      "id": "P_6",
+      "translation": "The pieces were destined for an individual collector's private collection.",
+      "evidence": "Sentence 2: \"for whose private collection the pieces were destined\"",
+      "explanation": "This is an atomic destination claim about the pieces; it is stated as a simple declarative."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "A major art theft from a museum occurred.",
+      "evidence": "Sentence 0",
+      "reasoning": "Presented as background fact, not hedged.",
+      "list nli": [
+        [
+          8.178623829735443e-06,
+          0.00013035950541961938,
+          0.999861478805542
+        ],
+        [
+          5.341281848814106e-06,
+          0.0004377767036203295,
+          0.999556839466095
+        ],
+        [
+          0.0006331953918561339,
+          3.2011161238187924e-05,
+          0.9993347525596619
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "The pieces stolen had been carefully selected.",
+      "evidence": "Sentence 0",
+      "reasoning": "Marked as \"clearly\" in the text, indicating strong commitment.",
+      "list nli": [
+        [
+          1.0049611773865763e-05,
+          0.00011589452333282679,
+          0.9998739957809448
+        ],
+        [
+          6.740200660715345e-06,
+          0.0001256002433365211,
+          0.9998676776885986
+        ],
+        [
+          0.00019417924340814352,
+          5.63394496566616e-05,
+          0.999749481678009
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "¬P_4",
+      "translation": "The criterion for selection was not greatest estimated market value.",
+      "evidence": "Sentence 1",
+      "reasoning": "Also marked as \"clearly\" and directly asserted as a negation.",
+      "list nli": [
+        [
+          4.6977587771834806e-05,
+          6.804338045185432e-05,
+          0.9998849630355835
+        ],
+        [
+          0.00018583572818897665,
+          4.367093788459897e-05,
+          0.99977046251297
+        ],
+        [
+          0.00015340815298259258,
+          0.0007737502455711365,
+          0.999072790145874
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "The theft was carried out to suit the taste of an individual collector.",
+      "evidence": "Sentence 2",
+      "reasoning": "Stated as the intended conclusion (\"It follows that\"), indicating the author’s strong endorsement, though it is an inference rather than an observational report.",
+      "list nli": [
+        [
+          5.743362271459773e-05,
+          3.549698521965183e-05,
+          0.9999070167541504
+        ],
+        [
+          7.439026376232505e-05,
+          3.8949194276938215e-05,
+          0.9998866319656372
+        ],
+        [
+          5.1823051762767136e-05,
+          6.792395288357511e-05,
+          0.9998801946640015
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "The pieces were destined for an individual collector's private collection.",
+      "evidence": "Sentence 2",
+      "reasoning": "Part of the same stated conclusion introduced by \"It follows that\".",
+      "list nli": [
+        [
+          5.097430039313622e-05,
+          4.9537567974766716e-05,
+          0.9998995065689087
+        ],
+        [
+          5.0573689804878086e-05,
+          5.3070314606884494e-05,
+          0.9998962879180908
+        ],
+        [
+          6.299898086581379e-05,
+          5.631047679344192e-05,
+          0.9998806715011597
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "(P_3 ∧ ¬P_4) ⟹ (P_5 ∧ P_6)",
+      "translation": "If the stolen pieces were carefully selected and the selection was not based on greatest market value, then the theft was carried out to suit a particular collector’s taste and the pieces were destined for that collector’s private collection.",
+      "evidence": "Sentences 0-2 (the inferential move from the stated premises to the stated conclusion)",
+      "reasoning": "This is the tacit bridging principle required for the argument to reach its conclusion from its premises; the argument relies on it as if it must hold.",
+      "list nli": [
+        [
+          1.973198595806025e-05,
+          0.00013519544154405594,
+          0.999845027923584
+        ],
+        [
+          7.24019409972243e-05,
+          0.0003003817400895059,
+          0.9996272325515747
+        ],
+        [
+          0.0010422561317682266,
+          0.0003683945396915078,
+          0.9985893368721008
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If the pieces were destined for an individual collector's private collection, then the theft was carried out to suit the taste of an individual collector.",
+      "evidence": "Sentence 2",
+      "reasoning": "The text presents these together as a package, and it is a plausible coherence assumption, but it is not strictly guaranteed by the wording alone.",
+      "list nli": [
+        [
+          1.0663832654245198e-05,
+          0.00025679427199065685,
+          0.9997325539588928
+        ],
+        [
+          9.632187720853835e-05,
+          0.0007378460140898824,
+          0.9991658926010132
+        ],
+        [
+          0.0009049357613548636,
+          0.0009531169780530035,
+          0.9981420040130615
+        ]
+      ],
+      "weight": 0.6
+    }
+  ]
+}

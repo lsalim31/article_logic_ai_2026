@@ -2,97 +2,133 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Lopez and Simmons are married to each other",
+      "translation": "Lopez and Simmons are a married couple.",
       "evidence": "Sentence 0: \"Lopez and Simmons, a married couple\"",
-      "explanation": "This is an atomic relationship claim (marital status) with no explicit logical connectives."
+      "explanation": "Atomic marital-status fact; no logical connective or condition."
     },
     {
       "id": "P_2",
-      "translation": "Lopez has been offered a job at Evritech Corporation",
-      "evidence": "Sentence 0: \"Lopez and Simmons ... have both been offered jobs at Evritech Corporation\"",
-      "explanation": "This is a single, truth-evaluable offer statement about Lopez."
+      "translation": "Lopez has been offered a job at Evritech Corporation.",
+      "evidence": "Sentence 0: \"Lopez ... have both been offered jobs at Evritech Corporation\"",
+      "explanation": "Atomic employment-offer fact about Lopez."
     },
     {
       "id": "P_3",
-      "translation": "Simmons has been offered a job at Evritech Corporation",
-      "evidence": "Sentence 0: \"Lopez and Simmons ... have both been offered jobs at Evritech Corporation\"",
-      "explanation": "This is a single, truth-evaluable offer statement about Simmons."
+      "translation": "Simmons has been offered a job at Evritech Corporation.",
+      "evidence": "Sentence 0: \"... Simmons ... have both been offered jobs at Evritech Corporation\"",
+      "explanation": "Atomic employment-offer fact about Simmons."
     },
     {
       "id": "P_4",
-      "translation": "Evritech has a rule against hiring more than one member of the same family",
+      "translation": "Evritech has a rule against hiring more than one member of the same family.",
       "evidence": "Sentence 1: \"Evritech has a rule against hiring more than one member of the same family\"",
-      "explanation": "This is an atomic statement describing a company rule."
+      "explanation": "Atomic statement of a single corporate rule."
     },
     {
       "id": "P_5",
-      "translation": "Lopez and Simmons have decided to reveal their marriage to Evritech",
+      "translation": "Lopez and Simmons have decided to reveal their marriage to Evritech.",
       "evidence": "Sentence 1: \"Lopez and Simmons have decided to reveal their marriage to Evritech\"",
-      "explanation": "This is an atomic statement about their decision."
+      "explanation": "Atomic decision/action statement (no conditionals or connectives)."
     },
     {
       "id": "P_6",
-      "translation": "Evritech learns that Lopez and Simmons are married to each other",
-      "evidence": "Sentence 1: \"reveal their marriage to Evritech\"",
-      "explanation": "Revealing is treated as a distinct atomic outcome (Evritech becomes informed), which is needed for downstream rule-based constraints."
+      "translation": "Evritech knows that Lopez and Simmons are married.",
+      "evidence": "Sentence 1: \"... decided to reveal their marriage to Evritech\"",
+      "explanation": "Atomic epistemic state; needed to represent the effect of revealing vs. keeping secret."
     },
     {
       "id": "P_7",
-      "translation": "One of Lopez or Simmons has a job offer withdrawn by Evritech",
+      "translation": "One of Lopez and Simmons has a job offer withdrawn.",
       "evidence": "Sentence 2: \"one of them will have a job offer withdrawn\"",
-      "explanation": "This is a single predicted outcome; it is not further decomposed into which person, since the text leaves it unspecified."
+      "explanation": "Atomic outcome claim (single event-type outcome)."
     },
     {
       "id": "P_8",
-      "translation": "The decision by Lopez and Simmons to reveal their marriage to Evritech is foolish",
+      "translation": "The decision of Lopez and Simmons to reveal their marriage to Evritech is foolish.",
       "evidence": "Sentence 2: \"Their decision is foolish\"",
-      "explanation": "This is an atomic evaluative conclusion about their decision."
+      "explanation": "Atomic evaluative conclusion stated directly in the text."
     },
     {
       "id": "P_9",
-      "translation": "Lopez and Simmons keep their marriage secret initially",
-      "evidence": "Sentence 3: \"they could easily keep their marriage secret initially\"",
-      "explanation": "This is an atomic action description. The modal \"could\" is handled via constraint weights rather than inside the proposition."
+      "translation": "Lopez and Simmons keep their marriage secret initially.",
+      "evidence": "Sentence 3: \"keep their marriage secret initially\"",
+      "explanation": "Atomic action/state used to model the proposed alternative plan; contains no connectives."
     },
     {
       "id": "P_10",
-      "translation": "Lopez and Simmons claim later that they married after they were hired",
+      "translation": "Lopez and Simmons claim to have married after they were hired.",
       "evidence": "Sentence 3: \"later claim to have married after they were hired\"",
-      "explanation": "This is an atomic action description; the conditional framing is handled in constraints."
+      "explanation": "Atomic claim/action used to model the proposed later story."
     },
     {
       "id": "P_11",
-      "translation": "Evritech terminates one of two employees who marry each other",
+      "translation": "Evritech has a policy of terminating one of two employees who marry each other.",
       "evidence": "Sentence 3: \"Evritech has no policy of terminating one of two employees who marry each other\"",
-      "explanation": "The text states an absence (no policy); to keep primitives non-negated, we represent the positive termination-policy claim and negate it in constraints."
+      "explanation": "Atomic policy statement expressed positively so that the text's 'no policy' can be represented via negation in constraints."
+    },
+    {
+      "id": "P_12",
+      "translation": "One of two Evritech employees who marry each other is terminated.",
+      "evidence": "Sentence 3: \"terminating one of two employees who marry each other\"",
+      "explanation": "Atomic termination outcome; separated from the policy itself."
+    },
+    {
+      "id": "P_13",
+      "translation": "Lopez is hired by Evritech.",
+      "evidence": "Sentence 3: \"after they were hired\"",
+      "explanation": "Atomic hiring-status proposition used for the hypothetical later scenario."
+    },
+    {
+      "id": "P_14",
+      "translation": "Simmons is hired by Evritech.",
+      "evidence": "Sentence 3: \"after they were hired\"",
+      "explanation": "Atomic hiring-status proposition used for the hypothetical later scenario."
+    },
+    {
+      "id": "P_15",
+      "translation": "Lopez and Simmons are members of the same family.",
+      "evidence": "Sentence 1: \"more than one member of the same family\" (applied to them via \"a married couple\" in Sentence 0)",
+      "explanation": "Atomic classification needed to connect the family-member hiring rule to their marriage."
+    },
+    {
+      "id": "P_16",
+      "translation": "Lopez and Simmons are married while employed at Evritech.",
+      "evidence": "Sentence 3: \"two employees who marry each other\" plus Sentence 0: \"a married couple\"",
+      "explanation": "Atomic status relevant to the termination-policy discussion (married + employees)."
+    },
+    {
+      "id": "P_17",
+      "translation": "Lopez and Simmons have an alternative plan that avoids losing a job offer.",
+      "evidence": "Sentence 3: \"keep their marriage secret initially\" and \"later claim to have married after they were hired\"",
+      "explanation": "Atomic summary proposition representing the availability of an alternative, which is central to the 'foolish' judgment."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 0.95,
+      "llm-weight": 1.0,
       "nli_entailment": 1.0,
-      "combined=(llm)*(nli)": 0.95,
+      "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_5 ⟹ P_6",
-      "translation": "If Lopez and Simmons decide to reveal their marriage to Evritech, then Evritech learns they are married",
+      "translation": "If Lopez and Simmons reveal their marriage to Evritech, then Evritech knows they are married.",
       "evidence": "Sentence 1: \"decided to reveal their marriage to Evritech\"",
-      "reasoning": "Revealing one’s marriage to Evritech strongly implies Evritech becomes informed; small uncertainty remains because “decide to reveal” could precede actual disclosure.",
+      "reasoning": "Revealing to Evritech directly entails Evritech's knowledge.",
       "list nli": [
         [
-          7.54093416617252e-05,
-          0.00023448679712601006,
-          0.9996901750564575
+          4.45126679551322e-05,
+          0.0004764801124110818,
+          0.9994789958000183
         ],
         [
-          0.000163118660566397,
-          0.00033406540751457214,
-          0.9995027780532837
+          0.00032825261587277055,
+          0.0006559016183018684,
+          0.9990158081054688
         ],
         [
-          6.432399095501751e-05,
-          0.0004991388414055109,
-          0.9994365572929382
+          7.793031727487687e-06,
+          0.0010236643720418215,
+          0.9989686012268066
         ]
       ]
     },
@@ -102,25 +138,25 @@
       "combined=(llm)*(nli)": 0.95,
       "hardness_constant": 0.9,
       "id": "C_2",
-      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_6) ⟹ P_7",
-      "translation": "Given both offers, Evritech's anti-nepotism hiring rule, and Evritech learning they are married, one offer will be withdrawn",
-      "evidence": "Sentence 2 (supported by Sentence 1): \"it will mean that one of them will have a job offer withdrawn\" + \"rule against hiring more than one member of the same family\"",
-      "reasoning": "The argument treats this consequence as the straightforward result of the rule once the marriage is revealed; hence very high confidence.",
+      "formula": "P_1 ⟹ P_15",
+      "translation": "If Lopez and Simmons are married, then they are members of the same family.",
+      "evidence": "Sentence 0: \"a married couple\"; Sentence 1: \"same family\"",
+      "reasoning": "The argument presupposes marriage counts as same-family for the rule; extremely likely in context though not explicitly defined.",
       "list nli": [
         [
-          5.9831883845617995e-05,
-          0.00013628591841552407,
-          0.9998039603233337
+          4.469016857910901e-05,
+          8.155237446771935e-05,
+          0.9998737573623657
         ],
         [
-          0.0004301414010114968,
-          0.00014996016398072243,
-          0.9994199275970459
+          7.490013376809657e-05,
+          0.0001030711064231582,
+          0.9998220801353455
         ],
         [
-          0.00047565216664224863,
-          0.000603023509029299,
-          0.9989213943481445
+          7.573625771328807e-05,
+          0.0004095032927580178,
+          0.9995148181915283
         ]
       ]
     },
@@ -130,25 +166,53 @@
       "combined=(llm)*(nli)": 0.9,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "If one of them has a job offer withdrawn, then the decision is foolish",
-      "evidence": "Sentence 2: \"Their decision is foolish ... since it will mean that one of them will have a job offer withdrawn\"",
-      "reasoning": "The text explicitly gives the withdrawal as the reason the decision is foolish; the evaluative step is presented as strong but is still an argument (normative), so slightly under 1.0.",
+      "formula": "(P_4 ∧ P_6 ∧ P_15) ⟹ P_7",
+      "translation": "If Evritech has the family-member hiring rule and Evritech knows they are married (same family), then one offer is withdrawn.",
+      "evidence": "Sentence 1-2: rule stated; then \"it will mean that one of them will have a job offer withdrawn\"",
+      "reasoning": "Willett asserts this outcome as the consequence of disclosure under the rule; slight uncertainty because enforcement details are implicit.",
       "list nli": [
         [
-          2.748223596427124e-05,
-          4.638699829229154e-05,
-          0.9999260902404785
+          0.00021121083409525454,
+          0.0001307370694121346,
+          0.9996581077575684
         ],
         [
-          7.064445526339114e-05,
-          6.0025486163794994e-05,
-          0.9998693466186523
+          0.000379455421352759,
+          0.00021884111629333347,
+          0.9994016885757446
         ],
         [
-          0.0006428555934689939,
-          0.0001328274083789438,
-          0.9992243051528931
+          0.000841842032968998,
+          0.00010305167234037071,
+          0.9990550875663757
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If one of them has a job offer withdrawn, then their decision to reveal the marriage is foolish.",
+      "evidence": "Sentence 2: \"Their decision is foolish ... since it will mean that one of them will have a job offer withdrawn.\"",
+      "reasoning": "The text explicitly uses the withdrawal outcome as the key support for calling the decision foolish.",
+      "list nli": [
+        [
+          2.4299530196003616e-05,
+          4.644336877390742e-05,
+          0.9999293088912964
+        ],
+        [
+          3.8517333450727165e-05,
+          3.307945735286921e-05,
+          0.99992835521698
+        ],
+        [
+          0.00015598272148054093,
+          9.678991773398593e-05,
+          0.9997472167015076
         ]
       ]
     },
@@ -157,26 +221,110 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 1.0,
       "hardness_constant": 0.9,
-      "id": "C_5",
+      "id": "C_7",
       "formula": "¬P_11",
-      "translation": "Evritech does not terminate one of two employees who marry each other",
-      "evidence": "Sentence 3: \"Evritech has no policy of terminating one of two employees who marry each other\"",
-      "reasoning": "This is stated as a flat policy fact in the passage; it is not presented as speculative.",
+      "translation": "Evritech does not have a policy of terminating one of two employees who marry each other.",
+      "evidence": "Sentence 3: \"Evritech has no policy of terminating one of two employees who marry each other.\"",
+      "reasoning": "Directly stated as fact.",
       "list nli": [
         [
-          0.00013121223310008645,
-          0.0009443974704481661,
-          0.9989243149757385
+          3.147440293105319e-05,
+          0.00014885820564813912,
+          0.9998196959495544
         ],
         [
-          0.0008118322002701461,
-          0.00048264750512316823,
-          0.9987055063247681
+          4.1723553295014426e-05,
+          0.0006054439581930637,
+          0.9993528723716736
         ],
         [
-          0.002248461591079831,
-          0.0003493220719974488,
-          0.9974021911621094
+          0.0006610115524381399,
+          0.0005236989818513393,
+          0.9988152980804443
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "(P_1 ∧ P_13 ∧ P_14) ⟹ P_16",
+      "translation": "If they are married and both are hired, then they are married while employed at Evritech.",
+      "evidence": "Sentence 0: \"a married couple\"; Sentence 3: \"two employees\"",
+      "reasoning": "Straightforward combination of being married plus both being employees.",
+      "list nli": [
+        [
+          0.002236605854704976,
+          0.0002039380487985909,
+          0.9975594282150269
+        ],
+        [
+          0.018633896484971046,
+          0.010453199967741966,
+          0.9709129333496094
+        ],
+        [
+          0.046460866928100586,
+          0.001029161037877202,
+          0.9525099992752075
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_1 ⟹ ¬P_9",
+      "translation": "If Lopez and Simmons are a married couple. then not Lopez and Simmons keep their marriage secret initially.",
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion constraint between original and auxiliary",
+      "list nli": [
+        [
+          0.0001161320906248875,
+          0.00024319604563061148,
+          0.999640703201294
+        ],
+        [
+          0.00030611950205639005,
+          0.0005312697030603886,
+          0.9991626739501953
+        ],
+        [
+          0.000871810712851584,
+          0.0007826319779269397,
+          0.9983456134796143
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_7 ⟹ ¬P_17",
+      "translation": "If One of Lopez and Simmons has a job offer withdrawn. then not Lopez and Simmons have an alternative plan that avoids losing a job offer.",
+      "evidence": "Auto-generated",
+      "reasoning": "Mutual exclusion constraint between original and auxiliary",
+      "list nli": [
+        [
+          0.00017634194227866828,
+          0.0004902186919935048,
+          0.9993334412574768
+        ],
+        [
+          0.0018347568111494184,
+          0.0005876455688849092,
+          0.9975776076316833
+        ],
+        [
+          0.0025498634204268456,
+          0.0012191366404294968,
+          0.9962310194969177
         ]
       ]
     }
@@ -187,26 +335,26 @@
       "nli_entailment": 1.0,
       "combined=(llm)*(nli)": 0.85,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_5 ⟹ P_8",
-      "translation": "If they decide to reveal their marriage to Evritech, then their decision is foolish",
-      "evidence": "Sentence 2 (about \"Their decision\" referring back to Sentence 1)",
-      "reasoning": "This is the main conclusion applied directly to the decision described in Sentence 1, supported via the intermediate consequence in Sentence 2.",
+      "id": "C_5",
+      "formula": "P_9 ⟹ ¬P_6",
+      "translation": "If they keep their marriage secret initially, then Evritech does not know they are married (initially).",
+      "evidence": "Sentence 3: \"keep their marriage secret initially\"",
+      "reasoning": "Keeping a fact secret normally prevents the other party from knowing it; some residual uncertainty because Evritech could learn elsewhere.",
       "list nli": [
         [
-          0.0001398137683281675,
-          5.3755771659780294e-05,
-          0.9998064637184143
+          1.4464452760876156e-05,
+          0.00013666259474121034,
+          0.9998488426208496
         ],
         [
-          0.00024553132243454456,
-          0.00011295296280877665,
-          0.9996415376663208
+          0.00023125286679714918,
+          0.0003704333503264934,
+          0.9993983507156372
         ],
         [
-          0.00044699496356770396,
-          0.0006216051406227052,
-          0.998931348323822
+          0.00010434154683025554,
+          0.0008489572792313993,
+          0.9990467429161072
         ]
       ],
       "weight": 0.85
@@ -217,28 +365,173 @@
       "combined=(llm)*(nli)": 0.7,
       "hardness_constant": 0.9,
       "id": "C_6",
-      "formula": "(P_9 ∧ P_10) ⟹ ¬P_7",
-      "translation": "If they keep the marriage secret initially and later claim they married after being hired, then no offer needs to be withdrawn",
-      "evidence": "Sentence 3: \"they could easily keep their marriage secret initially ... later claim to have married after they were hired\"",
-      "reasoning": "This is presented as a feasible workaround (“could easily”), but it relies on assumptions about how Evritech applies/enforces the hiring rule and accepts the later claim, so it is supported but not certain.",
+      "formula": "¬P_6 ⟹ ¬P_7",
+      "translation": "If Evritech does not know they are married, then no offer is withdrawn (at that stage).",
+      "evidence": "Sentence 3 (implied by the suggested strategy of secrecy to avoid withdrawal)",
+      "reasoning": "Willett's strategy relies on the idea that withdrawal happens due to the rule being triggered by knowledge; uncertainty remains if the rule could be applied for other reasons.",
       "list nli": [
         [
-          0.00020748135284520686,
-          0.00010665709851309657,
-          0.9996858835220337
+          0.00115034484770149,
+          0.0008923476561903954,
+          0.9979573488235474
         ],
         [
-          0.00019029536633752286,
-          0.0001285701000597328,
-          0.9996811151504517
+          0.0017781718634068966,
+          0.0006739913369528949,
+          0.9975478053092957
         ],
         [
-          0.00022409138910006732,
-          0.00016952128498815,
-          0.9996064305305481
+          0.006234896834939718,
+          0.0021458864212036133,
+          0.9916192293167114
         ]
       ],
       "weight": 0.7
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "(P_11 ∧ P_16) ⟹ P_12",
+      "translation": "If Evritech has such a termination policy and Lopez and Simmons are married while employed there, then one of them is terminated.",
+      "evidence": "Sentence 3: \"policy of terminating one of two employees who marry each other\"",
+      "reasoning": "Captures the normal meaning of having a termination policy; some uncertainty because policies could be non-mandatory.",
+      "list nli": [
+        [
+          1.742415588523727e-05,
+          0.00012569964746944606,
+          0.9998568296432495
+        ],
+        [
+          0.00018268279382027686,
+          6.89446460455656e-05,
+          0.9997484087944031
+        ],
+        [
+          1.9594726836658083e-05,
+          0.0004325323097873479,
+          0.9995478987693787
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "(¬P_11 ∧ P_16) ⟹ ¬P_12",
+      "translation": "If Evritech lacks such a termination policy and they are married while employed, then neither is terminated for that reason.",
+      "evidence": "Sentence 3: \"has no policy of terminating ...\"",
+      "reasoning": "Willett treats lack of policy as protection against being fired; still not logically guaranteed since termination could occur without a formal policy.",
+      "list nli": [
+        [
+          0.005672300234436989,
+          0.004442780744284391,
+          0.9898849725723267
+        ],
+        [
+          0.022511690855026245,
+          0.006464533042162657,
+          0.9710237383842468
+        ],
+        [
+          0.07358448952436447,
+          0.06132044270634651,
+          0.8650950789451599
+        ]
+      ],
+      "weight": 0.75
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "(P_2 ∧ P_3 ∧ ¬P_7) ⟹ (P_13 ∧ P_14)",
+      "translation": "If both have job offers and no offer is withdrawn, then both are hired.",
+      "evidence": "Sentence 0-2 (offers + withdrawal discussion) and Sentence 3 (\"after they were hired\")",
+      "reasoning": "The argument implicitly moves from keeping offers to being hired, but this is not guaranteed (they could decline or fail hiring).",
+      "list nli": [
+        [
+          0.0023376047611236572,
+          0.0062767211347818375,
+          0.9913856983184814
+        ],
+        [
+          0.0011866355780512094,
+          0.011647835373878479,
+          0.9871655702590942
+        ],
+        [
+          0.03152531012892723,
+          0.024409588426351547,
+          0.9440650343894958
+        ]
+      ],
+      "weight": 0.6
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "(P_9 ∧ P_10 ∧ ¬P_11) ⟹ P_17",
+      "translation": "If they keep the marriage secret initially, later claim they married after being hired, and there is no termination policy, then they have an alternative plan that avoids losing a job offer.",
+      "evidence": "Sentence 3: the proposed secrecy/claim strategy plus the no-termination-policy statement",
+      "reasoning": "This is Willett's suggested workaround; uncertainty because the plan could fail (e.g., discovery earlier, rule enforcement changes).",
+      "list nli": [
+        [
+          6.747958832420409e-05,
+          0.00010513344022911042,
+          0.9998273849487305
+        ],
+        [
+          0.0003842127334792167,
+          5.0078397180186585e-05,
+          0.9995656609535217
+        ],
+        [
+          0.0002178073045797646,
+          0.0002739131741691381,
+          0.999508261680603
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_17 ⟹ P_8",
+      "translation": "If they have an alternative plan that avoids losing a job offer, then their decision to reveal the marriage is foolish.",
+      "evidence": "Sentence 2-3: \"Their decision is foolish\" supported by the alternative in Sentence 3",
+      "reasoning": "Willett's criticism rests not only on harm (withdrawal) but also on the availability of an easy alternative.",
+      "list nli": [
+        [
+          2.3188911654870026e-05,
+          4.486144462134689e-05,
+          0.9999319314956665
+        ],
+        [
+          2.1759380615549162e-05,
+          5.596471601165831e-05,
+          0.9999222755432129
+        ],
+        [
+          3.1603314710082486e-05,
+          8.201654418371618e-05,
+          0.9998863935470581
+        ]
+      ],
+      "weight": 0.85
     }
   ]
 }

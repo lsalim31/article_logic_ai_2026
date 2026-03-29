@@ -4,108 +4,132 @@
       "id": "P_1",
       "translation": "Permits for the discharge of chemicals into a waterway are issued.",
       "evidence": "Sentence 0: \"When permits for the discharge of chemicals into a waterway are issued\"",
-      "explanation": "This is an atomic existence/occurrence claim about permits being issued, with no logical connectives."
+      "explanation": "This is an atomic event/state claim about permits being issued."
     },
     {
       "id": "P_2",
-      "translation": "Each permit is issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day.",
+      "translation": "A permit specifies the number of pounds per day of a chemical that can be discharged into the waterway.",
       "evidence": "Sentence 0: \"they are issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day\"",
-      "explanation": "This is a single declarative specification about how permits are expressed; it contains no conditional or explicit logical connective."
+      "explanation": "This is a single descriptive claim about what the permit terms are; it contains no logical connective."
     },
     {
       "id": "P_3",
-      "translation": "The discharge-limit figures are calculated separately for each chemical for which a permit is issued.",
+      "translation": "The permitted-poundage figure is calculated separately for each chemical for which a permit is issued.",
       "evidence": "Sentence 1: \"These figures, calculated separately for each chemical for which a permit is issued\"",
-      "explanation": "This is an atomic statement about how figures are calculated (separately per chemical)."
+      "explanation": "This is an atomic claim about how the figures are calculated (separately per chemical)."
     },
     {
       "id": "P_4",
-      "translation": "The discharge-limit figures are based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.",
+      "translation": "The permitted-poundage figure is based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.",
       "evidence": "Sentence 1: \"are based on an estimate of the effect of the dilution of the chemical by the amount of water flowing through the waterway\"",
-      "explanation": "This is an atomic statement describing the basis for the figures; it does not require decomposition into smaller logical parts for this task."
+      "explanation": "This is an atomic claim about the basis of the figures (an estimate involving dilution and water flow)."
     },
     {
       "id": "P_5",
-      "translation": "Chemicals are discharged into the waterway under the permits.",
-      "evidence": "Sentence 2: \"chemicals discharged under the permits\"",
-      "explanation": "This is an atomic claim that such discharges occur under permits (needed to connect permits to potential effects)."
+      "translation": "The waterway is protected against being adversely affected by chemicals discharged under the permits.",
+      "evidence": "Sentence 2: \"The waterway is therefore protected against being adversely affected by chemicals discharged under the permits.\"",
+      "explanation": "This is the argument's conclusion stated as a single truth-evaluable claim."
     },
     {
       "id": "P_6",
-      "translation": "Chemicals discharged under the permits adversely affect the waterway.",
-      "evidence": "Sentence 2: \"protected against being adversely affected by chemicals discharged under the permits\"",
-      "explanation": "This is a positive, atomic adverse-effect claim; the text asserts protection against this, which will be represented as a negation in constraints rather than as a negated primitive."
+      "translation": "The dilution-based estimate used to set the permitted-poundage figures is accurate.",
+      "evidence": "Sentence 1: \"based on an estimate of the effect of the dilution\" (assumption needed for Sentence 2's inference)",
+      "explanation": "This is a single factual assumption about accuracy; it is not further decomposed without introducing new logical structure."
     },
     {
       "id": "P_7",
-      "translation": "The estimate of dilution effect used to set the discharge-limit figures is accurate for the waterway.",
-      "evidence": "Sentence 1 (implicit): \"based on an estimate of the effect of the dilution\"",
-      "explanation": "This is an implicit atomic assumption about the correctness of the estimate, needed for the argument from 'based on an estimate' to 'protected'."
+      "translation": "The amount of water flow used in the dilution-based estimate matches the actual water flow when discharges occur.",
+      "evidence": "Sentence 1: \"by the amount of water flowing through the waterway\" (assumption needed for Sentence 2's inference)",
+      "explanation": "This is an atomic alignment/fit assumption between the flow in the estimate and real flow conditions."
     },
     {
       "id": "P_8",
-      "translation": "The amount of water flowing through the waterway during permitted discharges is the amount assumed in the dilution estimate.",
-      "evidence": "Sentence 1 (implicit): \"by the amount of water flowing through the waterway\"",
-      "explanation": "This is an implicit atomic assumption linking the real flow conditions to the flow conditions used in the estimate."
+      "translation": "Dischargers comply with the permits' pound-per-day limits.",
+      "evidence": "Sentence 2: \"chemicals discharged under the permits\" (assumption needed for Sentence 2's inference)",
+      "explanation": "This is an atomic compliance assumption required to link permit limits to real-world discharge."
     },
     {
       "id": "P_9",
-      "translation": "Adverse effects of the chemicals in the waterway depend on how much the chemicals are diluted by the water flow.",
-      "evidence": "Sentence 1-2 (implicit link): estimate of dilution is used, then conclusion about protection",
-      "explanation": "This is an implicit atomic assumption that dilution is the relevant/sufficient factor for whether adverse effects occur (so that a dilution-based limit can ensure protection)."
+      "translation": "Considering each chemical separately is sufficient to prevent adverse effects from the set of chemicals discharged under the permits.",
+      "evidence": "Sentence 1: \"calculated separately for each chemical\" together with Sentence 2's conclusion (assumption needed for the inference)",
+      "explanation": "This is an atomic adequacy assumption (no harmful interaction/combined effect beyond separate calculations) needed for the argument to go through."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If such permits are issued, they specify allowable pounds per day for each chemical.",
+      "translation": "When such permits are issued, they specify pounds per day for each chemical.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "This is directly stated as a general rule about how permits are issued."
+      "reasoning": "This is explicitly stated as a general rule about the terms of issued permits."
     },
     {
       "id": "C_2",
       "formula": "P_1 ⟹ P_3",
-      "translation": "If such permits are issued, the figures are calculated separately for each permitted chemical.",
+      "translation": "For each permitted chemical, the figure is calculated separately.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1 (continuing discussion of the permit figures introduced in Sentence 0)",
-      "reasoning": "The phrase 'These figures' refers back to the permit figures and states how they are calculated."
+      "evidence": "Sentence 1",
+      "reasoning": "The text directly describes the calculation as separate for each chemical for which a permit is issued."
     },
     {
       "id": "C_3",
       "formula": "P_1 ⟹ P_4",
-      "translation": "If such permits are issued, the figures are based on an estimate of dilution effects given water flow.",
+      "translation": "The figures are based on an estimate of dilution effects given water flow.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1 (continuing discussion of the permit figures introduced in Sentence 0)",
-      "reasoning": "The text states that the (permit) figures are based on a dilution estimate."
+      "evidence": "Sentence 1",
+      "reasoning": "The text directly states the basis of the figures."
     },
     {
       "id": "C_4",
-      "formula": "(P_2 ∧ P_4 ∧ P_5 ∧ P_7 ∧ P_8 ∧ P_9) ⟹ ¬P_6",
-      "translation": "If permitted discharge amounts are set using an accurate dilution estimate that matches actual water flow, and dilution determines harm, then permitted discharges do not adversely affect the waterway.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 1-2",
-      "reasoning": "The conclusion ('therefore protected') depends on the dilution-based limits actually ensuring safety. That requires (at minimum) that the estimate and assumed flow correspond to reality and that dilution is the key determinant of adverse effects."
+      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_6 ∧ P_7 ∧ P_8 ∧ P_9) ⟹ P_5",
+      "translation": "If permit limits are set per chemical based on dilution and the underlying estimation/compliance/interaction assumptions hold, then the waterway is protected from adverse effects of permitted discharges.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0, Sentence 1, Sentence 2",
+      "reasoning": "Sentence 2 is an inference from how limits are set (Sentences 0–1). That inference requires (at least) that the dilution estimate is accurate, that real flow matches the assumed flow, that permit limits are obeyed, and that calculating chemicals separately is adequate (no harmful combined effects)."
     },
     {
       "id": "C_5",
-      "formula": "¬P_6",
-      "translation": "The waterway is not adversely affected by chemicals discharged under the permits.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"The waterway is therefore protected against being adversely affected by chemicals discharged under the permits.\"",
-      "reasoning": "This is the argument's stated conclusion; 'protected against being adversely affected' directly supports the negation of adverse effect."
+      "formula": "P_3 ⟹ P_9",
+      "translation": "Because limits are calculated separately for each chemical, the argument presumes separate-by-chemical calculation is sufficient for protection.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 1, Sentence 2",
+      "reasoning": "The text emphasizes separate calculations and then concludes protection; this strongly suggests (but does not explicitly say) that combined effects do not undermine the conclusion."
     },
     {
       "id": "C_6",
+      "formula": "P_4 ⟹ P_6",
+      "translation": "Because the limits are based on an estimate, the argument presumes that estimate is accurate enough for safety.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1, Sentence 2",
+      "reasoning": "An estimate can be wrong; concluding protection from an estimate relies on its (sufficient) accuracy, but the text does not state accuracy explicitly."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_4 ⟹ P_7",
+      "translation": "Because the estimate uses water flow, the argument presumes the relevant real-world flow matches the flow assumed in the estimate.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1, Sentence 2",
+      "reasoning": "If actual flow is lower than assumed, dilution would be less and harm could occur despite compliance; the argument needs this alignment though it is not explicitly stated."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_5 ⟹ P_8",
+      "translation": "If the waterway is protected by the permit system, dischargers are complying with the limits.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 2",
+      "reasoning": "Protection 'under the permits' naturally presupposes compliance, but the conclusion could be read as about the permit scheme's design rather than actual behavior, so this is weaker."
+    },
+    {
+      "id": "C_9",
       "formula": "P_2",
-      "translation": "Each permit is issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day.",
+      "translation": "A permit specifies the number of pounds per day of a chemical that can be discharged into the waterway.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_7",
+      "id": "C_10",
       "formula": "P_2 ⟹ P_2",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -113,16 +137,48 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_8",
-      "formula": "P_8",
-      "translation": "The amount of water flowing through the waterway during permitted discharges is the amount assumed in the dilution estimate.",
+      "id": "C_11",
+      "formula": "P_3",
+      "translation": "The permitted-poundage figure is calculated separately for each chemical for which a permit is issued.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_9",
-      "formula": "P_8 ⟹ P_8",
+      "id": "C_12",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_13",
+      "formula": "P_4",
+      "translation": "The permitted-poundage figure is based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_14",
+      "formula": "P_4 ⟹ P_4",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_15",
+      "formula": "P_6",
+      "translation": "The dilution-based estimate used to set the permitted-poundage figures is accurate.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_16",
+      "formula": "P_6 ⟹ P_6",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
@@ -130,18 +186,30 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_2: 'Each permit is issued in terms of the number of pounds of each chemical that can be discharged into the waterway per day.' has modal 'can'",
-    "        Base text: 'Each permit is issued in terms of the number of pounds of each chemical that be discharged into the waterway per day.'",
+    "[Modal] P_2: 'A permit specifies the number of pounds per day of a chemical that can be discharged into the waterway.' has modal 'can'",
+    "        Base text: 'A permit specifies the number of pounds per day of a chemical that be discharged into the waterway.'",
     "        Found existing base: P_2",
-    "[Modal] P_8: 'The amount of water flowing through the waterway during permitted discharges is the amount assumed in the dilution estimate.' has modal 'permitted'",
-    "        Base text: 'The amount of water flowing through the waterway during discharges is the amount assumed in the dilution estimate.'",
-    "        Found existing base: P_8",
+    "[Modal] P_3: 'The permitted-poundage figure is calculated separately for each chemical for which a permit is issued.' has modal 'permitted'",
+    "        Base text: 'The - poundage figure is calculated separately for each chemical for which a permit is issued.'",
+    "        Found existing base: P_3",
+    "[Modal] P_4: 'The permitted-poundage figure is based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.' has modal 'permitted'",
+    "        Base text: 'The - poundage figure is based on an estimate of the effect of dilution of the chemical by the amount of water flowing through the waterway.'",
+    "        Found existing base: P_4",
+    "[Modal] P_6: 'The dilution-based estimate used to set the permitted-poundage figures is accurate.' has modal 'permitted'",
+    "        Base text: 'The dilution - based estimate used to set the - poundage figures is accurate.'",
+    "        Found existing base: P_6",
     "        Added constraint: P_2 @1.0",
     "        Added constraint: P_2 ⟹ P_2 @1.0",
-    "        Added constraint: P_8 @1.0",
-    "        Added constraint: P_8 ⟹ P_8 @1.0",
+    "        Added constraint: P_3 @1.0",
+    "        Added constraint: P_3 ⟹ P_3 @1.0",
+    "        Added constraint: P_4 @1.0",
+    "        Added constraint: P_4 ⟹ P_4 @1.0",
+    "        Added constraint: P_6 @1.0",
+    "        Added constraint: P_6 ⟹ P_6 @1.0",
     "[Opposite] P_2: 'can' has antonyms ['cannot']",
-    "[Opposite] P_8: 'permitted' has antonyms ['banned', 'prohibited', 'forbidden']",
+    "[Opposite] P_3: 'permitted' has antonyms ['forbidden', 'prohibited', 'banned']",
+    "[Opposite] P_4: 'permitted' has antonyms ['forbidden', 'prohibited', 'banned']",
+    "[Opposite] P_6: 'permitted' has antonyms ['forbidden', 'prohibited', 'banned']",
     "[Auxiliary] Found 0 auxiliary propositions"
   ]
 }

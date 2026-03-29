@@ -1,0 +1,241 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A situation is a double-trend conflict.",
+      "evidence": "Sentence 0: \"Double-trend conflict refers to ...\"",
+      "explanation": "This is the atomic classification claim being defined; finer structure is captured via separate feature propositions and constraints."
+    },
+    {
+      "id": "P_2",
+      "translation": "Two kinds of needs targets emerge simultaneously.",
+      "evidence": "Sentence 0: \"the simultaneous emergence of two kinds of needs targets\"",
+      "explanation": "This is a single event/state claim (simultaneous emergence) and is not a logical connective itself."
+    },
+    {
+      "id": "P_3",
+      "translation": "Both needs targets are attractive to the individual.",
+      "evidence": "Sentence 0: \"needs targets that are attractive to the individual\"",
+      "explanation": "The attractiveness property is asserted of the needs targets; the text does not provide separate names to split this further."
+    },
+    {
+      "id": "P_4",
+      "translation": "The individual experiences a motivational conflict.",
+      "evidence": "Sentence 0: \"the motivational conflict\"",
+      "explanation": "This is a single psychological-state claim; no further logical structure is expressed in the clause itself."
+    },
+    {
+      "id": "P_5",
+      "translation": "The individual cannot take both actions at the same time.",
+      "evidence": "Sentence 0: \"the individual cannot take both actions at the same time\"",
+      "explanation": "This is one inability claim; the sentence does not specify separate action names to decompose it."
+    },
+    {
+      "id": "P_6",
+      "translation": "Constraints prevent the individual from taking both actions at the same time.",
+      "evidence": "Sentence 0: \"because of the constraints\"",
+      "explanation": "This is a single causal/preventive condition attributed to constraints (kept atomic; causality is captured via constraints)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6)",
+      "translation": "If a situation is a double-trend conflict, then there is simultaneous emergence of two attractive needs targets and a motivational conflict where both actions cannot be taken at the same time due to constraints.",
+      "evidence": "Sentence 0",
+      "reasoning": "The text presents these conditions as the defining content of “double-trend conflict” (\"refers to ...\").",
+      "list nli": [
+        [
+          0.0003285986604169011,
+          0.00021453465160448104,
+          0.9994568228721619
+        ],
+        [
+          0.00011892776092281565,
+          0.0008451296016573906,
+          0.9990359544754028
+        ],
+        [
+          0.010294459760189056,
+          0.007901855744421482,
+          0.9818036556243896
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6) ⟹ P_1",
+      "translation": "If all the listed defining features hold, then the situation is a double-trend conflict.",
+      "evidence": "Sentence 0",
+      "reasoning": "Because the sentence is a definition (“refers to ...”), it strongly supports the converse direction as well (definitional equivalence).",
+      "list nli": [
+        [
+          3.942522653233027e-06,
+          0.0004178957606200129,
+          0.9995781779289246
+        ],
+        [
+          3.933810148737393e-05,
+          0.0005497431266121566,
+          0.9994109869003296
+        ],
+        [
+          4.66634810436517e-05,
+          0.0007686111493967474,
+          0.9991846680641174
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If constraints prevent taking both actions at the same time, then the individual cannot take both actions at the same time.",
+      "evidence": "Sentence 0: \"cannot ... because of the constraints\"",
+      "reasoning": "The clause explicitly makes constraints the reason for the inability; prevention entails inability in this context.",
+      "list nli": [
+        [
+          1.2995099496038165e-05,
+          0.0005540854181163013,
+          0.9994328618049622
+        ],
+        [
+          0.00010717495024437085,
+          0.0007787799113430083,
+          0.9991139769554138
+        ],
+        [
+          0.0025179802905768156,
+          0.0014389676507562399,
+          0.9960430860519409
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "The individual cannot take both actions at the same time.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          0.0007974175969138741,
+          0.0002655608404893428,
+          0.9989370703697205
+        ],
+        [
+          0.00033836724469438195,
+          0.000930053589399904,
+          0.9987315535545349
+        ],
+        [
+          0.0026649869978427887,
+          0.005360220558941364,
+          0.9919747710227966
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_5 ⟹ P_5",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0003989081014879048,
+          0.0003334260836709291,
+          0.9992676377296448
+        ],
+        [
+          0.0011186215560883284,
+          0.0011932606576010585,
+          0.9976881742477417
+        ],
+        [
+          0.01584438793361187,
+          0.0001829575194278732,
+          0.9839726686477661
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "¬P_6",
+      "translation": "It is not the case that Constraints prevent the individual from taking both actions at the same time.",
+      "evidence": "Sentence 0: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.0007283069426193833,
+          0.0009584682411514223,
+          0.9983131885528564
+        ],
+        [
+          0.015022658742964268,
+          0.0006636027246713638,
+          0.9843137264251709
+        ],
+        [
+          0.2479688823223114,
+          0.03737834841012955,
+          0.7146527767181396
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.75,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "(P_2 ∧ P_3 ∧ P_5) ⟹ P_4",
+      "translation": "If two attractive needs targets emerge simultaneously and both actions cannot be taken at the same time, then the individual experiences motivational conflict.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is a plausible coherence relation suggested by the definition (attractive alternatives + mutual incompatibility implies conflict), but the text states conflict as part of the definition rather than as an explicitly separate entailment.",
+      "list nli": [
+        [
+          2.91113701678114e-05,
+          9.299474186263978e-05,
+          0.9998779296875
+        ],
+        [
+          1.5723759133834392e-05,
+          0.00016307138139382005,
+          0.9998212456703186
+        ],
+        [
+          3.977999585913494e-05,
+          0.0001713748788461089,
+          0.9997888207435608
+        ]
+      ],
+      "weight": 0.75
+    }
+  ]
+}

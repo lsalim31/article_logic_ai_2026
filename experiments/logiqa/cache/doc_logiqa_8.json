@@ -1,0 +1,135 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The price the Coffee Shoppe pays for coffee beans continues to increase.",
+      "evidence": "Sentence 0: \"If the price it pays for coffee beans continues to increase\"",
+      "explanation": "This is a single factual condition about the bean price trend, with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "The Coffee Shoppe increases its prices.",
+      "evidence": "Sentence 0: \"the Coffee Shoppe will have to increase its prices\"",
+      "explanation": "This is an atomic action/outcome attributed to the Coffee Shoppe."
+    },
+    {
+      "id": "P_3",
+      "translation": "The Coffee Shoppe begins selling noncoffee products.",
+      "evidence": "Sentence 1: \"the Coffee Shoppe will begin selling noncoffee products\"",
+      "explanation": "This is a single business decision described without additional connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The Coffee Shoppe's coffee sales decrease.",
+      "evidence": "Sentence 1: \"its coffee sales will decrease\"",
+      "explanation": "This is a single outcome about coffee sales."
+    },
+    {
+      "id": "P_5",
+      "translation": "The Coffee Shoppe's overall profitability decreases.",
+      "evidence": "Sentence 2: \"will decrease the Coffee Shoppe's overall profitability\"",
+      "explanation": "This is a single outcome about overall profitability."
+    },
+    {
+      "id": "P_6",
+      "translation": "The Coffee Shoppe avoids a decrease in overall profitability.",
+      "evidence": "Sentence 3: \"the Coffee Shoppe can avoid a decrease in overall profitability\"",
+      "explanation": "This is treated as an atomic status (profitability is maintained) to avoid a negated primitive."
+    },
+    {
+      "id": "P_7",
+      "translation": "The Coffee Shoppe's coffee sales do not decrease.",
+      "evidence": "Sentence 3: \"its coffee sales do not decrease\"",
+      "explanation": "This is treated as an atomic status (coffee sales are maintained) to avoid a negated primitive."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If the price it pays for coffee beans continues to increase, then the Coffee Shoppe will have to increase its prices.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated directly as a conditional."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2 ⟹ (P_3 ∨ P_4)",
+      "translation": "If the Coffee Shoppe increases its prices, then either it will begin selling noncoffee products or its coffee sales will decrease.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1 (\"In that case\")",
+      "reasoning": "\"In that case\" refers to the prior consequence (increasing its prices), yielding a strict conditional with a disjunction."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_5",
+      "translation": "Selling noncoffee products decreases the Coffee Shoppe's overall profitability.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "This is explicitly asserted as a causal/implicational claim."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "The Coffee Shoppe can avoid a decrease in overall profitability only if its coffee sales do not decrease.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "\"A only if B\" is logically equivalent to A ⟹ B, and the statement is categorical."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5 ⟹ ¬P_6",
+      "translation": "If the Coffee Shoppe's overall profitability decreases, then it does not avoid a decrease in overall profitability.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2 and Sentence 3 (\"decrease\" vs \"avoid a decrease\")",
+      "reasoning": "By meaning, \"avoids a decrease\" is incompatible with \"overall profitability decreases\"; this is a strong semantic constraint implied by the wording."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6 ⟹ ¬P_5",
+      "translation": "If the Coffee Shoppe avoids a decrease in overall profitability, then its overall profitability does not decrease.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 3 (\"avoid a decrease\")",
+      "reasoning": "Avoiding a decrease entails that no decrease occurs; this is a near-definitional relation."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_4 ⟹ ¬P_7",
+      "translation": "If the Coffee Shoppe's coffee sales decrease, then its coffee sales do not satisfy the condition 'do not decrease'.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1 and Sentence 3 (\"sales will decrease\" vs \"sales do not decrease\")",
+      "reasoning": "These are natural complements in meaning; this mutual exclusivity is strongly implied."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_7 ⟹ ¬P_4",
+      "translation": "If the Coffee Shoppe's coffee sales do not decrease, then its coffee sales do not decrease is incompatible with sales decreasing.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 3 and Sentence 1",
+      "reasoning": "Same complement relationship as C_7 in the opposite direction."
+    },
+    {
+      "id": "C_9",
+      "formula": "¬P_7 ⟹ ¬P_6",
+      "translation": "If the Coffee Shoppe's coffee sales are not in the 'do not decrease' state, then the Coffee Shoppe does not avoid a decrease in overall profitability.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "This is the contrapositive of C_4, which is logically equivalent to C_4 in propositional logic."
+    },
+    {
+      "id": "C_10",
+      "formula": "¬P_4",
+      "translation": "It is not the case that The Coffee Shoppe's coffee sales decrease.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 3: Found negation of 'decrease'",
+    "           Affirmative clause: 'only if its coffee sales do decrease'",
+    "           Matched to: P_4",
+    "           Added constraint: ¬P_4 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

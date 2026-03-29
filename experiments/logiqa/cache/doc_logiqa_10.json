@@ -1,0 +1,111 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A situation is a double-trend conflict.",
+      "evidence": "Sentence 0: \"Double-trend conflict refers to ...\"",
+      "explanation": "This is the atomic classification claim being defined; finer structure is captured via separate feature propositions and constraints."
+    },
+    {
+      "id": "P_2",
+      "translation": "Two kinds of needs targets emerge simultaneously.",
+      "evidence": "Sentence 0: \"the simultaneous emergence of two kinds of needs targets\"",
+      "explanation": "This is a single event/state claim (simultaneous emergence) and is not a logical connective itself."
+    },
+    {
+      "id": "P_3",
+      "translation": "Both needs targets are attractive to the individual.",
+      "evidence": "Sentence 0: \"needs targets that are attractive to the individual\"",
+      "explanation": "The attractiveness property is asserted of the needs targets; the text does not provide separate names to split this further."
+    },
+    {
+      "id": "P_4",
+      "translation": "The individual experiences a motivational conflict.",
+      "evidence": "Sentence 0: \"the motivational conflict\"",
+      "explanation": "This is a single psychological-state claim; no further logical structure is expressed in the clause itself."
+    },
+    {
+      "id": "P_5",
+      "translation": "The individual cannot take both actions at the same time.",
+      "evidence": "Sentence 0: \"the individual cannot take both actions at the same time\"",
+      "explanation": "This is one inability claim; the sentence does not specify separate action names to decompose it."
+    },
+    {
+      "id": "P_6",
+      "translation": "Constraints prevent the individual from taking both actions at the same time.",
+      "evidence": "Sentence 0: \"because of the constraints\"",
+      "explanation": "This is a single causal/preventive condition attributed to constraints (kept atomic; causality is captured via constraints)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6)",
+      "translation": "If a situation is a double-trend conflict, then there is simultaneous emergence of two attractive needs targets and a motivational conflict where both actions cannot be taken at the same time due to constraints.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The text presents these conditions as the defining content of “double-trend conflict” (\"refers to ...\")."
+    },
+    {
+      "id": "C_2",
+      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6) ⟹ P_1",
+      "translation": "If all the listed defining features hold, then the situation is a double-trend conflict.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Because the sentence is a definition (“refers to ...”), it strongly supports the converse direction as well (definitional equivalence)."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If constraints prevent taking both actions at the same time, then the individual cannot take both actions at the same time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"cannot ... because of the constraints\"",
+      "reasoning": "The clause explicitly makes constraints the reason for the inability; prevention entails inability in this context."
+    },
+    {
+      "id": "C_4",
+      "formula": "(P_2 ∧ P_3 ∧ P_5) ⟹ P_4",
+      "translation": "If two attractive needs targets emerge simultaneously and both actions cannot be taken at the same time, then the individual experiences motivational conflict.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 0",
+      "reasoning": "This is a plausible coherence relation suggested by the definition (attractive alternatives + mutual incompatibility implies conflict), but the text states conflict as part of the definition rather than as an explicitly separate entailment."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "The individual cannot take both actions at the same time.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5 ⟹ P_5",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_6",
+      "translation": "It is not the case that Constraints prevent the individual from taking both actions at the same time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    }
+  ],
+  "_enrichment_log": [
+    "[Modal] P_5: 'The individual cannot take both actions at the same time.' has modal 'can'",
+    "        Base text: 'The individual not take both actions at the same time.'",
+    "        Found existing base: P_5",
+    "        Added constraint: P_5 @1.0",
+    "        Added constraint: P_5 ⟹ P_5 @1.0",
+    "[Opposite] P_5: 'can' has antonyms ['cannot']",
+    "[Negation] Sentence 0: Found negation of 'take'",
+    "           Affirmative clause: 'that the individual can take both actions at the same time because of the constraints'",
+    "           Matched to: P_6",
+    "           Added constraint: ¬P_6 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

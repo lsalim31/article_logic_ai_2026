@@ -1,0 +1,51 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Over the past 10 years, the company’s sales of personal notebook computers have continued to grow.",
+      "evidence": "Sentence 0: \"In the past 10 years, the sales of personal notebook computers of a computer company have continued to grow\"",
+      "explanation": "This is an atomic factual trend statement about notebook-computer sales over a specified period."
+    },
+    {
+      "id": "P_2",
+      "translation": "Over the past 10 years, the growth rate of the company’s personal notebook computer sales is lower than the growth rate of the company’s total sales of all products.",
+      "evidence": "Sentence 0: \"but the growth rate is lower than the growth rate of the company's total sales of all products\"",
+      "explanation": "This is an atomic comparative statement between two growth rates over the same period."
+    },
+    {
+      "id": "P_3",
+      "translation": "Over the past 10 years, the company’s total sales of all products have grown.",
+      "evidence": "Sentence 0: implied by the comparison of growth rates together with continued growth in notebook-computer sales",
+      "explanation": "This is a single trend statement about total sales; it is included because it is a natural implied consequence of P_1 and P_2 and is useful for representing downstream conflicts."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "The company’s personal notebook computer sales have continued to grow in the past 10 years.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as background information."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "The notebook-computer sales growth rate is lower than the growth rate of the company’s total sales of all products (over the past 10 years).",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as background information."
+    },
+    {
+      "id": "C_3",
+      "formula": "(P_1 ∧ P_2) ⟹ P_3",
+      "translation": "If notebook-computer sales continued to grow and their growth rate is lower than total-sales growth, then total sales grew over the past 10 years.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0",
+      "reasoning": "From common-sense semantics: “continued to grow” suggests a positive notebook-sales growth rate; if total-sales growth rate is higher than a positive rate, total-sales growth should also be positive, implying total sales grew."
+    }
+  ],
+  "_enrichment_log": [
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

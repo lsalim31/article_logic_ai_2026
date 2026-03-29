@@ -1,0 +1,559 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Time perception distortion occurs.",
+      "evidence": "Sentence 0: \"Time perception distortion ...\"",
+      "explanation": "This is an atomic event/state claim used as the main concept being defined."
+    },
+    {
+      "id": "P_2",
+      "translation": "A person has an incorrect perception of time.",
+      "evidence": "Sentence 0: \"Time perception distortion the incorrect perception of time.\"",
+      "explanation": "This is the core definitional content and is not a logical connective."
+    },
+    {
+      "id": "P_3",
+      "translation": "A person's perception of time is in line with reality.",
+      "evidence": "Sentence 1: \"people's perception of time is often not in line with reality.\"",
+      "explanation": "Stated as a positive atomic proposition so that misalignment can be represented via negation in constraints."
+    },
+    {
+      "id": "P_4",
+      "translation": "A person feels that time is too long.",
+      "evidence": "Sentence 2: \"Sometimes they feel that time is too long\"",
+      "explanation": "This is a single, truth-evaluable experiential statement."
+    },
+    {
+      "id": "P_5",
+      "translation": "A person feels that time is too short.",
+      "evidence": "Sentence 2: \"sometimes that time is too short.\"",
+      "explanation": "This is a single, truth-evaluable experiential statement."
+    },
+    {
+      "id": "P_6",
+      "translation": "A person has a bad performance in reality.",
+      "evidence": "Sentence 4: \"A bad performance in reality ...\"",
+      "explanation": "This is an atomic condition mentioned as a cause."
+    },
+    {
+      "id": "P_7",
+      "translation": "A person feels that the end is far away.",
+      "evidence": "Sentence 4: \"... make people feel like the end is far away.\"",
+      "explanation": "This is an atomic experiential outcome."
+    },
+    {
+      "id": "P_8",
+      "translation": "A person experiences a good and happy time.",
+      "evidence": "Sentence 5: \"... the good and happy time ...\"",
+      "explanation": "This is an atomic condition referred to as a contrasting case."
+    },
+    {
+      "id": "P_9",
+      "translation": "A person thinks that the good and happy time is too short.",
+      "evidence": "Sentence 5: \"people always think that the good and happy time is too short.\"",
+      "explanation": "This is a single belief claim; no logical connective is inside it."
+    },
+    {
+      "id": "P_10",
+      "translation": "Various factors affect a person's perception of time.",
+      "evidence": "Sentence 1: \"affected by various factors\"",
+      "explanation": "This is an atomic causal/background claim."
+    },
+    {
+      "id": "P_11",
+      "translation": "Many reasons cause time perception distortion.",
+      "evidence": "Sentence 3: \"Many reasons ... can cause distortion of time perception.\"",
+      "explanation": "This is an atomic causal-existence claim (that there are multiple causes)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟺ P_2",
+      "translation": "Time perception distortion is the incorrect perception of time.",
+      "evidence": "Sentence 0",
+      "reasoning": "The text presents this as a definition/identity.",
+      "list nli": [
+        [
+          3.62136670446489e-05,
+          6.848821794847026e-05,
+          0.9998953342437744
+        ],
+        [
+          4.6722369006602094e-05,
+          7.991917664185166e-05,
+          0.9998733997344971
+        ],
+        [
+          6.934510020073503e-05,
+          9.18121513677761e-05,
+          0.9998388290405273
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ ¬P_3",
+      "translation": "If a person's perception of time is incorrect, then it is not in line with reality.",
+      "evidence": "Sentence 0-1",
+      "reasoning": "Incorrect perception is strongly aligned with the stated idea of being 'not in line with reality', though phrasing is not a strict formal definition.",
+      "list nli": [
+        [
+          3.4920605685329065e-05,
+          0.00010383345215814188,
+          0.9998612403869629
+        ],
+        [
+          8.334896119777113e-05,
+          0.0003316719376016408,
+          0.999584972858429
+        ],
+        [
+          0.00014528754400089383,
+          0.0002721913333516568,
+          0.9995824694633484
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ ¬P_3",
+      "translation": "If time perception distortion occurs, then the perception of time is not in line with reality.",
+      "evidence": "Sentence 0-1",
+      "reasoning": "Combines the definition (distortion = incorrect) with the explicit claim that perception is often not aligned with reality.",
+      "list nli": [
+        [
+          1.0825136996572837e-05,
+          0.00014465294952969998,
+          0.9998445510864258
+        ],
+        [
+          3.188596019754186e-05,
+          0.00018063800234813243,
+          0.9997875094413757
+        ],
+        [
+          3.294349880889058e-05,
+          0.00018137629376724362,
+          0.9997857213020325
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "A bad performance in reality makes people feel the end is far away.",
+      "evidence": "Sentence 4",
+      "reasoning": "Stated as a strong causal claim ('will make').",
+      "list nli": [
+        [
+          0.00020802485232707113,
+          3.530775575200096e-05,
+          0.9997566342353821
+        ],
+        [
+          0.00031983398366719484,
+          3.286692299298011e-05,
+          0.9996472597122192
+        ],
+        [
+          0.0009492191020399332,
+          3.5132208722643554e-05,
+          0.9990156888961792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_8 ⟹ P_9",
+      "translation": "When a person experiences good and happy time, the person thinks it is too short.",
+      "evidence": "Sentence 5",
+      "reasoning": "\"Always think\" indicates a very strong association.",
+      "list nli": [
+        [
+          4.1454346501268446e-05,
+          5.035857611801475e-05,
+          0.9999082088470459
+        ],
+        [
+          7.832455594325438e-05,
+          3.6535282561089844e-05,
+          0.999885082244873
+        ],
+        [
+          4.6171797293936834e-05,
+          7.434612780343741e-05,
+          0.9998794794082642
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_3 ⟹ ¬P_2",
+      "translation": "If a person's perception of time is in line with reality, then the perception is not incorrect.",
+      "evidence": "Sentence 0-1",
+      "reasoning": "This is an implied commonsense inverse relationship between 'in line with reality' and 'incorrect perception', consistent with the definition.",
+      "list nli": [
+        [
+          0.00012355628132354468,
+          0.0003522051265463233,
+          0.9995242357254028
+        ],
+        [
+          0.0015072340611368418,
+          9.227109694620594e-05,
+          0.9984005093574524
+        ],
+        [
+          0.0005237673758529127,
+          0.0015020883874967694,
+          0.9979740977287292
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_16",
+      "formula": "¬P_3",
+      "translation": "It is not the case that A person's perception of time is in line with reality.",
+      "evidence": "Sentence 1: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.0002577099367044866,
+          5.713214341085404e-05,
+          0.9996851682662964
+        ],
+        [
+          0.00020152133947703987,
+          0.00023163265723269433,
+          0.9995668530464172
+        ],
+        [
+          0.00017120309348683804,
+          0.0028799083083868027,
+          0.9969488978385925
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "¬P_1",
+      "translation": "It is not the case that Time perception distortion occurs.",
+      "evidence": "Sentence 7: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.9882189035415649,
+          0.0023335949517786503,
+          0.009447472169995308
+        ],
+        [
+          0.9884364604949951,
+          0.003617400536313653,
+          0.007946188561618328
+        ],
+        [
+          0.9932678937911987,
+          0.0026529193855822086,
+          0.004079223144799471
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_2",
+      "translation": "Feeling that time is too long indicates an incorrect perception of time.",
+      "evidence": "Sentence 2",
+      "reasoning": "Judging time as 'too long' relative to reality is a typical instance of incorrect perception as described.",
+      "list nli": [
+        [
+          2.616430356283672e-05,
+          5.33307102159597e-05,
+          0.9999204874038696
+        ],
+        [
+          1.9865090507664718e-05,
+          7.648378959856927e-05,
+          0.999903678894043
+        ],
+        [
+          3.335660949232988e-05,
+          8.329992851940915e-05,
+          0.9998832941055298
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5 ⟹ P_2",
+      "translation": "Feeling that time is too short indicates an incorrect perception of time.",
+      "evidence": "Sentence 2",
+      "reasoning": "Judging time as 'too short' relative to reality is a typical instance of incorrect perception as described.",
+      "list nli": [
+        [
+          4.717591218650341e-05,
+          4.4448202970670536e-05,
+          0.9999083280563354
+        ],
+        [
+          3.4194494219264016e-05,
+          6.467549246735871e-05,
+          0.9999011754989624
+        ],
+        [
+          4.996927600586787e-05,
+          7.195568468887359e-05,
+          0.9998780488967896
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.8,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "(P_4 ∨ P_5) ⟹ P_1",
+      "translation": "If someone feels time is too long or too short, that counts as time perception distortion.",
+      "evidence": "Sentence 0-2",
+      "reasoning": "The text gives 'too long'/'too short' as characteristic ways distortion appears; not explicitly stated as exhaustive, hence < 1.0.",
+      "list nli": [
+        [
+          5.4367661505239084e-05,
+          8.360495121451095e-05,
+          0.9998619556427002
+        ],
+        [
+          5.199016959522851e-05,
+          9.079906158149242e-05,
+          0.9998571872711182
+        ],
+        [
+          1.641639755689539e-05,
+          0.00021522518363781273,
+          0.9997683167457581
+        ]
+      ],
+      "weight": 0.8
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_10",
+      "translation": "Various factors affect people's perception of time.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted as a general background claim; 'various factors' is broad but clearly stated.",
+      "list nli": [
+        [
+          1.108664582716301e-05,
+          0.001150014577433467,
+          0.9988389611244202
+        ],
+        [
+          1.0842973097169306e-05,
+          0.001670778263360262,
+          0.9983184337615967
+        ],
+        [
+          1.1038625416404102e-05,
+          0.002767734695225954,
+          0.9972212314605713
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_11",
+      "translation": "Many reasons can cause distortion of time perception.",
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted; phrasing is somewhat ungrammatical but intent is clear.",
+      "list nli": [
+        [
+          2.970699279103428e-05,
+          6.998198659857735e-05,
+          0.9999003410339355
+        ],
+        [
+          2.6667026759241708e-05,
+          0.00018605642253533006,
+          0.9997872710227966
+        ],
+        [
+          0.00015450101636815816,
+          0.0001232661452377215,
+          0.9997221827507019
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_7 ⟹ P_4",
+      "translation": "Feeling that the end is far away corresponds to feeling time is too long.",
+      "evidence": "Sentence 4 (supported by Sentence 2 context)",
+      "reasoning": "The text links 'end is far away' to a distorted sense of time; mapping it specifically to 'too long' is a plausible intended interpretation.",
+      "list nli": [
+        [
+          3.529590685502626e-05,
+          0.00015750111197121441,
+          0.9998071789741516
+        ],
+        [
+          2.878158920793794e-05,
+          0.00016414943092968315,
+          0.9998070597648621
+        ],
+        [
+          6.307574221864343e-05,
+          0.0002165981277357787,
+          0.9997202754020691
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_6 ⟹ P_1",
+      "translation": "A bad performance in reality can lead to time perception distortion.",
+      "evidence": "Sentence 4 (with definition in Sentence 0)",
+      "reasoning": "Bad performance is presented as a reason for distorted time feelings; the step from 'end far away' to full distortion is implied rather than explicitly named.",
+      "list nli": [
+        [
+          8.59484716784209e-05,
+          4.7235585952876136e-05,
+          0.9998668432235718
+        ],
+        [
+          9.509252413408831e-05,
+          5.5526568758068606e-05,
+          0.9998493194580078
+        ],
+        [
+          0.00013569947623182088,
+          4.482530857785605e-05,
+          0.9998194575309753
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.85,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_9 ⟹ P_5",
+      "translation": "Thinking that good and happy time is too short implies feeling that time is too short.",
+      "evidence": "Sentence 5 (linked to Sentence 2 concept of 'too short')",
+      "reasoning": "The sentence directly asserts 'too short' for good/happy time; treating it as an instance of the 'time is too short' perception is strongly supported.",
+      "list nli": [
+        [
+          9.321807010564953e-05,
+          0.00012984748173039407,
+          0.9997768998146057
+        ],
+        [
+          0.00011548658221727237,
+          0.00023209962819237262,
+          0.9996523857116699
+        ],
+        [
+          5.454684651340358e-05,
+          0.0003654607862699777,
+          0.9995799660682678
+        ]
+      ],
+      "weight": 0.85
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.8,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_9 ⟹ P_1",
+      "translation": "Thinking that good and happy time is too short counts as time perception distortion.",
+      "evidence": "Sentence 5 (with definition in Sentence 0)",
+      "reasoning": "This is presented as the contrasting example of distortion (good time feels short); it implies incorrect perception relative to reality.",
+      "list nli": [
+        [
+          0.00010466970707057044,
+          0.0001664852607063949,
+          0.9997288584709167
+        ],
+        [
+          0.00021961049060337245,
+          0.00010128895519301295,
+          0.9996790885925293
+        ],
+        [
+          8.297079330077395e-05,
+          0.00034284370485693216,
+          0.9995741248130798
+        ]
+      ],
+      "weight": 0.8
+    }
+  ]
+}

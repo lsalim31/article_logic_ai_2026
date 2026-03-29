@@ -1,0 +1,75 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "There are photos of the US military abusing prisoners.",
+      "evidence": "Sentence 0: \"Referring to the photos of the US military abusing prisoners\"",
+      "explanation": "This is an atomic existence claim about photos depicting a specific event; it contains no logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "The US military abuses prisoners.",
+      "evidence": "Sentence 0: \"photos of the US military abusing prisoners\"",
+      "explanation": "This is a simple event/state claim; it is the depicted action itself without connectives."
+    },
+    {
+      "id": "P_3",
+      "translation": "You want to be caught on the spot doing something stupid.",
+      "evidence": "Sentence 0: \"if you don't want to be caught on the spot doing something stupid\"",
+      "explanation": "This is a single attitude/state (wanting) toward a specific situation; negation is handled in constraints, not inside the proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "You do something stupid.",
+      "evidence": "Sentence 0: \"doing something stupid\" / \"you don't do anything stupid\"",
+      "explanation": "This is an atomic action claim; the universal wording \"anything\" is not represented with quantifiers, so it is captured as a single propositional action."
+    },
+    {
+      "id": "P_5",
+      "translation": "You are caught on the spot doing something stupid.",
+      "evidence": "Sentence 0: \"be caught on the spot doing something stupid\"",
+      "explanation": "This is an atomic situation/event description; internal structure (caught + doing) is not further decomposed here, but semantic constraints can relate it to other propositions."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "¬P_3 ⟹ ¬P_4",
+      "translation": "If you don't want to be caught on the spot doing something stupid, you don't do anything stupid.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"if you don't want to be caught on the spot doing something stupid, you don't do anything stupid\"",
+      "reasoning": "This is the main explicit conditional statement being quoted; it is stated directly as a rule/advice."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_4",
+      "translation": "Being caught on the spot doing something stupid entails that you did something stupid.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"caught on the spot doing something stupid\"",
+      "reasoning": "This is a strong commonsense semantic entailment from the meaning of \"caught ... doing X\"; minor uncertainty remains due to possible false accusation/mistake."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If there are photos of the US military abusing prisoners, then the US military abuses prisoners.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"photos of the US military abusing prisoners\"",
+      "reasoning": "Photos depicting an event strongly suggest the event occurred, but the text does not guarantee authenticity (could be staged/misinterpreted), so weight is high but not 1.0."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_3",
+      "translation": "It is not the case that You want to be caught on the spot doing something stupid.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 0: Found negation of 'want'",
+    "           Affirmative clause: 'if you do want to be caught on the spot doing something stupid'",
+    "           Matched to: P_3",
+    "           Added constraint: ¬P_3 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

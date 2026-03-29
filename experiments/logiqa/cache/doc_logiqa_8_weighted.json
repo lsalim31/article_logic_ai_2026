@@ -1,0 +1,329 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The price the Coffee Shoppe pays for coffee beans continues to increase.",
+      "evidence": "Sentence 0: \"If the price it pays for coffee beans continues to increase\"",
+      "explanation": "This is a single factual condition about the bean price trend, with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "The Coffee Shoppe increases its prices.",
+      "evidence": "Sentence 0: \"the Coffee Shoppe will have to increase its prices\"",
+      "explanation": "This is an atomic action/outcome attributed to the Coffee Shoppe."
+    },
+    {
+      "id": "P_3",
+      "translation": "The Coffee Shoppe begins selling noncoffee products.",
+      "evidence": "Sentence 1: \"the Coffee Shoppe will begin selling noncoffee products\"",
+      "explanation": "This is a single business decision described without additional connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The Coffee Shoppe's coffee sales decrease.",
+      "evidence": "Sentence 1: \"its coffee sales will decrease\"",
+      "explanation": "This is a single outcome about coffee sales."
+    },
+    {
+      "id": "P_5",
+      "translation": "The Coffee Shoppe's overall profitability decreases.",
+      "evidence": "Sentence 2: \"will decrease the Coffee Shoppe's overall profitability\"",
+      "explanation": "This is a single outcome about overall profitability."
+    },
+    {
+      "id": "P_6",
+      "translation": "The Coffee Shoppe avoids a decrease in overall profitability.",
+      "evidence": "Sentence 3: \"the Coffee Shoppe can avoid a decrease in overall profitability\"",
+      "explanation": "This is treated as an atomic status (profitability is maintained) to avoid a negated primitive."
+    },
+    {
+      "id": "P_7",
+      "translation": "The Coffee Shoppe's coffee sales do not decrease.",
+      "evidence": "Sentence 3: \"its coffee sales do not decrease\"",
+      "explanation": "This is treated as an atomic status (coffee sales are maintained) to avoid a negated primitive."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If the price it pays for coffee beans continues to increase, then the Coffee Shoppe will have to increase its prices.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated directly as a conditional.",
+      "list nli": [
+        [
+          1.556480310682673e-05,
+          0.00010177877265959978,
+          0.999882698059082
+        ],
+        [
+          5.3533123718807474e-05,
+          7.811877003405243e-05,
+          0.9998682737350464
+        ],
+        [
+          6.22258085059002e-05,
+          0.0001844621729105711,
+          0.9997532963752747
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ (P_3 ∨ P_4)",
+      "translation": "If the Coffee Shoppe increases its prices, then either it will begin selling noncoffee products or its coffee sales will decrease.",
+      "evidence": "Sentence 1 (\"In that case\")",
+      "reasoning": "\"In that case\" refers to the prior consequence (increasing its prices), yielding a strict conditional with a disjunction.",
+      "list nli": [
+        [
+          3.551556437741965e-05,
+          0.0001607886079000309,
+          0.9998037219047546
+        ],
+        [
+          0.00017375752213411033,
+          0.00019565619004424661,
+          0.9996305704116821
+        ],
+        [
+          5.97601720073726e-05,
+          0.0003150694537907839,
+          0.9996252059936523
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_5",
+      "translation": "Selling noncoffee products decreases the Coffee Shoppe's overall profitability.",
+      "evidence": "Sentence 2",
+      "reasoning": "This is explicitly asserted as a causal/implicational claim.",
+      "list nli": [
+        [
+          1.6719881386961788e-05,
+          9.12011819309555e-05,
+          0.9998921155929565
+        ],
+        [
+          0.00010100758663611487,
+          0.00010832883708644658,
+          0.9997907280921936
+        ],
+        [
+          0.00025931381969712675,
+          5.5886630434542894e-05,
+          0.9996848106384277
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "The Coffee Shoppe can avoid a decrease in overall profitability only if its coffee sales do not decrease.",
+      "evidence": "Sentence 3",
+      "reasoning": "\"A only if B\" is logically equivalent to A ⟹ B, and the statement is categorical.",
+      "list nli": [
+        [
+          7.700467904214747e-06,
+          0.0001204452637466602,
+          0.9998718500137329
+        ],
+        [
+          7.885134436946828e-06,
+          0.0001247329928446561,
+          0.99986732006073
+        ],
+        [
+          1.3350295375857968e-05,
+          0.00015237249317578971,
+          0.9998342990875244
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_5 ⟹ ¬P_6",
+      "translation": "If the Coffee Shoppe's overall profitability decreases, then it does not avoid a decrease in overall profitability.",
+      "evidence": "Sentence 2 and Sentence 3 (\"decrease\" vs \"avoid a decrease\")",
+      "reasoning": "By meaning, \"avoids a decrease\" is incompatible with \"overall profitability decreases\"; this is a strong semantic constraint implied by the wording.",
+      "list nli": [
+        [
+          0.004091901239007711,
+          0.0029079816304147243,
+          0.9930001497268677
+        ],
+        [
+          0.005028858315199614,
+          0.013200630433857441,
+          0.9817705750465393
+        ],
+        [
+          0.021190302446484566,
+          0.015755588188767433,
+          0.9630541205406189
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6 ⟹ ¬P_5",
+      "translation": "If the Coffee Shoppe avoids a decrease in overall profitability, then its overall profitability does not decrease.",
+      "evidence": "Sentence 3 (\"avoid a decrease\")",
+      "reasoning": "Avoiding a decrease entails that no decrease occurs; this is a near-definitional relation.",
+      "list nli": [
+        [
+          0.002914310432970524,
+          0.0009217170882038772,
+          0.9961639642715454
+        ],
+        [
+          0.0021608415991067886,
+          0.0024827481247484684,
+          0.9953563809394836
+        ],
+        [
+          0.0025923175271600485,
+          0.0032355845905840397,
+          0.9941720366477966
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_4 ⟹ ¬P_7",
+      "translation": "If the Coffee Shoppe's coffee sales decrease, then its coffee sales do not satisfy the condition 'do not decrease'.",
+      "evidence": "Sentence 1 and Sentence 3 (\"sales will decrease\" vs \"sales do not decrease\")",
+      "reasoning": "These are natural complements in meaning; this mutual exclusivity is strongly implied.",
+      "list nli": [
+        [
+          0.001184386434033513,
+          0.0013132882304489613,
+          0.9975023865699768
+        ],
+        [
+          0.0009197905892506242,
+          0.002387755084782839,
+          0.996692419052124
+        ],
+        [
+          0.002355041913688183,
+          0.0012477821437641978,
+          0.9963971972465515
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_7 ⟹ ¬P_4",
+      "translation": "If the Coffee Shoppe's coffee sales do not decrease, then its coffee sales do not decrease is incompatible with sales decreasing.",
+      "evidence": "Sentence 3 and Sentence 1",
+      "reasoning": "Same complement relationship as C_7 in the opposite direction.",
+      "list nli": [
+        [
+          0.00863928534090519,
+          0.004017816856503487,
+          0.9873428344726562
+        ],
+        [
+          0.01724431663751602,
+          0.007091363426297903,
+          0.9756643772125244
+        ],
+        [
+          0.018984150141477585,
+          0.005787527654320002,
+          0.9752283692359924
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "¬P_7 ⟹ ¬P_6",
+      "translation": "If the Coffee Shoppe's coffee sales are not in the 'do not decrease' state, then the Coffee Shoppe does not avoid a decrease in overall profitability.",
+      "evidence": "Sentence 3",
+      "reasoning": "This is the contrapositive of C_4, which is logically equivalent to C_4 in propositional logic.",
+      "list nli": [
+        [
+          0.00011276519944658503,
+          0.0002710043918341398,
+          0.9996161460876465
+        ],
+        [
+          0.0002421476092422381,
+          0.0001440932392142713,
+          0.9996138215065002
+        ],
+        [
+          2.5591301891836338e-05,
+          0.001758586149662733,
+          0.9982157945632935
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "¬P_4",
+      "translation": "It is not the case that The Coffee Shoppe's coffee sales decrease.",
+      "evidence": "Sentence 3: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.0009084442281164229,
+          0.0004201288102194667,
+          0.9986714124679565
+        ],
+        [
+          0.0025806473568081856,
+          0.0003001823788508773,
+          0.9971191883087158
+        ],
+        [
+          0.002086377702653408,
+          0.0033952840603888035,
+          0.9945183396339417
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

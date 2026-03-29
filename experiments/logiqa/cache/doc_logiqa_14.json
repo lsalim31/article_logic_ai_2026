@@ -1,0 +1,219 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Time perception distortion occurs.",
+      "evidence": "Sentence 0: \"Time perception distortion ...\"",
+      "explanation": "This is an atomic event/state claim used as the main concept being defined."
+    },
+    {
+      "id": "P_2",
+      "translation": "A person has an incorrect perception of time.",
+      "evidence": "Sentence 0: \"Time perception distortion the incorrect perception of time.\"",
+      "explanation": "This is the core definitional content and is not a logical connective."
+    },
+    {
+      "id": "P_3",
+      "translation": "A person's perception of time is in line with reality.",
+      "evidence": "Sentence 1: \"people's perception of time is often not in line with reality.\"",
+      "explanation": "Stated as a positive atomic proposition so that misalignment can be represented via negation in constraints."
+    },
+    {
+      "id": "P_4",
+      "translation": "A person feels that time is too long.",
+      "evidence": "Sentence 2: \"Sometimes they feel that time is too long\"",
+      "explanation": "This is a single, truth-evaluable experiential statement."
+    },
+    {
+      "id": "P_5",
+      "translation": "A person feels that time is too short.",
+      "evidence": "Sentence 2: \"sometimes that time is too short.\"",
+      "explanation": "This is a single, truth-evaluable experiential statement."
+    },
+    {
+      "id": "P_6",
+      "translation": "A person has a bad performance in reality.",
+      "evidence": "Sentence 4: \"A bad performance in reality ...\"",
+      "explanation": "This is an atomic condition mentioned as a cause."
+    },
+    {
+      "id": "P_7",
+      "translation": "A person feels that the end is far away.",
+      "evidence": "Sentence 4: \"... make people feel like the end is far away.\"",
+      "explanation": "This is an atomic experiential outcome."
+    },
+    {
+      "id": "P_8",
+      "translation": "A person experiences a good and happy time.",
+      "evidence": "Sentence 5: \"... the good and happy time ...\"",
+      "explanation": "This is an atomic condition referred to as a contrasting case."
+    },
+    {
+      "id": "P_9",
+      "translation": "A person thinks that the good and happy time is too short.",
+      "evidence": "Sentence 5: \"people always think that the good and happy time is too short.\"",
+      "explanation": "This is a single belief claim; no logical connective is inside it."
+    },
+    {
+      "id": "P_10",
+      "translation": "Various factors affect a person's perception of time.",
+      "evidence": "Sentence 1: \"affected by various factors\"",
+      "explanation": "This is an atomic causal/background claim."
+    },
+    {
+      "id": "P_11",
+      "translation": "Many reasons cause time perception distortion.",
+      "evidence": "Sentence 3: \"Many reasons ... can cause distortion of time perception.\"",
+      "explanation": "This is an atomic causal-existence claim (that there are multiple causes)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟺ P_2",
+      "translation": "Time perception distortion is the incorrect perception of time.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The text presents this as a definition/identity."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2 ⟹ ¬P_3",
+      "translation": "If a person's perception of time is incorrect, then it is not in line with reality.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0-1",
+      "reasoning": "Incorrect perception is strongly aligned with the stated idea of being 'not in line with reality', though phrasing is not a strict formal definition."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_1 ⟹ ¬P_3",
+      "translation": "If time perception distortion occurs, then the perception of time is not in line with reality.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0-1",
+      "reasoning": "Combines the definition (distortion = incorrect) with the explicit claim that perception is often not aligned with reality."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_2",
+      "translation": "Feeling that time is too long indicates an incorrect perception of time.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 2",
+      "reasoning": "Judging time as 'too long' relative to reality is a typical instance of incorrect perception as described."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5 ⟹ P_2",
+      "translation": "Feeling that time is too short indicates an incorrect perception of time.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 2",
+      "reasoning": "Judging time as 'too short' relative to reality is a typical instance of incorrect perception as described."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_4 ∨ P_5) ⟹ P_1",
+      "translation": "If someone feels time is too long or too short, that counts as time perception distortion.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0-2",
+      "reasoning": "The text gives 'too long'/'too short' as characteristic ways distortion appears; not explicitly stated as exhaustive, hence < 1.0."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_10",
+      "translation": "Various factors affect people's perception of time.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted as a general background claim; 'various factors' is broad but clearly stated."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_11",
+      "translation": "Many reasons can cause distortion of time perception.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted; phrasing is somewhat ungrammatical but intent is clear."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "A bad performance in reality makes people feel the end is far away.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 4",
+      "reasoning": "Stated as a strong causal claim ('will make')."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_7 ⟹ P_4",
+      "translation": "Feeling that the end is far away corresponds to feeling time is too long.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 4 (supported by Sentence 2 context)",
+      "reasoning": "The text links 'end is far away' to a distorted sense of time; mapping it specifically to 'too long' is a plausible intended interpretation."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_6 ⟹ P_1",
+      "translation": "A bad performance in reality can lead to time perception distortion.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 4 (with definition in Sentence 0)",
+      "reasoning": "Bad performance is presented as a reason for distorted time feelings; the step from 'end far away' to full distortion is implied rather than explicitly named."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_8 ⟹ P_9",
+      "translation": "When a person experiences good and happy time, the person thinks it is too short.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 5",
+      "reasoning": "\"Always think\" indicates a very strong association."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_9 ⟹ P_5",
+      "translation": "Thinking that good and happy time is too short implies feeling that time is too short.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 5 (linked to Sentence 2 concept of 'too short')",
+      "reasoning": "The sentence directly asserts 'too short' for good/happy time; treating it as an instance of the 'time is too short' perception is strongly supported."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_9 ⟹ P_1",
+      "translation": "Thinking that good and happy time is too short counts as time perception distortion.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 5 (with definition in Sentence 0)",
+      "reasoning": "This is presented as the contrasting example of distortion (good time feels short); it implies incorrect perception relative to reality."
+    },
+    {
+      "id": "C_15",
+      "formula": "P_3 ⟹ ¬P_2",
+      "translation": "If a person's perception of time is in line with reality, then the perception is not incorrect.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0-1",
+      "reasoning": "This is an implied commonsense inverse relationship between 'in line with reality' and 'incorrect perception', consistent with the definition."
+    },
+    {
+      "id": "C_16",
+      "formula": "¬P_3",
+      "translation": "It is not the case that A person's perception of time is in line with reality.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    },
+    {
+      "id": "C_17",
+      "formula": "¬P_1",
+      "translation": "It is not the case that Time perception distortion occurs.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 7: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint"
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'is'",
+    "           Affirmative clause: 'In life , affected by various factors , people 's perception of time is often in line with reality .'",
+    "           Matched to: P_3",
+    "           Added constraint: ¬P_3 @1.0",
+    "[Negation] Sentence 7: Found negation of 'meet'",
+    "           Affirmative clause: 'which of the following does meet the time perception distortion'",
+    "           Matched to: P_1",
+    "           Added constraint: ¬P_1 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

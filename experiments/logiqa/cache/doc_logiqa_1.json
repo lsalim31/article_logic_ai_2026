@@ -3,124 +3,76 @@
     {
       "id": "P_1",
       "translation": "X is a social self-organization",
-      "evidence": "Sentence 0: \"Social self-organization refers to a social organization that ...\"",
-      "explanation": "This is the target category being defined; it is a single class-membership claim."
+      "evidence": "Sentence 0: \"Social self-organization refers to ...\"",
+      "explanation": "This is the category membership claim being defined; the remaining content specifies its defining properties."
     },
     {
       "id": "P_2",
       "translation": "X is a social organization",
-      "evidence": "Sentence 0: \"... refers to a social organization ...\"",
-      "explanation": "This is an atomic type/classification statement."
+      "evidence": "Sentence 0: \"Social self-organization refers to a social organization...\"",
+      "explanation": "Atomic classification statement about X."
     },
     {
       "id": "P_3",
       "translation": "X is established spontaneously",
-      "evidence": "Sentence 0: \"... is established spontaneously ...\"",
-      "explanation": "This is a single property attribution without internal logical structure."
+      "evidence": "Sentence 0: \"...is established spontaneously...\"",
+      "explanation": "Single property attributed to X; no internal logical connective."
     },
     {
       "id": "P_4",
       "translation": "X develops independently",
-      "evidence": "Sentence 0: \"... develops independently ...\"",
-      "explanation": "This is a single property attribution."
+      "evidence": "Sentence 0: \"...develops independently...\"",
+      "explanation": "Single property attributed to X; no internal logical connective."
     },
     {
       "id": "P_5",
       "translation": "X acts independently",
-      "evidence": "Sentence 0: \"... acts independently ...\"",
-      "explanation": "This is a single property attribution."
+      "evidence": "Sentence 0: \"...acts independently...\"",
+      "explanation": "Single property attributed to X; no internal logical connective."
     },
     {
       "id": "P_6",
       "translation": "X has a certain scale",
-      "evidence": "Sentence 0: \"... has a certain scale ...\"",
-      "explanation": "This is a single property attribution."
+      "evidence": "Sentence 0: \"...has a certain scale...\"",
+      "explanation": "Single property attributed to X; treated as atomic because the text does not further analyze what the scale is."
     },
     {
       "id": "P_7",
       "translation": "X exists in the form of non-governmental organizations",
-      "evidence": "Sentence 0: \"... exists in the form of non-governmental organizations ...\"",
-      "explanation": "This is a single property attribution about organizational form."
+      "evidence": "Sentence 0: \"...exists in the form of non-governmental organizations...\"",
+      "explanation": "Single structural/form claim about X."
     },
     {
       "id": "P_8",
       "translation": "X gradually moves from disorder to order",
-      "evidence": "Sentence 0: \"... gradually moves from disorder to order.\"",
-      "explanation": "This is a single process/dynamic property attribution."
+      "evidence": "Sentence 0: \"...and gradually moves from disorder to order.\"",
+      "explanation": "Single developmental/dynamic claim about X as stated."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "If X is a social self-organization, then X is a social organization",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6 ∧ P_7 ∧ P_8)",
+      "translation": "If X is a social self-organization, then it is a social organization that is established spontaneously, develops independently, acts independently, has a certain scale, exists as an NGO form, and gradually moves from disorder to order",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"Social self-organization refers to a social organization that ...\"",
-      "reasoning": "The definition explicitly states that social self-organization is a kind of social organization."
+      "evidence": "Sentence 0 (entire definition)",
+      "reasoning": "The sentence is a definition specifying necessary properties of the term; definitional entailments are treated as mandatory."
     },
     {
       "id": "C_2",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If X is a social self-organization, then X is established spontaneously",
+      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6 ∧ P_7 ∧ P_8) ⟹ P_1",
+      "translation": "If X has all the listed properties, then X is a social self-organization",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... established spontaneously ...\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
+      "evidence": "Sentence 0: \"Social self-organization refers to a social organization that ...\"",
+      "reasoning": "The phrasing \"refers to\" indicates an intended equivalence: meeting the defining feature set is sufficient for the label."
     },
     {
       "id": "C_3",
-      "formula": "P_1 ⟹ P_4",
-      "translation": "If X is a social self-organization, then X develops independently",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... develops independently ...\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
-    },
-    {
-      "id": "C_4",
-      "formula": "P_1 ⟹ P_5",
-      "translation": "If X is a social self-organization, then X acts independently",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... acts independently ...\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
-    },
-    {
-      "id": "C_5",
-      "formula": "P_1 ⟹ P_6",
-      "translation": "If X is a social self-organization, then X has a certain scale",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... has a certain scale ...\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_1 ⟹ P_7",
-      "translation": "If X is a social self-organization, then X exists in the form of non-governmental organizations",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... exists in the form of non-governmental organizations ...\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_1 ⟹ P_8",
-      "translation": "If X is a social self-organization, then X gradually moves from disorder to order",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"... gradually moves from disorder to order.\"",
-      "reasoning": "Listed as a defining characteristic in the definition."
-    },
-    {
-      "id": "C_8",
-      "formula": "(P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6 ∧ P_7 ∧ P_8) ⟹ P_1",
-      "translation": "If X is a social organization and has all the listed characteristics, then X is a social self-organization",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0: the full definitional clause listing the characteristics",
-      "reasoning": "The wording \"refers to\" typically signals a definition (close to necessary-and-sufficient conditions), but natural-language definitions can be imperfectly exhaustive, so a small uncertainty is applied."
-    },
-    {
-      "id": "C_9",
       "formula": "P_1 ⟺ (P_2 ∧ P_3 ∧ P_4 ∧ P_5 ∧ P_6 ∧ P_7 ∧ P_8)",
-      "translation": "X is a social self-organization if and only if X is a social organization with all the listed features",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0: the definition as a whole",
-      "reasoning": "This summarizes C_1–C_8 as a biconditional, but it inherits the slight uncertainty about whether the list is fully exhaustive in all contexts."
+      "translation": "X is a social self-organization exactly when X has all the defining properties listed in the definition",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0 (definition as a whole)",
+      "reasoning": "This is the combined definitional constraint (bidirectional) implied by the definition; it follows from C_1 and C_2."
     }
   ],
   "_enrichment_log": [

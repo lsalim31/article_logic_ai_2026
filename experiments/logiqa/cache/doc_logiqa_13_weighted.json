@@ -1,0 +1,521 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A man works only for himself.",
+      "evidence": "Sentence 0: \"If a man works only for himself\"",
+      "explanation": "Atomic subject–predicate claim used as the antecedent of a conditional."
+    },
+    {
+      "id": "P_2",
+      "translation": "A man becomes a famous scholar.",
+      "evidence": "Sentence 0: \"he may become a famous scholar\"",
+      "explanation": "Single achievement/state; no logical connectives in the clause."
+    },
+    {
+      "id": "P_3",
+      "translation": "A man becomes a great philosopher.",
+      "evidence": "Sentence 0: \"a great philosopher\"",
+      "explanation": "Single achievement/state extracted from a list; listed items are separated into atomic propositions."
+    },
+    {
+      "id": "P_4",
+      "translation": "A man becomes an outstanding poet.",
+      "evidence": "Sentence 0: \"an outstanding poet\"",
+      "explanation": "Single achievement/state extracted from a list; atomic."
+    },
+    {
+      "id": "P_5",
+      "translation": "A man becomes a flawless great man.",
+      "evidence": "Sentence 0: \"become a flawless great man\"",
+      "explanation": "Single status; negation/possibility is handled in constraints, not inside the primitive."
+    },
+    {
+      "id": "P_6",
+      "translation": "We choose the profession that works best for the welfare of mankind.",
+      "evidence": "Sentence 1: \"If we choose the profession that works best for the welfare of mankind\"",
+      "explanation": "Atomic choice/action used as the antecedent of a conditional."
+    },
+    {
+      "id": "P_7",
+      "translation": "The burden overwhelms us.",
+      "evidence": "Sentence 1: \"the burden cannot overwhelm us\"",
+      "explanation": "Atomic event/state; the word \"cannot\" is represented via negation in constraints."
+    },
+    {
+      "id": "P_8",
+      "translation": "I give my life for all.",
+      "evidence": "Sentence 1: \"for I am giving my life for all\"",
+      "explanation": "Standalone asserted commitment; expressed as a simple declarative clause."
+    },
+    {
+      "id": "P_9",
+      "translation": "We feel poor pleasure.",
+      "evidence": "Sentence 1: \"what we feel is not poor\"",
+      "explanation": "Atomic felt-quality; negation handled as a constraint."
+    },
+    {
+      "id": "P_10",
+      "translation": "We feel limited pleasure.",
+      "evidence": "Sentence 1: \"limited\"",
+      "explanation": "Atomic felt-quality extracted from a list; no connectives in the primitive."
+    },
+    {
+      "id": "P_11",
+      "translation": "We feel selfish pleasure.",
+      "evidence": "Sentence 1: \"selfish pleasure\"",
+      "explanation": "Atomic felt-quality; negation handled as a constraint."
+    },
+    {
+      "id": "P_12",
+      "translation": "Our happiness belongs to millions of people.",
+      "evidence": "Sentence 1: \"our happiness will belong to millions of people\"",
+      "explanation": "Atomic ownership/belonging claim."
+    },
+    {
+      "id": "P_13",
+      "translation": "Our cause is silent.",
+      "evidence": "Sentence 1: \"our cause will be silent\"",
+      "explanation": "Atomic attribute statement."
+    },
+    {
+      "id": "P_14",
+      "translation": "Our cause lasts forever.",
+      "evidence": "Sentence 1: \"it will last forever\"",
+      "explanation": "Atomic persistence claim."
+    },
+    {
+      "id": "P_15",
+      "translation": "Noble people shed tears in the face of our ashes.",
+      "evidence": "Sentence 1: \"the noble people will shed tears in the face of our ashes\"",
+      "explanation": "Atomic predicted reaction/event."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_1 ⟹ ¬P_5",
+      "translation": "If a man works only for himself, he can never become a flawless great man.",
+      "evidence": "Sentence 0",
+      "reasoning": "\"Can never\" expresses a categorical impossibility under the antecedent.",
+      "list nli": [
+        [
+          9.563733328832313e-05,
+          3.744561763596721e-05,
+          0.9998668432235718
+        ],
+        [
+          5.6930708524305373e-05,
+          0.0001868700492195785,
+          0.9997561573982239
+        ],
+        [
+          0.0006007702322676778,
+          0.0003834899398498237,
+          0.9990156888961792
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6 ⟹ ¬P_7",
+      "translation": "If we choose the profession that best serves mankind's welfare, the burden cannot overwhelm us.",
+      "evidence": "Sentence 1",
+      "reasoning": "\"Cannot\" under the stated condition is presented as a firm claim.",
+      "list nli": [
+        [
+          2.0412373487488367e-05,
+          5.2482715545920655e-05,
+          0.9999270439147949
+        ],
+        [
+          4.3627162085613236e-05,
+          5.686794611392543e-05,
+          0.9998995065689087
+        ],
+        [
+          5.493413482327014e-05,
+          0.00031019101152196527,
+          0.999634861946106
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_6 ⟹ ¬P_9",
+      "translation": "If we choose the profession that best serves mankind's welfare, what we feel is not poor pleasure.",
+      "evidence": "Sentence 1",
+      "reasoning": "The text asserts this as a direct consequence introduced by \"then\" and stated with negation.",
+      "list nli": [
+        [
+          2.758470509434119e-05,
+          0.0005319843185134232,
+          0.9994403719902039
+        ],
+        [
+          0.0002335922181373462,
+          0.0009110935498028994,
+          0.9988553524017334
+        ],
+        [
+          0.00016116403276100755,
+          0.0009963026968762279,
+          0.9988425374031067
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6 ⟹ ¬P_10",
+      "translation": "If we choose the profession that best serves mankind's welfare, what we feel is not limited pleasure.",
+      "evidence": "Sentence 1",
+      "reasoning": "Same scope as the prior \"then\" consequence; stated as a definite outcome.",
+      "list nli": [
+        [
+          1.2666312613873743e-05,
+          0.00011419202201068401,
+          0.999873161315918
+        ],
+        [
+          1.4289374121290166e-05,
+          0.0001497635676059872,
+          0.9998359680175781
+        ],
+        [
+          1.5905978216324e-05,
+          0.0002441076358081773,
+          0.999739944934845
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_6 ⟹ ¬P_11",
+      "translation": "If we choose the profession that best serves mankind's welfare, what we feel is not selfish pleasure.",
+      "evidence": "Sentence 1",
+      "reasoning": "Same scope and certainty as the other negated feeling-qualities.",
+      "list nli": [
+        [
+          2.0618303096853197e-05,
+          7.286854088306427e-05,
+          0.9999065399169922
+        ],
+        [
+          2.1753241526312195e-05,
+          7.881910278229043e-05,
+          0.9998993873596191
+        ],
+        [
+          1.0932084478554316e-05,
+          0.0001848376850830391,
+          0.9998041987419128
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_6 ⟹ P_12",
+      "translation": "If we choose the profession that best serves mankind's welfare, our happiness will belong to millions of people.",
+      "evidence": "Sentence 1",
+      "reasoning": "Future-tense \"will\" presented as a clear consequence of the antecedent.",
+      "list nli": [
+        [
+          5.1314898882992566e-05,
+          3.4794589737430215e-05,
+          0.9999139308929443
+        ],
+        [
+          3.123226997558959e-05,
+          6.409527850337327e-05,
+          0.9999046325683594
+        ],
+        [
+          0.00011223458568565547,
+          3.1861603929428384e-05,
+          0.9998558759689331
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_6 ⟹ P_13",
+      "translation": "If we choose the profession that best serves mankind's welfare, our cause will be silent.",
+      "evidence": "Sentence 1",
+      "reasoning": "Stated as part of the same chain of outcomes under the initial \"If\".",
+      "list nli": [
+        [
+          2.8588372515514493e-05,
+          0.00014436747005674988,
+          0.9998270869255066
+        ],
+        [
+          0.0009370113839395344,
+          0.000682926329318434,
+          0.9983800649642944
+        ],
+        [
+          0.000824224203824997,
+          0.0014214219991117716,
+          0.9977543950080872
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_6 ⟹ P_14",
+      "translation": "If we choose the profession that best serves mankind's welfare, our cause will last forever.",
+      "evidence": "Sentence 1",
+      "reasoning": "Stated as a definite outcome (\"will\") under the same antecedent.",
+      "list nli": [
+        [
+          2.5526416720822453e-05,
+          4.9421523726778105e-05,
+          0.9999250173568726
+        ],
+        [
+          7.250457565532997e-05,
+          6.715029303450137e-05,
+          0.9998602867126465
+        ],
+        [
+          0.0003047475765924901,
+          3.1140207283897325e-05,
+          0.9996640682220459
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_6 ⟹ P_15",
+      "translation": "If we choose the profession that best serves mankind's welfare, noble people will shed tears in the face of our ashes.",
+      "evidence": "Sentence 1",
+      "reasoning": "Also asserted with \"will\" as an intended consequence of the choice.",
+      "list nli": [
+        [
+          0.00028312296490184963,
+          6.034799662302248e-05,
+          0.9996565580368042
+        ],
+        [
+          0.00038435266469605267,
+          4.3926676880801097e-05,
+          0.9995717406272888
+        ],
+        [
+          2.5110701244557276e-05,
+          0.000937508069910109,
+          0.9990373849868774
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_8",
+      "translation": "I am giving my life for all.",
+      "evidence": "Sentence 1",
+      "reasoning": "Presented as an asserted fact by the speaker (not conditionalized in the text).",
+      "list nli": [
+        [
+          4.43852914031595e-05,
+          0.000104684972029645,
+          0.999850869178772
+        ],
+        [
+          0.00019585236441344023,
+          9.077275171875954e-05,
+          0.9997133612632751
+        ],
+        [
+          0.0003103540511801839,
+          5.562352453125641e-05,
+          0.9996340274810791
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "¬P_5",
+      "translation": "It is not the case that A man becomes a flawless great man.",
+      "evidence": "Sentence 0: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.0004299692518543452,
+          0.0025677771773189306,
+          0.9970021843910217
+        ],
+        [
+          0.0032398353796452284,
+          0.0009039885480888188,
+          0.9958561062812805
+        ],
+        [
+          0.000629091402515769,
+          0.004160269629210234,
+          0.9952107071876526
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "¬P_6",
+      "translation": "It is not the case that We choose the profession that works best for the welfare of mankind.",
+      "evidence": "Sentence 1: explicit negation in source text",
+      "reasoning": "Explicit negation detected in source text - hard constraint",
+      "list nli": [
+        [
+          0.00027010944904759526,
+          0.0011934986105188727,
+          0.9985363483428955
+        ],
+        [
+          0.002350389724597335,
+          0.00014233385445550084,
+          0.9975072741508484
+        ],
+        [
+          0.011129016987979412,
+          0.0020376432221382856,
+          0.9868332743644714
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If a man works only for himself, he may become a famous scholar.",
+      "evidence": "Sentence 0",
+      "reasoning": "The modal \"may\" indicates possibility rather than certainty, so the implication is weak-to-moderate.",
+      "list nli": [
+        [
+          3.276848656241782e-05,
+          7.982812530826777e-05,
+          0.9998873472213745
+        ],
+        [
+          4.0645965782459825e-05,
+          0.00012054918624926358,
+          0.9998388290405273
+        ],
+        [
+          0.0002653506235219538,
+          3.734897109097801e-05,
+          0.9996973276138306
+        ]
+      ],
+      "weight": 0.6
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_1 ⟹ P_3",
+      "translation": "If a man works only for himself, he may become a great philosopher.",
+      "evidence": "Sentence 0",
+      "reasoning": "Same conditional with \"may\"; treated as a possible outcome.",
+      "list nli": [
+        [
+          2.2518950572703034e-05,
+          7.341284799622372e-05,
+          0.9999040365219116
+        ],
+        [
+          0.00015559341409243643,
+          3.84885715902783e-05,
+          0.9998059868812561
+        ],
+        [
+          0.00010303166345693171,
+          0.0001199736725538969,
+          0.9997770190238953
+        ]
+      ],
+      "weight": 0.6
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_4",
+      "translation": "If a man works only for himself, he may become an outstanding poet.",
+      "evidence": "Sentence 0",
+      "reasoning": "Same conditional with \"may\"; treated as a possible outcome.",
+      "list nli": [
+        [
+          1.7635866242926568e-05,
+          7.787389040458947e-05,
+          0.9999045133590698
+        ],
+        [
+          0.00014419545186683536,
+          3.842263322439976e-05,
+          0.999817430973053
+        ],
+        [
+          0.0006525491480715573,
+          7.940673094708472e-05,
+          0.9992679953575134
+        ]
+      ],
+      "weight": 0.6
+    }
+  ]
+}

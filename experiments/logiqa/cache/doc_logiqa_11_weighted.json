@@ -1,0 +1,109 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Over the past 10 years, the company’s sales of personal notebook computers have continued to grow.",
+      "evidence": "Sentence 0: \"In the past 10 years, the sales of personal notebook computers of a computer company have continued to grow\"",
+      "explanation": "This is an atomic factual trend statement about notebook-computer sales over a specified period."
+    },
+    {
+      "id": "P_2",
+      "translation": "Over the past 10 years, the growth rate of the company’s personal notebook computer sales is lower than the growth rate of the company’s total sales of all products.",
+      "evidence": "Sentence 0: \"but the growth rate is lower than the growth rate of the company's total sales of all products\"",
+      "explanation": "This is an atomic comparative statement between two growth rates over the same period."
+    },
+    {
+      "id": "P_3",
+      "translation": "Over the past 10 years, the company’s total sales of all products have grown.",
+      "evidence": "Sentence 0: implied by the comparison of growth rates together with continued growth in notebook-computer sales",
+      "explanation": "This is a single trend statement about total sales; it is included because it is a natural implied consequence of P_1 and P_2 and is useful for representing downstream conflicts."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "The company’s personal notebook computer sales have continued to grow in the past 10 years.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as background information.",
+      "list nli": [
+        [
+          1.0267002835462335e-05,
+          8.824519318295643e-05,
+          0.999901533126831
+        ],
+        [
+          9.783725545275956e-05,
+          0.9977359771728516,
+          0.0021661054342985153
+        ],
+        [
+          4.1347007936565205e-05,
+          0.9990611672401428,
+          0.0008975575328804553
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "The notebook-computer sales growth rate is lower than the growth rate of the company’s total sales of all products (over the past 10 years).",
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as background information.",
+      "list nli": [
+        [
+          1.2388380127958953e-05,
+          8.09759003459476e-05,
+          0.9999066591262817
+        ],
+        [
+          7.898814146756195e-06,
+          0.0001251770881935954,
+          0.9998669624328613
+        ],
+        [
+          5.884778147446923e-05,
+          0.9990604519844055,
+          0.0008806789992377162
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.95,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "(P_1 ∧ P_2) ⟹ P_3",
+      "translation": "If notebook-computer sales continued to grow and their growth rate is lower than total-sales growth, then total sales grew over the past 10 years.",
+      "evidence": "Sentence 0",
+      "reasoning": "From common-sense semantics: “continued to grow” suggests a positive notebook-sales growth rate; if total-sales growth rate is higher than a positive rate, total-sales growth should also be positive, implying total sales grew.",
+      "list nli": [
+        [
+          5.018716910853982e-05,
+          0.00014955454389564693,
+          0.9998002648353577
+        ],
+        [
+          0.0008653618860989809,
+          0.0016000769101083279,
+          0.9975345134735107
+        ],
+        [
+          0.005074888467788696,
+          0.0063541121780872345,
+          0.9885709881782532
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

@@ -1,0 +1,104 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "A major art theft from a museum occurred.",
+      "evidence": "Sentence 0: \"A major art theft from a museum\"",
+      "explanation": "This is a single event-claim (that such a theft occurred) and does not contain logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "The theft was remarkable.",
+      "evidence": "Sentence 0: \"was remarkable\"",
+      "explanation": "This is an atomic predication about the theft and cannot be decomposed into simpler truth-evaluable parts without adding structure not in the text."
+    },
+    {
+      "id": "P_3",
+      "translation": "The pieces stolen had been carefully selected.",
+      "evidence": "Sentence 0: \"the pieces stolen clearly had been carefully selected\"",
+      "explanation": "This is a simple declarative claim about the stolen pieces; it has no embedded conditionals or connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "The criterion for selection was greatest estimated market value.",
+      "evidence": "Sentence 1: \"The criterion for selection ... greatest estimated market value\"",
+      "explanation": "This states one specific candidate criterion; the text denies it, but the proposition itself is kept non-negated so negation can be represented in constraints."
+    },
+    {
+      "id": "P_5",
+      "translation": "The theft was carried out to suit the taste of an individual collector.",
+      "evidence": "Sentence 2: \"the theft was specifically carried out to suit the taste of some individual collector\"",
+      "explanation": "This is a single purpose/intention claim (no explicit logical connectives)."
+    },
+    {
+      "id": "P_6",
+      "translation": "The pieces were destined for an individual collector's private collection.",
+      "evidence": "Sentence 2: \"for whose private collection the pieces were destined\"",
+      "explanation": "This is an atomic destination claim about the pieces; it is stated as a simple declarative."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "A major art theft from a museum occurred.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Presented as background fact, not hedged."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "The pieces stolen had been carefully selected.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Marked as \"clearly\" in the text, indicating strong commitment."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_4",
+      "translation": "The criterion for selection was not greatest estimated market value.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Also marked as \"clearly\" and directly asserted as a negation."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "The theft was carried out to suit the taste of an individual collector.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2",
+      "reasoning": "Stated as the intended conclusion (\"It follows that\"), indicating the author’s strong endorsement, though it is an inference rather than an observational report."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "The pieces were destined for an individual collector's private collection.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2",
+      "reasoning": "Part of the same stated conclusion introduced by \"It follows that\"."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_3 ∧ ¬P_4) ⟹ (P_5 ∧ P_6)",
+      "translation": "If the stolen pieces were carefully selected and the selection was not based on greatest market value, then the theft was carried out to suit a particular collector’s taste and the pieces were destined for that collector’s private collection.",
+      "llm_weight": 1.0,
+      "evidence": "Sentences 0-2 (the inferential move from the stated premises to the stated conclusion)",
+      "reasoning": "This is the tacit bridging principle required for the argument to reach its conclusion from its premises; the argument relies on it as if it must hold."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If the pieces were destined for an individual collector's private collection, then the theft was carried out to suit the taste of an individual collector.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 2",
+      "reasoning": "The text presents these together as a package, and it is a plausible coherence assumption, but it is not strictly guaranteed by the wording alone."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'value'",
+    "           Affirmative clause: 'The criterion for selection , however , clearly had been greatest estimated market value .'",
+    "           Matched to: P_4",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}
