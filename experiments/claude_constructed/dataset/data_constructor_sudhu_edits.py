@@ -26,7 +26,9 @@ _code_dir = _script_dir.parent.parent.parent / "code"  # Go up 3 levels: dataset
 if str(_code_dir) not in sys.path:
     sys.path.insert(0, str(_code_dir))
 
-from config.retrieval_config import REASONING_MODEL
+# Hardcoded model configuration
+REASONING_MODEL = "openai/gpt-4.1"
+REASONING_EFFORT = "medium"
 
 # Configuration
 NUM_PREMISES = 15  # Number of premises to include
@@ -227,18 +229,24 @@ OUTPUT FORMAT (respond with this exact JSON structure):
 }}
 """
 
-
-    response = client.chat.completions.create(
-        model=model,
-        messages=[
+    # Build request with reasoning effort
+    request_params = {
+        "model": model,
+        "messages": [
             {
                 "role": "user",
                 "content": prompt
             }
         ],
-        temperature=0.3,
-        response_format={"type": "json_object"}
-    )
+        "temperature": 0.3,
+        "response_format": {"type": "json_object"}
+    }
+    
+    # Add reasoning effort for supported models
+    if "gpt-4" in model or "o1" in model or "o3" in model:
+        request_params["extra_body"] = {"reasoning_effort": REASONING_EFFORT}
+
+    response = client.chat.completions.create(**request_params)
 
     result = json.loads(response.choices[0].message.content)
 
@@ -255,6 +263,8 @@ def create_dataset(num_premises: int, api_key: str) -> dict:
             "source": "DocNLI (premises) + LLM generated single-sentence hypotheses",
             "original_source": str(LOCAL_DATA_PATH),
             "generation_method": "LLM-generated single-sentence hypotheses for 4-way NLI testing",
+            "generation_model": REASONING_MODEL,
+            "reasoning_effort": REASONING_EFFORT,
             "filter_criteria": {
                 "min_words": MIN_PREMISE_WORDS,
                 "max_words": MAX_PREMISE_WORDS,
@@ -379,6 +389,7 @@ def main():
     # Generate dataset
     print("=" * 80)
     print("CREATING 4-WAY CLASSIFICATION DATASET")
+    print(f"Model: {REASONING_MODEL} (reasoning_effort: {REASONING_EFFORT})")
     print("=" * 80)
 
     dataset = create_dataset(args.num_premises, args.api_key)
