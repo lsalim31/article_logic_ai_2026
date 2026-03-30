@@ -143,7 +143,7 @@ def get_full_retrieval_config() -> Dict[str, Any]:
         # Logify settings
         "USE_OPENIE": retrieval_config.USE_OPENIE,
         "HARDNESS_CONSTANT": retrieval_config.HARDNESS_CONSTANT,
-        "USE_ENRICHMENT": retrieval_config.USE_ENRICHMENT,
+        "USE_ENRICHMENT_KB": retrieval_config.USE_ENRICHMENT_KB,
         "USE_SUBSET": retrieval_config.USE_SUBSET,
         "DIRECT_RETRIEVAL_MULTIPLIER": retrieval_config.DIRECT_RETRIEVAL_MULTIPLIER,
         "DEFAULT_MIN_WORDS": retrieval_config.DEFAULT_MIN_WORDS,
@@ -551,7 +551,7 @@ def run_experiment(
     timestamp = datetime.now().isoformat()
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M")  # No seconds
     config_name = Path(config_path).stem if config_path else "default"
-    output_path = RESULTS_DIR / f"{DATASET_EXPERIMENT}_{config_name}_{timestamp_str}.json"
+    output_path = RESULTS_DIR / f"{timestamp_str}_{DATASET_EXPERIMENT}_{config_name}_.json"
 
     results_payload = {
         "metadata": {

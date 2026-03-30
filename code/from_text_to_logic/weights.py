@@ -45,7 +45,7 @@ from experiments.baseline_rag.retriever import (
 )
 from experiments.baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
-from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL, USE_ENRICHMENT 
+from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL, USE_ENRICHMENT_KB
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
 
 ################
@@ -233,7 +233,7 @@ def assign_weights(
         logified = json.load(f)
 
     # Step 1.5: ENRICH the logic structure (modal pairs, finite domains, etc.)
-    if USE_ENRICHMENT:
+    if USE_ENRICHMENT_KB:
         if verbose:
             print("Enriching logic structure...")
 
@@ -245,7 +245,7 @@ def assign_weights(
         )
     else:
         if verbose:
-            print("Skipping enrichment (USE_ENRICHMENT=False)")
+            print("Skipping enrichment (USE_ENRICHMENT_KB=False)")
     
     # Now continue with enriched structure
     constraints = logified.get('constraints', [])

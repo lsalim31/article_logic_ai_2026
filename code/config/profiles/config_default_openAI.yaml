@@ -17,7 +17,7 @@ tokens:
 
 reasoning:
   effort: "medium"
-  effort_translate: "medium"
+  effort_translate: "low"
   temperature_logic_converter: 0.1
   temperature_translate: 0.3
 
@@ -25,7 +25,7 @@ reasoning:
 # USED IN TRANSLATE
 ############################################
 prompts:
-  translation: "prompt_translate"
+  translation: "prompt_translate_march30"
   pass_1: "prompt_pass_1"
   pass_2: "prompt_pass_2"
   extraction: "prompt_long_openIE_Agn_nomodality"
@@ -34,8 +34,9 @@ retrieval:
   sbert_top_k: 10
   sbert_min_similarity: 0.1
   hardness_constant: 0.9
-  direct_retrieval_multiplier: 1 # do not modify. It will break translate
+  direct_retrieval_multiplier: 1 # do not modify. Changing it would break the chunks_for_translation = retrieved optimization.
 
+## The following are not used. Used in Ignore_old/translate_old.py
 nli:
   entailment_threshold: 0.5
   contradiction_threshold: 0.5
@@ -47,17 +48,16 @@ nli:
 features:
   use_shortcuts: false
   use_openie: false
-  use_enrichment: false
+  use_enrichment_kb: false 
   use_subset: false
   use_voting: false
   expand_query_synonyms: false
 
-  enable_nli_filtering: false
+  enable_nli_filtering: false #used in Ignore_old/translate_old.py
   enable_hybrid_embedding: false
-  enable_auto_negation_correction: false
-  enable_negation_warnings: false
+  enable_auto_negation_correction: false #not used
+  enable_negation_warnings: 
   
-
 synonyms:
   max_synonyms: 3
 
@@ -80,6 +80,7 @@ subset:
 ############################################
 # CONFIDENCE THRESHOLDS
 ############################################
+# The following are not used.
 confidence:
   threshold_true: 0.55
   min_proposition_weight: 0.3
