@@ -68,7 +68,7 @@ from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REA
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
 from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS, MAX_SYNONYMS, ON_EXPAND_QUERY_SYN
-from config.retrieval_config import USE_SUBSET, DIRECT_RETRIEVAL_MULTIPLIER, USE_SHORTCUTS
+from config.retrieval_config import USE_SUBSET, DIRECT_RETRIEVAL_MULTIPLIER, USE_SHORTCUTS, USE_VOTING
 
 # Import negation detection
 from interface_with_user import negation_detection
@@ -1821,6 +1821,11 @@ def translate_query_single(
 
     print(f"Within translate_query_single, we finished retrieved with {len(chunks)} chunks")
 
+    #################################
+    #
+    #
+    #
+    ##################################   
     if USE_SHORTCUTS:
     # 3. MODAL OPPOSITE DETECTION
     # Check if hypothesis has a modal word that contradicts a KB proposition
@@ -1866,17 +1871,18 @@ def translate_query_single(
                 print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
             return impl_result
         
-        else:
-            if verbose:
-            print("Shortcuts disabled, skipping to candidate generation.")
+    else:
+        if verbose:
+        print("Shortcuts disabled, skipping to candidate generation.")
 
+    ##################################################
     # 5-6. Generate candidates
     if USE_SUBSET:
         # Version-1 behavior preserved
         if verbose:
             print("\nGenerating candidates via subset entailment...")
 
-        chunks_for_translation = retrieve_with_expanded_query(query, chunks, sbert_model, k)
+        chunks_for_translation = retrieved
         candidates = generate_candidates_via_subset_entailment(
             query, chunks_for_translation, sbert_model, api_key, model_reasonig, verbose=verbose
         )
@@ -1914,6 +1920,7 @@ def translate_query_single(
             "confidence": 0.5
         }
 
+
     # Build prop_map for verbalization (needed for NLI verification)
     prop_map = {p['id']: p['translation'].strip(".") for p in chunks_for_translation}
 
@@ -1940,9 +1947,11 @@ def translate_query_single(
         print(f"  SBERT confidence: {sbert_confidence:.4f} (NLI score: {best_net_score:.4f})")
 
     # 8. ADAPTIVE VOTING (NEW STEP)
+    
     # If SBERT confidence is below threshold, sample more candidates and vote
-    if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
-    #if best_net_score < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0:
+    
+    #if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0 and USE_VOTING:
+    if ADDITIONAL_LLM_QUERY > 0 and USE_VOTING: # Always vote. For fractional design purposes.
         if verbose:
             print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
             print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")

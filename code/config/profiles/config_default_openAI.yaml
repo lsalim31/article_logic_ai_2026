@@ -34,7 +34,7 @@ retrieval:
   sbert_top_k: 10
   sbert_min_similarity: 0.1
   hardness_constant: 0.9
-  direct_retrieval_multiplier: 1
+  direct_retrieval_multiplier: 1 # do not modify. It will break translate
 
 nli:
   entailment_threshold: 0.5
@@ -45,10 +45,12 @@ nli:
 # FEATURE FLAGS
 ############################################
 features:
-  use_shortcut: false
+  use_shortcuts: false
   use_openie: false
   use_enrichment: false
   use_subset: false
+  use_voting: false
+
   enable_nli_filtering: false
   enable_hybrid_embedding: false
   enable_auto_negation_correction: false

@@ -85,7 +85,7 @@ def _update_module_variables():
     global TRIGGER_QUERY, ADDITIONAL_LLM_QUERY
     global SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD
     global MAX_VARIANTS
-    global USE_OPENIE, USE_ENRICHMENT, USE_SUBSET, USE_SHORTCUTS
+    global USE_OPENIE, USE_ENRICHMENT, USE_SUBSET, USE_SHORTCUTS, USE_VOTING
     global DEFAULT_MIN_WORDS, DEFAULT_MAX_WORDS
     global CHUNK_THRESHOLD, CHUNK_TARGET_SIZE
     
@@ -131,6 +131,7 @@ def _update_module_variables():
     USE_ENRICHMENT = cfg["features"]["use_enrichment"]
     USE_SUBSET = cfg["features"]["use_subset"]
     USE_SHORTCUTS = cfg["features"]["use_shortcuts"]
+    USE_VOTING = cfg["features"]["use_voting"]
     
     ENABLE_NLI_FILTERING = cfg["features"]["enable_nli_filtering"]
     ENABLE_HYBRID_EMBEDDING = cfg["features"]["enable_hybrid_embedding"]
