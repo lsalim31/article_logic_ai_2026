@@ -320,7 +320,7 @@ def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: 
 def is_yes_no_question(query: str, verbose=True) -> bool:
     """Preserved: Detect yes/no questions."""
     if verbose:
-        print(f"\n Detected Yes/No question. Converting...")
+        print(f"\n Using Yes/No question. Checking...")
     starters = ['is ', 'are ', 'was ', 'were ', 'will ', 'would ', 'should ', 'could ', 'can ', 'may ', 'must ', 'does ', 'do ', 'did ']
     return any(query.lower().strip().startswith(s) for s in starters)
 
@@ -1325,7 +1325,8 @@ def find_entailing_subsets(
         
         if score >= threshold:
             qualifying.append((subset_chunks, score))
-            print(f"DEBUG: Added qualifying subset with score {score} >= threshold {threshold}")
+            if verbose:
+                print(f"DEBUG: Added qualifying subset with score {score} >= threshold {threshold}")
 
             if verbose:
                 # Build formula string for display
@@ -1341,7 +1342,6 @@ def find_entailing_subsets(
     if verbose:
         print(f"find_entailing_subsets returning {len(qualifying)} qualifying subsets")
 
-    print(f"DEBUG: find_entailing_subsets returning {len(qualifying)} qualifying subsets")
     return qualifying
 
 
@@ -1353,6 +1353,7 @@ def llm_write_formula_from_subsets(
     model_name: str = TRANSLATE_MODEL,
     max_subsets: int = 2,
     verbose: bool = True, 
+    temperature = TEMPERATURE_TRANSLATE
 ) -> Dict:
     """
     Ask LLM to write a formula from qualifying subsets.
@@ -1406,16 +1407,20 @@ def llm_write_formula_from_subsets(
         subsets_text += f"  - {{{ids_str}}} (score: {score:.2f})\n"
     
     # Load prompt template from file
-    prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts', PROMPT_TRANSLATION)
-    with open(prompt_path, 'r') as f:
-        prompt_template = f.read()
+    ## <-
+    # Detect polarity
+    query_is_negative = negation_detection.detect_negation_in_hypothesis(hypothesis)
+    polarity_str = "NEGATIVE (prohibition/restriction)" if query_is_negative else "AFFIRMATIVE"
 
-    prompt = prompt_template.format(
-        props_text=props_text,
-        subsets_text=subsets_text,
-        hypothesis=hypothesis
+    # Load and fill prompt template (use .replace() to avoid issues with JSON braces)
+    template = load_prompt_template(PROMPT_TRANSLATION)
+    prompt = (
+        template
+        .replace("{props_text}", props_text)
+        .replace("{query}", hypothesis)
+        .replace("{polarity_str}", polarity_str)
     )
-    
+    ## <=
 
     if verbose:
         print(f"Asking LLM to write formula from qualifying subsets using Prompt: \n {prompt}")
@@ -1426,24 +1431,31 @@ def llm_write_formula_from_subsets(
     response = client.chat.completions.create(
         model=actual_model,
         messages=[{"role": "user", "content": prompt}],
-        temperature=0
+        temperature=temperature,
+        response_format={"type": "json_object"} #new to mach S. new function
     )
     
-    formula = response.choices[0].message.content.strip()
+    content = response.choices[0].message.content
+    result = json.loads(content)
     
+    # Extract fields from LLM response (same format as generate_candidates_llm)
+    formula_str = result.get('formula', '')
+    llm_reasoning = result.get('reasoning', '')
+    llm_translation = result.get('translation', '')
+
     if verbose:
-        print(f"  LLM generated formula: {formula}")
-    
+        print(f"  LLM generated formula: {formula_str}")
+        
     # Build translation text from the first (best) qualifying subset
     best_subset, best_score = qualifying_subsets[0]
-    translation = " AND ".join([c['translation'] for c in best_subset])
+    translation = llm_translation or " AND ".join([c['translation'] for c in best_subset])
     
     if verbose:
-        print(f"Initial {hypothesis}. Final {translation}. Formula {formula}")
+        print(f"Initial {hypothesis}. Final {translation}. Formula {formula_str}")
     
     return {
-        "formula": formula,
-        "reasoning": f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
+        "formula": formula_str,
+        "reasoning": llm_reasoning or f"Generated from {len(qualifying_subsets)} qualifying subset(s) via NLI entailment",
         "translation": translation
     }
 
@@ -1535,7 +1547,8 @@ def generate_candidates_via_subset_entailment(
         print("\n ---> End Step 3")
     
     # Step 4: Generate formula or return NONE
-    print(f"\n DEBUG: After find_entailing_subsets, got {len(potential_qualifying_subsets)} subsets \n")
+    if verbose:
+        print(f"\n DEBUG: After find_entailing_subsets, got {len(potential_qualifying_subsets)} subsets \n")
 
     if not potential_qualifying_subsets:
         if verbose:
@@ -1791,7 +1804,7 @@ def translate_query_single(
             query = convert_yes_no_to_statement(query, api_key, model_reasonig)
             if verbose:
                 print(f"  → Statement: {query}")
-        except:
+        except Exception:
             if verbose:
                 print("  → Conversion failed, proceeding with original.")
     else:
@@ -1873,7 +1886,7 @@ def translate_query_single(
         
     else:
         if verbose:
-        print("Shortcuts disabled, skipping to candidate generation.")
+            print("Shortcuts disabled, skipping to candidate generation.")
 
     ##################################################
     # 5-6. Generate candidates
@@ -1892,7 +1905,7 @@ def translate_query_single(
             print("\nGenerating candidates via direct top-K retrieval...")
 
         k_direct = max(k, k * DIRECT_RETRIEVAL_MULTIPLIER)
-        chunks_for_translation = retrieve_with_expanded_query(query, chunks, sbert_model, k_direct)
+        chunks_for_translation = retrieved
         candidates = generate_candidates_via_direct_retrieval(
             query=query,
             chunks=chunks_for_translation,
@@ -1953,8 +1966,9 @@ def translate_query_single(
     #if sbert_confidence < TRIGGER_QUERY and ADDITIONAL_LLM_QUERY > 0 and USE_VOTING:
     if ADDITIONAL_LLM_QUERY > 0 and USE_VOTING: # Always vote. For fractional design purposes.
         if verbose:
-            print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
-            print(f"[Adaptive Voting] Making {ADDITIONAL_LLM_QUERY} additional LLM calls...")
+            print(f"")
+            #print(f"\n[Adaptive Voting] Confidence {best_net_score:.2f} < {TRIGGER_QUERY}, triggering voting...")
+            print(f"Adaptive Voting is on. Making {ADDITIONAL_LLM_QUERY} additional LLM calls. Confidence {best_net_score:.2f}")
 
         # Collect all formulas (first one + additional samples)
         all_formulas = [normalize_formula(winner['formula'])]
@@ -2311,8 +2325,8 @@ def translate_query(
             # Aggregate all claim results
             output =  aggregate_claim_results(claim_results, query, verbose)
             if verbose:
-                print( "-> Translation: ", aggregate_claim_results(claim_results, query, verbose))
-            return aggregate_claim_results(claim_results, query, verbose)
+                print( "-> Translation: ", output)
+            return output
 
         else:
             if verbose:
