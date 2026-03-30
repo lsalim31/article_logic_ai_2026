@@ -374,8 +374,8 @@ def main():
     )
     parser.add_argument(
         "--output-name",
-        default="gold_balanced_4way.json",
-        help="Output filename (default: gold_balanced_4way.json)",
+        default="data_claude_constructed_test.json",
+        help="Output filename (default: data_claude_constructed_test.json)",
     )
     args = parser.parse_args()
 
