@@ -15,6 +15,19 @@ Inputs:
 Outputs:
 - A dictionary containing the selected formula, explanation, confidence,
   and related translation metadata.
+  
+- factorial design  
+    SHORTCUTS	On/Off (modal, antonym, implication)
+    SYNONYM_EXPANSION	On/Off
+    SUBSET_ENTAILMENT	On/Off
+    VOTING	On/Off  
+  
+    Level 0: Baseline (direct LLM)
+    Level 1: + Shortcuts
+    Level 2: + Synonyms  
+    Level 3: + Subset entailment
+    Level 4: + Voting
+  
 """
 
 try:
@@ -55,7 +68,7 @@ from config.retrieval_config import TEMPERATURE_LOGIC_CONVERTER, MAX_TOKENS, REA
 from config.retrieval_config import REASONING_MODEL, TRANSLATE_MODEL, TEMPERATURE_TRANSLATE, REASONING_EFFORT_TRANSLATE, PROMPT_TRANSLATION
 from config.retrieval_config import TRIGGER_QUERY, ADDITIONAL_LLM_QUERY, SBERT_MODEL, NLI_MODEL
 from config.retrieval_config import SUBSET_TOP_K_RETRIEVAL, SUBSET_NUM_CLUSTERS, SUBSET_TOP_PER_CLUSTER, SUBSET_ENTAILMENT_THRESHOLD, MAX_VARIANTS, MAX_SYNONYMS, ON_EXPAND_QUERY_SYN
-from config.retrieval_config import USE_SUBSET, DIRECT_RETRIEVAL_MULTIPLIER
+from config.retrieval_config import USE_SUBSET, DIRECT_RETRIEVAL_MULTIPLIER, USE_SHORTCUTS
 
 # Import negation detection
 from interface_with_user import negation_detection
@@ -1808,49 +1821,54 @@ def translate_query_single(
 
     print(f"Within translate_query_single, we finished retrieved with {len(chunks)} chunks")
 
+    if USE_SHORTCUTS:
     # 3. MODAL OPPOSITE DETECTION
     # Check if hypothesis has a modal word that contradicts a KB proposition
-    if verbose:
-        print("\nChecking for modal opposites...")
-
-    modal_opposite_result = detect_modal_opposite(query, retrieved, sbert_model, verbose=verbose)
-
-    if modal_opposite_result:
-        # Modal opposite found - return immediately without LLM
-        modal_opposite_result["query"] = query
-        modal_opposite_result["original_query"] = original_query
         if verbose:
-            print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
-        return modal_opposite_result
+            print("\nChecking for modal opposites...")
 
-    # 4. ANTONYM CONTRADICTION DETECTION (NEW STEP)
-    # Check if hypothesis has a lexical antonym that contradicts a KB proposition
-    if verbose:
-        print("\nChecking for antonym contradictions...")
+        modal_opposite_result = detect_modal_opposite(query, retrieved, sbert_model, verbose=verbose)
 
-    antonym_result = detect_antonym_contradiction(query, retrieved, sbert_model, verbose=verbose)
+        if modal_opposite_result:
+            # Modal opposite found - return immediately without LLM
+            modal_opposite_result["query"] = query
+            modal_opposite_result["original_query"] = original_query
+            if verbose:
+                print(f"  → Modal opposite detected! Returning: {modal_opposite_result['formula']}")
+            return modal_opposite_result
 
-    if antonym_result:
-        # Antonym contradiction found - return immediately without LLM
-        antonym_result["query"] = query
-        antonym_result["original_query"] = original_query
+        # 4. ANTONYM CONTRADICTION DETECTION (NEW STEP)
+        # Check if hypothesis has a lexical antonym that contradicts a KB proposition
         if verbose:
-            print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
-        return antonym_result
+            print("\nChecking for antonym contradictions...")
 
-    # 4b. IMPLICATION CONTRADICTION DETECTION
-    # Check if hypothesis contradicts an implication in the KB
-    if verbose:
-        print("\nChecking for implication contradictions...")
+        antonym_result = detect_antonym_contradiction(query, retrieved, sbert_model, verbose=verbose)
 
-    impl_result = detect_implication_contradiction(query, logified_structure, sbert_model, verbose=verbose)
+        if antonym_result:
+            # Antonym contradiction found - return immediately without LLM
+            antonym_result["query"] = query
+            antonym_result["original_query"] = original_query
+            if verbose:
+                print(f"  → Antonym contradiction detected! Returning: {antonym_result['formula']}")
+            return antonym_result
 
-    if impl_result:
-        impl_result["query"] = query
-        impl_result["original_query"] = original_query
+        # 4b. IMPLICATION CONTRADICTION DETECTION
+        # Check if hypothesis contradicts an implication in the KB
         if verbose:
-            print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
-        return impl_result
+            print("\nChecking for implication contradictions...")
+
+        impl_result = detect_implication_contradiction(query, logified_structure, sbert_model, verbose=verbose)
+
+        if impl_result:
+            impl_result["query"] = query
+            impl_result["original_query"] = original_query
+            if verbose:
+                print(f"  → Implication contradiction detected! Returning: {impl_result['formula']}")
+            return impl_result
+        
+        else:
+            if verbose:
+            print("Shortcuts disabled, skipping to candidate generation.")
 
     # 5-6. Generate candidates
     if USE_SUBSET:

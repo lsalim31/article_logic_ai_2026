@@ -2,229 +2,82 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Ben Johnson tests positive for a banned substance at the Seoul Olympics.",
-      "evidence": [
-        0,
-        4
-      ],
-      "explanation": "Atomic event of testing positive; a simple declarative clause that cannot be broken down further without losing meaning."
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement about an event; contains no logical connectives or conditionals."
     },
     {
       "id": "P_2",
-      "translation": "Ben Johnson was using banned substances before the Seoul Olympics.",
-      "evidence": [
-        5,
-        6
-      ],
-      "explanation": "Atomic state of drug use; a simple declarative clause without logical connectives or modals."
+      "translation": "Ben Johnson was worried about testing positive for banned steroids.",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic statement about a mental state; no connectives, modals removed."
     },
     {
       "id": "P_3",
-      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
-      "evidence": [
-        0,
-        6
-      ],
-      "explanation": "Atomic event of sample tampering; a complete, truth-evaluable statement."
+      "translation": "Charlie Francis bragged to Lynda Huey about Ben Johnson's preparations for a showdown against Carl Lewis.",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic statement about a speech act; no internal logical structure."
     },
     {
       "id": "P_4",
-      "translation": "Charlie Francis claimed that P_3 is true.",
-      "evidence": [
-        0
-      ],
-      "explanation": "Atomic speech act of claiming; a simple declarative about an action, not further decomposable."
+      "translation": "Charlie Francis said that Ben Johnson was more afraid of failing the drug test than of Carl Lewis.",
+      "evidence": "Sentence 6",
+      "explanation": "Direct quote treated as atomic; though it references another proposition, it is a simple declarative reporting of speech."
     },
     {
       "id": "P_5",
-      "translation": "Johnson was worried about testing positive.",
-      "evidence": [
-        0
-      ],
-      "explanation": "Atomic emotional state regarding drug test; extracted as a component clause from reported speech."
+      "translation": "Charlie Francis testified that Ben Johnson was not taking the steroid stanozolol before the Games.",
+      "evidence": "Sentence 9",
+      "explanation": "Atomic statement about testimony; no connectives, modals removed."
     },
     {
       "id": "P_6",
-      "translation": "Johnson is afraid of Carl Lewis.",
-      "evidence": [
-        4
-      ],
-      "explanation": "Atomic emotional state of fear; a simple declarative from quoted speech, with no hidden connectives."
+      "translation": "A mysterious person slipped something into Ben Johnson's beverage before the urine test.",
+      "evidence": "Sentence 9",
+      "explanation": "Atomic statement about an event; modals removed to make it definite."
     },
     {
       "id": "P_7",
-      "translation": "Francis bragged that Johnson was prepared for a showdown against Carl Lewis.",
-      "evidence": [
-        1
-      ],
-      "explanation": "Atomic speech act of bragging; a simple declarative about an event, not further breakable."
-    },
-    {
-      "id": "P_8",
-      "translation": "Johnson was prepared for a showdown against Carl Lewis.",
-      "evidence": [
-        1
-      ],
-      "explanation": "Atomic state of preparation; extracted as a component clause from the content of bragging."
-    },
-    {
-      "id": "P_9",
-      "translation": "Francis said that Johnson was clean at the Olympics.",
-      "evidence": [
-        5
-      ],
-      "explanation": "Atomic speech act of saying; a simple declarative without modals or conditionals."
-    },
-    {
-      "id": "P_10",
-      "translation": "Johnson was clean at the Olympics.",
-      "evidence": [
-        5
-      ],
-      "explanation": "Atomic state of being clean from drugs; a simple declarative clause, truth-evaluable independently."
-    },
-    {
-      "id": "P_11",
-      "translation": "Francis had reason to think that Ben may not pass the test.",
-      "evidence": [
-        7
-      ],
-      "explanation": "Atomic state of having reason to doubt test outcome; modals removed for atomicity."
+      "translation": "Lynda Huey believes that Francis had some reason to think Ben Johnson might not pass the drug test.",
+      "evidence": "Sentence 10",
+      "explanation": "Atomic statement about a belief; modals removed, treated as a single fact."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_4",
-      "translation": "Charlie Francis claimed that the urine sample was spiked.",
-      "llm_weight": 1.0,
-      "evidence": [
-        0
-      ],
-      "reasoning": "Directly stated in the text as a factual event, with no uncertainty implied."
+      "formula": "P_4 ⟹ ¬P_5",
+      "translation": "If Francis said Johnson was more afraid of failing the test than of Lewis, then he did not testify that Johnson was not taking steroids.",
+      "llm_weight": 0.7,
+      "evidence": "Sentences 6, 9",
+      "reasoning": "The two statements are semantically inconsistent: the first implies Johnson might have used drugs (making failing a concern), while the second denies drug use. The weight reflects moderate but not certain contradiction."
     },
     {
       "id": "C_2",
-      "formula": "P_7",
-      "translation": "Francis bragged about Johnson's preparations.",
-      "llm_weight": 1.0,
-      "evidence": [
-        1
-      ],
-      "reasoning": "Directly reported by Huey as a fact that occurred, with strong textual support."
+      "formula": "P_6 ⟹ P_1",
+      "translation": "If a mysterious person slipped something into Johnson's beverage, then his urine sample was spiked.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 9",
+      "reasoning": "The beverage incident is the described mechanism for spiking; strong causal link but not explicitly stated as certain in the text."
     },
     {
       "id": "C_3",
-      "formula": "P_9",
-      "translation": "Francis said that Johnson was clean.",
-      "llm_weight": 1.0,
-      "evidence": [
-        5
-      ],
-      "reasoning": "Explicitly stated in the text as a speech act, with no indication of falsehood in reporting."
+      "formula": "P_7 ⟹ (P_4 ∨ P_2)",
+      "translation": "Huey's belief that Francis had reason to think Johnson might not pass implies that either Francis said Johnson was afraid of failing or Johnson was worried about testing positive.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 10",
+      "reasoning": "These are plausible reasons for Francis's concern; weight reflects that other reasons might exist but these are directly suggested by the text."
     },
     {
       "id": "C_4",
-      "formula": "P_5",
-      "translation": "Johnson was worried about testing positive.",
-      "llm_weight": 0.8,
-      "evidence": [
-        0
-      ],
-      "reasoning": "Reported by Francis via acquaintance; taken as credible in context but not directly verified, hence moderate weight."
-    },
-    {
-      "id": "C_5",
-      "formula": "P_6",
-      "translation": "Johnson is afraid of Carl Lewis.",
-      "llm_weight": 0.8,
-      "evidence": [
-        4
-      ],
-      "reasoning": "From quoted statement by Francis; assumed true based on the report, but with some uncertainty as it's reported speech."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_11",
-      "translation": "Francis had reason to think Ben may not pass the test.",
-      "llm_weight": 1.0,
-      "evidence": [
-        7
-      ],
-      "reasoning": "Stated by Huey as her belief and presented as a fact in the text, implying certainty."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_5 ⟹ P_1",
-      "translation": "If Johnson was worried about testing positive, then he likely tests positive.",
-      "llm_weight": 0.7,
-      "evidence": [
-        0,
-        4
-      ],
-      "reasoning": "Common-sense implication that worry often indicates perceived likelihood; supported by context but not guaranteed."
-    },
-    {
-      "id": "C_8",
-      "formula": "P_11 ⟹ P_1",
-      "translation": "If Francis had reason to think Ben may not pass, then Ben likely tests positive.",
-      "llm_weight": 0.9,
-      "evidence": [
-        7
-      ],
-      "reasoning": "Strong implication from Huey's statement that the reason must correlate with the test outcome, based on textual intent."
-    },
-    {
-      "id": "C_9",
-      "formula": "P_3 ⟹ P_1",
-      "translation": "If the urine sample was spiked, then Johnson might test positive.",
-      "llm_weight": 0.6,
-      "evidence": [
-        0,
-        6
-      ],
-      "reasoning": "Plausible causal relationship, but not certain due to other factors; weight reflects moderate likelihood."
-    },
-    {
-      "id": "C_10",
-      "formula": "P_10 ⟹ ¬P_1",
-      "translation": "If Johnson was clean, then he should not test positive.",
-      "llm_weight": 0.5,
-      "evidence": [
-        5
-      ],
-      "reasoning": "Expected outcome based on cleanliness, but acknowledged possible exceptions like sample spiking, leading to lower weight."
-    },
-    {
-      "id": "C_11",
-      "formula": "P_10 ⟹ ¬P_2",
-      "translation": "If Johnson was clean, then he was not using banned substances.",
-      "llm_weight": 1.0,
-      "evidence": [
-        5
-      ],
-      "reasoning": "Definitional constraint; clean explicitly implies no drug use, with no uncertainty in meaning."
-    },
-    {
-      "id": "C_12",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "If Francis bragged about Johnson's preparation, then Johnson was likely prepared.",
-      "llm_weight": 0.8,
-      "evidence": [
-        1
-      ],
-      "reasoning": "Common-sense that bragging typically implies truth of the content; high but not absolute confidence based on context."
-    },
-    {
-      "id": "C_13",
       "formula": "P_1",
-      "translation": "Ben Johnson tests positive for a banned substance at the Seoul Olympics.",
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_14",
+      "id": "C_5",
       "formula": "P_1 ⟹ P_1",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -232,15 +85,15 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_15",
+      "id": "C_6",
       "formula": "P_2",
-      "translation": "Ben Johnson was using banned substances before the Seoul Olympics.",
+      "translation": "Ben Johnson was worried about testing positive for banned steroids.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_16",
+      "id": "C_7",
       "formula": "P_2 ⟹ P_2",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -248,24 +101,16 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_17",
-      "formula": "P_3",
-      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
+      "id": "C_8",
+      "formula": "P_7",
+      "translation": "Lynda Huey believes that Francis had some reason to think Ben Johnson might not pass the drug test.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_18",
-      "formula": "P_3 ⟹ P_3",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_19",
-      "formula": "P_11 ⟹ P_11",
+      "id": "C_9",
+      "formula": "P_7 ⟹ P_7",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
@@ -273,28 +118,23 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_1: 'Ben Johnson tests positive for a banned substance at the Seoul Olympics.' has modal 'banned'",
-    "        Base text: 'Ben Johnson tests positive for a substance at the Seoul Olympics.'",
-    "        Found existing base: P_1",
-    "[Modal] P_2: 'Ben Johnson was using banned substances before the Seoul Olympics.' has modal 'banned'",
-    "        Base text: 'Ben Johnson was using substances before the Seoul Olympics.'",
-    "        Found existing base: P_2",
-    "[Modal] P_3: 'Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.' has modal 'banned'",
+    "[Modal] P_1: 'Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.' has modal 'banned'",
     "        Base text: 'Ben Johnson 's urine sample at the Seoul Olympics was spiked with a steroid.'",
-    "        Found existing base: P_3",
-    "[Modal] P_11: 'Francis had reason to think that Ben may not pass the test.' has modal 'may'",
-    "        Base text: 'Francis had reason to think that Ben not pass the test.'",
-    "        Found existing base: P_11",
+    "        Found existing base: P_1",
+    "[Modal] P_2: 'Ben Johnson was worried about testing positive for banned steroids.' has modal 'banned'",
+    "        Base text: 'Ben Johnson was worried about testing positive for steroids.'",
+    "        Found existing base: P_2",
+    "[Modal] P_7: 'Lynda Huey believes that Francis had some reason to think Ben Johnson might not pass the drug test.' has modal 'might'",
+    "        Base text: 'Lynda Huey believes that Francis had some reason to think Ben Johnson not pass the drug test.'",
+    "        Found existing base: P_7",
     "        Added constraint: P_1 @1.0",
     "        Added constraint: P_1 ⟹ P_1 @1.0",
     "        Added constraint: P_2 @1.0",
     "        Added constraint: P_2 ⟹ P_2 @1.0",
-    "        Added constraint: P_3 @1.0",
-    "        Added constraint: P_3 ⟹ P_3 @1.0",
-    "        Added constraint: P_11 ⟹ P_11 @1.0",
-    "[Opposite] P_1: 'banned' has antonyms ['permitted', 'required', 'allowed']",
-    "[Opposite] P_2: 'banned' has antonyms ['permitted', 'required', 'allowed']",
-    "[Opposite] P_3: 'banned' has antonyms ['permitted', 'required', 'allowed']",
+    "        Added constraint: P_7 @1.0",
+    "        Added constraint: P_7 ⟹ P_7 @1.0",
+    "[Opposite] P_1: 'banned' has antonyms ['allowed', 'permitted', 'required']",
+    "[Opposite] P_2: 'banned' has antonyms ['allowed', 'permitted', 'required']",
     "[Negation] Sentence 9: Found negation of 'taking'",
     "           Affirmative clause: 'that Johnson was taking the steroid , stanozolol , before the Games and that a mysterious person might have slipped something into Johnson 's beverage in the drug - testing area before the sprinter gave his urine specimen'",
     "           No matching proposition found",
