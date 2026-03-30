@@ -2280,10 +2280,11 @@ def translate_query(
     k: int = SBERT_TOP_K,
     sbert_model_name: str = SBERT_MODEL,
     verbose: bool = True,
-    enable_decomposition: bool = True,
+    enable_decomposition: bool = False,
 ) -> Dict[str, Any]:
     """
     Main entry point with hypothesis decomposition support.
+    enable_decomposition = True is required for using multi query
     """
     
     print(20*"#", f"\nFUNCTION: translate_query : {query}")
