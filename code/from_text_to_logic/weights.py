@@ -46,7 +46,7 @@ from experiments.baseline_rag.retriever import (
 from experiments.baseline_rag.nli_reranker import load_nli_model, score_nli_pairs
 
 from config.retrieval_config import HARDNESS_CONSTANT, SBERT_TOP_K, SBERT_MODEL, NLI_MODEL, USE_ENRICHMENT 
-
+from from_text_to_logic.check_logic_structure import enrich_logic_structure
 
 ################
 
@@ -141,83 +141,73 @@ def extract_text_from_document(file_path: str) -> str:
 #     # Return max entailment score
 #     return float(np.max(probs[:, 2]))
 
-
 def compute_nli_entailment(
     constraint_text: str,
     propositions_from_text: List[Dict],
     nli_model,
     k: int = 10,
-    sbert_model_name = SBERT_MODEL
+    sbert_model=None,
+    prop_embeddings=None,
+    sbert_model_name=SBERT_MODEL
 ):
     """
-    Compute max NLI entailment score for a constraint against proposition texts.
+    Compute NLI entailment scores for a constraint against proposition texts.
 
-    Returns the maximum P(entailment) across top-k proposition candidates.
+    Returns tuple:
+        - max_entailment: float - maximum P(entailment) across top-k candidates
+        - top_3_probs: list - top 3 NLI probability distributions [contra, neutral, entail]
+    
+    NOTE: If prop_embeddings is provided, propositions_from_text should already be
+          filtered (only dicts with "translation" key) to match the embeddings.
     """
-    # Filter to propositions that actually have a translation
-    filtered_props = [p for p in propositions_from_text if isinstance(p, dict) and p.get("translation")]
+    # If embeddings provided, assume propositions are pre-filtered
+    if prop_embeddings is not None:
+        filtered_props = propositions_from_text
+    else:
+        # Filter to propositions that actually have a translation
+        filtered_props = [p for p in propositions_from_text if isinstance(p, dict) and p.get("translation")]
+    
     if not filtered_props:
-        return 0.0
+        return 0.0, []
 
     prop_texts = [p["translation"] for p in filtered_props]
 
-    # SBERT ranking by cosine similarity
-    sbert_model = load_sbert_model(sbert_model_name)
-    query_embedding = encode_query(constraint_text, sbert_model)
-    prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True)
+    # Use provided model or load (for backward compatibility)
+    if sbert_model is None:
+        sbert_model = load_sbert_model(sbert_model_name)
+    
+    # Use provided embeddings or compute
+    if prop_embeddings is None:
+        prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True)
 
+    # SBERT ranking by cosine similarity
+    query_embedding = encode_query(constraint_text, sbert_model)
     similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
 
     k = min(k, len(prop_texts)) if k else len(prop_texts)
     top_k_indices = np.argsort(similarities)[::-1][:k]
 
-    # Select top-k propositions by SBERT similarity (aligned with filtered_props)
+    # Select top-k propositions by SBERT similarity
     candidates = [filtered_props[i] for i in top_k_indices]
 
-    # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
+    # Build (premise, hypothesis) pairs
     pairs = [(prop["translation"], constraint_text) for prop in candidates]
 
     if not pairs:
-        return 0.0
+        return 0.0, []
 
     # Score with NLI: returns array [P(contra), P(neutral), P(entail)]
     probs = score_nli_pairs(nli_model, pairs)
 
-    # Return max entailment score
-    return float(1)
-    #return float(np.max(probs[:, 2]))
+    # Compute both return values
+    max_entailment = float(np.max(probs[:, 2]))
+    top_3 = sorted(probs, key=lambda x: x[2], reverse=True)[:3]
+    top_3_list = [row.tolist() for row in top_3]
+
+    return max_entailment, top_3_list
 
 
-def compute_list_nli_entailment(
-    constraint_text: str,
-    propositions_from_text: List[Dict],
-    nli_model,
-    k: int = 10,
-    sbert_model_name = SBERT_MODEL
-):
-    """
-    """
-    # Filter to propositions that actually have a translation
-    filtered_props = [p for p in propositions_from_text if isinstance(p, dict) and p.get("translation")]
-    if not filtered_props:
-        return 0.0
-    prop_texts = [p["translation"] for p in filtered_props]
-    # SBERT ranking by cosine similarity
-    sbert_model = load_sbert_model(sbert_model_name)
-    query_embedding = encode_query(constraint_text, sbert_model)
-    prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True)
-    similarities = compute_cosine_similarity(query_embedding, prop_embeddings)
-    k = min(k, len(prop_texts)) if k else len(prop_texts)
-    top_k_indices = np.argsort(similarities)[::-1][:k]
-    # Select top-k propositions by SBERT similarity (aligned with filtered_props)
-    candidates = [filtered_props[i] for i in top_k_indices]
-    # Build (premise, hypothesis) pairs: premise=proposition, hypothesis=constraint
-    pairs = [(prop["translation"], constraint_text) for prop in candidates]
-    if not pairs:
-        return 0.0
-    probs = score_nli_pairs(nli_model, pairs)
-    top = sorted(probs, key=lambda x: x[2], reverse=True)[:3]
-    return [row.tolist() for row in top]
+
 
 
 def assign_weights(
@@ -232,12 +222,8 @@ def assign_weights(
     verbose: bool = True
     ) -> Dict[str, Any]:
     """
-
+    Assign weights to logical constraints and split them into hard and soft constraints.
     """
-    
-    # At the top of assign_weights(), after loading the JSON:
-
-    from from_text_to_logic.check_logic_structure import enrich_logic_structure
     
     # Step 1: Load logified JSON
     if verbose:
@@ -262,7 +248,6 @@ def assign_weights(
             print("Skipping enrichment (USE_ENRICHMENT=False)")
     
     # Now continue with enriched structure
-    
     constraints = logified.get('constraints', [])
     primitive_props = logified.get('primitive_props', [])
 
@@ -280,6 +265,11 @@ def assign_weights(
     if verbose:
         print(f"  Found {len(propositions)} propositions")
 
+    # Step 3: Load models ONCE
+    if verbose:
+        print(f"Loading SBERT model: {sbert_model_name}")
+    sbert_model = load_sbert_model(sbert_model_name)
+    
     if verbose:
         print(f"Loading NLI model: {nli_model_name}")
     nli_model = load_nli_model(nli_model_name)
@@ -296,32 +286,29 @@ def assign_weights(
     if missing:
         raise ValueError("[Weights] constraints missing required fields: id, translation, formula, llm_weight")
 
+    # Pre-compute proposition embeddings ONCE
+    filtered_props = [p for p in propositions if isinstance(p, dict) and p.get("translation")]
+    prop_texts = [p["translation"] for p in filtered_props]
+    prop_embeddings = sbert_model.encode(prop_texts, convert_to_numpy=True) if prop_texts else None
+
     for i, constraint in enumerate(constraints):
         constraint_id = constraint.get('id', f'C_{i+1}')
         constraint_text = constraint.get('translation', '')
-        llm_weight = constraint.get('llm_weight', 0)  # WARNING
+        llm_weight = constraint.get('llm_weight', 0)
 
         if not constraint_text:
             if verbose:
                 print(f"  [{i+1}/{len(constraints)}] {constraint_id}: SKIPPED (no translation)")
             continue
 
-        # Compute NLI entailment score (proposition-level)
-        nli_entailment = compute_nli_entailment(
+        # Single call returns both values
+        nli_entailment, list_nli_entailment = compute_nli_entailment(
             constraint_text=constraint_text,
-            propositions_from_text=propositions,
+            propositions_from_text=filtered_props,  
             nli_model=nli_model,
-            k=k, 
-            sbert_model_name =sbert_model_name
-        )
-
-        
-        list_nli_entailment = compute_list_nli_entailment(
-            constraint_text=constraint_text,
-            propositions_from_text=propositions,
-            nli_model=nli_model,
-            k=k, 
-            sbert_model_name =sbert_model_name
+            k=k,
+            sbert_model=sbert_model,
+            prop_embeddings=prop_embeddings
         )
     
         # Compute combined score
@@ -333,10 +320,10 @@ def assign_weights(
 
         # Build output constraint
         output_constraint = {
-            "llm-weight":llm_weight,
-            "nli_entailment":nli_entailment,
-            "combined=(llm)*(nli)":combined,
-            "hardness_constant":hardness_criterion,
+            "llm-weight": llm_weight,
+            "nli_entailment": nli_entailment,
+            "combined=(llm)*(nli)": combined,
+            "hardness_constant": hardness_criterion,
             "id": constraint_id,
             "formula": constraint.get('formula', ''),
             "translation": constraint_text,
@@ -376,6 +363,7 @@ def assign_weights(
         print(f"  Output saved to: {output_path}")
 
     return output
+
 
 
 def main():

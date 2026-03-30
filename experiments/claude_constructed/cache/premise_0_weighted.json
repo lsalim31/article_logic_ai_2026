@@ -1,0 +1,663 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ben Johnson tests positive for a banned substance at the Seoul Olympics.",
+      "evidence": [
+        0,
+        4
+      ],
+      "explanation": "Atomic event of testing positive; a simple declarative clause that cannot be broken down further without losing meaning."
+    },
+    {
+      "id": "P_2",
+      "translation": "Ben Johnson was using banned substances before the Seoul Olympics.",
+      "evidence": [
+        5,
+        6
+      ],
+      "explanation": "Atomic state of drug use; a simple declarative clause without logical connectives or modals."
+    },
+    {
+      "id": "P_3",
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
+      "evidence": [
+        0,
+        6
+      ],
+      "explanation": "Atomic event of sample tampering; a complete, truth-evaluable statement."
+    },
+    {
+      "id": "P_4",
+      "translation": "Charlie Francis claimed that P_3 is true.",
+      "evidence": [
+        0
+      ],
+      "explanation": "Atomic speech act of claiming; a simple declarative about an action, not further decomposable."
+    },
+    {
+      "id": "P_5",
+      "translation": "Johnson was worried about testing positive.",
+      "evidence": [
+        0
+      ],
+      "explanation": "Atomic emotional state regarding drug test; extracted as a component clause from reported speech."
+    },
+    {
+      "id": "P_6",
+      "translation": "Johnson is afraid of Carl Lewis.",
+      "evidence": [
+        4
+      ],
+      "explanation": "Atomic emotional state of fear; a simple declarative from quoted speech, with no hidden connectives."
+    },
+    {
+      "id": "P_7",
+      "translation": "Francis bragged that Johnson was prepared for a showdown against Carl Lewis.",
+      "evidence": [
+        1
+      ],
+      "explanation": "Atomic speech act of bragging; a simple declarative about an event, not further breakable."
+    },
+    {
+      "id": "P_8",
+      "translation": "Johnson was prepared for a showdown against Carl Lewis.",
+      "evidence": [
+        1
+      ],
+      "explanation": "Atomic state of preparation; extracted as a component clause from the content of bragging."
+    },
+    {
+      "id": "P_9",
+      "translation": "Francis said that Johnson was clean at the Olympics.",
+      "evidence": [
+        5
+      ],
+      "explanation": "Atomic speech act of saying; a simple declarative without modals or conditionals."
+    },
+    {
+      "id": "P_10",
+      "translation": "Johnson was clean at the Olympics.",
+      "evidence": [
+        5
+      ],
+      "explanation": "Atomic state of being clean from drugs; a simple declarative clause, truth-evaluable independently."
+    },
+    {
+      "id": "P_11",
+      "translation": "Francis had reason to think that Ben may not pass the test.",
+      "evidence": [
+        7
+      ],
+      "explanation": "Atomic state of having reason to doubt test outcome; modals removed for atomicity."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_4",
+      "translation": "Charlie Francis claimed that the urine sample was spiked.",
+      "evidence": [
+        0
+      ],
+      "reasoning": "Directly stated in the text as a factual event, with no uncertainty implied.",
+      "list nli": [
+        [
+          4.747390630654991e-05,
+          4.534780964604579e-05,
+          0.9999071359634399
+        ],
+        [
+          0.002297336235642433,
+          2.5574443498044275e-05,
+          0.9976771473884583
+        ],
+        [
+          0.004748628940433264,
+          3.356574961799197e-05,
+          0.9952178001403809
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_7",
+      "translation": "Francis bragged about Johnson's preparations.",
+      "evidence": [
+        1
+      ],
+      "reasoning": "Directly reported by Huey as a fact that occurred, with strong textual support.",
+      "list nli": [
+        [
+          0.002816407708451152,
+          8.850215090205893e-05,
+          0.9970951080322266
+        ],
+        [
+          0.027651172131299973,
+          7.771680247969925e-05,
+          0.9722710847854614
+        ],
+        [
+          0.9256510734558105,
+          0.0002239766763523221,
+          0.07412496209144592
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_9",
+      "translation": "Francis said that Johnson was clean.",
+      "evidence": [
+        5
+      ],
+      "reasoning": "Explicitly stated in the text as a speech act, with no indication of falsehood in reporting.",
+      "list nli": [
+        [
+          0.0010139585938304663,
+          0.0002582882298156619,
+          0.9987277388572693
+        ],
+        [
+          0.016567902639508247,
+          0.0001626248558750376,
+          0.983269453048706
+        ],
+        [
+          9.458966815145686e-05,
+          0.9977607727050781,
+          0.0021446431055665016
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_11",
+      "translation": "Francis had reason to think Ben may not pass the test.",
+      "evidence": [
+        7
+      ],
+      "reasoning": "Stated by Huey as her belief and presented as a fact in the text, implying certainty.",
+      "list nli": [
+        [
+          0.0009451729711145163,
+          4.6847657358739525e-05,
+          0.9990079998970032
+        ],
+        [
+          0.0013164611300453544,
+          7.387241930700839e-05,
+          0.9986096620559692
+        ],
+        [
+          0.0011388600105419755,
+          0.0004462737124413252,
+          0.9984148740768433
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.9,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_11 ⟹ P_1",
+      "translation": "If Francis had reason to think Ben may not pass, then Ben likely tests positive.",
+      "evidence": [
+        7
+      ],
+      "reasoning": "Strong implication from Huey's statement that the reason must correlate with the test outcome, based on textual intent.",
+      "list nli": [
+        [
+          0.0004947041161358356,
+          0.0002120631979778409,
+          0.9992932081222534
+        ],
+        [
+          0.0012784411665052176,
+          0.0008612553938291967,
+          0.9978602528572083
+        ],
+        [
+          0.0014394697500392795,
+          0.0010950361611321568,
+          0.9974654912948608
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_10 ⟹ ¬P_2",
+      "translation": "If Johnson was clean, then he was not using banned substances.",
+      "evidence": [
+        5
+      ],
+      "reasoning": "Definitional constraint; clean explicitly implies no drug use, with no uncertainty in meaning.",
+      "list nli": [
+        [
+          2.1369174646679312e-05,
+          0.0001351672544842586,
+          0.9998434782028198
+        ],
+        [
+          0.00013446557568386197,
+          0.0013166347052901983,
+          0.9985489249229431
+        ],
+        [
+          0.0012535651912912726,
+          0.001280896714888513,
+          0.9974654912948608
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_1",
+      "translation": "Ben Johnson tests positive for a banned substance at the Seoul Olympics.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          0.018979454413056374,
+          0.0004980092635378242,
+          0.9805225729942322
+        ],
+        [
+          0.25347191095352173,
+          0.00016481748025398701,
+          0.7463632822036743
+        ],
+        [
+          0.0014447284629568458,
+          0.7721832394599915,
+          0.22637197375297546
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_1 ⟹ P_1",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010783644393086433,
+          0.011404863558709621,
+          0.9875167012214661
+        ],
+        [
+          0.007663758005946875,
+          0.03188002109527588,
+          0.9604561924934387
+        ],
+        [
+          0.014593708328902721,
+          0.02968650497496128,
+          0.9557198286056519
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_2",
+      "translation": "Ben Johnson was using banned substances before the Seoul Olympics.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          5.688707096851431e-05,
+          6.9656569394283e-05,
+          0.9998733997344971
+        ],
+        [
+          0.00012178035831311718,
+          2.8967415346414782e-05,
+          0.9998492002487183
+        ],
+        [
+          9.813393262447789e-05,
+          7.23897319403477e-05,
+          0.9998294115066528
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_16",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010783644393086433,
+          0.011404863558709621,
+          0.9875167012214661
+        ],
+        [
+          0.007663758005946875,
+          0.03188002109527588,
+          0.9604561924934387
+        ],
+        [
+          0.014593708328902721,
+          0.02968650497496128,
+          0.9557198286056519
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "P_3",
+      "translation": "Ben Johnson's urine sample at the Seoul Olympics was spiked with a banned steroid.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          1.888970291474834e-05,
+          7.319898577407002e-05,
+          0.9999078512191772
+        ],
+        [
+          2.6446692572790198e-05,
+          0.0001298987481277436,
+          0.9998435974121094
+        ],
+        [
+          0.00022117202752269804,
+          2.1106243366375566e-05,
+          0.999757707118988
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_18",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010783644393086433,
+          0.011404863558709621,
+          0.9875167012214661
+        ],
+        [
+          0.007663758005946875,
+          0.03188002109527588,
+          0.9604561924934387
+        ],
+        [
+          0.014593708328902721,
+          0.02968650497496128,
+          0.9557198286056519
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 1.0,
+      "hardness_constant": 0.9,
+      "id": "C_19",
+      "formula": "P_11 ⟹ P_11",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0010783644393086433,
+          0.011404863558709621,
+          0.9875167012214661
+        ],
+        [
+          0.007663758005946875,
+          0.03188002109527588,
+          0.9604561924934387
+        ],
+        [
+          0.014593708328902721,
+          0.02968650497496128,
+          0.9557198286056519
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.8,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_5",
+      "translation": "Johnson was worried about testing positive.",
+      "evidence": [
+        0
+      ],
+      "reasoning": "Reported by Francis via acquaintance; taken as credible in context but not directly verified, hence moderate weight.",
+      "list nli": [
+        [
+          2.9468363209161907e-05,
+          7.8855715401005e-05,
+          0.9998916387557983
+        ],
+        [
+          2.10046891879756e-05,
+          8.737509051570669e-05,
+          0.9998916387557983
+        ],
+        [
+          3.4944823710247874e-05,
+          8.28959746286273e-05,
+          0.9998821020126343
+        ]
+      ],
+      "weight": 0.8
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.8,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "Johnson is afraid of Carl Lewis.",
+      "evidence": [
+        4
+      ],
+      "reasoning": "From quoted statement by Francis; assumed true based on the report, but with some uncertainty as it's reported speech.",
+      "list nli": [
+        [
+          0.0025736314710229635,
+          5.388374484027736e-05,
+          0.9973725080490112
+        ],
+        [
+          0.022941838949918747,
+          0.00011053534399252385,
+          0.9769476652145386
+        ],
+        [
+          0.9057522416114807,
+          6.83342368574813e-05,
+          0.0941794142127037
+        ]
+      ],
+      "weight": 0.8
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.7,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_5 ⟹ P_1",
+      "translation": "If Johnson was worried about testing positive, then he likely tests positive.",
+      "evidence": [
+        0,
+        4
+      ],
+      "reasoning": "Common-sense implication that worry often indicates perceived likelihood; supported by context but not guaranteed.",
+      "list nli": [
+        [
+          0.000883745844475925,
+          0.001262016361579299,
+          0.9978541731834412
+        ],
+        [
+          0.0014879474183544517,
+          0.0007703463779762387,
+          0.99774169921875
+        ],
+        [
+          0.00032842959626577795,
+          0.0023699691519141197,
+          0.9973015785217285
+        ]
+      ],
+      "weight": 0.7
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.6,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_3 ⟹ P_1",
+      "translation": "If the urine sample was spiked, then Johnson might test positive.",
+      "evidence": [
+        0,
+        6
+      ],
+      "reasoning": "Plausible causal relationship, but not certain due to other factors; weight reflects moderate likelihood.",
+      "list nli": [
+        [
+          3.1517203751718625e-05,
+          3.7318681279430166e-05,
+          0.9999312162399292
+        ],
+        [
+          3.8075202610343695e-05,
+          3.8368889363482594e-05,
+          0.999923586845398
+        ],
+        [
+          2.9251947125885636e-05,
+          5.3365802159532905e-05,
+          0.9999173879623413
+        ]
+      ],
+      "weight": 0.6
+    },
+    {
+      "llm-weight": 0.5,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.5,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_10 ⟹ ¬P_1",
+      "translation": "If Johnson was clean, then he should not test positive.",
+      "evidence": [
+        5
+      ],
+      "reasoning": "Expected outcome based on cleanliness, but acknowledged possible exceptions like sample spiking, leading to lower weight.",
+      "list nli": [
+        [
+          4.2187199142063037e-05,
+          0.00023710631649009883,
+          0.9997206330299377
+        ],
+        [
+          7.967705460032448e-05,
+          0.0005784780369140208,
+          0.9993417859077454
+        ],
+        [
+          0.002446602564305067,
+          0.000534102029632777,
+          0.9970192909240723
+        ]
+      ],
+      "weight": 0.5
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 1.0,
+      "combined=(llm)*(nli)": 0.8,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If Francis bragged about Johnson's preparation, then Johnson was likely prepared.",
+      "evidence": [
+        1
+      ],
+      "reasoning": "Common-sense that bragging typically implies truth of the content; high but not absolute confidence based on context.",
+      "list nli": [
+        [
+          0.0003298006486147642,
+          0.00045192555990070105,
+          0.999218225479126
+        ],
+        [
+          0.0014132189098745584,
+          0.0007939889328554273,
+          0.9977928400039673
+        ],
+        [
+          0.0007013377617113292,
+          0.0016262215794995427,
+          0.9976723790168762
+        ]
+      ],
+      "weight": 0.8
+    }
+  ]
+}

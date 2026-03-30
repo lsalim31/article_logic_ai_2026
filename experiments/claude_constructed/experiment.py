@@ -13,12 +13,11 @@ Usage:
     python experiment.py --api-key $OPENROUTER_API_KEY --limit 5
     python experiment.py --api-key $OPENROUTER_API_KEY --verbose
     
-# Use specific config
-    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_openAI.yaml
+# Use specific config. For example
+    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/config_default_openAI.yaml
 
-    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_deepseek.yaml
+    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/config_default_deepseek.yaml
 
-    python experiment.py --config profiles/topk1_query0_IE_0_enrich_0_subset_0.yaml
         
 """
 

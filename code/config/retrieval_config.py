@@ -159,7 +159,3 @@ def _update_module_variables():
     # Document limits
     DEFAULT_MIN_WORDS = cfg["document"]["default_min_words"]
     DEFAULT_MAX_WORDS = cfg["document"]["default_max_words"]
-
-
-# Load default config on module import
-load_config()

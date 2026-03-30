@@ -157,27 +157,6 @@ class OpenIEExtractor:
         self.client.__enter__()
 
 
- 
-    # Commented on Feb 2 - Patricio
-    # def _start_client(self):
-    #     """Start the CoreNLP client for OpenIE."""
-    #     self.client = CoreNLPClient(
-    #         annotators=self.openie_annotators,
-    #         timeout=self.timeout,
-    #         memory=self.memory,
-    #         properties=self.openie_properties,
-    #         be_quiet=True,
-    #     )
-    #     # Enter the context to start the server
-
-    #     endpoint = self.endpoint or f"http://localhost:{self.port}"
-    #     if self.endpoint is not None:
-    #         try:
-    #             requests.get(f"{endpoint}")
-    #         except Exception as e:
-    #             raise RuntimeError(f"CoreNLP endpoint unreachable: {endpoint}") from e   
-
-    #     self.client.__enter__()    
 
     def _resolve_coreferences(self, text: str) -> tuple[str, List[Dict[str, Any]]]:
         
