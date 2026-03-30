@@ -12,6 +12,8 @@ models:
 tokens:
   max_completion_tokens: 42000
   max_tokens: 42000
+  chunk_target_size: 500000
+  chunk_threshold: 1500
 
 reasoning:
   effort: "medium"
@@ -24,9 +26,9 @@ reasoning:
 ############################################
 prompts:
   translation: "prompt_translate"
-  pass_1: "prompt_pass_1"
-  pass_2: "prompt_pass_2"
-  extraction: "prompt_long_openIE_Agn_nomodality"
+  pass_1: "prompt_pass_1" #only for the case of long document that are split
+  pass_2: "prompt_pass_2" #only for the case of long document that are split
+  extraction: "prompt_long_openIE_Agn_nomodality" # This one is used to logify
 
 retrieval:
   sbert_top_k: 10

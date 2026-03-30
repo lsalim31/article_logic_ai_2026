@@ -25,10 +25,10 @@ from typing import Dict, List, Any, Tuple, Optional
 import spacy
 import nltk
 from nltk.corpus import wordnet
-
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+MATCHING_PROPOSITION = 0.85
 
 # Ensure wordnet is downloaded
 try:
@@ -680,7 +680,7 @@ def detect_implication_contradiction(
 
         # Check 1: Does the hypothesis mention the antecedent condition?
         antecedent_keywords = set(antecedent_text.replace('.', '').split())
-        antecedent_keywords -= {'alice', 'she', 'her', 'is', 'a', 'an', 'the'}
+        antecedent_keywords -= {'she', 'her', 'he', 'his', 'they', 'them','is', 'a', 'an', 'the'}
 
         query_words = set(query_lower.replace('.', '').split())
         antecedent_overlap = len(antecedent_keywords & query_words) / max(len(antecedent_keywords), 1)
@@ -695,7 +695,7 @@ def detect_implication_contradiction(
         consequent_keywords = consequent_text.replace('.', '').split()
 
         for cons_word in consequent_keywords:
-            if cons_word in ['alice', 'she', 'her', 'is', 'a', 'an', 'the']:
+            if cons_word in ['she', 'her', 'he', 'his', 'they', 'them','is', 'a', 'an', 'the']:
                 continue
 
             contradictions = SEMANTIC_CONTRADICTION_PAIRS.get(cons_word, [])
@@ -1035,7 +1035,7 @@ def find_matching_proposition(
     propositions: List[Dict[str, Any]],
     sbert_model: SentenceTransformer,
     prop_embeddings: Optional[Dict[str, np.ndarray]] = None,
-    threshold: float = 0.85
+    threshold: float = MATCHING_PROPOSITION
 ) -> Optional[Dict[str, Any]]:
     """
     Find proposition whose translation matches candidate text using SBERT.
@@ -1082,7 +1082,7 @@ def proposition_exists(
     propositions: List[Dict[str, Any]],
     sbert_model: SentenceTransformer,
     prop_embeddings: Optional[Dict[str, np.ndarray]] = None,
-    threshold: float = 0.85
+    threshold: float = MATCHING_PROPOSITION
 ) -> bool:
     """
     Check if a proposition with similar text already exists.

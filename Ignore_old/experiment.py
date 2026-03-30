@@ -390,8 +390,8 @@ def write_experiment_debug_report(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Debug ContractNLI-style experiments")
-    parser.add_argument("--dataset-path", required=True, help="Path to ContractNLI-style JSON")
+    parser = argparse.ArgumentParser(description="Debug  experiments")
+    parser.add_argument("--dataset-path", required=True, help="Path to  JSON")
     parser.add_argument(
         "--api-key",
         default=os.environ.get("OPENROUTER_API_KEY"),

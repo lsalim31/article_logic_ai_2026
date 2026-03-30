@@ -29,17 +29,15 @@ from config.retrieval_config import (
     PROMPT_EXTRACTION,
     REASONING_MODEL,
     PROMPT_PASS_1,
-    PROMPT_PASS_2
+    PROMPT_PASS_2,
+    CHUNK_THRESHOLD, # Threshold for triggering multi-chunk mode (characters)
+    CHUNK_TARGET_SIZE # Target chunk size (characters)
 )
 
 
 class LogicConverter:
     """Converts text to structured propositional logic using LLM."""
 
-    # Threshold for triggering multi-chunk mode (characters)
-    CHUNK_THRESHOLD = 500000
-    # Target chunk size (characters)
-    CHUNK_TARGET_SIZE = 1500
 
     def __init__(
         self,
@@ -47,7 +45,9 @@ class LogicConverter:
         model: str = REASONING_MODEL,
         temperature: float = TEMPERATURE_LOGIC_CONVERTER,
         max_tokens: int = MAX_TOKENS,
-        reasoning_effort: str = REASONING_EFFORT
+        reasoning_effort: str = REASONING_EFFORT,
+        chunk_target_size = CHUNK_TARGET_SIZE,
+        chunk_threshold = CHUNK_THRESHOLD
     ):
         """Initialize the logic converter with API credentials and model settings."""
         # Detect OpenRouter keys and use appropriate base URL
@@ -65,6 +65,8 @@ class LogicConverter:
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
         self.api_key = api_key
+        self.chunk_target_size = chunk_target_size
+        self.chunk_threshold = chunk_threshold
 
         # Load prompts
         self._script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -418,7 +420,7 @@ class LogicConverter:
             List of chunk text strings
         """
         if target_size is None:
-            target_size = self.CHUNK_TARGET_SIZE
+            target_size = self.chunk_target_size
 
         # cut start here
         # First, split by double newlines (paragraphs)
@@ -641,7 +643,7 @@ Extract propositions from this chunk.
         print(f"[logic_converter] Multi-chunk mode (document size: {len(text)} chars)")
 
         # Split document into chunks
-        chunks = self._split_into_chunks(text, self.CHUNK_TARGET_SIZE)
+        chunks = self._split_into_chunks(text, self.chunk_target_size)
         print(f"[logic_converter] Split document into {len(chunks)} chunks")
 
         for i, chunk in enumerate(chunks):
@@ -690,7 +692,7 @@ Extract propositions from this chunk.
         """
         try:
             # Choose mode based on document size
-            if len(text) < self.CHUNK_THRESHOLD:
+            if len(text) < self.chunk_threshold:
                 return self._single_pass(text, formatted_triples)
             else:
                 return self._multi_chunk_convert(text, formatted_triples)

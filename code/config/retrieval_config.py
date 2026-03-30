@@ -14,7 +14,7 @@ _config_dir = Path(__file__).resolve().parent
 _profiles_dir = _config_dir / "profiles"
 
 # Allow override via environment variable or default to 'default.yaml'
-_profile_name = os.environ.get("CONFIG_PROFILE", "default_openAI.yaml")
+_profile_name = os.environ.get("CONFIG_PROFILE", "config_default_openAI.yaml")
 _profile_path = _profiles_dir / _profile_name
 
 # Global config storage
@@ -87,6 +87,7 @@ def _update_module_variables():
     global MAX_VARIANTS
     global USE_OPENIE, USE_ENRICHMENT, USE_SUBSET
     global DEFAULT_MIN_WORDS, DEFAULT_MAX_WORDS
+    global CHUNK_THRESHOLD, CHUNK_TARGET_SIZE
     
     cfg = _active_config
     
@@ -99,6 +100,8 @@ def _update_module_variables():
     # Tokens
     MAX_COMPLETION_TOKENS = cfg["tokens"]["max_completion_tokens"]
     MAX_TOKENS = cfg["tokens"]["max_tokens"]
+    CHUNK_TARGET_SIZE = cfg["tokens"]["chunk_target_size"]
+    CHUNK_THRESHOLD =  cfg["tokens"]["chunk_threshold"]
     
     # Reasoning
     REASONING_EFFORT = cfg["reasoning"]["effort"]

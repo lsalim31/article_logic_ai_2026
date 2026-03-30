@@ -18,7 +18,7 @@ Usage:
 
     python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/default_deepseek.yaml
 
-    python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/topk1_query0_IE_0_enrich_0_subset_0.yaml
+    python experiment.py --config profiles/topk1_query0_IE_0_enrich_0_subset_0.yaml
         
 """
 
@@ -77,11 +77,17 @@ from config.retrieval_config import (
 )
 
 
+
 # Directory configuration
 CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DATASET_DIR = _script_dir / "dataset"
-DEFAULT_DATASET_PATH = DATASET_DIR / "gold_balanced_sudhu_edit.json"
+
+#DATASET_EXPERIMENT = "data_claude_constructed_sudhir.json"
+DATASET_EXPERIMENT = "data_claude_constructed_test.json"
+
+
+DEFAULT_DATASET_PATH = DATASET_DIR / DATASET_EXPERIMENT
 
 
 def get_full_retrieval_config() -> Dict[str, Any]:
@@ -542,8 +548,9 @@ def run_experiment(
 
     # Initialize results
     timestamp = datetime.now().isoformat()
-    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = RESULTS_DIR / f"experiment_{timestamp_str}.json"
+    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M")  # No seconds
+    config_name = Path(config_path).stem if config_path else "default"
+    output_path = RESULTS_DIR / f"{DATASET_EXPERIMENT}_{config_name}_{timestamp_str}.json"
 
     results_payload = {
         "metadata": {
