@@ -18,6 +18,17 @@ Usage:
 
     python experiment.py --api-key $OPENROUTER_API_KEY --config profiles/config_default_deepseek.yaml
 
+    nohup python experiment.py --config profiles/config_run1_openAI.yaml > output_run1.txt 2>&1 &
+    nohup python experiment.py --config profiles/config_run4_openAI.yaml > output_run4.txt 2>&1 &
+
+    nohup python experiment.py --config profiles/config_run2_openAI.yaml > output_run2.txt 2>&1 &
+    nohup python experiment.py --config profiles/config_run3_openAI.yaml > output_run3.txt 2>&1 &
+
+    nohup python experiment.py --config profiles/config_run5_openAI.yaml > output_run5.txt 2>&1 &
+    nohup python experiment.py --config profiles/config_run8_openAI.yaml > output_run8.txt 2>&1 &
+
+    nohup python experiment.py --config profiles/config_run6_openAI.yaml > output_run6.txt 2>&1 &
+    nohup python experiment.py --config profiles/config_run7_openAI.yaml > output_run7.txt 2>&1 &
         
 """
 
@@ -82,7 +93,7 @@ CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DATASET_DIR = _script_dir / "dataset"
 
-DATASET_EXPERIMENT = "data_test_balanced4way.json"
+DATASET_EXPERIMENT = "data_constructed_march30.json"
 
 
 DEFAULT_DATASET_PATH = DATASET_DIR / DATASET_EXPERIMENT
