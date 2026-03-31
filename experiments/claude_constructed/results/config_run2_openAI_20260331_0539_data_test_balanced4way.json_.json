@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "timestamp": "2026-03-30T23:44:20.344613",
+    "timestamp": "2026-03-31T05:39:10.680435",
     "data_path": "/home/logify/article_logic_ai_2026/experiments/claude_constructed/dataset/data_test_balanced4way.json",
-    "config_profile": "profiles/config_run15_openAI.yaml",
+    "config_profile": "profiles/config_run2_openAI.yaml",
     "logify_model": "gpt-5.2",
     "query_model": "openai/gpt-5-nano",
     "temperature": 0.1,
@@ -46,17 +46,22 @@
       "is_4way_classification": true
     },
     "total_correct": 12,
-    "total_evaluated": 19,
-    "overall_accuracy": 0.631578947368421,
-    "total_errors": 1,
+    "total_evaluated": 20,
+    "overall_accuracy": 0.6,
+    "total_errors": 0,
     "classification_type": "4-way",
     "label_set": [
+      "contradiction",
       "entailment",
       "uncertain",
-      "contradiction",
       "not_mentioned"
     ],
     "per_label_accuracy": {
+      "contradiction": {
+        "correct": 1,
+        "total": 5,
+        "accuracy": 0.2
+      },
       "entailment": {
         "correct": 3,
         "total": 5,
@@ -66,11 +71,6 @@
         "correct": 3,
         "total": 5,
         "accuracy": 0.6
-      },
-      "contradiction": {
-        "correct": 1,
-        "total": 4,
-        "accuracy": 0.25
       },
       "not_mentioned": {
         "correct": 5,
@@ -105,7 +105,7 @@
     "ENABLE_NEGATION_WARNINGS": null,
     "CONFIDENCE_THRESHOLD_TRUE": 0.55,
     "MIN_PROPOSITION_WEIGHT": 0.3,
-    "ON_EXPAND_QUERY_SYN": true,
+    "ON_EXPAND_QUERY_SYN": false,
     "MAX_SYNONYMS": 3,
     "TRIGGER_QUERY": 0.8,
     "ADDITIONAL_LLM_QUERY": 2,
@@ -114,7 +114,7 @@
     "SUBSET_TOP_PER_CLUSTER": 2,
     "SUBSET_ENTAILMENT_THRESHOLD": 0.5,
     "MAX_VARIANTS": 6,
-    "USE_OPENIE": true,
+    "USE_OPENIE": false,
     "HARDNESS_CONSTANT": 0.9,
     "USE_ENRICHMENT_KB": true,
     "USE_SUBSET": false,
@@ -131,10 +131,10 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1007.5697057247162,
+      "query_latency_total_sec": 424.4077208042145,
       "premise_correct": 12,
-      "premise_total": 19,
-      "premise_accuracy": 0.631578947368421
+      "premise_total": 20,
+      "premise_accuracy": 0.6
     }
   ],
   "results": [
@@ -152,14 +152,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 52.5028932094574,
+      "query_latency_sec": 31.61432194709778,
       "nli_confidence": 0.9925458186189644,
       "sbert_confidence": 0.9181323051452637,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_1": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -175,14 +173,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 82.46305179595947,
+      "query_latency_sec": 27.116912841796875,
       "nli_confidence": 0.99922603808227,
       "sbert_confidence": 0.4777323603630066,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_3": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -198,14 +194,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 58.93690037727356,
+      "query_latency_sec": 15.066787481307983,
       "nli_confidence": 0.9998798703140892,
       "sbert_confidence": 0.6507689952850342,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_2": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -221,15 +215,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 90.56013560295105,
+      "query_latency_sec": 31.951454877853394,
       "nli_confidence": 0.9990137717977632,
-      "sbert_confidence": 0.3701927661895752,
-      "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
-      "vote_counts": {
-        "P_3": 1,
-        "P_7": 2
-      }
+      "sbert_confidence": 0.3130558133125305,
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -245,14 +236,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 23.77098250389099,
+      "query_latency_sec": 9.215852737426758,
       "nli_confidence": 0.9908245080641791,
       "sbert_confidence": 0.8931726813316345,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_5": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -268,32 +257,30 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 119.41084456443787,
+      "query_latency_sec": 30.602797031402588,
       "nli_confidence": -0.9950770284049213,
       "sbert_confidence": 0.8806771039962769,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_1": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
       "original_idx": 6,
       "hypothesis_text": "Huey said she had known Francis since 1990 when he stayed at her home in Los Angeles.",
       "ground_truth": "contradiction",
-      "prediction": null,
-      "prediction_4way": null,
-      "confidence": null,
-      "formula": "ERROR",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 0.5,
+      "formula": "P_3",
       "query_mode": "entailment",
-      "explanation": null,
-      "error": "ERROR: LLM failed to generate a valid formula",
-      "error_type": "translate_error",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
+      "error": null,
+      "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 20.872966289520264,
-      "nli_confidence": null,
-      "sbert_confidence": null,
+      "query_latency_sec": 38.51434588432312,
+      "nli_confidence": 0.9970527347177267,
+      "sbert_confidence": 0.4375147819519043,
       "voting_triggered": false,
       "voting_confidence": null,
       "vote_counts": null
@@ -312,14 +299,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 91.56507229804993,
+      "query_latency_sec": 25.467413187026978,
       "nli_confidence": 0.9998738272934133,
       "sbert_confidence": 0.4691600501537323,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "~P_2": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -335,14 +320,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 72.82380509376526,
+      "query_latency_sec": 31.45724391937256,
       "nli_confidence": -0.999004494806286,
       "sbert_confidence": 0.7687749266624451,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "~P_3": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -358,14 +341,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 32.37274384498596,
+      "query_latency_sec": 15.69478702545166,
       "nli_confidence": -0.999941635536743,
       "sbert_confidence": 0.7319595217704773,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "~P_5": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -381,14 +362,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 60.49242115020752,
+      "query_latency_sec": 19.728561401367188,
       "nli_confidence": 0.9996021705883322,
       "sbert_confidence": 0.49726545810699463,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_3": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -404,14 +383,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 75.33321142196655,
+      "query_latency_sec": 29.469867944717407,
       "nli_confidence": -0.999809221153555,
       "sbert_confidence": 0.3364467918872833,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_1": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -427,14 +404,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 64.10686993598938,
+      "query_latency_sec": 32.967939138412476,
       "nli_confidence": -0.9997797013493255,
       "sbert_confidence": 0.40994858741760254,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_3": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -450,14 +425,12 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 71.81102538108826,
+      "query_latency_sec": 44.269195795059204,
       "nli_confidence": -0.9985049475217238,
       "sbert_confidence": 0.6355858445167542,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_3": 3
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -473,15 +446,12 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 64.2948796749115,
+      "query_latency_sec": 30.11906337738037,
       "nli_confidence": 0.9997807609834126,
       "sbert_confidence": 0.5088803768157959,
-      "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
-      "vote_counts": {
-        "P_1": 2,
-        "P_5": 1
-      }
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
@@ -497,7 +467,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 12.528162002563477,
+      "query_latency_sec": 7.461738586425781,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -518,7 +488,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.231762409210205,
+      "query_latency_sec": 0.8920836448669434,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -539,7 +509,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.4058618545532227,
+      "query_latency_sec": 0.9453780651092529,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -560,7 +530,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.2925705909729004,
+      "query_latency_sec": 0.8917293548583984,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -581,8 +551,8 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 9.793545722961426,
-      "nli_confidence": 0.5,
+      "query_latency_sec": 0.9602465629577637,
+      "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
       "voting_confidence": null,

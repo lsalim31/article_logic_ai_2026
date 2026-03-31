@@ -45,14 +45,31 @@ nli:
 ############################################
 # FEATURE FLAGS
 ############################################
+# run 1 0000
+# run 2 1001
+# run 3 0101
+# run 4 1100
+# run 5 0011
+# run 6 1010
+# run 7 0110
+# run 8 1111
 features:
-  use_shortcuts: false
-  use_openie: true
-  use_enrichment_kb: true 
-  use_subset: false
-  use_voting: true
+  ###############################
+  use_shortcuts: true #factor Q1
+  ###############################
+  # next together Q2
+  use_voting: true  
   expand_query_synonyms: true
+  ###############################
+  use_openie: false         # factor T1
+  use_enrichment_kb: false  # factor T2
+  ###############################
 
+  use_subset: false         # always false
+
+############################################
+# NOT USED OR CHANGED
+############################################
   enable_nli_filtering: false #used in Ignore_old/translate_old.py
   enable_hybrid_embedding: false
   enable_auto_negation_correction: false #not used
