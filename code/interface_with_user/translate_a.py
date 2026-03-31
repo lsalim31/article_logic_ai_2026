@@ -288,109 +288,33 @@ def extract_proposition_chunks(logified_structure: Dict[str, Any], hybrid_embedd
         })
     return chunks
 
-##
-def retrieve_top_k_propositions(
-    query: str, 
-    chunks: List[Dict], 
-    sbert_model, 
-    k: int = SBERT_TOP_K, 
-    minimal_similarity: float = 0.5, #SBERT_MIN_SIMILARITY
-    enable_nli_filtering: bool = True, #ENABLE_NLI_FILTERING,
-    verbose: bool = True
-) -> List[Dict]:
+
+def retrieve_top_k_propositions(query: str, chunks: List[Dict], sbert_model, k: int = SBERT_TOP_K, minimal_similarity = SBERT_MIN_SIMILARITY, verbose=True) -> List[Dict]:
     """
-    Two-stage retrieval: SBERT candidates + optional NLI filtering.
-    
-    Stage 1: SBERT retrieves top-k candidates by cosine similarity
-    Stage 2: NLI cross-encoder filters out neutral propositions (if enabled)
-    
-    Args:
-        query: User query/hypothesis
-        chunks: List of proposition dicts with 'translation' field
-        sbert_model: Loaded SBERT model
-        k: Number of candidates to retrieve
-        minimal_similarity: Minimum cosine similarity threshold
-        enable_nli_filtering: If True, filter out neutral propositions
-        verbose: Print debug information
-        
-    Returns:
-        List of relevant proposition dicts with similarity scores
+    Preserved (simplified): Retrieve relevant chunks using SBERT.
     """
     if verbose:
         print(f"""
-              \n#FUNCTION: retrieve_top_k_propositions
-              \nPARAMETERS: k={k}, minimal_similarity={minimal_similarity}, 
-              enable_nli_filtering={enable_nli_filtering}, num_chunks={len(chunks)}
-              """)
+              \n#FUNCTION: retrieve_top_k_propositions.
+              \nPARAMETERS: k={SBERT_TOP_K}, minimal_similarity={SBERT_MIN_SIMILARITY}, number of chunks = {len(chunks)}
+              """
+              )
     
-    # Stage 1: SBERT candidate retrieval
     chunk_embeddings = encode_chunks(chunks, sbert_model)
     query_embedding = encode_query(query, sbert_model)
     similarities = compute_cosine_similarity(query_embedding, chunk_embeddings)
     top_k_indices = np.argsort(similarities)[::-1][:k]
 
-    candidates = []
+    retrieved = []
     for idx in top_k_indices:
         if similarities[idx] < minimal_similarity:
             break
         chunk = chunks[idx].copy()
         chunk['similarity'] = float(similarities[idx])
-        candidates.append(chunk)
-    
+        retrieved.append(chunk)
     if verbose:
-        print(f"  Stage 1 (SBERT): {len(candidates)} candidates")
-    
-    # Stage 2: NLI filtering (if enabled)
-    if enable_nli_filtering and candidates:
-        if verbose:
-            print(f"  Stage 2 (NLI): Filtering neutral propositions...")
-        
-        nli_model = load_nli_model_singleton()
-        
-        # Score each (proposition, query) pair
-        pairs = [(chunk['translation'], query) for chunk in candidates]
-        nli_scores = nli_model.predict(pairs)
-        
-        # Ensure 2D array (handle single prediction case)
-        if nli_scores.ndim == 1:
-            nli_scores = nli_scores.reshape(1, -1)
-        
-        # Apply softmax to get probabilities
-        exp_scores = np.exp(nli_scores - np.max(nli_scores, axis=1, keepdims=True))
-        probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
-        
-        # Filter: keep if P(entailment) > threshold OR P(contradiction) > threshold
-        filtered = []
-        for chunk, prob in zip(candidates, probs):
-            p_contradiction = float(prob[0])
-            p_neutral = float(prob[1])
-            p_entailment = float(prob[2])
-            
-            # Keep if entails or contradicts (discard neutral)
-            if p_entailment >= NLI_ENTAILMENT_THRESHOLD or p_contradiction >= NLI_CONTRADICTION_THRESHOLD:
-                chunk['nli_scores'] = {
-                    'contradiction': p_contradiction,
-                    'neutral': p_neutral,
-                    'entailment': p_entailment
-                }
-                filtered.append(chunk)
-            elif verbose:
-                print(f"    Filtered out (neutral): {chunk['id']} - E:{p_entailment:.2f} C:{p_contradiction:.2f} N:{p_neutral:.2f}")
-        
-        if verbose:
-            print(f"  Stage 2 (NLI): {len(filtered)} after filtering ({len(candidates) - len(filtered)} neutral removed)")
-        
-        return filtered
-    
-    if verbose:
-        print(f"  Total retrieved: {len(candidates)}")
-    
-    return candidates
-
-
-
-##
-
+        print(f"Total retrieved {len(retrieved)}")    
+    return retrieved
 
 
 def is_yes_no_question(query: str, verbose=True) -> bool:

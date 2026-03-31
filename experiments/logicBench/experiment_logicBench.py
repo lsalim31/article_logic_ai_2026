@@ -35,6 +35,21 @@ for p in (_repo_root, _code_dir):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+# ---- INSERT BELOW ----
+_pre_parser = argparse.ArgumentParser(add_help=False)
+_pre_parser.add_argument("--config", type=str, default=None)
+_pre_args, _ = _pre_parser.parse_known_args()
+
+if _pre_args.config:
+    from config.retrieval_config import load_config, _profiles_dir
+
+    config_path = Path(_pre_args.config)
+    if not config_path.is_absolute():
+        config_path = _profiles_dir / config_path.name
+
+    load_config(config_path)
+# ---- INSERT ABOVE ----
+
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
@@ -90,7 +105,7 @@ def get_full_retrieval_config() -> Dict[str, Any]:
         "ENABLE_NEGATION_WARNINGS": retrieval_config.ENABLE_NEGATION_WARNINGS,
         # Confidence thresholds
         "CONFIDENCE_THRESHOLD_TRUE": retrieval_config.CONFIDENCE_THRESHOLD_TRUE,
-        "MIN_PROPOSITION_WEIGHT": retrieval_config.MIN_PROPOSIT3ION_WEIGHT,
+        "MIN_PROPOSITION_WEIGHT": retrieval_config.MIN_PROPOSITION_WEIGHT,
         # Query expansion
         "ON_EXPAND_QUERY_SYN": retrieval_config.ON_EXPAND_QUERY_SYN,
         "MAX_SYNONYMS": retrieval_config.MAX_SYNONYMS,
@@ -106,7 +121,7 @@ def get_full_retrieval_config() -> Dict[str, Any]:
         # Logify settings
         "USE_OPENIE": retrieval_config.USE_OPENIE,
         "HARDNESS_CONSTANT": retrieval_config.HARDNESS_CONSTANT,
-        "USE_ENRICHMENT": retrieval_config.USE_ENRICHMENT,
+        "USE_ENRICHMENT_KB": retrieval_config.USE_ENRICHMENT_KB,
         "USE_SUBSET": retrieval_config.USE_SUBSET,
         "DIRECT_RETRIEVAL_MULTIPLIER": retrieval_config.DIRECT_RETRIEVAL_MULTIPLIER,
         "DEFAULT_MIN_WORDS": retrieval_config.DEFAULT_MIN_WORDS,
@@ -245,6 +260,13 @@ def logify_context(
 
     try:
         logic_structure = converter.convert_text_to_logic(text)
+    except Exception as exc:
+        return {
+            "logified_structure": None,
+            "logify_latency_sec": time.time() - start_time,
+            "logify_cached": False,
+            "logify_error": str(exc),
+        }
     finally:
         converter.close()
 
@@ -254,23 +276,27 @@ def logify_context(
         json.dump(logic_structure, f, indent=2, ensure_ascii=False)
 
     # Create temp text file for weights and enrichment
-    temp_text_path = CACHE_DIR / f"doc_{doc_id}_text.txt"
+    safe_id = str(doc_id).replace("/", "_").replace("\\", "_")
+    temp_text_path = CACHE_DIR / f"doc_{safe_id}_text.txt"
     with open(temp_text_path, "w", encoding="utf-8") as f:
         f.write(text)
 
-    # Enrich logic structure
-    enrich_logic_structure(
-        logified_path=str(intermediate_path),
-        source_path=str(temp_text_path),
-        output_path=str(intermediate_path),
-        verbose=verbose,
-    )
 
     # Assign weights
     if verbose:
         print(f"    [WEIGHTS] Assigning weights...")
 
     try:
+        
+                # Enrich logic structure
+        enrich_logic_structure(
+            logified_path=str(intermediate_path),
+            source_path=str(temp_text_path),
+            output_path=str(intermediate_path),
+            verbose=verbose,
+        )
+
+        
         assign_weights(
             pathfile=str(temp_text_path),
             json_path=str(intermediate_path),
@@ -470,6 +496,7 @@ def query_question(
 def run_experiment(
     api_key: str,
     data_path: Path,
+    config_path: Optional[str] = None,
     query_model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
     reasoning_effort: str = REASONING_EFFORT,
@@ -531,12 +558,15 @@ def run_experiment(
     # Initialize results
     timestamp = datetime.now().isoformat()
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = RESULTS_DIR / f"experiment_{timestamp_str}.json"
+    config_name = Path(config_path).stem if config_path else "default"
+    output_path = RESULTS_DIR / f"{timestamp_str}_{logic_type}_{axiom}_{config_name}.json"
+ 
 
     results_payload = {
         "metadata": {
             "timestamp": timestamp,
             "data_path": str(data_path),
+            "config_profile": config_path,
             "logic_type": logic_type,
             "axiom": axiom,
             "logify_model": REASONING_MODEL,
@@ -846,10 +876,21 @@ def main() -> int:
         help="Enable detailed output",
     )
 
+    parser.add_argument(
+        "--config",
+        type=str,
+        default=None,
+        help="Path to YAML config profile (e.g., profiles/config_default_openAI.yaml)",
+    )
+
     args = parser.parse_args()
 
     if not args.api_key:
         print("Error: No API key. Set OPENROUTER_API_KEY or use --api-key")
+        return 1
+
+    if not args.config:
+        print("Error: No configuration file. Select one in /code/config/profiles")
         return 1
 
     # Determine data path
@@ -874,6 +915,7 @@ def main() -> int:
         run_experiment(
             api_key=args.api_key,
             data_path=data_path,
+            config_path=args.config,
             query_model=args.query_model,
             temperature=args.temperature,
             reasoning_effort=args.reasoning_effort,
