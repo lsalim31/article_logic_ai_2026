@@ -1,0 +1,370 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The TSA were allowed to keep $675,000 in spare change last year.",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic money-amount claim about a single event/year; no logical connective is required to evaluate it."
+    },
+    {
+      "id": "P_2",
+      "translation": "Travellers dropped spare change at airport security last year.",
+      "evidence": "Sentence 0",
+      "explanation": "Atomic event description; it attributes a single action to travellers in a time period."
+    },
+    {
+      "id": "P_3",
+      "translation": "Airline passengers left behind more than $2.7 million in quarters and dimes over the past five years.",
+      "evidence": "Sentence 1",
+      "explanation": "Atomic aggregate-amount claim; it can be true or false as stated."
+    },
+    {
+      "id": "P_4",
+      "translation": "The funds collected by the TSA increase every year.",
+      "evidence": "Sentence 2",
+      "explanation": "Atomic trend statement; the modality in the text is handled by constraint weights rather than adding modal words here."
+    },
+    {
+      "id": "P_5",
+      "translation": "The amount collected in 2008 was $383,414.",
+      "evidence": "Sentence 4",
+      "explanation": "Atomic numeric fact about a single year."
+    },
+    {
+      "id": "P_6",
+      "translation": "The amount the TSA kept last year was almost double the amount collected in 2008.",
+      "evidence": "Sentence 4",
+      "explanation": "Atomic comparative claim; it is not a logical conjunction even though it compares two quantities."
+    },
+    {
+      "id": "P_7",
+      "translation": "The amount the TSA kept last year exceeded the amount passengers left behind in 2012 by $107,000.",
+      "evidence": "Sentence 5",
+      "explanation": "Atomic comparative claim; the comparison is a single predicate."
+    },
+    {
+      "id": "P_8",
+      "translation": "The amount the TSA kept last year exceeded the amount passengers left behind in 2011 by more than $150,000.",
+      "evidence": "Sentence 5",
+      "explanation": "Atomic comparative claim; despite 'more than', it is still a single truth-evaluable statement."
+    },
+    {
+      "id": "P_9",
+      "translation": "Someone comes back to claim the money.",
+      "evidence": "Sentence 6",
+      "explanation": "Atomic claim-return action; phrased positively so that negation can be expressed in constraints."
+    },
+    {
+      "id": "P_10",
+      "translation": "The TSA are allowed to keep the money.",
+      "evidence": "Sentence 6",
+      "explanation": "Atomic legal-permission statement."
+    },
+    {
+      "id": "P_11",
+      "translation": "The money stays with the TSA.",
+      "evidence": "Sentence 13",
+      "explanation": "Atomic ownership/possession outcome statement."
+    },
+    {
+      "id": "P_12",
+      "translation": "The TSA are free to spend the money on improving civil aviation security.",
+      "evidence": "Sentence 7",
+      "explanation": "Atomic permission/use statement about spending purpose."
+    },
+    {
+      "id": "P_13",
+      "translation": "The agency makes every effort to reunite passengers with items left at the checkpoint.",
+      "evidence": "Sentence 8",
+      "explanation": "Atomic policy/effort statement attributed to TSA officials."
+    },
+    {
+      "id": "P_14",
+      "translation": "Items are left at the checkpoint.",
+      "evidence": "Sentence 8",
+      "explanation": "Atomic existence statement about items being left behind."
+    },
+    {
+      "id": "P_15",
+      "translation": "The money is documented.",
+      "evidence": "Sentence 10",
+      "explanation": "Atomic administrative-action statement."
+    },
+    {
+      "id": "P_16",
+      "translation": "The money is turned into the TSA financial office.",
+      "evidence": "Sentence 10",
+      "explanation": "Atomic administrative-transfer statement."
+    },
+    {
+      "id": "P_17",
+      "translation": "Congress gave the agency the ability to use the forgotten money to help fund security operations in 2005.",
+      "evidence": "Sentence 11",
+      "explanation": "Atomic historical/legal authorization event."
+    },
+    {
+      "id": "P_18",
+      "translation": "The TSA can use the money to help fund security operations.",
+      "evidence": "Sentence 11",
+      "explanation": "Atomic ability/authorization statement (without embedding the 2005 event)."
+    },
+    {
+      "id": "P_19",
+      "translation": "Phoenix airport offers travellers the opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12",
+      "explanation": "Atomic offering/opportunity statement for a specific airport."
+    },
+    {
+      "id": "P_20",
+      "translation": "Columbus airport in Ohio offers travellers the opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12",
+      "explanation": "Atomic offering/opportunity statement for a specific airport."
+    },
+    {
+      "id": "P_21",
+      "translation": "Denver International Airport offers travellers the opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12",
+      "explanation": "Atomic offering/opportunity statement for a specific airport."
+    },
+    {
+      "id": "P_22",
+      "translation": "Passengers remove loose coins from their pockets.",
+      "evidence": "Sentence 10",
+      "explanation": "Atomic action statement; the 'typically' qualifier is handled via constraint weight."
+    },
+    {
+      "id": "P_23",
+      "translation": "The money consists of loose coins.",
+      "evidence": "Sentence 10",
+      "explanation": "Atomic composition statement; the 'typically' qualifier is handled via constraint weight."
+    },
+    {
+      "id": "P_24",
+      "translation": "The amount the TSA kept last year exceeded the amount collected in 2008.",
+      "evidence": "Sentence 4",
+      "explanation": "Atomic comparative statement derived from explicit amounts/comparison in the text."
+    },
+    {
+      "id": "P_25",
+      "translation": "The amount the TSA kept last year exceeded the amount passengers left behind in 2012.",
+      "evidence": "Sentence 5",
+      "explanation": "Atomic comparative statement supported by the stated difference relative to 2012."
+    },
+    {
+      "id": "P_26",
+      "translation": "The amount the TSA kept last year exceeded the amount passengers left behind in 2011.",
+      "evidence": "Sentence 5",
+      "explanation": "Atomic comparative statement supported by the stated difference relative to 2011."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "The TSA were allowed to keep $675,000 in spare change last year.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Direct asserted factual claim."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Travellers dropped spare change at airport security last year.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as the source of the spare change; minor paraphrase uncertainty between 'dropped' and 'left behind'."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Over the past five years, passengers left behind more than $2.7 million in coins.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Direct numeric aggregate claim."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "The funds collected appear to be increasing every year.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 2",
+      "reasoning": "The text uses 'appear', indicating evidential/hedged support rather than absolute certainty."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_5",
+      "translation": "The amount collected in 2008 was $383,414.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Explicitly stated with a precise number."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_6",
+      "translation": "Last year's amount was almost double the 2008 amount.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 4",
+      "reasoning": "Explicit comparative description in the text."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Last year's amount exceeded the 2012 left-behind amount by $107,000.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Explicitly stated difference."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Last year's amount exceeded the 2011 left-behind amount by more than $150,000.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 5",
+      "reasoning": "Explicitly stated comparison."
+    },
+    {
+      "id": "C_9",
+      "formula": "(¬P_9 ⟹ P_10)",
+      "translation": "If no one comes back to claim the money, the TSA are allowed to keep it.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 6",
+      "reasoning": "Stated as a federal-law rule; treated as a hard implication."
+    },
+    {
+      "id": "C_10",
+      "formula": "(¬P_9 ⟹ P_11)",
+      "translation": "If no one comes back to claim the money, it stays with the TSA.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 13",
+      "reasoning": "Restated as a federal-law consequence; treated as a hard implication."
+    },
+    {
+      "id": "C_11",
+      "formula": "(P_10 ⟹ P_11)",
+      "translation": "TSA permission to keep the money implies the money stays with the TSA.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 6; Sentence 13",
+      "reasoning": "A strong commonsense/legal alignment between 'allowed to keep' and 'stays with'."
+    },
+    {
+      "id": "C_12",
+      "formula": "(P_10 ⟹ P_12)",
+      "translation": "After the TSA are allowed to keep the money, the agency is free to spend it to improve civil aviation security.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 6; Sentence 7",
+      "reasoning": "'Then free to spend' indicates a consequential relation; phrased as an implication."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_13",
+      "translation": "The agency makes every effort to reunite passengers with items left at the checkpoint.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 8",
+      "reasoning": "Attributed to TSA officials; treated as highly credible but still reported speech."
+    },
+    {
+      "id": "C_14",
+      "formula": "P_14",
+      "translation": "Items are left at the checkpoint.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 8",
+      "reasoning": "Directly presupposed by the officials' statement about reuniting passengers with left items."
+    },
+    {
+      "id": "C_15",
+      "formula": "(¬P_9 ⟹ P_15)",
+      "translation": "When the money is not claimed, it is documented.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 10",
+      "reasoning": "The text describes how 'unclaimed money' is handled; mapping 'unclaimed' to ¬P_9 is natural but slightly interpretive."
+    },
+    {
+      "id": "C_16",
+      "formula": "(¬P_9 ⟹ P_16)",
+      "translation": "When the money is not claimed, it is turned into the TSA financial office.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 10",
+      "reasoning": "Same handling-policy statement as above; encoded as conditional on non-claiming."
+    },
+    {
+      "id": "C_17",
+      "formula": "P_17",
+      "translation": "In 2005, Congress gave the agency the ability to use the forgotten money to help fund security operations.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 11",
+      "reasoning": "Explicit historical/legal claim."
+    },
+    {
+      "id": "C_18",
+      "formula": "(P_17 ⟹ P_18)",
+      "translation": "Congress granting the ability implies the TSA can use the money to help fund security operations.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 11",
+      "reasoning": "This is the direct meaning of 'gave the ability to'."
+    },
+    {
+      "id": "C_19",
+      "formula": "P_19",
+      "translation": "Phoenix airport offers travellers the opportunity to donate to local charities at checkpoint collection boxes.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 12",
+      "reasoning": "Phoenix is presented as an example of airports that do this ('such as'), so it is strongly suggested but not framed as an exhaustive fact about Phoenix at all times."
+    },
+    {
+      "id": "C_20",
+      "formula": "P_20",
+      "translation": "Columbus airport in Ohio offers travellers the opportunity to donate to local charities at checkpoint collection boxes.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 12",
+      "reasoning": "Same 'such as' evidential framing as the Phoenix claim."
+    },
+    {
+      "id": "C_21",
+      "formula": "P_21",
+      "translation": "Denver International Airport offers travellers the opportunity to donate to local charities at checkpoint collection boxes.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 12",
+      "reasoning": "Same 'such as' evidential framing as the Phoenix claim."
+    },
+    {
+      "id": "C_22",
+      "formula": "P_22",
+      "translation": "Passengers remove loose coins from their pockets.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 10",
+      "reasoning": "The text says this is typical, which suggests it often happens but not universally."
+    },
+    {
+      "id": "C_23",
+      "formula": "P_23",
+      "translation": "The money consists of loose coins.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 10",
+      "reasoning": "The text says the unclaimed money typically consists of loose coins; 'typically' reduces certainty."
+    },
+    {
+      "id": "C_24",
+      "formula": "(P_6 ⟹ P_24)",
+      "translation": "Being almost double the 2008 amount implies last year's amount exceeded the 2008 amount.",
+      "llm_weight": 0.98,
+      "evidence": "Sentence 4",
+      "reasoning": "From the semantics of 'almost double', exceeding is a very strong consequence."
+    },
+    {
+      "id": "C_25",
+      "formula": "(P_7 ⟹ P_25)",
+      "translation": "Exceeding the 2012 amount by $107,000 implies last year's amount exceeded the 2012 amount.",
+      "llm_weight": 0.99,
+      "evidence": "Sentence 5",
+      "reasoning": "Arithmetic/semantic entailment of 'exceeded by'."
+    },
+    {
+      "id": "C_26",
+      "formula": "(P_8 ⟹ P_26)",
+      "translation": "Exceeding the 2011 amount by more than $150,000 implies last year's amount exceeded the 2011 amount.",
+      "llm_weight": 0.99,
+      "evidence": "Sentence 5",
+      "reasoning": "Arithmetic/semantic entailment of 'exceeded by more than'."
+    }
+  ]
+}
