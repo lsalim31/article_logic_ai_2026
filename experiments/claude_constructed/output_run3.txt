@@ -1144,3 +1144,483 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   Using top-10 SBERT propositions (from 10 retrieved)
   Cand 0: P_21
     -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_21 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_21 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_21': 3}
+[Adaptive Voting] Winner: P_21 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_21'
+  [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
+      formula: P_21
+      nli_confidence: 1.00
+      sbert_confidence: 0.46
+      voting: TRIGGERED (conf=1.00, counts={'P_21': 3})
+#################### 
+FUNCTION: translate_query : Rubicon Project partnered with AppNexus to launch a new programmatic video ad solution for publishers.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Rubicon Project partnered with AppNexus to launch a new programmatic video ad solution for publishers., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 34 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_13
+    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+    -> Score: -0.59 (Ent: 0.21, Con: 0.79)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5424 (NLI score: -0.5882)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.59
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
+    → Got formula: P_21 (score: -0.59)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
+    → Got formula: P_21 (score: -0.59)
+
+[Adaptive Voting] Vote results: {'P_13': 1, 'P_21': 2}
+[Adaptive Voting] Winner: P_21 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_21'
+  [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
+      formula: P_21
+      nli_confidence: -0.59
+      sbert_confidence: 0.54
+      voting: TRIGGERED (conf=0.67, counts={'P_13': 1, 'P_21': 2})
+#################### 
+FUNCTION: translate_query : In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 39 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Adelphic is a cross-channel demand-side platform...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5030 (NLI score: -0.9772)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_4
+    -> Verbal: Adelphic is a cross-channel demand-side platform...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_4 (score: -0.98)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_2 (score: -1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 2, 'P_2': 1}
+[Adaptive Voting] Winner: P_4 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_4'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 14: pred=TRUE (entailment) gt=not_mentioned
+      formula: P_4
+      nli_confidence: -0.98
+      sbert_confidence: 0.50
+      voting: TRIGGERED (conf=0.67, counts={'P_4': 2, 'P_2': 1})
+#################### 
+FUNCTION: translate_query : The International Space Station completed a major solar panel upgrade in orbit.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = The International Space Station completed a major solar panel upgrade in orbit., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 29 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 7
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 9
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 5
+
+ Total of 21 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  [+] hyp 15: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
+#################### 
+FUNCTION: translate_query : Researchers discovered a new species of deep-sea fish in the Mariana Trench
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Researchers discovered a new species of deep-sea fish in the Mariana Trench, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 62 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
+  Premise accuracy: 7/16 = 43.75%
+  Logify: 0.00s (cached: True)
+
+[2/10] Premise 1: 378 words, 16 hypotheses
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+#################### 
+FUNCTION: translate_query : Ben Johnson told reporters that he lost his gold medal after testing positive for steroids in Seoul.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Ben Johnson told reporters that he lost his gold medal after testing positive for steroids in Seoul., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 51 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 62 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 51 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8716 (NLI score: 0.9990)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_6&P_2&P_5': 3}
+[Adaptive Voting] Winner: P_6&P_2&P_5 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
+[DEBUG] Parsing formula: 'P_6 ∧ P_2 ∧ P_5'
+  [x] hyp 1: pred=UNCERTAIN (uncertain) gt=entailment
+      formula: P_6 ∧ P_2 ∧ P_5
+      nli_confidence: 1.00
+      sbert_confidence: 0.87
+      voting: TRIGGERED (conf=1.00, counts={'P_6&P_2&P_5': 3})
+#################### 
+FUNCTION: translate_query : Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 51 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 23 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
