@@ -82,7 +82,6 @@ CACHE_DIR = _script_dir / "cache"
 RESULTS_DIR = _script_dir / "results"
 DATASET_DIR = _script_dir / "dataset"
 
-#DATASET_EXPERIMENT = "data_claude_constructed_sudhir.json"
 DATASET_EXPERIMENT = "data_test_balanced4way.json"
 
 
