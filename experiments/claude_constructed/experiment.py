@@ -84,6 +84,7 @@ from config.retrieval_config import (
     SBERT_TOP_K,
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
+    USE_ENRICHMENT_KB
 )
 
 
@@ -290,12 +291,13 @@ def logify_premise(
         f.write(text)
 
     # Enrich logic structure
-    enrich_logic_structure(
-        logified_path=str(intermediate_path),
-        source_path=str(temp_text_path),
-        output_path=str(intermediate_path),
-        verbose=verbose,
-    )
+    if USE_ENRICHMENT_KB:
+        enrich_logic_structure(
+            logified_path=str(intermediate_path),
+            source_path=str(temp_text_path),
+            output_path=str(intermediate_path),
+            verbose=verbose,
+        )
 
     # Assign weights
     if verbose:
