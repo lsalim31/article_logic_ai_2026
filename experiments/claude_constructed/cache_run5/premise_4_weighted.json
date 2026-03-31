@@ -1,0 +1,776 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "The TSA kept $675,000 in spare change last year.",
+      "evidence": "Sentence 0: \"The TSA got to keep $ 675,000 in spare change ... last year.\"",
+      "explanation": "This is a single factual claim about an amount the TSA kept in a specific time period, with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "Travellers dropped spare change at airport security last year.",
+      "evidence": "Sentence 0: \"... spare change dropped by travellers at airport security last year.\"",
+      "explanation": "This is an atomic event description attributing the dropping of spare change to travellers at a location and time."
+    },
+    {
+      "id": "P_3",
+      "translation": "Airline passengers left behind more than $2.7 million in small coins over the past five years.",
+      "evidence": "Sentence 1: \"Over the past five years , airline passengers have left behind more than $ 2.7 million in quarters and dimes .\"",
+      "explanation": "This is a single quantitative claim over a time span; the coin types are compressed to 'small coins' to avoid an 'and' connective in the proposition text."
+    },
+    {
+      "id": "P_4",
+      "translation": "Transportation Security Administration figures indicate the collected funds are increasing every year.",
+      "evidence": "Sentence 2: \"... the funds collected appear to be increasing every year , according to figures from the Transportation Security Administration .\"",
+      "explanation": "This is an atomic claim attributing an increasing trend to TSA figures."
+    },
+    {
+      "id": "P_5",
+      "translation": "The TSA was allowed to keep $675,000 in spare change last year.",
+      "evidence": "Sentence 4: \"Last year the TSA were allowed to keep $ 675,000 in spare change ...\"",
+      "explanation": "This is a single permission/authorization statement tied to a time and amount."
+    },
+    {
+      "id": "P_6",
+      "translation": "The TSA collected $383,414 in 2008.",
+      "evidence": "Sentence 4: \"... what was collected in 2008 at $ 383,414 ...\"",
+      "explanation": "This is an atomic factual claim about an amount collected in a specific year."
+    },
+    {
+      "id": "P_7",
+      "translation": "Last year's $675,000 amount was almost double the 2008 amount.",
+      "evidence": "Sentence 4: \"... almost double what was collected in 2008 ...\"",
+      "explanation": "This is a single comparative claim between two yearly amounts, expressed without logical connectives."
+    },
+    {
+      "id": "P_8",
+      "translation": "Last year's sum exceeded the 2012 sum by $107,000.",
+      "evidence": "Sentence 5: \"The sum was $ 107,000 more than what passengers left behind in 2012 ...\"",
+      "explanation": "This is an atomic numeric comparison between last year and 2012."
+    },
+    {
+      "id": "P_9",
+      "translation": "Last year's sum exceeded the 2011 sum by more than $150,000.",
+      "evidence": "Sentence 5: \"... more than $ 150,000 than 2011 .\"",
+      "explanation": "This is an atomic numeric comparison between last year and 2011."
+    },
+    {
+      "id": "P_10",
+      "translation": "A person comes back to claim the money.",
+      "evidence": "Sentence 6: \"... if no one comes back to claim the money ...\"",
+      "explanation": "This is the positive/atomic version of the return-to-claim condition, enabling negation to be represented only in constraints."
+    },
+    {
+      "id": "P_11",
+      "translation": "The TSA is allowed to keep the money.",
+      "evidence": "Sentence 6: \"... the TSA are allowed to keep it .\"",
+      "explanation": "This is an atomic permission statement (the condition is handled as a separate constraint)."
+    },
+    {
+      "id": "P_12",
+      "translation": "The money stays with the TSA.",
+      "evidence": "Sentence 13: \"... if no one comes back to claim the money it stays with the TSA .\"",
+      "explanation": "This is an atomic claim about where the money ends up."
+    },
+    {
+      "id": "P_13",
+      "translation": "The agency is free to spend the money on actions that improve civil aviation security.",
+      "evidence": "Sentence 7: \"The agency is then free to spend anything they feel will improve the civil aviation security .\"",
+      "explanation": "This is an atomic authorization statement about permissible spending purpose."
+    },
+    {
+      "id": "P_14",
+      "translation": "The TSA makes every effort to reunite passengers with items left at the checkpoint.",
+      "evidence": "Sentence 8: \"... the agency 'makes every effort to reunite passengers with items left at the checkpoint ...\"",
+      "explanation": "This is an atomic policy/effort claim by TSA officials."
+    },
+    {
+      "id": "P_15",
+      "translation": "Loose change is left behind at the checkpoint.",
+      "evidence": "Sentence 8: \"... there are instances where loose change ... are left behind ...\"",
+      "explanation": "This is an atomic statement about loose change being left behind."
+    },
+    {
+      "id": "P_16",
+      "translation": "Loose change remains at the checkpoint.",
+      "evidence": "Sentence 8: \"... loose change ... are left behind and unclaimed .\"",
+      "explanation": "This is a positive re-encoding of the 'unclaimed' idea without explicit negation terms."
+    },
+    {
+      "id": "P_17",
+      "translation": "Other items are left behind at the checkpoint.",
+      "evidence": "Sentence 8: \"... or other items are left behind ...\"",
+      "explanation": "This is an atomic statement about non-coin items being left behind."
+    },
+    {
+      "id": "P_18",
+      "translation": "Other items remain at the checkpoint.",
+      "evidence": "Sentence 8: \"... other items are left behind and unclaimed .\"",
+      "explanation": "This is a positive re-encoding of the 'unclaimed' idea for other items without explicit negation terms."
+    },
+    {
+      "id": "P_19",
+      "translation": "Passengers remove loose coins from their pockets.",
+      "evidence": "Sentence 10: \"... loose coins passengers remove from their pockets ...\"",
+      "explanation": "This is an atomic behavioral claim about passengers."
+    },
+    {
+      "id": "P_20",
+      "translation": "Forgotten money consists of loose coins.",
+      "evidence": "Sentence 10: \"'Unclaimed money , typically consisting of loose coins ...'\"",
+      "explanation": "This is an atomic composition claim; the modality 'typically' is handled via constraint weight."
+    },
+    {
+      "id": "P_21",
+      "translation": "Forgotten money is documented.",
+      "evidence": "Sentence 10: \"... is documented ...\"",
+      "explanation": "This is an atomic process claim about handling forgotten/unclaimed money."
+    },
+    {
+      "id": "P_22",
+      "translation": "Forgotten money is turned into the TSA financial office.",
+      "evidence": "Sentence 10: \"... turned into the TSA financial office ...\"",
+      "explanation": "This is an atomic process claim about where the money is sent."
+    },
+    {
+      "id": "P_23",
+      "translation": "Congress gave the TSA the ability to use forgotten money to help fund security operations in 2005.",
+      "evidence": "Sentence 11: \"In 2005 , Congress gave the agency the ability to use the forgotten money to help fund security operations .\"",
+      "explanation": "This is an atomic legislative/authorization event claim including time."
+    },
+    {
+      "id": "P_24",
+      "translation": "The TSA can use forgotten money to help fund security operations.",
+      "evidence": "Sentence 11: \"... ability to use the forgotten money to help fund security operations .\"",
+      "explanation": "This is an atomic capability/permission statement derived directly from the stated 'ability'."
+    },
+    {
+      "id": "P_25",
+      "translation": "Phoenix airport offers travellers an opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12: \"Some airports , such as Phoenix ... offer travellers the opportunity to donate money to local charities at collection boxes at checkpoints .\"",
+      "explanation": "This is an atomic claim about a specific airport offering a donation option."
+    },
+    {
+      "id": "P_26",
+      "translation": "Columbus Ohio airport offers travellers an opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12: \"... Columbus , Ohio ... offer travellers the opportunity to donate money ...\"",
+      "explanation": "This is an atomic claim about a specific airport offering a donation option."
+    },
+    {
+      "id": "P_27",
+      "translation": "Denver International Airport offers travellers an opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12: \"... Denver International Airport , offer travellers the opportunity to donate money ...\"",
+      "explanation": "This is an atomic claim about a specific airport offering a donation option."
+    },
+    {
+      "id": "P_28",
+      "translation": "Some airports offer travellers an opportunity to donate money to local charities at collection boxes at checkpoints.",
+      "evidence": "Sentence 12: \"Some airports ... offer travellers the opportunity to donate money to local charities at collection boxes at checkpoints .\"",
+      "explanation": "This is an atomic generic/existential claim ('some airports') without internal logical connectives."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9989935755729675,
+      "combined=(llm)*(nli)": 0.9490438967943191,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_5",
+      "translation": "If the TSA kept $675,000 last year, then the TSA was allowed to keep $675,000 last year.",
+      "evidence": "Sentences 0 and 4",
+      "reasoning": "\"got to keep\" strongly implies having permission/authorization; the text also explicitly states the allowance.",
+      "list nli": [
+        [
+          0.0005677728913724422,
+          0.0004386572109069675,
+          0.9989935755729675
+        ],
+        [
+          0.0007594985072501004,
+          0.00029986214940436184,
+          0.998940646648407
+        ],
+        [
+          6.343577842926607e-05,
+          0.0011023053666576743,
+          0.9988343119621277
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999824583530426,
+      "combined=(llm)*(nli)": 0.999824583530426,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_10 ⟹ P_11",
+      "translation": "If no person comes back to claim the money, then the TSA is allowed to keep the money.",
+      "evidence": "Sentence 6",
+      "reasoning": "This is stated as a rule of federal law in the text.",
+      "list nli": [
+        [
+          7.006158739386592e-06,
+          0.00016849293024279177,
+          0.999824583530426
+        ],
+        [
+          5.9342537497286685e-06,
+          0.00018503454339224845,
+          0.9998090863227844
+        ],
+        [
+          1.9965485989814624e-05,
+          0.00023459123622160405,
+          0.9997454285621643
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9997898936271667,
+      "combined=(llm)*(nli)": 0.9997898936271667,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_10 ⟹ P_12",
+      "translation": "If no person comes back to claim the money, then the money stays with the TSA.",
+      "evidence": "Sentence 13",
+      "reasoning": "This is explicitly stated as a federal-law consequence in the text.",
+      "list nli": [
+        [
+          1.9162800526828505e-05,
+          0.00019097131735179573,
+          0.9997898936271667
+        ],
+        [
+          6.766620936105028e-05,
+          0.00030246982350945473,
+          0.9996298551559448
+        ],
+        [
+          3.938250301871449e-06,
+          0.0003710364399012178,
+          0.9996249675750732
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9998937845230103,
+      "combined=(llm)*(nli)": 0.9498990952968597,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_23 ⟹ P_24",
+      "translation": "If Congress gave the TSA the ability to use forgotten money to fund security operations in 2005, then the TSA can use forgotten money to help fund security operations.",
+      "evidence": "Sentence 11",
+      "reasoning": "Granting an ability strongly implies the resulting capability/permission; this is essentially a definitional unpacking.",
+      "list nli": [
+        [
+          3.473112883511931e-05,
+          7.152013131417334e-05,
+          0.9998937845230103
+        ],
+        [
+          3.043782271561213e-05,
+          0.0001016770547721535,
+          0.9998679161071777
+        ],
+        [
+          1.5778923625475727e-05,
+          0.00012190268171252683,
+          0.9998623132705688
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999345541000366,
+      "combined=(llm)*(nli)": 0.9999345541000366,
+      "hardness_constant": 0.9,
+      "id": "C_16",
+      "formula": "P_5",
+      "translation": "The TSA was allowed to keep $675,000 in spare change last year.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          2.062053135887254e-05,
+          4.482453005039133e-05,
+          0.9999345541000366
+        ],
+        [
+          4.3332900531822816e-05,
+          4.612618431565352e-05,
+          0.9999104738235474
+        ],
+        [
+          0.00018865866877604276,
+          2.027668415394146e-05,
+          0.9997910857200623
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998388290405273,
+      "combined=(llm)*(nli)": 0.9998388290405273,
+      "hardness_constant": 0.9,
+      "id": "C_18",
+      "formula": "P_11",
+      "translation": "The TSA is allowed to keep the money.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          5.358144699130207e-05,
+          0.00010758145072031766,
+          0.9998388290405273
+        ],
+        [
+          0.0002971092180814594,
+          6.656852929154411e-05,
+          0.9996362924575806
+        ],
+        [
+          1.3867050256521907e-05,
+          0.0009220373467542231,
+          0.9990641474723816
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9954146146774292,
+      "combined=(llm)*(nli)": 0.9954146146774292,
+      "hardness_constant": 0.9,
+      "id": "C_19",
+      "formula": "P_11 ⟹ P_11",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.002062996383756399,
+          0.0025223696138709784,
+          0.9954146146774292
+        ],
+        [
+          0.007184113375842571,
+          0.02319176122546196,
+          0.9696241021156311
+        ],
+        [
+          0.009298465214669704,
+          0.04635070264339447,
+          0.9443508386611938
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.99983811378479,
+      "combined=(llm)*(nli)": 0.99983811378479,
+      "hardness_constant": 0.9,
+      "id": "C_20",
+      "formula": "P_24",
+      "translation": "The TSA can use forgotten money to help fund security operations.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          2.0844683604082093e-05,
+          0.00014103983994573355,
+          0.99983811378479
+        ],
+        [
+          8.036600047489628e-05,
+          0.00010705472232075408,
+          0.999812662601471
+        ],
+        [
+          8.553013685741462e-06,
+          0.00020050381135661155,
+          0.9997909665107727
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9954146146774292,
+      "combined=(llm)*(nli)": 0.9954146146774292,
+      "hardness_constant": 0.9,
+      "id": "C_21",
+      "formula": "P_24 ⟹ P_24",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.002062996383756399,
+          0.0025223696138709784,
+          0.9954146146774292
+        ],
+        [
+          0.007184113375842571,
+          0.02319176122546196,
+          0.9696241021156311
+        ],
+        [
+          0.009298465214669704,
+          0.04635070264339447,
+          0.9443508386611938
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 0.9997065663337708,
+      "combined=(llm)*(nli)": 0.7497799247503281,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_1",
+      "translation": "If the TSA was allowed to keep $675,000 last year, then the TSA kept $675,000 last year.",
+      "evidence": "Sentences 0 and 4",
+      "reasoning": "Permission alone does not always entail the action, but here the narrative presents the amount as money the TSA in fact kept.",
+      "list nli": [
+        [
+          0.00013936981849838048,
+          0.0001540814555482939,
+          0.9997065663337708
+        ],
+        [
+          0.00065661157714203,
+          0.00026348113897256553,
+          0.9990799427032471
+        ],
+        [
+          0.0009396938257850707,
+          0.0002630579110700637,
+          0.9987971782684326
+        ]
+      ],
+      "weight": 0.7497799247503281
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9994603991508484,
+      "combined=(llm)*(nli)": 0.8495413392782211,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If the TSA kept $675,000 in spare change last year, then travellers dropped spare change at airport security last year.",
+      "evidence": "Sentence 0",
+      "reasoning": "The kept money is described as spare change dropped by travellers at airport security; this makes the dropping a strong implied source of the kept change.",
+      "list nli": [
+        [
+          0.0005133591475896537,
+          2.6271603928762488e-05,
+          0.9994603991508484
+        ],
+        [
+          0.0005267302040010691,
+          3.6395544157130644e-05,
+          0.9994367957115173
+        ],
+        [
+          0.0008430892485193908,
+          4.656673991121352e-05,
+          0.9991102814674377
+        ]
+      ],
+      "weight": 0.8495413392782211
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9995275735855103,
+      "combined=(llm)*(nli)": 0.8995748162269592,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7 ⟹ (P_1 ∧ P_6)",
+      "translation": "If last year's $675,000 was almost double the 2008 amount, then the last-year amount and the 2008 amount are both in force as stated amounts.",
+      "evidence": "Sentence 4",
+      "reasoning": "The 'almost double' comparison presupposes the two referenced yearly amounts; the text provides both.",
+      "list nli": [
+        [
+          0.00032368910615332425,
+          0.00014880677917972207,
+          0.9995275735855103
+        ],
+        [
+          0.0008186185732483864,
+          0.0006664753891527653,
+          0.9985149502754211
+        ],
+        [
+          0.00476052425801754,
+          0.0010045035742223263,
+          0.9942349791526794
+        ]
+      ],
+      "weight": 0.8995748162269592
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998717308044434,
+      "combined=(llm)*(nli)": 0.899884557723999,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_8 ⟹ P_1",
+      "translation": "If last year's sum exceeded the 2012 sum by $107,000, then the TSA kept $675,000 last year.",
+      "evidence": "Sentence 5 (referring back to Sentence 4)",
+      "reasoning": "\"The sum\" in Sentence 5 refers to the $675,000 amount introduced immediately before.",
+      "list nli": [
+        [
+          4.3621083023026586e-05,
+          8.468491432722658e-05,
+          0.9998717308044434
+        ],
+        [
+          1.8422135326545686e-05,
+          0.0001474744494771585,
+          0.9998340606689453
+        ],
+        [
+          0.0004617412923835218,
+          5.5118740419857204e-05,
+          0.9994831085205078
+        ]
+      ],
+      "weight": 0.899884557723999
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998551607131958,
+      "combined=(llm)*(nli)": 0.8998696446418762,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_9 ⟹ P_1",
+      "translation": "If last year's sum exceeded the 2011 sum by more than $150,000, then the TSA kept $675,000 last year.",
+      "evidence": "Sentence 5 (referring back to Sentence 4)",
+      "reasoning": "As with the 2012 comparison, \"the sum\" refers to the already-stated last-year amount.",
+      "list nli": [
+        [
+          7.180303509812802e-05,
+          7.307251507882029e-05,
+          0.9998551607131958
+        ],
+        [
+          3.467473652563058e-05,
+          0.00012111967225791886,
+          0.9998441934585571
+        ],
+        [
+          1.4297474990598857e-05,
+          0.00025422207545489073,
+          0.9997314810752869
+        ]
+      ],
+      "weight": 0.8998696446418762
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996121525764465,
+      "combined=(llm)*(nli)": 0.8996509373188019,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_25 ⟹ P_28",
+      "translation": "If Phoenix airport offers checkpoint charity donation boxes, then some airports offer checkpoint charity donation boxes.",
+      "evidence": "Sentence 12",
+      "reasoning": "A specific example airport providing the opportunity entails that at least one airport (hence 'some airports') provides it.",
+      "list nli": [
+        [
+          1.6319587302859873e-05,
+          0.0003716042556334287,
+          0.9996121525764465
+        ],
+        [
+          0.00011215296399313956,
+          0.0002798269269987941,
+          0.9996080994606018
+        ],
+        [
+          0.0004329474177211523,
+          9.02635874808766e-05,
+          0.9994768500328064
+        ]
+      ],
+      "weight": 0.8996509373188019
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9997474551200867,
+      "combined=(llm)*(nli)": 0.899772709608078,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_26 ⟹ P_28",
+      "translation": "If Columbus Ohio airport offers checkpoint charity donation boxes, then some airports offer checkpoint charity donation boxes.",
+      "evidence": "Sentence 12",
+      "reasoning": "Same entailment from a specific example to the existential/general claim.",
+      "list nli": [
+        [
+          9.472397505305707e-05,
+          0.00015780563990119845,
+          0.9997474551200867
+        ],
+        [
+          1.068204983312171e-05,
+          0.00033135124249383807,
+          0.9996579885482788
+        ],
+        [
+          0.0006017809500917792,
+          0.00012478142161853611,
+          0.9992734789848328
+        ]
+      ],
+      "weight": 0.899772709608078
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996581077575684,
+      "combined=(llm)*(nli)": 0.8996922969818115,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_27 ⟹ P_28",
+      "translation": "If Denver International Airport offers checkpoint charity donation boxes, then some airports offer checkpoint charity donation boxes.",
+      "evidence": "Sentence 12",
+      "reasoning": "Same entailment from a specific example to the existential/general claim.",
+      "list nli": [
+        [
+          1.2972789591003675e-05,
+          0.00032892319723032415,
+          0.9996581077575684
+        ],
+        [
+          0.000156005538883619,
+          0.0002566666516941041,
+          0.99958735704422
+        ],
+        [
+          0.00043566423119045794,
+          6.622755608987063e-05,
+          0.9994981288909912
+        ]
+      ],
+      "weight": 0.8996922969818115
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9999024868011475,
+      "combined=(llm)*(nli)": 0.6999317407608032,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "P_19 ⟹ P_20",
+      "translation": "If passengers remove loose coins from their pockets, then forgotten money consists of loose coins.",
+      "evidence": "Sentence 10",
+      "reasoning": "The text says forgotten/unclaimed money 'typically' consists of loose coins removed from pockets; 'typically' motivates a non-maximal weight.",
+      "list nli": [
+        [
+          4.471200372790918e-05,
+          5.2824885642621666e-05,
+          0.9999024868011475
+        ],
+        [
+          1.9291890566819347e-05,
+          8.123165025608614e-05,
+          0.9998995065689087
+        ],
+        [
+          6.627936090808362e-05,
+          3.8945054257055745e-05,
+          0.9998947381973267
+        ]
+      ],
+      "weight": 0.6999317407608032
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998968839645386,
+      "combined=(llm)*(nli)": 0.8999071955680847,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_21 ∧ P_22",
+      "translation": "Forgotten money is documented and it is turned into the TSA financial office.",
+      "evidence": "Sentence 10",
+      "reasoning": "The statement directly asserts both handling steps; the high weight reflects that it is presented as agency procedure.",
+      "list nli": [
+        [
+          5.0317394197918475e-05,
+          5.272966518532485e-05,
+          0.9998968839645386
+        ],
+        [
+          6.88086511217989e-05,
+          4.777002686751075e-05,
+          0.9998834133148193
+        ],
+        [
+          2.5684874344733544e-05,
+          0.00011020364763680845,
+          0.9998641014099121
+        ]
+      ],
+      "weight": 0.8999071955680847
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9998756647109985,
+      "combined=(llm)*(nli)": 0.5999253988265991,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_14 ⟹ (P_15 ∨ P_17)",
+      "translation": "If the TSA makes every effort to reunite passengers with items left at the checkpoint, then loose change is left behind at the checkpoint or other items are left behind at the checkpoint.",
+      "evidence": "Sentence 8",
+      "reasoning": "Reuniting implies the presence of left-behind items, but the 'every effort' claim is policy-like and does not logically require any particular left-behind category in all worlds; hence moderate weight.",
+      "list nli": [
+        [
+          7.811718387529254e-05,
+          4.625677320291288e-05,
+          0.9998756647109985
+        ],
+        [
+          8.010017336346209e-05,
+          0.00011325748346280307,
+          0.9998067021369934
+        ],
+        [
+          3.2967760489555076e-05,
+          0.00023945739667396992,
+          0.9997275471687317
+        ]
+      ],
+      "weight": 0.5999253988265991
+    },
+    {
+      "llm-weight": 0.5,
+      "nli_entailment": 0.999889612197876,
+      "combined=(llm)*(nli)": 0.499944806098938,
+      "hardness_constant": 0.9,
+      "id": "C_17",
+      "formula": "P_1",
+      "translation": "The TSA kept $675,000 in spare change last year.",
+      "evidence": "Auto-generated",
+      "reasoning": "Derived base event from 'allowed' has weight 0.5",
+      "list nli": [
+        [
+          8.864597475621849e-05,
+          2.1677005861420184e-05,
+          0.999889612197876
+        ],
+        [
+          8.348226401722059e-05,
+          2.7667685571941547e-05,
+          0.9998888969421387
+        ],
+        [
+          9.381498239235952e-05,
+          2.1418289179564454e-05,
+          0.9998847246170044
+        ]
+      ],
+      "weight": 0.499944806098938
+    }
+  ]
+}
