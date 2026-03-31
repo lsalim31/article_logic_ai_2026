@@ -10,15 +10,14 @@ Given natural language text T and POSSIBLY its Stanford OpenIE relation triples 
    - Non-redundant: avoid paraphrase duplicates; do not split into overlapping variants unless required by uncertainty rules
    - Include natural language meaning and textual evidence
    - Propositions must be specific, complete, and exhaustive for all constraints
-   - CRITICAL: The proposition TEXT must be a simple declarative clause with no conditional words ("if", "when", "unless", "whenever", "not") or logical connectives ("and", "or"). If the original text contains these, extract the component clauses as separate propositions and express the relationship in a constraint formula.
-
+   - CRITICAL: The proposition TEXT must be a simple declarative clause with no conditional words ("if", "when", "unless", "whenever", "not") or logical connectives ("and", "or").
 2. CONSTRAINTS WITH WEIGHTS (C_1, C_2, ..., C_m)
    - Zero-order propositional formulas over {P_1, ..., P_n} suggested by the text
    - Each constraint has a llm_weight between 0 and 1 describing how strongly the text implies the formula holds
    - llm_weight = 1.0 means the constraint must hold
    - llm_weight = 0.5 means the constraint may be satsified with 50% uncertainty. 
    - Include meaning, evidence, and reasoning from text
-   - If contradictions exist, prioritize text intent; include inconsistencies if genuinely intended
+   - If contradictions exist, prioritize text intent; only include inconsistencies if genuinely intended
    - IMPORTANT: You must look at the primitive propositions and examine their translations. There may be common-sense semantic relationships between them. You must include constraints corresponding to these relationships with appropriate weights, including implied logical constraints.
 
 METHODOLOGY
@@ -45,7 +44,6 @@ STEP 2: Construct Primitive Propositions
     → P_13: "Alice is focused" (simple declarative)
     → P_14: "Alice completes her assignments on time" (simple declarative)
     → Then create constraint: C: P_13 ⟹ P_14 with weight 1.0
-- Do not invent named entities, times, locations, or categories not present in the original text unless required by a finite, explicitly relevant alternative set for mutual exclusion
 - Remove ALL Modal/uncertainty word and use them to help inform what the weights of constraints are: these are word indicating modality, frequency, or strength such as
   always, never, usually, typically, generally, often, frequently, sometimes, occasionally, rarely, seldom,
   may, might, could, can, should, ought, encouraged, discouraged, recommended, optional. 
