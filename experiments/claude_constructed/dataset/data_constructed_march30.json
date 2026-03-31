@@ -1,0 +1,958 @@
+{
+  "metadata": {
+    "source": "DocNLI (premises) + LLM generated single-sentence hypotheses",
+    "original_sources": [
+      "/home/logify/article_logic_ai_2026/experiments/DocNLI/docnli-long_100_400/sample_10.json",
+      "/home/logify/article_logic_ai_2026/experiments/DocNLI/doc-nli/sample_100.json"
+    ],
+    "generation_method": "LLM-generated single-sentence hypotheses for 4-way NLI testing",
+    "generation_model": "openai/gpt-4.1",
+    "reasoning_effort": "medium",
+    "filter_criteria": {
+      "min_words": 100,
+      "max_words": 500,
+      "hypotheses_per_label": 4
+    },
+    "download_timestamp": "2026-03-31T01:17:45.885439",
+    "num_premises": 10,
+    "num_examples": 160,
+    "label_distribution": {
+      "entailment": 40,
+      "contradiction": 40,
+      "uncertain": 40,
+      "not_mentioned": 40
+    },
+    "label_set": [
+      "entailment",
+      "contradiction",
+      "uncertain",
+      "not_mentioned"
+    ],
+    "avg_hypotheses_per_premise": 16,
+    "is_single_sentence": true,
+    "is_4way_classification": true,
+    "not_mentioned_split": "2 hard (same-domain) + 2 easy (off-topic)"
+  },
+  "premises": [
+    {
+      "premise_id": 0,
+      "premise": "Native advertising supply-side platform (SSP) Sharethrough on Tuesday announced a native programmatic ad integration with Adelphic, a mobile and cross-channel demand-side platform (DSP). The integration aims to help trading desks and media buyers who use Adelphic\u2019s DSP to access large audiences with in-feed display and video placements across mobile sites and apps on the Sharethrough Exchange through Adelphic\u2019s self-serve native workflow. The deal combines Adelphic\u2019s mobile ad expertise with Sharethrough\u2019s publisher network. It will comply with the Interactive Advertising Bureau\u2019s OpenRTB 2.3 specification that standardized the component parts for the real-time trading of native ads. Adelphic is known in the mobile and cross-channel advertising spaces for developing patented technology that overcomes the limits of user identification in mobile and across channels. Its technology aims to break down billions of data points to help brands better understand which customers they\u2019re talking to on mobile platforms. advertisement advertisement Sharethrough said Adelphic is the first DSP to allow third-party buyers to purchase native video placements on the Sharethrough Exchange programmatically. \u201cIntegrating with a vertical DSP like Adelphic shows how much the programmatic native market has matured,\u201d Alex White, VP product marketing at Sharethrough, told Real-Time Daily via email. White hinted that he expects more integrations in 2017 to support in-feed native video programmatically. Sharethrough reported $140 million in native ad spend running through its platform in 2016. More than 75% of the impressions served through the Sharethrough Exchange in Q3 2016 were on mobile devices, with 77% of that inventory from the mobile Web. Sharethrough also said mobile native ads present unique requirements, as the units\u2019 dimensions need to be optimized for with click-through rates that can be as much as three times higher than desktop ads. But they also have lower viewability rates than desktop equivalents \u2014 24% viewability on mobile vs. 38% on desktop, according to the company\u2019s data. Native video on mobile is projected to exceed $20 billion in ad spend in 2017, according to Business Insider Intelligence.",
+      "premise_word_count": 328,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Sharethrough announced a native programmatic ad integration with Adelphic on Tuesday.",
+          "label": "entailment",
+          "original_idx": 0
+        },
+        {
+          "hypothesis": "Adelphic\u2019s DSP users can access in-feed display and video placements on mobile sites and apps via the Sharethrough Exchange.",
+          "label": "entailment",
+          "original_idx": 1
+        },
+        {
+          "hypothesis": "The integration between Sharethrough and Adelphic will comply with the Interactive Advertising Bureau\u2019s OpenRTB 2.3 specification.",
+          "label": "entailment",
+          "original_idx": 2
+        },
+        {
+          "hypothesis": "Sharethrough reported $140 million in native ad spend running through its platform in 2016.",
+          "label": "entailment",
+          "original_idx": 3
+        },
+        {
+          "hypothesis": "Sharethrough announced a native programmatic ad integration with The Trade Desk on Tuesday.",
+          "label": "contradiction",
+          "original_idx": 4
+        },
+        {
+          "hypothesis": "Sharethrough reported $200 million in native ad spend running through its platform in 2016.",
+          "label": "contradiction",
+          "original_idx": 5
+        },
+        {
+          "hypothesis": "Adelphic is not known for developing patented technology to overcome the limits of user identification.",
+          "label": "contradiction",
+          "original_idx": 6
+        },
+        {
+          "hypothesis": "According to the company, Alex White is the CEO of Sharethrough.",
+          "label": "contradiction",
+          "original_idx": 7
+        },
+        {
+          "hypothesis": "The integration between Sharethrough and Adelphic will include support for desktop-only native ads.",
+          "label": "uncertain",
+          "original_idx": 8
+        },
+        {
+          "hypothesis": "Adelphic\u2019s DSP may allow buyers to purchase native audio placements on the Sharethrough Exchange in the future.",
+          "label": "uncertain",
+          "original_idx": 9
+        },
+        {
+          "hypothesis": "Sharethrough and Adelphic could expand their partnership to include additional ad formats next year.",
+          "label": "uncertain",
+          "original_idx": 10
+        },
+        {
+          "hypothesis": "Some trading desks using Adelphic\u2019s DSP might have exclusive access to certain Sharethrough inventory.",
+          "label": "uncertain",
+          "original_idx": 11
+        },
+        {
+          "hypothesis": "Rubicon Project partnered with AppNexus to launch a new programmatic video ad solution for publishers.",
+          "label": "not_mentioned",
+          "original_idx": 12
+        },
+        {
+          "hypothesis": "In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs.",
+          "label": "not_mentioned",
+          "original_idx": 13
+        },
+        {
+          "hypothesis": "The European Central Bank raised interest rates in March 2017 to curb inflation.",
+          "label": "not_mentioned",
+          "original_idx": 14
+        },
+        {
+          "hypothesis": "Toyota announced a recall of 500,000 vehicles due to faulty airbags.",
+          "label": "not_mentioned",
+          "original_idx": 15
+        }
+      ]
+    },
+    {
+      "premise_id": 1,
+      "premise": "Ben Johnson, the world-class sprinter knocked off track and field's pedestal after testing positive for steroids, says it's wrong for athletes to use the muscle-building substance. ``I got caught in Seoul. I lost my gold medal,'' the Canadian told reporters as legislation to classify anabolic steroids as a controlled substance was introduced Thursday. ``I'm here to tell the people of this country it's wrong to cheat, not to take it, it's bad for your health.'' Watching Johnson was his chief nemesis: Carl Lewis, the man who was awarded the Olympic gold medals Johnson lost. ``I think it's great,'' Lewis said of the legislation. ``They're making a move and it's very positive. I'm happy to see it.'' However, the flamboyant, pony-tailed Lewis told reporters: ``I don't understand why Ben Johnson's here.'' Lewis said he attended the news conference because he was working on his autobiography and one of the chapters deals with steroids. He said he didn't intend to upstage Johnson. Reps. Mel Levine, D-Calif., Henry Waxman, D-Calif., and Benjamin Gilman, R-N.Y., invited Johnson to attend as they presented the legislation that would make anabolic steroids a controlled substance, similar to the designation given cocaine and heroin. The lawmakers emphasized the increasing abuse of steroids by college, high school and even junior high school athletes who believe the substance will enhance their performance. ``America is about to have an adolescent time-bomb explode in its hands,'' Levine said. ``But if we act quickly enough to restrict steroid distribution, and to increase the penalties for illicit distribution, we can prevent this plague from spreading.'' Levine referred to the abuse of steroids as ``the silent side of the drug disease in this country.'' He applauded Johnson's courage for attending the news conference. Johnson later stepped up to the microphones and in a quiet voice with a slight stutter told other athletes not to make the same mistake he did, urging them ``to come forward, to come clean.'' Lewis dismissed reporters' questions that he had used steroids, indicating he would be willing to run against Johnson ``if he comes back and he's clean.'' While Lewis held the spotlight, Johnson slipped away to adjoining congressional offices. ``He's not here to compete with Carl Lewis. I hope he will someday,'' said Ed Futerman, Johnson's lawyer.",
+      "premise_word_count": 378,
+      "source_file": "sample_10.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Ben Johnson told reporters that he lost his gold medal after testing positive for steroids in Seoul.",
+          "label": "entailment",
+          "original_idx": 16
+        },
+        {
+          "hypothesis": "Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost.",
+          "label": "entailment",
+          "original_idx": 17
+        },
+        {
+          "hypothesis": "Reps. Mel Levine, Henry Waxman, and Benjamin Gilman introduced legislation to classify anabolic steroids as a controlled substance.",
+          "label": "entailment",
+          "original_idx": 18
+        },
+        {
+          "hypothesis": "Levine said that steroid abuse among college, high school, and junior high school athletes is increasing.",
+          "label": "entailment",
+          "original_idx": 19
+        },
+        {
+          "hypothesis": "Ben Johnson told reporters that he won a silver medal after testing positive for steroids in Seoul.",
+          "label": "contradiction",
+          "original_idx": 20
+        },
+        {
+          "hypothesis": "Carl Lewis was awarded the Olympic gold medals that Johnson lost in 1988 in Barcelona.",
+          "label": "contradiction",
+          "original_idx": 21
+        },
+        {
+          "hypothesis": "Lewis said he attended the news conference to upstage Ben Johnson.",
+          "label": "contradiction",
+          "original_idx": 22
+        },
+        {
+          "hypothesis": "Rep. John Smith, R-Texas, invited Johnson to attend the legislation presentation.",
+          "label": "contradiction",
+          "original_idx": 23
+        },
+        {
+          "hypothesis": "Ben Johnson apologized personally to Carl Lewis during the news conference.",
+          "label": "uncertain",
+          "original_idx": 24
+        },
+        {
+          "hypothesis": "Carl Lewis and Ben Johnson discussed their rivalry privately after the event.",
+          "label": "uncertain",
+          "original_idx": 25
+        },
+        {
+          "hypothesis": "The legislation introduced on Thursday was unanimously supported by all members of Congress.",
+          "label": "uncertain",
+          "original_idx": 26
+        },
+        {
+          "hypothesis": "Ed Futerman represented Ben Johnson in previous legal matters related to doping.",
+          "label": "uncertain",
+          "original_idx": 27
+        },
+        {
+          "hypothesis": "Jamaican sprinter Yohan Blake advocated for stricter anti-doping measures at a recent international athletics summit.",
+          "label": "not_mentioned",
+          "original_idx": 28
+        },
+        {
+          "hypothesis": "The International Olympic Committee revised its anti-doping protocols following a scandal involving Russian athletes.",
+          "label": "not_mentioned",
+          "original_idx": 29
+        },
+        {
+          "hypothesis": "The European Central Bank raised interest rates in March to combat inflation.",
+          "label": "not_mentioned",
+          "original_idx": 30
+        },
+        {
+          "hypothesis": "Toyota announced a recall of 500,000 vehicles due to faulty airbags.",
+          "label": "not_mentioned",
+          "original_idx": 31
+        }
+      ]
+    },
+    {
+      "premise_id": 2,
+      "premise": "A 1987 state constitutional amendment broadening the right to bear arms means that even convicted felons may own guns, a judge ruled. Cumberland County Superior Court Justice Stephen L. Perkins on Friday dismissed a charge of possession of a firearm by a felon against Edward Brown of Cumberland. Prosecutors had argued that the amendment's backers did not intend to allow felons to own guns, but the judge said nothing in the amendment indicated such an intent. ``If Maine legislators and citizens wanted to restrict or qualify the right to keep and bear arms, they could have enacted a constitutional provision that contained the desired restrictions,'' Perkins wrote. ``Maine's right to keep and bear arms amendment is the most broad and least restrictive of any of the 43 similar state amendments,'' he wrote. Attorney General James E. Tierney said Saturday that the case would be appealed, adding, ``With all due respect to Justice Perkins, we think he is wrong.'' The Maine constitution used to guaranteed the right to keep and bear arms ``for the common defense.'' In 1986, the Maine Supreme Court upheld a gun violation by focusing on the ``common defense'' phrase. In response, the Legislature enacted a constitutional amendment deleting that language, and voters approved it in November 1987. The amendment declared, ``Every citizen has a right to keep and bear arms,and this right shall never be questioned.'' Brown had been accused of criminal threatening in 1988, as well as with illegal possession of a gun. He previously had been convicted under the state's habitual offender law for operating a motor vehicle after his driver's license had been revoked. Perkins denied a motion to dismiss the criminal threatening charge, but threw out the gun possession charge, saying ``there is simply no rational connection'' between Brown's previous conviction and his ownership of a firearm.",
+      "premise_word_count": 304,
+      "source_file": "sample_10.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Justice Stephen L. Perkins dismissed a charge of possession of a firearm by a felon against Edward Brown of Cumberland.",
+          "label": "entailment",
+          "original_idx": 32
+        },
+        {
+          "hypothesis": "The Maine constitution was amended in 1987 to declare that every citizen has a right to keep and bear arms, and this right shall never be questioned.",
+          "label": "entailment",
+          "original_idx": 33
+        },
+        {
+          "hypothesis": "Attorney General James E. Tierney said the case would be appealed and stated that he thinks Justice Perkins is wrong.",
+          "label": "entailment",
+          "original_idx": 34
+        },
+        {
+          "hypothesis": "Prosecutors argued that the amendment's backers did not intend to allow felons to own guns, but the judge found no such intent in the amendment.",
+          "label": "entailment",
+          "original_idx": 35
+        },
+        {
+          "hypothesis": "Justice Michael R. Stevens dismissed a charge of possession of a firearm by a felon against Edward Brown of Cumberland.",
+          "label": "contradiction",
+          "original_idx": 36
+        },
+        {
+          "hypothesis": "The Maine constitution was amended in 1985 to declare that every citizen has a right to keep and bear arms.",
+          "label": "contradiction",
+          "original_idx": 37
+        },
+        {
+          "hypothesis": "Justice Perkins upheld the charge of possession of a firearm by a felon against Edward Brown.",
+          "label": "contradiction",
+          "original_idx": 38
+        },
+        {
+          "hypothesis": "Attorney General James E. Tierney agreed with Justice Perkins's ruling and said there would be no appeal.",
+          "label": "contradiction",
+          "original_idx": 39
+        },
+        {
+          "hypothesis": "Edward Brown may have been acquitted of the criminal threatening charge.",
+          "label": "uncertain",
+          "original_idx": 40
+        },
+        {
+          "hypothesis": "Justice Perkins might have previously ruled on other constitutional gun rights cases.",
+          "label": "uncertain",
+          "original_idx": 41
+        },
+        {
+          "hypothesis": "The prosecutors could appeal the dismissal of the gun possession charge to a higher court.",
+          "label": "uncertain",
+          "original_idx": 42
+        },
+        {
+          "hypothesis": "Edward Brown may have owned multiple firearms at the time of his arrest.",
+          "label": "uncertain",
+          "original_idx": 43
+        },
+        {
+          "hypothesis": "The New Hampshire Supreme Court recently ruled on the legality of firearm possession by non-citizens.",
+          "label": "not_mentioned",
+          "original_idx": 44
+        },
+        {
+          "hypothesis": "In 1990, Vermont voters rejected a proposed amendment to expand hunting rights in the state constitution.",
+          "label": "not_mentioned",
+          "original_idx": 45
+        },
+        {
+          "hypothesis": "The European Space Agency launched a new satellite to monitor climate change in April.",
+          "label": "not_mentioned",
+          "original_idx": 46
+        },
+        {
+          "hypothesis": "Samsung unveiled its latest foldable smartphone model at a technology expo in Barcelona.",
+          "label": "not_mentioned",
+          "original_idx": 47
+        }
+      ]
+    },
+    {
+      "premise_id": 3,
+      "premise": "( CNN ) About 150,000 years ago -- give or take 20,000 -- a guy fell into a well . Last month he made science history . The Altamura Man became the oldest Neanderthal to have his DNA extracted by researchers . It took them more than 20 years to get around to doing it . Scientists in southern Italy have known about him since 1993 , when spelunkers spied his skull staring blankly back at them from its nook in the Lamalunga cave , deep under the town of Altamura . The cave explorers told researchers at the University of Bari what they 'd found , according to their report published in March in the Journal of Human Evolution and Phys.org . Altamura Man 's intact skull and jumbled pile of bones made for a great specimen , but they were wedged into a panoply of stalactites and stony globules deposited by water dripping over them for tens of thousands of years . Researchers decided not to rescue the bones for fear that trying to ease them out of the cave 's calcified grip would shatter them and ruin Altamura Man . So , they left him forever a cave man . Calcite pebbles line the Neanderthal 's eye sockets , nose bone and an upper jaw like a hundred decorative piercings . Analysis of the calcite has shown the bones to be 128,000 to 187,000 years old . Scientists believe Altamura Man wound up in the cave at least that long ago after falling into a prehistoric well , then died in the caverns at its bottom of thirst or hunger . Recently , researchers made an exception , and toted off a chip from his right shoulder blade to the lab . Metrics taken of his skeleton confirm Altamura Man was a Homo neanderthalensis . He will spend perhaps endless eons glaring silently out of his cranny in the world 's most secluded spot , or , as Altamura 's archeological museum describes it , `` in the corner of a small cavity situated between the ground and the back wall . '' The scientists hope they will be able to sequence his DNA , to find out more about the evolution of all hominids -- including us . And to hear some of Altamura Man 's story about life in Neanderthals ' early days in Europe , before he happened to stumble into that darned hole .",
+      "premise_word_count": 411,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Researchers extracted DNA from the Altamura Man, whose remains were discovered in the Lamalunga cave near Altamura.",
+          "label": "entailment",
+          "original_idx": 48
+        },
+        {
+          "hypothesis": "The Altamura Man's intact skull and bones were found wedged among stalactites and calcite deposits.",
+          "label": "entailment",
+          "original_idx": 49
+        },
+        {
+          "hypothesis": "Scientists in southern Italy have known about the Altamura Man since 1993, when spelunkers found his skull in the cave.",
+          "label": "entailment",
+          "original_idx": 50
+        },
+        {
+          "hypothesis": "Analysis of calcite showed the Altamura Man's bones to be between 128,000 and 187,000 years old.",
+          "label": "entailment",
+          "original_idx": 51
+        },
+        {
+          "hypothesis": "Researchers at the University of Naples extracted DNA from the Altamura Woman.",
+          "label": "contradiction",
+          "original_idx": 52
+        },
+        {
+          "hypothesis": "The bones of Altamura Man were dated to be about 15,000 years old.",
+          "label": "contradiction",
+          "original_idx": 53
+        },
+        {
+          "hypothesis": "Scientists removed all of Altamura Man's bones from the cave for study.",
+          "label": "contradiction",
+          "original_idx": 54
+        },
+        {
+          "hypothesis": "The discovery of the Altamura Man was first reported by the Journal of Archaeological Science.",
+          "label": "contradiction",
+          "original_idx": 55
+        },
+        {
+          "hypothesis": "The Altamura Man may have had injuries from his fall into the prehistoric well.",
+          "label": "uncertain",
+          "original_idx": 56
+        },
+        {
+          "hypothesis": "Researchers might eventually recover more than just a chip from his skeleton.",
+          "label": "uncertain",
+          "original_idx": 57
+        },
+        {
+          "hypothesis": "The cave explorers could have found other ancient remains in Lamalunga cave.",
+          "label": "uncertain",
+          "original_idx": 58
+        },
+        {
+          "hypothesis": "Altamura Man's DNA could reveal genetic traits not found in other Neanderthals.",
+          "label": "uncertain",
+          "original_idx": 59
+        },
+        {
+          "hypothesis": "In 2018, French archaeologists uncovered a Denisovan child's tooth in a cave near Toulouse.",
+          "label": "not_mentioned",
+          "original_idx": 60
+        },
+        {
+          "hypothesis": "A team in Spain recently sequenced the genome of a Cro-Magnon individual discovered in the El Castillo cave.",
+          "label": "not_mentioned",
+          "original_idx": 61
+        },
+        {
+          "hypothesis": "The Bank of England introduced a new polymer fifty-pound note featuring Alan Turing.",
+          "label": "not_mentioned",
+          "original_idx": 62
+        },
+        {
+          "hypothesis": "A solar flare disrupted satellite communications across Southeast Asia last November.",
+          "label": "not_mentioned",
+          "original_idx": 63
+        }
+      ]
+    },
+    {
+      "premise_id": 4,
+      "premise": "The TSA got to keep $ 675,000 in spare change dropped by travellers at airport security last year . Over the past five years , airline passengers have left behind more than $ 2.7 million in quarters and dimes . And the funds collected appear to be increasing every year , according to figures from the Transportation Security Administration . The funds collected by the TSA appear to be increasing every year , according to figures from the Transportation Security Administration . Last year the TSA were allowed to keep $ 675,000 in spare change - almost double what was collected in 2008 at $ 383,414 , . The sum was $ 107,000 more than what passengers left behind in 2012 , and more than $ 150,000 than 2011 . According to federal law , if no one comes back to claim the money the TSA are allowed to keep it . The agency is then free to spend anything they feel will improve the civil aviation security . TSA officials said the agency 'makes every effort to reunite passengers with items left at the checkpoint , however there are instances where loose change or other items are left behind and unclaimed . The TSA got to keep $ 675,000 in spare change left behind by travellers at airport security last year . 'Unclaimed money , typically consisting of loose coins passengers remove from their pockets , is documented and turned into the TSA financial office , ' the agency said in a statement . In 2005 , Congress gave the agency the ability to use the forgotten money to help fund security operations . Some airports , such as Phoenix and Columbus , Ohio , and Denver International Airport , offer travellers the opportunity to donate money to local charities at collection boxes at checkpoints . According to federal law , if no one comes back to claim the money it stays with the TSA .",
+      "premise_word_count": 327,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "The TSA got to keep $675,000 in spare change left behind by travellers at airport security last year.",
+          "label": "entailment",
+          "original_idx": 64
+        },
+        {
+          "hypothesis": "According to federal law, if no one comes back to claim the money, the TSA are allowed to keep it.",
+          "label": "entailment",
+          "original_idx": 65
+        },
+        {
+          "hypothesis": "Over the past five years, airline passengers have left behind more than $2.7 million in quarters and dimes.",
+          "label": "entailment",
+          "original_idx": 66
+        },
+        {
+          "hypothesis": "In 2008, the amount of spare change collected at airport security was $383,414.",
+          "label": "entailment",
+          "original_idx": 67
+        },
+        {
+          "hypothesis": "The TSA got to keep $675,000 in spare change left behind by travellers at train stations last year.",
+          "label": "contradiction",
+          "original_idx": 68
+        },
+        {
+          "hypothesis": "Last year, the TSA collected $1,200,000 in spare change at airport security.",
+          "label": "contradiction",
+          "original_idx": 69
+        },
+        {
+          "hypothesis": "According to federal law, the TSA is not allowed to keep unclaimed money left at airport checkpoints.",
+          "label": "contradiction",
+          "original_idx": 70
+        },
+        {
+          "hypothesis": "In 2005, Congress gave the Federal Aviation Administration the ability to use forgotten money to fund security operations.",
+          "label": "contradiction",
+          "original_idx": 71
+        },
+        {
+          "hypothesis": "Some of the spare change collected by the TSA last year included foreign currency.",
+          "label": "uncertain",
+          "original_idx": 72
+        },
+        {
+          "hypothesis": "The TSA used part of the unclaimed money to upgrade security equipment at airports.",
+          "label": "uncertain",
+          "original_idx": 73
+        },
+        {
+          "hypothesis": "Passengers who left behind spare change at airport security were notified by mail.",
+          "label": "uncertain",
+          "original_idx": 74
+        },
+        {
+          "hypothesis": "The amount of spare change collected by the TSA at Los Angeles International Airport increased last year.",
+          "label": "uncertain",
+          "original_idx": 75
+        },
+        {
+          "hypothesis": "Chicago O'Hare airport donated $50,000 in unclaimed baggage fees to a local children's hospital in 2022.",
+          "label": "not_mentioned",
+          "original_idx": 76
+        },
+        {
+          "hypothesis": "The Port Authority of New York and New Jersey implemented a new lost-and-found system for items left at subway stations.",
+          "label": "not_mentioned",
+          "original_idx": 77
+        },
+        {
+          "hypothesis": "The European Central Bank raised interest rates by 0.5% in March.",
+          "label": "not_mentioned",
+          "original_idx": 78
+        },
+        {
+          "hypothesis": "A team of researchers discovered a new species of frog in the Amazon rainforest.",
+          "label": "not_mentioned",
+          "original_idx": 79
+        }
+      ]
+    },
+    {
+      "premise_id": 5,
+      "premise": "A bizarre performance from Stan Wawrinka saw Grigor Dimitrov breeze through 6-1 , 6-2 to his first masters quarter-final of the season . Wawrinka is the defending champion in Monte Carlo and seldom has a title been relinquished so easily . The Swiss No 2 played like he was in a hurry - and not in a good way . Rushing between points , Wawrinka won the first of the match and then made four unforced errors in a row to surrender his serve . Grigor Dimitrov powers a forehand from the back court in his comfortable win over Stan Wawrinka . Wawrinka , the Monte Carlo Masters defending champion , appeared out of sorts in the 6-1 6-2 defeat . The world No 9 looked listless and disinterested , rolling in 95mph first serves and ballooning groundstrokes long . He did not appear to be injured but something was very clearly wrong ; four winners and 41 unforced errors can not be put down merely to a bad day at the office . Wawrinka 's coach Magnus Norman is not in Monte Carlo this week and , watching at home , he may have been glad of the opportunity to turn off the television . Dimitrov moves through to the quarter-finals where the Bulgarian will meet Frenchman Gael Monfils . Wawrinka was n't at his finest as he failed to get on the board in the match until the fifth game . In the second , Wawrinka played a little better - he could scarcely have played worse - but still gave Dimitrov a generous helping of mistakes . The world No 11 broke early and Wawrinka served to stay in the match at 5-2 down . Four tame unforced errors later and Dimitrov was through to the last eight . The crowd on court central would have expected a thrilling encounter between two of the most expressive players on tour . Instead , they were treated to an abject and mystifying performance from Wawrinka . The 30-year-old finally got on the board in the fifth game of the match , although this was down more to errors from Dimitrov - who was n't even playing especially well himself - than any improvement from the Swiss . But the Bulgarian broke for a third time and closed out the first set 6-1 . Dimitrov and a disappointed Wawrinka shake hands at the end of the quickfire encounter .",
+      "premise_word_count": 409,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Grigor Dimitrov defeated Stan Wawrinka 6-1, 6-2 to reach his first masters quarter-final of the season.",
+          "label": "entailment",
+          "original_idx": 80
+        },
+        {
+          "hypothesis": "Stan Wawrinka, the defending Monte Carlo Masters champion, lost to Grigor Dimitrov in straight sets.",
+          "label": "entailment",
+          "original_idx": 81
+        },
+        {
+          "hypothesis": "Wawrinka made four unforced errors in a row to surrender his serve early in the match against Dimitrov.",
+          "label": "entailment",
+          "original_idx": 82
+        },
+        {
+          "hypothesis": "Magnus Norman, Wawrinka's coach, was not present in Monte Carlo during the match and watched from home.",
+          "label": "entailment",
+          "original_idx": 83
+        },
+        {
+          "hypothesis": "Rafael Nadal defeated Stan Wawrinka in the Monte Carlo Masters quarter-final.",
+          "label": "contradiction",
+          "original_idx": 84
+        },
+        {
+          "hypothesis": "Stan Wawrinka won the match against Grigor Dimitrov 6-2, 6-1.",
+          "label": "contradiction",
+          "original_idx": 85
+        },
+        {
+          "hypothesis": "Wawrinka appeared energetic and focused throughout the match, making only a few unforced errors.",
+          "label": "contradiction",
+          "original_idx": 86
+        },
+        {
+          "hypothesis": "Magnus Norman was sitting courtside in Monte Carlo coaching Wawrinka during the match.",
+          "label": "contradiction",
+          "original_idx": 87
+        },
+        {
+          "hypothesis": "Stan Wawrinka may have spoken to Grigor Dimitrov after the match.",
+          "label": "uncertain",
+          "original_idx": 88
+        },
+        {
+          "hypothesis": "Wawrinka could have practiced with his coach Magnus Norman before the tournament began.",
+          "label": "uncertain",
+          "original_idx": 89
+        },
+        {
+          "hypothesis": "The crowd might have booed during Wawrinka's unforced errors.",
+          "label": "uncertain",
+          "original_idx": 90
+        },
+        {
+          "hypothesis": "Dimitrov possibly celebrated his victory with his team immediately after the match.",
+          "label": "uncertain",
+          "original_idx": 91
+        },
+        {
+          "hypothesis": "Kei Nishikori advanced to the Rome Masters quarter-final after defeating Marin Cilic in straight sets.",
+          "label": "not_mentioned",
+          "original_idx": 92
+        },
+        {
+          "hypothesis": "In the same tournament, Novak Djokovic withdrew before his scheduled match due to an elbow injury.",
+          "label": "not_mentioned",
+          "original_idx": 93
+        },
+        {
+          "hypothesis": "The United Nations held a climate summit in Geneva to discuss global carbon emissions.",
+          "label": "not_mentioned",
+          "original_idx": 94
+        },
+        {
+          "hypothesis": "Apple released a new line of MacBook laptops featuring redesigned keyboards and improved battery life.",
+          "label": "not_mentioned",
+          "original_idx": 95
+        }
+      ]
+    },
+    {
+      "premise_id": 6,
+      "premise": "Pablo Osvaldo has urged Italian legends Andrea Pirlo and Francisco Totti to move continents and join him at Argentinian giants Boca Juniors . The 29-year-old moved to his current side on a loan deal from Southampton and has become an instant hit - scoring three goals in six games . Osvaldo believes that the duo would be a good fit for Boca , and says the fans would love to have them line up on the La Bombonera pitch . Pablo Osvaldo thinks that his former team-mates Andrea Pirlo and Francesco Totti should move to Boca . 'Who I would like to join me at Boca ? Pirlo and Totti , ' the 29-year-old told Corriere dello Sport . ' I have played with many great players over the years and many of them are my friends . I do n't want to do injustice to anyone , but if I had to pick two , it would be Pirlo and Totti . 'They have a bit of a South-American style and they would be perfect for Boca with their abilities . 'The Bombonera would go absolutely crazy for players like them . ' Pirlo has established himself as one of the best midfielders in world football and is hugely popular . Totti ( 10 ) is a Roma legend and Osvaldo feels that he would be just as loved if he moved to Argentina .",
+      "premise_word_count": 236,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Pablo Osvaldo has urged Andrea Pirlo and Francesco Totti to join him at Boca Juniors.",
+          "label": "entailment",
+          "original_idx": 96
+        },
+        {
+          "hypothesis": "Osvaldo moved to Boca Juniors on a loan deal from Southampton and scored three goals in six games.",
+          "label": "entailment",
+          "original_idx": 97
+        },
+        {
+          "hypothesis": "Pablo Osvaldo told Corriere dello Sport that he would like Pirlo and Totti to join him at Boca.",
+          "label": "entailment",
+          "original_idx": 98
+        },
+        {
+          "hypothesis": "Osvaldo believes that Pirlo and Totti would be perfect for Boca Juniors and that the fans would love them.",
+          "label": "entailment",
+          "original_idx": 99
+        },
+        {
+          "hypothesis": "Pablo Osvaldo has urged Lionel Messi and Alessandro Del Piero to join him at Boca Juniors.",
+          "label": "contradiction",
+          "original_idx": 100
+        },
+        {
+          "hypothesis": "Osvaldo moved to Boca Juniors on a permanent deal from Southampton and scored five goals in ten games.",
+          "label": "contradiction",
+          "original_idx": 101
+        },
+        {
+          "hypothesis": "Pablo Osvaldo said that Pirlo and Totti would not be a good fit for Boca Juniors.",
+          "label": "contradiction",
+          "original_idx": 102
+        },
+        {
+          "hypothesis": "According to Andrea Pirlo, Pablo Osvaldo should move to Roma instead of Boca Juniors.",
+          "label": "contradiction",
+          "original_idx": 103
+        },
+        {
+          "hypothesis": "Pablo Osvaldo may have contacted Pirlo and Totti personally to discuss a move to Boca Juniors.",
+          "label": "uncertain",
+          "original_idx": 104
+        },
+        {
+          "hypothesis": "Andrea Pirlo could be considering an offer from Boca Juniors after Osvaldo's comments.",
+          "label": "uncertain",
+          "original_idx": 105
+        },
+        {
+          "hypothesis": "Francesco Totti might have visited La Bombonera before making a decision about his future.",
+          "label": "uncertain",
+          "original_idx": 106
+        },
+        {
+          "hypothesis": "Osvaldo could have played with Pirlo and Totti at a club other than Boca Juniors.",
+          "label": "uncertain",
+          "original_idx": 107
+        },
+        {
+          "hypothesis": "Gianluigi Buffon was approached by River Plate to join their squad for the upcoming season.",
+          "label": "not_mentioned",
+          "original_idx": 108
+        },
+        {
+          "hypothesis": "Juventus announced a tribute match for Alessandro Del Piero at the Allianz Stadium in Turin.",
+          "label": "not_mentioned",
+          "original_idx": 109
+        },
+        {
+          "hypothesis": "The Nobel Prize in Chemistry was awarded to a team researching renewable energy solutions.",
+          "label": "not_mentioned",
+          "original_idx": 110
+        },
+        {
+          "hypothesis": "A major earthquake struck the coast of Japan, prompting widespread evacuations and relief efforts.",
+          "label": "not_mentioned",
+          "original_idx": 111
+        }
+      ]
+    },
+    {
+      "premise_id": 7,
+      "premise": "Last week Gatecoin, a digital currency exchange company based in Hong Kong, suffered a security breach that resulted in the loss of 250 bitcoin and 185,000 etherium. This loss is the equivalent of $2 million, or 15% of the total assets held by Gatecoin. In the official statement posted on their website, Gatecoin stated that they had a disruption of service last Monday that resulted in a server reboot, and on Friday noticed suspicious transactions. After an immediate suspension of services, and a forensic investigation by French cybersecurity firm Tehtri Security, Gatecoin confirms that the breach occurred and resulted in a drastic loss of assets. Gatecoin services will be offline until May 28, at which time customers may access their accounts and, if they choose, withdraw their funds using a new platform specifically designed for secure withdrawals. The company is also attempting to raise funds to cover customer losses and intends to reimburse their customers for funds lost in the hack. The use of segregated accounts was touted by Gatecoin as a method to reduce risk and exposure to hackers, a concern when dealing in digital currencies. However, in the security breach the hacker altered the system so that the multi-sig cold storage system was bypassed, and funds were transmitted directly to a hot wallet. There is a 5% limit on hot wallets, but due to the multi-sig bypass, transfers were allowed to exceed that limit. Hot wallet exchanges are different from offline storage, or \u2018cold wallet\u2019 hacks, such as the February attack on Chinese firm Bter that resulted in a similar, almost $2 million loss. Hot wallet exchanges are hidden inside active traffic, making them harder to detect immediately. Gatecoin has requested help in tracking the \u2018malicious external entities\u2019 responsible for the breach, and to that end have posted the wallet addresses used by the hackers on their website. As a result of the weaknesses in their system that have been exposed, Gatecoin is planning a move to a new infrastructure before services resume. They have assured their customers that remaining assets are secure. Aur\u00e9lien Menant, CEO of Gatecoin added, \u201cWe sincerely apologize for all the concern experienced by our clients and for the inconvenience caused while clients wait for their fund withdrawals to be processed. Gatecoin would also like to express our gratitude to the community of exchanges that have very kindly volunteered to help identify the parties responsible for the stolen funds.\u201d",
+      "premise_word_count": 405,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Gatecoin suffered a security breach last week that resulted in the loss of 250 bitcoin and 185,000 etherium.",
+          "label": "entailment",
+          "original_idx": 112
+        },
+        {
+          "hypothesis": "The breach at Gatecoin led to a loss equivalent to $2 million, which was 15% of the company\u2019s total assets.",
+          "label": "entailment",
+          "original_idx": 113
+        },
+        {
+          "hypothesis": "Gatecoin suspended its services immediately after noticing suspicious transactions on Friday and began a forensic investigation with Tehtri Security.",
+          "label": "entailment",
+          "original_idx": 114
+        },
+        {
+          "hypothesis": "Gatecoin services will remain offline until May 28, when customers can access their accounts and withdraw funds using a new secure platform.",
+          "label": "entailment",
+          "original_idx": 115
+        },
+        {
+          "hypothesis": "CBCoin, a digital currency exchange based in Singapore, suffered a security breach last week.",
+          "label": "contradiction",
+          "original_idx": 116
+        },
+        {
+          "hypothesis": "The loss from the Gatecoin breach was only $200,000, representing 1.5% of total assets.",
+          "label": "contradiction",
+          "original_idx": 117
+        },
+        {
+          "hypothesis": "Gatecoin did not suspend its services after the breach and continued normal operations.",
+          "label": "contradiction",
+          "original_idx": 118
+        },
+        {
+          "hypothesis": "The forensic investigation of the breach was conducted by American cybersecurity firm FireEye, not Tehtri Security.",
+          "label": "contradiction",
+          "original_idx": 119
+        },
+        {
+          "hypothesis": "Gatecoin customers may have experienced delays in accessing their account balances before the official service suspension.",
+          "label": "uncertain",
+          "original_idx": 120
+        },
+        {
+          "hypothesis": "The hacker responsible for the breach could have used multiple wallet addresses to transfer the stolen funds.",
+          "label": "uncertain",
+          "original_idx": 121
+        },
+        {
+          "hypothesis": "Some of the stolen etherium might have been converted to other digital currencies after the breach.",
+          "label": "uncertain",
+          "original_idx": 122
+        },
+        {
+          "hypothesis": "Gatecoin may implement additional security measures beyond the new withdrawal platform before resuming services.",
+          "label": "uncertain",
+          "original_idx": 123
+        },
+        {
+          "hypothesis": "Bitstamp, a European cryptocurrency exchange, recently upgraded its security protocols following a minor phishing incident.",
+          "label": "not_mentioned",
+          "original_idx": 124
+        },
+        {
+          "hypothesis": "In March, a Tokyo-based exchange experienced a temporary outage due to a software update unrelated to any security breach.",
+          "label": "not_mentioned",
+          "original_idx": 125
+        },
+        {
+          "hypothesis": "The United Nations announced a new climate initiative aimed at reducing global carbon emissions by 2030.",
+          "label": "not_mentioned",
+          "original_idx": 126
+        },
+        {
+          "hypothesis": "A team of researchers at MIT developed a new battery technology that doubles the energy density of current lithium-ion cells.",
+          "label": "not_mentioned",
+          "original_idx": 127
+        }
+      ]
+    },
+    {
+      "premise_id": 8,
+      "premise": "China's yuan funds outstanding for foreign exchange grew each month during the first half of this year, official data showed today. The funds stood at 21.52 trillion yuan (US$3.2 trillion) at the end of June, up by 7.61 billion yuan from a month earlier, according to the People's Bank of China, Xinhua reports. June's increase followed a rise of 9.1 billion yuan in May. As the Chinese currency is not freely convertible under the capital account, the central bank has to purchase foreign currency generated by China's trade surplus and foreign investment in the country, adding funds to the money market. Such funds are an important indicator of cross-border foreign capital flows and domestic yuan liquidity. An increase in the funds usually signals eased capital flight pressure, while a decrease often means higher capital flight pressure. China's foreign exchange reserves remained relatively stable at US$3.1121 trillion at the end of June, up 0.05 percent from May, earlier data showed. \"China has ample foreign exchange reserves and relatively large room for policy controls. China is capable and confident in coping with all sorts of challenges,\" said Wang Chunying, spokesperson for the State Administration of Foreign Exchange, at a press conference today.",
+      "premise_word_count": 200,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "China's yuan funds outstanding for foreign exchange increased in every month during the first half of this year, according to official data.",
+          "label": "entailment",
+          "original_idx": 128
+        },
+        {
+          "hypothesis": "At the end of June, China's yuan funds outstanding for foreign exchange reached 21.52 trillion yuan, up by 7.61 billion yuan from May.",
+          "label": "entailment",
+          "original_idx": 129
+        },
+        {
+          "hypothesis": "The People's Bank of China reported that June's increase in yuan funds outstanding followed a rise of 9.1 billion yuan in May.",
+          "label": "entailment",
+          "original_idx": 130
+        },
+        {
+          "hypothesis": "Wang Chunying, spokesperson for the State Administration of Foreign Exchange, stated that China is capable and confident in coping with all sorts of challenges.",
+          "label": "entailment",
+          "original_idx": 131
+        },
+        {
+          "hypothesis": "Japan's yen funds outstanding for foreign exchange grew each month during the first half of this year.",
+          "label": "contradiction",
+          "original_idx": 132
+        },
+        {
+          "hypothesis": "China's foreign exchange reserves at the end of June were US$2.5 trillion, down 0.2 percent from May.",
+          "label": "contradiction",
+          "original_idx": 133
+        },
+        {
+          "hypothesis": "The People's Bank of China reported that the yuan funds outstanding for foreign exchange decreased in June.",
+          "label": "contradiction",
+          "original_idx": 134
+        },
+        {
+          "hypothesis": "According to Li Wei, spokesperson for the Ministry of Finance, China is not confident in coping with challenges.",
+          "label": "contradiction",
+          "original_idx": 135
+        },
+        {
+          "hypothesis": "China's central bank may have adjusted interest rates during the first half of the year.",
+          "label": "uncertain",
+          "original_idx": 136
+        },
+        {
+          "hypothesis": "Foreign investment in China could have contributed more to the yuan funds increase than trade surplus.",
+          "label": "uncertain",
+          "original_idx": 137
+        },
+        {
+          "hypothesis": "Wang Chunying discussed potential future changes to capital account convertibility at the press conference.",
+          "label": "uncertain",
+          "original_idx": 138
+        },
+        {
+          "hypothesis": "The increase in yuan funds outstanding might have affected domestic inflation rates.",
+          "label": "uncertain",
+          "original_idx": 139
+        },
+        {
+          "hypothesis": "The Bank of Korea reported a decline in South Korea's foreign exchange reserves in June.",
+          "label": "not_mentioned",
+          "original_idx": 140
+        },
+        {
+          "hypothesis": "Singapore's central bank implemented new measures to manage capital inflows in the second quarter.",
+          "label": "not_mentioned",
+          "original_idx": 141
+        },
+        {
+          "hypothesis": "The World Health Organization launched a new initiative to combat malaria in sub-Saharan Africa.",
+          "label": "not_mentioned",
+          "original_idx": 142
+        },
+        {
+          "hypothesis": "NASA announced the successful deployment of a new weather satellite into orbit.",
+          "label": "not_mentioned",
+          "original_idx": 143
+        }
+      ]
+    },
+    {
+      "premise_id": 9,
+      "premise": "Liverpool boss Brendan Rodgers believes a 'very poor decision ' by Michael Oliver 's assistant referee was one of the reason 's Liverpool were knocked out of the FA Cup semi-final by Aston Villa on Sunday night . With the score at 2-1 and just five minutes left on the clock at Wembley , much-maligned Reds striker Mario Balotelli had the ball in the net only to see the linesman unfairly flag for offside . Replays clearly showed that Villa defender Leandro Bacuna was playing Balotelli onside before the Italian slid the ball past Shay Given . Mario Balotelli ( circled ) is clearly onside as Steven Gerrard looks to play him through on goal . With Aston Villa leading 2-1 , the Reds striker sweeps the ball home before realising his effort would n't count . Speaking after his side 's defeat , Rodgers told BT Sport : 'It was very clear . It was a very poor decision by the official because he 's looking right along the line . 'He should be able to see the full back is playing him at least a yard onside . It was a terrfici ball in , Balotelli has a good touch and he 's in on goal . You need those to go for you . ' Balotelli also criticised the decision , posting a screen-grab of the incident - showing him to be onside - to his Instagram page , with the message 'No words . This picture say it all ' Rodgers ' side had taken the lead after brilliant build-up play from Raheem Sterling and Philippe Coutinho before the latter jinked into the Villa penalty area and curled a right-footed shot beyond Given . The semi-final showpiece was all-square just six minutes later after Christian Benteke swept home from 12-yards out following a neat cut-back from Fabian Delph . Liverpool boss Brendan Rodgers admitted he was left frustrated by the assistant referee 's decision . Philippe Coutinho gives Liverpool a 1-0 lead as Rodgers ' side looked to earn a spot in the FA Cup final . The Villains captain earned his side a place in the FA Cup final with a 53rd-minute strike as Liverpool were unable to respond despite throwing on Rickie Lambert in the final stages . Speaking after the game , Delph told BT Sport : 'It was a great performance . It 's been a tricky season for us but we believed we could do it . The gaffer is brilliant , he does n't panic and we are so happy for the fans . ' I ca n't wait for the final . To walk out as captain for the final will be the highlight of my career . ' Villa frontman Christian Benteke ( left ) celebrates pulling his side back into the semi-final clash . Fabian Delph is mobbed by his Villa team-mates after putting Tim Sherwood 's side into a deserved 2-1 lead .",
+      "premise_word_count": 497,
+      "source_file": "sample_100.json",
+      "num_entailment": 4,
+      "num_contradiction": 4,
+      "num_uncertain": 4,
+      "num_not_mentioned": 4,
+      "hypotheses": [
+        {
+          "hypothesis": "Brendan Rodgers said that a very poor decision by Michael Oliver's assistant referee contributed to Liverpool being knocked out of the FA Cup semi-final by Aston Villa.",
+          "label": "entailment",
+          "original_idx": 144
+        },
+        {
+          "hypothesis": "Replays showed that Villa defender Leandro Bacuna was playing Mario Balotelli onside before Balotelli scored a disallowed goal.",
+          "label": "entailment",
+          "original_idx": 145
+        },
+        {
+          "hypothesis": "Philippe Coutinho gave Liverpool a 1-0 lead after combining with Raheem Sterling and scoring past Shay Given.",
+          "label": "entailment",
+          "original_idx": 146
+        },
+        {
+          "hypothesis": "Fabian Delph scored the winning goal for Aston Villa in the 53rd minute, earning his team a place in the FA Cup final.",
+          "label": "entailment",
+          "original_idx": 147
+        },
+        {
+          "hypothesis": "Chelsea manager Jos\u00e9 Mourinho blamed the referee for Chelsea's defeat in the FA Cup semi-final against Manchester United.",
+          "label": "contradiction",
+          "original_idx": 148
+        },
+        {
+          "hypothesis": "The assistant referee flagged Mario Balotelli offside when the score was 3-2 with ten minutes left on the clock.",
+          "label": "contradiction",
+          "original_idx": 149
+        },
+        {
+          "hypothesis": "Replays showed that Mario Balotelli was clearly offside before scoring against Aston Villa.",
+          "label": "contradiction",
+          "original_idx": 150
+        },
+        {
+          "hypothesis": "Christian Benteke was credited with Liverpool's opening goal after a pass from Philippe Coutinho.",
+          "label": "contradiction",
+          "original_idx": 151
+        },
+        {
+          "hypothesis": "Mario Balotelli may have spoken to Brendan Rodgers about the offside decision after the match.",
+          "label": "uncertain",
+          "original_idx": 152
+        },
+        {
+          "hypothesis": "Rickie Lambert could have had a scoring opportunity in the final stages of the game.",
+          "label": "uncertain",
+          "original_idx": 153
+        },
+        {
+          "hypothesis": "Steven Gerrard might have assisted another Liverpool player besides Balotelli during the semi-final.",
+          "label": "uncertain",
+          "original_idx": 154
+        },
+        {
+          "hypothesis": "Raheem Sterling possibly received a yellow card during the match at Wembley.",
+          "label": "uncertain",
+          "original_idx": 155
+        },
+        {
+          "hypothesis": "Manchester City advanced to the FA Cup final after defeating Arsenal in a dramatic penalty shootout.",
+          "label": "not_mentioned",
+          "original_idx": 156
+        },
+        {
+          "hypothesis": "Everton's Romelu Lukaku scored twice to secure a 3-1 win over Southampton in their FA Cup quarter-final clash.",
+          "label": "not_mentioned",
+          "original_idx": 157
+        },
+        {
+          "hypothesis": "The World Health Organization declared a new global health emergency due to a novel virus outbreak.",
+          "label": "not_mentioned",
+          "original_idx": 158
+        },
+        {
+          "hypothesis": "NASA successfully launched a new weather satellite into orbit to improve climate monitoring.",
+          "label": "not_mentioned",
+          "original_idx": 159
+        }
+      ]
+    }
+  ]
+}
