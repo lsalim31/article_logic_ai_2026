@@ -551,7 +551,7 @@ def run_experiment(
     timestamp = datetime.now().isoformat()
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M")  # No seconds
     config_name = Path(config_path).stem if config_path else "default"
-    output_path = RESULTS_DIR / f"{timestamp_str}_{DATASET_EXPERIMENT}_{config_name}_.json"
+    output_path = RESULTS_DIR / f"{config_name}_{timestamp_str}_{DATASET_EXPERIMENT}_.json"
 
     results_payload = {
         "metadata": {
