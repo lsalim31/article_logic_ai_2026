@@ -1,0 +1,1626 @@
+nohup: ignoring input
+Loading data from /home/logify/article_logic_ai_2026/experiments/claude_constructed/dataset/data_constructed_march30.json...
+  Loaded 10 premises with 160 total hypotheses
+  Label distribution: {'entailment': 40, 'contradiction': 40, 'uncertain': 40, 'not_mentioned': 40}
+
+[1/10] Premise 0: 328 words, 16 hypotheses
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+#################### 
+FUNCTION: translate_query : Sharethrough announced a native programmatic ad integration with Adelphic on Tuesday.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough announced a native programmatic ad integration with Adelphic on Tuesday., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 16 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Loading NLI Model (cross-encoder/nli-deberta-v3-large)...
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9611 (NLI score: 0.0040)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'P_2': 3}
+[Adaptive Voting] Winner: P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] hyp 1: pred=TRUE (entailment) gt=entailment
+      formula: P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.96
+      voting: TRIGGERED (conf=1.00, counts={'P_2': 3})
+#################### 
+FUNCTION: translate_query : Adelphic's DSP users can access in-feed display and video placements on mobile sites and apps via the Sharethrough Exchange.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Adelphic's DSP users can access in-feed display and video placements on mobile sites and apps via the Sharethrough Exchange., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 35 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
+    -> Verbal: Adelphic is a mobile demand-side platform, and The integrati...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7927 (NLI score: 0.9976)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -0.03 (Ent: 0.14, Con: 0.17)
+    → Got formula: P_2 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 (score: -0.03)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_22
+    -> Verbal: The integration provides in-feed display placements across m...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_22 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_3&P_7&P_8&P_9&P_10&P_2': 1, 'P_2&P_7&P_8&P_9&P_10': 1, 'P_7&P_8&P_9&P_10&P_22': 1}
+[Adaptive Voting] Winner: P_3&P_7&P_8&P_9&P_10&P_2 (1/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2'
+  [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
+      formula: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
+      nli_confidence: 1.00
+      sbert_confidence: 0.79
+      voting: TRIGGERED (conf=0.33, counts={'P_3&P_7&P_8&P_9&P_10&P_2': 1, 'P_2&P_7&P_8&P_9&P_10': 1, 'P_7&P_8&P_9&P_10&P_22': 1})
+#################### 
+FUNCTION: translate_query : The integration between Sharethrough and Adelphic will comply with the Interactive Advertising Bureau's OpenRTB 2.3 specification.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = The integration between Sharethrough and Adelphic will comply with the Interactive Advertising Bureau's OpenRTB 2.3 specification., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 8 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_14
+    -> Verbal: The integration complies with the Interactive Advertising Bu...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8328 (NLI score: 0.0028)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_14
+    -> Verbal: The integration complies with the Interactive Advertising Bu...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_14 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_14
+    -> Verbal: The integration complies with the Interactive Advertising Bu...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_14 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'P_14': 3}
+[Adaptive Voting] Winner: P_14 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_14'
+  [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
+      formula: P_14
+      nli_confidence: 0.00
+      sbert_confidence: 0.83
+      voting: TRIGGERED (conf=1.00, counts={'P_14': 3})
+#################### 
+FUNCTION: translate_query : Sharethrough reported $140 million in native ad spend running through its platform in 2016.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough reported $140 million in native ad spend running through its platform in 2016., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 67 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_26
+    -> Verbal: Sharethrough had $140 million in native ad spend running thr...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9620 (NLI score: 0.0012)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_26
+    -> Verbal: Sharethrough had $140 million in native ad spend running thr...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_26 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_26
+    -> Verbal: Sharethrough had $140 million in native ad spend running thr...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_26 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'P_26': 3}
+[Adaptive Voting] Winner: P_26 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_26'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] hyp 4: pred=TRUE (entailment) gt=entailment
+      formula: P_26
+      nli_confidence: 0.00
+      sbert_confidence: 0.96
+      voting: TRIGGERED (conf=1.00, counts={'P_26': 3})
+#################### 
+FUNCTION: translate_query : Sharethrough announced a native programmatic ad integration with The Trade Desk on Tuesday.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough announced a native programmatic ad integration with The Trade Desk on Tuesday., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 16 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8258 (NLI score: -0.9751)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Sharethrough announced a native prog...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: ¬P_2 (score: -1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_2 (score: -0.98)
+
+[Adaptive Voting] Vote results: {'P_2': 2, '~P_2': 1}
+[Adaptive Voting] Winner: P_2 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 5: pred=TRUE (entailment) gt=contradiction
+      formula: P_2
+      nli_confidence: -0.98
+      sbert_confidence: 0.83
+      voting: TRIGGERED (conf=0.67, counts={'P_2': 2, '~P_2': 1})
+#################### 
+FUNCTION: translate_query : Sharethrough reported $200 million in native ad spend running through its platform in 2016.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough reported $200 million in native ad spend running through its platform in 2016., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 67 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_26
+    -> Verbal: it is not the case that Sharethrough had $140 million in nat...
+    -> Score: -0.99 (Ent: 0.00, Con: 0.99)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8976 (NLI score: -0.9925)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_26
+    -> Verbal: it is not the case that Sharethrough had $140 million in nat...
+    -> Score: -0.99 (Ent: 0.00, Con: 0.99)
+    → Got formula: ¬P_26 (score: -0.99)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_26
+    -> Verbal: it is not the case that Sharethrough had $140 million in nat...
+    -> Score: -0.99 (Ent: 0.00, Con: 0.99)
+    → Got formula: ¬P_26 (score: -0.99)
+
+[Adaptive Voting] Vote results: {'~P_26': 3}
+[Adaptive Voting] Winner: ~P_26 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: '¬P_26'
+  [+] hyp 6: pred=FALSE (contradiction) gt=contradiction
+      formula: ¬P_26
+      nli_confidence: -0.99
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'~P_26': 3})
+#################### 
+FUNCTION: translate_query : Adelphic is not known for developing patented technology to overcome the limits of user identification.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Adelphic is not known for developing patented technology to overcome the limits of user identification., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 87 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬(P_16 ∧ P_17)
+    -> Verbal: it is not the case that Adelphic developed patented technolo...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7945 (NLI score: 0.9998)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_16
+    -> Verbal: it is not the case that Adelphic developed patented technolo...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_16 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬(P_16 ∧ P_17)
+    -> Verbal: it is not the case that Adelphic developed patented technolo...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: ¬(P_16 ∧ P_17) (score: 1.00)
+
+[Adaptive Voting] Vote results: {'~(P_16&P_17)': 2, '~P_16': 1}
+[Adaptive Voting] Winner: ~(P_16&P_17) (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: '¬(P_16 ∧ P_17)'
+  [x] hyp 7: pred=UNCERTAIN (uncertain) gt=contradiction
+      formula: ¬(P_16 ∧ P_17)
+      nli_confidence: 1.00
+      sbert_confidence: 0.79
+      voting: TRIGGERED (conf=0.67, counts={'~(P_16&P_17)': 2, '~P_16': 1})
+#################### 
+FUNCTION: translate_query : According to the company, Alex White is the CEO of Sharethrough.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = According to the company, Alex White is the CEO of Sharethrough., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 17 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Sharethrough is a native advertising supply-side platform...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.3823 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_1
+    -> Verbal: Sharethrough is a native advertising supply-side platform...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_1
+    -> Verbal: Sharethrough is a native advertising supply-side platform...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 8: pred=TRUE (entailment) gt=contradiction
+      formula: P_1
+      nli_confidence: 1.00
+      sbert_confidence: 0.38
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+#################### 
+FUNCTION: translate_query : Sharethrough and Adelphic may expand their integration to international markets.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough and Adelphic may expand their integration to international markets., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 27 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_5
+    -> Verbal: A native programmatic ad integration between Sharethrough an...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5675 (NLI score: 0.9995)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_2 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_2 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_5': 1, 'P_2': 2}
+[Adaptive Voting] Winner: P_2 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 9: pred=TRUE (entailment) gt=uncertain
+      formula: P_2
+      nli_confidence: 1.00
+      sbert_confidence: 0.57
+      voting: TRIGGERED (conf=0.67, counts={'P_5': 1, 'P_2': 2})
+#################### 
+FUNCTION: translate_query : Adelphic’s DSP may allow buyers to purchase native audio placements on the Sharethrough Exchange in the future.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Adelphic’s DSP may allow buyers to purchase native audio placements on the Sharethrough Exchange in the future., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 37 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_5
+    -> Verbal: A native programmatic ad integration between Sharethrough an...
+    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5256 (NLI score: 0.9791)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_5
+    -> Verbal: A native programmatic ad integration between Sharethrough an...
+    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
+    → Got formula: P_5 (score: 0.98)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.97 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_21 (score: -0.97)
+
+[Adaptive Voting] Vote results: {'P_5': 2, 'P_21': 1}
+[Adaptive Voting] Winner: P_5 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_5'
+  [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
+      formula: P_5
+      nli_confidence: 0.98
+      sbert_confidence: 0.53
+      voting: TRIGGERED (conf=0.67, counts={'P_5': 2, 'P_21': 1})
+#################### 
+FUNCTION: translate_query : Sharethrough and Adelphic could expand their partnership to include additional ad formats next year.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Sharethrough and Adelphic could expand their partnership to include additional ad formats next year., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 32 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_13
+    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7620 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_5
+    -> Verbal: A native programmatic ad integration between Sharethrough an...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_21 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_13': 1, 'P_5': 1, 'P_21': 1}
+[Adaptive Voting] Winner: P_13 (1/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_13'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 11: pred=TRUE (entailment) gt=uncertain
+      formula: P_13
+      nli_confidence: 1.00
+      sbert_confidence: 0.76
+      voting: TRIGGERED (conf=0.33, counts={'P_13': 1, 'P_5': 1, 'P_21': 1})
+#################### 
+FUNCTION: translate_query : Some trading desks using Adelphic’s DSP might have exclusive access to certain Sharethrough inventory.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Some trading desks using Adelphic’s DSP might have exclusive access to certain Sharethrough inventory., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 55 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.4613 (NLI score: 0.9993)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_21 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_21 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_21': 3}
+[Adaptive Voting] Winner: P_21 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_21'
+  [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
+      formula: P_21
+      nli_confidence: 1.00
+      sbert_confidence: 0.46
+      voting: TRIGGERED (conf=1.00, counts={'P_21': 3})
+#################### 
+FUNCTION: translate_query : Rubicon Project partnered with AppNexus to launch a new programmatic video ad solution for publishers.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Rubicon Project partnered with AppNexus to launch a new programmatic video ad solution for publishers., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 34 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_13
+    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+    -> Score: -0.59 (Ent: 0.21, Con: 0.79)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5424 (NLI score: -0.5882)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.59
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
+    → Got formula: P_21 (score: -0.59)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
+    → Got formula: P_21 (score: -0.59)
+
+[Adaptive Voting] Vote results: {'P_13': 1, 'P_21': 2}
+[Adaptive Voting] Winner: P_21 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_21'
+  [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
+      formula: P_21
+      nli_confidence: -0.59
+      sbert_confidence: 0.54
+      voting: TRIGGERED (conf=0.67, counts={'P_13': 1, 'P_21': 2})
+#################### 
+FUNCTION: translate_query : In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 39 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Adelphic is a cross-channel demand-side platform...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5030 (NLI score: -0.9772)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_4
+    -> Verbal: Adelphic is a cross-channel demand-side platform...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_4 (score: -0.98)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_2 (score: -1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 2, 'P_2': 1}
+[Adaptive Voting] Winner: P_4 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
+[DEBUG] Parsing formula: 'P_4'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] hyp 14: pred=TRUE (entailment) gt=not_mentioned
+      formula: P_4
+      nli_confidence: -0.98
+      sbert_confidence: 0.50
+      voting: TRIGGERED (conf=0.67, counts={'P_4': 2, 'P_2': 1})
+#################### 
+FUNCTION: translate_query : The International Space Station completed a major solar panel upgrade in orbit.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = The International Space Station completed a major solar panel upgrade in orbit., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 29 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 7
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 9
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 5
+
+ Total of 21 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  [+] hyp 15: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
+#################### 
+FUNCTION: translate_query : Researchers discovered a new species of deep-sea fish in the Mariana Trench
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Researchers discovered a new species of deep-sea fish in the Mariana Trench, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_0_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 35 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 62 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 35
+              
+Total retrieved 2
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 35 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
+  Premise accuracy: 7/16 = 43.75%
+  Logify: 0.00s (cached: True)
+
+[2/10] Premise 1: 378 words, 16 hypotheses
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+#################### 
+FUNCTION: translate_query : Ben Johnson told reporters that he lost his gold medal after testing positive for steroids in Seoul.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Ben Johnson told reporters that he lost his gold medal after testing positive for steroids in Seoul., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 51 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 62 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
+
+ Total of 30 retrievals
+Within translate_query_single, we finished retrieved with 51 chunks
+Shortcuts disabled, skipping to candidate generation.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8716 (NLI score: 0.9990)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_6 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_6&P_2&P_5': 3}
+[Adaptive Voting] Winner: P_6&P_2&P_5 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
+[DEBUG] Parsing formula: 'P_6 ∧ P_2 ∧ P_5'
+  [x] hyp 1: pred=UNCERTAIN (uncertain) gt=entailment
+      formula: P_6 ∧ P_2 ∧ P_5
+      nli_confidence: 1.00
+      sbert_confidence: 0.87
+      voting: TRIGGERED (conf=1.00, counts={'P_6&P_2&P_5': 3})
+#################### 
+FUNCTION: translate_query : Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost.
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost., 
+    json_path: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+is_yes_no_question routine not used
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/claude_constructed/cache/premise_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 51 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 23 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions.
+              
+PARAMETERS: k=10, minimal_similarity=0.1, number of chunks = 51
+              
+Total retrieved 10
