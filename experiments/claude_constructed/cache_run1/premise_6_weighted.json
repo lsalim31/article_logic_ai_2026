@@ -1,0 +1,639 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Pablo Osvaldo urges Andrea Pirlo to join Boca Juniors.",
+      "evidence": "Sentence 0: \"Pablo Osvaldo has urged ... Andrea Pirlo ... to ... join him at ... Boca Juniors\"",
+      "explanation": "Single attitude/action relation (urge) with a single target; no logical connective."
+    },
+    {
+      "id": "P_2",
+      "translation": "Pablo Osvaldo urges Francesco Totti to join Boca Juniors.",
+      "evidence": "Sentence 0: \"Pablo Osvaldo has urged ... Francisco Totti to ... join him at ... Boca Juniors\"",
+      "explanation": "Single attitude/action relation (urge) with a single target; no logical connective."
+    },
+    {
+      "id": "P_3",
+      "translation": "Pablo Osvaldo plays for Boca Juniors.",
+      "evidence": "Sentence 0: \"join him at ... Boca Juniors\" (context that he is already there) and Sentence 1: \"moved to his current side\"",
+      "explanation": "Atomic membership/affiliation claim; no connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "Pablo Osvaldo moved to Boca Juniors on a loan deal from Southampton.",
+      "evidence": "Sentence 1: \"moved to his current side on a loan deal from Southampton\"",
+      "explanation": "Single transfer fact; expressed as one declarative event description."
+    },
+    {
+      "id": "P_5",
+      "translation": "Pablo Osvaldo is 29 years old.",
+      "evidence": "Sentence 1: \"The 29-year-old\" (and again Sentence 4)",
+      "explanation": "Atomic attribute of a person."
+    },
+    {
+      "id": "P_6",
+      "translation": "Pablo Osvaldo has become an instant hit at Boca Juniors.",
+      "evidence": "Sentence 1: \"has become an instant hit\"",
+      "explanation": "Single evaluative status claim; no internal logical operators."
+    },
+    {
+      "id": "P_7",
+      "translation": "Pablo Osvaldo has scored three goals in six games.",
+      "evidence": "Sentence 1: \"scoring three goals in six games\"",
+      "explanation": "Atomic performance statistic."
+    },
+    {
+      "id": "P_8",
+      "translation": "Osvaldo believes Andrea Pirlo is a good fit for Boca Juniors.",
+      "evidence": "Sentence 2: \"Osvaldo believes that the duo would be a good fit for Boca\"",
+      "explanation": "Single belief attribution about one player; extracted from a statement about the duo."
+    },
+    {
+      "id": "P_9",
+      "translation": "Osvaldo believes Francesco Totti is a good fit for Boca Juniors.",
+      "evidence": "Sentence 2: \"Osvaldo believes that the duo would be a good fit for Boca\"",
+      "explanation": "Single belief attribution about one player; extracted from a statement about the duo."
+    },
+    {
+      "id": "P_10",
+      "translation": "Boca fans would love Andrea Pirlo to line up on the La Bombonera pitch.",
+      "evidence": "Sentence 2: \"says the fans would love to have them line up on the La Bombonera pitch\"",
+      "explanation": "Atomic claim about fans' (hypothetical) reaction for one player; extracted from 'them' (the duo)."
+    },
+    {
+      "id": "P_11",
+      "translation": "Boca fans would love Francesco Totti to line up on the La Bombonera pitch.",
+      "evidence": "Sentence 2: \"says the fans would love to have them line up on the La Bombonera pitch\"",
+      "explanation": "Atomic claim about fans' (hypothetical) reaction for one player; extracted from 'them' (the duo)."
+    },
+    {
+      "id": "P_12",
+      "translation": "Osvaldo wants Andrea Pirlo to move to Boca Juniors.",
+      "evidence": "Sentence 3: \"Osvaldo thinks that ... Andrea Pirlo ... should move to Boca\" and Sentence 4: \"Who I would like to join me at Boca? Pirlo\"",
+      "explanation": "Atomic desire/preference statement; modality ('should') is normalized to a desire claim."
+    },
+    {
+      "id": "P_13",
+      "translation": "Osvaldo wants Francesco Totti to move to Boca Juniors.",
+      "evidence": "Sentence 3: \"Osvaldo thinks that ... Francesco Totti should move to Boca\" and Sentence 4: \"Who I would like to join me at Boca? ... Totti\"",
+      "explanation": "Atomic desire/preference statement; modality ('should') is normalized to a desire claim."
+    },
+    {
+      "id": "P_14",
+      "translation": "Osvaldo has played with many great players over the years.",
+      "evidence": "Sentence 5: \"I have played with many great players over the years\"",
+      "explanation": "Single past-experience claim."
+    },
+    {
+      "id": "P_15",
+      "translation": "Many great players are Osvaldo's friends.",
+      "evidence": "Sentence 5: \"many of them are my friends\"",
+      "explanation": "Atomic social-relation claim (even though 'many' is vague, it is still a single proposition)."
+    },
+    {
+      "id": "P_16",
+      "translation": "Osvaldo chooses Andrea Pirlo as one of two players to join him at Boca Juniors.",
+      "evidence": "Sentence 6: \"if I had to pick two, it would be Pirlo\"",
+      "explanation": "Atomic choice statement about one individual; conditional phrasing is removed and handled in constraints/weighting."
+    },
+    {
+      "id": "P_17",
+      "translation": "Osvaldo chooses Francesco Totti as one of two players to join him at Boca Juniors.",
+      "evidence": "Sentence 6: \"if I had to pick two, it would be ... Totti\"",
+      "explanation": "Atomic choice statement about one individual; conditional phrasing is removed and handled in constraints/weighting."
+    },
+    {
+      "id": "P_18",
+      "translation": "Andrea Pirlo has a South-American style.",
+      "evidence": "Sentence 7: \"They have a bit of a South-American style\" (applied to the duo)",
+      "explanation": "Atomic stylistic attribute for one individual, extracted from a statement about the duo."
+    },
+    {
+      "id": "P_19",
+      "translation": "Francesco Totti has a South-American style.",
+      "evidence": "Sentence 7: \"They have a bit of a South-American style\" (applied to the duo)",
+      "explanation": "Atomic stylistic attribute for one individual, extracted from a statement about the duo."
+    },
+    {
+      "id": "P_20",
+      "translation": "Andrea Pirlo would be perfect for Boca Juniors.",
+      "evidence": "Sentence 7: \"they would be perfect for Boca\"",
+      "explanation": "Atomic suitability evaluation for one individual, extracted from a statement about the duo."
+    },
+    {
+      "id": "P_21",
+      "translation": "Francesco Totti would be perfect for Boca Juniors.",
+      "evidence": "Sentence 7: \"they would be perfect for Boca\"",
+      "explanation": "Atomic suitability evaluation for one individual, extracted from a statement about the duo."
+    },
+    {
+      "id": "P_22",
+      "translation": "La Bombonera would go absolutely crazy for Andrea Pirlo.",
+      "evidence": "Sentence 8: \"The Bombonera would go absolutely crazy for players like them\"",
+      "explanation": "Atomic crowd-reaction claim for one individual, specialized from 'players like them'."
+    },
+    {
+      "id": "P_23",
+      "translation": "La Bombonera would go absolutely crazy for Francesco Totti.",
+      "evidence": "Sentence 8: \"The Bombonera would go absolutely crazy for players like them\"",
+      "explanation": "Atomic crowd-reaction claim for one individual, specialized from 'players like them'."
+    },
+    {
+      "id": "P_24",
+      "translation": "Andrea Pirlo has established himself as one of the best midfielders in world football.",
+      "evidence": "Sentence 9: \"Pirlo has established himself as one of the best midfielders in world football\"",
+      "explanation": "Single status/achievement claim."
+    },
+    {
+      "id": "P_25",
+      "translation": "Andrea Pirlo is hugely popular.",
+      "evidence": "Sentence 9: \"and is hugely popular\"",
+      "explanation": "Atomic popularity attribute."
+    },
+    {
+      "id": "P_26",
+      "translation": "Francesco Totti is a Roma legend.",
+      "evidence": "Sentence 10: \"Totti ... is a Roma legend\"",
+      "explanation": "Atomic status claim."
+    },
+    {
+      "id": "P_27",
+      "translation": "Francesco Totti wears number 10.",
+      "evidence": "Sentence 10: \"Totti ( 10 )\"",
+      "explanation": "Atomic attribute (shirt number)."
+    },
+    {
+      "id": "P_28",
+      "translation": "Francesco Totti moves to Argentina.",
+      "evidence": "Sentence 10: \"if he moved to Argentina\"",
+      "explanation": "Atomic event description extracted from a conditional mention."
+    },
+    {
+      "id": "P_29",
+      "translation": "Francesco Totti is loved in Argentina.",
+      "evidence": "Sentence 10: \"he would be just as loved\" (in the context of moving to Argentina)",
+      "explanation": "Atomic affective-reception claim."
+    },
+    {
+      "id": "P_30",
+      "translation": "Osvaldo wants to avoid doing injustice to anyone.",
+      "evidence": "Sentence 6: \"I do n't want to do injustice to anyone\"",
+      "explanation": "Negation is removed by rephrasing as a positive 'avoidance' desire; remains a single attitude statement."
+    },
+    {
+      "id": "P_31",
+      "translation": "Andrea Pirlo is an Italian legend.",
+      "evidence": "Sentence 0: \"Italian legends Andrea Pirlo\"",
+      "explanation": "Atomic descriptive label applied to Pirlo."
+    },
+    {
+      "id": "P_32",
+      "translation": "Francesco Totti is an Italian legend.",
+      "evidence": "Sentence 0: \"Italian legends ... Francisco Totti\"",
+      "explanation": "Atomic descriptive label applied to Totti."
+    },
+    {
+      "id": "P_33",
+      "translation": "Pablo Osvaldo is under contract with Southampton.",
+      "evidence": "Sentence 1: \"on a loan deal from Southampton\"",
+      "explanation": "Atomic contractual-status proposition (commonly implied by being loaned from a club)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9747309684753418,
+      "combined=(llm)*(nli)": 0.9259944200515746,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_12",
+      "translation": "If Osvaldo urges Pirlo to join Boca, Osvaldo wants Pirlo to move to Boca.",
+      "evidence": "Sentence 0 (urged) and Sentence 3-4 (should / would like)",
+      "reasoning": "Urging someone to join a club strongly indicates the speaker wants that move, though 'urge' could theoretically be rhetorical.",
+      "list nli": [
+        [
+          0.004324653651565313,
+          0.02094431407749653,
+          0.9747309684753418
+        ],
+        [
+          0.007430029567331076,
+          0.032547131180763245,
+          0.9600228667259216
+        ],
+        [
+          0.010464481078088284,
+          0.04097942262887955,
+          0.948556125164032
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9634937047958374,
+      "combined=(llm)*(nli)": 0.9153190195560454,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_13",
+      "translation": "If Osvaldo urges Totti to join Boca, Osvaldo wants Totti to move to Boca.",
+      "evidence": "Sentence 0 (urged) and Sentence 3-4 (should / would like)",
+      "reasoning": "Same rationale as C_1 for Totti.",
+      "list nli": [
+        [
+          0.0017061728285625577,
+          0.03480006009340286,
+          0.9634937047958374
+        ],
+        [
+          0.010605617426335812,
+          0.037450481206178665,
+          0.9519439339637756
+        ],
+        [
+          0.005871417000889778,
+          0.04464960843324661,
+          0.9494789838790894
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998637437820435,
+      "combined=(llm)*(nli)": 0.8998773694038391,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "If Osvaldo moved to Boca on loan, then Osvaldo plays for Boca.",
+      "evidence": "Sentence 1: \"moved to his current side on a loan deal\"",
+      "reasoning": "Moving to a 'current side' by loan implies current membership; small uncertainty remains because 'moved' could be reported without confirming current registration, but context supports it.",
+      "list nli": [
+        [
+          1.2577744200825691e-05,
+          0.00012361678818706423,
+          0.9998637437820435
+        ],
+        [
+          0.0001244776794919744,
+          0.00010973975440720096,
+          0.9997658133506775
+        ],
+        [
+          0.002088068751618266,
+          0.004177636932581663,
+          0.9937343001365662
+        ]
+      ],
+      "weight": 0.8998773694038391
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9998002648353577,
+      "combined=(llm)*(nli)": 0.849830225110054,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_33",
+      "translation": "If Osvaldo moved on a loan deal from Southampton, then Osvaldo is under contract with Southampton.",
+      "evidence": "Sentence 1: \"loan deal from Southampton\"",
+      "reasoning": "In football, a loan 'from' a club usually means that club holds the player's contract; this is a strong common-sense implication.",
+      "list nli": [
+        [
+          0.00015856751997489482,
+          4.116246054763906e-05,
+          0.9998002648353577
+        ],
+        [
+          0.0011547482572495937,
+          0.0004225847078487277,
+          0.9984226226806641
+        ],
+        [
+          0.025789692997932434,
+          0.020233510062098503,
+          0.9539768099784851
+        ]
+      ],
+      "weight": 0.849830225110054
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998432397842407,
+      "combined=(llm)*(nli)": 0.8998589158058167,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_20 ⟹ P_8",
+      "translation": "If Pirlo would be perfect for Boca, then Pirlo is a good fit for Boca (in Osvaldo's view).",
+      "evidence": "Sentence 2 (good fit) and Sentence 7 (perfect)",
+      "reasoning": "'Perfect for Boca' is stronger than 'good fit' and is presented as consistent with Osvaldo's assessment.",
+      "list nli": [
+        [
+          6.597779429284856e-05,
+          9.078429138753563e-05,
+          0.9998432397842407
+        ],
+        [
+          0.0003002920129802078,
+          0.0001909877173602581,
+          0.9995087385177612
+        ],
+        [
+          0.00010035347804659978,
+          0.00043055127025581896,
+          0.9994691014289856
+        ]
+      ],
+      "weight": 0.8998589158058167
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998481273651123,
+      "combined=(llm)*(nli)": 0.8998633146286011,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_21 ⟹ P_9",
+      "translation": "If Totti would be perfect for Boca, then Totti is a good fit for Boca (in Osvaldo's view).",
+      "evidence": "Sentence 2 (good fit) and Sentence 7 (perfect)",
+      "reasoning": "Same strengthening relationship as C_5.",
+      "list nli": [
+        [
+          6.45316467853263e-05,
+          8.734212315175682e-05,
+          0.9998481273651123
+        ],
+        [
+          9.986426448449492e-05,
+          0.00013285143359098583,
+          0.9997672438621521
+        ],
+        [
+          0.00010413043492008,
+          0.000295991194434464,
+          0.9995998740196228
+        ]
+      ],
+      "weight": 0.8998633146286011
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9998689889907837,
+      "combined=(llm)*(nli)": 0.799895191192627,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_22 ⟹ P_10",
+      "translation": "If La Bombonera would go absolutely crazy for Pirlo, then Boca fans would love Pirlo to line up there.",
+      "evidence": "Sentence 2 (fans would love) and Sentence 8 (go crazy)",
+      "reasoning": "Going 'absolutely crazy' is a strong indicator of fan love, but the metaphor could indicate excitement rather than affection; thus not forced.",
+      "list nli": [
+        [
+          6.316813960438594e-05,
+          6.780255353078246e-05,
+          0.9998689889907837
+        ],
+        [
+          2.5624198315199465e-05,
+          0.00018947897478938103,
+          0.9997848868370056
+        ],
+        [
+          1.6090261851786636e-05,
+          0.00025474836002103984,
+          0.9997290968894958
+        ]
+      ],
+      "weight": 0.799895191192627
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9998088479042053,
+      "combined=(llm)*(nli)": 0.7998470783233643,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_23 ⟹ P_11",
+      "translation": "If La Bombonera would go absolutely crazy for Totti, then Boca fans would love Totti to line up there.",
+      "evidence": "Sentence 2 (fans would love) and Sentence 8 (go crazy)",
+      "reasoning": "Same rationale as C_7.",
+      "list nli": [
+        [
+          0.00011893070040969178,
+          7.219202962005511e-05,
+          0.9998088479042053
+        ],
+        [
+          3.2161267881747335e-05,
+          0.00017214776016771793,
+          0.9997957348823547
+        ],
+        [
+          2.8449849196476862e-05,
+          0.0002408653381280601,
+          0.99973064661026
+        ]
+      ],
+      "weight": 0.7998470783233643
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998490810394287,
+      "combined=(llm)*(nli)": 0.8998641729354858,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_16 ⟹ P_12",
+      "translation": "If Osvaldo chooses Pirlo as one of two players to join him at Boca, then Osvaldo wants Pirlo to move to Boca.",
+      "evidence": "Sentence 6 (pick two) and Sentence 4 (would like to join me at Boca)",
+      "reasoning": "Picking someone as a desired joiner strongly implies wanting that move; slight uncertainty because the pick is framed hypothetically.",
+      "list nli": [
+        [
+          1.4344340343086515e-05,
+          0.00013660021068062633,
+          0.9998490810394287
+        ],
+        [
+          3.286938590463251e-05,
+          0.000181147494004108,
+          0.9997859597206116
+        ],
+        [
+          2.5322902729385532e-05,
+          0.00024939331342466176,
+          0.9997252821922302
+        ]
+      ],
+      "weight": 0.8998641729354858
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.999861478805542,
+      "combined=(llm)*(nli)": 0.8998753309249878,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "P_17 ⟹ P_13",
+      "translation": "If Osvaldo chooses Totti as one of two players to join him at Boca, then Osvaldo wants Totti to move to Boca.",
+      "evidence": "Sentence 6 (pick two) and Sentence 4 (would like to join me at Boca)",
+      "reasoning": "Same rationale as C_9.",
+      "list nli": [
+        [
+          1.4482082406175323e-05,
+          0.0001240474230144173,
+          0.999861478805542
+        ],
+        [
+          3.207489135093056e-05,
+          0.00014537677634507418,
+          0.9998225569725037
+        ],
+        [
+          2.1550898964051157e-05,
+          0.00019554269965738058,
+          0.9997828602790833
+        ]
+      ],
+      "weight": 0.8998753309249878
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9999276399612427,
+      "combined=(llm)*(nli)": 0.6999493479728698,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_28 ⟹ P_29",
+      "translation": "If Totti moves to Argentina, then Totti is loved in Argentina.",
+      "evidence": "Sentence 10: \"Osvaldo feels that he would be just as loved if he moved to Argentina\"",
+      "reasoning": "This is explicitly presented as Osvaldo's feeling/prediction, not a guaranteed fact.",
+      "list nli": [
+        [
+          2.910970761149656e-05,
+          4.319509389461018e-05,
+          0.9999276399612427
+        ],
+        [
+          2.037534250121098e-05,
+          5.53122372366488e-05,
+          0.9999243021011353
+        ],
+        [
+          2.2637186702922918e-05,
+          5.691482510883361e-05,
+          0.9999204874038696
+        ]
+      ],
+      "weight": 0.6999493479728698
+    },
+    {
+      "llm-weight": 0.55,
+      "nli_entailment": 0.9998639822006226,
+      "combined=(llm)*(nli)": 0.5499251902103425,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "P_24 ⟹ P_25",
+      "translation": "If Pirlo is one of the best midfielders in world football, then Pirlo is hugely popular.",
+      "evidence": "Sentence 9: \"one of the best midfielders\" and \"hugely popular\"",
+      "reasoning": "Elite status often correlates with popularity, but the text states popularity separately; the implication is plausible but not necessary.",
+      "list nli": [
+        [
+          1.0589646990410984e-05,
+          0.000125389255117625,
+          0.9998639822006226
+        ],
+        [
+          1.1549275768629741e-05,
+          0.0001456275349482894,
+          0.9998427629470825
+        ],
+        [
+          9.375246736453846e-05,
+          8.148339838953689e-05,
+          0.9998248219490051
+        ]
+      ],
+      "weight": 0.5499251902103425
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.999896764755249,
+      "combined=(llm)*(nli)": 0.5999380588531494,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "(P_8 ∧ P_9) ⟹ (P_12 ∧ P_13)",
+      "translation": "If Osvaldo believes both Pirlo and Totti are good fits for Boca, then Osvaldo wants both of them to move to Boca.",
+      "evidence": "Sentence 2 (good fit) and Sentence 3-4 (should / would like)",
+      "reasoning": "Believing players fit well often motivates wanting them to join, but wanting can also occur without that belief; hence moderate weight.",
+      "list nli": [
+        [
+          6.759074312867597e-05,
+          3.56856471626088e-05,
+          0.999896764755249
+        ],
+        [
+          4.889447154710069e-05,
+          6.078027581679635e-05,
+          0.9998903274536133
+        ],
+        [
+          7.153875048970804e-05,
+          5.6603796110721305e-05,
+          0.9998718500137329
+        ]
+      ],
+      "weight": 0.5999380588531494
+    },
+    {
+      "llm-weight": 0.55,
+      "nli_entailment": 0.9993209838867188,
+      "combined=(llm)*(nli)": 0.5496265411376954,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "(P_10 ∧ P_11) ⟹ (P_12 ∧ P_13)",
+      "translation": "If Boca fans would love Pirlo and Totti at La Bombonera, then Osvaldo wants Pirlo and Totti to move to Boca.",
+      "evidence": "Sentence 2 (fans would love) and Sentence 3-4 (should / would like)",
+      "reasoning": "Fan enthusiasm can be a reason for wanting a transfer, but it does not logically force Osvaldo's desire; weak-to-moderate plausibility.",
+      "list nli": [
+        [
+          8.71920638019219e-05,
+          0.0005917949602007866,
+          0.9993209838867188
+        ],
+        [
+          1.4895364074618556e-05,
+          0.0008301351335830986,
+          0.9991549253463745
+        ],
+        [
+          1.141559005191084e-05,
+          0.0011277475859969854,
+          0.9988608360290527
+        ]
+      ],
+      "weight": 0.5496265411376954
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9999290704727173,
+      "combined=(llm)*(nli)": 0.5999574422836303,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_7 ⟹ P_6",
+      "translation": "If Osvaldo has scored three goals in six games, then Osvaldo has become an instant hit.",
+      "evidence": "Sentence 1: \"instant hit - scoring three goals in six games\"",
+      "reasoning": "The dash suggests scoring contributes to being an instant hit, but 'instant hit' could also depend on other factors.",
+      "list nli": [
+        [
+          3.212316005374305e-05,
+          3.879192809108645e-05,
+          0.9999290704727173
+        ],
+        [
+          0.007402560207992792,
+          0.0007340985466726124,
+          0.9918633699417114
+        ],
+        [
+          0.006284851580858231,
+          0.0034616664052009583,
+          0.9902535080909729
+        ]
+      ],
+      "weight": 0.5999574422836303
+    }
+  ]
+}
