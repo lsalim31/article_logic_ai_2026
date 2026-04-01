@@ -1,0 +1,633 @@
+
+\documentclass{article} % For LaTeX2e
+\usepackage[submission]{colm2026_conference}
+
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{subcaption}
+
+% NOTE: including geometry package
+% The geometery package modifies some page properties when used. This can dramatically change the page margins, leading to severe template violation, and potential desk rejection. If the package is required, it can be used with the "pass" flag to skip the default page modifications, as in the following line:
+% \usepackage[pass]{geometry}
+
+\usepackage{lineno}
+
+\definecolor{darkblue}{rgb}{0, 0, 0.5}
+\hypersetup{colorlinks=true, citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
+
+
+\title{Formatting Instructions for COLM 2026 \\ Conference Submissions
+}
+
+% Authors must not appear in the submitted version. This should be be taken care of automatically as long as you are using the "submission" option for the colm2026_conference package. But it's on the authors to verify. Non-anonymous submissions will be rejected without review.
+
+\author{Antiquus S.~Hippocampus, Natalia Cerebro \& Amelie P. Amygdale \thanks{ Use footnote for providing further information
+about author (webpage, alternative address)---\emph{not} for acknowledging
+funding agencies.  Funding acknowledgements go at the end of the paper.} \\
+Department of Computer Science\\
+Cranberry-Lemon University\\
+Pittsburgh, PA 15213, USA \\
+\texttt{\{hippo,brain,jen\}@cs.cranberry-lemon.edu} \\
+\And
+Ji Q. Ren \& Yevgeny LeNet \\
+Department of Computational Neuroscience \\
+University of the Witwatersrand \\
+Joburg, South Africa \\
+\texttt{\{robot,net\}@wits.ac.za} \\
+\AND
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email}
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\begin{document}
+
+\ifcolmsubmission
+\linenumbers
+\fi
+
+\maketitle
+
+\begin{abstract}
+One important approach to improving the reasoning abilities of Large Language Models (LLMs) is to convert natural-language questions into logical propositions so that reasoning is performed via external tools such as logic solvers. However, translating ambiguous natural language into logical form is a known bottleneck that can introduce errors. Here, we study an LLM-based pipeline that, given a text and queries about it, first converts the text into a propositional knowledge base consisting of primitive propositions, their natural-language interpretations, and propositional formulas capturing the logical constraints expressed in the text. We then answer natural-language queries by translating each query into a propositional formula over that knowledge base and solving it with a SAT solver.
+In particular, we study how different design choices affect end-to-end reasoning and translation accuracy. In particular, we study: (i) the impact of NLP tools such as OpenIE, cross-encoders, and SBERT models in guiding logic extraction; (ii) the use of synonyms, antonyms, and modal words to enrich either extracted propositions or query translation; and (iii) the effect of parameters such as retrieval depth and model choice on overall performance. Using a fractional factorial experimental design, we identify which components and combinations yield robust gains, which interactions are synergistic, and where additional complexity leads to diminishing returns. Finally, we compare the accuracy of the NL-to-logic pipeline against standard RAG on recent reasoning datasets such as LogiQA.
+
+\end{abstract}
+
+\section{Introduction}
+
+Reliable reasoning over text remains a core challenge in AI. Given a text, users need to determine whether a statement is entailed, contradicted, satisfiable, or completely irrelevant. Large language models (LLMs) provide natural-language interfaces for such tasks, but they conflate two fundamentally different problems: \emph{language semantics} (extracting meaning from text) and \emph{logical reasoning} (deriving valid conclusions from premises stated in the text). This conflation is the source of their unreliability. LLMs hallucinate facts, preferring external knowledge to the input document~\citep{ji2023hallucination}; miss information in long contexts, prioritizing the start and end while neglecting the middle~\citep{liu2024lost}; and produce plausible but logically unsound conclusions~\citep{huang2023reasoning}.
+
+A recent survey identifies neuro-symbolic methods, which separate language semantics from logical reasoning, as the most effective paradigm for improving reasoning in LLMs~\citep{yang2025neurosymbolic}. One class of neuro-symbolic methods translates natural language into formal representations, delegates inference to symbolic solvers, and interprets results---the LLM serves as a bridge between natural language and formal logic. However, these approaches are typically evaluated on benchmarks that favor the specific formalism they adopt, making cross-method comparison difficult. FOLIO~\citep{han2022folio} and ProofWriter~\citep{tafjord2021proofwriter} are constructed around first-order logic; LogiQA2.0~\citep{liu2023logiqa2} and LogicBench~\citep{parmar2024logicbench} frame propositional and multi-step logical reasoning as multiple-choice questions; and DocNLI~\citep{yin2021docnli} and ContractNLI~\citep{koreeda2021contractnli} measure textual entailment instead of logical entailment over longer premises.
+
+To address this, we propose a configurable pipeline that converts text into a propositional knowledge base of atomic propositions along with propositional formulas representing hard constraints, and then answers queries via a SAT solver. Using four binary design factors, a full factorial experiment would require $2^4 = 16$ runs per query---costly, especially when each run involves potentially multiple LLM calls. We therefore adopt a $2^{4-1}_{IV}$ fractional factorial design~\citep{box2005statistics}, which reduces the experimental runs to 8 while preserving the ability to estimate all main effects and most two-factor interactions.
+This allows us to identify the most influential pipeline components with statistical rigor.
+
+We evaluate this pipeline on four datasets: LogiQA2, LogicBench, DocNLI, and a custom hand-written ``Alice'' benchmark. LogiQA2 and LogicBench test reasoning over short premises, while DocNLI evaluates entailment over longer documents. Because DocNLI measures textual rather than logical entailment, we use an LLM to generate queries that require logical inference from the source text. These three datasets purposefully avoid modal language, focusing on classical propositional reasoning. To evaluate reasoning in the presence of graded modalities, we introduce the Alice benchmark, which includes modal words such as ``always,'' ``usually,'' ``rarely,'' and ``never.'' Different configurations may favor different datasets, and our factorial analysis identifies which components yield robust gains across this diverse evaluation suite.
+
+
+\section{Related works}
+
+\subsection{Neuro-symbolic solvers}
+Recent work combines LLMs with symbolic solvers to improve logical reasoning.
+Logic-LM~\citep{pan2023logiclm} introduced a framework that uses LLMs to translate natural language text and queries into a first-order logic (FOL) knowledge base, iteratively solve FOL syntax issues refining from error messages, and offloads to an SMT solver to determine entailment. Logic-LM++~\citep{parmar2024logiclmpp} extends this with multi-step refinement using pairwise comparisons to evaluate candidate revisions, achieving 78.9\% on FOLIO and 79.7\% on ProofWriter.
+LINC~\citep{olausson2023linc} takes a similar approach but uses the Prover9 
+theorem prover for deductive inference and, instead of fixing incorrect FOL 
+syntax, LINC samples (at default $10$) candidate translations and uses a majority voting strategy. LINC reaches 87\% on ProofWriter with GPT-4, outperforming chain-of-thought prompting by 10--38\% absolute depending on model size.
+
+Both systems formalize problems per query on short benchmarks; in contrast, our approach \emph{logifies} the document once and supports repeated querying over longer texts. 
+Both systems also compare to baselines with simple Chain-of-Thought (CoT) prompting. A major source of error as pointed out in their comparison, comes from FOL formulation. FOL translation requires choosing predicate arities, variable
+scopes, and quantifier structures—decisions that introduce semantic
+ambiguity beyond the LLM's competence. Logic-LM's execution rate drops from 99\% (propositional-like ProofWriter)
+to 79.9\% (FOL-based FOLIO). 
+And LINC's error analysis attributes failures primarily to the FOL translation process—implicit information loss and representation choices—rather than the symbolic reasoning itself.
+We therefore deliberately restrict ourselves to propositional logic.
+
+\subsection{Tool-augmented LLMs}
+A broader line of work augments LLMs with external tools to offload computation from reasoning.
+PAL~\citep{gao2023pal} and Program-of-Thought~\citep{chen2023pot} generate Python code for arithmetic reasoning, delegating calculation to an interpreter while the LLM handles problem decomposition.
+SatLM~\citep{ye2023satlm} uses declarative prompting to cast problems as satisfiability queries, achieving state-of-the-art on LSAT and BoardgameQA by offloading inference to an automated theorem prover.
+Logic-of-Thought~\citep{liu2024lot} injects propositional logic into prompts as an augmentation layer: it extracts logical expressions, extends them via inference rules, translates them back to natural language, and appends this enriched context to the original prompt for the LLM to reason over.
+All of these approaches outperform CoT baselines by separating what LLMs do well (processing language) from what they do poorly (valid, intricate reasoning).
+
+\subsection{Semantic similarity and textual entailment}
+Our pipeline leverages pretrained models for semantic retrieval and entailment scoring. Sentence-BERT (SBERT)~\citep{reimers2019sbert} modifies the BERT architecture with siamese networks to produce fixed-size sentence embeddings that capture semantic similarity; cosine similarity between embeddings enables efficient retrieval without cross-encoding every pair. For textual entailment, we use a cross-encoder NLI model~\citep{conneau2017infersent} trained on natural language inference (NLI) datasets. Unlike SBERT's bi-encoder, a cross-encoder jointly encodes a premise-hypothesis pair and outputs probabilities over entailment, contradiction, and neutral---more accurate but computationally expensive, so we use SBERT for retrieval and cross-encoder NLI for scoring.
+
+For syntactic analysis and lexical knowledge, we rely on established NLP tools. SpaCy~\citep{spacy} provides tokenization, part-of-speech tagging, and dependency parsing, which we use for negation detection and grammatical analysis. WordNet~\citep{miller1995wordnet} supplies synonym sets and antonym relations, enabling our modal-opposite detection and query expansion mechanisms. Stanford CoreNLP's OpenIE~\citep{angeli2015openie}, accessed via Stanza~\citep{qi2020stanza}, extracts subject-predicate-object triples from text.
+
+
+
+
+\section{System architecture}
+
+Our pipeline follows a modular design with three components: (1) \texttt{from\_text\_to\_logic}, which \emph{logifies} text into atomic propositions, their translation into natural language, and hard constraints inferred from the text;  (2) \texttt{interface\_with\_user}, which handles translation from natural language queries to propositional formulas over the logified atomic propositions; and (3) \texttt{logic\_solver}, which performs reasoning via a SAT solver. 
+This modularity facilitates our fractional analysis with four boolean factors, two factors for enriching the logification and the other two for enriching queries. 
+
+\subsection{From text to logic}
+
+We implement the extraction of natural language text into a logified structure in up to four stages.
+As part of our factorial experiment, this extraction depends on two binary factors described in Table~\ref{table:frac_dsgn}: \texttt{use\_openie}, which enriches the original text with subject-predicate-object triples, and \texttt{use\_enrichment\_kb} which enriches the original logified file to better support both modal questions and related propositional queries. 
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{c|p{3.5cm}|p{8.5cm}}
+\toprule
+\multicolumn{3}{c}{\bf Text-to-knowledge-base construction stage} \\
+\midrule
+& \bf Factor & \multicolumn{1}{c}{\bf Description} \\
+\midrule
+T1 & \texttt{use\_openie} & Supplies Stanford CoreNLP OpenIE relation triples as auxiliary input to the LLM during text-to-logic conversion. \\ \hline
+T2 & \texttt{use\_enrichment\_kb} & Applies enrichment (modal-pair verification, negation detection, finite-domain auxiliaries, and conflict resolution) to expand and validate the knowledge base. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Binary factors for the text-to-logic stage of our factorial experiment. Each factor enables or disables a distinct pipeline component.}
+\label{table:frac_dsgn}
+\end{table}
+
+\subsubsection{Relation triple extraction}
+We use Stanford CoreNLP's OpenIE system to extract subject-predicate-object triples from the text. We first apply native Stanza coreference resolution to ensure that triples consistently refer to canonical entities rather than pronouns, e.g., replacing ``they'' with ``Alice''. There are cases where the grammatical structure fails for OpenIE, e.g. ``Alice sleeps soundly'' yields no OpenIE triple, so we extract the subject-verb pair from Stanza's dependency parse. 
+By keeping this as a factor in our experiment, we aim to measure the effectiveness of using well-established NLP tools for logical reasoning tasks.
+
+\subsubsection{LLM logic conversion}
+We input the original text $T$ and, when \texttt{use\_openie} is enabled, its extracted triples to GPT-5.2 (with medium reasoning effort) using a few-shot Chain-of-Thought (CoT) prompt. The LLM identifies atomic propositions $\mathcal{P}(T):=\{P_1, P_2, \dots, P_n\}$ and a collection of propositional formulas over $\mathcal{P}(T)$ representing constraints $\mathcal{C}(T):=\{C_1, C_2, \dots, C_m\}$. For each constraint, the LLM assigns an initial weight $w \in [0,1]$ reflecting confidence that the constraint is obligatory; for example, if $w_1=1$ then the LLM determined that the constraint $C_1$ is enforced from the text. 
+Note, we use two different prompts according to whether we are testing the Alice dataset or not (i.e., LogicQA2, LogicBench, and DocNLI). Only in the Alice dataset do the atomic propositions contain modal expressions representing degrees of uncertainty (e.g., ``must,'' ``likely,'' ``may''). For the other datasets, the LLM strips all modality away from the atomic propositions, and the assigned weight reflects this degree. 
+
+The LLM generates an initial JSON structure containing: (i) primitive propositions with their natural-language translations and textual evidence, and (ii) constraints with their logical formulas, translations, evidence, and initial weights (see Appendix~\ref{sec:prompt} for the full prompt and Appendix~\ref{sec:exemplar} for a worked example).
+
+\subsubsection{Enriching the knowledge base}
+When \texttt{use\_enrichment\_kb} is enabled, we apply four deterministic enrichment steps to the initial logified structure:
+\begin{enumerate}
+     \item \textbf{Modal-pair verification:} For each atomic proposition containing a modal word (e.g., ``always,'' ``usually,'' ``rarely''), we add another atomic proposition, if missing, that removes the modality. For example, if  ``\textit{Alice rarely studies late at night}''  is an atomic proposition in the original logified JSON, we insert a new one ``\textit{Alice studies late at night}.'' In particular, this step only applies to the Alice dataset because for the other datasets, the modalities are already stripped. 
+     
+     
+    \item \textbf{Modal-opposite detection:} Using WordNet antonyms with a fallback table, we identify propositions with opposing modal words (e.g., ``typically'' vs.\ ``rarely'') over the same base event. When such pairs are found, we add mutual exclusion constraints. For instance, if the text contained both $P_i$: ``\textit{Alice typically studies hard}'' and $P_j$: ``\textit{Alice rarely studies hard},'' we would add $P_i \Rightarrow \neg P_j$ and $P_j \Rightarrow \neg P_i$ to enforce that these cannot both hold.
+
+    \item \textbf{Negation detection:} We use SpaCy dependency parsing to detect a particular kind of bug: whether the original logified knowledge base includes atomic propositions that are negations (e.g., ``not,'' ``never,'' ``doesn't''). If present,  we extract the affirmative clause and use SBERT similarity to match it against existing propositions in the knowledge base. If a match is found, we add a negation constraint; otherwise, we add a new atomic propositions along with the negation constraint.
+    
+    \item \textbf{Finite-domain auxiliaries:} Propositional logic lacks the expressivity to represent finite-domain constraints directly (e.g., ``Alice studies exactly one major''). To partially address this, we detect propositions involving values from known finite domains (e.g., days of the week) and generate auxiliary propositions for alternative values, adding mutual exclusion constraints between them. For example, from the atomic proposition ``\textit{Alice's assignments are due every Friday}'' we generate amon others ``\textit{Alice's assignments are due Monday}'' and add the constraint $P_{12} \Rightarrow \neg P_{28}$.
+
+\end{enumerate}
+Finally, we apply NLI-based conflict resolution to detect and resolve cases of inconsistency in the resulting logified knowledge base. If a proposition and its negation are asserted as constraints, we keep with higher NLI entailment support from the source text.
+
+
+\subsubsection{Final logified structure}
+We determine which weighted constraints to keep as hard constraints for the final logified JSON. For each constraint $C_i$ with LLM-assigned weight $w_i^{\text{llm}}$, we compute an NLI entailment score $w_i^{\text{nli}}$ as follows. We retrieve the top-$10$ most similar propositions using SBERT and measure the maximum entailment probability using a cross-encoder NLI model. The combined score is the product $w_i = w_i^{\text{llm}}  w_i^{\text{nli}}$. Constraints which exceed a fixed hardness threshold ( $w_i\geq 0.9$ in our experiments) become the final hard constraints; the remaining become soft constraints.  
+Entrees in the final JSON have a template shown in Appendix~\ref{app:json}. 
+
+
+\subsection{Interface with user}
+
+Once we have logified the text, we can process queries about that text and solve them with a logic solver. The purpose of this module is to translate a given query into a propositional formula. Translation depends on two binary factors described in Table~\ref{table:query_factors}: \texttt{use\_shortcuts}, which avoids some cases of calling an LLM, and \texttt{expand\_query}, which generates synonymous queries and uses a voting strategy for translation.
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{c|p{3cm}|p{8cm}}
+\toprule
+\multicolumn{3}{c}{\bf Query-to-formula translation stage} \\
+\midrule
+& \bf Factor & \multicolumn{1}{c}{\bf Description} \\
+\midrule
+Q1 & \texttt{use\_shortcuts} & Activates deterministic shortcut detectors (modal opposites, lexical antonyms, and implication contradictions) that bypass the LLM when certain patterns are found in the query. \\ \hline
+Q2 & \texttt{expand\_query} & Creates query alternatives using WordNet synonym variants filtered by SBERT similarity, and enables majority-vote ensembling over multiple LLM calls to select the final logical formula. Both mechanisms are activated jointly. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Binary factors for the query-to-formula translation stage of our factorial experiment.}
+\label{table:query_factors}
+\end{table}
+
+\subsubsection{Proposition retrieval}
+Given a natural-language query and the logified knowledge base, we first retrieve the top-$10$ most relevant propositions using SBERT embeddings. This retrieved subset is provided to the LLM as context. 
+
+\subsubsection{LLM query translation}
+The LLM serves only as a translator---it does not reason about the text content. Given the query and retrieved propositions, the LLM outputs either a propositional formula over the retrieved propositions (e.g., $P_3 \land P_7$, or $P_5 \rightarrow P_9$), or \texttt{NONE} if the query is unrelated to any proposition in the knowledge base.
+
+\subsubsection{Shortcut detectors}
+When \texttt{use\_shortcuts} is enabled, deterministic shortcut detectors can resolve certain queries before invoking the LLM. These include detecting contradictions between modal expressions such as ``must'' and ``must not,'' identifying direct lexical antonyms using WordNet (for example, ``always'' versus ``never''), and recognizing implication-based contradictions such as ``$X$ requires $Y$'' versus ``$X$ does not require $Y$.'' When a shortcut fires, it bypasses LLM translation entirely, reducing latency and avoiding potential translation errors.
+
+\subsubsection{Query expansion and voting}
+When \texttt{expand\_query} is enabled, we apply two mechanisms to improve translation robustness. First, synonym expansion generates multiple queries  using WordNet synonyms filtered by SBERT similarity to ensure semantic fidelity; each variant is translated independently by the LLM. Second, majority voting selects the final formula by vote over the multiple candidate translations, weighted by translation confidence. This ensemble approach reduces sensitivity to specific query phrasings.
+
+\subsection{Logic solver}
+
+We use PySAT's RC2 solver~\citep{ignatiev2019rc2} to determine the result. To check entailment, we add $\neg Q$ as a hard constraint and test satisfiability; if the resulting formula is unsatisfiable, then the knowledge base entails $Q$. To check contradiction, we instead add $Q$ as a hard constraint; if this makes the formula unsatisfiable, then the knowledge base entails $\neg Q$, so the query is contradicted. To check uncertainty, we verify that neither case holds---that is, both $Q$ and $\neg Q$ are consistent with the knowledge base. For queries where the translation returns \texttt{NONE}, we report \texttt{NOT\_MENTIONED}: the query concerns content outside the knowledge base's scope.
+
+\section{Experiments} 
+\subsection{Datasets}
+\subsubsection{LogicBench} 
+\citep{parmar2024logicbench} is a comprehensive logical reasoning benchmark comprising 25 distinct inference patterns across propositional, first-order, and non-monotonic logics. We use the LogicBench(Eval) subset, in particular binary question-answer instances. Each example presents a natural language context encoding logical premises and asks whether a conclusion follows. The dataset tests fundamental inference rules including modus ponens, modus tollens, disjunctive syllogism, hypothetical syllogism, and constructive/destructive dilemmas. We evaluate on 160 examples balanced across 8 propositional logic patterns. 
+
+
+
+\subsubsection{LogicQA2}
+\citep{liu2023logiqa2} is a large-scale logical reasoning benchmark derived from the Chinese Civil Service Examination, professionally translated to English. Unlike the original multiple-choice format, we convert it to a balanced binary classification task: for each context, we pair the correct answer (labeled ``yes'') with one randomly sampled incorrect answer (labeled ``no''), yielding 30 hypothesis pairs from 15 source problems. This conversion enables direct comparison with our neuro-symbolic pipeline, which naturally outputs entailment judgments. The dataset tests categorical reasoning, conditional reasoning, and conjunctive reasoning patterns.
+
+
+\subsubsection{DocNLI} 
+\citep{yin2021docnli} is a document-level natural language inference dataset aggregating premise-hypothesis pairs from diverse sources including news articles, Wikipedia passages, and other document corpora. The original dataset provides binary labels (entailment vs. not entailment) for NLI queries regarding documents of varying lengths. 
+Because the original DocNLI queries reflect textual entailment rather than strict logical entailment, we regenerate queries to better exercise our neuro-symbolic pipeline. We prompt an LLM (see Appendix~\ref{sec:hypothesis_generation_prompt}) to generate 16 single-sentence hypotheses per premise: 4 \emph{entailment} (facts directly verifiable from the premise), 4 \emph{contradiction} (statements that contradict the premise), 4 \emph{uncertain} (statements consistent with the premise but not entailed), and 4 \emph{not mentioned} (statements completely irrelevant to the passage). This yields 160 hypothesis instances across 10 premises, balanced across all four output categories.
+
+
+
+
+
+\subsubsection{Alice}
+``Alice'' is a controlled natural language inference benchmark we construct to evaluate fine-grained reasoning capabilities over everyday scenarios. The benchmark consists of a short document describing ``Alice,'' a university student, with 20 hypothesis statements spanning four inference types: direct entailment (e.g., ``Alice attends a university''), contradiction (e.g., ``Alice studies a subject other than computer science''), uncertainty under incomplete information (e.g., ``Alice passes all of her exams''), and statements not mentioned in the source (e.g., ``Alice has a dog''). Unlike the other benchmarks, the Alice document contains modal language such as ``always,'' ``usually,'' ``rarely,'' and ``never,'' allowing us to test whether the pipeline correctly handles degrees of uncertainty. 
+
+
+\subsection{Fractional Design}
+
+\subsection{Results}
+
+\section{Conclusion}
+
+In summary, we present a configurable neuro-symbolic pipeline that converts natural language text into a propositional knowledge base and answers queries via SAT solving. Using a fractional factorial design, we conclude.....However, an example from LogicBench in Appendix~\ref{app:case1}, illustrates that some apparent errors may stem not from faulty reasoning, but from differences in interpretation between our pipeline and the datasets. Namely, how evaluation results depend on how strictly benchmarks adhere to the source text.
+
+Include something about alice dataset here, and the orle modalitiy plays. Emaphsize that our results may be related to our treatementof modalitiy.  
+
+
+\subsection{Limitations}
+Our adoption of propositional logic restricts expressivity. First-order constructs such as universal and existential quantification must be flattened into finite conjunctions or disjunctions over enumerated entities. At best inflates the number of atomic propositions, and at worse fails when domains are open-ended. 
+
+By using SAT rather than SMT solvers, we lack native support for arithmetic and numerical reasoning. Statements involving comparisons, arithmetic relationships, or ordering is not easily captured. 
+
+
+
+
+\subsection{Future Work}
+Our framework already supports infrastructure for many-valued and modal logics beyond classical propositional logic. Extending the pipeline to leverage these capabilities would enable more faithful representation of the text we logify. We would be interested in comparing the accuracy of logifying text over those alternative logics. 
+
+Additionally, we can modify our logification prompt to process much larger documents. Our current approach could scale to texts that exceed LLM context windows. The logified knowledge base, once constructed, supports efficient querying regardless of the original document length---enabling reasoning over arbitrarily large corpora.
+
+
+\section*{Acknowledgments}
+We thank the Sundial team for their invaluable support and
+collaboration throughout this project.
+
+
+\section*{Ethics Statement}
+Authors can add an optional ethics statement to the paper. 
+For papers that touch on ethical issues, this section will be evaluated as part of the review process. The ethics statement should come at the end of the paper. It does not count toward the page limit, but should not be more than 1 page. 
+
+
+
+\bibliography{colm2026_conference}
+\bibliographystyle{colm2026_conference}
+
+\newpage
+\appendix
+\section{Appendix}
+
+\subsection{Fractional Design }
+
+\begin{table}[ht]
+\centering
+\caption{$2^{4-1}_{IV}$ fractional factorial design with generator $T_2=Q_1 Q_2 T_1$.
+  Factor $Q_2$ merges synonym expansion and majority-vote ensembling.}
+\label{tab:factorial-design}
+\begin{tabular}{c cccc r}
+\toprule
+Run & $Q_1$:Short & $Q_2$:Augment & $T_1$:OpenIE & $T_2$:Enrich & Est.\ time \\
+\midrule
+1 & $-$ & $-$ & $-$ & $-$ &  4.5 min \\
+2 & $+$ & $-$ & $-$ & $+$ &  5.1 min \\
+3 & $-$ & $+$ & $-$ & $+$ & 17.3 min \\
+4 & $+$ & $+$ & $-$ & $-$ & 11.8 min \\
+5 & $-$ & $-$ & $+$ & $+$ &  7.2 min \\
+6 & $+$ & $-$ & $+$ & $-$ &  5.1 min \\
+7 & $-$ & $+$ & $+$ & $-$ & 17.3 min \\
+8 & $+$ & $+$ & $+$ & $+$ & 18.7 min \\
+\midrule
+\multicolumn{5}{l}{Total (1 premise, CPU)} & $\approx$ 1.5 h \\
+\multicolumn{5}{l}{Total (10 premises, 2 workers)} & $\approx$ 7.3 h \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Logification Prompt}
+\label{sec:prompt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We use two logification prompts for converting natural language text into propositional logic. When not evaluating on the Alice dataset, we run the following few-shot, CoT prompt \texttt{prompt\_long\_openIE\_Agn\_nomodality} located in code/prompts of our GitHub. 
+\begin{verbatim}
+ROLE
+You are a neuro-symbolic reasoning assistant specializing in translating natural language to zeroth-order propositional logic,
+aided by preprocessed OpenIE relation triples.
+
+INTENDED TASK
+Given natural language text T and POSSIBLY its Stanford OpenIE relation triples (you may NOT be given triples), extract:
+
+1. PRIMITIVE PROPOSITIONS (P_1, P_2, ..., P_n)
+   - Primitive, truth-evaluable statements that do are not themselves connectives of finer propositions (e.g. no negated statements). 
+   - Non-redundant: avoid paraphrase duplicates; do not split into overlapping variants unless required by uncertainty rules
+   - Include natural language meaning and textual evidence
+   - Propositions must be specific, complete, and exhaustive for all constraints
+   - CRITICAL: The proposition TEXT must be a simple declarative clause with no conditional words ("if", "when", "unless", "whenever", "not") or logical connectives ("and", "or").
+2. CONSTRAINTS WITH WEIGHTS (C_1, C_2, ..., C_m)
+   - Zero-order propositional formulas over {P_1, ..., P_n} suggested by the text
+   - Each constraint has a llm_weight between 0 and 1 describing how strongly the text implies the formula holds
+   - llm_weight = 1.0 means the constraint must hold
+   - llm_weight = 0.5 means the constraint may be satsified with 50% uncertainty. 
+   - Include meaning, evidence, and reasoning from text
+   - If contradictions exist, prioritize text intent; only include inconsistencies if genuinely intended
+   - IMPORTANT: You must look at the primitive propositions and examine their translations. There may be common-sense semantic relationships between them. You must include constraints corresponding to these relationships with appropriate weights, including implied logical constraints.
+
+METHODOLOGY
+Let's work step-by-step as follows:
+
+STEP 0: Review Exemplars
+- Study examples for task intent and baseline quality expectations
+- Use for guidance on ambiguous or interpretable text
+
+STEP 1: Analyze Relation Triples
+- If present, review triples to understand extracted entities and relationships
+- CRITICAL: Triples are incomplete preprocessing hints. Follow this reconciliation protocol:
+  1. Extract propositions from the original text first
+  2. Use triples to recover missed arguments or entities
+  3. Reject triples that introduce entities, relations, or facts absent from or contradictory to the text
+  4. When triples conflict with text, always prioritize the text
+
+STEP 2: Construct Primitive Propositions
+- Extract atomic, truth-evaluable statements from text that cannot further be broken down
+- Ensure propositions are non-redundant and that they exhaust all constraints
+- Break down to genuinely atomic statements (no hidden logical connectives)
+- CRITICAL RULE: If text contains conditional or connective words ("if", "when", "unless", "and", "or", "not"), extract component clauses separately
+  - Example: "When Alice is focused, she completes her assignments on time"
+    → P_13: "Alice is focused" (simple declarative)
+    → P_14: "Alice completes her assignments on time" (simple declarative)
+    → Then create constraint: C: P_13 ⟹ P_14 with weight 1.0
+- Remove ALL Modal/uncertainty word and use them to help inform what the weights of constraints are: these are word indicating modality, frequency, or strength such as
+  always, never, usually, typically, generally, often, frequently, sometimes, occasionally, rarely, seldom,
+  may, might, could, can, should, ought, encouraged, discouraged, recommended, optional. 
+
+GUIDEDELINES:
+- Use zeroth-order logic only (no quantifiers)
+- Use consistent terminology: "primitive propositions" (matching JSON field `primitive_props`)
+- Flatten first-order-like statements: "Every student studies Tuesday" → identify all students (Alice, Bob) → "Alice studies Tuesday ∧ Bob studies Tuesday"
+- Ensure faithfulness to original text
+- Extract implicit assumptions using text intent and common sense
+- When triples conflict with text, prioritize text
+- Constraints inform the primitive propositions, so update primitive propositions when necessary
+- Make sure to compare with the examples
+
+GRAMMAR
+Use standard zeroth-order propositional logic:
+- Variables: P_1, P_2, ...
+- Operators: ¬ (not), ∧ (and), ∨ (or), ⟹ (implies), ⟺ (iff)
+- Use parentheses when needed to avoid ambiguity
+
+OUTPUT
+Output ONLY valid JSON following this schema:
+
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": <proposition meaning in natural language>,
+      "evidence": <location in text where proposition first appears; sentence indices are 0-based (first sentence is Sentence 0)>,
+      "explanation": <brief explanation for why this is atomic and cannot be broken down>
+    }, ...
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": <propositional formula over P_i>,
+      "translation": <natural language translation; prefer brief direct quote or paraphrase>,
+      "llm_weight": <float 0.0-1.0>,
+      "evidence": <location in text; sentence indices are 0-based>,
+      "reasoning": <why this constraint has this weight>
+    }, ...
+  ]
+}
+
+If saving to disk, name the file "logified.json".
+
+INPUT FORMAT
+You will receive the original text T and OpenIE relation triples. Sentence indices in triples are 0-based.
+
+ORIGINAL TEXT:
+<<<
+[Original natural language text]
+>>>
+
+RELATION TRIPLES:
+<<<
+[JSON array where each triple is: [subject, predicate, object, sentence_index]]
+Example: [["Alice", "likes", "Bob", 0], ["Bob", "studies", "hard", 1]]
+Sentence indices are 0-based (first sentence is index 0).
+>>>
+\end{verbatim}
+The prompt is followed by two examples (omitted for brevity). 
+For the Alice dataset we run a shorter zero-shot prompt to retain the modalities. 
+
+
+\subsection{Logification JSON format}
+\label{app:json}
+The final knowledge base as a JSON file has three components:
+\begin{verbatim}
+{"primitive_props": [
+   {"id": "P_1", "translation": "...",
+    "evidence": "...", "explanation": "..."}],
+ "hard_constraints": [
+   {"id": "C_1", "formula": "P_1 ⟹ P_2",
+    "translation": "...", "evidence": "...",
+    "reasoning": "...", "llm-weight": 1.0,
+    "nli_entailment": 1.0,
+    "combined=(llm)*(nli)": 1.0}],
+ "soft_constraints": [
+   {"id": "C_5", "formula": "P_6",
+    "translation": "...", "evidence": "...",
+    "reasoning": "...", "llm-weight": 0.65,
+    "nli_entailment": 1.0,
+    "combined=(llm)*(nli)": 0.65, "weight": 0.65}]}
+\end{verbatim}
+The \texttt{id} field refers to the index in the enumeration of the proposition or constraint; the \texttt{translation} field refers to its meaning in natural language; the \texttt{evidence} field refers to the first source location in the text where it appears; and the \texttt{explanation} field provides a brief reasoning for the LLM's choice. 
+Note, while we retain the soft constraints in the final logified file, for the purposes of SAT solving they are ignored. We keep them for the possibility of extending the solvers to accommodate soft probabilistic logic.
+
+\subsection{Hypothesis Generation Prompt}
+\label{sec:hypothesis_generation_prompt}
+
+For the DocNLI dataset, we regenerate queries using an LLM to obtain 4-way classification labels (entailment, contradiction, uncertain, not\_mentioned) that better exercise logical rather than textual entailment. 
+The prompt is below. 
+\begin{verbatim}
+You are generating test data for a logical inference system that uses formal propositional logic.
+
+The system works by:
+1. Extracting atomic propositions from the premise (simple statements without logical connectives)
+2. Matching hypothesis text to these propositions using semantic similarity
+3. Using a logic solver to check entailment
+4. You generate statements built out of these propositions with varying degrees of complexity — usually simple but occasionally involving up to 5 connectives. Mix it up.
+
+Given the following premise, generate exactly {HYPOTHESES_PER_LABEL * 4} single-sentence hypotheses:
+- {HYPOTHESES_PER_LABEL} ENTAILMENT hypotheses: Statements that are definitely TRUE based on the premise
+- {HYPOTHESES_PER_LABEL} CONTRADICTION hypotheses: Statements that are definitely FALSE based on the premise
+- {HYPOTHESES_PER_LABEL} UNCERTAIN hypotheses: Statements that COULD be true or false — the premise is consistent with both
+- {HYPOTHESES_PER_LABEL} NOT_MENTIONED hypotheses: See special rules below
+
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR ENTAILMENT HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+1. USE EXPLICIT FACTS ONLY
+   ✓ Good: "Huey said she knew Francis since 1980"
+   ✓ Good: "Francis told Huey that Johnson feared the drug test"
+   ✗ Bad: "Huey recalls Francis implying..." (inference, not stated)
+
+2. REFERENCE WHAT WAS SAID, DONE, OR REPORTED
+   ✓ Good: "X said that Y", "X testified that Y", "X did Y"
+   ✗ Bad: "X implied that Y", "X believed that Y" (unless explicitly stated)
+
+3. COMBINE FACTS NATURALLY
+   ✓ Good: "X and Y" — both facts stated
+   ✓ Good: "X, who did Y" — relative clause combining facts
+   ✓ Good: "The [noun] that [fact1] also [fact2]"
+
+4. USE NAMES, DATES, AND NUMBERS EXACTLY AS STATED
+   ✓ Good: Use "NBC-TV" if the text says "NBC-TV"
+   ✗ Bad: Paraphrase "NBC-TV" as "a television network"
+
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR CONTRADICTION HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+1. USE LEXICALLY DISTINGUISHABLE ERRORS (the system uses word matching)
+   ✓ Good: Wrong proper nouns: "CBC-TV" instead of "NBC-TV"
+   ✓ Good: Wrong numbers/dates: "1985" instead of "1980"
+   ✓ Good: Wrong names: "Johnson" instead of "Lewis"
+   ✓ Good: Negated actions: "rejected" instead of "approved"
+
+2. AVOID SUBTLE SEMANTIC SHIFTS
+   ✗ Bad: Changing only one adjective or adverb
+   ✗ Bad: Synonyms that are lexically similar
+
+3. TYPES OF CONTRADICTION TO INCLUDE:
+   - Directly negate or reverse a stated fact
+   - Swap names, organizations, locations
+   - Change dates, numbers, quantities
+   - Attribute statements to the wrong person
+
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR UNCERTAIN HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+The premise NEITHER confirms NOR denies these. Both true and false are possible.
+
+1. USE UNDERSPECIFIED ASPECTS
+   ✓ Good: "Huey met Francis at a restaurant" (they met, but location not specified)
+   ✓ Good: "Johnson was nervous during the interview" (interview happened, emotion not stated)
+
+2. COMBINE KNOWN FACTS WITH UNKNOWN DETAILS
+   ✓ Good: "Francis warned Huey before the test" (both exist, warning not mentioned)
+   ✓ Good: "The committee met twice before approving" (approval happened, count unknown)
+
+3. WHAT MAKES IT UNCERTAIN (NOT CONTRADICTION):
+   - The premise doesn't rule it out
+   - It's plausible given what's stated
+   - Adding this fact wouldn't create a logical contradiction
+
+═══════════════════════════════════════════════════════════════════════════════
+CRITICAL RULES FOR NOT_MENTIONED HYPOTHESES:
+═══════════════════════════════════════════════════════════════════════════════
+
+Generate TWO types of not_mentioned hypotheses:
+
+TYPE A — HARD (same broad domain, but different entities/events):
+Generate {HYPOTHESES_PER_LABEL // 2} hypotheses that are in the SAME DOMAIN as the premise
+but about DIFFERENT specific entities, events, or facts NOT mentioned in the premise.
+   ✓ Good (sports premise): "Roger Federer withdrew from the French Open due to a knee injury."
+     (same domain: sports/tennis, but different people and events)
+   ✓ Good (legal premise): "The California Supreme Court overturned a ruling on eminent domain."
+     (same domain: law, but different court, state, and issue)
+   The key: shares general topic vocabulary but NO overlap with specific premise entities.
+
+TYPE B — EASY (completely different domain):
+Generate {HYPOTHESES_PER_LABEL - HYPOTHESES_PER_LABEL // 2} hypotheses about COMPLETELY DIFFERENT topics.
+   ✓ Good: "The European Central Bank raised interest rates in March."
+   ✓ Good: "Toyota announced a recall of 500,000 vehicles."
+   Ensure ZERO lexical overlap with key premise terms.
+
+ALL not_mentioned hypotheses must be realistic standalone statements.
+
+═══════════════════════════════════════════════════════════════════════════════
+FORMATTING REQUIREMENTS:
+═══════════════════════════════════════════════════════════════════════════════
+
+- Each hypothesis must be ONE SINGLE SENTENCE (10-30 words)
+- Cover DIFFERENT aspects of the premise
+- Use simple, direct language
+
+═══════════════════════════════════════════════════════════════════════════════
+PREMISE:
+═══════════════════════════════════════════════════════════════════════════════
+{premise}
+
+═══════════════════════════════════════════════════════════════════════════════
+OUTPUT FORMAT (respond with this exact JSON structure, {HYPOTHESES_PER_LABEL} items per list):
+═══════════════════════════════════════════════════════════════════════════════
+{{
+    "entailment": [
+        "First entailment combining explicit facts naturally.",
+        "Second entailment using different facts from the premise.",
+        "Third entailment covering another aspect of the premise.",
+        "Fourth entailment with exact names/dates/numbers from text."
+    ],
+    "contradiction": [
+        "First contradiction with wrong proper noun.",
+        "Second contradiction with wrong date or number.",
+        "Third contradiction that negates a stated fact.",
+        "Fourth contradiction with wrong attribution."
+    ],
+    "uncertain": [
+        "First uncertain: known event with unspecified detail.",
+        "Second uncertain: plausible extension of stated facts.",
+        "Third uncertain: combines known entities in unconfirmed way.",
+        "Fourth uncertain: reasonable detail not explicitly stated."
+    ],
+    "not_mentioned": [
+        "TYPE A (hard): same-domain statement about different entities.",
+        "TYPE A (hard): same-domain statement about different events.",
+        "TYPE B (easy): entirely different domain and topic.",
+        "TYPE B (easy): no lexical overlap with premise."
+    ]
+}}
+\end{verbatim}
+
+\subsection{Interesting case in LogicBench}
+\label{app:case1}
+ An interesting use case for one reported failure from our pipeline arises in the following LogicBench example: ``If Mason decides to leave his job, he will not receive any salary.'' Our pipeline is particularly strict about logical form and treats \emph{deciding to leave} and \emph{having left} as distinct states, whereas the benchmark annotation appears to interpret the statement more pragmatically. Under this stricter notion of logical entailment, it is possible that Mason has decided to leave but has not yet acted on that decision, so his employment status is not definitively determined. 
+
+\end{document}
+
+1-5 Both running 7:30am
+2-6
+3-7
+exp 7 in machine 8 both running 7:30am
+
+
+# MACHINE 1 — T1=OFF, T2=OFF (Runs 1 )
+ORIGINAL ONE
+#starting 12:38pm
+nohup python experiment.py --config profiles/config_run1_openAI.yaml > output_run1.txt 2>&1 &
+
+# MACHINE 2 — T1=ON, T2=ON (Runs 5 )
+12:35pm
+nohup python experiment.py --config profiles/config_run5_openAI.yaml > output_run5.txt 2>&1 &
+
+# MACHINE 3 — T1=OFF, T2=ON (Runs 2 )
+# starting at 12:27pm
+nohup python experiment.py --config profiles/config_run2_openAI.yaml > output_run2.txt 2>&1 &
+
+# MACHINE 4 — T1=ON, T2=OFF (Runs 6 )
+# running 12:26pm
+nohup python experiment.py --config profiles/config_run6_openAI.yaml > output_run6.txt 2>&1 &
+
+# MACHINE 5 — T1=OFF, T2=OFF (Runs 4)
+12:41
+nohup python experiment.py --config profiles/config_run4_openAI.yaml > output_run4.txt 2>&1 &
+
+# MACHINE 6 — T1=ON, T2=ON (Runs 8 )
+12:42pm
+nohup python experiment.py --config profiles/config_run8_openAI.yaml > output_run8.txt 2>&1 &
+
+# MACHINE 7 — T1=OFF, T2=ON (Runs  3)
+nohup python experiment.py --config profiles/config_run3_openAI.yaml > output_run3.txt 2>&1 &
+
+# MACHINE 8 — T1=ON, T2=OFF (Runs 67)
+12:45am
+nohup python experiment.py --config profiles/config_run7_openAI.yaml > output_run7.txt 2>&1 &
