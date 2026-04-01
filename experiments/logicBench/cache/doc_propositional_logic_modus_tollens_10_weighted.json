@@ -2,83 +2,83 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Elijah has a new job",
-      "evidence": "Sentence 0: \"If Elijah has a new job\"",
-      "explanation": "This is an atomic state attribution about Elijah (having a new job) with no logical connectives or negation."
+      "translation": "Elijah has a new job.",
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "explanation": "This is an atomic state about Elijah having a new job; it contains no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Elijah will get a raise",
-      "evidence": "Sentence 0: \"then he will get a raise\"",
-      "explanation": "This is an atomic future-directed claim (getting a raise) and is not itself a connective."
+      "translation": "Elijah gets a raise.",
+      "evidence": "Sentence 0: \"...then he will get a raise.\"",
+      "explanation": "This is an atomic event/outcome; it does not embed any further conditions or connectives."
     },
     {
       "id": "P_3",
-      "translation": "Elijah is receiving the raise he had anticipated",
-      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated\"",
-      "explanation": "This is the positive form of the negated claim in the text, expressed as a simple declarative clause without negation or connectives."
+      "translation": "Elijah receives the raise he had anticipated.",
+      "evidence": "Sentence 1: \"...he would not be receiving the raise he had anticipated.\"",
+      "explanation": "This is the positive (non-negated) atomic proposition corresponding to the negated statement in the text."
     },
     {
       "id": "P_4",
-      "translation": "Elijah had anticipated a raise",
-      "evidence": "Sentence 1: \"the raise he had anticipated\"",
-      "explanation": "The noun phrase presupposes that Elijah anticipated a raise; this is a separate atomic proposition needed to capture that presupposed content."
+      "translation": "Elijah anticipated a raise.",
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\"",
+      "explanation": "This is an atomic mental-state claim presupposed by the definite description \"the raise he had anticipated.\""
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997544884681702,
-      "combined=(llm)*(nli)": 0.9997544884681702,
+      "nli_entailment": 0.9997661709785461,
+      "combined=(llm)*(nli)": 0.9997661709785461,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Elijah has a new job, then Elijah will get a raise",
+      "translation": "If Elijah has a new job, he gets a raise.",
       "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
       "reasoning": "This is stated explicitly as a conditional in the text.",
       "list nli": [
         [
-          2.3426435291185044e-05,
-          0.00022205452842172235,
-          0.9997544884681702
+          6.395850959961535e-06,
+          0.00022742865257896483,
+          0.9997661709785461
         ],
         [
-          6.732430392730748e-06,
-          0.0002595496771391481,
-          0.9997337460517883
+          5.056205736764241e-06,
+          0.0002509992627892643,
+          0.9997439980506897
         ],
         [
-          6.624401521548862e-06,
-          0.0003491636598482728,
-          0.9996441602706909
+          1.0031133570009843e-05,
+          0.00032163842115551233,
+          0.9996683597564697
         ]
       ]
     },
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9992039799690247,
-      "combined=(llm)*(nli)": 0.9492437809705734,
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999649167060852,
+      "combined=(llm)*(nli)": 0.999649167060852,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_3 ⟹ P_4",
-      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah had anticipated a raise",
-      "evidence": "Sentence 1: \"the raise he had anticipated\"",
-      "reasoning": "The description \"the raise he had anticipated\" strongly implies Elijah anticipated a raise; conditioning on P_3 makes this presupposition link explicit.",
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Elijah does not receive the raise he had anticipated.",
+      "evidence": "Sentence 1: \"...he would not be receiving the raise he had anticipated.\"",
+      "reasoning": "This is asserted directly (the modality \"would\" is treated as part of the statement’s force here rather than a separate condition).",
       "list nli": [
         [
-          0.0001167558366432786,
-          0.0006792781641706824,
-          0.9992039799690247
+          0.00032142832060344517,
+          2.9428585548885167e-05,
+          0.999649167060852
         ],
         [
-          0.0019674126524478197,
-          0.0045331851579248905,
-          0.9934993982315063
+          0.0007681977585889399,
+          0.00017446062702219933,
+          0.9990573525428772
         ],
         [
-          5.92523610976059e-05,
-          0.007065282668918371,
-          0.9928754568099976
+          0.9988546371459961,
+          0.00013928014959674329,
+          0.0010061017237603664
         ]
       ]
     }
@@ -86,61 +86,90 @@
   "soft_constraints": [
     {
       "llm-weight": 0.9,
-      "nli_entailment": 0.9996527433395386,
-      "combined=(llm)*(nli)": 0.8996874690055847,
-      "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "¬P_3",
-      "translation": "Elijah is not receiving the raise he had anticipated",
-      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated.\"",
-      "reasoning": "The text directly asserts non-receipt; the modal \"would\" introduces slight uncertainty about whether it is a projected/conditional scenario, so the weight is high but not maximal.",
-      "list nli": [
-        [
-          0.0003066984354518354,
-          4.05564351240173e-05,
-          0.9996527433395386
-        ],
-        [
-          0.0012813796056434512,
-          0.00041494795004837215,
-          0.9983036518096924
-        ],
-        [
-          0.9793865084648132,
-          0.0004054841410834342,
-          0.02020803652703762
-        ]
-      ],
-      "weight": 0.8996874690055847
-    },
-    {
-      "llm-weight": 0.8,
-      "nli_entailment": 0.9997983574867249,
-      "combined=(llm)*(nli)": 0.7998386859893799,
+      "nli_entailment": 0.9998041987419128,
+      "combined=(llm)*(nli)": 0.8998237788677216,
       "hardness_constant": 0.9,
       "id": "C_3",
       "formula": "P_3 ⟹ P_2",
-      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah will get a raise",
-      "evidence": "Sentence 1: \"the raise he had anticipated\" (in context of receiving a raise)",
-      "reasoning": "By common-sense semantics, receiving a (particular) raise entails getting a raise; this is an implied relationship rather than explicitly stated.",
+      "translation": "If Elijah receives the raise he had anticipated, then Elijah gets a raise.",
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\" (the anticipated thing is a raise)",
+      "reasoning": "By common-sense semantics, receiving a particular raise entails getting a raise; this is strongly implied by the noun phrase.",
       "list nli": [
         [
-          8.419321966357529e-05,
-          0.00011752504360629246,
-          0.9997983574867249
+          7.239859405672178e-05,
+          0.00012340045941527933,
+          0.9998041987419128
         ],
         [
-          6.8476347223622724e-06,
-          0.00045746276737190783,
-          0.9995356798171997
+          5.454133315652143e-06,
+          0.0005550815258175135,
+          0.9994394183158875
         ],
         [
-          0.0006106923101469874,
-          0.0009103838237933815,
-          0.9984789490699768
+          0.0005583221791312099,
+          0.0007489288109354675,
+          0.9986928105354309
         ]
       ],
-      "weight": 0.7998386859893799
+      "weight": 0.8998237788677216
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9992693066596985,
+      "combined=(llm)*(nli)": 0.8993423759937287,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Elijah receives the raise he had anticipated, then Elijah anticipated a raise.",
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\"",
+      "reasoning": "Receiving 'the raise he had anticipated' presupposes that he did anticipate a raise; this is a strong semantic implication.",
+      "list nli": [
+        [
+          0.00013713470252696425,
+          0.0005935475928708911,
+          0.9992693066596985
+        ],
+        [
+          3.201024082954973e-05,
+          0.005913334898650646,
+          0.9940547347068787
+        ],
+        [
+          0.00044578773668035865,
+          0.008156207390129566,
+          0.9913979768753052
+        ]
+      ],
+      "weight": 0.8993423759937287
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.994838297367096,
+      "combined=(llm)*(nli)": 0.8456125527620315,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "¬P_3 ⟹ P_4",
+      "translation": "If Elijah does not receive the raise he had anticipated, then Elijah anticipated a raise.",
+      "evidence": "Sentence 1: \"...would not be receiving the raise he had anticipated.\"",
+      "reasoning": "Even under negation, the definite description 'the raise he had anticipated' typically carries a presupposition that he anticipated such a raise, though presuppositions can be weaker than explicit assertions.",
+      "list nli": [
+        [
+          0.0036803139373660088,
+          0.0014813768211752176,
+          0.994838297367096
+        ],
+        [
+          0.003216790733858943,
+          0.0033255883026868105,
+          0.9934576153755188
+        ],
+        [
+          0.9803182482719421,
+          0.0013297691475600004,
+          0.01835193857550621
+        ]
+      ],
+      "weight": 0.8456125527620315
     }
   ]
 }
