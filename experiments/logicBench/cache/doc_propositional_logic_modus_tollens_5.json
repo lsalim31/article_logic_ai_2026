@@ -2,47 +2,55 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Sophia achieves the highest score in the test.",
-      "evidence": "Sentence 0: \"Sophia has the highest score in the test\"; Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "explanation": "This is an atomic, truth-evaluable claim about Sophia's test result, and it is used as the antecedent/target of negation in the text."
+      "translation": "Sophia has the highest score in the test.",
+      "evidence": "Sentence 0: \"Sophia has the highest score in the test\"",
+      "explanation": "This is an atomic, truth-evaluable claim about Sophia’s test result."
     },
     {
       "id": "P_2",
       "translation": "Sophia is awarded a medal.",
       "evidence": "Sentence 0: \"she will be awarded a medal\"",
-      "explanation": "This is a single event/state assertion (receiving a medal) and does not contain logical connectives or conditions."
+      "explanation": "This is an atomic, truth-evaluable event/state about Sophia receiving a medal."
     },
     {
       "id": "P_3",
-      "translation": "Sophia has outstanding performance.",
+      "translation": "Sophia has an outstanding performance.",
       "evidence": "Sentence 0: \"for her outstanding performance\"",
-      "explanation": "This is a simple descriptive claim about Sophia's performance; it is referenced as the stated basis for the medal and is separable from the medal-award event."
+      "explanation": "This is an atomic, truth-evaluable claim attributing outstanding performance to Sophia."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
-      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance.",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance.\"",
-      "reasoning": "This is stated as an explicit conditional in the text; the consequent linguistically bundles both being awarded a medal and the medal being for outstanding performance."
+      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
+      "reasoning": "This is stated explicitly as a conditional in the text."
     },
     {
       "id": "C_2",
       "formula": "¬P_1",
-      "translation": "Sophia did not achieve the highest score in the test.",
+      "translation": "Sophia did not achieve the highest score in the test",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "reasoning": "This is directly asserted as a fact (no hedging), so it is treated as certain."
+      "reasoning": "This is stated explicitly and unqualified."
     },
     {
       "id": "C_3",
       "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal (as described), then Sophia has outstanding performance.",
+      "translation": "Sophia’s being awarded a medal implies Sophia has an outstanding performance.",
       "llm_weight": 0.8,
       "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
-      "reasoning": "The phrase \"a medal for her outstanding performance\" suggests the medal award is grounded in outstanding performance; this implication is strong but could be treated as slightly defeasible in natural language, so weight is < 1."
+      "reasoning": "The medal is described as being for her outstanding performance, which strongly suggests that if she is awarded the medal, she has an outstanding performance; however, the phrasing is explanatory and not a strict logical definition."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_1 ⟹ ¬P_2",
+      "translation": "Sophia’s not having the highest score implies Sophia is not awarded a medal.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 0-1: conditional in Sentence 0 plus \"However... Sophia didn't achieve the highest score\" in Sentence 1",
+      "reasoning": "The discourse contrast (setting up the condition and then stating it fails) pragmatically invites the conclusion that the medal will not be awarded, but this is not logically entailed because other reasons for a medal are not ruled out."
     }
   ],
   "_enrichment_log": [

@@ -2,145 +2,144 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Benjamin anticipates his trip to the beach.",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks.",
       "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
-      "explanation": "This is a single, truth-evaluable mental-state claim about Benjamin, with no embedded logical connective."
+      "explanation": "This is a single descriptive claim about Benjamin's mental state over a time period, with no embedded logical connective."
     },
     {
       "id": "P_2",
-      "translation": "Benjamin has a trip to the beach.",
-      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach...\"",
-      "explanation": "This is an atomic claim that a specific trip-to-the-beach (as an intended/possessed trip) exists for Benjamin; it is distinct from whether he actually goes."
+      "translation": "Benjamin had a trip to the beach.",
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach\"",
+      "explanation": "This captures the existence of the referenced trip as an atomic situation; it does not include conditionals or connectives."
     },
     {
       "id": "P_3",
-      "translation": "Benjamin is going to the beach.",
-      "evidence": "Sentence 1: \"If he is going to the beach, then he will go swimming.\"",
-      "explanation": "This is the antecedent event/state mentioned in the conditional; it is represented as its own atomic proposition."
+      "translation": "Benjamin goes to the beach.",
+      "evidence": "Sentence 1: \"If he is going to the beach\"",
+      "explanation": "This is the antecedent event referenced by the quoted conditional; it is an atomic, truth-evaluable clause."
     },
     {
       "id": "P_4",
       "translation": "Benjamin goes swimming.",
-      "evidence": "Sentence 1: \"...then he will go swimming.\" / Sentence 2: \"...going swimming...\"",
-      "explanation": "This is the consequent event mentioned in the conditional and later discussed; it is an atomic action proposition (kept non-negated)."
+      "evidence": "Sentence 1: \"then he will go swimming\"; Sentence 2: \"he didn't end up going swimming\"",
+      "explanation": "This is the core action discussed in both the quoted rule and the later outcome, expressible as a single atomic clause."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.986003041267395,
-      "combined=(llm)*(nli)": 0.9367028892040252,
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999185800552368,
+      "combined=(llm)*(nli)": 0.9999185800552368,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Benjamin anticipates his trip to the beach implies Benjamin has a trip to the beach.",
-      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach...\"",
-      "reasoning": "Anticipating \"his trip\" strongly presupposes the existence of such a trip (at least as a planned/intended trip), though the text does not explicitly describe booking or scheduling, so weight is slightly below 1.0.",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a plain narrative fact.",
       "list nli": [
         [
-          0.001702142646536231,
-          0.012294824235141277,
-          0.986003041267395
+          1.8459890270605683e-05,
+          6.299902452155948e-05,
+          0.9999185800552368
         ],
         [
-          0.004292543511837721,
-          0.03229346126317978,
-          0.9634140729904175
+          3.078080771956593e-05,
+          7.391506369458511e-05,
+          0.9998953342437744
         ],
         [
-          0.00201450870372355,
-          0.9304446578025818,
-          0.06754091382026672
+          9.213243174599484e-06,
+          0.00012813805369660258,
+          0.9998626708984375
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9989357590675354,
-      "combined=(llm)*(nli)": 0.9989357590675354,
+      "nli_entailment": 0.9989062547683716,
+      "combined=(llm)*(nli)": 0.9989062547683716,
       "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "¬P_4",
-      "translation": "Benjamin does not go swimming.",
-      "evidence": "Sentence 2: \"However, he didn't end up going swimming after all.\"",
-      "reasoning": "The text directly asserts the negation of going swimming as the final outcome.",
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Benjamin had a trip to the beach.",
+      "evidence": "Sentence 0",
+      "reasoning": "The text refers to \"his trip to the beach\" as an existing planned trip; this is directly asserted.",
       "list nli": [
         [
-          0.0008906630682758987,
-          0.00017363460210617632,
-          0.9989357590675354
+          6.110862886998802e-05,
+          0.0010326371993869543,
+          0.9989062547683716
         ],
         [
-          0.9659310579299927,
-          0.000761346542276442,
-          0.03330758213996887
+          8.165717736119404e-05,
+          0.9806602597236633,
+          0.019258160144090652
         ],
         [
-          0.9876552224159241,
-          0.0004763104079756886,
-          0.011868437752127647
+          0.0006456245901063085,
+          0.9920071363449097,
+          0.00734720891341567
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999037981033325,
+      "combined=(llm)*(nli)": 0.9999037981033325,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Benjamin did not end up going swimming.",
+      "evidence": "Sentence 2: \"However, he didn't end up going swimming after all.\"",
+      "reasoning": "This is explicitly stated as the final outcome.",
+      "list nli": [
+        [
+          3.3564203476998955e-05,
+          6.257840868784115e-05,
+          0.9999037981033325
+        ],
+        [
+          0.0002242071059299633,
+          2.7110787414130755e-05,
+          0.9997486472129822
+        ],
+        [
+          0.0002107927721226588,
+          0.00012393582437653095,
+          0.9996652603149414
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.999671220779419,
-      "combined=(llm)*(nli)": 0.8497205376625061,
+      "llm-weight": 0.65,
+      "nli_entailment": 0.9996618032455444,
+      "combined=(llm)*(nli)": 0.6497801721096039,
       "hardness_constant": 0.9,
-      "id": "C_2",
+      "id": "C_3",
       "formula": "P_3 ⟹ P_4",
-      "translation": "If Benjamin is going to the beach then Benjamin goes swimming.",
+      "translation": "If Benjamin is going to the beach, then Benjamin will go swimming.",
       "evidence": "Sentence 1: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
-      "reasoning": "The conditional is explicitly stated, but it is reported as what his friends told him (hearsay/claim), and the later outcome conflicts with it, so it should not be treated as a certain rule about reality.",
+      "reasoning": "This implication is presented as something Benjamin's friends said, not as an objective law; it is plausible guidance/prediction but not guaranteed by the narrator.",
       "list nli": [
         [
-          5.803548447147477e-06,
-          0.00032294157426804304,
-          0.999671220779419
+          6.655584911641199e-06,
+          0.0003315794747322798,
+          0.9996618032455444
         ],
         [
-          0.0007364818593487144,
-          0.0002686444786377251,
-          0.9989948868751526
+          0.00010717366967583075,
+          0.00028386752819642425,
+          0.9996089339256287
         ],
         [
-          0.002360048471018672,
-          0.0004968807916156948,
-          0.9971430897712708
+          0.00022008613450452685,
+          0.0003785830922424793,
+          0.999401330947876
         ]
       ],
-      "weight": 0.8497205376625061
-    },
-    {
-      "llm-weight": 0.55,
-      "nli_entailment": 0.05502457544207573,
-      "combined=(llm)*(nli)": 0.030263516493141653,
-      "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "Benjamin has a trip to the beach implies Benjamin is going to the beach.",
-      "evidence": "Sentence 0: \"...his trip to the beach...\" and Sentence 1: \"If he is going to the beach...\"",
-      "reasoning": "Having a trip to the beach suggests (but does not guarantee) that he is going to the beach; the text emphasizes anticipation and a conditional about going, without explicitly confirming the trip occurs.",
-      "list nli": [
-        [
-          0.0009184843511320651,
-          0.9440569877624512,
-          0.05502457544207573
-        ],
-        [
-          0.00021508427744265646,
-          0.9726651906967163,
-          0.027119770646095276
-        ],
-        [
-          0.00028024642961099744,
-          0.9921694397926331,
-          0.007550344802439213
-        ]
-      ],
-      "weight": 0.030263516493141653
+      "weight": 0.6497801721096039
     }
   ]
 }

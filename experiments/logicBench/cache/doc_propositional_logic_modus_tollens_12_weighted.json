@@ -4,89 +4,219 @@
       "id": "P_1",
       "translation": "Olivia is known for her green thumb.",
       "evidence": "Sentence 0: \"Olivia had always been known for her green thumb.\"",
-      "explanation": "This is an atomic attribution about Olivia's reputation; it is truth-evaluable and contains no logical connectives or negation."
+      "explanation": "This is an attribution about Olivia's reputation and contains no internal logical connective that must be split."
     },
     {
       "id": "P_2",
-      "translation": "Olivia has the ability to plant trees.",
+      "translation": "Olivia prides herself on her ability to plant beautiful trees.",
       "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
-      "explanation": "This extracts one atomic component of the stated ability; the original contains a conjunction that must be split."
+      "explanation": "This is a single pride/attitude claim; it is made atomic by isolating the 'plant' part from the coordinated phrase in the text."
     },
     {
       "id": "P_3",
-      "translation": "Olivia has the ability to care for beautiful trees.",
+      "translation": "Olivia prides herself on her ability to care for beautiful trees.",
       "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
-      "explanation": "This extracts the other atomic component of the stated ability; the original contains a conjunction that must be split."
+      "explanation": "This is a single pride/attitude claim; it is made atomic by isolating the 'care' part from the coordinated phrase in the text."
     },
     {
       "id": "P_4",
       "translation": "Olivia planted a tree.",
-      "evidence": "Sentence 2: \"if Olivia planted a tree, then she would undoubtedly take care of it.\"",
-      "explanation": "This is the antecedent event referenced by the stated rule; it is needed as a standalone atom to express the conditional."
+      "evidence": "Sentence 2: \"if Olivia planted a tree\"",
+      "explanation": "This is the antecedent clause of a conditional; it is a simple declarative that can be true or false."
     },
     {
       "id": "P_5",
-      "translation": "Olivia takes care of the tree she planted.",
-      "evidence": "Sentence 2: \"then she would undoubtedly take care of it.\"",
-      "explanation": "This is the consequent action referenced by the stated rule; it is an atomic action statement (no negation)."
+      "translation": "Olivia takes care of the tree.",
+      "evidence": "Sentence 2: \"then she would undoubtedly take care of it\"; Sentence 3: \"she won't take care of it.\"",
+      "explanation": "This is the positive core action statement; the text’s negation is handled as a separate logical constraint rather than building negation into the primitive."
+    },
+    {
+      "id": "P_6",
+      "translation": "Olivia has the ability to plant beautiful trees.",
+      "evidence": "Sentence 1: \"her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an ability claim extracted as a simple declarative, separated from other coordinated content."
+    },
+    {
+      "id": "P_7",
+      "translation": "Olivia has the ability to care for beautiful trees.",
+      "evidence": "Sentence 1: \"her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an ability claim extracted as a simple declarative, separated from other coordinated content."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9996825456619263,
-      "combined=(llm)*(nli)": 0.9996825456619263,
+      "nli_entailment": 0.9998401403427124,
+      "combined=(llm)*(nli)": 0.9998401403427124,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_4 ⟹ P_5",
-      "translation": "If Olivia planted a tree, then Olivia takes care of it.",
+      "translation": "According to the rule, Olivia planting a tree implies Olivia takes care of it.",
       "evidence": "Sentence 2: \"According to the rule, if Olivia planted a tree, then she would undoubtedly take care of it.\"",
-      "reasoning": "The text explicitly states a rule and strengthens it with \"undoubtedly\", indicating a firm implication.",
+      "reasoning": "The statement is explicitly presented as a rule, and \"undoubtedly\" indicates maximal strength.",
       "list nli": [
         [
-          5.723443337046774e-06,
-          0.00031180118094198406,
-          0.9996825456619263
+          1.4515012480842415e-05,
+          0.00014532402565237135,
+          0.9998401403427124
         ],
         [
-          0.00011842903040815145,
-          0.0003181134816259146,
-          0.9995633959770203
+          4.285956310923211e-05,
+          0.0005567603511735797,
+          0.9994003772735596
         ],
         [
-          3.066125282202847e-05,
-          0.0013888046378269792,
-          0.9985805749893188
+          0.0002963205042760819,
+          0.0003477969439700246,
+          0.9993558526039124
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.998450517654419,
-      "combined=(llm)*(nli)": 0.998450517654419,
+      "nli_entailment": 0.9939597845077515,
+      "combined=(llm)*(nli)": 0.9939597845077515,
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "¬P_5",
-      "translation": "Olivia does not take care of the tree she planted.",
+      "translation": "Olivia will not take care of it.",
       "evidence": "Sentence 3: \"However, she won't take care of it.\"",
-      "reasoning": "This is stated directly as a factual exception/contrast, so it is treated as certain.",
+      "reasoning": "This is a direct assertion with no hedging, so it is treated as certain.",
       "list nli": [
         [
-          0.0014973364304751158,
-          5.2078485168749467e-05,
-          0.998450517654419
+          0.005906164646148682,
+          0.00013402232434600592,
+          0.9939597845077515
         ],
         [
-          0.00967202614992857,
-          0.00018030282808467746,
-          0.9901476502418518
+          0.9930562376976013,
+          0.000264503265498206,
+          0.006679311394691467
         ],
         [
-          0.9905727505683899,
-          0.000246516487095505,
-          0.009180627763271332
+          0.9955447912216187,
+          0.00020289984240662307,
+          0.004252293612807989
         ]
       ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9995695948600769,
+      "combined=(llm)*(nli)": 0.8996126353740692,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_6",
+      "translation": "If Olivia prides herself on her ability to plant beautiful trees, then she has the ability to plant beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant...\"",
+      "reasoning": "Pride in an ability strongly suggests possession of that ability, though it is an inference from the attitude report rather than a direct 'has ability' assertion.",
+      "list nli": [
+        [
+          0.00016342355229426175,
+          0.0002670286630745977,
+          0.9995695948600769
+        ],
+        [
+          0.0001963563699973747,
+          0.00039069342892616987,
+          0.999413013458252
+        ],
+        [
+          0.0013462669448927045,
+          0.0019731721840798855,
+          0.9966805577278137
+        ]
+      ],
+      "weight": 0.8996126353740692
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996328353881836,
+      "combined=(llm)*(nli)": 0.8996695518493653,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_7",
+      "translation": "If Olivia prides herself on her ability to care for beautiful trees, then she has the ability to care for beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to ... care for beautiful trees.\"",
+      "reasoning": "Same rationale as C_3: it is strongly implied but still inferential.",
+      "list nli": [
+        [
+          0.0001236448297277093,
+          0.0002435248316032812,
+          0.9996328353881836
+        ],
+        [
+          0.00022655192879028618,
+          0.0009220967767760158,
+          0.9988512992858887
+        ],
+        [
+          0.0005573431262746453,
+          0.0009806371526792645,
+          0.9984620809555054
+        ]
+      ],
+      "weight": 0.8996695518493653
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.999854326248169,
+      "combined=(llm)*(nli)": 0.6998980283737182,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_1 ⟹ P_6",
+      "translation": "If Olivia is known for her green thumb, then she has the ability to plant beautiful trees.",
+      "evidence": "Sentence 0: \"known for her green thumb\"",
+      "reasoning": "A 'green thumb' commonly implies skill at growing/planting, but this is a commonsense inference rather than an explicit logical rule.",
+      "list nli": [
+        [
+          3.9027876482577994e-05,
+          0.00010661801206879318,
+          0.999854326248169
+        ],
+        [
+          7.421753707603784e-06,
+          0.00017470819875597954,
+          0.9998179078102112
+        ],
+        [
+          7.186816219473258e-06,
+          0.00019559290376491845,
+          0.9997972846031189
+        ]
+      ],
+      "weight": 0.6998980283737182
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9998286962509155,
+      "combined=(llm)*(nli)": 0.6998800873756408,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_1 ⟹ P_7",
+      "translation": "If Olivia is known for her green thumb, then she has the ability to care for beautiful trees.",
+      "evidence": "Sentence 0: \"known for her green thumb\"",
+      "reasoning": "A 'green thumb' commonly implies skill at caring for plants/trees; again, this is plausible but not explicitly stated.",
+      "list nli": [
+        [
+          7.056991762510734e-06,
+          0.00016418741142842919,
+          0.9998286962509155
+        ],
+        [
+          5.995311585138552e-05,
+          0.00012404556036926806,
+          0.9998160004615784
+        ],
+        [
+          6.007032880006591e-06,
+          0.0004615243524312973,
+          0.9995324611663818
+        ]
+      ],
+      "weight": 0.6998800873756408
     }
   ],
   "soft_constraints": []

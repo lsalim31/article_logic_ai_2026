@@ -2,41 +2,33 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Scarlett is late for work today.",
-      "evidence": "Sentence 0: 'If Scarlett is late for work...' (lateness); Sentence 1: 'Today, ...' (time context)",
-      "explanation": "This is an atomic predicate about Scarlett's lateness for work, with the time 'today' taken from the immediate discourse context; it contains no logical connectives or negation."
+      "translation": "Scarlett is late for work today",
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\" (time made explicit by Sentence 1 \"Today\")",
+      "explanation": "This is an atomic state about Scarlett (late for work) at the relevant time (today), with no connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Scarlett receives a warning today.",
-      "evidence": "Sentence 0: '...she will receive a warning.' (warning); Sentence 1: 'Today, Scarlett did not receive a warning.' (time context)",
-      "explanation": "This is an atomic event statement about Scarlett receiving a warning, with the time 'today' anchored by the second sentence; it contains no logical connectives or negation."
+      "translation": "Scarlett receives a warning today",
+      "evidence": "Sentence 0: \"she will receive a warning.\"; Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "explanation": "This is an atomic event about whether Scarlett receives a warning today; it contains no connectives or negation."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Scarlett is late for work, she will receive a warning (applied to today in context).",
+      "translation": "If Scarlett is late for work, she will receive a warning (applied to today’s case).",
       "llm_weight": 0.85,
-      "evidence": "Sentence 0; with 'Today' context from Sentence 1",
-      "reasoning": "The conditional is stated explicitly, but the text does not explicitly say it is restricted to today; aligning it to today's situation is strongly suggested by the follow-up sentence but not logically forced, so the weight is high but < 1.0."
+      "evidence": "Sentence 0 (\"If Scarlett is late for work, she will receive a warning.\") with contextual anchoring from Sentence 1 (\"Today ...\")",
+      "reasoning": "The conditional is explicitly stated, but the text does not explicitly say the policy is about today; mapping it to today is strongly suggested by the immediate follow-up about today."
     },
     {
       "id": "C_2",
       "formula": "¬P_2",
-      "translation": "Scarlett did not receive a warning today.",
+      "translation": "Today, Scarlett did not receive a warning.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: 'Today, Scarlett did not receive a warning.'",
-      "reasoning": "This is directly and unambiguously asserted."
-    },
-    {
-      "id": "C_3",
-      "formula": "¬P_1",
-      "translation": "Scarlett was not late for work today.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 0-1 (conditional + no warning today)",
-      "reasoning": "Given the conditional (C_1) and the explicit absence of a warning today (C_2), the intended inference is modus tollens: if lateness would lead to a warning, and no warning occurred, then she was not late. This inherits the same uncertainty as applying the conditional to today."
+      "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "reasoning": "This is directly asserted in the text with no hedging or modality."
     }
   ],
   "_enrichment_log": [

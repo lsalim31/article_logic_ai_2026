@@ -4,296 +4,217 @@
       "id": "P_1",
       "translation": "Jackson decided to have a slice of pizza for dinner.",
       "evidence": "Sentence 0: \"Jackson decided to have a slice of pizza for dinner.\"",
-      "explanation": "This is a single decision event attributed to Jackson and is truth-evaluable without requiring further logical decomposition."
+      "explanation": "This is an atomic mental-action statement about Jackson's decision, with no embedded logical connectives."
     },
     {
       "id": "P_2",
       "translation": "Jackson ate the slice of pizza.",
-      "evidence": "Sentence 2: \"he actually felt completely satisfied.\" (implies a completed dinner outcome; eating is not explicitly stated)",
-      "explanation": "This is an atomic event claim (ate vs. did not eat). The text strongly suggests but does not explicitly assert it, so it is kept as a separate primitive to allow uncertain constraints."
+      "evidence": "Sentence 2: \"he actually felt completely satisfied\" (contextually refers to after eating the slice mentioned earlier)",
+      "explanation": "This is a single event claim. The text does not explicitly state it, but it is strongly suggested by the narrative linking dinner pizza to the later 'afterwards' satisfaction."
     },
     {
       "id": "P_3",
-      "translation": "Jackson felt unsatisfied afterwards.",
-      "evidence": "Sentence 1: \"he wouldn't feel satisfied afterwards.\"",
-      "explanation": "The text states a post-event affective state; it is expressed here as a positive predicate (unsatisfied) rather than a negated one, keeping it atomic."
+      "translation": "Jackson felt completely satisfied afterwards.",
+      "evidence": "Sentence 2: \"he actually felt completely satisfied.\"",
+      "explanation": "This is an atomic experiential state claim; it does not decompose into simpler propositions without adding new structure."
     },
     {
       "id": "P_4",
-      "translation": "Jackson expected to feel unsatisfied after eating the slice of pizza.",
-      "evidence": "Sentence 1: \"He knew that if he ate the slice of pizza, he wouldn't feel satisfied afterwards.\"",
-      "explanation": "This captures Jackson's internal expectation/knowledge as a standalone mental-state proposition, which is atomic at the propositional level."
+      "translation": "Jackson felt unsatisfied afterwards.",
+      "evidence": "Sentence 1: \"he wouldn't feel satisfied afterwards\" (the unsatisfied outcome described)",
+      "explanation": "The text discusses an 'unsatisfied' outcome; representing it as its own positive atom avoids using negation inside primitive propositions."
     },
     {
       "id": "P_5",
       "translation": "Jackson felt completely satisfied afterwards.",
       "evidence": "Sentence 2: \"he actually felt completely satisfied.\"",
-      "explanation": "This is a direct, complete report of Jackson's affective state and is not a connective of smaller propositions."
+      "explanation": "This is an atomic reported outcome; 'completely' is an intensifier, not a logical connective."
     },
     {
       "id": "P_6",
       "translation": "Jackson was surprised.",
-      "evidence": "Sentence 2: \"However, to his surprise\"",
-      "explanation": "Surprise is an atomic reported mental state; the clause provides a direct assertion of that state."
+      "evidence": "Sentence 2: \"to his surprise\"",
+      "explanation": "This is an atomic emotional state attribution."
+    },
+    {
+      "id": "P_6",
+      "translation": "Jackson believed that eating the slice would leave him unsatisfied afterwards.",
+      "evidence": "Sentence 1: \"He knew that if he ate the slice of pizza, he wouldn't feel satisfied afterwards.\"",
+      "explanation": "This is a single attitude/belief report capturing what Jackson 'knew/believed' without encoding the conditional word inside the primitive proposition."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999246597290039,
-      "combined=(llm)*(nli)": 0.9999246597290039,
+      "nli_entailment": 0.9998977184295654,
+      "combined=(llm)*(nli)": 0.9998977184295654,
       "hardness_constant": 0.9,
-      "id": "C_1",
-      "formula": "P_5",
-      "translation": "Jackson felt completely satisfied afterwards.",
-      "evidence": "Sentence 2: \"he actually felt completely satisfied.\"",
-      "reasoning": "This is stated as an actual outcome with no hedging.",
-      "list nli": [
-        [
-          2.4170429242076352e-05,
-          5.116254760650918e-05,
-          0.9999246597290039
-        ],
-        [
-          4.278946653357707e-05,
-          7.742750312900171e-05,
-          0.9998797178268433
-        ],
-        [
-          0.009332039393484592,
-          8.665831410326064e-05,
-          0.9905812740325928
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9980159997940063,
-      "combined=(llm)*(nli)": 0.9980159997940063,
-      "hardness_constant": 0.9,
-      "id": "C_2",
+      "id": "C_3",
       "formula": "P_6",
-      "translation": "Jackson was surprised.",
-      "evidence": "Sentence 2: \"to his surprise\"",
-      "reasoning": "Surprise is explicitly asserted.",
+      "translation": "Jackson had the belief/knowledge that eating the slice would leave him unsatisfied afterwards.",
+      "evidence": "Sentence 1",
+      "reasoning": "The text directly asserts his epistemic state ('He knew that ...'), so this attitude report is taken as certain.",
       "list nli": [
         [
-          0.0014883793191984296,
-          0.0004956031916663051,
-          0.9980159997940063
+          3.5377895983401686e-05,
+          6.693497562082484e-05,
+          0.9998977184295654
         ],
         [
-          0.003278108546510339,
-          0.0002709502005018294,
-          0.9964509010314941
+          0.01860210672020912,
+          0.0004957474302500486,
+          0.9809020757675171
         ],
         [
-          0.00276781409047544,
-          0.0013010570546612144,
-          0.995931088924408
+          0.8891467452049255,
+          0.0010520275682210922,
+          0.10980119556188583
         ]
       ]
     },
     {
       "llm-weight": 0.95,
-      "nli_entailment": 0.9997562766075134,
-      "combined=(llm)*(nli)": 0.9497684627771377,
-      "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_4",
-      "translation": "Jackson expected to feel unsatisfied after eating the slice of pizza.",
-      "evidence": "Sentence 1: \"He knew that if he ate the slice of pizza, he wouldn't feel satisfied afterwards.\"",
-      "reasoning": "\"He knew\" signals a strong commitment to this expectation, though the later twist suggests it can conflict with reality.",
-      "list nli": [
-        [
-          0.00022444737260229886,
-          1.930044345499482e-05,
-          0.9997562766075134
-        ],
-        [
-          0.00031096796737983823,
-          1.6790836525615305e-05,
-          0.9996722936630249
-        ],
-        [
-          0.0006559620378538966,
-          3.706929419422522e-05,
-          0.9993069171905518
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.98,
-      "nli_entailment": 0.948574960231781,
-      "combined=(llm)*(nli)": 0.9296034610271454,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "¬(P_5 ∧ P_3)",
-      "translation": "Jackson cannot be completely satisfied afterwards while also being unsatisfied afterwards.",
-      "evidence": "Sentence 1: \"wouldn't feel satisfied afterwards\"; Sentence 2: \"felt completely satisfied\"",
-      "reasoning": "By common-sense semantics, 'completely satisfied' and 'unsatisfied' are mutually exclusive affective states in the same relevant timeframe; the text sets them in tension.",
-      "list nli": [
-        [
-          0.0016992201562970877,
-          0.04972585663199425,
-          0.948574960231781
-        ],
-        [
-          0.05641959607601166,
-          0.0069041079841554165,
-          0.9366763234138489
-        ],
-        [
-          0.17614664137363434,
-          0.03194776177406311,
-          0.7919055819511414
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.98,
-      "nli_entailment": 0.9966906309127808,
-      "combined=(llm)*(nli)": 0.9767568182945251,
+      "nli_entailment": 0.9987792372703552,
+      "combined=(llm)*(nli)": 0.9488402754068375,
       "hardness_constant": 0.9,
       "id": "C_6",
-      "formula": "P_5 ⟹ ¬P_3",
-      "translation": "Completely satisfied afterwards implies not unsatisfied afterwards.",
-      "evidence": "Sentence 2: \"felt completely satisfied\" (contrasts with Sentence 1 unsatisfied outcome)",
-      "reasoning": "This is an implied semantic constraint: complete satisfaction rules out unsatisfaction for the same 'afterwards' interval.",
+      "formula": "¬(P_3 ∧ P_4)",
+      "translation": "Jackson was not both completely satisfied afterwards and unsatisfied afterwards.",
+      "evidence": "Sentences 1-2",
+      "reasoning": "Being 'completely satisfied' is incompatible with being 'unsatisfied' in the same relevant time frame; the text contrasts the expected unsatisfied outcome with the actual satisfied outcome.",
       "list nli": [
         [
-          0.0003518699377309531,
-          0.002957429736852646,
-          0.9966906309127808
+          0.0002437867660773918,
+          0.0009769864846020937,
+          0.9987792372703552
         ],
         [
-          0.002127180341631174,
-          0.007912030443549156,
-          0.989960789680481
+          0.0006956043071113527,
+          0.0068589323200285435,
+          0.9924455285072327
         ],
         [
-          0.006760953925549984,
-          0.01754802279174328,
-          0.975691020488739
+          0.23041625320911407,
+          0.05780110880732536,
+          0.7117826342582703
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9757245182991028,
-      "combined=(llm)*(nli)": 0.9757245182991028,
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9989569187164307,
+      "combined=(llm)*(nli)": 0.6992698431015014,
       "hardness_constant": 0.9,
-      "id": "C_9",
-      "formula": "P_4 ⟹ P_4",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Jackson's decision to have the slice for dinner implies he ate the slice.",
+      "evidence": "Sentence 0",
+      "reasoning": "Deciding to have a slice for dinner usually leads to eating it, but the text does not explicitly say he followed through.",
       "list nli": [
         [
-          0.020465470850467682,
-          0.0038100809324532747,
-          0.9757245182991028
+          2.8793614546884783e-05,
+          0.0010142149403691292,
+          0.9989569187164307
         ],
         [
-          0.007473246660083532,
-          0.041552938520908356,
-          0.9509738683700562
+          4.008188989246264e-05,
+          0.0048572225496172905,
+          0.9951026439666748
         ],
         [
-          0.014522017911076546,
-          0.06729656457901001,
-          0.9181813597679138
+          0.009698072448372841,
+          0.006475398782640696,
+          0.9838265776634216
         ]
-      ]
-    }
-  ],
-  "soft_constraints": [
+      ],
+      "weight": 0.6992698431015014
+    },
     {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.9998683929443359,
-      "combined=(llm)*(nli)": 0.8498881340026855,
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9998714923858643,
+      "combined=(llm)*(nli)": 0.699910044670105,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Jackson ate the slice, then Jackson felt unsatisfied afterwards.",
+      "evidence": "Sentence 1",
+      "reasoning": "The conditional is presented as something Jackson 'knew', but the subsequent 'However' plus actual satisfaction suggests this expected rule may be false in the actual world, so the implication is not treated as certain.",
+      "list nli": [
+        [
+          1.865419835667126e-05,
+          0.00010987829591613263,
+          0.9998714923858643
+        ],
+        [
+          0.0008125071180984378,
+          0.00016523891827091575,
+          0.9990222454071045
+        ],
+        [
+          0.0036575139965862036,
+          0.00018948620709124953,
+          0.996152937412262
+        ]
+      ],
+      "weight": 0.699910044670105
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9997887015342712,
+      "combined=(llm)*(nli)": 0.8998098313808441,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "P_4 ⟹ (P_2 ⟹ P_3)",
-      "translation": "Jackson's expectation links eating the slice of pizza to feeling unsatisfied afterwards.",
-      "evidence": "Sentence 1: \"if he ate the slice of pizza, he wouldn't feel satisfied afterwards\"",
-      "reasoning": "The conditional is explicitly described as something Jackson 'knew', but the narrative reveals it fails in actuality, so it is modeled as a strong-but-defeasible constraint.",
+      "formula": "P_5 ⟹ P_3",
+      "translation": "Jackson's surprise aligns with the fact that he felt completely satisfied.",
+      "evidence": "Sentence 2",
+      "reasoning": "\"To his surprise\" is attached to the clause stating he felt satisfied, strongly linking surprise to that outcome.",
       "list nli": [
         [
-          0.00010941502841887996,
-          2.211902756243944e-05,
-          0.9998683929443359
+          2.7511654479894787e-05,
+          0.00018385506700724363,
+          0.9997887015342712
         ],
         [
-          0.002933190669864416,
-          0.0002587982453405857,
-          0.9968079924583435
+          0.0004576787177938968,
+          0.00015696018817834556,
+          0.9993853569030762
         ],
         [
-          0.005176484119147062,
-          0.00036148299113847315,
-          0.9944619536399841
+          0.00046002017916180193,
+          0.0006951059913262725,
+          0.9988448619842529
         ]
       ],
-      "weight": 0.8498881340026855
+      "weight": 0.8998098313808441
     },
     {
-      "llm-weight": 0.65,
-      "nli_entailment": 0.9982252717018127,
-      "combined=(llm)*(nli)": 0.6488464266061783,
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9999176263809204,
+      "combined=(llm)*(nli)": 0.8499299824237824,
       "hardness_constant": 0.9,
-      "id": "C_7",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Deciding to have a slice of pizza for dinner tends to result in eating the slice of pizza.",
-      "evidence": "Sentence 0: \"decided to have a slice of pizza for dinner\"",
-      "reasoning": "A decision to eat often leads to eating, but the text does not explicitly say he ate; this is a plausible but uncertain inference.",
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "Jackson's being satisfied afterwards implies he ate the slice.",
+      "evidence": "Sentences 0-2 (narrative connection from planned dinner pizza to 'afterwards' feeling)",
+      "reasoning": "The 'afterwards' satisfaction is most naturally interpreted as after eating the slice discussed; still, it is an inference rather than explicit.",
       "list nli": [
         [
-          0.0001881660718936473,
-          0.0015865546884015203,
-          0.9982252717018127
+          4.958388672093861e-05,
+          3.2781576010165736e-05,
+          0.9999176263809204
         ],
         [
-          1.5061633348523173e-05,
-          0.007616213522851467,
-          0.992368757724762
+          2.1722411474911496e-05,
+          0.0011339515913277864,
+          0.9988442659378052
         ],
         [
-          2.654583477124106e-05,
-          0.01667005382478237,
-          0.983303427696228
+          9.675300680100918e-05,
+          0.001818227581679821,
+          0.9980850219726562
         ]
       ],
-      "weight": 0.6488464266061783
-    },
-    {
-      "llm-weight": 0.8,
-      "nli_entailment": 0.9998315572738647,
-      "combined=(llm)*(nli)": 0.7998652458190918,
-      "hardness_constant": 0.9,
-      "id": "C_8",
-      "formula": "P_6 ⟹ P_4",
-      "translation": "Jackson's surprise is explained by his prior expectation of being unsatisfied after eating.",
-      "evidence": "Sentence 2: \"to his surprise\" combined with Sentence 1: \"He knew that ...\"",
-      "reasoning": "Surprise about being satisfied is naturally supported by an opposing prior expectation; the text provides that expectation, making this link fairly strong.",
-      "list nli": [
-        [
-          0.00011295978765701875,
-          5.550695277634077e-05,
-          0.9998315572738647
-        ],
-        [
-          0.0003073891857638955,
-          0.00013995353947393596,
-          0.9995526671409607
-        ],
-        [
-          0.0002799676440190524,
-          0.0002813994651660323,
-          0.9994385838508606
-        ]
-      ],
-      "weight": 0.7998652458190918
+      "weight": 0.8499299824237824
     }
   ]
 }

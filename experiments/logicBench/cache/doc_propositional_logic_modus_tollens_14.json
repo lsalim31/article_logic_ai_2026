@@ -4,107 +4,69 @@
       "id": "P_1",
       "translation": "Scarlett is an avid book collector",
       "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
-      "explanation": "This is a single attributive claim about Scarlett and does not contain logical connectives or conditionals."
+      "explanation": "This is a single descriptive fact about Scarlett and contains no logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Scarlett has a cherished book collection",
+      "translation": "Scarlett has a cherished book collection.",
       "evidence": "Sentence 0: \"her cherished collection\"",
-      "explanation": "This is an atomic possession/ownership-style fact implied by the phrase describing her collection."
+      "explanation": "This is an atomic possession/state claim and does not decompose into smaller propositions without adding structure not explicit in the text."
     },
     {
       "id": "P_3",
-      "translation": "Scarlett dreams of finding a rare book to add to her collection",
-      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
-      "explanation": "This is a single mental-state predicate (dreaming of a particular outcome) and is not itself a logical combination of smaller truth-evaluable clauses in the text."
+      "translation": "Scarlett dreamt of finding a rare book.",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book\"",
+      "explanation": "This is a single mental-state claim; the frequency cue \"always\" is omitted per instructions, leaving an atomic proposition."
     },
     {
       "id": "P_4",
-      "translation": "Scarlett stumbles upon a rare book",
+      "translation": "Scarlett stumbled upon a rare book.",
       "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
-      "explanation": "This is an event description used as an antecedent in a conditional; extracted here as a standalone atomic proposition."
+      "explanation": "This is an atomic event description extracted from the conditional antecedent."
     },
     {
       "id": "P_5",
-      "translation": "Scarlett decides to keep the rare book",
+      "translation": "Scarlett decided to keep the book in her collection.",
       "evidence": "Sentence 1: \"she would immediately decide to keep it\"",
-      "explanation": "This is an atomic decision/intention statement; it contains no connectives once separated from the conditional."
+      "explanation": "This is an atomic decision/action statement; negation is handled only in constraints, not inside the primitive proposition."
     },
     {
       "id": "P_6",
-      "translation": "Scarlett makes the rare book a part of her literary treasures",
+      "translation": "Scarlett made the book part of her literary treasures.",
       "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
-      "explanation": "This is a single action/outcome predicate; it is not a connective of finer propositions."
+      "explanation": "This is a single action/result claim and is not itself a logical combination of smaller propositions."
     },
     {
       "id": "P_7",
-      "translation": "Scarlett finds a book",
+      "translation": "Scarlett found a book one day.",
       "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "explanation": "This is an atomic event claim about finding a book."
-    },
-    {
-      "id": "P_8",
-      "translation": "Scarlett keeps the found book in her collection",
-      "evidence": "Sentence 2: \"keep it in her collection\"",
-      "explanation": "This is a simple action/state claim (keeping the book in the collection). Negation is handled at the constraint level."
+      "explanation": "This is an atomic event claim. The temporal phrase \"one day\" does not introduce a logical connective."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_4 ⟹ P_5",
-      "translation": "If Scarlett stumbles upon a rare book, she decides to keep it",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it\"",
-      "reasoning": "The conditional is presented as Scarlett's belief rather than an objective law, so it is strongly suggested but not absolutely guaranteed as a fact about the world."
+      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
+      "translation": "If Scarlett stumbled upon a rare book, she would decide to keep it and make it part of her literary treasures.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it and make it a part of her literary treasures.\"",
+      "reasoning": "The text frames this as Scarlett's belief about what she would do, not a guaranteed law of the world; thus the implication is supported but not treated as absolutely certain (weight < 1.0)."
     },
     {
       "id": "C_2",
-      "formula": "P_4 ⟹ P_6",
-      "translation": "If Scarlett stumbles upon a rare book, she makes it part of her literary treasures",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 1: \"...and make it a part of her literary treasures\"",
-      "reasoning": "Same belief-based conditional as C_1; strong but not certain as an objective rule."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
-      "translation": "If Scarlett stumbles upon a rare book, she decides to keep it and makes it part of her literary treasures",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 1: \"...she would immediately decide to keep it and make it a part of her literary treasures\"",
-      "reasoning": "This captures the full structure of the believed conditional; it is redundant with C_1 and C_2 logically but included to preserve the explicit joint consequence expressed in the sentence."
-    },
-    {
-      "id": "C_4",
       "formula": "P_7",
-      "translation": "Scarlett found a book",
+      "translation": "Scarlett found a book one day.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2: \"one day Scarlett found a book\"",
       "reasoning": "This is asserted as a narrative fact."
     },
     {
-      "id": "C_5",
-      "formula": "¬P_8",
-      "translation": "Scarlett did not keep the found book in her collection",
+      "id": "C_3",
+      "formula": "¬P_5",
+      "translation": "Scarlett did not decide to keep the book in her collection.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"but she decided not to keep it in her collection\"",
-      "reasoning": "The text explicitly states a decision not to keep it in her collection; in context this strongly indicates the 'keeping in her collection' proposition is false."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_7 ⟹ ¬P_8",
-      "translation": "Given that Scarlett found a book that day, that book was not kept in her collection",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 2: \"Scarlett found a book, but she decided not to keep it in her collection\"",
-      "reasoning": "The 'it' refers to the book she found, so the non-keeping applies to that found book; pronoun resolution is highly likely but not logically forced in all imaginable readings."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "If Scarlett is an avid book collector, she has a book collection",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0: \"Scarlett, an avid book collector\" and \"her cherished collection\"",
-      "reasoning": "Being a book collector strongly implies having a collection, and the text also directly mentions her collection; this is effectively certain from the combined phrasing."
+      "evidence": "Sentence 2: \"but she decided not to keep it in her collection.\"",
+      "reasoning": "This is explicitly stated; the negation is placed in the constraint (not in the primitive proposition) to follow the extraction rules."
     }
   ],
   "_enrichment_log": [

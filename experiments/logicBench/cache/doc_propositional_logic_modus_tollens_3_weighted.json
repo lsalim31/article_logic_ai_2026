@@ -4,47 +4,47 @@
       "id": "P_1",
       "translation": "Mason decides to leave his job.",
       "evidence": "Sentence 0: \"If Mason decides to leave his job\"",
-      "explanation": "This is an atomic mental-action state about Mason; it is a single declarative clause without logical connectives."
+      "explanation": "This is an atomic decision-state attribution about Mason; it contains no logical connective and can be evaluated as true or false."
     },
     {
       "id": "P_2",
       "translation": "Mason receives a salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "explanation": "This is a simple truth-evaluable clause. The text’s negated variant (\"will not receive any salary\") is handled as a constraint using ¬P_2 rather than as a primitive."
+      "explanation": "This is an atomic receiving relation (Mason receiving salary) and is not itself composed of smaller truth-evaluable parts in the given text."
     },
     {
       "id": "P_3",
       "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "explanation": "This is an atomic event/state description; it is not a connective and stands as a single declarative clause."
+      "explanation": "This is an atomic event/state description (receiving a regular paycheck) without embedded connectives."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9975154399871826,
-      "combined=(llm)*(nli)": 0.9975154399871826,
+      "nli_entailment": 0.9962707757949829,
+      "combined=(llm)*(nli)": 0.9962707757949829,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If Mason decides to leave his job, Mason does not receive a salary.",
+      "formula": "(P_1 ⟹ ¬P_2)",
+      "translation": "Mason deciding to leave his job implies Mason does not receive any salary.",
       "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
-      "reasoning": "This is explicitly stated as a conditional consequence in the text.",
+      "reasoning": "This is stated directly as a conditional consequence; the wording is unqualified (\"will not\"), so it is treated as strict.",
       "list nli": [
         [
-          0.0023068643640726805,
-          0.00017769442638382316,
-          0.9975154399871826
+          0.0036010893527418375,
+          0.00012808713654521853,
+          0.9962707757949829
         ],
         [
-          0.0010974555043503642,
-          0.0017679007723927498,
-          0.9971346855163574
+          0.9999529123306274,
+          7.58091709940345e-06,
+          3.9431492041330785e-05
         ],
         [
-          0.005655323620885611,
-          0.00022959333728067577,
-          0.9941151142120361
+          0.9999548196792603,
+          7.784427907608915e-06,
+          3.744830610230565e-05
         ]
       ]
     },
@@ -57,7 +57,7 @@
       "formula": "P_2",
       "translation": "Mason receives his salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "reasoning": "This is directly asserted (\"still receives\").",
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging.",
       "list nli": [
         [
           0.00047994524356909096,
@@ -70,9 +70,9 @@
           0.009067202918231487
         ],
         [
-          4.450523556442931e-05,
-          0.9966824650764465,
-          0.0032730204984545708
+          0.0001290925283683464,
+          0.9981151819229126,
+          0.0017557514365762472
         ]
       ]
     },
@@ -85,7 +85,7 @@
       "formula": "P_3",
       "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "reasoning": "This is directly asserted as something he is receiving.",
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging.",
       "list nli": [
         [
           0.0012668088311329484,
@@ -106,29 +106,29 @@
     },
     {
       "llm-weight": 0.95,
-      "nli_entailment": 0.9995827078819275,
-      "combined=(llm)*(nli)": 0.9496035724878311,
+      "nli_entailment": 0.9930070638656616,
+      "combined=(llm)*(nli)": 0.9433567106723785,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "P_3 ⟹ P_2",
-      "translation": "If Mason receives his regular paycheck, Mason receives a salary.",
-      "evidence": "Sentence 2: \"receiving his regular paycheck\"; Sentence 1: \"receives his salary\"",
-      "reasoning": "Common-sense semantic implication: a regular paycheck is (typically) the mechanism by which salary is received. The text also aligns with this by mentioning both paycheck and salary.",
+      "formula": "(P_3 ⟹ P_2)",
+      "translation": "Mason receiving his regular paycheck implies Mason receives a salary.",
+      "evidence": "Sentence 1: \"receives his salary\"; Sentence 2: \"receiving his regular paycheck\"",
+      "reasoning": "A regular paycheck is commonly a form of salary payment; the text also juxtaposes these as aligned descriptions, so the implication is strongly suggested though slightly reliant on common-sense equivalence.",
       "list nli": [
         [
-          4.975850060873199e-06,
-          0.000412373075960204,
-          0.9995827078819275
+          2.2547534172190353e-05,
+          0.006970388814806938,
+          0.9930070638656616
         ],
         [
-          0.00015046460612211376,
-          0.0010390646057203412,
-          0.9988105297088623
+          0.0002277450985275209,
+          0.9774833917617798,
+          0.022288965061306953
         ],
         [
-          0.11440066993236542,
-          0.6365160346031189,
-          0.2490832507610321
+          0.0001376691070618108,
+          0.9945236444473267,
+          0.005338705610483885
         ]
       ]
     }

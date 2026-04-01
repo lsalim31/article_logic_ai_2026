@@ -1,31 +1,37 @@
 #!/usr/bin/env python3
 """
-experiment_logicBench.py
+experiment_alice.py
 
-Experiment: Evaluate Logify on the LogicBench dataset.
+Experiment: Evaluate Logify on the alice-20samples dataset.
 
-This script runs the neuro-symbolic reasoning pipeline on LogicBench's
-context + qa_pairs format (Binary QA with yes/no answers).
+This script runs the neuro-symbolic reasoning pipeline on premises with
+4-way classification: entailment, contradiction, uncertain, not_mentioned.
+
+The alice dataset format differs from the standard premises format:
+  - Top-level keys: "documents" (list) and "labels" (dict)
+  - Each document has: id, text, spans, annotation_sets
+  - Labels dict maps hypothesis IDs to {short_description, hypothesis}
+  - Annotation choices (capitalized): "Entailment", "Contradiction",
+    "NotMentioned", "Uncertain"
 
 Usage:
-    python experiment_logicBench.py --api-key $OPENROUTER_API_KEY
-    python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --logic-type propositional_logic --axiom modus_tollens
-    python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --doc-id 1
-    python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --limit 5
-    python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --verbose
-    
-    
-/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run3_openAI_20260331_2250_data_constructed_march30.json_.json
-    
-    
-/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run6_openAI_20260401_0006_data_constructed_march30.json_.json
-    
-    
-    nohup python experiment_logicBench.py \
-  --api-key $OPENROUTER_API_KEY \
-  --logic-type propositional_logic \
-  --axiom modus_tollens \
-  --config profiles/config_run1_openAI.yaml  > output_run1_logicBench.txt 2>&1 &
+    python experiment_alice.py --config profiles/config_run1_openAI.yaml
+    python experiment_alice.py --api-key $OPENROUTER_API_KEY --config profiles/config_run1_openAI.yaml
+    python experiment_alice.py --api-key $OPENROUTER_API_KEY --config profiles/config_run1_openAI.yaml --verbose
+    python experiment_alice.py --api-key $OPENROUTER_API_KEY --config profiles/config_run1_openAI.yaml --limit 5
+    python experiment_alice.py --api-key $OPENROUTER_API_KEY --config profiles/config_run1_openAI.yaml --premise-id 1
+
+    nohup python experiment_alice.py --config profiles/config_run1_openAI.yaml > output_alice_run1.txt 2>&1 &
+    nohup python experiment_alice.py --config profiles/config_run4_openAI.yaml > output_alice_run4.txt 2>&1 &
+
+    nohup python experiment_alice.py --config profiles/config_run2_openAI.yaml > output_alice_run2.txt 2>&1 &
+    nohup python experiment_alice.py --config profiles/config_run3_openAI.yaml > output_alice_run3.txt 2>&1 &
+
+    nohup python experiment_alice.py --config profiles/config_run5_openAI.yaml > output_alice_run5.txt 2>&1 &
+    nohup python experiment_alice.py --config profiles/config_run8_openAI.yaml > output_alice_run8.txt 2>&1 &
+
+    nohup python experiment_alice.py --config profiles/config_run6_openAI.yaml > output_alice_run6.txt 2>&1 &
+    nohup python experiment_alice.py --config profiles/config_run7_openAI.yaml > output_alice_run7.txt 2>&1 &
 """
 
 import argparse
@@ -36,7 +42,7 @@ import time
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 # Add code directory to Python path
@@ -48,26 +54,29 @@ for p in (_repo_root, _code_dir):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-# ---- INSERT BELOW ----
 _pre_parser = argparse.ArgumentParser(add_help=False)
 _pre_parser.add_argument("--config", type=str, default=None)
 _pre_args, _ = _pre_parser.parse_known_args()
 
+# Load config if specified
 if _pre_args.config:
     from config.retrieval_config import load_config, _profiles_dir
 
     config_path = Path(_pre_args.config)
+    # If relative path, look in the profiles directory
     if not config_path.is_absolute():
         config_path = _profiles_dir / config_path.name
 
     load_config(config_path)
-# ---- INSERT ABOVE ----
 
 from from_text_to_logic.logify import LogifyConverter
 from from_text_to_logic.weights import assign_weights
 from interface_with_user.translate import translate_query
 from from_text_to_logic.check_logic_structure import enrich_logic_structure
 from logic_solver import LogicSolver
+
+from config import retrieval_config
+
 from config.retrieval_config import (
     HARDNESS_CONSTANT,
     MAX_TOKENS,
@@ -76,8 +85,18 @@ from config.retrieval_config import (
     SBERT_TOP_K,
     TEMPERATURE_LOGIC_CONVERTER,
     TRANSLATE_MODEL,
+    USE_ENRICHMENT_KB,
 )
-from config import retrieval_config
+
+
+# Directory configuration
+CACHE_DIR = _script_dir / "cache"
+RESULTS_DIR = _script_dir / "results"
+DATASET_DIR = _script_dir / "dataset"
+
+DATASET_EXPERIMENT = "alice-20samples.json"
+
+DEFAULT_DATASET_PATH = DATASET_DIR / DATASET_EXPERIMENT
 
 
 def get_full_retrieval_config() -> Dict[str, Any]:
@@ -142,33 +161,27 @@ def get_full_retrieval_config() -> Dict[str, Any]:
     }
 
 
-# Directory configuration
-CACHE_DIR = _script_dir / "cache"
-RESULTS_DIR = _script_dir / "results"
+# Valid labels for 4-way classification
+VALID_LABELS = {"entailment", "contradiction", "uncertain", "not_mentioned"}
 
-# LogicBench data location
-LOGICBENCH_DATA_DIR = _repo_root / "experiments" / "baseline_logiclm_plus" / "data" / "LogicBench(Eval)" / "BQA"
-
-# Default dataset path
-DEFAULT_LOGIC_TYPE = "propositional_logic"
-DEFAULT_AXIOM = "modus_tollens"
-
-
-def get_default_dataset_path() -> Path:
-    """Get the default dataset path."""
-    return LOGICBENCH_DATA_DIR / DEFAULT_LOGIC_TYPE / DEFAULT_AXIOM / "data_instances.json"
+# Mapping from alice annotation choices (capitalized) to internal 4-way labels
+_ALICE_LABEL_MAP = {
+    "Entailment": "entailment",
+    "Contradiction": "contradiction",
+    "NotMentioned": "not_mentioned",
+    "Uncertain": "uncertain",
+}
 
 
 @dataclass
 class QueryDebugResult:
-    """Result of querying a single question against a logified context."""
-    doc_id: str  # e.g., "propositional_logic_modus_tollens_1"
-    sample_id: int
-    question_idx: int
-    question_text: str
-    ground_truth: str  # "yes" or "no"
-    prediction: Optional[str]  # Solver output: TRUE, FALSE, UNCERTAIN, NOT MENTIONED
-    prediction_binary: Optional[str]  # Mapped to "yes" or "no"
+    """Result of querying a single hypothesis against a logified premise."""
+    premise_id: int
+    original_idx: Union[int, str]  # int for standard format, str key (e.g. "test-31") for alice
+    hypothesis_text: str
+    ground_truth: str  # 4-way label: entailment, contradiction, uncertain, not_mentioned
+    prediction: Optional[str]  # Raw solver output: TRUE, FALSE, UNCERTAIN, NOT MENTIONED
+    prediction_4way: Optional[str]  # Mapped 4-way label
     confidence: Optional[float]
     formula: Optional[str]
     query_mode: Optional[str]
@@ -186,46 +199,142 @@ class QueryDebugResult:
 
 
 def load_dataset(data_path: Path) -> Dict[str, Any]:
-    """Load the LogicBench dataset from JSON file."""
+    """Load the dataset from JSON file."""
     with open(data_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def map_solver_to_binary(prediction: Optional[str]) -> Optional[str]:
+def normalize_alice_label(choice: str) -> str:
     """
-    Map solver prediction to binary yes/no label.
+    Normalize alice annotation choice string to internal 4-way label.
 
-    TRUE -> yes
-    FALSE -> no
-    UNCERTAIN -> no
-    NOT MENTIONED -> no
+    "Entailment"    -> "entailment"
+    "Contradiction" -> "contradiction"
+    "NotMentioned"  -> "not_mentioned"
+    "Uncertain"     -> "uncertain"
+
+    Falls back to "uncertain" for any unrecognized value.
+    """
+    return _ALICE_LABEL_MAP.get(choice, "uncertain")
+
+
+def parse_alice_to_premises(
+    data: Dict[str, Any],
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Convert alice dataset format into the internal premises list format.
+
+    Alice JSON structure:
+    {
+      "documents": [
+        {
+          "id": 1,
+          "text": "Alice is a university student. ...",
+          "spans": [[0, 30], ...],
+          "annotation_sets": [
+            {
+              "annotations": {
+                "test-31": {"choice": "Entailment", "spans": [0]},
+                ...
+              }
+            }
+          ]
+        }
+      ],
+      "labels": {
+        "test-31": {"short_description": "test", "hypothesis": "Alice attends a university."},
+        ...
+      }
+    }
+
+    Returns:
+        premises: list of dicts with keys premise_id, premise, premise_word_count, hypotheses
+        metadata: synthetic metadata dict (alice has no top-level metadata)
+    """
+    documents = data.get("documents", [])
+    labels_dict = data.get("labels", {})
+    premises = []
+
+    for doc in documents:
+        premise_id = doc.get("id")
+        text = doc.get("text", "")
+        annotation_sets = doc.get("annotation_sets", [])
+
+        # Use annotations from the first annotation set
+        annotations: Dict[str, Any] = {}
+        if annotation_sets:
+            annotations = annotation_sets[0].get("annotations", {})
+
+        hypotheses = []
+        for label_key, annotation in annotations.items():
+            label_entry = labels_dict.get(label_key, {})
+            hypothesis_text = label_entry.get("hypothesis", "")
+            choice = annotation.get("choice", "Uncertain")
+            normalized_label = normalize_alice_label(choice)
+
+            hypotheses.append({
+                "original_idx": label_key,       # e.g. "test-31"
+                "hypothesis": hypothesis_text,
+                "label": normalized_label,
+            })
+
+        premises.append({
+            "premise_id": premise_id,
+            "premise": text,
+            "premise_word_count": len(text.split()),
+            "hypotheses": hypotheses,
+        })
+
+    # Build a synthetic metadata dict (alice format has no top-level metadata)
+    label_counts: Dict[str, int] = {lbl: 0 for lbl in VALID_LABELS}
+    for doc_entry in premises:
+        for hyp in doc_entry["hypotheses"]:
+            lbl = hyp["label"]
+            if lbl in label_counts:
+                label_counts[lbl] += 1
+
+    metadata = {
+        "dataset": "alice-20samples",
+        "num_documents": len(documents),
+        "num_labels": len(labels_dict),
+        "label_distribution": label_counts,
+    }
+    return premises, metadata
+
+
+def map_solver_to_4way(prediction: Optional[str]) -> Optional[str]:
+    """
+    Map solver prediction to 4-way classification label.
+
+    TRUE          -> entailment
+    FALSE         -> contradiction
+    UNCERTAIN     -> uncertain
+    NOT MENTIONED -> not_mentioned
     """
     if prediction is None:
         return None
     mapping = {
-        "TRUE": "yes",
-        "FALSE": "no",
-        "UNCERTAIN": "no",
-        "NOT MENTIONED": "no",
+        "TRUE": "entailment",
+        "FALSE": "contradiction",
+        "UNCERTAIN": "uncertain",
+        "NOT MENTIONED": "not_mentioned",
     }
-    return mapping.get(prediction, "no")
+    return mapping.get(prediction, "uncertain")
 
 
-def get_cached_logified_path(doc_id: str) -> Path:
+def get_cached_logified_path(premise_id: int) -> Path:
     """Get path to cached weighted logified structure."""
-    safe_id = str(doc_id).replace("/", "_").replace("\\", "_")
-    return CACHE_DIR / f"doc_{safe_id}_weighted.json"
+    return CACHE_DIR / f"premise_{premise_id}_weighted.json"
 
 
-def get_intermediate_logified_path(doc_id: str) -> Path:
+def get_intermediate_logified_path(premise_id: int) -> Path:
     """Get path to intermediate (pre-weighted) logified structure."""
-    safe_id = str(doc_id).replace("/", "_").replace("\\", "_")
-    return CACHE_DIR / f"doc_{safe_id}.json"
+    return CACHE_DIR / f"premise_{premise_id}.json"
 
 
-def logify_context(
+def logify_premise(
     text: str,
-    doc_id: str,
+    premise_id: int,
     api_key: str,
     temperature: float,
     reasoning_effort: str,
@@ -234,16 +343,16 @@ def logify_context(
     verbose: bool = True,
 ) -> Dict[str, Any]:
     """
-    Convert a context text to logic representation and cache the result.
+    Convert a premise text to logic representation and cache the result.
 
     Steps:
     1. Check cache for existing logified structure
     2. Convert text to logic using LogifyConverter
-    3. Enrich the logic structure
+    3. Optionally enrich the logic structure (if USE_ENRICHMENT_KB)
     4. Assign weights to propositions
     5. Cache and return the result
     """
-    cache_path = get_cached_logified_path(doc_id)
+    cache_path = get_cached_logified_path(premise_id)
 
     # Check cache first
     if cache_path.exists():
@@ -259,54 +368,58 @@ def logify_context(
         }
 
     if verbose:
-        print(f"    [LOGIFY] Converting context {doc_id} to logic...")
+        print(f"    [LOGIFY] Converting premise {premise_id} to logic...")
     start_time = time.time()
 
-    # Initialize converter
-    converter = LogifyConverter(
-        api_key=api_key,
-        model=REASONING_MODEL,
-        temperature=temperature,
-        reasoning_effort=reasoning_effort,
-        max_tokens=max_tokens,
-    )
+    # FIX 1: initialize temp_text_path to None before the outer try so the
+    # finally block can safely reference it even if we fail before creating it.
+    temp_text_path = None
 
     try:
-        logic_structure = converter.convert_text_to_logic(text)
-    except Exception as exc:
-        return {
-            "logified_structure": None,
-            "logify_latency_sec": time.time() - start_time,
-            "logify_cached": False,
-            "logify_error": str(exc),
-        }
-    finally:
-        converter.close()
-
-    # Save intermediate (non-weighted) JSON
-    intermediate_path = get_intermediate_logified_path(doc_id)
-    with open(intermediate_path, "w", encoding="utf-8") as f:
-        json.dump(logic_structure, f, indent=2, ensure_ascii=False)
-
-    # Create temp text file for weights and enrichment
-    safe_id = str(doc_id).replace("/", "_").replace("\\", "_")
-    temp_text_path = CACHE_DIR / f"doc_{safe_id}_text.txt"
-    with open(temp_text_path, "w", encoding="utf-8") as f:
-        f.write(text)
-
-
-    # Assign weights
-    if verbose:
-        print(f"    [WEIGHTS] Assigning weights...")
-
-    try:    
-        # Enrich logic structure
-        enrich_logic_structure(
-            logified_path=str(intermediate_path),
-            source_path=str(temp_text_path),
-            output_path=str(intermediate_path),
-            verbose=verbose,
+        # Initialize converter — keep the inner try/finally so converter.close()
+        # is always called, but now the whole block is inside the outer try/except
+        # so any exception (including from convert_text_to_logic) is caught here
+        # and returned as a logify_error instead of crashing the experiment run.
+        converter = LogifyConverter(
+            api_key=api_key,
+            model=REASONING_MODEL,
+            temperature=temperature,
+            reasoning_effort=reasoning_effort,
+            max_tokens=max_tokens,
         )
+        try:
+            logic_structure = converter.convert_text_to_logic(text)
+        finally:
+            converter.close()
+
+        # Save intermediate (non-weighted) JSON
+        intermediate_path = get_intermediate_logified_path(premise_id)
+        with open(intermediate_path, "w", encoding="utf-8") as f:
+            json.dump(logic_structure, f, indent=2, ensure_ascii=False)
+
+        # Create temp text file for weights and enrichment
+        safe_id = str(premise_id).replace("/", "_").replace("\\", "_")
+        temp_text_path = CACHE_DIR / f"premise_{safe_id}_text.txt"
+        with open(temp_text_path, "w", encoding="utf-8") as f:
+            f.write(text)
+
+        # Optionally enrich logic structure
+        if USE_ENRICHMENT_KB:
+            try:
+                enrich_logic_structure(
+                    logified_path=str(intermediate_path),
+                    source_path=str(temp_text_path),
+                    output_path=str(intermediate_path),
+                    verbose=verbose,
+                )
+            except Exception as enrich_exc:
+                if verbose:
+                    print(f"    [ENRICH WARNING] enrich_logic_structure failed: {enrich_exc}")
+                # Continue with un-enriched structure
+
+        # Assign weights
+        if verbose:
+            print(f"    [WEIGHTS] Assigning weights...")
 
         assign_weights(
             pathfile=str(temp_text_path),
@@ -329,6 +442,7 @@ def logify_context(
             "logify_cached": False,
             "logify_error": None,
         }
+
     except Exception as exc:
         return {
             "logified_structure": None,
@@ -337,14 +451,15 @@ def logify_context(
             "logify_error": str(exc),
         }
     finally:
-        temp_text_path.unlink(missing_ok=True)
+        # FIX 1 (continued): only unlink if the file was actually created
+        if temp_text_path is not None:
+            temp_text_path.unlink(missing_ok=True)
 
 
-def query_question(
-    doc_id: str,
-    sample_id: int,
-    question_idx: int,
-    question_text: str,
+def query_hypothesis(
+    premise_id: int,
+    original_idx: Union[int, str],
+    hypothesis_text: str,
     ground_truth: str,
     logified_structure: Dict[str, Any],
     json_path: str,
@@ -357,20 +472,20 @@ def query_question(
     verbose: bool = True,
 ) -> QueryDebugResult:
     """
-    Query a question against a logified context structure.
+    Query a hypothesis against a logified premise structure.
 
     Steps:
-    1. Translate the question to a logical formula
+    1. Translate the hypothesis to a logical formula
     2. Query the logic solver
-    3. Map solver result to binary yes/no label
+    3. Map solver result to 4-way classification label
     4. Return structured result with metrics
     """
     start_time = time.time()
 
     try:
-        # Translate question to logical formula
+        # Translate hypothesis to logical formula
         translation_result = translate_query(
-            query=question_text,
+            query=hypothesis_text,
             json_path=json_path,
             api_key=api_key,
             model=model,
@@ -391,23 +506,22 @@ def query_question(
         voting_confidence = translation_result.get("voting_confidence")
         vote_counts = translation_result.get("vote_counts")
 
-        # Handle NONE formula (question not found in context)
+        # Handle NONE formula (hypothesis not found in premises)
         if formula == "NONE":
             prediction = "NOT MENTIONED"
-            prediction_binary = map_solver_to_binary(prediction)
-            is_correct = prediction_binary == ground_truth
+            prediction_4way = map_solver_to_4way(prediction)
+            is_correct = prediction_4way == ground_truth
             return QueryDebugResult(
-                doc_id=doc_id,
-                sample_id=sample_id,
-                question_idx=question_idx,
-                question_text=question_text,
+                premise_id=premise_id,
+                original_idx=original_idx,
+                hypothesis_text=hypothesis_text,
                 ground_truth=ground_truth,
                 prediction=prediction,
-                prediction_binary=prediction_binary,
+                prediction_4way=prediction_4way,
                 confidence=1.0,
                 formula=formula,
                 query_mode=query_mode,
-                explanation="No matching proposition for question",
+                explanation="No matching proposition for hypothesis",
                 error=None,
                 error_type=None,
                 is_correct=is_correct,
@@ -422,13 +536,12 @@ def query_question(
         # Handle ERROR or missing formula
         if not formula or formula == "ERROR":
             return QueryDebugResult(
-                doc_id=doc_id,
-                sample_id=sample_id,
-                question_idx=question_idx,
-                question_text=question_text,
+                premise_id=premise_id,
+                original_idx=original_idx,
+                hypothesis_text=hypothesis_text,
                 ground_truth=ground_truth,
                 prediction=None,
-                prediction_binary=None,
+                prediction_4way=None,
                 confidence=None,
                 formula=formula,
                 query_mode=query_mode,
@@ -452,8 +565,8 @@ def query_question(
             solver_result = solver.query(formula)
 
         prediction = solver_result.answer
-        prediction_binary = map_solver_to_binary(prediction)
-        is_correct = prediction_binary == ground_truth if prediction_binary else False
+        prediction_4way = map_solver_to_4way(prediction)
+        is_correct = prediction_4way == ground_truth if prediction_4way else False
 
         error = None
         error_type = None
@@ -462,13 +575,12 @@ def query_question(
             error_type = "solver_error"
 
         return QueryDebugResult(
-            doc_id=doc_id,
-            sample_id=sample_id,
-            question_idx=question_idx,
-            question_text=question_text,
+            premise_id=premise_id,
+            original_idx=original_idx,
+            hypothesis_text=hypothesis_text,
             ground_truth=ground_truth,
             prediction=prediction,
-            prediction_binary=prediction_binary,
+            prediction_4way=prediction_4way,
             confidence=solver_result.confidence,
             formula=formula,
             query_mode=query_mode,
@@ -486,13 +598,12 @@ def query_question(
 
     except Exception as exc:
         return QueryDebugResult(
-            doc_id=doc_id,
-            sample_id=sample_id,
-            question_idx=question_idx,
-            question_text=question_text,
+            premise_id=premise_id,
+            original_idx=original_idx,
+            hypothesis_text=hypothesis_text,
             ground_truth=ground_truth,
             prediction=None,
-            prediction_binary=None,
+            prediction_4way=None,
             confidence=None,
             formula=None,
             query_mode=None,
@@ -506,7 +617,7 @@ def query_question(
 
 def run_experiment(
     api_key: str,
-    data_path: Path,
+    data_path: Path = DEFAULT_DATASET_PATH,
     config_path: Optional[str] = None,
     query_model: str = TRANSLATE_MODEL,
     temperature: float = TEMPERATURE_LOGIC_CONVERTER,
@@ -515,16 +626,17 @@ def run_experiment(
     query_max_tokens: int = MAX_TOKENS,
     k_weights: int = 10,
     k_query: int = SBERT_TOP_K,
-    doc_id: Optional[int] = None,
+    premise_id: Optional[int] = None,
     limit: Optional[int] = None,
     verbose: bool = True,
 ) -> Tuple[List[QueryDebugResult], Dict[str, Any], Path]:
     """
-    Run the experiment on the LogicBench dataset.
+    Run the experiment on the alice-20samples dataset.
 
     Args:
         api_key: API key for LLM calls
         data_path: Path to dataset JSON file
+        config_path: Path to YAML config profile (for metadata)
         query_model: Model for query translation
         temperature: Sampling temperature
         reasoning_effort: Reasoning effort level
@@ -532,8 +644,8 @@ def run_experiment(
         query_max_tokens: Max tokens for query translation
         k_weights: Top-k chunks for weight assignment
         k_query: Top-k propositions for query translation
-        doc_id: Optional single sample ID to evaluate
-        limit: Optional limit on number of samples to process
+        premise_id: Optional single premise ID (document id) to evaluate
+        limit: Optional limit on number of premises to process
         verbose: Enable detailed output
 
     Returns:
@@ -544,42 +656,40 @@ def run_experiment(
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Load data
+    # Load and parse alice dataset
     print(f"Loading data from {data_path}...")
     data = load_dataset(data_path)
-    samples = data.get("samples", [])
-    logic_type = data.get("type", "unknown")
-    axiom = data.get("axiom", "unknown")
+    premises, metadata = parse_alice_to_premises(data)
 
-    # Filter by doc_id if specified
-    if doc_id is not None:
-        samples = [s for s in samples if s.get("id") == doc_id]
-        if not samples:
-            raise ValueError(f"No sample found with id={doc_id}")
+    # Filter by premise_id if specified
+    if premise_id is not None:
+        premises = [p for p in premises if p.get("premise_id") == premise_id]
+        if not premises:
+            raise ValueError(f"No premise found with premise_id={premise_id}")
 
     # Apply limit
     if limit is not None:
-        samples = samples[:limit]
+        premises = premises[:limit]
 
-    # Count total questions
-    total_questions = sum(len(s.get("qa_pairs", [])) for s in samples)
-    print(f"  Loaded {len(samples)} samples with {total_questions} total questions")
-    print(f"  Logic type: {logic_type}, Axiom: {axiom}")
+    # Count total hypotheses
+    total_hypotheses = sum(len(p.get("hypotheses", [])) for p in premises)
+    print(f"  Loaded {len(premises)} premises with {total_hypotheses} total hypotheses")
+
+    # Print label distribution
+    if "label_distribution" in metadata:
+        print(f"  Label distribution: {metadata['label_distribution']}")
 
     # Initialize results
     timestamp = datetime.now().isoformat()
-    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M")  # No seconds
     config_name = Path(config_path).stem if config_path else "default"
-    output_path = RESULTS_DIR / f"{timestamp_str}_{logic_type}_{axiom}_{config_name}.json"
- 
+    output_path = RESULTS_DIR / f"{config_name}_{timestamp_str}_{DATASET_EXPERIMENT}_.json"
 
     results_payload = {
         "metadata": {
             "timestamp": timestamp,
             "data_path": str(data_path),
             "config_profile": config_path,
-            "logic_type": logic_type,
-            "axiom": axiom,
             "logify_model": REASONING_MODEL,
             "query_model": query_model,
             "temperature": temperature,
@@ -588,13 +698,14 @@ def run_experiment(
             "query_max_tokens": query_max_tokens,
             "k_weights": k_weights,
             "k_query": k_query,
-            "num_samples": len(samples),
-            "num_questions": total_questions,
-            "doc_filter": doc_id,
+            "num_premises": len(premises),
+            "num_hypotheses": total_hypotheses,
+            "premise_filter": premise_id,
             "limit": limit,
+            "data_metadata": metadata,
         },
         "retrieval_config": get_full_retrieval_config(),
-        "sample_metrics": [],
+        "premise_metrics": [],
         "results": [],
     }
 
@@ -603,44 +714,43 @@ def run_experiment(
     total_evaluated = 0
     total_errors = 0
 
-    # Track per-label accuracy
-    label_correct = {"yes": 0, "no": 0}
-    label_total = {"yes": 0, "no": 0}
+    # Track per-label accuracy (4-way classification)
+    label_correct = {label: 0 for label in VALID_LABELS}
+    label_total = {label: 0 for label in VALID_LABELS}
 
-    # Process each sample
-    for sample_idx, sample_data in enumerate(samples):
-        sample_id = sample_data.get("id")
-        context_text = sample_data.get("context", "")
-        qa_pairs = sample_data.get("qa_pairs", [])
+    # Process each premise
+    for premise_idx, premise_data in enumerate(premises):
+        current_premise_id = premise_data.get("premise_id")
+        premise_text = premise_data.get("premise", "")
+        premise_word_count = premise_data.get("premise_word_count", len(premise_text.split()))
+        hypotheses = premise_data.get("hypotheses", [])
 
-        # Create unique doc_id combining logic_type, axiom, and sample id
-        current_doc_id = f"{logic_type}_{axiom}_{sample_id}"
-        context_word_count = len(context_text.split())
+        print(
+            f"\n[{premise_idx + 1}/{len(premises)}] Premise {current_premise_id}: "
+            f"{premise_word_count} words, {len(hypotheses)} hypotheses"
+        )
 
-        print(f"\n[{sample_idx + 1}/{len(samples)}] Sample {sample_id} ({current_doc_id}): {context_word_count} words, {len(qa_pairs)} questions")
-
-        if not context_text or not context_text.strip():
-            print(f"  [SKIP] Empty context text")
-            results_payload["sample_metrics"].append({
-                "doc_id": current_doc_id,
-                "sample_id": sample_id,
-                "context_length": len(context_text),
-                "context_word_count": context_word_count,
-                "num_questions": len(qa_pairs),
+        if not premise_text or not premise_text.strip():
+            print(f"  [SKIP] Empty premise text")
+            results_payload["premise_metrics"].append({
+                "premise_id": current_premise_id,
+                "premise_length": len(premise_text),
+                "premise_word_count": premise_word_count,
+                "num_hypotheses": len(hypotheses),
                 "logify_latency_sec": 0.0,
                 "logify_cached": False,
-                "logify_error": "Empty context text",
+                "logify_error": "Empty premise text",
                 "query_latency_total_sec": 0.0,
-                "sample_correct": 0,
-                "sample_total": 0,
-                "sample_accuracy": 0.0,
+                "premise_correct": 0,
+                "premise_total": 0,
+                "premise_accuracy": 0.0,
             })
             continue
 
-        # Logify context
-        logify_result = logify_context(
-            text=context_text,
-            doc_id=current_doc_id,
+        # Logify premise
+        logify_result = logify_premise(
+            text=premise_text,
+            premise_id=current_premise_id,
             api_key=api_key,
             temperature=temperature,
             reasoning_effort=reasoning_effort,
@@ -650,27 +760,27 @@ def run_experiment(
         )
 
         logified_structure = logify_result["logified_structure"]
-        json_path = str(get_cached_logified_path(current_doc_id))
+        json_path = str(get_cached_logified_path(current_premise_id))
         logify_error = logify_result.get("logify_error")
 
-        sample_correct = 0
-        sample_total = 0
+        premise_correct = 0
+        premise_total = 0
         query_latency_total = 0.0
 
-        # Query each question
-        for q_idx, qa in enumerate(qa_pairs):
-            question_text = qa.get("question", "")
-            ground_truth = qa.get("answer", "no").lower()  # "yes" or "no"
+        # Query each hypothesis
+        for hyp_idx, hyp in enumerate(hypotheses):
+            original_idx = hyp.get("original_idx", hyp_idx)  # alice key e.g. "test-31"
+            hypothesis_text = hyp.get("hypothesis", "")
+            ground_truth = hyp.get("label", "uncertain")  # Default to uncertain for 4-way
 
             if logified_structure is None:
                 result = QueryDebugResult(
-                    doc_id=current_doc_id,
-                    sample_id=sample_id,
-                    question_idx=q_idx,
-                    question_text=question_text,
+                    premise_id=current_premise_id,
+                    original_idx=original_idx,
+                    hypothesis_text=hypothesis_text,
                     ground_truth=ground_truth,
                     prediction=None,
-                    prediction_binary=None,
+                    prediction_4way=None,
                     confidence=None,
                     formula=None,
                     query_mode=None,
@@ -681,11 +791,10 @@ def run_experiment(
                     query_latency_sec=0.0,
                 )
             else:
-                result = query_question(
-                    doc_id=current_doc_id,
-                    sample_id=sample_id,
-                    question_idx=q_idx,
-                    question_text=question_text,
+                result = query_hypothesis(
+                    premise_id=current_premise_id,
+                    original_idx=original_idx,
+                    hypothesis_text=hypothesis_text,
                     ground_truth=ground_truth,
                     logified_structure=logified_structure,
                     json_path=json_path,
@@ -702,22 +811,27 @@ def run_experiment(
             results_payload["results"].append(asdict(result))
             query_latency_total += result.query_latency_sec
 
-            if result.prediction_binary is not None:
-                sample_total += 1
+            if result.prediction_4way is not None:
+                premise_total += 1
                 total_evaluated += 1
-                label_total[ground_truth] = label_total.get(ground_truth, 0) + 1
+                if ground_truth in label_total:
+                    label_total[ground_truth] += 1
 
                 if result.is_correct:
-                    sample_correct += 1
+                    premise_correct += 1
                     total_correct += 1
-                    label_correct[ground_truth] = label_correct.get(ground_truth, 0) + 1
+                    if ground_truth in label_correct:
+                        label_correct[ground_truth] += 1
 
             if result.error:
                 total_errors += 1
 
             # Print progress
             status = "+" if result.is_correct else ("?" if result.prediction is None else "x")
-            print(f"  [{status}] q{q_idx}: pred={result.prediction} ({result.prediction_binary}) gt={ground_truth}")
+            print(
+                f"  [{status}] hyp {hyp_idx + 1} ({original_idx}): "
+                f"pred={result.prediction} ({result.prediction_4way}) gt={ground_truth}"
+            )
             if verbose:
                 if result.formula:
                     print(f"      formula: {result.formula}")
@@ -726,38 +840,52 @@ def run_experiment(
                 if result.sbert_confidence is not None:
                     print(f"      sbert_confidence: {result.sbert_confidence:.2f}")
                 if result.voting_triggered:
-                    print(f"      voting: TRIGGERED (conf={result.voting_confidence:.2f}, counts={result.vote_counts})")
+                    # FIX 2: guard voting_confidence against None before applying :.2f
+                    conf_str = (
+                        f"{result.voting_confidence:.2f}"
+                        if result.voting_confidence is not None
+                        else "N/A"
+                    )
+                    print(
+                        f"      voting: TRIGGERED "
+                        f"(conf={conf_str}, counts={result.vote_counts})"
+                    )
                 if result.error:
                     print(f"      error ({result.error_type}): {result.error}")
 
-        # Store sample metrics
-        sample_accuracy = sample_correct / sample_total if sample_total > 0 else 0.0
-        sample_metrics = {
-            "doc_id": current_doc_id,
-            "sample_id": sample_id,
-            "context_length": len(context_text),
-            "context_word_count": context_word_count,
-            "num_questions": len(qa_pairs),
+        # Store premise metrics
+        premise_accuracy = premise_correct / premise_total if premise_total > 0 else 0.0
+        premise_metrics = {
+            "premise_id": current_premise_id,
+            "premise_length": len(premise_text),
+            "premise_word_count": premise_word_count,
+            "num_hypotheses": len(hypotheses),
             "logify_latency_sec": logify_result["logify_latency_sec"],
             "logify_cached": logify_result["logify_cached"],
             "logify_error": logify_error,
             "query_latency_total_sec": query_latency_total,
-            "sample_correct": sample_correct,
-            "sample_total": sample_total,
-            "sample_accuracy": sample_accuracy,
+            "premise_correct": premise_correct,
+            "premise_total": premise_total,
+            "premise_accuracy": premise_accuracy,
         }
-        results_payload["sample_metrics"].append(sample_metrics)
+        results_payload["premise_metrics"].append(premise_metrics)
 
-        print(f"  Sample accuracy: {sample_correct}/{sample_total} = {sample_accuracy:.2%}")
+        print(f"  Premise accuracy: {premise_correct}/{premise_total} = {premise_accuracy:.2%}")
         print(f"  Logify: {logify_result['logify_latency_sec']:.2f}s (cached: {logify_result['logify_cached']})")
 
-        # Save intermediate results
+        # Save intermediate results after each premise
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(results_payload, f, indent=2, ensure_ascii=False)
 
-    # Calculate per-label accuracy
-    yes_acc = label_correct["yes"] / label_total["yes"] if label_total["yes"] > 0 else 0.0
-    no_acc = label_correct["no"] / label_total["no"] if label_total["no"] > 0 else 0.0
+    # Calculate per-label accuracy (4-way)
+    label_accuracy = {}
+    for label in VALID_LABELS:
+        acc = label_correct[label] / label_total[label] if label_total[label] > 0 else 0.0
+        label_accuracy[label] = {
+            "correct": label_correct[label],
+            "total": label_total[label],
+            "accuracy": acc,
+        }
 
     # Final summary
     overall_accuracy = total_correct / total_evaluated if total_evaluated > 0 else 0.0
@@ -765,34 +893,26 @@ def run_experiment(
     results_payload["metadata"]["total_evaluated"] = total_evaluated
     results_payload["metadata"]["overall_accuracy"] = overall_accuracy
     results_payload["metadata"]["total_errors"] = total_errors
-    results_payload["metadata"]["per_label_accuracy"] = {
-        "yes": {
-            "correct": label_correct["yes"],
-            "total": label_total["yes"],
-            "accuracy": yes_acc,
-        },
-        "no": {
-            "correct": label_correct["no"],
-            "total": label_total["no"],
-            "accuracy": no_acc,
-        },
-    }
+    results_payload["metadata"]["classification_type"] = "4-way"
+    results_payload["metadata"]["label_set"] = list(VALID_LABELS)
+    results_payload["metadata"]["per_label_accuracy"] = label_accuracy
 
     # Save final results
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results_payload, f, indent=2, ensure_ascii=False)
 
     print("\n" + "=" * 60)
-    print("EXPERIMENT COMPLETE")
+    print("EXPERIMENT COMPLETE (4-way classification)")
     print("=" * 60)
-    print(f"Logic type: {logic_type}, Axiom: {axiom}")
-    print(f"Samples processed: {len(samples)}")
-    print(f"Questions evaluated: {total_evaluated}")
+    print(f"Premises processed: {len(premises)}")
+    print(f"Hypotheses evaluated: {total_evaluated}")
     print(f"Correct predictions: {total_correct}")
     print(f"Overall accuracy: {overall_accuracy:.2%}")
-    print(f"  - Yes accuracy: {label_correct['yes']}/{label_total['yes']} = {yes_acc:.2%}")
-    print(f"  - No accuracy: {label_correct['no']}/{label_total['no']} = {no_acc:.2%}")
-    print(f"Total errors: {total_errors}")
+    print(f"\nPer-label accuracy:")
+    for label in VALID_LABELS:
+        acc = label_accuracy[label]
+        print(f"  - {label}: {acc['correct']}/{acc['total']} = {acc['accuracy']:.2%}")
+    print(f"\nTotal errors: {total_errors}")
     print(f"Results saved to: {output_path}")
 
     return results, results_payload, output_path
@@ -801,7 +921,7 @@ def run_experiment(
 def main() -> int:
     """Main entry point for the experiment."""
     parser = argparse.ArgumentParser(
-        description="Logify Experiment on LogicBench dataset"
+        description="Logify Experiment on alice-20samples dataset (4-way classification)"
     )
     parser.add_argument(
         "--api-key",
@@ -809,35 +929,22 @@ def main() -> int:
         help="API key (default: OPENROUTER_API_KEY env var)",
     )
     parser.add_argument(
-        "--logic-type",
-        type=str,
-        default=DEFAULT_LOGIC_TYPE,
-        choices=["propositional_logic", "first_order_logic", "nm_logic"],
-        help=f"Logic type (default: {DEFAULT_LOGIC_TYPE})",
-    )
-    parser.add_argument(
-        "--axiom",
-        type=str,
-        default=DEFAULT_AXIOM,
-        help=f"Axiom/reasoning pattern (default: {DEFAULT_AXIOM})",
-    )
-    parser.add_argument(
         "--data-path",
         type=Path,
-        default=None,
-        help="Path to dataset JSON (overrides --logic-type and --axiom)",
+        default=DEFAULT_DATASET_PATH,
+        help=f"Path to dataset JSON (default: {DEFAULT_DATASET_PATH})",
     )
     parser.add_argument(
-        "--doc-id",
+        "--premise-id",
         type=int,
         default=None,
-        help="Single sample ID to evaluate",
+        help="Single document id to evaluate (e.g. 1)",
     )
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Limit number of samples to process",
+        help="Limit number of premises to process",
     )
     parser.add_argument(
         "--query-model",
@@ -886,12 +993,11 @@ def main() -> int:
         default=True,
         help="Enable detailed output",
     )
-
     parser.add_argument(
         "--config",
         type=str,
         default=None,
-        help="Path to YAML config profile (e.g., profiles/config_default_openAI.yaml)",
+        help="Path to YAML config profile (e.g., profiles/config_run1_openAI.yaml)",
     )
 
     args = parser.parse_args()
@@ -900,32 +1006,18 @@ def main() -> int:
         print("Error: No API key. Set OPENROUTER_API_KEY or use --api-key")
         return 1
 
-    if not args.config:
-        print("Error: No configuration file. Select one in /code/config/profiles")
+    if not args.data_path.exists():
+        print(f"Error: Data not found: {args.data_path}")
         return 1
 
-    # Determine data path
-    if args.data_path is not None:
-        data_path = args.data_path
-    else:
-        data_path = LOGICBENCH_DATA_DIR / args.logic_type / args.axiom / "data_instances.json"
-
-    if not data_path.exists():
-        print(f"Error: Data not found: {data_path}")
-        print(f"\nAvailable logic types and axioms in {LOGICBENCH_DATA_DIR}:")
-        if LOGICBENCH_DATA_DIR.exists():
-            for logic_type_dir in sorted(LOGICBENCH_DATA_DIR.iterdir()):
-                if logic_type_dir.is_dir():
-                    print(f"  {logic_type_dir.name}/")
-                    for axiom_dir in sorted(logic_type_dir.iterdir()):
-                        if axiom_dir.is_dir():
-                            print(f"    - {axiom_dir.name}")
+    if not args.config:
+        print("Error: No configuration file. Select one in /code/config/profiles")
         return 1
 
     try:
         run_experiment(
             api_key=args.api_key,
-            data_path=data_path,
+            data_path=args.data_path,
             config_path=args.config,
             query_model=args.query_model,
             temperature=args.temperature,
@@ -934,7 +1026,7 @@ def main() -> int:
             query_max_tokens=args.query_max_tokens,
             k_weights=args.k_weights,
             k_query=args.k_query,
-            doc_id=args.doc_id,
+            premise_id=args.premise_id,
             limit=args.limit,
             verbose=args.verbose,
         )

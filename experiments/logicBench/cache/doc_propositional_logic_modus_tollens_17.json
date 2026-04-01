@@ -4,56 +4,56 @@
       "id": "P_1",
       "translation": "Alexander decided to go for a walk in the park.",
       "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
-      "explanation": "This is a single decision event attributed to Alexander; it is truth-evaluable and contains no logical connectives or negation."
+      "explanation": "This is an atomic attitude/action-intention statement (a decision) and is not presented as a logical combination of smaller clauses in the text."
     },
     {
       "id": "P_2",
-      "translation": "Alexander is fully aware that a walk in the park would soon tire him out.",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
       "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
-      "explanation": "This is an atomic mental-state attribution (awareness) with a specific embedded content; it is not itself a logical connective."
+      "explanation": "This is an atomic mental-state attribution (awareness) as stated; its internal content is not expressed with explicit logical connectives that must be separately represented inside this proposition."
     },
     {
       "id": "P_3",
-      "translation": "A walk in the park would soon tire Alexander out.",
+      "translation": "The walk tires Alexander out soon.",
       "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "explanation": "This is a single predictive claim about the effect of the walk; it is stated as one declarative clause without explicit logical operators."
+      "explanation": "This is a simple, truth-evaluable event/property claim (the walk leads to Alexander being tired soon) with no explicit logical connectives."
     },
     {
       "id": "P_4",
       "translation": "Alexander gets tired soon.",
       "evidence": "Sentence 1: \"he won't get tired soon\" (negated in text)",
-      "explanation": "This is the positive (non-negated) core claim needed so that the text's negation can be represented as a logical constraint."
+      "explanation": "The text discusses whether Alexander gets tired soon; to avoid a negated primitive proposition, the positive core claim is represented atomically here."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_2 ⟹ P_3",
-      "translation": "If Alexander is fully aware that the walk would soon tire him out, then the walk would soon tire him out.",
-      "llm_weight": 0.8,
+      "translation": "If Alexander is fully aware that the walk would soon tire him out, then the walk tires Alexander out soon.",
+      "llm_weight": 0.75,
       "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
-      "reasoning": "The phrasing suggests the speaker treats the embedded content (that the walk would soon tire him out) as a factual expectation, but awareness reports can sometimes reflect Alexander's perspective rather than objective truth, so this is strong but not absolute."
+      "reasoning": "The text explicitly attributes Alexander's awareness of the walk-soon-tires-him content, but awareness does not strictly guarantee the content is true (it could be a mistaken belief), so the implication is strong but not absolute."
     },
     {
       "id": "C_2",
       "formula": "P_3 ⟹ P_4",
-      "translation": "If a walk in the park would soon tire Alexander out, then Alexander gets tired soon.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0: \"would soon tire him out\"; Sentence 1: \"get tired soon\"",
-      "reasoning": "Being tired out soon from the walk strongly implies getting tired soon; this is a near-definitional/common-sense linkage between 'tire him out soon' and 'gets tired soon'."
+      "translation": "If the walk tires Alexander out soon, then Alexander gets tired soon.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"it would soon tire him out\"",
+      "reasoning": "By the meaning of 'tire him out soon', it very strongly entails that Alexander becomes tired soon; this is a near-definitional/common-sense entailment."
     },
     {
       "id": "C_3",
       "formula": "¬P_4",
-      "translation": "Alexander does not get tired soon.",
+      "translation": "Alexander will not get tired soon.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"However, he won't get tired soon.\"",
-      "reasoning": "This is stated directly and emphatically (\"won't\"), so it is treated as a must-hold constraint."
+      "reasoning": "This is directly and explicitly asserted in the text; it is presented as a firm claim."
     },
     {
       "id": "C_4",
       "formula": "P_2",
-      "translation": "Alexander is fully aware that a walk in the park would soon tire him out.",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
@@ -69,7 +69,7 @@
     {
       "id": "C_6",
       "formula": "P_3",
-      "translation": "A walk in the park would soon tire Alexander out.",
+      "translation": "The walk tires Alexander out soon.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
@@ -83,8 +83,8 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_9",
-      "formula": "P_4 ⟹ P_4",
+      "id": "C_8",
+      "formula": "P_3 ⟹ P_3",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
@@ -92,11 +92,11 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_2: 'Alexander is fully aware that a walk in the park would soon tire him out.' has modal 'soon'",
-    "        Base text: 'Alexander is fully aware that a walk in the park would tire him out.'",
+    "[Modal] P_2: 'Alexander is fully aware that the walk would soon tire him out.' has modal 'soon'",
+    "        Base text: 'Alexander is fully aware that the walk would tire him out.'",
     "        Found existing base: P_2",
-    "[Modal] P_3: 'A walk in the park would soon tire Alexander out.' has modal 'soon'",
-    "        Base text: 'A walk in the park would tire Alexander out.'",
+    "[Modal] P_3: 'The walk tires Alexander out soon.' has modal 'soon'",
+    "        Base text: 'The walk tires Alexander out.'",
     "        Found existing base: P_3",
     "[Modal] P_4: 'Alexander gets tired soon.' has modal 'soon'",
     "        Base text: 'Alexander gets tired.'",
