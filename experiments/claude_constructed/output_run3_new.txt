@@ -165,40 +165,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
-    -> Verbal: Adelphic is a mobile demand-side platform, and The integrati...
+  Cand 0: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
+    -> Verbal: The integration provides in-feed display placements across m...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7927 (NLI score: 0.9976)
+  SBERT confidence: 0.7762 (NLI score: 0.9993)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_2 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10
-    -> Verbal: Sharethrough announced a native programmatic ad integration ...
-    -> Score: -0.03 (Ent: 0.14, Con: 0.17)
-    → Got formula: P_2 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 (score: -0.03)
+  Cand 0: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
+    -> Verbal: The integration provides in-feed display placements across m...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_22
-    -> Verbal: The integration provides in-feed display placements across m...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_22 (score: 1.00)
+  Cand 0: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_13
+    -> Verbal: Adelphic is a mobile demand-side platform, and The integrati...
+    -> Score: 0.89 (Ent: 0.91, Con: 0.03)
+    → Got formula: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_13 (score: 0.89)
 
-[Adaptive Voting] Vote results: {'P_3&P_7&P_8&P_9&P_10&P_2': 1, 'P_2&P_7&P_8&P_9&P_10': 1, 'P_7&P_8&P_9&P_10&P_22': 1}
-[Adaptive Voting] Winner: P_3&P_7&P_8&P_9&P_10&P_2 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_7&P_8&P_9&P_10&P_2': 2, 'P_3&P_7&P_8&P_9&P_10&P_13': 1}
+[Adaptive Voting] Winner: P_7&P_8&P_9&P_10&P_2 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
-[DEBUG] Parsing formula: 'P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2'
+[DEBUG] Parsing formula: 'P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2'
   [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
+      formula: P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2
       nli_confidence: 1.00
-      sbert_confidence: 0.79
-      voting: TRIGGERED (conf=0.33, counts={'P_3&P_7&P_8&P_9&P_10&P_2': 1, 'P_2&P_7&P_8&P_9&P_10': 1, 'P_7&P_8&P_9&P_10&P_22': 1})
+      sbert_confidence: 0.78
+      voting: TRIGGERED (conf=0.67, counts={'P_7&P_8&P_9&P_10&P_2': 2, 'P_3&P_7&P_8&P_9&P_10&P_13': 1})
 #################### 
 FUNCTION: translate_query : The integration between Sharethrough and Adelphic will comply with the Interactive Advertising Bureau's OpenRTB 2.3 specification.
 Multi-sentence hypothesis not detected
@@ -466,10 +466,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_2
-    -> Verbal: it is not the case that Sharethrough announced a native prog...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: ¬P_2 (score: -1.00)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_2 (score: -0.98)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -479,8 +479,8 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
     -> Score: -0.98 (Ent: 0.01, Con: 0.99)
     → Got formula: P_2 (score: -0.98)
 
-[Adaptive Voting] Vote results: {'P_2': 2, '~P_2': 1}
-[Adaptive Voting] Winner: P_2 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_2': 3}
+[Adaptive Voting] Winner: P_2 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
 [DEBUG] Parsing formula: 'P_2'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
@@ -488,7 +488,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
       formula: P_2
       nli_confidence: -0.98
       sbert_confidence: 0.83
-      voting: TRIGGERED (conf=0.67, counts={'P_2': 2, '~P_2': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_2': 3})
 #################### 
 FUNCTION: translate_query : Sharethrough reported $200 million in native ad spend running through its platform in 2016.
 Multi-sentence hypothesis not detected
@@ -571,20 +571,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_26
-    -> Verbal: it is not the case that Sharethrough had $140 million in nat...
-    -> Score: -0.99 (Ent: 0.00, Con: 0.99)
-    → Got formula: ¬P_26 (score: -0.99)
+  Cand 0: P_26
+    -> Verbal: Sharethrough had $140 million in native ad spend running thr...
+    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_26 (score: -0.99)
 
-[Adaptive Voting] Vote results: {'~P_26': 3}
-[Adaptive Voting] Winner: ~P_26 (3/3 votes)
+[Adaptive Voting] Vote results: {'~P_26': 2, 'P_26': 1}
+[Adaptive Voting] Winner: ~P_26 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
 [DEBUG] Parsing formula: '¬P_26'
   [+] hyp 6: pred=FALSE (contradiction) gt=contradiction
       formula: ¬P_26
       nli_confidence: -0.99
       sbert_confidence: 0.90
-      voting: TRIGGERED (conf=1.00, counts={'~P_26': 3})
+      voting: TRIGGERED (conf=0.67, counts={'~P_26': 2, 'P_26': 1})
 #################### 
 FUNCTION: translate_query : Adelphic is not known for developing patented technology to overcome the limits of user identification.
 Multi-sentence hypothesis not detected
@@ -659,28 +659,28 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_16
+  Cand 0: ¬(P_16 ∧ (P_17 ∨ P_18))
     -> Verbal: it is not the case that Adelphic developed patented technolo...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: ¬P_16 (score: 0.00)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: ¬(P_16 ∧ (P_17 ∨ P_18)) (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬(P_16 ∧ P_17)
+  Cand 0: ¬P_16
     -> Verbal: it is not the case that Adelphic developed patented technolo...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: ¬(P_16 ∧ P_17) (score: 1.00)
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_16 (score: 0.00)
 
-[Adaptive Voting] Vote results: {'~(P_16&P_17)': 2, '~P_16': 1}
-[Adaptive Voting] Winner: ~(P_16&P_17) (2/3 votes)
+[Adaptive Voting] Vote results: {'~(P_16&P_17)': 1, '~(P_16&(P_17|P_18))': 1, '~P_16': 1}
+[Adaptive Voting] Winner: ~(P_16&P_17) (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
 [DEBUG] Parsing formula: '¬(P_16 ∧ P_17)'
   [x] hyp 7: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: ¬(P_16 ∧ P_17)
       nli_confidence: 1.00
       sbert_confidence: 0.79
-      voting: TRIGGERED (conf=0.67, counts={'~(P_16&P_17)': 2, '~P_16': 1})
+      voting: TRIGGERED (conf=0.33, counts={'~(P_16&P_17)': 1, '~(P_16&(P_17|P_18))': 1, '~P_16': 1})
 #################### 
 FUNCTION: translate_query : According to the company, Alex White is the CEO of Sharethrough.
 Multi-sentence hypothesis not detected
@@ -755,10 +755,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_1
-    -> Verbal: Sharethrough is a native advertising supply-side platform...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_1 (score: 1.00)
+    → LLM abstained (NONE)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -768,8 +765,8 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_1 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_1': 3}
-[Adaptive Voting] Winner: P_1 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_1': 2, 'NONE': 1}
+[Adaptive Voting] Winner: P_1 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
 [DEBUG] Parsing formula: 'P_1'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
@@ -777,7 +774,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
       formula: P_1
       nli_confidence: 1.00
       sbert_confidence: 0.38
-      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_1': 2, 'NONE': 1})
 #################### 
 FUNCTION: translate_query : Sharethrough and Adelphic may expand their integration to international markets.
 Multi-sentence hypothesis not detected
@@ -937,14 +934,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_5
-    -> Verbal: A native programmatic ad integration between Sharethrough an...
-    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.97 (Ent: 0.01, Con: 0.99)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5256 (NLI score: 0.9791)
+  SBERT confidence: 0.6815 (NLI score: -0.9743)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.97
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -962,15 +959,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
     -> Score: -0.97 (Ent: 0.01, Con: 0.99)
     → Got formula: P_21 (score: -0.97)
 
-[Adaptive Voting] Vote results: {'P_5': 2, 'P_21': 1}
-[Adaptive Voting] Winner: P_5 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_21': 2, 'P_5': 1}
+[Adaptive Voting] Winner: P_21 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
-[DEBUG] Parsing formula: 'P_5'
+[DEBUG] Parsing formula: 'P_21'
   [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_5
-      nli_confidence: 0.98
-      sbert_confidence: 0.53
-      voting: TRIGGERED (conf=0.67, counts={'P_5': 2, 'P_21': 1})
+      formula: P_21
+      nli_confidence: -0.97
+      sbert_confidence: 0.68
+      voting: TRIGGERED (conf=0.67, counts={'P_21': 2, 'P_5': 1})
 #################### 
 FUNCTION: translate_query : Sharethrough and Adelphic could expand their partnership to include additional ad formats next year.
 Multi-sentence hypothesis not detected
@@ -1033,15 +1030,23 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_13
-    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7620 (NLI score: 0.9999)
+  SBERT confidence: 0.6172 (NLI score: 0.9992)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_13
+    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_13 (score: 1.00)
+  [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
@@ -1049,25 +1054,16 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Verbal: A native programmatic ad integration between Sharethrough an...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_5 (score: 1.00)
-  [Voting] Additional call 2/2...
 
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_21
-    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_21 (score: 1.00)
-
-[Adaptive Voting] Vote results: {'P_13': 1, 'P_5': 1, 'P_21': 1}
-[Adaptive Voting] Winner: P_13 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_21': 1, 'P_13': 1, 'P_5': 1}
+[Adaptive Voting] Winner: P_21 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
-[DEBUG] Parsing formula: 'P_13'
-[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
-  [x] hyp 11: pred=TRUE (entailment) gt=uncertain
-      formula: P_13
+[DEBUG] Parsing formula: 'P_21'
+  [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
+      formula: P_21
       nli_confidence: 1.00
-      sbert_confidence: 0.76
-      voting: TRIGGERED (conf=0.33, counts={'P_13': 1, 'P_5': 1, 'P_21': 1})
+      sbert_confidence: 0.62
+      voting: TRIGGERED (conf=0.33, counts={'P_21': 1, 'P_13': 1, 'P_5': 1})
 #################### 
 FUNCTION: translate_query : Some trading desks using Adelphic’s DSP might have exclusive access to certain Sharethrough inventory.
 Multi-sentence hypothesis not detected
@@ -1226,12 +1222,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_13
-    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
-    -> Score: -0.59 (Ent: 0.21, Con: 0.79)
+  Cand 0: P_21
+    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
+    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5424 (NLI score: -0.5882)
+  SBERT confidence: 0.5413 (NLI score: -0.5911)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.59
   [Voting] Additional call 1/2...
@@ -1246,12 +1242,12 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.59
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_21
-    -> Verbal: Adelphic allows third-party buyers to purchase native video ...
-    -> Score: -0.59 (Ent: 0.20, Con: 0.79)
-    → Got formula: P_21 (score: -0.59)
+  Cand 0: P_13
+    -> Verbal: The deal combines Adelphic’s mobile ad expertise with Sharet...
+    -> Score: -0.59 (Ent: 0.21, Con: 0.79)
+    → Got formula: P_13 (score: -0.59)
 
-[Adaptive Voting] Vote results: {'P_13': 1, 'P_21': 2}
+[Adaptive Voting] Vote results: {'P_21': 2, 'P_13': 1}
 [Adaptive Voting] Winner: P_21 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
 [DEBUG] Parsing formula: 'P_21'
@@ -1259,7 +1255,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.59
       formula: P_21
       nli_confidence: -0.59
       sbert_confidence: 0.54
-      voting: TRIGGERED (conf=0.67, counts={'P_13': 1, 'P_21': 2})
+      voting: TRIGGERED (conf=0.67, counts={'P_21': 2, 'P_13': 1})
 #################### 
 FUNCTION: translate_query : In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs.
 Multi-sentence hypothesis not detected
@@ -1322,14 +1318,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_4
-    -> Verbal: Adelphic is a cross-channel demand-side platform...
-    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+  Cand 0: P_2
+    -> Verbal: Sharethrough announced a native programmatic ad integration ...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5030 (NLI score: -0.9772)
+  SBERT confidence: 0.5886 (NLI score: -0.9988)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -1342,21 +1338,21 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_2
-    -> Verbal: Sharethrough announced a native programmatic ad integration ...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_2 (score: -1.00)
+  Cand 0: P_5
+    -> Verbal: A native programmatic ad integration between Sharethrough an...
+    -> Score: 0.66 (Ent: 0.82, Con: 0.17)
+    → Got formula: P_5 (score: 0.66)
 
-[Adaptive Voting] Vote results: {'P_4': 2, 'P_2': 1}
-[Adaptive Voting] Winner: P_4 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_2': 1, 'P_4': 1, 'P_5': 1}
+[Adaptive Voting] Winner: P_2 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_13', 'P_15', 'P_22 ⟹ P_21', 'P_26', 'P_27', 'P_28', '(P_33 ∧ P_34) ⟹ P_32']
-[DEBUG] Parsing formula: 'P_4'
+[DEBUG] Parsing formula: 'P_2'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
   [x] hyp 14: pred=TRUE (entailment) gt=not_mentioned
-      formula: P_4
-      nli_confidence: -0.98
-      sbert_confidence: 0.50
-      voting: TRIGGERED (conf=0.67, counts={'P_4': 2, 'P_2': 1})
+      formula: P_2
+      nli_confidence: -1.00
+      sbert_confidence: 0.59
+      voting: TRIGGERED (conf=0.33, counts={'P_2': 1, 'P_4': 1, 'P_5': 1})
 #################### 
 FUNCTION: translate_query : The International Space Station completed a major solar panel upgrade in orbit.
 Multi-sentence hypothesis not detected
@@ -1485,7 +1481,7 @@ Generating candidates via direct top-K retrieval...
   [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
       formula: NONE
       nli_confidence: 0.50
-  Premise accuracy: 7/16 = 43.75%
+  Premise accuracy: 8/16 = 50.00%
   Logify: 0.00s (cached: True)
 
 [2/10] Premise 1: 378 words, 16 hypotheses
@@ -1564,10 +1560,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_6 ∧ P_2 ∧ P_5
-    -> Verbal: Ben Johnson lost his Olympic gold medal, and Ben Johnson tes...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
+  Cand 0: (P_2 ∧ P_5) ⟹ P_6
+    -> Verbal: if Ben Johnson tested positive for steroids, and Ben Johnson...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+    → Got formula: (P_2 ∧ P_5) ⟹ P_6 (score: 0.98)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -1577,15 +1573,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_6 ∧ P_2 ∧ P_5 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_6&P_2&P_5': 3}
-[Adaptive Voting] Winner: P_6&P_2&P_5 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_6&P_2&P_5': 2, '(P_2&P_5)=>P_6': 1}
+[Adaptive Voting] Winner: P_6&P_2&P_5 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_6 ∧ P_2 ∧ P_5'
   [x] hyp 1: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_6 ∧ P_2 ∧ P_5
       nli_confidence: 1.00
       sbert_confidence: 0.87
-      voting: TRIGGERED (conf=1.00, counts={'P_6&P_2&P_5': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_6&P_2&P_5': 2, '(P_2&P_5)=>P_6': 1})
 #################### 
 FUNCTION: translate_query : Carl Lewis was awarded the Olympic gold medals that Ben Johnson lost.
 Multi-sentence hypothesis not detected
@@ -1660,10 +1656,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_13 ∧ P_6
-    -> Verbal: Carl Lewis was awarded an Olympic gold medal, and Ben Johnso...
+  Cand 0: P_6 ∧ P_13
+    -> Verbal: Ben Johnson lost his Olympic gold medal, and Carl Lewis was ...
     -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_13 ∧ P_6 (score: 0.00)
+    → Got formula: P_6 ∧ P_13 (score: 0.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -1673,15 +1669,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
     -> Score: 0.00 (Ent: 0.00, Con: 0.00)
     → Got formula: P_13 ∧ P_6 (score: 0.00)
 
-[Adaptive Voting] Vote results: {'P_13&P_6': 3}
-[Adaptive Voting] Winner: P_13&P_6 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_13&P_6': 2, 'P_6&P_13': 1}
+[Adaptive Voting] Winner: P_13&P_6 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_13 ∧ P_6'
   [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_13 ∧ P_6
       nli_confidence: 0.00
       sbert_confidence: 0.97
-      voting: TRIGGERED (conf=1.00, counts={'P_13&P_6': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_13&P_6': 2, 'P_6&P_13': 1})
 #################### 
 FUNCTION: translate_query : Reps. Mel Levine, Henry Waxman, and Benjamin Gilman introduced legislation to classify anabolic steroids as a controlled substance.
 Multi-sentence hypothesis not detected
@@ -1756,18 +1752,18 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_8
-    -> Verbal: Legislation to classify anabolic steroids as a controlled su...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_8 (score: 1.00)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
   Cand 0: P_8 ∧ P_24
     -> Verbal: Legislation to classify anabolic steroids as a controlled su...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_8 ∧ P_24 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_8
+    -> Verbal: Legislation to classify anabolic steroids as a controlled su...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_8 (score: 1.00)
 
 [Adaptive Voting] Vote results: {'P_8': 2, 'P_8&P_24': 1}
 [Adaptive Voting] Winner: P_8 (2/3 votes)
@@ -1852,10 +1848,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_34
-    -> Verbal: Mel Levine described steroid abuse as the silent side of the...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_34 (score: 1.00)
+  Cand 0: P_27
+    -> Verbal: Lawmakers emphasized increasing abuse of steroids by student...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: P_27 (score: 0.01)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -1865,15 +1861,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_34 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_34': 3}
-[Adaptive Voting] Winner: P_34 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_34': 2, 'P_27': 1}
+[Adaptive Voting] Winner: P_34 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_34'
   [x] hyp 4: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_34
       nli_confidence: 1.00
       sbert_confidence: 0.62
-      voting: TRIGGERED (conf=1.00, counts={'P_34': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_34': 2, 'P_27': 1})
 #################### 
 FUNCTION: translate_query : Ben Johnson told reporters that he won a silver medal after testing positive for steroids in Seoul.
 Multi-sentence hypothesis not detected
@@ -1936,40 +1932,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_2 ∧ P_5 ∧ P_36 ∧ ¬P_6
+  Cand 0: P_2 ∧ P_5 ∧ P_36
     -> Verbal: Ben Johnson tested positive for steroids, and Ben Johnson wa...
-    -> Score: 0.93 (Ent: 0.94, Con: 0.01)
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7981 (NLI score: 0.9282)
+  SBERT confidence: 0.7538 (NLI score: 0.9911)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.93
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_2 ∧ P_5 ∧ P_36 ∧ P_42
-    -> Verbal: Ben Johnson tested positive for steroids, and Ben Johnson wa...
-    -> Score: 0.97 (Ent: 0.98, Con: 0.01)
-    → Got formula: P_2 ∧ P_5 ∧ P_36 ∧ P_42 (score: 0.97)
+  Cand 0: P_36 ∧ P_2 ∧ P_5
+    -> Verbal: Ben Johnson attended the news conference, and Ben Johnson te...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: P_36 ∧ P_2 ∧ P_5 (score: 0.99)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_2 ∧ P_42 ∧ P_5 ∧ P_36
-    -> Verbal: Ben Johnson tested positive for steroids, and Ben Johnson us...
+  Cand 0: P_2 ∧ P_5 ∧ P_36
+    -> Verbal: Ben Johnson tested positive for steroids, and Ben Johnson wa...
     -> Score: 0.99 (Ent: 0.99, Con: 0.00)
-    → Got formula: P_2 ∧ P_42 ∧ P_5 ∧ P_36 (score: 0.99)
+    → Got formula: P_2 ∧ P_5 ∧ P_36 (score: 0.99)
 
-[Adaptive Voting] Vote results: {'P_2&P_5&P_36&~P_6': 1, 'P_2&P_5&P_36&P_42': 1, 'P_2&P_42&P_5&P_36': 1}
-[Adaptive Voting] Winner: P_2&P_5&P_36&~P_6 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_2&P_5&P_36': 2, 'P_36&P_2&P_5': 1}
+[Adaptive Voting] Winner: P_2&P_5&P_36 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
-[DEBUG] Parsing formula: 'P_2 ∧ P_5 ∧ P_36 ∧ ¬P_6'
+[DEBUG] Parsing formula: 'P_2 ∧ P_5 ∧ P_36'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: P_2 ∧ P_5 ∧ P_36 ∧ ¬P_6
-      nli_confidence: 0.93
-      sbert_confidence: 0.80
-      voting: TRIGGERED (conf=0.33, counts={'P_2&P_5&P_36&~P_6': 1, 'P_2&P_5&P_36&P_42': 1, 'P_2&P_42&P_5&P_36': 1})
+      formula: P_2 ∧ P_5 ∧ P_36
+      nli_confidence: 0.99
+      sbert_confidence: 0.75
+      voting: TRIGGERED (conf=0.67, counts={'P_2&P_5&P_36': 2, 'P_36&P_2&P_5': 1})
 #################### 
 FUNCTION: translate_query : Carl Lewis was awarded the Olympic gold medals that Johnson lost in 1988 in Barcelona.
 Multi-sentence hypothesis not detected
@@ -2128,14 +2124,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_16
-    -> Verbal: Carl Lewis attended the news conference...
-    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+  Cand 0: P_16 ∧ P_47
+    -> Verbal: Carl Lewis attended the news conference, and Carl Lewis held...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8003 (NLI score: 0.9904)
+  SBERT confidence: 0.7419 (NLI score: 0.9998)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -2153,15 +2149,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
     -> Score: 0.99 (Ent: 0.99, Con: 0.00)
     → Got formula: P_16 (score: 0.99)
 
-[Adaptive Voting] Vote results: {'P_16': 3}
-[Adaptive Voting] Winner: P_16 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_16&P_47': 1, 'P_16': 2}
+[Adaptive Voting] Winner: P_16 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_16'
   [x] hyp 7: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: P_16
       nli_confidence: 0.99
-      sbert_confidence: 0.80
-      voting: TRIGGERED (conf=1.00, counts={'P_16': 3})
+      sbert_confidence: 0.74
+      voting: TRIGGERED (conf=0.67, counts={'P_16&P_47': 1, 'P_16': 2})
 #################### 
 FUNCTION: translate_query : Rep. John Smith, R-Texas, invited Johnson to attend the legislation presentation.
 Multi-sentence hypothesis not detected
@@ -2224,40 +2220,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_22
-    -> Verbal: Representative Benjamin Gilman invited Ben Johnson to attend...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+  Cand 0: P_23
+    -> Verbal: The representatives presented the legislation...
+    -> Score: 0.96 (Ent: 0.96, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4967 (NLI score: -0.9994)
+  SBERT confidence: 0.5185 (NLI score: 0.9562)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.96
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_22
-    -> Verbal: Representative Benjamin Gilman invited Ben Johnson to attend...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_22 (score: -1.00)
+  Cand 0: ¬P_22
+    -> Verbal: it is not the case that Representative Benjamin Gilman invit...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: ¬P_22 (score: -0.98)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_22
-    -> Verbal: Representative Benjamin Gilman invited Ben Johnson to attend...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_22 (score: -1.00)
+  Cand 0: P_23
+    -> Verbal: The representatives presented the legislation...
+    -> Score: 0.96 (Ent: 0.96, Con: 0.00)
+    → Got formula: P_23 (score: 0.96)
 
-[Adaptive Voting] Vote results: {'P_22': 3}
-[Adaptive Voting] Winner: P_22 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_23': 2, '~P_22': 1}
+[Adaptive Voting] Winner: P_23 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
-[DEBUG] Parsing formula: 'P_22'
+[DEBUG] Parsing formula: 'P_23'
   [x] hyp 8: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: P_22
-      nli_confidence: -1.00
-      sbert_confidence: 0.50
-      voting: TRIGGERED (conf=1.00, counts={'P_22': 3})
+      formula: P_23
+      nli_confidence: 0.96
+      sbert_confidence: 0.52
+      voting: TRIGGERED (conf=0.67, counts={'P_23': 2, '~P_22': 1})
 #################### 
 FUNCTION: translate_query : Ben Johnson may have felt emotional when discussing his past actions during the news conference.
 Multi-sentence hypothesis not detected
@@ -2320,23 +2316,15 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_36
-    -> Verbal: Ben Johnson attended the news conference...
-    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+  Cand 0: P_36 ∧ P_35
+    -> Verbal: Ben Johnson attended the news conference, and Mel Levine app...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7067 (NLI score: 0.0071)
+  SBERT confidence: 0.6553 (NLI score: 0.9987)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_35
-    -> Verbal: Mel Levine applauded Ben Johnson's courage for attending the...
-    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_35 (score: 0.99)
-  [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
@@ -2344,16 +2332,24 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
     -> Verbal: Ben Johnson attended the news conference...
     -> Score: 0.01 (Ent: 0.01, Con: 0.00)
     → Got formula: P_36 (score: 0.01)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'P_36': 2, 'P_35': 1}
-[Adaptive Voting] Winner: P_36 (2/3 votes)
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_36 ∧ P_35
+    -> Verbal: Ben Johnson attended the news conference, and Mel Levine app...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_36 ∧ P_35 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_36&P_35': 2, 'P_36': 1}
+[Adaptive Voting] Winner: P_36&P_35 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
-[DEBUG] Parsing formula: 'P_36'
+[DEBUG] Parsing formula: 'P_36 ∧ P_35'
   [+] hyp 9: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_36
-      nli_confidence: 0.01
-      sbert_confidence: 0.71
-      voting: TRIGGERED (conf=0.67, counts={'P_36': 2, 'P_35': 1})
+      formula: P_36 ∧ P_35
+      nli_confidence: 1.00
+      sbert_confidence: 0.66
+      voting: TRIGGERED (conf=0.67, counts={'P_36&P_35': 2, 'P_36': 1})
 #################### 
 FUNCTION: translate_query : Carl Lewis might have spoken with other attendees about the need for stronger anti-doping measures after the news conference.
 Multi-sentence hypothesis not detected
@@ -2436,20 +2432,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_16
-    -> Verbal: Carl Lewis attended the news conference...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_16 (score: 0.00)
+  Cand 0: P_16 ∧ P_40
+    -> Verbal: Carl Lewis attended the news conference, and Reporters asked...
+    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_16 ∧ P_40 (score: 0.99)
 
-[Adaptive Voting] Vote results: {'P_16&P_40': 1, 'P_40': 1, 'P_16': 1}
-[Adaptive Voting] Winner: P_16&P_40 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_16&P_40': 2, 'P_40': 1}
+[Adaptive Voting] Winner: P_16&P_40 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_16 ∧ P_40'
   [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_16 ∧ P_40
       nli_confidence: 0.99
       sbert_confidence: 0.74
-      voting: TRIGGERED (conf=0.33, counts={'P_16&P_40': 1, 'P_40': 1, 'P_16': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_16&P_40': 2, 'P_40': 1})
 #################### 
 FUNCTION: translate_query : The legislation introduced on Thursday was unanimously supported by all members of Congress.
 Multi-sentence hypothesis not detected
@@ -2512,23 +2508,15 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_8 ∧ P_14
+  Cand 0: P_8 ∧ P_24 ∧ P_14
     -> Verbal: Legislation to classify anabolic steroids as a controlled su...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.3433 (NLI score: 0.9999)
+  SBERT confidence: 0.3198 (NLI score: 0.9997)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_8
-    -> Verbal: Legislation to classify anabolic steroids as a controlled su...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_8 (score: 1.00)
-  [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
@@ -2536,16 +2524,24 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Verbal: Legislation to classify anabolic steroids as a controlled su...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_8 ∧ P_14 (score: 1.00)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'P_8&P_14': 2, 'P_8': 1}
-[Adaptive Voting] Winner: P_8&P_14 (2/3 votes)
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_8
+    -> Verbal: Legislation to classify anabolic steroids as a controlled su...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_8 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_8&P_24&P_14': 1, 'P_8&P_14': 1, 'P_8': 1}
+[Adaptive Voting] Winner: P_8&P_24&P_14 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
-[DEBUG] Parsing formula: 'P_8 ∧ P_14'
+[DEBUG] Parsing formula: 'P_8 ∧ P_24 ∧ P_14'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_8 ∧ P_14
+      formula: P_8 ∧ P_24 ∧ P_14
       nli_confidence: 1.00
-      sbert_confidence: 0.34
-      voting: TRIGGERED (conf=0.67, counts={'P_8&P_14': 2, 'P_8': 1})
+      sbert_confidence: 0.32
+      voting: TRIGGERED (conf=0.33, counts={'P_8&P_24&P_14': 1, 'P_8&P_14': 1, 'P_8': 1})
 #################### 
 FUNCTION: translate_query : Ed Futerman represented Ben Johnson in previous legal matters related to doping.
 Multi-sentence hypothesis not detected
@@ -2724,12 +2720,11 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_4
-    -> Verbal: Ben Johnson said using anabolic steroids is wrong for athlet...
-    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_4 (score: -0.99)
+  Warning: LLM generation failed or returned invalid JSON: 'NoneType' object is not subscriptable
+  [LLM ERROR] Generation failed: TypeError: 'NoneType' object is not subscriptable
+    → LLM abstained (NONE)
 
-[Adaptive Voting] Vote results: {'P_37': 1, 'P_38': 1, 'P_4': 1}
+[Adaptive Voting] Vote results: {'P_37': 1, 'P_38': 1, 'NONE': 1}
 [Adaptive Voting] Winner: P_37 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_37'
@@ -2737,7 +2732,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
       formula: P_37
       nli_confidence: -1.00
       sbert_confidence: 0.36
-      voting: TRIGGERED (conf=0.33, counts={'P_37': 1, 'P_38': 1, 'P_4': 1})
+      voting: TRIGGERED (conf=0.33, counts={'P_37': 1, 'P_38': 1, 'NONE': 1})
 #################### 
 FUNCTION: translate_query : The International Olympic Committee revised its anti-doping protocols following a scandal involving Russian athletes.
 Multi-sentence hypothesis not detected
@@ -2800,14 +2795,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_2
-    -> Verbal: Ben Johnson tested positive for steroids...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+  Cand 0: P_8
+    -> Verbal: Legislation to classify anabolic steroids as a controlled su...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.2588 (NLI score: -0.9986)
+  SBERT confidence: 0.3545 (NLI score: 0.9970)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -2825,15 +2820,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_8 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_2': 1, 'P_8': 2}
-[Adaptive Voting] Winner: P_8 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_8': 3}
+[Adaptive Voting] Winner: P_8 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_35 ⟹ P_36', 'P_11 ⟹ P_16', 'P_11 ⟹ P_36', 'P_41 ⟹ P_40', 'P_32 ⟹ ¬P_33', 'P_46 ⟹ P_36']
 [DEBUG] Parsing formula: 'P_8'
   [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
       formula: P_8
       nli_confidence: 1.00
-      sbert_confidence: 0.26
-      voting: TRIGGERED (conf=0.67, counts={'P_2': 1, 'P_8': 2})
+      sbert_confidence: 0.35
+      voting: TRIGGERED (conf=1.00, counts={'P_8': 3})
 #################### 
 FUNCTION: translate_query : Mozart's lost piano concerto was authenticated by musicologists in Vienna.
 Multi-sentence hypothesis not detected
@@ -3145,20 +3140,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.31
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_1 ∧ P_21 ∧ ¬P_22
-    -> Verbal: A 1987 state constitutional amendment broadened the right to...
-    -> Score: 0.31 (Ent: 0.31, Con: 0.00)
-    → Got formula: P_1 ∧ P_21 ∧ ¬P_22 (score: 0.31)
+  Cand 0: P_21 ∧ P_1 ∧ ¬P_22
+    -> Verbal: Every citizen has a right to keep and bear arms, and A 1987 ...
+    -> Score: 0.63 (Ent: 0.63, Con: 0.00)
+    → Got formula: P_21 ∧ P_1 ∧ ¬P_22 (score: 0.63)
 
-[Adaptive Voting] Vote results: {'P_1&P_21&~P_22': 2, 'P_21&P_1&~P_22': 1}
-[Adaptive Voting] Winner: P_1&P_21&~P_22 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_1&P_21&~P_22': 1, 'P_21&P_1&~P_22': 2}
+[Adaptive Voting] Winner: P_21&P_1&~P_22 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
-[DEBUG] Parsing formula: 'P_1 ∧ P_21 ∧ ¬P_22'
+[DEBUG] Parsing formula: 'P_21 ∧ P_1 ∧ ¬P_22'
   [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: P_1 ∧ P_21 ∧ ¬P_22
-      nli_confidence: 0.31
+      formula: P_21 ∧ P_1 ∧ ¬P_22
+      nli_confidence: 0.63
       sbert_confidence: 0.75
-      voting: TRIGGERED (conf=0.67, counts={'P_1&P_21&~P_22': 2, 'P_21&P_1&~P_22': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_1&P_21&~P_22': 1, 'P_21&P_1&~P_22': 2})
 #################### 
 FUNCTION: translate_query : Attorney General James E. Tierney said the case would be appealed and stated that he thinks Justice Perkins is wrong.
 Multi-sentence hypothesis not detected
@@ -3317,14 +3312,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_8
+  Cand 0: ¬P_8 ∧ ¬P_9
     -> Verbal: it is not the case that The amendment's backers intended to ...
-    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+    -> Score: 0.66 (Ent: 0.66, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8113 (NLI score: 0.0159)
+  SBERT confidence: 0.8202 (NLI score: 0.6559)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.02
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.66
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -3342,15 +3337,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.02
     -> Score: 0.66 (Ent: 0.66, Con: 0.00)
     → Got formula: ¬P_8 ∧ ¬P_9 (score: 0.66)
 
-[Adaptive Voting] Vote results: {'~P_8': 1, '~P_8&~P_9': 2}
-[Adaptive Voting] Winner: ~P_8&~P_9 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_8&~P_9': 3}
+[Adaptive Voting] Winner: ~P_8&~P_9 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: '¬P_8 ∧ ¬P_9'
   [x] hyp 4: pred=UNCERTAIN (uncertain) gt=entailment
       formula: ¬P_8 ∧ ¬P_9
       nli_confidence: 0.66
-      sbert_confidence: 0.81
-      voting: TRIGGERED (conf=0.67, counts={'~P_8': 1, '~P_8&~P_9': 2})
+      sbert_confidence: 0.82
+      voting: TRIGGERED (conf=1.00, counts={'~P_8&~P_9': 3})
 #################### 
 FUNCTION: translate_query : Justice Michael R. Stevens dismissed a charge of possession of a firearm by a felon against Edward Brown of Cumberland.
 Multi-sentence hypothesis not detected
@@ -3413,14 +3408,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_5
-    -> Verbal: it is not the case that Perkins dismissed the charge of poss...
-    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
+  Cand 0: P_5
+    -> Verbal: Perkins dismissed the charge of possession of a firearm by a...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7160 (NLI score: -0.9852)
+  SBERT confidence: 0.7638 (NLI score: -0.9986)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -3438,15 +3433,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
     → Got formula: P_5 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'~P_5': 1, 'P_5': 2}
-[Adaptive Voting] Winner: P_5 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_5': 3}
+[Adaptive Voting] Winner: P_5 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: 'P_5'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: P_5
       nli_confidence: -1.00
-      sbert_confidence: 0.72
-      voting: TRIGGERED (conf=0.67, counts={'~P_5': 1, 'P_5': 2})
+      sbert_confidence: 0.76
+      voting: TRIGGERED (conf=1.00, counts={'P_5': 3})
 #################### 
 FUNCTION: translate_query : The Maine constitution was amended in 1985 to declare that every citizen has a right to keep and bear arms.
 Multi-sentence hypothesis not detected
@@ -3713,10 +3708,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_29 ∧ ¬P_15
-    -> Verbal: it is not the case that The case is appealed, and it is not ...
-    -> Score: 0.44 (Ent: 0.59, Con: 0.16)
-    → Got formula: ¬P_29 ∧ ¬P_15 (score: 0.44)
+  Cand 0: ¬P_15 ∧ ¬P_29
+    -> Verbal: it is not the case that James E. Tierney thinks Justice Perk...
+    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
+    → Got formula: ¬P_15 ∧ ¬P_29 (score: -0.99)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -3726,15 +3721,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
     -> Score: -0.99 (Ent: 0.01, Con: 0.99)
     → Got formula: ¬P_15 ∧ ¬P_29 (score: -0.99)
 
-[Adaptive Voting] Vote results: {'~P_15&~P_29': 2, '~P_29&~P_15': 1}
-[Adaptive Voting] Winner: ~P_15&~P_29 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_15&~P_29': 3}
+[Adaptive Voting] Winner: ~P_15&~P_29 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: '¬P_15 ∧ ¬P_29'
   [x] hyp 8: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: ¬P_15 ∧ ¬P_29
       nli_confidence: -0.99
       sbert_confidence: 0.78
-      voting: TRIGGERED (conf=0.67, counts={'~P_15&~P_29': 2, '~P_29&~P_15': 1})
+      voting: TRIGGERED (conf=1.00, counts={'~P_15&~P_29': 3})
 #################### 
 FUNCTION: translate_query : Edward Brown may have been acquitted of the criminal threatening charge.
 Multi-sentence hypothesis not detected
@@ -3797,14 +3792,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_30
-    -> Verbal: it is not the case that Brown faced a criminal threatening c...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+  Cand 0: P_30
+    -> Verbal: Brown faced a criminal threatening charge...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6937 (NLI score: -0.9952)
+  SBERT confidence: 0.7075 (NLI score: 0.0010)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -3817,20 +3812,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_30
-    -> Verbal: it is not the case that Brown faced a criminal threatening c...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: ¬P_30 (score: -1.00)
+  Cand 0: P_30
+    -> Verbal: Brown faced a criminal threatening charge...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_30 (score: 0.00)
 
-[Adaptive Voting] Vote results: {'~P_30': 2, 'P_30': 1}
-[Adaptive Voting] Winner: ~P_30 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_30': 3}
+[Adaptive Voting] Winner: P_30 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
-[DEBUG] Parsing formula: '¬P_30'
+[DEBUG] Parsing formula: 'P_30'
   [+] hyp 9: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: ¬P_30
-      nli_confidence: -1.00
-      sbert_confidence: 0.69
-      voting: TRIGGERED (conf=0.67, counts={'~P_30': 2, 'P_30': 1})
+      formula: P_30
+      nli_confidence: 0.00
+      sbert_confidence: 0.71
+      voting: TRIGGERED (conf=1.00, counts={'P_30': 3})
 #################### 
 FUNCTION: translate_query : Justice Perkins might have previously ruled on other constitutional gun rights cases.
 Multi-sentence hypothesis not detected
@@ -3905,10 +3900,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.89
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3
-    -> Verbal: A judge ruled that convicted felons have a right to own guns...
+  Cand 0: P_4 ∧ P_3
+    -> Verbal: Stephen L. Perkins is a Cumberland County Superior Court Jus...
     -> Score: 0.98 (Ent: 0.99, Con: 0.01)
-    → Got formula: P_3 (score: 0.98)
+    → Got formula: P_4 ∧ P_3 (score: 0.98)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -3918,7 +3913,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.89
     -> Score: -0.89 (Ent: 0.05, Con: 0.95)
     → Got formula: P_5 (score: -0.89)
 
-[Adaptive Voting] Vote results: {'P_5': 2, 'P_3': 1}
+[Adaptive Voting] Vote results: {'P_5': 2, 'P_4&P_3': 1}
 [Adaptive Voting] Winner: P_5 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: 'P_5'
@@ -3926,7 +3921,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.89
       formula: P_5
       nli_confidence: -0.89
       sbert_confidence: 0.60
-      voting: TRIGGERED (conf=0.67, counts={'P_5': 2, 'P_3': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_5': 2, 'P_4&P_3': 1})
 #################### 
 FUNCTION: translate_query : The higher court might overturn the dismissal and rule that the gun possession law applies to Edward Brown's case.
 Multi-sentence hypothesis not detected
@@ -3989,40 +3984,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_5 ∧ P_2
+  Cand 0: ¬P_5 ∧ P_3
     -> Verbal: it is not the case that Perkins dismissed the charge of poss...
     -> Score: -0.98 (Ent: 0.01, Con: 0.99)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6784 (NLI score: -0.9828)
+  SBERT confidence: 0.6854 (NLI score: -0.9824)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_6
-    -> Verbal: Edward Brown faced a charge of possession of a firearm by a ...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_6 (score: 1.00)
+  Cand 0: ¬P_5 ∧ P_2
+    -> Verbal: it is not the case that Perkins dismissed the charge of poss...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: ¬P_5 ∧ P_2 (score: -0.98)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_5 ∧ P_6
+  Cand 0: ¬P_5 ∧ P_2
     -> Verbal: it is not the case that Perkins dismissed the charge of poss...
-    -> Score: 0.00 (Ent: 0.01, Con: 0.00)
-    → Got formula: ¬P_5 ∧ P_6 (score: 0.00)
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
+    → Got formula: ¬P_5 ∧ P_2 (score: -0.98)
 
-[Adaptive Voting] Vote results: {'~P_5&P_2': 1, 'P_6': 1, '~P_5&P_6': 1}
-[Adaptive Voting] Winner: ~P_5&P_2 (1/3 votes)
+[Adaptive Voting] Vote results: {'~P_5&P_3': 1, '~P_5&P_2': 2}
+[Adaptive Voting] Winner: ~P_5&P_2 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: '¬P_5 ∧ P_2'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: ¬P_5 ∧ P_2
       nli_confidence: -0.98
-      sbert_confidence: 0.68
-      voting: TRIGGERED (conf=0.33, counts={'~P_5&P_2': 1, 'P_6': 1, '~P_5&P_6': 1})
+      sbert_confidence: 0.69
+      voting: TRIGGERED (conf=0.67, counts={'~P_5&P_3': 1, '~P_5&P_2': 2})
 #################### 
 FUNCTION: translate_query : Edward Brown may have owned multiple firearms at the time of his arrest.
 Multi-sentence hypothesis not detected
@@ -4097,10 +4092,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_28
-    -> Verbal: There is a rational connection between Brown's previous conv...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_28 (score: 1.00)
+  Cand 0: P_24
+    -> Verbal: Brown was accused of illegal possession of a gun...
+    -> Score: 0.94 (Ent: 0.94, Con: 0.00)
+    → Got formula: P_24 (score: 0.94)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -4110,15 +4105,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_6 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_28': 2, 'P_6': 1}
-[Adaptive Voting] Winner: P_28 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_28': 1, 'P_24': 1, 'P_6': 1}
+[Adaptive Voting] Winner: P_28 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: 'P_28'
   [x] hyp 12: pred=FALSE (contradiction) gt=uncertain
       formula: P_28
       nli_confidence: 1.00
       sbert_confidence: 0.74
-      voting: TRIGGERED (conf=0.67, counts={'P_28': 2, 'P_6': 1})
+      voting: TRIGGERED (conf=0.33, counts={'P_28': 1, 'P_24': 1, 'P_6': 1})
 #################### 
 FUNCTION: translate_query : The New Hampshire Supreme Court recently ruled on the legality of firearm possession by non-citizens.
 Multi-sentence hypothesis not detected
@@ -4289,7 +4284,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
+  Cand 0: P_1
+    -> Verbal: A 1987 state constitutional amendment broadened the right to...
+    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_1 (score: -0.99)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -4299,15 +4297,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
     -> Score: -0.99 (Ent: 0.00, Con: 1.00)
     → Got formula: P_1 (score: -0.99)
 
-[Adaptive Voting] Vote results: {'P_1': 2, 'NONE': 1}
-[Adaptive Voting] Winner: P_1 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_2', 'P_5 ⟹ P_6', '¬P_22', 'P_26 ⟹ P_30', '¬P_28']
 [DEBUG] Parsing formula: 'P_1'
   [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
       formula: P_1
       nli_confidence: -0.99
       sbert_confidence: 0.55
-      voting: TRIGGERED (conf=0.67, counts={'P_1': 2, 'NONE': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
 #################### 
 FUNCTION: translate_query : A Japanese roboticist developed a humanoid capable of learning sign language.
 Multi-sentence hypothesis not detected
@@ -4613,12 +4611,12 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_10 ∧ P_13
+  Cand 0: P_10 ∧ P_13 ∧ P_21 ∧ P_23
     -> Verbal: Altamura Man's skull was intact, and Altamura Man's bones we...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_10 ∧ P_13 (score: 0.00)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_10 ∧ P_13 ∧ P_21 ∧ P_23 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_10&P_13&P_21': 2, 'P_10&P_13': 1}
+[Adaptive Voting] Vote results: {'P_10&P_13&P_21': 2, 'P_10&P_13&P_21&P_23': 1}
 [Adaptive Voting] Winner: P_10&P_13&P_21 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
 [DEBUG] Parsing formula: 'P_10 ∧ P_13 ∧ P_21'
@@ -4626,7 +4624,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
       formula: P_10 ∧ P_13 ∧ P_21
       nli_confidence: 1.00
       sbert_confidence: 0.91
-      voting: TRIGGERED (conf=0.67, counts={'P_10&P_13&P_21': 2, 'P_10&P_13': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_10&P_13&P_21': 2, 'P_10&P_13&P_21&P_23': 1})
 #################### 
 FUNCTION: translate_query : Scientists in southern Italy have known about the Altamura Man since 1993, when spelunkers found his skull in the cave.
 Multi-sentence hypothesis not detected
@@ -4709,20 +4707,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_6
+  Cand 0: P_6 ∧ P_7
     -> Verbal: Scientists in southern Italy have known about Altamura Man s...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_6 (score: 0.00)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 ∧ P_7 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_6&P_7': 2, 'P_6': 1}
-[Adaptive Voting] Winner: P_6&P_7 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_6&P_7': 3}
+[Adaptive Voting] Winner: P_6&P_7 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
 [DEBUG] Parsing formula: 'P_6 ∧ P_7'
   [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_6 ∧ P_7
       nli_confidence: 1.00
       sbert_confidence: 0.93
-      voting: TRIGGERED (conf=0.67, counts={'P_6&P_7': 2, 'P_6': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_6&P_7': 3})
 #################### 
 FUNCTION: translate_query : Analysis of calcite showed the Altamura Man's bones to be between 128,000 and 187,000 years old.
 Multi-sentence hypothesis not detected
@@ -4893,10 +4891,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3
-    -> Verbal: Researchers extracted DNA from Altamura Man...
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Researchers extracted DNA from Altam...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_3 (score: -1.00)
+    → Got formula: ¬P_3 (score: -1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -4906,15 +4904,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
     → Got formula: P_3 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_3': 3}
-[Adaptive Voting] Winner: P_3 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_3': 2, '~P_3': 1}
+[Adaptive Voting] Winner: P_3 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
 [DEBUG] Parsing formula: 'P_3'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: P_3
       nli_confidence: -1.00
       sbert_confidence: 0.86
-      voting: TRIGGERED (conf=1.00, counts={'P_3': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_3': 2, '~P_3': 1})
 #################### 
 FUNCTION: translate_query : The bones of Altamura Man were dated to be about 15,000 years old.
 Multi-sentence hypothesis not detected
@@ -5168,9 +5166,41 @@ Generating candidates via direct top-K retrieval...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  [x] hyp 8: pred=NOT MENTIONED (not_mentioned) gt=contradiction
-      formula: NONE
-      nli_confidence: 0.50
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_2
+    -> Verbal: Altamura Man made science history last month...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7919 (NLI score: 0.9998)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_6
+    -> Verbal: Scientists in southern Italy have known about Altamura Man s...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_2
+    -> Verbal: Altamura Man made science history last month...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_2 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_2': 2, 'P_6': 1}
+[Adaptive Voting] Winner: P_2 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
+[DEBUG] Parsing formula: 'P_2'
+  [x] hyp 8: pred=UNCERTAIN (uncertain) gt=contradiction
+      formula: P_2
+      nli_confidence: 1.00
+      sbert_confidence: 0.79
+      voting: TRIGGERED (conf=0.67, counts={'P_2': 2, 'P_6': 1})
 #################### 
 FUNCTION: translate_query : The Altamura Man may have had injuries from his fall into the prehistoric well.
 Multi-sentence hypothesis not detected
@@ -5329,40 +5359,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_27 ∧ P_3
+  Cand 0: P_27 ∧ P_17
     -> Verbal: Researchers removed a chip from Altamura Man's right shoulde...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5685 (NLI score: 0.9994)
+  SBERT confidence: 0.5793 (NLI score: 0.9992)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17
-    -> Verbal: Researchers rescued Altamura Man's bones from the cave...
+  Cand 0: P_27 ∧ P_17
+    -> Verbal: Researchers removed a chip from Altamura Man's right shoulde...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_17 (score: 1.00)
+    → Got formula: P_27 ∧ P_17 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17
-    -> Verbal: Researchers rescued Altamura Man's bones from the cave...
+  Cand 0: P_27 ∧ P_17
+    -> Verbal: Researchers removed a chip from Altamura Man's right shoulde...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_17 (score: 1.00)
+    → Got formula: P_27 ∧ P_17 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_27&P_3': 1, 'P_17': 2}
-[Adaptive Voting] Winner: P_17 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_27&P_17': 3}
+[Adaptive Voting] Winner: P_27&P_17 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
-[DEBUG] Parsing formula: 'P_17'
+[DEBUG] Parsing formula: 'P_27 ∧ P_17'
   [x] hyp 10: pred=FALSE (contradiction) gt=uncertain
-      formula: P_17
+      formula: P_27 ∧ P_17
       nli_confidence: 1.00
-      sbert_confidence: 0.57
-      voting: TRIGGERED (conf=0.67, counts={'P_27&P_3': 1, 'P_17': 2})
+      sbert_confidence: 0.58
+      voting: TRIGGERED (conf=1.00, counts={'P_27&P_17': 3})
 #################### 
 FUNCTION: translate_query : The cave explorers could have found other ancient remains in Lamalunga cave.
 Multi-sentence hypothesis not detected
@@ -5425,22 +5455,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_7
-    -> Verbal: Spelunkers saw Altamura Man's skull in the Lamalunga cave...
-    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
+  Cand 0: P_9
+    -> Verbal: Cave explorers told University of Bari researchers about the...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5346 (NLI score: 0.9831)
+  SBERT confidence: 0.6645 (NLI score: 0.9998)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_7
-    -> Verbal: Spelunkers saw Altamura Man's skull in the Lamalunga cave...
-    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
-    → Got formula: P_7 (score: 0.98)
+  Cand 0: P_9
+    -> Verbal: Cave explorers told University of Bari researchers about the...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_9 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -5450,15 +5480,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_9 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_7': 2, 'P_9': 1}
-[Adaptive Voting] Winner: P_7 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_9': 3}
+[Adaptive Voting] Winner: P_9 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_4 ⟹ P_3', 'P_29 ⟹ P_30', '¬P_17']
-[DEBUG] Parsing formula: 'P_7'
+[DEBUG] Parsing formula: 'P_9'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_7
-      nli_confidence: 0.98
-      sbert_confidence: 0.53
-      voting: TRIGGERED (conf=0.67, counts={'P_7': 2, 'P_9': 1})
+      formula: P_9
+      nli_confidence: 1.00
+      sbert_confidence: 0.66
+      voting: TRIGGERED (conf=1.00, counts={'P_9': 3})
 #################### 
 FUNCTION: translate_query : Altamura Man's DNA could reveal genetic traits not found in other Neanderthals.
 Multi-sentence hypothesis not detected
@@ -5840,33 +5870,9 @@ Generating candidates via direct top-K retrieval...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_9
-    -> Verbal: Cave explorers told University of Bari researchers about the...
-    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
-
-#FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.2687 (NLI score: 0.9941)
-
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
-  [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
-
-[Adaptive Voting] Vote results: {'P_9': 1, 'NONE': 2}
-[Adaptive Voting] Winner: NONE (2/3 votes)
   [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
       formula: NONE
       nli_confidence: 0.50
-      sbert_confidence: 0.27
-      voting: TRIGGERED (conf=0.67, counts={'P_9': 1, 'NONE': 2})
   Premise accuracy: 7/16 = 43.75%
   Logify: 0.00s (cached: True)
 
@@ -6031,7 +6037,7 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: (¬P_8) ⟹ P_9
+  Cand 0: ¬P_8 ⟹ P_9
     -> Verbal: if it is not the case that Someone comes back to claim the m...
     -> Score: 0.00 (Ent: 0.00, Con: 0.00)
 
@@ -6043,10 +6049,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: (¬P_8) ⟹ P_9
-    -> Verbal: if it is not the case that Someone comes back to claim the m...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: (¬P_8) ⟹ P_9 (score: 0.00)
+  Cand 0: P_17 ⟹ (¬P_8 ⟹ P_9)
+    -> Verbal: if In 2005 Congress gave the TSA the ability to use forgotte...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_17 ⟹ (¬P_8 ⟹ P_9) (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -6056,16 +6062,16 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
     -> Score: 0.00 (Ent: 0.00, Con: 0.00)
     → Got formula: ¬P_8 ⟹ P_9 (score: 0.00)
 
-[Adaptive Voting] Vote results: {'(~P_8)=>P_9': 2, '~P_8=>P_9': 1}
-[Adaptive Voting] Winner: (~P_8)=>P_9 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_8=>P_9': 2, 'P_17=>(~P_8=>P_9)': 1}
+[Adaptive Voting] Winner: ~P_8=>P_9 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
-[DEBUG] Parsing formula: '(¬P_8) ⟹ P_9'
+[DEBUG] Parsing formula: '¬P_8 ⟹ P_9'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
   [+] hyp 2: pred=TRUE (entailment) gt=entailment
-      formula: (¬P_8) ⟹ P_9
+      formula: ¬P_8 ⟹ P_9
       nli_confidence: 0.00
       sbert_confidence: 0.95
-      voting: TRIGGERED (conf=0.67, counts={'(~P_8)=>P_9': 2, '~P_8=>P_9': 1})
+      voting: TRIGGERED (conf=0.67, counts={'~P_8=>P_9': 2, 'P_17=>(~P_8=>P_9)': 1})
 #################### 
 FUNCTION: translate_query : Over the past five years, airline passengers have left behind more than $2.7 million in quarters and dimes.
 Multi-sentence hypothesis not detected
@@ -6419,12 +6425,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_1
-    -> Verbal: The TSA kept $675,000 in spare change left behind by travell...
+  Cand 0: ¬P_4
+    -> Verbal: it is not the case that The TSA collected $383,414 in spare ...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8929 (NLI score: -0.9989)
+  SBERT confidence: 0.8055 (NLI score: -0.9992)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
@@ -6444,16 +6450,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: -0.74 (Ent: 0.13, Con: 0.87)
     → Got formula: P_4 (score: -0.74)
 
-[Adaptive Voting] Vote results: {'P_1': 2, 'P_4': 1}
-[Adaptive Voting] Winner: P_1 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_4': 1, 'P_1': 1, 'P_4': 1}
+[Adaptive Voting] Winner: ~P_4 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
-[DEBUG] Parsing formula: 'P_1'
-[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
-  [x] hyp 6: pred=TRUE (entailment) gt=contradiction
-      formula: P_1
+[DEBUG] Parsing formula: '¬P_4'
+  [+] hyp 6: pred=FALSE (contradiction) gt=contradiction
+      formula: ¬P_4
       nli_confidence: -1.00
-      sbert_confidence: 0.89
-      voting: TRIGGERED (conf=0.67, counts={'P_1': 2, 'P_4': 1})
+      sbert_confidence: 0.81
+      voting: TRIGGERED (conf=0.33, counts={'~P_4': 1, 'P_1': 1, 'P_4': 1})
 #################### 
 FUNCTION: translate_query : According to federal law, the TSA is not allowed to keep unclaimed money left at airport checkpoints.
 Multi-sentence hypothesis not detected
@@ -6721,29 +6726,29 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_1
+  Cand 0: P_1 ∧ P_21
     -> Verbal: The TSA kept $675,000 in spare change left behind by travell...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_1 (score: 1.00)
+    → Got formula: P_1 ∧ P_21 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_1
-    -> Verbal: The TSA kept $675,000 in spare change left behind by travell...
+  Cand 0: P_4
+    -> Verbal: The TSA collected $383,414 in spare change in 2008...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_1 (score: 1.00)
+    → Got formula: P_4 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_4': 1, 'P_1': 2}
-[Adaptive Voting] Winner: P_1 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_4': 2, 'P_1&P_21': 1}
+[Adaptive Voting] Winner: P_4 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
-[DEBUG] Parsing formula: 'P_1'
+[DEBUG] Parsing formula: 'P_4'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
   [x] hyp 9: pred=TRUE (entailment) gt=uncertain
-      formula: P_1
+      formula: P_4
       nli_confidence: 1.00
       sbert_confidence: 0.68
-      voting: TRIGGERED (conf=0.67, counts={'P_4': 1, 'P_1': 2})
+      voting: TRIGGERED (conf=0.67, counts={'P_4': 2, 'P_1&P_21': 1})
 #################### 
 FUNCTION: translate_query : The TSA used part of the unclaimed money to upgrade security equipment at airports.
 Multi-sentence hypothesis not detected
@@ -6806,41 +6811,41 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_11
-    -> Verbal: The TSA is free to spend the money on improving civil aviati...
+  Cand 0: P_17
+    -> Verbal: In 2005 Congress gave the TSA the ability to use forgotten m...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6594 (NLI score: 0.9990)
+  SBERT confidence: 0.6859 (NLI score: 0.9999)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17 ∧ P_11
+  Cand 0: P_17
     -> Verbal: In 2005 Congress gave the TSA the ability to use forgotten m...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_17 ∧ P_11 (score: 1.00)
+    → Got formula: P_17 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17 ∧ P_11
-    -> Verbal: In 2005 Congress gave the TSA the ability to use forgotten m...
+  Cand 0: P_11
+    -> Verbal: The TSA is free to spend the money on improving civil aviati...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_17 ∧ P_11 (score: 1.00)
+    → Got formula: P_11 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_11': 1, 'P_17&P_11': 2}
-[Adaptive Voting] Winner: P_17&P_11 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_17': 2, 'P_11': 1}
+[Adaptive Voting] Winner: P_17 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
-[DEBUG] Parsing formula: 'P_17 ∧ P_11'
+[DEBUG] Parsing formula: 'P_17'
 [DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
   [x] hyp 10: pred=TRUE (entailment) gt=uncertain
-      formula: P_17 ∧ P_11
+      formula: P_17
       nli_confidence: 1.00
-      sbert_confidence: 0.66
-      voting: TRIGGERED (conf=0.67, counts={'P_11': 1, 'P_17&P_11': 2})
+      sbert_confidence: 0.69
+      voting: TRIGGERED (conf=0.67, counts={'P_17': 2, 'P_11': 1})
 #################### 
 FUNCTION: translate_query : Passengers who left behind spare change at airport security were notified by mail.
 Multi-sentence hypothesis not detected
@@ -6923,20 +6928,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_13 ∧ P_12
-    -> Verbal: Loose change is left behind at the checkpoint, and The TSA m...
+  Cand 0: P_12
+    -> Verbal: The TSA makes every effort to reunite passengers with items ...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_13 ∧ P_12 (score: 1.00)
+    → Got formula: P_12 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_12': 2, 'P_13&P_12': 1}
-[Adaptive Voting] Winner: P_12 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_12': 3}
+[Adaptive Voting] Winner: P_12 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
 [DEBUG] Parsing formula: 'P_12'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_12
       nli_confidence: 1.00
       sbert_confidence: 0.41
-      voting: TRIGGERED (conf=0.67, counts={'P_12': 2, 'P_13&P_12': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_12': 3})
 #################### 
 FUNCTION: translate_query : The amount of spare change collected by the TSA at Los Angeles International Airport increased last year.
 Multi-sentence hypothesis not detected
@@ -6999,12 +7004,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_3
-    -> Verbal: The funds collected by the TSA increase every year...
+  Cand 0: P_1
+    -> Verbal: The TSA kept $675,000 in spare change left behind by travell...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7023 (NLI score: 0.9998)
+  SBERT confidence: 0.7090 (NLI score: 0.9999)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
@@ -7019,20 +7024,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3 ∧ P_1
-    -> Verbal: The funds collected by the TSA increase every year, and The ...
+  Cand 0: P_3
+    -> Verbal: The funds collected by the TSA increase every year...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_3 ∧ P_1 (score: 1.00)
+    → Got formula: P_3 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_3': 2, 'P_3&P_1': 1}
+[Adaptive Voting] Vote results: {'P_1': 1, 'P_3': 2}
 [Adaptive Voting] Winner: P_3 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
 [DEBUG] Parsing formula: 'P_3'
   [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_3
       nli_confidence: 1.00
-      sbert_confidence: 0.70
-      voting: TRIGGERED (conf=0.67, counts={'P_3': 2, 'P_3&P_1': 1})
+      sbert_confidence: 0.71
+      voting: TRIGGERED (conf=0.67, counts={'P_1': 1, 'P_3': 2})
 #################### 
 FUNCTION: translate_query : Chicago O'Hare airport donated $50,000 in unclaimed baggage fees to a local children's hospital in 2022.
 Multi-sentence hypothesis not detected
@@ -7203,7 +7208,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.97
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
+  Cand 0: P_12
+    -> Verbal: The TSA makes every effort to reunite passengers with items ...
+    -> Score: -0.97 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_12 (score: -0.97)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -7213,15 +7221,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.97
     -> Score: -0.97 (Ent: 0.01, Con: 0.99)
     → Got formula: P_12 (score: -0.97)
 
-[Adaptive Voting] Vote results: {'P_12': 2, 'NONE': 1}
-[Adaptive Voting] Winner: P_12 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_12': 3}
+[Adaptive Voting] Winner: P_12 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_4', 'P_5', 'P_6', 'P_7', 'P_5 ⟹ P_1', 'P_5 ⟹ P_4', '¬P_8 ⟹ P_9', '¬P_8 ⟹ P_10', 'P_9 ⟹ P_11', 'P_15', 'P_16', 'P_17', 'P_1 ⟹ P_9', 'P_9', 'P_9 ⟹ P_9']
 [DEBUG] Parsing formula: 'P_12'
   [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
       formula: P_12
       nli_confidence: -0.97
       sbert_confidence: 0.38
-      voting: TRIGGERED (conf=0.67, counts={'P_12': 2, 'NONE': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_12': 3})
 #################### 
 FUNCTION: translate_query : Netflix renewed its adaptation of 'Dune' for a third season.
 Multi-sentence hypothesis not detected
@@ -7350,7 +7358,7 @@ Generating candidates via direct top-K retrieval...
   [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
       formula: NONE
       nli_confidence: 0.50
-  Premise accuracy: 9/16 = 56.25%
+  Premise accuracy: 10/16 = 62.50%
   Logify: 0.00s (cached: True)
 
 [6/10] Premise 5: 409 words, 16 hypotheses
@@ -7437,20 +7445,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.06
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_39 ∧ P_2 ∧ P_3 ∧ P_36
+  Cand 0: P_39 ∧ P_2 ∧ P_3
     -> Verbal: Grigor Dimitrov defeated Stan Wawrinka, and Grigor Dimitrov ...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_39 ∧ P_2 ∧ P_3 ∧ P_36 (score: 1.00)
+    -> Score: 0.06 (Ent: 0.06, Con: 0.00)
+    → Got formula: P_39 ∧ P_2 ∧ P_3 (score: 0.06)
 
-[Adaptive Voting] Vote results: {'P_39&P_2&P_3': 2, 'P_39&P_2&P_3&P_36': 1}
-[Adaptive Voting] Winner: P_39&P_2&P_3 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_39&P_2&P_3': 3}
+[Adaptive Voting] Winner: P_39&P_2&P_3 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
 [DEBUG] Parsing formula: 'P_39 ∧ P_2 ∧ P_3'
   [x] hyp 1: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_39 ∧ P_2 ∧ P_3
       nli_confidence: 0.06
       sbert_confidence: 0.95
-      voting: TRIGGERED (conf=0.67, counts={'P_39&P_2&P_3': 2, 'P_39&P_2&P_3&P_36': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_39&P_2&P_3': 3})
 #################### 
 FUNCTION: translate_query : Stan Wawrinka, the defending Monte Carlo Masters champion, lost to Grigor Dimitrov in straight sets.
 Multi-sentence hypothesis not detected
@@ -7629,20 +7637,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_8 ∧ P_9
+  Cand 0: P_8 ∧ P_9 ∧ P_24
     -> Verbal: Stan Wawrinka made four unforced errors in a row, and Stan W...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_8 ∧ P_9 (score: 0.00)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_8 ∧ P_9 ∧ P_24 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_8&P_9': 3}
-[Adaptive Voting] Winner: P_8&P_9 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_8&P_9': 2, 'P_8&P_9&P_24': 1}
+[Adaptive Voting] Winner: P_8&P_9 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
 [DEBUG] Parsing formula: 'P_8 ∧ P_9'
   [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_8 ∧ P_9
       nli_confidence: 0.00
       sbert_confidence: 0.80
-      voting: TRIGGERED (conf=1.00, counts={'P_8&P_9': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_8&P_9': 2, 'P_8&P_9&P_24': 1})
 #################### 
 FUNCTION: translate_query : Magnus Norman, Wawrinka's coach, was not present in Monte Carlo during the match and watched from home.
 Multi-sentence hypothesis not detected
@@ -7801,14 +7809,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_39
-    -> Verbal: Grigor Dimitrov defeated Stan Wawrinka...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+  Cand 0: ¬P_39
+    -> Verbal: it is not the case that Grigor Dimitrov defeated Stan Wawrin...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5500 (NLI score: -0.9998)
+  SBERT confidence: 0.4743 (NLI score: 0.0076)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -7821,20 +7829,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_39
-    -> Verbal: it is not the case that Grigor Dimitrov defeated Stan Wawrin...
-    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
-    → Got formula: ¬P_39 (score: 0.01)
+  Cand 0: P_39
+    -> Verbal: Grigor Dimitrov defeated Stan Wawrinka...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_39 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_39': 1, '~P_39': 2}
+[Adaptive Voting] Vote results: {'~P_39': 2, 'P_39': 1}
 [Adaptive Voting] Winner: ~P_39 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
 [DEBUG] Parsing formula: '¬P_39'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: ¬P_39
       nli_confidence: 0.01
-      sbert_confidence: 0.55
-      voting: TRIGGERED (conf=0.67, counts={'P_39': 1, '~P_39': 2})
+      sbert_confidence: 0.47
+      voting: TRIGGERED (conf=0.67, counts={'~P_39': 2, 'P_39': 1})
 #################### 
 FUNCTION: translate_query : Stan Wawrinka won the match against Grigor Dimitrov 6-2, 6-1.
 Multi-sentence hypothesis not detected
@@ -7909,20 +7917,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.24
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_2
-    -> Verbal: it is not the case that Grigor Dimitrov won the match 6-1, 6...
-    -> Score: -0.27 (Ent: 0.06, Con: 0.34)
-    → Got formula: ¬P_2 (score: -0.27)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
   Cand 0: ¬P_39
     -> Verbal: it is not the case that Grigor Dimitrov defeated Stan Wawrin...
     -> Score: -0.24 (Ent: 0.01, Con: 0.25)
     → Got formula: ¬P_39 (score: -0.24)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'~P_39': 2, '~P_2': 1}
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_39 ∧ ¬P_2
+    -> Verbal: it is not the case that Grigor Dimitrov defeated Stan Wawrin...
+    -> Score: 0.74 (Ent: 0.85, Con: 0.11)
+    → Got formula: ¬P_39 ∧ ¬P_2 (score: 0.74)
+
+[Adaptive Voting] Vote results: {'~P_39': 2, '~P_39&~P_2': 1}
 [Adaptive Voting] Winner: ~P_39 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
 [DEBUG] Parsing formula: '¬P_39'
@@ -7930,7 +7938,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.24
       formula: ¬P_39
       nli_confidence: -0.24
       sbert_confidence: 0.76
-      voting: TRIGGERED (conf=0.67, counts={'~P_39': 2, '~P_2': 1})
+      voting: TRIGGERED (conf=0.67, counts={'~P_39': 2, '~P_39&~P_2': 1})
 #################### 
 FUNCTION: translate_query : Wawrinka appeared energetic and focused throughout the match, making only a few unforced errors.
 Multi-sentence hypothesis not detected
@@ -7993,22 +8001,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_23
-    -> Verbal: Stan Wawrinka was at his finest in the match...
-    -> Score: 0.96 (Ent: 0.96, Con: 0.00)
+  Cand 0: P_23 ∧ ¬P_19
+    -> Verbal: Stan Wawrinka was at his finest in the match, and it is not ...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5842 (NLI score: 0.9600)
+  SBERT confidence: 0.7441 (NLI score: 0.0107)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.96
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_23
-    -> Verbal: Stan Wawrinka was at his finest in the match...
-    -> Score: 0.96 (Ent: 0.96, Con: 0.00)
-    → Got formula: P_23 (score: 0.96)
+  Cand 0: P_23 ∧ P_8
+    -> Verbal: Stan Wawrinka was at his finest in the match, and Stan Wawri...
+    -> Score: -0.97 (Ent: 0.02, Con: 0.98)
+    → Got formula: P_23 ∧ P_8 (score: -0.97)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -8018,15 +8026,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.96
     -> Score: 0.96 (Ent: 0.96, Con: 0.00)
     → Got formula: P_23 (score: 0.96)
 
-[Adaptive Voting] Vote results: {'P_23': 3}
-[Adaptive Voting] Winner: P_23 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_23&~P_19': 1, 'P_23&P_8': 1, 'P_23': 1}
+[Adaptive Voting] Winner: P_23&~P_19 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
-[DEBUG] Parsing formula: 'P_23'
+[DEBUG] Parsing formula: 'P_23 ∧ ¬P_19'
   [+] hyp 7: pred=FALSE (contradiction) gt=contradiction
-      formula: P_23
-      nli_confidence: 0.96
-      sbert_confidence: 0.58
-      voting: TRIGGERED (conf=1.00, counts={'P_23': 3})
+      formula: P_23 ∧ ¬P_19
+      nli_confidence: 0.01
+      sbert_confidence: 0.74
+      voting: TRIGGERED (conf=0.33, counts={'P_23&~P_19': 1, 'P_23&P_8': 1, 'P_23': 1})
 #################### 
 FUNCTION: translate_query : Magnus Norman was sitting courtside in Monte Carlo coaching Wawrinka during the match.
 Multi-sentence hypothesis not detected
@@ -8377,23 +8385,15 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_31
-    -> Verbal: The crowd were treated to an abject performance from Stan Wa...
-    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+  Cand 0: P_8 ∧ P_31
+    -> Verbal: Stan Wawrinka made four unforced errors in a row, and The cr...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5914 (NLI score: 0.9946)
+  SBERT confidence: 0.6842 (NLI score: 0.9998)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_19 ∧ P_31
-    -> Verbal: Stan Wawrinka made 41 unforced errors in the match, and The ...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_19 ∧ P_31 (score: 1.00)
-  [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
@@ -8401,16 +8401,24 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
     -> Verbal: Stan Wawrinka made four unforced errors in a row, and The cr...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_8 ∧ P_31 (score: 1.00)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'P_31': 1, 'P_19&P_31': 1, 'P_8&P_31': 1}
-[Adaptive Voting] Winner: P_31 (1/3 votes)
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_31
+    -> Verbal: The crowd were treated to an abject performance from Stan Wa...
+    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_31 (score: 0.99)
+
+[Adaptive Voting] Vote results: {'P_8&P_31': 2, 'P_31': 1}
+[Adaptive Voting] Winner: P_8&P_31 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
-[DEBUG] Parsing formula: 'P_31'
+[DEBUG] Parsing formula: 'P_8 ∧ P_31'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_31
-      nli_confidence: 0.99
-      sbert_confidence: 0.59
-      voting: TRIGGERED (conf=0.33, counts={'P_31': 1, 'P_19&P_31': 1, 'P_8&P_31': 1})
+      formula: P_8 ∧ P_31
+      nli_confidence: 1.00
+      sbert_confidence: 0.68
+      voting: TRIGGERED (conf=0.67, counts={'P_8&P_31': 2, 'P_31': 1})
 #################### 
 FUNCTION: translate_query : Dimitrov possibly celebrated his victory with his team immediately after the match.
 Multi-sentence hypothesis not detected
@@ -8473,14 +8481,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_39
-    -> Verbal: Grigor Dimitrov defeated Stan Wawrinka...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+  Cand 0: P_39 ∧ P_37
+    -> Verbal: Grigor Dimitrov defeated Stan Wawrinka, and Grigor Dimitrov ...
+    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4882 (NLI score: 0.9997)
+  SBERT confidence: 0.4975 (NLI score: -0.9873)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -8498,15 +8506,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_2 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_39': 1, 'P_2': 2}
+[Adaptive Voting] Vote results: {'P_39&P_37': 1, 'P_2': 2}
 [Adaptive Voting] Winner: P_2 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
 [DEBUG] Parsing formula: 'P_2'
   [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_2
       nli_confidence: 1.00
-      sbert_confidence: 0.49
-      voting: TRIGGERED (conf=0.67, counts={'P_39': 1, 'P_2': 2})
+      sbert_confidence: 0.50
+      voting: TRIGGERED (conf=0.67, counts={'P_39&P_37': 1, 'P_2': 2})
 #################### 
 FUNCTION: translate_query : Kei Nishikori advanced to the Rome Masters quarter-final after defeating Marin Cilic in straight sets.
 Multi-sentence hypothesis not detected
@@ -8569,12 +8577,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_29
-    -> Verbal: Grigor Dimitrov reached the last eight...
+  Cand 0: P_3
+    -> Verbal: Grigor Dimitrov reached his first Masters quarter-final of t...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.3527 (NLI score: -0.9994)
+  SBERT confidence: 0.4508 (NLI score: -0.9993)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
@@ -8589,20 +8597,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_29
-    -> Verbal: Grigor Dimitrov reached the last eight...
+  Cand 0: P_3
+    -> Verbal: Grigor Dimitrov reached his first Masters quarter-final of t...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_29 (score: -1.00)
+    → Got formula: P_3 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_29': 2, 'P_3': 1}
-[Adaptive Voting] Winner: P_29 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_3': 3}
+[Adaptive Voting] Winner: P_3 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_39', 'P_39 ⟹ P_3', '¬P_16', '¬P_21', '¬P_23', '¬P_24', 'P_33 ⟹ P_32', 'P_2 ⟹ P_36', 'P_30', 'P_30 ⟹ P_30', '¬P_32']
-[DEBUG] Parsing formula: 'P_29'
+[DEBUG] Parsing formula: 'P_3'
   [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
-      formula: P_29
+      formula: P_3
       nli_confidence: -1.00
-      sbert_confidence: 0.35
-      voting: TRIGGERED (conf=0.67, counts={'P_29': 2, 'P_3': 1})
+      sbert_confidence: 0.45
+      voting: TRIGGERED (conf=1.00, counts={'P_3': 3})
 #################### 
 FUNCTION: translate_query : In the same tournament, Novak Djokovic withdrew before his scheduled match due to an elbow injury.
 Multi-sentence hypothesis not detected
@@ -9246,22 +9254,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_3 ∧ P_4
-    -> Verbal: Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors, and P...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Pablo Osvaldo urged Andrea Pirlo to ...
+    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8205 (NLI score: -0.9998)
+  SBERT confidence: 0.7606 (NLI score: -0.9865)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3 ∨ P_4
-    -> Verbal: Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors, or Pa...
+  Cand 0: P_3 ∧ P_4
+    -> Verbal: Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors, and P...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_3 ∨ P_4 (score: -1.00)
+    → Got formula: P_3 ∧ P_4 (score: -1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -9271,15 +9279,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
     → Got formula: P_3 ∧ P_4 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_3&P_4': 2, 'P_3|P_4': 1}
+[Adaptive Voting] Vote results: {'~P_3': 1, 'P_3&P_4': 2}
 [Adaptive Voting] Winner: P_3&P_4 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
 [DEBUG] Parsing formula: 'P_3 ∧ P_4'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: P_3 ∧ P_4
       nli_confidence: -1.00
-      sbert_confidence: 0.82
-      voting: TRIGGERED (conf=0.67, counts={'P_3&P_4': 2, 'P_3|P_4': 1})
+      sbert_confidence: 0.76
+      voting: TRIGGERED (conf=0.67, counts={'~P_3': 1, 'P_3&P_4': 2})
 #################### 
 FUNCTION: translate_query : Osvaldo moved to Boca Juniors on a permanent deal from Southampton and scored five goals in ten games.
 Multi-sentence hypothesis not detected
@@ -9342,40 +9350,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_6 ∧ P_7
+  Cand 0: ¬P_6 ∧ P_5 ∧ ¬P_7
     -> Verbal: it is not the case that Pablo Osvaldo joined Boca Juniors on...
-    -> Score: -0.95 (Ent: 0.01, Con: 0.96)
+    -> Score: 0.80 (Ent: 0.89, Con: 0.09)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7880 (NLI score: -0.9519)
+  SBERT confidence: 0.7834 (NLI score: 0.7991)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.95
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.80
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_6 ∧ P_5 ∧ P_7
+  Cand 0: ¬P_6 ∧ P_7
     -> Verbal: it is not the case that Pablo Osvaldo joined Boca Juniors on...
-    -> Score: -0.99 (Ent: 0.00, Con: 0.99)
-    → Got formula: ¬P_6 ∧ P_5 ∧ P_7 (score: -0.99)
+    -> Score: -0.95 (Ent: 0.01, Con: 0.96)
+    → Got formula: ¬P_6 ∧ P_7 (score: -0.95)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: (¬P_6) ∧ P_7
-    -> Verbal: it is not the case that Pablo Osvaldo joined Boca Juniors on...
-    -> Score: -0.95 (Ent: 0.01, Con: 0.96)
-    → Got formula: (¬P_6) ∧ P_7 (score: -0.95)
+  Cand 0: P_6 ∧ P_5 ∧ P_7
+    -> Verbal: Pablo Osvaldo joined Boca Juniors on loan from Southampton, ...
+    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_6 ∧ P_5 ∧ P_7 (score: -0.99)
 
-[Adaptive Voting] Vote results: {'~P_6&P_7': 1, '~P_6&P_5&P_7': 1, '(~P_6)&P_7': 1}
-[Adaptive Voting] Winner: ~P_6&P_7 (1/3 votes)
+[Adaptive Voting] Vote results: {'~P_6&P_5&~P_7': 1, '~P_6&P_7': 1, 'P_6&P_5&P_7': 1}
+[Adaptive Voting] Winner: ~P_6&P_5&~P_7 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
-[DEBUG] Parsing formula: '¬P_6 ∧ P_7'
+[DEBUG] Parsing formula: '¬P_6 ∧ P_5 ∧ ¬P_7'
   [x] hyp 6: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: ¬P_6 ∧ P_7
-      nli_confidence: -0.95
-      sbert_confidence: 0.79
-      voting: TRIGGERED (conf=0.33, counts={'~P_6&P_7': 1, '~P_6&P_5&P_7': 1, '(~P_6)&P_7': 1})
+      formula: ¬P_6 ∧ P_5 ∧ ¬P_7
+      nli_confidence: 0.80
+      sbert_confidence: 0.78
+      voting: TRIGGERED (conf=0.33, counts={'~P_6&P_5&~P_7': 1, '~P_6&P_7': 1, 'P_6&P_5&P_7': 1})
 #################### 
 FUNCTION: translate_query : Pablo Osvaldo said that Pirlo and Totti would not be a good fit for Boca Juniors.
 Multi-sentence hypothesis not detected
@@ -9546,10 +9554,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.80
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_5
-    -> Verbal: it is not the case that Pablo Osvaldo plays for Boca Juniors...
-    -> Score: -0.69 (Ent: 0.15, Con: 0.84)
-    → Got formula: ¬P_5 (score: -0.69)
+  Cand 0: ¬P_29
+    -> Verbal: it is not the case that Andrea Pirlo joins Boca Juniors...
+    -> Score: 0.80 (Ent: 0.83, Con: 0.04)
+    → Got formula: ¬P_29 (score: 0.80)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -9559,15 +9567,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.80
     -> Score: -0.69 (Ent: 0.15, Con: 0.84)
     → Got formula: ¬P_5 (score: -0.69)
 
-[Adaptive Voting] Vote results: {'~P_29': 1, '~P_5': 2}
-[Adaptive Voting] Winner: ~P_5 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_29': 2, '~P_5': 1}
+[Adaptive Voting] Winner: ~P_29 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
-[DEBUG] Parsing formula: '¬P_5'
+[DEBUG] Parsing formula: '¬P_29'
   [x] hyp 8: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: ¬P_5
-      nli_confidence: -0.69
+      formula: ¬P_29
+      nli_confidence: 0.80
       sbert_confidence: 0.68
-      voting: TRIGGERED (conf=0.67, counts={'~P_29': 1, '~P_5': 2})
+      voting: TRIGGERED (conf=0.67, counts={'~P_29': 2, '~P_5': 1})
 #################### 
 FUNCTION: translate_query : Pablo Osvaldo may have contacted Pirlo and Totti personally to discuss a move to Boca Juniors.
 Multi-sentence hypothesis not detected
@@ -9650,20 +9658,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3 ∧ P_4
-    -> Verbal: Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors, and P...
-    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_3 ∧ P_4 (score: 0.99)
+  Cand 0: P_13 ∧ P_14
+    -> Verbal: Pablo Osvaldo said he wants Andrea Pirlo to join him at Boca...
+    -> Score: -0.67 (Ent: 0.16, Con: 0.83)
+    → Got formula: P_13 ∧ P_14 (score: -0.67)
 
-[Adaptive Voting] Vote results: {'P_3&P_4': 3}
-[Adaptive Voting] Winner: P_3&P_4 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_3&P_4': 2, 'P_13&P_14': 1}
+[Adaptive Voting] Winner: P_3&P_4 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
 [DEBUG] Parsing formula: 'P_3 ∧ P_4'
   [+] hyp 9: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_3 ∧ P_4
       nli_confidence: 0.99
       sbert_confidence: 0.86
-      voting: TRIGGERED (conf=1.00, counts={'P_3&P_4': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_3&P_4': 2, 'P_13&P_14': 1})
 #################### 
 FUNCTION: translate_query : Andrea Pirlo could be considering an offer from Boca Juniors after Osvaldo's comments.
 Multi-sentence hypothesis not detected
@@ -9726,40 +9734,39 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_3 ⟹ P_29
-    -> Verbal: if Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors, th...
+  Cand 0: P_13
+    -> Verbal: Pablo Osvaldo said he wants Andrea Pirlo to join him at Boca...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8459 (NLI score: 0.9973)
+  SBERT confidence: 0.8492 (NLI score: 0.9984)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_13
-    -> Verbal: Pablo Osvaldo said he wants Andrea Pirlo to join him at Boca...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_13 (score: 1.00)
+  Warning: LLM generation failed or returned invalid JSON: 'NoneType' object is not subscriptable
+  [LLM ERROR] Generation failed: TypeError: 'NoneType' object is not subscriptable
+    → LLM abstained (NONE)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_13
+  Cand 0: P_13 ∧ P_9
     -> Verbal: Pablo Osvaldo said he wants Andrea Pirlo to join him at Boca...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_13 (score: 1.00)
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: P_13 ∧ P_9 (score: 0.99)
 
-[Adaptive Voting] Vote results: {'P_3=>P_29': 1, 'P_13': 2}
-[Adaptive Voting] Winner: P_13 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_13': 1, 'NONE': 1, 'P_13&P_9': 1}
+[Adaptive Voting] Winner: P_13 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
 [DEBUG] Parsing formula: 'P_13'
   [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_13
       nli_confidence: 1.00
       sbert_confidence: 0.85
-      voting: TRIGGERED (conf=0.67, counts={'P_3=>P_29': 1, 'P_13': 2})
+      voting: TRIGGERED (conf=0.33, counts={'P_13': 1, 'NONE': 1, 'P_13&P_9': 1})
 #################### 
 FUNCTION: translate_query : Francesco Totti might have visited La Bombonera before making a decision about his future.
 Multi-sentence hypothesis not detected
@@ -9822,14 +9829,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_34 ∧ P_27
-    -> Verbal: Francesco Totti plays at La Bombonera, and Francesco Totti m...
-    -> Score: -0.96 (Ent: 0.02, Con: 0.98)
+  Cand 0: P_34 ⟹ P_27
+    -> Verbal: if Francesco Totti plays at La Bombonera, then Francesco Tot...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7246 (NLI score: -0.9612)
+  SBERT confidence: 0.7544 (NLI score: 0.9975)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.96
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -9842,20 +9849,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.96
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_34 ⟹ P_27
-    -> Verbal: if Francesco Totti plays at La Bombonera, then Francesco Tot...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_34 ⟹ P_27 (score: 1.00)
+  Cand 0: P_34
+    -> Verbal: Francesco Totti plays at La Bombonera...
+    -> Score: -0.50 (Ent: 0.25, Con: 0.75)
+    → Got formula: P_34 (score: -0.50)
 
-[Adaptive Voting] Vote results: {'P_34&P_27': 1, 'P_34': 1, 'P_34=>P_27': 1}
-[Adaptive Voting] Winner: P_34&P_27 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_34=>P_27': 1, 'P_34': 2}
+[Adaptive Voting] Winner: P_34 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: []
-[DEBUG] Parsing formula: 'P_34 ∧ P_27'
+[DEBUG] Parsing formula: 'P_34'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_34 ∧ P_27
-      nli_confidence: -0.96
-      sbert_confidence: 0.72
-      voting: TRIGGERED (conf=0.33, counts={'P_34&P_27': 1, 'P_34': 1, 'P_34=>P_27': 1})
+      formula: P_34
+      nli_confidence: -0.50
+      sbert_confidence: 0.75
+      voting: TRIGGERED (conf=0.67, counts={'P_34=>P_27': 1, 'P_34': 2})
 #################### 
 FUNCTION: translate_query : Osvaldo could have played with Pirlo and Totti at a club other than Boca Juniors.
 Multi-sentence hypothesis not detected
@@ -10013,38 +10020,9 @@ Generating candidates via direct top-K retrieval...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_27
-    -> Verbal: Francesco Totti moves to Argentina...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-
-#FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.2900 (NLI score: -0.9999)
-
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
-  [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3
-    -> Verbal: Pablo Osvaldo urged Andrea Pirlo to join Boca Juniors...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_3 (score: -1.00)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
-
-[Adaptive Voting] Vote results: {'P_27': 1, 'P_3': 1, 'NONE': 1}
-[Adaptive Voting] Winner: P_27 (1/3 votes)
-[DEBUG] Hard constraints passed to encoder: []
-[DEBUG] Parsing formula: 'P_27'
-  [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
-      formula: P_27
-      nli_confidence: -1.00
-      sbert_confidence: 0.29
-      voting: TRIGGERED (conf=0.33, counts={'P_27': 1, 'P_3': 1, 'NONE': 1})
+  [+] hyp 13: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
 #################### 
 FUNCTION: translate_query : Juventus announced a tribute match for Alessandro Del Piero at the Allianz Stadium in Turin.
 Multi-sentence hypothesis not detected
@@ -10106,9 +10084,38 @@ Generating candidates via direct top-K retrieval...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  [+] hyp 14: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
-      formula: NONE
-      nli_confidence: 0.50
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_39
+    -> Verbal: Andrea Pirlo is an Italian legend...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.4842 (NLI score: 0.9969)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_39
+    -> Verbal: Andrea Pirlo is an Italian legend...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_39 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+    → LLM abstained (NONE)
+
+[Adaptive Voting] Vote results: {'P_39': 2, 'NONE': 1}
+[Adaptive Voting] Winner: P_39 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: []
+[DEBUG] Parsing formula: 'P_39'
+  [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
+      formula: P_39
+      nli_confidence: 1.00
+      sbert_confidence: 0.48
+      voting: TRIGGERED (conf=0.67, counts={'P_39': 2, 'NONE': 1})
 #################### 
 FUNCTION: translate_query : The London Metropolitan Museum displayed King Tutankhamun's complete burial chamber.
 Multi-sentence hypothesis not detected
@@ -10394,14 +10401,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_2 ⟹ (P_5 ∧ P_6)
-    -> Verbal: if A security breach occurred at Gatecoin last week, then Th...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+  Cand 0: P_5 ∧ P_6
+    -> Verbal: The loss is equivalent to 2 million dollars, and The loss is...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8610 (NLI score: 0.9994)
+  SBERT confidence: 0.8573 (NLI score: 0.0017)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -10414,20 +10421,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_5 ∧ P_6
+  Cand 0: P_5 ∧ P_6 ∧ P_2 ∧ P_15
     -> Verbal: The loss is equivalent to 2 million dollars, and The loss is...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_5 ∧ P_6 (score: 0.00)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 ∧ P_6 ∧ P_2 ∧ P_15 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_2=>(P_5&P_6)': 2, 'P_5&P_6': 1}
-[Adaptive Voting] Winner: P_2=>(P_5&P_6) (2/3 votes)
+[Adaptive Voting] Vote results: {'P_5&P_6': 1, 'P_2=>(P_5&P_6)': 1, 'P_5&P_6&P_2&P_15': 1}
+[Adaptive Voting] Winner: P_5&P_6 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
-[DEBUG] Parsing formula: 'P_2 ⟹ (P_5 ∧ P_6)'
+[DEBUG] Parsing formula: 'P_5 ∧ P_6'
   [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: P_2 ⟹ (P_5 ∧ P_6)
-      nli_confidence: 1.00
+      formula: P_5 ∧ P_6
+      nli_confidence: 0.00
       sbert_confidence: 0.86
-      voting: TRIGGERED (conf=0.67, counts={'P_2=>(P_5&P_6)': 2, 'P_5&P_6': 1})
+      voting: TRIGGERED (conf=0.33, counts={'P_5&P_6': 1, 'P_2=>(P_5&P_6)': 1, 'P_5&P_6&P_2&P_15': 1})
 #################### 
 FUNCTION: translate_query : Gatecoin suspended its services immediately after noticing suspicious transactions on Friday and began a forensic investigation with Tehtri Security.
 Multi-sentence hypothesis not detected
@@ -10490,22 +10497,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: (P_10 ⟹ P_11) ∧ P_36
+  Cand 0: (P_10 ⟹ P_11) ∧ (P_10 ⟹ P_36)
     -> Verbal: if Gatecoin noticed suspicious transactions on Friday, then ...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.7623 (NLI score: 0.9996)
+  SBERT confidence: 0.7366 (NLI score: 0.9997)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: (P_10 ⟹ P_11) ∧ P_36
+  Cand 0: (P_10 ⟹ (P_11 ∧ P_36))
     -> Verbal: if Gatecoin noticed suspicious transactions on Friday, then ...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: (P_10 ⟹ P_11) ∧ P_36 (score: 1.00)
+    → Got formula: (P_10 ⟹ (P_11 ∧ P_36)) (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -10515,15 +10522,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: (P_10 ⟹ P_11) ∧ P_36 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'(P_10=>P_11)&P_36': 3}
-[Adaptive Voting] Winner: (P_10=>P_11)&P_36 (3/3 votes)
+[Adaptive Voting] Vote results: {'(P_10=>P_11)&(P_10=>P_36)': 1, '(P_10=>(P_11&P_36))': 1, '(P_10=>P_11)&P_36': 1}
+[Adaptive Voting] Winner: (P_10=>P_11)&(P_10=>P_36) (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
-[DEBUG] Parsing formula: '(P_10 ⟹ P_11) ∧ P_36'
+[DEBUG] Parsing formula: '(P_10 ⟹ P_11) ∧ (P_10 ⟹ P_36)'
   [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: (P_10 ⟹ P_11) ∧ P_36
+      formula: (P_10 ⟹ P_11) ∧ (P_10 ⟹ P_36)
       nli_confidence: 1.00
-      sbert_confidence: 0.76
-      voting: TRIGGERED (conf=1.00, counts={'(P_10=>P_11)&P_36': 3})
+      sbert_confidence: 0.74
+      voting: TRIGGERED (conf=0.33, counts={'(P_10=>P_11)&(P_10=>P_36)': 1, '(P_10=>(P_11&P_36))': 1, '(P_10=>P_11)&P_36': 1})
 #################### 
 FUNCTION: translate_query : Gatecoin services will remain offline until May 28, when customers can access their accounts and withdraw funds using a new secure platform.
 Multi-sentence hypothesis not detected
@@ -10598,28 +10605,28 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_16 ∧ P_17 ∧ P_18 ∧ P_39
-    -> Verbal: Gatecoin services are offline, and Gatecoin services resume ...
-    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
-    → Got formula: P_16 ∧ P_17 ∧ P_18 ∧ P_39 (score: 0.98)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
   Cand 0: P_16 ∧ P_17 ∧ P_18 ∧ P_39 ∧ P_40
     -> Verbal: Gatecoin services are offline, and Gatecoin services resume ...
     -> Score: 0.98 (Ent: 0.98, Con: 0.01)
     → Got formula: P_16 ∧ P_17 ∧ P_18 ∧ P_39 ∧ P_40 (score: 0.98)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'P_16&P_17&P_18&P_39': 2, 'P_16&P_17&P_18&P_39&P_40': 1}
-[Adaptive Voting] Winner: P_16&P_17&P_18&P_39 (2/3 votes)
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: P_16 ∧ P_18 ∧ P_17 ∧ P_39
+    -> Verbal: Gatecoin services are offline, and Customers can access thei...
+    -> Score: 0.74 (Ent: 0.86, Con: 0.13)
+    → Got formula: P_16 ∧ P_18 ∧ P_17 ∧ P_39 (score: 0.74)
+
+[Adaptive Voting] Vote results: {'P_16&P_17&P_18&P_39': 1, 'P_16&P_17&P_18&P_39&P_40': 1, 'P_16&P_18&P_17&P_39': 1}
+[Adaptive Voting] Winner: P_16&P_17&P_18&P_39 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: 'P_16 ∧ P_17 ∧ P_18 ∧ P_39'
   [x] hyp 4: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_16 ∧ P_17 ∧ P_18 ∧ P_39
       nli_confidence: 0.98
       sbert_confidence: 0.87
-      voting: TRIGGERED (conf=0.67, counts={'P_16&P_17&P_18&P_39': 2, 'P_16&P_17&P_18&P_39&P_40': 1})
+      voting: TRIGGERED (conf=0.33, counts={'P_16&P_17&P_18&P_39': 1, 'P_16&P_17&P_18&P_39&P_40': 1, 'P_16&P_18&P_17&P_39': 1})
 #################### 
 FUNCTION: translate_query : CBCoin, a digital currency exchange based in Singapore, suffered a security breach last week.
 Multi-sentence hypothesis not detected
@@ -10778,22 +10785,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_2 ∧ ¬P_5 ∧ ¬P_6
-    -> Verbal: A security breach occurred at Gatecoin last week, and it is ...
+  Cand 0: P_5 ∧ P_6
+    -> Verbal: The loss is equivalent to 2 million dollars, and The loss is...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8223 (NLI score: -0.9997)
+  SBERT confidence: 0.7660 (NLI score: -0.9999)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_6
-    -> Verbal: it is not the case that The loss is 15% of the total assets ...
+  Cand 0: ¬P_5 ∧ ¬P_6
+    -> Verbal: it is not the case that The loss is equivalent to 2 million ...
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: ¬P_6 (score: -1.00)
+    → Got formula: ¬P_5 ∧ ¬P_6 (score: -1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -10803,15 +10810,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
     → Got formula: ¬P_6 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_2&~P_5&~P_6': 1, '~P_6': 2}
-[Adaptive Voting] Winner: ~P_6 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_5&P_6': 1, '~P_5&~P_6': 1, '~P_6': 1}
+[Adaptive Voting] Winner: P_5&P_6 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
-[DEBUG] Parsing formula: '¬P_6'
+[DEBUG] Parsing formula: 'P_5 ∧ P_6'
   [x] hyp 6: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: ¬P_6
+      formula: P_5 ∧ P_6
       nli_confidence: -1.00
-      sbert_confidence: 0.82
-      voting: TRIGGERED (conf=0.67, counts={'P_2&~P_5&~P_6': 1, '~P_6': 2})
+      sbert_confidence: 0.77
+      voting: TRIGGERED (conf=0.33, counts={'P_5&P_6': 1, '~P_5&~P_6': 1, '~P_6': 1})
 #################### 
 FUNCTION: translate_query : Gatecoin did not suspend its services after the breach and continued normal operations.
 Multi-sentence hypothesis not detected
@@ -10874,12 +10881,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_11 ∧ ¬P_16
-    -> Verbal: it is not the case that Gatecoin suspended services, and it ...
+  Cand 0: ¬P_11 ∧ P_17
+    -> Verbal: it is not the case that Gatecoin suspended services, and Gat...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6834 (NLI score: 0.9997)
+  SBERT confidence: 0.6899 (NLI score: 0.9999)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
@@ -10899,15 +10906,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: ¬P_11 ∧ ¬P_16 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'~P_11&~P_16': 3}
-[Adaptive Voting] Winner: ~P_11&~P_16 (3/3 votes)
+[Adaptive Voting] Vote results: {'~P_11&P_17': 1, '~P_11&~P_16': 2}
+[Adaptive Voting] Winner: ~P_11&~P_16 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: '¬P_11 ∧ ¬P_16'
   [x] hyp 7: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: ¬P_11 ∧ ¬P_16
       nli_confidence: 1.00
-      sbert_confidence: 0.68
-      voting: TRIGGERED (conf=1.00, counts={'~P_11&~P_16': 3})
+      sbert_confidence: 0.69
+      voting: TRIGGERED (conf=0.67, counts={'~P_11&P_17': 1, '~P_11&~P_16': 2})
 #################### 
 FUNCTION: translate_query : The forensic investigation of the breach was conducted by American cybersecurity firm FireEye, not Tehtri Security.
 Multi-sentence hypothesis not detected
@@ -11066,12 +11073,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_8 ∧ P_11
-    -> Verbal: Gatecoin had a service disruption last Monday, and Gatecoin ...
+  Cand 0: P_8
+    -> Verbal: Gatecoin had a service disruption last Monday...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6968 (NLI score: 0.9997)
+  SBERT confidence: 0.5957 (NLI score: 0.9999)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
@@ -11086,20 +11093,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_8
-    -> Verbal: Gatecoin had a service disruption last Monday...
+  Cand 0: P_8 ∧ P_11
+    -> Verbal: Gatecoin had a service disruption last Monday, and Gatecoin ...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_8 (score: 1.00)
+    → Got formula: P_8 ∧ P_11 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_8&P_11': 1, 'P_8': 2}
+[Adaptive Voting] Vote results: {'P_8': 2, 'P_8&P_11': 1}
 [Adaptive Voting] Winner: P_8 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: 'P_8'
   [+] hyp 9: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_8
       nli_confidence: 1.00
-      sbert_confidence: 0.70
-      voting: TRIGGERED (conf=0.67, counts={'P_8&P_11': 1, 'P_8': 2})
+      sbert_confidence: 0.60
+      voting: TRIGGERED (conf=0.67, counts={'P_8': 2, 'P_8&P_11': 1})
 #################### 
 FUNCTION: translate_query : The hacker responsible for the breach could have used multiple wallet addresses to transfer the stolen funds.
 Multi-sentence hypothesis not detected
@@ -11174,10 +11181,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_37 ∧ P_29
+  Cand 0: P_37
     -> Verbal: Gatecoin posted the wallet addresses used by the hackers on ...
-    -> Score: -0.92 (Ent: 0.04, Con: 0.96)
-    → Got formula: P_37 ∧ P_29 (score: -0.92)
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_37 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -11187,15 +11194,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_37 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_37': 2, 'P_37&P_29': 1}
-[Adaptive Voting] Winner: P_37 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_37': 3}
+[Adaptive Voting] Winner: P_37 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: 'P_37'
   [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_37
       nli_confidence: 1.00
       sbert_confidence: 0.58
-      voting: TRIGGERED (conf=0.67, counts={'P_37': 2, 'P_37&P_29': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_37': 3})
 #################### 
 FUNCTION: translate_query : Some of the stolen etherium might have been converted to other digital currencies after the breach.
 Multi-sentence hypothesis not detected
@@ -11258,14 +11265,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_4 ∧ P_29
-    -> Verbal: Gatecoin lost 185,000 etherium, and Funds were transmitted d...
-    -> Score: 0.97 (Ent: 0.99, Con: 0.01)
+  Cand 0: P_4
+    -> Verbal: Gatecoin lost 185,000 etherium...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4533 (NLI score: 0.9735)
+  SBERT confidence: 0.4679 (NLI score: 0.9998)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.97
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -11283,15 +11290,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.97
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_4 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_4&P_29': 1, 'P_4': 2}
-[Adaptive Voting] Winner: P_4 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: 'P_4'
   [+] hyp 11: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_4
       nli_confidence: 1.00
-      sbert_confidence: 0.45
-      voting: TRIGGERED (conf=0.67, counts={'P_4&P_29': 1, 'P_4': 2})
+      sbert_confidence: 0.47
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
 #################### 
 FUNCTION: translate_query : Gatecoin may implement additional security measures beyond the new withdrawal platform before resuming services.
 Multi-sentence hypothesis not detected
@@ -11354,40 +11361,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_24
-    -> Verbal: Gatecoin touted the use of segregated accounts...
-    -> Score: -0.93 (Ent: 0.04, Con: 0.96)
+  Cand 0: P_11 ∧ P_38
+    -> Verbal: Gatecoin suspended services, and Weaknesses in Gatecoin's sy...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5383 (NLI score: -0.9281)
+  SBERT confidence: 0.6166 (NLI score: 0.9917)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.93
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_20 ∧ P_24 ∧ P_11
-    -> Verbal: The new platform is designed for secure withdrawals, and Gat...
-    -> Score: 0.98 (Ent: 0.99, Con: 0.01)
-    → Got formula: P_20 ∧ P_24 ∧ P_11 (score: 0.98)
+  Cand 0: P_38
+    -> Verbal: Weaknesses in Gatecoin's system were exposed...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_38 (score: 1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_38 ⟹ P_24
-    -> Verbal: if Weaknesses in Gatecoin's system were exposed, then Gateco...
-    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_38 ⟹ P_24 (score: 0.99)
+  Cand 0: P_11 ∧ P_20 ∧ P_24
+    -> Verbal: Gatecoin suspended services, and The new platform is designe...
+    -> Score: -0.94 (Ent: 0.03, Con: 0.97)
+    → Got formula: P_11 ∧ P_20 ∧ P_24 (score: -0.94)
 
-[Adaptive Voting] Vote results: {'P_24': 1, 'P_20&P_24&P_11': 1, 'P_38=>P_24': 1}
-[Adaptive Voting] Winner: P_24 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_11&P_38': 1, 'P_38': 1, 'P_11&P_20&P_24': 1}
+[Adaptive Voting] Winner: P_11&P_38 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
-[DEBUG] Parsing formula: 'P_24'
+[DEBUG] Parsing formula: 'P_11 ∧ P_38'
   [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_24
-      nli_confidence: -0.93
-      sbert_confidence: 0.54
-      voting: TRIGGERED (conf=0.33, counts={'P_24': 1, 'P_20&P_24&P_11': 1, 'P_38=>P_24': 1})
+      formula: P_11 ∧ P_38
+      nli_confidence: 0.99
+      sbert_confidence: 0.62
+      voting: TRIGGERED (conf=0.33, counts={'P_11&P_38': 1, 'P_38': 1, 'P_11&P_20&P_24': 1})
 #################### 
 FUNCTION: translate_query : Bitstamp, a European cryptocurrency exchange, recently upgraded its security protocols following a minor phishing incident.
 Multi-sentence hypothesis not detected
@@ -11470,20 +11477,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.94
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_38
-    -> Verbal: Weaknesses in Gatecoin's system were exposed...
-    -> Score: -0.88 (Ent: 0.06, Con: 0.94)
-    → Got formula: P_38 (score: -0.88)
+  Cand 0: P_2
+    -> Verbal: A security breach occurred at Gatecoin last week...
+    -> Score: -0.94 (Ent: 0.03, Con: 0.97)
+    → Got formula: P_2 (score: -0.94)
 
-[Adaptive Voting] Vote results: {'P_2': 2, 'P_38': 1}
-[Adaptive Voting] Winner: P_2 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_2': 3}
+[Adaptive Voting] Winner: P_2 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
 [DEBUG] Parsing formula: 'P_2'
   [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
       formula: P_2
       nli_confidence: -0.94
       sbert_confidence: 0.41
-      voting: TRIGGERED (conf=0.67, counts={'P_2': 2, 'P_38': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_2': 3})
 #################### 
 FUNCTION: translate_query : In March, a Tokyo-based exchange experienced a temporary outage due to a software update unrelated to any security breach.
 Multi-sentence hypothesis not detected
@@ -11546,40 +11553,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_8 ∧ ¬P_2
-    -> Verbal: Gatecoin had a service disruption last Monday, and it is not...
-    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+  Cand 0: P_8
+    -> Verbal: Gatecoin had a service disruption last Monday...
+    -> Score: -0.76 (Ent: 0.12, Con: 0.88)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4013 (NLI score: 0.9922)
+  SBERT confidence: 0.3551 (NLI score: -0.7630)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.76
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_16
-    -> Verbal: Gatecoin services are offline...
-    -> Score: 0.95 (Ent: 0.97, Con: 0.03)
-    → Got formula: P_16 (score: 0.95)
+  Cand 0: P_8
+    -> Verbal: Gatecoin had a service disruption last Monday...
+    -> Score: -0.76 (Ent: 0.12, Con: 0.88)
+    → Got formula: P_8 (score: -0.76)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_9
-    -> Verbal: A server reboot occurred last Monday...
-    -> Score: -0.97 (Ent: 0.02, Con: 0.98)
-    → Got formula: P_9 (score: -0.97)
+  Cand 0: P_8
+    -> Verbal: Gatecoin had a service disruption last Monday...
+    -> Score: -0.76 (Ent: 0.12, Con: 0.88)
+    → Got formula: P_8 (score: -0.76)
 
-[Adaptive Voting] Vote results: {'P_8&~P_2': 1, 'P_16': 1, 'P_9': 1}
-[Adaptive Voting] Winner: P_8&~P_2 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_8': 3}
+[Adaptive Voting] Winner: P_8 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3', 'P_2 ⟹ P_4', 'P_8 ⟹ P_9', 'P_14 ⟹ P_2', 'P_2 ⟹ P_15', 'P_27 ⟹ P_28', 'P_28 ⟹ P_29', '(P_30 ∧ P_28) ⟹ P_31', 'P_34 ⟹ P_35', 'P_17', 'P_17 ⟹ P_17', 'P_18', 'P_18 ⟹ P_18', 'P_19', 'P_19 ⟹ P_19', 'P_35', 'P_35 ⟹ P_35']
-[DEBUG] Parsing formula: 'P_8 ∧ ¬P_2'
+[DEBUG] Parsing formula: 'P_8'
   [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
-      formula: P_8 ∧ ¬P_2
-      nli_confidence: 0.99
-      sbert_confidence: 0.40
-      voting: TRIGGERED (conf=0.33, counts={'P_8&~P_2': 1, 'P_16': 1, 'P_9': 1})
+      formula: P_8
+      nli_confidence: -0.76
+      sbert_confidence: 0.36
+      voting: TRIGGERED (conf=1.00, counts={'P_8': 3})
 #################### 
 FUNCTION: translate_query : The World Health Organization approved a vaccine against dengue fever.
 Multi-sentence hypothesis not detected
@@ -11961,40 +11968,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_4 ⟹ P_5
-    -> Verbal: if China's yuan funds outstanding for foreign exchange rose ...
-    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+  Cand 0: P_4 ∧ P_5
+    -> Verbal: China's yuan funds outstanding for foreign exchange rose by ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8027 (NLI score: 0.0134)
+  SBERT confidence: 0.7991 (NLI score: 0.0034)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_4 ⟹ P_3
-    -> Verbal: if China's yuan funds outstanding for foreign exchange rose ...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_4 ⟹ P_3 (score: 1.00)
+  Cand 0: P_5 ∧ P_4
+    -> Verbal: China's yuan funds outstanding for foreign exchange increase...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_5 ∧ P_4 (score: 0.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_4 ⟹ P_5
-    -> Verbal: if China's yuan funds outstanding for foreign exchange rose ...
-    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
-    → Got formula: P_4 ⟹ P_5 (score: 0.01)
+  Cand 0: P_5 ∧ P_4
+    -> Verbal: China's yuan funds outstanding for foreign exchange increase...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: P_5 ∧ P_4 (score: 0.00)
 
-[Adaptive Voting] Vote results: {'P_4=>P_5': 2, 'P_4=>P_3': 1}
-[Adaptive Voting] Winner: P_4=>P_5 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_4&P_5': 1, 'P_5&P_4': 2}
+[Adaptive Voting] Winner: P_5&P_4 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
-[DEBUG] Parsing formula: 'P_4 ⟹ P_5'
+[DEBUG] Parsing formula: 'P_5 ∧ P_4'
   [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: P_4 ⟹ P_5
-      nli_confidence: 0.01
+      formula: P_5 ∧ P_4
+      nli_confidence: 0.00
       sbert_confidence: 0.80
-      voting: TRIGGERED (conf=0.67, counts={'P_4=>P_5': 2, 'P_4=>P_3': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_4&P_5': 1, 'P_5&P_4': 2})
 #################### 
 FUNCTION: translate_query : Wang Chunying, spokesperson for the State Administration of Foreign Exchange, stated that China is capable and confident in coping with all sorts of challenges.
 Multi-sentence hypothesis not detected
@@ -12057,12 +12064,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_23 ∧ P_24 ∧ P_25 ∧ P_26
-    -> Verbal: China is capable of coping with all sorts of challenges, and...
+  Cand 0: P_25 ∧ P_26 ∧ P_23 ∧ P_24
+    -> Verbal: Wang Chunying is the spokesperson for the State Administrati...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8978 (NLI score: 0.9995)
+  SBERT confidence: 0.8607 (NLI score: 0.9989)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
@@ -12077,20 +12084,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_23 ∧ P_24
-    -> Verbal: China is capable of coping with all sorts of challenges, and...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_23 ∧ P_24 (score: 0.00)
+  Cand 0: P_25 ∧ P_23 ∧ P_24
+    -> Verbal: Wang Chunying is the spokesperson for the State Administrati...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: P_25 ∧ P_23 ∧ P_24 (score: 0.01)
 
-[Adaptive Voting] Vote results: {'P_23&P_24&P_25&P_26': 1, 'P_25&P_26&P_23&P_24': 1, 'P_23&P_24': 1}
-[Adaptive Voting] Winner: P_23&P_24&P_25&P_26 (1/3 votes)
+[Adaptive Voting] Vote results: {'P_25&P_26&P_23&P_24': 2, 'P_25&P_23&P_24': 1}
+[Adaptive Voting] Winner: P_25&P_26&P_23&P_24 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
-[DEBUG] Parsing formula: 'P_23 ∧ P_24 ∧ P_25 ∧ P_26'
+[DEBUG] Parsing formula: 'P_25 ∧ P_26 ∧ P_23 ∧ P_24'
   [x] hyp 4: pred=UNCERTAIN (uncertain) gt=entailment
-      formula: P_23 ∧ P_24 ∧ P_25 ∧ P_26
+      formula: P_25 ∧ P_26 ∧ P_23 ∧ P_24
       nli_confidence: 1.00
-      sbert_confidence: 0.90
-      voting: TRIGGERED (conf=0.33, counts={'P_23&P_24&P_25&P_26': 1, 'P_25&P_26&P_23&P_24': 1, 'P_23&P_24': 1})
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=0.67, counts={'P_25&P_26&P_23&P_24': 2, 'P_25&P_23&P_24': 1})
 #################### 
 FUNCTION: translate_query : Japan's yen funds outstanding for foreign exchange grew each month during the first half of this year.
 Multi-sentence hypothesis not detected
@@ -12165,10 +12172,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_1
-    -> Verbal: China's yuan funds outstanding for foreign exchange grew eac...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_1 (score: -1.00)
+    → LLM abstained (NONE)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -12178,15 +12182,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
     -> Score: -1.00 (Ent: 0.00, Con: 1.00)
     → Got formula: P_1 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_1': 3}
-[Adaptive Voting] Winner: P_1 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_1': 2, 'NONE': 1}
+[Adaptive Voting] Winner: P_1 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: 'P_1'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: P_1
       nli_confidence: -1.00
       sbert_confidence: 0.74
-      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_1': 2, 'NONE': 1})
 #################### 
 FUNCTION: translate_query : China's foreign exchange reserves at the end of June were US$2.5 trillion, down 0.2 percent from May.
 Multi-sentence hypothesis not detected
@@ -12249,14 +12253,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_19
-    -> Verbal: it is not the case that China's foreign exchange reserves we...
-    -> Score: -0.43 (Ent: 0.03, Con: 0.46)
+  Cand 0: ¬P_18
+    -> Verbal: it is not the case that China's foreign exchange reserves st...
+    -> Score: -0.00 (Ent: 0.02, Con: 0.03)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.8350 (NLI score: -0.4282)
+  SBERT confidence: 0.8790 (NLI score: -0.0035)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.43
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -12274,15 +12278,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.43
     -> Score: -0.00 (Ent: 0.02, Con: 0.03)
     → Got formula: ¬P_18 (score: -0.00)
 
-[Adaptive Voting] Vote results: {'~P_19': 1, '~P_18': 2}
-[Adaptive Voting] Winner: ~P_18 (2/3 votes)
+[Adaptive Voting] Vote results: {'~P_18': 3}
+[Adaptive Voting] Winner: ~P_18 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: '¬P_18'
   [x] hyp 6: pred=UNCERTAIN (uncertain) gt=contradiction
       formula: ¬P_18
       nli_confidence: -0.00
-      sbert_confidence: 0.84
-      voting: TRIGGERED (conf=0.67, counts={'~P_19': 1, '~P_18': 2})
+      sbert_confidence: 0.88
+      voting: TRIGGERED (conf=1.00, counts={'~P_18': 3})
 #################### 
 FUNCTION: translate_query : The People's Bank of China reported that the yuan funds outstanding for foreign exchange decreased in June.
 Multi-sentence hypothesis not detected
@@ -12633,12 +12637,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_8 ∧ P_7
+  Cand 0: P_8 ∨ P_7
     -> Verbal: The central bank purchases foreign currency generated by for...
-    -> Score: 0.94 (Ent: 0.96, Con: 0.02)
+    -> Score: 0.94 (Ent: 0.95, Con: 0.02)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.6145 (NLI score: 0.9404)
+  SBERT confidence: 0.6019 (NLI score: 0.9369)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.94
   [Voting] Additional call 1/2...
@@ -12653,20 +12657,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.94
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_8 ∨ P_7
+  Cand 0: P_8 ∧ P_7
     -> Verbal: The central bank purchases foreign currency generated by for...
-    -> Score: 0.94 (Ent: 0.95, Con: 0.02)
-    → Got formula: P_8 ∨ P_7 (score: 0.94)
+    -> Score: 0.94 (Ent: 0.96, Con: 0.02)
+    → Got formula: P_8 ∧ P_7 (score: 0.94)
 
-[Adaptive Voting] Vote results: {'P_8&P_7': 2, 'P_8|P_7': 1}
+[Adaptive Voting] Vote results: {'P_8|P_7': 1, 'P_8&P_7': 2}
 [Adaptive Voting] Winner: P_8&P_7 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: 'P_8 ∧ P_7'
   [+] hyp 10: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_8 ∧ P_7
       nli_confidence: 0.94
-      sbert_confidence: 0.61
-      voting: TRIGGERED (conf=0.67, counts={'P_8&P_7': 2, 'P_8|P_7': 1})
+      sbert_confidence: 0.60
+      voting: TRIGGERED (conf=0.67, counts={'P_8|P_7': 1, 'P_8&P_7': 2})
 #################### 
 FUNCTION: translate_query : Wang Chunying discussed potential future changes to capital account convertibility at the press conference.
 Multi-sentence hypothesis not detected
@@ -12729,22 +12733,22 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_26
-    -> Verbal: Wang Chunying spoke at a press conference today...
-    -> Score: 0.04 (Ent: 0.04, Con: 0.00)
+  Cand 0: P_26 ∧ P_6
+    -> Verbal: Wang Chunying spoke at a press conference today, and The Chi...
+    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5727 (NLI score: 0.0384)
+  SBERT confidence: 0.7243 (NLI score: -0.9839)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.04
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.98
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_26 ∧ P_6
-    -> Verbal: Wang Chunying spoke at a press conference today, and The Chi...
-    -> Score: -0.98 (Ent: 0.01, Con: 0.99)
-    → Got formula: P_26 ∧ P_6 (score: -0.98)
+  Cand 0: P_26
+    -> Verbal: Wang Chunying spoke at a press conference today...
+    -> Score: 0.04 (Ent: 0.04, Con: 0.00)
+    → Got formula: P_26 (score: 0.04)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -12754,15 +12758,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.04
     -> Score: -0.98 (Ent: 0.01, Con: 0.99)
     → Got formula: P_26 ∧ P_6 (score: -0.98)
 
-[Adaptive Voting] Vote results: {'P_26': 1, 'P_26&P_6': 2}
+[Adaptive Voting] Vote results: {'P_26&P_6': 2, 'P_26': 1}
 [Adaptive Voting] Winner: P_26&P_6 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: 'P_26 ∧ P_6'
   [x] hyp 11: pred=FALSE (contradiction) gt=uncertain
       formula: P_26 ∧ P_6
       nli_confidence: -0.98
-      sbert_confidence: 0.57
-      voting: TRIGGERED (conf=0.67, counts={'P_26': 1, 'P_26&P_6': 2})
+      sbert_confidence: 0.72
+      voting: TRIGGERED (conf=0.67, counts={'P_26&P_6': 2, 'P_26': 1})
 #################### 
 FUNCTION: translate_query : The increase in yuan funds outstanding might have affected domestic inflation rates.
 Multi-sentence hypothesis not detected
@@ -12825,12 +12829,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_13
-    -> Verbal: The funds increase...
+  Cand 0: P_13 ⟹ P_12
+    -> Verbal: if The funds increase, then These funds are an important ind...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4806 (NLI score: 0.9996)
+  SBERT confidence: 0.7406 (NLI score: 0.9993)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
   [Voting] Additional call 1/2...
@@ -12850,15 +12854,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_13 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_13': 3}
-[Adaptive Voting] Winner: P_13 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_13=>P_12': 1, 'P_13': 2}
+[Adaptive Voting] Winner: P_13 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: 'P_13'
   [+] hyp 12: pred=UNCERTAIN (uncertain) gt=uncertain
       formula: P_13
       nli_confidence: 1.00
-      sbert_confidence: 0.48
-      voting: TRIGGERED (conf=1.00, counts={'P_13': 3})
+      sbert_confidence: 0.74
+      voting: TRIGGERED (conf=0.67, counts={'P_13=>P_12': 1, 'P_13': 2})
 #################### 
 FUNCTION: translate_query : The Bank of Korea reported a decline in South Korea's foreign exchange reserves in June.
 Multi-sentence hypothesis not detected
@@ -12933,17 +12937,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: ¬P_17
-    -> Verbal: it is not the case that China's foreign exchange reserves re...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: ¬P_17 (score: 1.00)
+  Cand 0: P_18
+    -> Verbal: China's foreign exchange reserves stood at US$3.1121 trillio...
+    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_18 (score: 0.99)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
+  Cand 0: P_15
+    -> Verbal: The funds decrease...
+    -> Score: 0.95 (Ent: 0.95, Con: 0.00)
+    → Got formula: P_15 (score: 0.95)
 
-[Adaptive Voting] Vote results: {'~P_19': 1, '~P_17': 1, 'NONE': 1}
+[Adaptive Voting] Vote results: {'~P_19': 1, 'P_18': 1, 'P_15': 1}
 [Adaptive Voting] Winner: ~P_19 (1/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: '¬P_19'
@@ -12951,7 +12958,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
       formula: ¬P_19
       nli_confidence: 0.99
       sbert_confidence: 0.52
-      voting: TRIGGERED (conf=0.33, counts={'~P_19': 1, '~P_17': 1, 'NONE': 1})
+      voting: TRIGGERED (conf=0.33, counts={'~P_19': 1, 'P_18': 1, 'P_15': 1})
 #################### 
 FUNCTION: translate_query : Singapore's central bank implemented new measures to manage capital inflows in the second quarter.
 Multi-sentence hypothesis not detected
@@ -13026,20 +13033,17 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_10
-    -> Verbal: The central bank adds funds to the money market...
-    -> Score: 0.69 (Ent: 0.80, Con: 0.11)
-    → Got formula: P_10 (score: 0.69)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
   Cand 0: P_9
     -> Verbal: The central bank purchases foreign currency...
     -> Score: 1.00 (Ent: 1.00, Con: 0.00)
     → Got formula: P_9 (score: 1.00)
+  [Voting] Additional call 2/2...
 
-[Adaptive Voting] Vote results: {'P_9': 2, 'P_10': 1}
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+    → LLM abstained (NONE)
+
+[Adaptive Voting] Vote results: {'P_9': 2, 'NONE': 1}
 [Adaptive Voting] Winner: P_9 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ (P_4 ∧ P_5)', 'P_3 ⟹ P_5', '¬P_6', 'P_7 ⟹ P_9', 'P_8 ⟹ P_9', 'P_18 ⟹ P_20', 'P_21 ⟹ P_20', 'P_4', 'P_4 ⟹ P_4', 'P_19', 'P_19 ⟹ P_19']
 [DEBUG] Parsing formula: 'P_9'
@@ -13047,7 +13051,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
       formula: P_9
       nli_confidence: 1.00
       sbert_confidence: 0.35
-      voting: TRIGGERED (conf=0.67, counts={'P_9': 2, 'P_10': 1})
+      voting: TRIGGERED (conf=0.67, counts={'P_9': 2, 'NONE': 1})
 #################### 
 FUNCTION: translate_query : SpaceX's Starship completed its first crewed mission to the lunar surface.
 Multi-sentence hypothesis not detected
@@ -13351,10 +13355,10 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_9 ⟹ P_8
-    -> Verbal: if Leandro Bacuna was playing Mario Balotelli onside, then B...
-    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
-    → Got formula: P_9 ⟹ P_8 (score: 0.02)
+  Cand 0: P_9 ∧ P_8
+    -> Verbal: Leandro Bacuna was playing Mario Balotelli onside, and Balot...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: P_9 ∧ P_8 (score: 0.01)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -13364,15 +13368,15 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
     -> Score: 0.01 (Ent: 0.01, Con: 0.00)
     → Got formula: P_9 ∧ P_8 (score: 0.01)
 
-[Adaptive Voting] Vote results: {'P_9&P_8': 2, 'P_9=>P_8': 1}
-[Adaptive Voting] Winner: P_9&P_8 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_9&P_8': 3}
+[Adaptive Voting] Winner: P_9&P_8 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
 [DEBUG] Parsing formula: 'P_9 ∧ P_8'
   [x] hyp 2: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_9 ∧ P_8
       nli_confidence: 0.01
       sbert_confidence: 0.90
-      voting: TRIGGERED (conf=0.67, counts={'P_9&P_8': 2, 'P_9=>P_8': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_9&P_8': 3})
 #################### 
 FUNCTION: translate_query : Philippe Coutinho gave Liverpool a 1-0 lead after combining with Raheem Sterling and scoring past Shay Given.
 Multi-sentence hypothesis not detected
@@ -13455,20 +13459,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17
-    -> Verbal: Philippe Coutinho gave Liverpool a 1-0 lead...
-    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
-    → Got formula: P_17 (score: 0.00)
+  Cand 0: P_17 ∧ P_16
+    -> Verbal: Philippe Coutinho gave Liverpool a 1-0 lead, and Philippe Co...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_17 ∧ P_16 (score: 1.00)
 
-[Adaptive Voting] Vote results: {'P_17&P_16': 2, 'P_17': 1}
-[Adaptive Voting] Winner: P_17&P_16 (2/3 votes)
+[Adaptive Voting] Vote results: {'P_17&P_16': 3}
+[Adaptive Voting] Winner: P_17&P_16 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
 [DEBUG] Parsing formula: 'P_17 ∧ P_16'
   [x] hyp 3: pred=UNCERTAIN (uncertain) gt=entailment
       formula: P_17 ∧ P_16
       nli_confidence: 1.00
       sbert_confidence: 0.85
-      voting: TRIGGERED (conf=0.67, counts={'P_17&P_16': 2, 'P_17': 1})
+      voting: TRIGGERED (conf=1.00, counts={'P_17&P_16': 3})
 #################### 
 FUNCTION: translate_query : Fabian Delph scored the winning goal for Aston Villa in the 53rd minute, earning his team a place in the FA Cup final.
 Multi-sentence hypothesis not detected
@@ -13627,40 +13631,40 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_12
-    -> Verbal: The assistant referee's decision was poor...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+  Cand 0: P_4
+    -> Verbal: Brendan Rodgers believes the assistant referee made a very p...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4218 (NLI score: 0.9999)
+  SBERT confidence: 0.3626 (NLI score: -0.9986)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_12
-    -> Verbal: The assistant referee's decision was poor...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_12 (score: 1.00)
+  Cand 0: P_4
+    -> Verbal: Brendan Rodgers believes the assistant referee made a very p...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_4 (score: -1.00)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_12
-    -> Verbal: The assistant referee's decision was poor...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_12 (score: 1.00)
+  Cand 0: P_4
+    -> Verbal: Brendan Rodgers believes the assistant referee made a very p...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
+    → Got formula: P_4 (score: -1.00)
 
-[Adaptive Voting] Vote results: {'P_12': 3}
-[Adaptive Voting] Winner: P_12 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
-[DEBUG] Parsing formula: 'P_12'
+[DEBUG] Parsing formula: 'P_4'
   [x] hyp 5: pred=UNCERTAIN (uncertain) gt=contradiction
-      formula: P_12
-      nli_confidence: 1.00
-      sbert_confidence: 0.42
-      voting: TRIGGERED (conf=1.00, counts={'P_12': 3})
+      formula: P_4
+      nli_confidence: -1.00
+      sbert_confidence: 0.36
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
 #################### 
 FUNCTION: translate_query : The assistant referee flagged Mario Balotelli offside when the score was 3-2 with ten minutes left on the clock.
 Multi-sentence hypothesis not detected
@@ -14023,28 +14027,28 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3 ∧ P_21
+  Cand 0: P_3
     -> Verbal: The assistant referee flagged for offside on Mario Balotelli...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_3 ∧ P_21 (score: 1.00)
+    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_3 (score: 0.99)
   [Voting] Additional call 2/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_3 ∧ P_21
+  Cand 0: P_3
     -> Verbal: The assistant referee flagged for offside on Mario Balotelli...
-    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
-    → Got formula: P_3 ∧ P_21 (score: 1.00)
+    -> Score: 0.99 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_3 (score: 0.99)
 
-[Adaptive Voting] Vote results: {'P_3&P_21': 3}
-[Adaptive Voting] Winner: P_3&P_21 (3/3 votes)
+[Adaptive Voting] Vote results: {'P_3&P_21': 1, 'P_3': 2}
+[Adaptive Voting] Winner: P_3 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
-[DEBUG] Parsing formula: 'P_3 ∧ P_21'
+[DEBUG] Parsing formula: 'P_3'
   [+] hyp 9: pred=UNCERTAIN (uncertain) gt=uncertain
-      formula: P_3 ∧ P_21
-      nli_confidence: 1.00
+      formula: P_3
+      nli_confidence: 0.99
       sbert_confidence: 0.75
-      voting: TRIGGERED (conf=1.00, counts={'P_3&P_21': 3})
+      voting: TRIGGERED (conf=0.67, counts={'P_3&P_21': 1, 'P_3': 2})
 #################### 
 FUNCTION: translate_query : Rickie Lambert could have had a scoring opportunity in the final stages of the game.
 Multi-sentence hypothesis not detected
@@ -14203,12 +14207,12 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_2
-    -> Verbal: Liverpool were knocked out of the FA Cup semi-final by Aston...
-    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
+  Cand 0: P_17
+    -> Verbal: Philippe Coutinho gave Liverpool a 1-0 lead...
+    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4591 (NLI score: -0.9870)
+  SBERT confidence: 0.4578 (NLI score: -0.9945)
 
 Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
   [Voting] Additional call 1/2...
@@ -14223,12 +14227,12 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_17
-    -> Verbal: Philippe Coutinho gave Liverpool a 1-0 lead...
-    -> Score: -0.99 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_17 (score: -0.99)
+  Cand 0: P_2
+    -> Verbal: Liverpool were knocked out of the FA Cup semi-final by Aston...
+    -> Score: -0.99 (Ent: 0.01, Con: 0.99)
+    → Got formula: P_2 (score: -0.99)
 
-[Adaptive Voting] Vote results: {'P_2': 1, 'P_17': 2}
+[Adaptive Voting] Vote results: {'P_17': 2, 'P_2': 1}
 [Adaptive Voting] Winner: P_17 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
 [DEBUG] Parsing formula: 'P_17'
@@ -14236,7 +14240,7 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence -0.99
       formula: P_17
       nli_confidence: -0.99
       sbert_confidence: 0.46
-      voting: TRIGGERED (conf=0.67, counts={'P_2': 1, 'P_17': 2})
+      voting: TRIGGERED (conf=0.67, counts={'P_17': 2, 'P_2': 1})
 #################### 
 FUNCTION: translate_query : Raheem Sterling possibly received a yellow card during the match at Wembley.
 Multi-sentence hypothesis not detected
@@ -14395,14 +14399,14 @@ Generating candidates via direct top-K retrieval...
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
 Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: ¬P_28
-    -> Verbal: it is not the case that Liverpool reached the FA Cup final...
-    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+  Cand 0: P_28
+    -> Verbal: Liverpool reached the FA Cup final...
+    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
 
 #FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.5687 (NLI score: 0.0065)
+  SBERT confidence: 0.6710 (NLI score: -0.9995)
 
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
   [Voting] Additional call 1/2...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
@@ -14415,20 +14419,20 @@ Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_28
-    -> Verbal: Liverpool reached the FA Cup final...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_28 (score: -1.00)
+  Cand 0: ¬P_28
+    -> Verbal: it is not the case that Liverpool reached the FA Cup final...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_28 (score: 0.01)
 
-[Adaptive Voting] Vote results: {'~P_28': 1, 'P_28': 2}
+[Adaptive Voting] Vote results: {'P_28': 2, '~P_28': 1}
 [Adaptive Voting] Winner: P_28 (2/3 votes)
 [DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
 [DEBUG] Parsing formula: 'P_28'
   [x] hyp 13: pred=UNCERTAIN (uncertain) gt=not_mentioned
       formula: P_28
       nli_confidence: -1.00
-      sbert_confidence: 0.57
-      voting: TRIGGERED (conf=0.67, counts={'~P_28': 1, 'P_28': 2})
+      sbert_confidence: 0.67
+      voting: TRIGGERED (conf=0.67, counts={'P_28': 2, '~P_28': 1})
 #################### 
 FUNCTION: translate_query : Everton's Romelu Lukaku scored twice to secure a 3-1 win over Southampton in their FA Cup quarter-final clash.
 Multi-sentence hypothesis not detected
@@ -14490,38 +14494,9 @@ Generating candidates via direct top-K retrieval...
 
  #FUNCTION: generate_candidates_via_direct_retrieval
   Using top-10 SBERT propositions (from 10 retrieved)
-Step B & C: Verbalizing and Verifying with NLI...
-  Cand 0: P_5
-    -> Verbal: Aston Villa led 2-1...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-
-#FUNCTION: compute_sbert_confidence
-  SBERT confidence: 0.4501 (NLI score: -0.9999)
-
-Adaptive Voting is on. Making 2 additional LLM calls. Confidence -1.00
-  [Voting] Additional call 1/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-  Cand 0: P_19
-    -> Verbal: Christian Benteke scored from 12 yards out...
-    -> Score: -1.00 (Ent: 0.00, Con: 1.00)
-    → Got formula: P_19 (score: -1.00)
-  [Voting] Additional call 2/2...
-
- #FUNCTION: generate_candidates_via_direct_retrieval
-  Using top-10 SBERT propositions (from 10 retrieved)
-    → LLM abstained (NONE)
-
-[Adaptive Voting] Vote results: {'P_5': 1, 'P_19': 1, 'NONE': 1}
-[Adaptive Voting] Winner: P_5 (1/3 votes)
-[DEBUG] Hard constraints passed to encoder: ['P_3 ⟹ P_8', 'P_9 ⟹ P_10', 'P_10 ⟹ ¬P_11', 'P_11 ⟹ ¬P_10', 'P_2 ⟹ ¬P_28', 'P_23 ⟹ ¬P_28']
-[DEBUG] Parsing formula: 'P_5'
-  [x] hyp 14: pred=UNCERTAIN (uncertain) gt=not_mentioned
-      formula: P_5
-      nli_confidence: -1.00
-      sbert_confidence: 0.45
-      voting: TRIGGERED (conf=0.33, counts={'P_5': 1, 'P_19': 1, 'NONE': 1})
+  [+] hyp 14: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
+      formula: NONE
+      nli_confidence: 0.50
 #################### 
 FUNCTION: translate_query : The Vatican released newly digitized documents from the Secret Archives.
 Multi-sentence hypothesis not detected
@@ -14644,7 +14619,7 @@ Generating candidates via direct top-K retrieval...
   [+] hyp 16: pred=NOT MENTIONED (not_mentioned) gt=not_mentioned
       formula: NONE
       nli_confidence: 0.50
-  Premise accuracy: 6/16 = 37.50%
+  Premise accuracy: 7/16 = 43.75%
   Logify: 0.00s (cached: True)
 
 ============================================================
@@ -14652,14 +14627,14 @@ EXPERIMENT COMPLETE (4-way classification)
 ============================================================
 Premises processed: 10
 Hypotheses evaluated: 160
-Correct predictions: 67
-Overall accuracy: 41.88%
+Correct predictions: 70
+Overall accuracy: 43.75%
 
 Per-label accuracy:
+  - contradiction: 6/40 = 15.00%
+  - not_mentioned: 24/40 = 60.00%
+  - uncertain: 34/40 = 85.00%
   - entailment: 6/40 = 15.00%
-  - not_mentioned: 23/40 = 57.50%
-  - contradiction: 5/40 = 12.50%
-  - uncertain: 33/40 = 82.50%
 
 Total errors: 0
-Results saved to: /home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run3_openAI_20260331_2148_data_constructed_march30.json_.json
+Results saved to: /home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run3_openAI_20260331_2218_data_constructed_march30.json_.json

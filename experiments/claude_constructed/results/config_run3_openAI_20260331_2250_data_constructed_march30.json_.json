@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-31T21:48:44.661332",
+    "timestamp": "2026-03-31T22:50:59.145274",
     "data_path": "/home/logify/article_logic_ai_2026/experiments/claude_constructed/dataset/data_constructed_march30.json",
     "config_profile": "profiles/config_run3_openAI.yaml",
     "logify_model": "gpt-5.2",
@@ -49,18 +49,28 @@
       "is_4way_classification": true,
       "not_mentioned_split": "2 hard (same-domain) + 2 easy (off-topic)"
     },
-    "total_correct": 67,
+    "total_correct": 69,
     "total_evaluated": 160,
-    "overall_accuracy": 0.41875,
+    "overall_accuracy": 0.43125,
     "total_errors": 0,
     "classification_type": "4-way",
     "label_set": [
-      "entailment",
-      "not_mentioned",
+      "uncertain",
       "contradiction",
-      "uncertain"
+      "entailment",
+      "not_mentioned"
     ],
     "per_label_accuracy": {
+      "uncertain": {
+        "correct": 35,
+        "total": 40,
+        "accuracy": 0.875
+      },
+      "contradiction": {
+        "correct": 5,
+        "total": 40,
+        "accuracy": 0.125
+      },
       "entailment": {
         "correct": 6,
         "total": 40,
@@ -70,16 +80,6 @@
         "correct": 23,
         "total": 40,
         "accuracy": 0.575
-      },
-      "contradiction": {
-        "correct": 5,
-        "total": 40,
-        "accuracy": 0.125
-      },
-      "uncertain": {
-        "correct": 33,
-        "total": 40,
-        "accuracy": 0.825
       }
     }
   },
@@ -135,10 +135,10 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1080.1057703495026,
-      "premise_correct": 7,
+      "query_latency_total_sec": 974.7552034854889,
+      "premise_correct": 8,
       "premise_total": 16,
-      "premise_accuracy": 0.4375
+      "premise_accuracy": 0.5
     },
     {
       "premise_id": 1,
@@ -148,7 +148,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1085.4103088378906,
+      "query_latency_total_sec": 1599.8453402519226,
       "premise_correct": 6,
       "premise_total": 16,
       "premise_accuracy": 0.375
@@ -161,7 +161,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1174.5251743793488,
+      "query_latency_total_sec": 1103.222309589386,
       "premise_correct": 5,
       "premise_total": 16,
       "premise_accuracy": 0.3125
@@ -174,10 +174,10 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 866.7175149917603,
-      "premise_correct": 7,
+      "query_latency_total_sec": 1108.6917390823364,
+      "premise_correct": 6,
       "premise_total": 16,
-      "premise_accuracy": 0.4375
+      "premise_accuracy": 0.375
     },
     {
       "premise_id": 4,
@@ -187,7 +187,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 930.8953685760498,
+      "query_latency_total_sec": 918.002010345459,
       "premise_correct": 9,
       "premise_total": 16,
       "premise_accuracy": 0.5625
@@ -200,7 +200,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 977.9343974590302,
+      "query_latency_total_sec": 969.130939245224,
       "premise_correct": 9,
       "premise_total": 16,
       "premise_accuracy": 0.5625
@@ -213,7 +213,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1357.4969589710236,
+      "query_latency_total_sec": 1066.0328233242035,
       "premise_correct": 7,
       "premise_total": 16,
       "premise_accuracy": 0.4375
@@ -226,7 +226,7 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1293.2626836299896,
+      "query_latency_total_sec": 1893.467366695404,
       "premise_correct": 6,
       "premise_total": 16,
       "premise_accuracy": 0.375
@@ -239,10 +239,10 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1005.7170631885529,
-      "premise_correct": 5,
+      "query_latency_total_sec": 1594.3597629070282,
+      "premise_correct": 6,
       "premise_total": 16,
-      "premise_accuracy": 0.3125
+      "premise_accuracy": 0.375
     },
     {
       "premise_id": 9,
@@ -252,10 +252,10 @@
       "logify_latency_sec": 0.0,
       "logify_cached": true,
       "logify_error": null,
-      "query_latency_total_sec": 1020.089284658432,
-      "premise_correct": 6,
+      "query_latency_total_sec": 998.6497979164124,
+      "premise_correct": 7,
       "premise_total": 16,
-      "premise_accuracy": 0.375
+      "premise_accuracy": 0.4375
     }
   ],
   "results": [
@@ -273,7 +273,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 36.57894968986511,
+      "query_latency_sec": 41.44188666343689,
       "nli_confidence": 0.004007638795883395,
       "sbert_confidence": 0.9611382484436035,
       "voting_triggered": true,
@@ -290,21 +290,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 1.0,
-      "formula": "P_3 ∧ P_7 ∧ P_8 ∧ P_9 ∧ P_10 ∧ P_2",
+      "formula": "P_7 ∧ P_8 ∧ P_9 ∧ P_10",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 107.42163467407227,
-      "nli_confidence": 0.9976310814963654,
-      "sbert_confidence": 0.7926917672157288,
+      "query_latency_sec": 105.28181791305542,
+      "nli_confidence": 0.014121116138994694,
+      "sbert_confidence": 0.6066693663597107,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_3&P_7&P_8&P_9&P_10&P_2": 1,
-        "P_2&P_7&P_8&P_9&P_10": 1,
-        "P_7&P_8&P_9&P_10&P_22": 1
+        "P_7&P_8&P_9&P_10": 2,
+        "P_3&P_7&P_8&P_9&P_10": 1
       }
     },
     {
@@ -321,7 +320,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 47.88657236099243,
+      "query_latency_sec": 36.09390211105347,
       "nli_confidence": 0.0027596387153607793,
       "sbert_confidence": 0.8327639698982239,
       "voting_triggered": true,
@@ -344,7 +343,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 29.848798751831055,
+      "query_latency_sec": 43.50589632987976,
       "nli_confidence": 0.0011570938295335509,
       "sbert_confidence": 0.9620128273963928,
       "voting_triggered": true,
@@ -367,7 +366,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 83.51569080352783,
+      "query_latency_sec": 64.14606785774231,
       "nli_confidence": -0.9750867579132318,
       "sbert_confidence": 0.8257879614830017,
       "voting_triggered": true,
@@ -382,22 +381,23 @@
       "original_idx": 5,
       "hypothesis_text": "Sharethrough reported $200 million in native ad spend running through its platform in 2016.",
       "ground_truth": "contradiction",
-      "prediction": "FALSE",
-      "prediction_4way": "contradiction",
-      "confidence": 0,
-      "formula": "¬P_26",
+      "prediction": "TRUE",
+      "prediction_4way": "entailment",
+      "confidence": 1,
+      "formula": "P_26",
       "query_mode": "entailment",
-      "explanation": "Query is contradicted by the knowledge base",
+      "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
       "error": null,
       "error_type": null,
-      "is_correct": true,
-      "query_latency_sec": 92.24908757209778,
-      "nli_confidence": -0.9924629549495876,
+      "is_correct": false,
+      "query_latency_sec": 70.20152354240417,
+      "nli_confidence": -0.9944607052020729,
       "sbert_confidence": 0.8976436257362366,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_26": 3
+        "~P_26": 1,
+        "P_26": 2
       }
     },
     {
@@ -414,14 +414,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 96.85544800758362,
+      "query_latency_sec": 108.851065158844,
       "nli_confidence": 0.9998160301747703,
-      "sbert_confidence": 0.7944536209106445,
+      "sbert_confidence": 0.7317366600036621,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~(P_16&P_17)": 2,
-        "~P_16": 1
+        "~(P_16&(P_17|P_18))": 1,
+        "~(P_16&P_17)": 2
       }
     },
     {
@@ -429,46 +429,43 @@
       "original_idx": 7,
       "hypothesis_text": "According to the company, Alex White is the CEO of Sharethrough.",
       "ground_truth": "contradiction",
-      "prediction": "TRUE",
-      "prediction_4way": "entailment",
-      "confidence": 1,
-      "formula": "P_1",
+      "prediction": "NOT MENTIONED",
+      "prediction_4way": "not_mentioned",
+      "confidence": 1.0,
+      "formula": "NONE",
       "query_mode": "entailment",
-      "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
+      "explanation": "No matching proposition for hypothesis",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 71.77775144577026,
-      "nli_confidence": 0.9998952911337256,
-      "sbert_confidence": 0.38226518034935,
-      "voting_triggered": true,
-      "voting_confidence": 1.0,
-      "vote_counts": {
-        "P_1": 3
-      }
+      "query_latency_sec": 13.34060025215149,
+      "nli_confidence": 0.5,
+      "sbert_confidence": null,
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 0,
       "original_idx": 8,
       "hypothesis_text": "Sharethrough and Adelphic may expand their integration to international markets.",
       "ground_truth": "uncertain",
-      "prediction": "TRUE",
-      "prediction_4way": "entailment",
-      "confidence": 1,
-      "formula": "P_2",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 1.0,
+      "formula": "P_5",
       "query_mode": "entailment",
-      "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
-      "is_correct": false,
-      "query_latency_sec": 61.5901095867157,
-      "nli_confidence": 0.9981453244690783,
+      "is_correct": true,
+      "query_latency_sec": 67.88592648506165,
+      "nli_confidence": 0.9995233313675271,
       "sbert_confidence": 0.5674924254417419,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_5": 1,
-        "P_2": 2
+        "P_5": 3
       }
     },
     {
@@ -485,14 +482,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 61.784372091293335,
+      "query_latency_sec": 77.99911999702454,
       "nli_confidence": 0.9790700282901525,
-      "sbert_confidence": 0.5255917906761169,
+      "sbert_confidence": 0.681496798992157,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_5": 2,
-        "P_21": 1
+        "P_21": 1,
+        "P_5": 2
       }
     },
     {
@@ -500,24 +497,22 @@
       "original_idx": 10,
       "hypothesis_text": "Sharethrough and Adelphic could expand their partnership to include additional ad formats next year.",
       "ground_truth": "uncertain",
-      "prediction": "TRUE",
-      "prediction_4way": "entailment",
-      "confidence": 1,
-      "formula": "P_13",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 1.0,
+      "formula": "P_21",
       "query_mode": "entailment",
-      "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
-      "is_correct": false,
-      "query_latency_sec": 85.49378752708435,
-      "nli_confidence": 0.9998604936808988,
-      "sbert_confidence": 0.7620379328727722,
+      "is_correct": true,
+      "query_latency_sec": 82.25690245628357,
+      "nli_confidence": 0.9991965754015837,
+      "sbert_confidence": 0.617185652256012,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_13": 1,
-        "P_5": 1,
-        "P_21": 1
+        "P_21": 3
       }
     },
     {
@@ -534,7 +529,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 84.38295364379883,
+      "query_latency_sec": 66.61637449264526,
       "nli_confidence": 0.9993014507053886,
       "sbert_confidence": 0.4613359570503235,
       "voting_triggered": true,
@@ -557,14 +552,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 107.86950469017029,
+      "query_latency_sec": 88.88168501853943,
       "nli_confidence": -0.5911024510860443,
-      "sbert_confidence": 0.5423778295516968,
+      "sbert_confidence": 0.5413320660591125,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_13": 1,
-        "P_21": 2
+        "P_21": 2,
+        "P_25": 1
       }
     },
     {
@@ -572,23 +567,23 @@
       "original_idx": 13,
       "hypothesis_text": "In 2017, MoPub introduced a cross-channel native ad integration with several European DSPs.",
       "ground_truth": "not_mentioned",
-      "prediction": "TRUE",
-      "prediction_4way": "entailment",
-      "confidence": 1,
-      "formula": "P_4",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 1.0,
+      "formula": "P_5",
       "query_mode": "entailment",
-      "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 92.98225951194763,
-      "nli_confidence": -0.9771881755441427,
-      "sbert_confidence": 0.503010094165802,
+      "query_latency_sec": 91.17264866828918,
+      "nli_confidence": 0.6568726003170013,
+      "sbert_confidence": 0.5252351760864258,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_4": 2,
-        "P_2": 1
+        "P_5": 2,
+        "P_5&P_4": 1
       }
     },
     {
@@ -605,7 +600,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 11.2225501537323,
+      "query_latency_sec": 8.896538019180298,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -626,7 +621,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 8.646299839019775,
+      "query_latency_sec": 8.183248519897461,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -640,20 +635,21 @@
       "ground_truth": "entailment",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "P_6 ∧ P_2 ∧ P_5",
+      "confidence": 1.0,
+      "formula": "(P_2 ∧ P_5) ⟹ P_6",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 87.90900874137878,
-      "nli_confidence": 0.9990197185916259,
-      "sbert_confidence": 0.8715753555297852,
+      "query_latency_sec": 79.77494478225708,
+      "nli_confidence": 0.984912814999916,
+      "sbert_confidence": 0.8659834861755371,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_6&P_2&P_5": 3
+        "(P_2&P_5)=>P_6": 2,
+        "P_6&P_2&P_5": 1
       }
     },
     {
@@ -670,7 +666,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 70.6291401386261,
+      "query_latency_sec": 47.0553297996521,
       "nli_confidence": 0.0009847596920735668,
       "sbert_confidence": 0.9675267338752747,
       "voting_triggered": true,
@@ -693,14 +689,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 51.05964803695679,
+      "query_latency_sec": 41.80506706237793,
       "nli_confidence": 0.9998336962371468,
       "sbert_confidence": 0.8397268056869507,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_8": 2,
-        "P_8&P_24": 1
+        "P_8": 3
       }
     },
     {
@@ -717,13 +712,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 80.29843544960022,
+      "query_latency_sec": 72.15812063217163,
       "nli_confidence": 0.9998371563797264,
       "sbert_confidence": 0.6248475909233093,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_34": 3
+        "P_34": 2,
+        "P_34&P_33": 1
       }
     },
     {
@@ -733,22 +729,21 @@
       "ground_truth": "contradiction",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.0,
-      "formula": "P_2 ∧ P_5 ∧ P_36 ∧ ¬P_6",
+      "confidence": 0.5,
+      "formula": "P_2 ∧ P_5 ∧ P_36",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 126.08124160766602,
-      "nli_confidence": 0.9282455937936902,
-      "sbert_confidence": 0.7980602383613586,
+      "query_latency_sec": 87.31855654716492,
+      "nli_confidence": 0.9910705327056348,
+      "sbert_confidence": 0.7545310258865356,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_2&P_5&P_36&~P_6": 1,
-        "P_2&P_5&P_36&P_42": 1,
-        "P_2&P_42&P_5&P_36": 1
+        "P_2&P_36&P_5": 1,
+        "P_2&P_5&P_36": 2
       }
     },
     {
@@ -765,7 +760,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 55.15541934967041,
+      "query_latency_sec": 54.20120120048523,
       "nli_confidence": 0.0011325541054247878,
       "sbert_confidence": 0.8307596445083618,
       "voting_triggered": true,
@@ -782,19 +777,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_16",
+      "formula": "P_16 ∧ P_47",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 86.72100567817688,
-      "nli_confidence": 0.9904267797246575,
-      "sbert_confidence": 0.800291895866394,
+      "query_latency_sec": 76.89020252227783,
+      "nli_confidence": 0.9997881185663573,
+      "sbert_confidence": 0.741926372051239,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_16": 3
+        "P_16&P_47": 2,
+        "P_16": 1
       }
     },
     {
@@ -805,19 +801,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_22",
+      "formula": "P_23",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 98.07964253425598,
-      "nli_confidence": -0.999426136520924,
+      "query_latency_sec": 102.50316524505615,
+      "nli_confidence": 0.9561899246764369,
       "sbert_confidence": 0.49665722250938416,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_22": 3
+        "P_22": 1,
+        "P_23": 2
       }
     },
     {
@@ -828,20 +825,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_36",
+      "formula": "P_35",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 64.75865721702576,
-      "nli_confidence": 0.0071141830703709275,
+      "query_latency_sec": 74.3852231502533,
+      "nli_confidence": 0.9947890937328339,
       "sbert_confidence": 0.7066954374313354,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_36": 2,
-        "P_35": 1
+        "P_36": 1,
+        "P_35": 2
       }
     },
     {
@@ -852,21 +849,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_16 ∧ P_40",
+      "formula": "P_16",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 89.050865650177,
-      "nli_confidence": 0.9940900329966098,
-      "sbert_confidence": 0.7350202798843384,
+      "query_latency_sec": 72.6966438293457,
+      "nli_confidence": 0.0031873113475739956,
+      "sbert_confidence": 0.6892393231391907,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_16&P_40": 1,
-        "P_40": 1,
-        "P_16": 1
+        "P_16": 2,
+        "P_40": 1
       }
     },
     {
@@ -877,20 +873,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_8 ∧ P_14",
+      "formula": "P_8 ∧ P_24",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 73.67361164093018,
-      "nli_confidence": 0.9998800670146011,
-      "sbert_confidence": 0.3432671129703522,
+      "query_latency_sec": 74.79452276229858,
+      "nli_confidence": 0.01770447254239116,
+      "sbert_confidence": 0.29877588152885437,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_8&P_14": 2,
-        "P_8": 1
+        "P_8&P_24": 1,
+        "P_8": 1,
+        "P_8&P_14": 1
       }
     },
     {
@@ -907,7 +904,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 36.08504271507263,
+      "query_latency_sec": 639.4381234645844,
       "nli_confidence": 0.016847866354510188,
       "sbert_confidence": 0.7917936444282532,
       "voting_triggered": true,
@@ -924,21 +921,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_37",
+      "formula": "P_38",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 79.83272767066956,
-      "nli_confidence": -0.9974298808956519,
+      "query_latency_sec": 92.61948657035828,
+      "nli_confidence": -0.9971085778670385,
       "sbert_confidence": 0.35896944999694824,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
         "P_37": 1,
-        "P_38": 1,
-        "P_4": 1
+        "P_38": 2
       }
     },
     {
@@ -955,14 +951,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 70.20470976829529,
+      "query_latency_sec": 71.19125533103943,
       "nli_confidence": 0.9969791994662955,
-      "sbert_confidence": 0.2587788701057434,
+      "sbert_confidence": 0.3544543385505676,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_2": 1,
-        "P_8": 2
+        "P_8": 3
       }
     },
     {
@@ -979,7 +974,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 8.374536752700806,
+      "query_latency_sec": 7.723162412643433,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -1000,7 +995,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 7.496615886688232,
+      "query_latency_sec": 5.290334939956665,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -1021,7 +1016,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 39.85855507850647,
+      "query_latency_sec": 41.537779569625854,
       "nli_confidence": 0.001915075601573335,
       "sbert_confidence": 0.934542715549469,
       "voting_triggered": true,
@@ -1038,20 +1033,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_1 ∧ P_21 ∧ ¬P_22",
+      "formula": "P_21 ∧ P_1 ∧ ¬P_22",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 91.77519416809082,
-      "nli_confidence": 0.3071711970260367,
+      "query_latency_sec": 74.61359238624573,
+      "nli_confidence": 0.6286955319810659,
       "sbert_confidence": 0.7541719079017639,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_1&P_21&~P_22": 2,
-        "P_21&P_1&~P_22": 1
+        "P_1&P_21&~P_22": 1,
+        "P_21&P_1&~P_22": 2
       }
     },
     {
@@ -1068,7 +1063,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 41.1209990978241,
+      "query_latency_sec": 50.773762226104736,
       "nli_confidence": 0.001238874603586737,
       "sbert_confidence": 0.9059972167015076,
       "voting_triggered": true,
@@ -1091,14 +1086,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 89.1491448879242,
+      "query_latency_sec": 89.10407447814941,
       "nli_confidence": 0.6559365633875132,
-      "sbert_confidence": 0.8113424777984619,
+      "sbert_confidence": 0.8202135562896729,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_8": 1,
-        "~P_8&~P_9": 2
+        "~P_8&~P_9": 2,
+        "~P_8": 1
       }
     },
     {
@@ -1109,20 +1104,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_5",
+      "formula": "¬P_5",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 102.93093085289001,
-      "nli_confidence": -0.998594060423784,
+      "query_latency_sec": 67.2944929599762,
+      "nli_confidence": -0.985214835498482,
       "sbert_confidence": 0.7160042524337769,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_5": 1,
-        "P_5": 2
+        "~P_5": 2,
+        "P_5": 1
       }
     },
     {
@@ -1139,7 +1134,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 57.439130783081055,
+      "query_latency_sec": 53.310330390930176,
       "nli_confidence": 0.040000836102990434,
       "sbert_confidence": 0.6363280415534973,
       "voting_triggered": true,
@@ -1162,7 +1157,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 92.46975564956665,
+      "query_latency_sec": 75.2988634109497,
       "nli_confidence": -0.990612882305868,
       "sbert_confidence": 0.9056973457336426,
       "voting_triggered": true,
@@ -1185,7 +1180,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 118.43132448196411,
+      "query_latency_sec": 93.0423755645752,
       "nli_confidence": -0.9851791062392294,
       "sbert_confidence": 0.7763605117797852,
       "voting_triggered": true,
@@ -1203,20 +1198,19 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "¬P_30",
+      "formula": "P_30",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 96.08707022666931,
-      "nli_confidence": -0.9951521966140717,
-      "sbert_confidence": 0.6936826705932617,
+      "query_latency_sec": 86.77397465705872,
+      "nli_confidence": 0.0009751029283506796,
+      "sbert_confidence": 0.7075451016426086,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "~P_30": 2,
-        "P_30": 1
+        "P_30": 3
       }
     },
     {
@@ -1233,14 +1227,13 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 95.52893400192261,
+      "query_latency_sec": 85.96369433403015,
       "nli_confidence": -0.8943909518420696,
       "sbert_confidence": 0.6025753021240234,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_5": 2,
-        "P_3": 1
+        "P_5": 3
       }
     },
     {
@@ -1251,21 +1244,19 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "¬P_5 ∧ P_2",
+      "formula": "¬P_5 ∧ P_6",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 116.03663372993469,
-      "nli_confidence": -0.9827554104849696,
-      "sbert_confidence": 0.6783651113510132,
+      "query_latency_sec": 97.63108253479004,
+      "nli_confidence": 0.003998632077127695,
+      "sbert_confidence": 0.6990376710891724,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "~P_5&P_2": 1,
-        "P_6": 1,
-        "~P_5&P_6": 1
+        "~P_5&P_6": 3
       }
     },
     {
@@ -1282,13 +1273,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 94.25671625137329,
+      "query_latency_sec": 104.14395356178284,
       "nli_confidence": 0.9984885802259669,
       "sbert_confidence": 0.735929012298584,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_28": 2,
+        "P_28": 1,
+        "P_24": 1,
         "P_6": 1
       }
     },
@@ -1306,13 +1298,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 51.581164836883545,
+      "query_latency_sec": 68.78333234786987,
       "nli_confidence": -0.9996974683162989,
       "sbert_confidence": 0.5563492178916931,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_17": 3
+        "P_17": 2,
+        "NONE": 1
       }
     },
     {
@@ -1323,19 +1316,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_1",
+      "formula": "¬P_1",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 76.15912318229675,
-      "nli_confidence": -0.9945127409882843,
-      "sbert_confidence": 0.5461410284042358,
+      "query_latency_sec": 106.2117087841034,
+      "nli_confidence": -0.9711351804435253,
+      "sbert_confidence": 0.5497782230377197,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_1": 2,
+        "~P_1": 1,
+        "P_1": 1,
         "NONE": 1
       }
     },
@@ -1353,7 +1347,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 10.15210485458374,
+      "query_latency_sec": 7.2474000453948975,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -1374,7 +1368,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.5483922958374023,
+      "query_latency_sec": 1.4918923377990723,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -1395,7 +1389,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 59.70653557777405,
+      "query_latency_sec": 64.39126253128052,
       "nli_confidence": 0.004417936666868627,
       "sbert_confidence": 0.9512722492218018,
       "voting_triggered": true,
@@ -1418,14 +1412,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 86.58845210075378,
+      "query_latency_sec": 76.32154250144958,
       "nli_confidence": 0.9989232238804107,
       "sbert_confidence": 0.9089310169219971,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_10&P_13&P_21": 2,
-        "P_10&P_13": 1
+        "P_10&P_13&P_21": 3
       }
     },
     {
@@ -1442,14 +1435,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 69.93865942955017,
+      "query_latency_sec": 59.26563549041748,
       "nli_confidence": 0.9994460971220178,
       "sbert_confidence": 0.9336608648300171,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_6&P_7": 2,
-        "P_6": 1
+        "P_6&P_7": 3
       }
     },
     {
@@ -1466,7 +1458,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 34.17474913597107,
+      "query_latency_sec": 29.84109878540039,
       "nli_confidence": 0.002801347909553442,
       "sbert_confidence": 0.9308356642723083,
       "voting_triggered": true,
@@ -1489,7 +1481,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 77.91794776916504,
+      "query_latency_sec": 74.55118155479431,
       "nli_confidence": -0.9998611428127333,
       "sbert_confidence": 0.8584394454956055,
       "voting_triggered": true,
@@ -1512,7 +1504,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 71.04535341262817,
+      "query_latency_sec": 128.53128266334534,
       "nli_confidence": -0.9998527284478769,
       "sbert_confidence": 0.883676290512085,
       "voting_triggered": true,
@@ -1535,7 +1527,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 37.433993101119995,
+      "query_latency_sec": 55.212825298309326,
       "nli_confidence": 0.003464897097728681,
       "sbert_confidence": 0.7993385791778564,
       "voting_triggered": true,
@@ -1549,21 +1541,25 @@
       "original_idx": 55,
       "hypothesis_text": "The discovery of the Altamura Man was first reported by the Journal of Archaeological Science.",
       "ground_truth": "contradiction",
-      "prediction": "NOT MENTIONED",
-      "prediction_4way": "not_mentioned",
-      "confidence": 1.0,
-      "formula": "NONE",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 0.5,
+      "formula": "P_2",
       "query_mode": "entailment",
-      "explanation": "No matching proposition for hypothesis",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 9.249958276748657,
-      "nli_confidence": 0.5,
-      "sbert_confidence": null,
-      "voting_triggered": false,
-      "voting_confidence": null,
-      "vote_counts": null
+      "query_latency_sec": 93.41689276695251,
+      "nli_confidence": 0.999783690480399,
+      "sbert_confidence": 0.7919437885284424,
+      "voting_triggered": true,
+      "voting_confidence": 0.3333333333333333,
+      "vote_counts": {
+        "P_2": 1,
+        "P_3": 1,
+        "P_6": 1
+      }
     },
     {
       "premise_id": 3,
@@ -1579,13 +1575,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 77.29432916641235,
+      "query_latency_sec": 78.10829758644104,
       "nli_confidence": 0.0035137566810590215,
       "sbert_confidence": 0.867039144039154,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_1": 3
+        "P_1": 2,
+        "P_1&P_13": 1
       }
     },
     {
@@ -1602,14 +1599,15 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 97.79190468788147,
+      "query_latency_sec": 68.81515383720398,
       "nli_confidence": 0.9995061721710954,
-      "sbert_confidence": 0.5685045123100281,
+      "sbert_confidence": 0.402544766664505,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_27&P_3": 1,
-        "P_17": 2
+        "P_17": 1,
+        "P_27&P_17": 1,
+        "P_32": 1
       }
     },
     {
@@ -1620,20 +1618,19 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_7",
+      "formula": "P_9",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 80.1646499633789,
-      "nli_confidence": 0.9830545531585813,
-      "sbert_confidence": 0.5345920324325562,
+      "query_latency_sec": 86.16289043426514,
+      "nli_confidence": 0.9998255170576158,
+      "sbert_confidence": 0.6645128130912781,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_7": 2,
-        "P_9": 1
+        "P_9": 3
       }
     },
     {
@@ -1650,7 +1647,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 57.25942420959473,
+      "query_latency_sec": 75.01535606384277,
       "nli_confidence": 0.9997545886890293,
       "sbert_confidence": 0.7488744854927063,
       "voting_triggered": true,
@@ -1664,21 +1661,24 @@
       "original_idx": 60,
       "hypothesis_text": "In 2018, French archaeologists uncovered a Denisovan child's tooth in a cave near Toulouse.",
       "ground_truth": "not_mentioned",
-      "prediction": "NOT MENTIONED",
-      "prediction_4way": "not_mentioned",
-      "confidence": 1.0,
-      "formula": "NONE",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 0.5,
+      "formula": "P_9",
       "query_mode": "entailment",
-      "explanation": "No matching proposition for hypothesis",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
-      "is_correct": true,
-      "query_latency_sec": 18.628039121627808,
-      "nli_confidence": 0.5,
-      "sbert_confidence": null,
-      "voting_triggered": false,
-      "voting_confidence": null,
-      "vote_counts": null
+      "is_correct": false,
+      "query_latency_sec": 68.25485324859619,
+      "nli_confidence": 0.9997549861145671,
+      "sbert_confidence": 0.4543412923812866,
+      "voting_triggered": true,
+      "voting_confidence": 0.6666666666666666,
+      "vote_counts": {
+        "P_9": 2,
+        "NONE": 1
+      }
     },
     {
       "premise_id": 3,
@@ -1694,7 +1694,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 54.83509874343872,
+      "query_latency_sec": 95.33254098892212,
       "nli_confidence": -0.9761721137911081,
       "sbert_confidence": 0.46537140011787415,
       "voting_triggered": true,
@@ -1717,7 +1717,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 6.315082788467407,
+      "query_latency_sec": 8.26087498664856,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -1738,7 +1738,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 28.373337507247925,
+      "query_latency_sec": 47.21005034446716,
       "nli_confidence": 0.5,
       "sbert_confidence": 0.2687450051307678,
       "voting_triggered": true,
@@ -1762,7 +1762,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 30.502492666244507,
+      "query_latency_sec": 37.99206781387329,
       "nli_confidence": 0.0015386016020784155,
       "sbert_confidence": 0.9773555994033813,
       "voting_triggered": true,
@@ -1779,20 +1779,20 @@
       "prediction": "TRUE",
       "prediction_4way": "entailment",
       "confidence": 1,
-      "formula": "(¬P_8) ⟹ P_9",
+      "formula": "¬P_8 ⟹ P_9",
       "query_mode": "entailment",
       "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 71.11822962760925,
+      "query_latency_sec": 80.89413356781006,
       "nli_confidence": 0.001213094510603696,
       "sbert_confidence": 0.9458043575286865,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "(~P_8)=>P_9": 2,
-        "~P_8=>P_9": 1
+        "(~P_8)=>P_9": 1,
+        "~P_8=>P_9": 2
       }
     },
     {
@@ -1809,7 +1809,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 38.468937397003174,
+      "query_latency_sec": 32.7535035610199,
       "nli_confidence": 0.0008899672247935086,
       "sbert_confidence": 0.9719706177711487,
       "voting_triggered": true,
@@ -1832,7 +1832,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 23.356793880462646,
+      "query_latency_sec": 20.48096203804016,
       "nli_confidence": 0.9460658102871093,
       "sbert_confidence": 0.7685207724571228,
       "voting_triggered": true,
@@ -1855,7 +1855,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 75.65048027038574,
+      "query_latency_sec": 53.12751364707947,
       "nli_confidence": -0.9979849344235845,
       "sbert_confidence": 0.9236799478530884,
       "voting_triggered": true,
@@ -1872,20 +1872,20 @@
       "prediction": "TRUE",
       "prediction_4way": "entailment",
       "confidence": 1,
-      "formula": "P_1",
+      "formula": "P_4",
       "query_mode": "entailment",
       "explanation": "Query is entailed by the hard constraints (KB ∧ ¬Q is unsatisfiable)",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 105.62108445167542,
-      "nli_confidence": -0.9989464081882033,
-      "sbert_confidence": 0.8928624987602234,
+      "query_latency_sec": 107.23164701461792,
+      "nli_confidence": -0.7429032772779465,
+      "sbert_confidence": 0.8441984057426453,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_1": 2,
-        "P_4": 1
+        "P_4": 2,
+        "P_1": 1
       }
     },
     {
@@ -1902,7 +1902,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 58.30006766319275,
+      "query_latency_sec": 54.97521114349365,
       "nli_confidence": 0.004284645154257305,
       "sbert_confidence": 0.802537202835083,
       "voting_triggered": true,
@@ -1925,7 +1925,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 64.79129314422607,
+      "query_latency_sec": 51.05366635322571,
       "nli_confidence": 0.009167073585558683,
       "sbert_confidence": 0.8477913737297058,
       "voting_triggered": true,
@@ -1948,14 +1948,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 89.99014568328857,
+      "query_latency_sec": 82.36350774765015,
       "nli_confidence": 0.999885320172325,
-      "sbert_confidence": 0.6824759840965271,
+      "sbert_confidence": 0.6713523268699646,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_4": 1,
-        "P_1": 2
+        "P_1": 2,
+        "P_4": 1
       }
     },
     {
@@ -1972,14 +1972,15 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 74.04778504371643,
+      "query_latency_sec": 75.08816885948181,
       "nli_confidence": 0.9993718409023131,
-      "sbert_confidence": 0.6593945026397705,
+      "sbert_confidence": 0.689998209476471,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
+        "P_17&P_11": 1,
         "P_11": 1,
-        "P_17&P_11": 2
+        "P_17": 1
       }
     },
     {
@@ -1996,14 +1997,13 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 70.08751201629639,
+      "query_latency_sec": 57.46064257621765,
       "nli_confidence": 0.9997380611457629,
       "sbert_confidence": 0.4128025770187378,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_12": 2,
-        "P_13&P_12": 1
+        "P_12": 3
       }
     },
     {
@@ -2020,14 +2020,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 76.60229516029358,
+      "query_latency_sec": 97.24073934555054,
       "nli_confidence": 0.9997673869838763,
       "sbert_confidence": 0.7022923827171326,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
         "P_3": 2,
-        "P_3&P_1": 1
+        "P_1&P_3": 1
       }
     },
     {
@@ -2044,7 +2044,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 89.6600067615509,
+      "query_latency_sec": 97.33050012588501,
       "nli_confidence": -0.9959488427266479,
       "sbert_confidence": 0.5252394676208496,
       "voting_triggered": true,
@@ -2067,7 +2067,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 51.08097195625305,
+      "query_latency_sec": 56.30690956115723,
       "nli_confidence": -0.9744132673367858,
       "sbert_confidence": 0.37934696674346924,
       "voting_triggered": true,
@@ -2091,7 +2091,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 4.650129318237305,
+      "query_latency_sec": 6.590465784072876,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2112,7 +2112,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 6.967143535614014,
+      "query_latency_sec": 7.112371206283569,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2127,20 +2127,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_39 ∧ P_2 ∧ P_3",
+      "formula": "P_2 ∧ P_3",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 89.10348320007324,
-      "nli_confidence": 0.05541426918352954,
-      "sbert_confidence": 0.9476807117462158,
+      "query_latency_sec": 67.11624884605408,
+      "nli_confidence": 0.001233330431205104,
+      "sbert_confidence": 0.8493884801864624,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_39&P_2&P_3": 2,
-        "P_39&P_2&P_3&P_36": 1
+        "P_2&P_3": 2,
+        "P_39&P_2&P_3": 1
       }
     },
     {
@@ -2151,20 +2151,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_39 ∧ P_4",
+      "formula": "P_4 ∧ P_39",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 47.35930871963501,
-      "nli_confidence": 0.0009479958098381758,
-      "sbert_confidence": 0.8239818215370178,
+      "query_latency_sec": 51.97039008140564,
+      "nli_confidence": 0.001431769982445985,
+      "sbert_confidence": 0.8425518274307251,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_39&P_4": 2,
-        "P_4&P_39": 1
+        "P_4&P_39": 2,
+        "P_39&P_4": 1
       }
     },
     {
@@ -2181,7 +2181,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 81.51680064201355,
+      "query_latency_sec": 79.98633050918579,
       "nli_confidence": 0.000990099837508751,
       "sbert_confidence": 0.8021277189254761,
       "voting_triggered": true,
@@ -2204,7 +2204,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 72.74706411361694,
+      "query_latency_sec": 51.02314496040344,
       "nli_confidence": 0.9911017697304487,
       "sbert_confidence": 0.7484082579612732,
       "voting_triggered": true,
@@ -2221,20 +2221,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "¬P_39",
+      "formula": "P_39",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 97.38168716430664,
-      "nli_confidence": 0.007627720013260841,
+      "query_latency_sec": 91.7870728969574,
+      "nli_confidence": -0.9997741545885219,
       "sbert_confidence": 0.5500398874282837,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_39": 1,
-        "~P_39": 2
+        "P_39": 2,
+        "~P_39": 1
       }
     },
     {
@@ -2251,14 +2251,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 89.75460457801819,
+      "query_latency_sec": 78.69876885414124,
       "nli_confidence": -0.23742208164185286,
       "sbert_confidence": 0.7563083171844482,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "~P_39": 2,
-        "~P_2": 1
+        "~P_39": 3
       }
     },
     {
@@ -2275,13 +2274,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 57.05113339424133,
+      "query_latency_sec": 66.26459670066833,
       "nli_confidence": 0.9600487323477864,
-      "sbert_confidence": 0.5842369198799133,
+      "sbert_confidence": 0.7441122531890869,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_23": 3
+        "P_23&~P_19": 1,
+        "P_23": 2
       }
     },
     {
@@ -2298,14 +2298,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 51.86459255218506,
+      "query_latency_sec": 44.77453875541687,
       "nli_confidence": 0.945464995704242,
-      "sbert_confidence": 0.7836574912071228,
+      "sbert_confidence": 0.6736426949501038,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_20&P_21": 2,
-        "P_20": 1
+        "P_20": 1,
+        "P_20&P_21": 2
       }
     },
     {
@@ -2322,7 +2322,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 63.88957095146179,
+      "query_latency_sec": 55.390899419784546,
       "nli_confidence": 0.9949739759322256,
       "sbert_confidence": 0.7542406916618347,
       "voting_triggered": true,
@@ -2345,7 +2345,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 42.57403635978699,
+      "query_latency_sec": 70.86939764022827,
       "nli_confidence": 0.0027469056767586153,
       "sbert_confidence": 0.7743232250213623,
       "voting_triggered": true,
@@ -2368,14 +2368,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 71.26421689987183,
+      "query_latency_sec": 106.37406897544861,
       "nli_confidence": 0.9945612620213069,
       "sbert_confidence": 0.591418445110321,
       "voting_triggered": true,
       "voting_confidence": 0.3333333333333333,
       "vote_counts": {
         "P_31": 1,
-        "P_19&P_31": 1,
+        "P_31&P_8": 1,
         "P_8&P_31": 1
       }
     },
@@ -2387,20 +2387,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_2",
+      "formula": "P_39",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 84.5610363483429,
-      "nli_confidence": 0.9994096894806717,
+      "query_latency_sec": 66.08896565437317,
+      "nli_confidence": 0.9997396878898144,
       "sbert_confidence": 0.4882267415523529,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
         "P_39": 1,
-        "P_2": 2
+        "NONE": 1,
+        "P_2&P_37": 1
       }
     },
     {
@@ -2417,7 +2418,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 83.74858617782593,
+      "query_latency_sec": 69.86525774002075,
       "nli_confidence": -0.9993828092410695,
       "sbert_confidence": 0.3526594340801239,
       "voting_triggered": true,
@@ -2441,7 +2442,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 25.25292730331421,
+      "query_latency_sec": 52.40832996368408,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2462,7 +2463,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 10.980000734329224,
+      "query_latency_sec": 7.2752697467803955,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2483,7 +2484,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 8.885348320007324,
+      "query_latency_sec": 9.237658500671387,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2504,7 +2505,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 93.9842758178711,
+      "query_latency_sec": 31.680614709854126,
       "nli_confidence": 0.0067939687287434936,
       "sbert_confidence": 0.9522479772567749,
       "voting_triggered": true,
@@ -2527,7 +2528,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 27.419315338134766,
+      "query_latency_sec": 30.319477081298828,
       "nli_confidence": 0.0011195574334124103,
       "sbert_confidence": 0.8493062257766724,
       "voting_triggered": true,
@@ -2550,7 +2551,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 46.59774684906006,
+      "query_latency_sec": 34.10456824302673,
       "nli_confidence": 0.9837569868541323,
       "sbert_confidence": 0.8832285404205322,
       "voting_triggered": true,
@@ -2573,7 +2574,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 55.66117835044861,
+      "query_latency_sec": 55.45710754394531,
       "nli_confidence": 0.5973364931996912,
       "sbert_confidence": 0.8893804550170898,
       "voting_triggered": true,
@@ -2590,20 +2591,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_3 ∧ P_4",
+      "formula": "¬P_3 ∧ ¬P_4",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 121.20814871788025,
-      "nli_confidence": -0.999776890326757,
-      "sbert_confidence": 0.8204911947250366,
+      "query_latency_sec": 106.23039960861206,
+      "nli_confidence": 0.995037532877177,
+      "sbert_confidence": 0.7679396271705627,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_3&P_4": 2,
-        "P_3|P_4": 1
+        "~P_3&~P_4": 1,
+        "P_3|P_4": 1,
+        "~P_3": 1
       }
     },
     {
@@ -2614,21 +2616,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "¬P_6 ∧ P_7",
+      "formula": "P_6 ∧ P_7",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 161.37997102737427,
-      "nli_confidence": -0.9518654053099453,
-      "sbert_confidence": 0.7879581451416016,
+      "query_latency_sec": 165.41266322135925,
+      "nli_confidence": -0.9993929110642057,
+      "sbert_confidence": 0.8082618117332458,
       "voting_triggered": true,
       "voting_confidence": 0.3333333333333333,
       "vote_counts": {
+        "P_6&P_7": 1,
         "~P_6&P_7": 1,
-        "~P_6&P_5&P_7": 1,
-        "(~P_6)&P_7": 1
+        "P_5&~P_6&P_7": 1
       }
     },
     {
@@ -2645,7 +2647,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 76.22835993766785,
+      "query_latency_sec": 88.78327488899231,
       "nli_confidence": 0.05162638146430254,
       "sbert_confidence": 0.890061616897583,
       "voting_triggered": true,
@@ -2662,20 +2664,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "¬P_5",
+      "formula": "P_9",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 91.75159025192261,
-      "nli_confidence": -0.6911976784467697,
-      "sbert_confidence": 0.6837199330329895,
+      "query_latency_sec": 120.62297630310059,
+      "nli_confidence": -0.999901235303696,
+      "sbert_confidence": 0.8055346012115479,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
+        "P_9": 1,
         "~P_29": 1,
-        "~P_5": 2
+        "~P_5": 1
       }
     },
     {
@@ -2692,13 +2695,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 62.22365593910217,
+      "query_latency_sec": 61.352593421936035,
       "nli_confidence": 0.9929025580640882,
-      "sbert_confidence": 0.8577579855918884,
+      "sbert_confidence": 0.8492900133132935,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_3&P_4": 3
+        "P_13&P_14": 1,
+        "P_3&P_4": 2
       }
     },
     {
@@ -2715,14 +2719,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 79.77375102043152,
+      "query_latency_sec": 82.5240797996521,
       "nli_confidence": 0.9984280539720203,
-      "sbert_confidence": 0.8459394574165344,
+      "sbert_confidence": 0.8492220640182495,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_3=>P_29": 1,
-        "P_13": 2
+        "P_13": 2,
+        "P_9": 1
       }
     },
     {
@@ -2733,20 +2737,19 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_34 ∧ P_27",
+      "formula": "P_34",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 299.6631224155426,
-      "nli_confidence": -0.9611656609922647,
-      "sbert_confidence": 0.7246167063713074,
+      "query_latency_sec": 59.247251987457275,
+      "nli_confidence": -0.503597304224968,
+      "sbert_confidence": 0.7650293111801147,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_34&P_27": 1,
-        "P_34": 1,
+        "P_34": 2,
         "P_34=>P_27": 1
       }
     },
@@ -2764,13 +2767,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 127.6026360988617,
+      "query_latency_sec": 96.85921835899353,
       "nli_confidence": 0.998873685777653,
-      "sbert_confidence": 0.6929340362548828,
+      "sbert_confidence": 0.8153657913208008,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_12": 3
+        "P_12&P_3": 1,
+        "P_12": 2
       }
     },
     {
@@ -2787,7 +2791,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 96.42692255973816,
+      "query_latency_sec": 68.74285674095154,
       "nli_confidence": -0.9998708342573082,
       "sbert_confidence": 0.2899659276008606,
       "voting_triggered": true,
@@ -2812,12 +2816,15 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 6.63025689125061,
+      "query_latency_sec": 55.12233209609985,
       "nli_confidence": 0.5,
-      "sbert_confidence": null,
-      "voting_triggered": false,
-      "voting_confidence": null,
-      "vote_counts": null
+      "sbert_confidence": 0.48424893617630005,
+      "voting_triggered": true,
+      "voting_confidence": 0.6666666666666666,
+      "vote_counts": {
+        "P_39": 1,
+        "NONE": 2
+      }
     },
     {
       "premise_id": 6,
@@ -2833,7 +2840,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.574204444885254,
+      "query_latency_sec": 1.543280839920044,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2854,7 +2861,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 9.37182331085205,
+      "query_latency_sec": 8.030128479003906,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -2875,7 +2882,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 45.00690698623657,
+      "query_latency_sec": 49.803991079330444,
       "nli_confidence": 0.0009133110033872072,
       "sbert_confidence": 0.9547417163848877,
       "voting_triggered": true,
@@ -2898,13 +2905,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 84.34783935546875,
+      "query_latency_sec": 100.603360414505,
       "nli_confidence": 0.9993556685772091,
       "sbert_confidence": 0.8610420227050781,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_2=>(P_5&P_6)": 2,
+        "P_2=>(P_5&P_6)": 1,
+        "P_2&P_5&P_6": 1,
         "P_5&P_6": 1
       }
     },
@@ -2916,19 +2924,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "(P_10 ⟹ P_11) ∧ P_36",
+      "formula": "P_10 ⟹ (P_11 ∧ P_36)",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 98.14538836479187,
+      "query_latency_sec": 142.03595089912415,
       "nli_confidence": 0.9995579171154532,
       "sbert_confidence": 0.7622571587562561,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "(P_10=>P_11)&P_36": 3
+        "P_10=>(P_11&P_36)": 2,
+        "(P_10=>(P_11&P_36))&P_10": 1
       }
     },
     {
@@ -2938,21 +2947,21 @@
       "ground_truth": "entailment",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "P_16 ∧ P_17 ∧ P_18 ∧ P_39",
+      "confidence": 1.0,
+      "formula": "P_16 ∧ P_17 ∧ P_18",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 103.94661736488342,
-      "nli_confidence": 0.9755664216354489,
-      "sbert_confidence": 0.8688691258430481,
+      "query_latency_sec": 102.42851495742798,
+      "nli_confidence": 0.03491722047328949,
+      "sbert_confidence": 0.8635996580123901,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_16&P_17&P_18&P_39": 2,
-        "P_16&P_17&P_18&P_39&P_40": 1
+        "P_16&P_17&P_18": 2,
+        "P_16&P_17&P_18&P_39": 1
       }
     },
     {
@@ -2969,7 +2978,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 66.09260129928589,
+      "query_latency_sec": 57.644638776779175,
       "nli_confidence": -0.9967446117661893,
       "sbert_confidence": 0.5544704794883728,
       "voting_triggered": true,
@@ -2985,21 +2994,21 @@
       "ground_truth": "contradiction",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "¬P_6",
+      "confidence": 0.0,
+      "formula": "P_2 ∧ ¬P_5 ∧ ¬P_6",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 128.45909190177917,
-      "nli_confidence": -0.9997419472420006,
+      "query_latency_sec": 170.12324357032776,
+      "nli_confidence": -0.9996939330885652,
       "sbert_confidence": 0.8223178386688232,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_2&~P_5&~P_6": 1,
-        "~P_6": 2
+        "P_2&~P_5&~P_6": 2,
+        "P_2&P_15&P_6&P_5": 1
       }
     },
     {
@@ -3009,20 +3018,21 @@
       "ground_truth": "contradiction",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.0,
-      "formula": "¬P_11 ∧ ¬P_16",
+      "confidence": 0.5,
+      "formula": "¬P_11",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 121.5525004863739,
-      "nli_confidence": 0.9996790428722306,
-      "sbert_confidence": 0.6834311485290527,
+      "query_latency_sec": 100.20253586769104,
+      "nli_confidence": 0.0019348212117620278,
+      "sbert_confidence": 0.7311983108520508,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_11&~P_16": 3
+        "~P_11": 2,
+        "P_2=>(~P_11&~P_16)": 1
       }
     },
     {
@@ -3039,7 +3049,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 69.23341774940491,
+      "query_latency_sec": 55.88941168785095,
       "nli_confidence": 0.0009231894291588105,
       "sbert_confidence": 0.7851072549819946,
       "voting_triggered": true,
@@ -3056,20 +3066,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_8",
+      "formula": "P_8 ⟹ P_11",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 91.3902645111084,
-      "nli_confidence": 0.9998911886359565,
-      "sbert_confidence": 0.6968495845794678,
+      "query_latency_sec": 80.27404546737671,
+      "nli_confidence": 0.9979818709543906,
+      "sbert_confidence": 0.7012273669242859,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_8&P_11": 1,
-        "P_8": 2
+        "P_8=>P_11": 1,
+        "P_8": 1,
+        "P_8&P_11": 1
       }
     },
     {
@@ -3086,14 +3097,13 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 74.4501268863678,
+      "query_latency_sec": 63.615888833999634,
       "nli_confidence": 0.9976587631972507,
       "sbert_confidence": 0.5808120369911194,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_37": 2,
-        "P_37&P_29": 1
+        "P_37": 3
       }
     },
     {
@@ -3104,20 +3114,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_4",
+      "formula": "P_29",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 87.5269672870636,
-      "nli_confidence": 0.9997553757129936,
-      "sbert_confidence": 0.45327937602996826,
+      "query_latency_sec": 95.34318518638611,
+      "nli_confidence": 0.515962615609169,
+      "sbert_confidence": 0.3180943727493286,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_4&P_29": 1,
-        "P_4": 2
+        "P_29": 2,
+        "P_2&P_4&P_29": 1
       }
     },
     {
@@ -3128,21 +3138,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_24",
+      "formula": "P_24 ∧ P_11",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 148.48245787620544,
-      "nli_confidence": -0.9280786924064159,
-      "sbert_confidence": 0.538307249546051,
+      "query_latency_sec": 90.73647284507751,
+      "nli_confidence": -0.9877055091783404,
+      "sbert_confidence": 0.6299692988395691,
       "voting_triggered": true,
       "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_24": 1,
-        "P_20&P_24&P_11": 1,
-        "P_38=>P_24": 1
+        "P_24&P_11": 1,
+        "P_39": 1,
+        "P_24": 1
       }
     },
     {
@@ -3159,7 +3169,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 62.68401551246643,
+      "query_latency_sec": 69.16761827468872,
       "nli_confidence": -0.9360052980482578,
       "sbert_confidence": 0.41088128089904785,
       "voting_triggered": true,
@@ -3176,22 +3186,22 @@
       "ground_truth": "not_mentioned",
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "P_8 ∧ ¬P_2",
+      "confidence": 1.0,
+      "formula": "P_16",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 103.42172026634216,
-      "nli_confidence": 0.9921921854838729,
-      "sbert_confidence": 0.40129536390304565,
+      "query_latency_sec": 702.0502471923828,
+      "nli_confidence": 0.9494492821395397,
+      "sbert_confidence": 0.2704355716705322,
       "voting_triggered": true,
       "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_8&~P_2": 1,
         "P_16": 1,
-        "P_9": 1
+        "P_9": 1,
+        "P_8&~P_2": 1
       }
     },
     {
@@ -3208,7 +3218,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 6.438532829284668,
+      "query_latency_sec": 10.88536787033081,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -3229,7 +3239,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 2.0842349529266357,
+      "query_latency_sec": 2.662893772125244,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -3250,7 +3260,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 51.00958824157715,
+      "query_latency_sec": 57.566556453704834,
       "nli_confidence": 0.0014444484950217884,
       "sbert_confidence": 0.8712294101715088,
       "voting_triggered": true,
@@ -3273,7 +3283,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 54.78563165664673,
+      "query_latency_sec": 54.76312470436096,
       "nli_confidence": 0.001386778107189457,
       "sbert_confidence": 0.942979097366333,
       "voting_triggered": true,
@@ -3290,20 +3300,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_4 ⟹ P_5",
+      "formula": "P_5 ∧ P_4",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 87.0410680770874,
-      "nli_confidence": 0.013355405506445095,
-      "sbert_confidence": 0.8026768565177917,
+      "query_latency_sec": 661.6533365249634,
+      "nli_confidence": 0.0009653458109823987,
+      "sbert_confidence": 0.810745358467102,
       "voting_triggered": true,
       "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_4=>P_5": 2,
-        "P_4=>P_3": 1
+        "P_5&P_4": 2,
+        "P_4&P_5": 1
       }
     },
     {
@@ -3314,21 +3324,20 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 0.5,
-      "formula": "P_23 ∧ P_24 ∧ P_25 ∧ P_26",
+      "formula": "P_23 ∧ P_24",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 65.45647478103638,
-      "nli_confidence": 0.9994923484000537,
-      "sbert_confidence": 0.8978127837181091,
+      "query_latency_sec": 57.61682391166687,
+      "nli_confidence": 0.001781950006261468,
+      "sbert_confidence": 0.8606770634651184,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_23&P_24&P_25&P_26": 1,
         "P_25&P_26&P_23&P_24": 1,
-        "P_23&P_24": 1
+        "P_23&P_24": 2
       }
     },
     {
@@ -3345,7 +3354,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 71.26940107345581,
+      "query_latency_sec": 68.66496515274048,
       "nli_confidence": -0.9997963490895927,
       "sbert_confidence": 0.7411313652992249,
       "voting_triggered": true,
@@ -3359,23 +3368,24 @@
       "original_idx": 133,
       "hypothesis_text": "China's foreign exchange reserves at the end of June were US$2.5 trillion, down 0.2 percent from May.",
       "ground_truth": "contradiction",
-      "prediction": "UNCERTAIN",
-      "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "¬P_18",
+      "prediction": "FALSE",
+      "prediction_4way": "contradiction",
+      "confidence": 0,
+      "formula": "¬P_18 ∧ ¬P_19",
       "query_mode": "entailment",
-      "explanation": "Query is consistent but not entailed by the knowledge base",
+      "explanation": "Query is contradicted by the knowledge base",
       "error": null,
       "error_type": null,
-      "is_correct": false,
-      "query_latency_sec": 109.35782361030579,
-      "nli_confidence": -0.003468293696641922,
-      "sbert_confidence": 0.8350487351417542,
+      "is_correct": true,
+      "query_latency_sec": 111.31482076644897,
+      "nli_confidence": -0.9927239313255996,
+      "sbert_confidence": 0.9157339930534363,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "~P_19": 1,
-        "~P_18": 2
+        "~P_18&~P_19": 1,
+        "P_18": 1,
+        "~P_18": 1
       }
     },
     {
@@ -3392,13 +3402,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 62.746408224105835,
+      "query_latency_sec": 64.94522476196289,
       "nli_confidence": 0.0027321903908159584,
-      "sbert_confidence": 0.7661999464035034,
+      "sbert_confidence": 0.6922143697738647,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_5": 3
+        "~P_3&~P_5": 1,
+        "~P_5": 2
       }
     },
     {
@@ -3415,7 +3426,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 55.87156629562378,
+      "query_latency_sec": 46.401846408843994,
       "nli_confidence": 0.007857364937081002,
       "sbert_confidence": 0.7525568008422852,
       "voting_triggered": true,
@@ -3438,7 +3449,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 72.79816818237305,
+      "query_latency_sec": 67.63900828361511,
       "nli_confidence": 0.9919130329508334,
       "sbert_confidence": 0.4216344952583313,
       "voting_triggered": true,
@@ -3455,20 +3466,21 @@
       "prediction": "UNCERTAIN",
       "prediction_4way": "uncertain",
       "confidence": 1.0,
-      "formula": "P_8 ∧ P_7",
+      "formula": "P_8",
       "query_mode": "entailment",
       "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 73.01665186882019,
-      "nli_confidence": 0.9404402524232864,
-      "sbert_confidence": 0.6144682168960571,
+      "query_latency_sec": 78.8437032699585,
+      "nli_confidence": 0.9997986240705359,
+      "sbert_confidence": 0.5809169411659241,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 0.3333333333333333,
       "vote_counts": {
-        "P_8&P_7": 2,
-        "P_8|P_7": 1
+        "P_8": 1,
+        "P_8|P_7": 1,
+        "P_8&P_7": 1
       }
     },
     {
@@ -3485,14 +3497,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 78.07349228858948,
+      "query_latency_sec": 81.78598546981812,
       "nli_confidence": -0.9838628396391869,
-      "sbert_confidence": 0.5726526975631714,
+      "sbert_confidence": 0.7243228554725647,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_26": 1,
-        "P_26&P_6": 2
+        "P_26&P_6": 3
       }
     },
     {
@@ -3509,13 +3520,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 63.146209478378296,
+      "query_latency_sec": 56.764140367507935,
       "nli_confidence": 0.9995720538136084,
       "sbert_confidence": 0.4805504083633423,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_13": 3
+        "P_13": 2,
+        "P_12": 1
       }
     },
     {
@@ -3523,24 +3535,23 @@
       "original_idx": 140,
       "hypothesis_text": "The Bank of Korea reported a decline in South Korea's foreign exchange reserves in June.",
       "ground_truth": "not_mentioned",
-      "prediction": "FALSE",
-      "prediction_4way": "contradiction",
-      "confidence": 0,
-      "formula": "¬P_19",
+      "prediction": "UNCERTAIN",
+      "prediction_4way": "uncertain",
+      "confidence": 0.5,
+      "formula": "P_15",
       "query_mode": "entailment",
-      "explanation": "Query is contradicted by the knowledge base",
+      "explanation": "Query is consistent but not entailed by the knowledge base",
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 70.94842314720154,
-      "nli_confidence": 0.9918543701060116,
-      "sbert_confidence": 0.5194501876831055,
+      "query_latency_sec": 103.40140271186829,
+      "nli_confidence": 0.950365804717876,
+      "sbert_confidence": 0.4526684880256653,
       "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "~P_19": 1,
-        "~P_17": 1,
-        "NONE": 1
+        "P_15": 2,
+        "~P_19": 1
       }
     },
     {
@@ -3557,7 +3568,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 72.36393475532532,
+      "query_latency_sec": 70.10631346702576,
       "nli_confidence": 0.9976375221740454,
       "sbert_confidence": 0.3486296236515045,
       "voting_triggered": true,
@@ -3581,7 +3592,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 9.951587200164795,
+      "query_latency_sec": 6.355228424072266,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -3602,7 +3613,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 7.880634307861328,
+      "query_latency_sec": 6.537282228469849,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -3623,14 +3634,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 76.84733462333679,
+      "query_latency_sec": 63.26111459732056,
       "nli_confidence": 0.0007589321212435607,
       "sbert_confidence": 0.8915159702301025,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_4&P_2": 2,
-        "P_4&P_12&P_2": 1
+        "P_4&P_2": 3
       }
     },
     {
@@ -3647,14 +3657,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 58.24903893470764,
+      "query_latency_sec": 60.261457681655884,
       "nli_confidence": 0.009653140208683908,
       "sbert_confidence": 0.9040029644966125,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_9&P_8": 2,
-        "P_9=>P_8": 1
+        "P_9&P_8": 3
       }
     },
     {
@@ -3671,14 +3680,13 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 49.705281257629395,
+      "query_latency_sec": 64.31165146827698,
       "nli_confidence": 0.9998035228663866,
       "sbert_confidence": 0.8504472970962524,
       "voting_triggered": true,
-      "voting_confidence": 0.6666666666666666,
+      "voting_confidence": 1.0,
       "vote_counts": {
-        "P_17&P_16": 2,
-        "P_17": 1
+        "P_17&P_16": 3
       }
     },
     {
@@ -3695,7 +3703,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 63.06764769554138,
+      "query_latency_sec": 73.53487253189087,
       "nli_confidence": 0.0045346020233409945,
       "sbert_confidence": 0.9152349233627319,
       "voting_triggered": true,
@@ -3718,13 +3726,14 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 74.64867758750916,
+      "query_latency_sec": 75.14653658866882,
       "nli_confidence": 0.9998932990474714,
       "sbert_confidence": 0.42179957032203674,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_12": 3
+        "P_12": 2,
+        "P_4": 1
       }
     },
     {
@@ -3741,7 +3750,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 36.04627966880798,
+      "query_latency_sec": 32.54162788391113,
       "nli_confidence": 0.0015470033467863686,
       "sbert_confidence": 0.9276079535484314,
       "voting_triggered": true,
@@ -3764,7 +3773,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 50.683961629867554,
+      "query_latency_sec": 79.49246573448181,
       "nli_confidence": 0.14172598323784769,
       "sbert_confidence": 0.8918235898017883,
       "voting_triggered": true,
@@ -3787,7 +3796,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 90.95633673667908,
+      "query_latency_sec": 82.66450500488281,
       "nli_confidence": 0.9998986511809562,
       "sbert_confidence": 0.6695950031280518,
       "voting_triggered": true,
@@ -3810,13 +3819,14 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 107.6428542137146,
+      "query_latency_sec": 100.40310788154602,
       "nli_confidence": 0.9994509905081941,
       "sbert_confidence": 0.7467482089996338,
       "voting_triggered": true,
-      "voting_confidence": 1.0,
+      "voting_confidence": 0.6666666666666666,
       "vote_counts": {
-        "P_3&P_21": 3
+        "P_3&P_21": 2,
+        "P_3": 1
       }
     },
     {
@@ -3833,7 +3843,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 44.00710678100586,
+      "query_latency_sec": 56.26213502883911,
       "nli_confidence": 0.9551822021603584,
       "sbert_confidence": 0.7828450202941895,
       "voting_triggered": true,
@@ -3856,7 +3866,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 81.89087080955505,
+      "query_latency_sec": 104.7988805770874,
       "nli_confidence": -0.9945028517395258,
       "sbert_confidence": 0.4591192603111267,
       "voting_triggered": true,
@@ -3880,7 +3890,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 84.63565993309021,
+      "query_latency_sec": 78.4590380191803,
       "nli_confidence": 0.9999079629815242,
       "sbert_confidence": 0.37078744173049927,
       "voting_triggered": true,
@@ -3903,7 +3913,7 @@
       "error": null,
       "error_type": null,
       "is_correct": false,
-      "query_latency_sec": 97.74761605262756,
+      "query_latency_sec": 109.96534514427185,
       "nli_confidence": -0.9995000473427353,
       "sbert_confidence": 0.568709671497345,
       "voting_triggered": true,
@@ -3918,25 +3928,21 @@
       "original_idx": 157,
       "hypothesis_text": "Everton's Romelu Lukaku scored twice to secure a 3-1 win over Southampton in their FA Cup quarter-final clash.",
       "ground_truth": "not_mentioned",
-      "prediction": "UNCERTAIN",
-      "prediction_4way": "uncertain",
-      "confidence": 0.5,
-      "formula": "P_5",
+      "prediction": "NOT MENTIONED",
+      "prediction_4way": "not_mentioned",
+      "confidence": 1.0,
+      "formula": "NONE",
       "query_mode": "entailment",
-      "explanation": "Query is consistent but not entailed by the knowledge base",
+      "explanation": "No matching proposition for hypothesis",
       "error": null,
       "error_type": null,
-      "is_correct": false,
-      "query_latency_sec": 90.47918272018433,
-      "nli_confidence": -0.9998516699270112,
-      "sbert_confidence": 0.45008912682533264,
-      "voting_triggered": true,
-      "voting_confidence": 0.3333333333333333,
-      "vote_counts": {
-        "P_5": 1,
-        "P_19": 1,
-        "NONE": 1
-      }
+      "is_correct": true,
+      "query_latency_sec": 9.129127979278564,
+      "nli_confidence": 0.5,
+      "sbert_confidence": null,
+      "voting_triggered": false,
+      "voting_confidence": null,
+      "vote_counts": null
     },
     {
       "premise_id": 9,
@@ -3952,7 +3958,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 1.4354665279388428,
+      "query_latency_sec": 1.483428955078125,
       "nli_confidence": -1,
       "sbert_confidence": null,
       "voting_triggered": false,
@@ -3973,7 +3979,7 @@
       "error": null,
       "error_type": null,
       "is_correct": true,
-      "query_latency_sec": 12.045969486236572,
+      "query_latency_sec": 6.934502840042114,
       "nli_confidence": 0.5,
       "sbert_confidence": null,
       "voting_triggered": false,
