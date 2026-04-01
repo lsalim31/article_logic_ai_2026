@@ -1,0 +1,91 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is late for work today",
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "explanation": "This is an atomic, truth-evaluable condition mentioned in the conditional; it contains no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett receives a warning today",
+      "evidence": "Sentence 0: \"...she will receive a warning.\" / Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "explanation": "This is an atomic, truth-evaluable event/state; negation is handled in constraints rather than inside the proposition."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9983453750610352,
+      "combined=(llm)*(nli)": 0.9983453750610352,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Scarlett does not receive a warning today",
+      "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "reasoning": "This is explicitly stated as a factual claim about today.",
+      "list nli": [
+        [
+          0.0014906286960467696,
+          0.00016397915896959603,
+          0.9983453750610352
+        ],
+        [
+          0.9999648332595825,
+          7.754993021080736e-06,
+          2.7388816306483932e-05
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996863603591919,
+      "combined=(llm)*(nli)": 0.8997177243232727,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is late for work today, then Scarlett receives a warning today",
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "reasoning": "The text presents a strong conditional rule ('will') linking being late to receiving a warning; mapping it to today is strongly suggested by the immediate 'Today...' follow-up, though the rule is stated generally.",
+      "list nli": [
+        [
+          1.159166913566878e-05,
+          0.0003021256416104734,
+          0.9996863603591919
+        ],
+        [
+          0.0002057884557871148,
+          0.00026620953576639295,
+          0.9995280504226685
+        ]
+      ],
+      "weight": 0.8997177243232727
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.976798415184021,
+      "combined=(llm)*(nli)": 0.6837588906288147,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "¬P_2 ⟹ ¬P_1",
+      "translation": "If Scarlett does not receive a warning today, then Scarlett is not late for work today",
+      "evidence": "Sentence 0-1: rule about lateness leading to warning, plus \"Today...did not receive a warning.\"",
+      "reasoning": "Given the stated policy-like rule, it is a plausible (but defeasible) inference that lack of a warning suggests she was not late; in real settings warnings might be omitted despite lateness, so this is not treated as certain.",
+      "list nli": [
+        [
+          0.022930705919861794,
+          0.0002708873653318733,
+          0.976798415184021
+        ],
+        [
+          0.9604285955429077,
+          0.0005930027109570801,
+          0.03897840529680252
+        ]
+      ],
+      "weight": 0.6837588906288147
+    }
+  ]
+}

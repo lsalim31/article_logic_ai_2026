@@ -1,0 +1,146 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Elijah has a new job",
+      "evidence": "Sentence 0: \"If Elijah has a new job\"",
+      "explanation": "This is an atomic state attribution about Elijah (having a new job) with no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Elijah will get a raise",
+      "evidence": "Sentence 0: \"then he will get a raise\"",
+      "explanation": "This is an atomic future-directed claim (getting a raise) and is not itself a connective."
+    },
+    {
+      "id": "P_3",
+      "translation": "Elijah is receiving the raise he had anticipated",
+      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated\"",
+      "explanation": "This is the positive form of the negated claim in the text, expressed as a simple declarative clause without negation or connectives."
+    },
+    {
+      "id": "P_4",
+      "translation": "Elijah had anticipated a raise",
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "explanation": "The noun phrase presupposes that Elijah anticipated a raise; this is a separate atomic proposition needed to capture that presupposed content."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9997544884681702,
+      "combined=(llm)*(nli)": 0.9997544884681702,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Elijah has a new job, then Elijah will get a raise",
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "reasoning": "This is stated explicitly as a conditional in the text.",
+      "list nli": [
+        [
+          2.3426435291185044e-05,
+          0.00022205452842172235,
+          0.9997544884681702
+        ],
+        [
+          6.732430392730748e-06,
+          0.0002595496771391481,
+          0.9997337460517883
+        ],
+        [
+          6.624401521548862e-06,
+          0.0003491636598482728,
+          0.9996441602706909
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9992039799690247,
+      "combined=(llm)*(nli)": 0.9492437809705734,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah had anticipated a raise",
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "reasoning": "The description \"the raise he had anticipated\" strongly implies Elijah anticipated a raise; conditioning on P_3 makes this presupposition link explicit.",
+      "list nli": [
+        [
+          0.0001167558366432786,
+          0.0006792781641706824,
+          0.9992039799690247
+        ],
+        [
+          0.0019674126524478197,
+          0.0045331851579248905,
+          0.9934993982315063
+        ],
+        [
+          5.92523610976059e-05,
+          0.007065282668918371,
+          0.9928754568099976
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996527433395386,
+      "combined=(llm)*(nli)": 0.8996874690055847,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Elijah is not receiving the raise he had anticipated",
+      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated.\"",
+      "reasoning": "The text directly asserts non-receipt; the modal \"would\" introduces slight uncertainty about whether it is a projected/conditional scenario, so the weight is high but not maximal.",
+      "list nli": [
+        [
+          0.0003066984354518354,
+          4.05564351240173e-05,
+          0.9996527433395386
+        ],
+        [
+          0.0012813796056434512,
+          0.00041494795004837215,
+          0.9983036518096924
+        ],
+        [
+          0.9793865084648132,
+          0.0004054841410834342,
+          0.02020803652703762
+        ]
+      ],
+      "weight": 0.8996874690055847
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9997983574867249,
+      "combined=(llm)*(nli)": 0.7998386859893799,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah will get a raise",
+      "evidence": "Sentence 1: \"the raise he had anticipated\" (in context of receiving a raise)",
+      "reasoning": "By common-sense semantics, receiving a (particular) raise entails getting a raise; this is an implied relationship rather than explicitly stated.",
+      "list nli": [
+        [
+          8.419321966357529e-05,
+          0.00011752504360629246,
+          0.9997983574867249
+        ],
+        [
+          6.8476347223622724e-06,
+          0.00045746276737190783,
+          0.9995356798171997
+        ],
+        [
+          0.0006106923101469874,
+          0.0009103838237933815,
+          0.9984789490699768
+        ]
+      ],
+      "weight": 0.7998386859893799
+    }
+  ]
+}

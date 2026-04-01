@@ -1,0 +1,68 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Elijah has a new job.",
+      "evidence": "Sentence 0: \"If Elijah has a new job\"",
+      "explanation": "This is an atomic state about Elijah; it contains no logical connective or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Elijah will get a raise.",
+      "evidence": "Sentence 0: \"then he will get a raise\"",
+      "explanation": "This is an atomic future event claim; it contains no logical connective or negation."
+    },
+    {
+      "id": "P_3",
+      "translation": "Elijah is receiving the raise he had anticipated.",
+      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated\"",
+      "explanation": "This is a single declarative clause describing a specific kind of raise receipt (the anticipated one). It is treated as atomic so that the text's negation can be represented as ¬P_3."
+    },
+    {
+      "id": "P_4",
+      "translation": "Elijah had anticipated a raise.",
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "explanation": "This is an atomic past-mental-state claim (anticipation). It is separable from whether he actually receives that raise."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Elijah has a new job, then he will get a raise.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "reasoning": "The conditional is stated explicitly with no hedging, so it is treated as a hard implication."
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Elijah would not be receiving the raise he had anticipated.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated\"",
+      "reasoning": "This is an explicit negation in the text (\"would not\"), so the negated proposition should hold with certainty."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Elijah had anticipated a raise.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "reasoning": "Referring to \"the raise he had anticipated\" strongly presupposes that Elijah anticipated a raise, though this is backgrounded rather than asserted as the main point."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah had anticipated a raise.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "reasoning": "By meaning, receiving 'the raise he had anticipated' implies he anticipated a raise. This is a semantic entailment rather than a separately emphasized claim, so it is slightly below 1.0."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receiving'",
+    "           Affirmative clause: 'However , he would be receiving the raise he had anticipated .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}
