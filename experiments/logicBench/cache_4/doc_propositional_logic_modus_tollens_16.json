@@ -1,0 +1,48 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is late for work today",
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "explanation": "This is an atomic, truth-evaluable condition mentioned in the conditional; it contains no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett receives a warning today",
+      "evidence": "Sentence 0: \"...she will receive a warning.\" / Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "explanation": "This is an atomic, truth-evaluable event/state; negation is handled in constraints rather than inside the proposition."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is late for work today, then Scarlett receives a warning today",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "reasoning": "The text presents a strong conditional rule ('will') linking being late to receiving a warning; mapping it to today is strongly suggested by the immediate 'Today...' follow-up, though the rule is stated generally."
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Scarlett does not receive a warning today",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "reasoning": "This is explicitly stated as a factual claim about today."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_2 ⟹ ¬P_1",
+      "translation": "If Scarlett does not receive a warning today, then Scarlett is not late for work today",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0-1: rule about lateness leading to warning, plus \"Today...did not receive a warning.\"",
+      "reasoning": "Given the stated policy-like rule, it is a plausible (but defeasible) inference that lack of a warning suggests she was not late; in real settings warnings might be omitted despite lateness, so this is not treated as certain."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receive'",
+    "           Affirmative clause: 'Today , Scarlett did receive a warning .'",
+    "           Matched to: P_2",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Ethan has a passion for cooking.",
+      "evidence": "Sentence 0: \"Ethan's passion for cooking\"",
+      "explanation": "Atomic state attribution to Ethan; the text directly ascribes this passion."
+    },
+    {
+      "id": "P_2",
+      "translation": "Ethan's passion for cooking ignited at a young age.",
+      "evidence": "Sentence 0: \"Ethan's passion for cooking ignited at a young age\"",
+      "explanation": "Atomic event/timing claim about the passion; no explicit connective structure inside the clause."
+    },
+    {
+      "id": "P_3",
+      "translation": "Ethan's grandmother's treats exist.",
+      "evidence": "Sentence 0: \"his grandmother's delectable treats\"",
+      "explanation": "Existence of the referenced treats is an atomic presupposition required to make the description truth-evaluable."
+    },
+    {
+      "id": "P_4",
+      "translation": "Ethan's grandmother's treats are delectable.",
+      "evidence": "Sentence 0: \"his grandmother's delectable treats\"",
+      "explanation": "Single property attribution to the treats; no further decomposition is needed."
+    },
+    {
+      "id": "P_5",
+      "translation": "Ethan's passion for cooking was fueled by his grandmother's treats.",
+      "evidence": "Sentence 0: \"fueled by his grandmother's delectable treats\"",
+      "explanation": "Atomic causal/boosting relation asserted by the sentence; not a logical connective."
+    },
+    {
+      "id": "P_6",
+      "translation": "Ethan aspired to become a chef.",
+      "evidence": "Sentence 1: \"He aspired to become a chef\"",
+      "explanation": "Atomic desire/aspiration claim about Ethan."
+    },
+    {
+      "id": "P_7",
+      "translation": "Ethan pursues this path.",
+      "evidence": "Sentence 1: \"he pursued this path\" (appears inside a hypothetical)",
+      "explanation": "Atomic action/path-commitment claim, introduced to serve as the antecedent of the described hypothetical."
+    },
+    {
+      "id": "P_8",
+      "translation": "Ethan makes a delicious cake.",
+      "evidence": "Sentence 1: \"he would make a delicious cake\"; Sentence 2: \"make a delicious cake\"",
+      "explanation": "Atomic outcome claim (kept positive to allow negation to be expressed in constraints)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "Ethan's passion igniting at a young age entails that he has a passion for cooking.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Ethan's passion for cooking ignited at a young age\"",
+      "reasoning": "If a passion ignited, the passion exists; this is a direct semantic entailment of the phrasing."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "Delectable treats entail the existence of the treats.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"his grandmother's delectable treats\"",
+      "reasoning": "Predicating a property of an entity presupposes the entity exists in the discourse."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_5 ⟹ P_1",
+      "translation": "Being fueled by his grandmother's treats entails that Ethan has a passion for cooking.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"fueled by his grandmother's delectable treats\"",
+      "reasoning": "Something that is fueled (his passion) is being treated as present; this strongly implies the passion exists, though it is already stated explicitly."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_5 ⟹ P_3",
+      "translation": "If Ethan's passion was fueled by his grandmother's treats, then those treats exist.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"fueled by his grandmother's delectable treats\"",
+      "reasoning": "Fueling by a referenced item strongly presupposes the item exists."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "Pursuing this path leads to making a delicious cake.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 1: \"believing that if he pursued this path, he would make a delicious cake\"",
+      "reasoning": "The conditional is presented as Ethan's belief rather than as an objective fact, so it is modeled as a weaker (uncertain) constraint."
+    },
+    {
+      "id": "C_6",
+      "formula": "¬P_8",
+      "translation": "Ethan will not make a delicious cake.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"However, he won't make a delicious cake.\"",
+      "reasoning": "This is an explicit, unqualified statement by the narrator, indicated by \"However\" as a corrective to the prior belief."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'make'",
+    "           Affirmative clause: 'However , he wo make a delicious cake .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

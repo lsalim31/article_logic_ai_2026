@@ -1,0 +1,233 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
+      "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
+      "explanation": "This is a single descriptive claim about Henry's reputation/habit, with no logical connectives or conditions to split further."
+    },
+    {
+      "id": "P_2",
+      "translation": "Henry forgot his wallet.",
+      "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic event claim about Henry forgetting his wallet, which serves as an antecedent for a conditional stated later."
+    },
+    {
+      "id": "P_3",
+      "translation": "Henry was supposed to buy lunch.",
+      "evidence": "Sentence 1: \"...he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic normative/expectation claim about Henry's obligation/plan, not decomposable into simpler propositional parts."
+    },
+    {
+      "id": "P_4",
+      "translation": "Henry was able to buy lunch.",
+      "evidence": "Sentence 3: \"...he was still able to buy lunch.\"",
+      "explanation": "This is a single capability/achievement claim stated as a simple declarative clause."
+    },
+    {
+      "id": "P_5",
+      "translation": "Henry was unable to buy lunch.",
+      "evidence": "Sentence 2: \"...then he would not be able to buy lunch.\"",
+      "explanation": "The text asserts an 'inability' outcome in the rule; phrasing it as 'unable' keeps it atomic (no explicit negation word) and allows the rule to be represented without embedding negation inside a primitive."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999276399612427,
+      "combined=(llm)*(nli)": 0.9999276399612427,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as background fact.",
+      "list nli": [
+        [
+          2.9365590307861567e-05,
+          4.2993469833163545e-05,
+          0.9999276399612427
+        ],
+        [
+          1.777365105226636e-05,
+          8.881971007212996e-05,
+          0.9998934268951416
+        ],
+        [
+          8.815732144284993e-05,
+          2.9969087336212397e-05,
+          0.9998818635940552
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999262094497681,
+      "combined=(llm)*(nli)": 0.9999262094497681,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "On the relevant day, Henry forgot his wallet.",
+      "evidence": "Sentence 1",
+      "reasoning": "The narrative explicitly states that the day in question is a day Henry forgot his wallet.",
+      "list nli": [
+        [
+          1.957537097041495e-05,
+          5.425756171462126e-05,
+          0.9999262094497681
+        ],
+        [
+          0.00026322933263145387,
+          3.21889529004693e-05,
+          0.9997045397758484
+        ],
+        [
+          0.8692725896835327,
+          0.00025642194668762386,
+          0.13047096133232117
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999088048934937,
+      "combined=(llm)*(nli)": 0.9999088048934937,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "On that day, Henry was supposed to buy lunch.",
+      "evidence": "Sentence 1",
+      "reasoning": "This is explicitly stated as part of the setup for the situation.",
+      "list nli": [
+        [
+          4.619164974428713e-05,
+          4.4977743527852e-05,
+          0.9999088048934937
+        ],
+        [
+          0.00011729393736459315,
+          2.145008329534903e-05,
+          0.9998612403869629
+        ],
+        [
+          0.0019066461827605963,
+          0.0007775407284498215,
+          0.9973158240318298
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9987779259681702,
+      "combined=(llm)*(nli)": 0.9987779259681702,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Henry was still able to buy lunch.",
+      "evidence": "Sentence 3",
+      "reasoning": "This is stated as the surprising outcome.",
+      "list nli": [
+        [
+          0.001187609974294901,
+          3.450848089414649e-05,
+          0.9987779259681702
+        ],
+        [
+          0.588656485080719,
+          0.0009408447658643126,
+          0.41040265560150146
+        ],
+        [
+          3.672155798994936e-05,
+          0.9986544847488403,
+          0.0013088706182315946
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999045133590698,
+      "combined=(llm)*(nli)": 0.9999045133590698,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_2 ⟹ P_5",
+      "translation": "According to the rule: if Henry forgot his wallet, then Henry was unable to buy lunch.",
+      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
+      "reasoning": "The conditional is explicitly presented as a rule; the text strongly commits to the rule's content, even though the later sentence indicates an exception/violation in this case.",
+      "list nli": [
+        [
+          9.352912456961349e-06,
+          8.607983181718737e-05,
+          0.9999045133590698
+        ],
+        [
+          9.358125680591911e-05,
+          3.176277823513374e-05,
+          0.9998745918273926
+        ],
+        [
+          9.757572843227535e-05,
+          5.631491876556538e-05,
+          0.9998461008071899
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9971850514411926,
+      "combined=(llm)*(nli)": 0.9473257988691329,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "¬(P_4 ∧ P_5)",
+      "translation": "Henry being able to buy lunch and Henry being unable to buy lunch cannot both hold.",
+      "evidence": "Sentence 2 (\"not be able\") and Sentence 3 (\"still able\")",
+      "reasoning": "By common-sense semantics, 'able' and 'unable' are mutually exclusive states. The weight is slightly below 1.0 to allow for edge cases (e.g., different interpretations or times), but the intended meaning is strong incompatibility.",
+      "list nli": [
+        [
+          0.001321669784374535,
+          0.0014933166094124317,
+          0.9971850514411926
+        ],
+        [
+          0.0072790649719536304,
+          0.0023975197691470385,
+          0.9903234243392944
+        ],
+        [
+          0.002675403608009219,
+          0.007885170169174671,
+          0.9894394278526306
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9885199666023254,
+      "combined=(llm)*(nli)": 0.9885199666023254,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0013549956493079662,
+          0.010125012136995792,
+          0.9885199666023254
+        ],
+        [
+          0.0030917527619749308,
+          0.031216662377119064,
+          0.9656915664672852
+        ],
+        [
+          0.004461216274648905,
+          0.043512213975191116,
+          0.9520266056060791
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

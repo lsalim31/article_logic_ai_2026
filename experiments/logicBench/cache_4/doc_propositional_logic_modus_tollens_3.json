@@ -1,0 +1,95 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Mason decides to leave his job.",
+      "evidence": "Sentence 0: \"If Mason decides to leave his job\"",
+      "explanation": "This is an atomic decision-state attributed to Mason; it is not a logical connective and can be true or false independently."
+    },
+    {
+      "id": "P_2",
+      "translation": "Mason receives a salary.",
+      "evidence": "Sentence 1: \"Mason still receives his salary.\"",
+      "explanation": "This is an atomic, truth-evaluable claim about Mason receiving salary; negation and conditional structure are handled in constraints."
+    },
+    {
+      "id": "P_3",
+      "translation": "Mason has a job.",
+      "evidence": "Sentence 0: \"his job\"",
+      "explanation": "The phrase presupposes Mason has a job; represented as a single atomic proposition rather than embedding it inside other propositions."
+    },
+    {
+      "id": "P_4",
+      "translation": "Mason receives his regular paycheck.",
+      "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
+      "explanation": "This is a specific atomic claim about receiving a regular paycheck; it is not reducible into connectives within the text."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ ¬P_2",
+      "translation": "If Mason decides to leave his job, then Mason does not receive a salary.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
+      "reasoning": "This is stated as a direct conditional consequence in the text with no hedging."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Mason receives a salary.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"Mason still receives his salary.\"",
+      "reasoning": "This is asserted as an actual fact (\"still receives\") rather than a possibility."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Mason receives his regular paycheck.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
+      "reasoning": "This is explicitly presented as an observed fact in the narrative."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_2",
+      "translation": "If Mason receives his regular paycheck, then Mason receives a salary.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"receives his salary\"; Sentence 2: \"receiving his regular paycheck\"",
+      "reasoning": "A regular paycheck is commonly a form of salary payment, and the text juxtaposes both as describing the same ongoing payment situation; treated as a strong but slightly defeasible commonsense implication."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_3",
+      "translation": "Mason has a job.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"leave his job\"",
+      "reasoning": "Referring to \"his job\" strongly presupposes Mason has a job, though it is not asserted in a standalone sentence."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Mason receives a salary, then Mason has a job.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 1: \"receives his salary\" (with context from Sentence 0: \"his job\")",
+      "reasoning": "Receiving a salary typically implies employment (having a job), but edge cases exist (e.g., delayed payments after leaving), so this is a moderate-strength commonsense constraint."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 0: Found negation of 'receive'",
+    "           Affirmative clause: 'If Mason decides to leave his job , he will receive any salary .'",
+    "           Matched to: P_2",
+    "           Added constraint: ¬P_2 @1.0",
+    "[Auxiliary] Found 0 auxiliary propositions",
+    {
+      "prop_id": "P_2",
+      "translation": "Mason receives a salary.",
+      "positive_constraint": "C_2",
+      "negative_constraint": "C_7",
+      "nli_score_positive": 0.9933556318283081,
+      "nli_score_negative": 0.036663077771663666,
+      "decision": "keep positive",
+      "removed": "C_7"
+    }
+  ]
+}

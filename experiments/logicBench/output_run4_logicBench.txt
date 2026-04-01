@@ -1,0 +1,4971 @@
+nohup: ignoring input
+Loading data from /home/logify/article_logic_ai_2026/experiments/baseline_logiclm_plus/data/LogicBench(Eval)/BQA/propositional_logic/modus_tollens/data_instances.json...
+  Loaded 20 samples with 40 total questions
+  Logic type: propositional_logic, Axiom: modus_tollens
+
+[1/20] Sample 1 (propositional_logic_modus_tollens_1): 36 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_1_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that liam didn't finish his work early?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that liam didn't finish his work early?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Liam didn't finish his work early.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 26 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Loading NLI Model (cross-encoder/nli-deberta-v3-large)...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'liam', 'finish', 'work', 'early']
+  [Antonym Detection] Word 'finish' has antonyms: ['start', 'beginning', 'begin']
+  [Antonym Detection] Word 'work' has antonyms: ['malfunction', 'idle']
+  [Antonym Detection] Word 'early' has antonyms: ['middle', 'late']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Liam finished his work early for the...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8525 (NLI score: 0.9989)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Liam finished his work early for the...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: ¬P_1 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Liam finished his work early for the...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: ¬P_1 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_4', '(P_3 ⟹ ¬P_2)', '(P_4 ⟹ ¬P_2)']
+[DEBUG] Parsing formula: '¬P_1'
+  [x] q0: pred=FALSE (no) gt=yes
+      formula: ¬P_1
+      nli_confidence: 1.00
+      sbert_confidence: 0.85
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that liam finished his work early?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that liam finished his work early?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_1_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Liam finished his work early
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_1_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 21 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+ Total of 3 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'liam', 'finished', 'work', 'early']
+  [Antonym Detection] Word 'finished' has antonyms: ['begin', 'unfinished']
+  [Antonym Detection] Word 'work' has antonyms: ['malfunction', 'idle']
+  [Antonym Detection] Word 'early' has antonyms: ['middle', 'late']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Liam chose something else for dinner on the particular day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5269 (NLI score: 0.9964)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+  Cand 0: P_4
+    -> Verbal: Liam chose something else for dinner on the particular day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+  Cand 0: P_4
+    -> Verbal: Liam chose something else for dinner on the particular day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_4', '(P_3 ⟹ ¬P_2)', '(P_4 ⟹ ¬P_2)']
+[DEBUG] Parsing formula: 'P_4'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_4
+      nli_confidence: 1.00
+      sbert_confidence: 0.53
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[2/20] Sample 2 (propositional_logic_modus_tollens_2): 41 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_2_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that isabella didn't finish her project on time?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that isabella didn't finish her project on time?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_2_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Isabella didn't finish her project on time
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_2_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 22 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'isabella', 'finish', 'project', 'time']
+  [Antonym Detection] Word 'finish' has antonyms: ['start', 'beginning', 'begin']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: isabella finishes her project on time.
+    Consequent: isabella receives a bonus from her company.
+    Antecedent overlap: 0.80
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Isabella finishes her project on tim...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9094 (NLI score: 0.0022)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Isabella finishes her project on tim...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Isabella finishes her project on tim...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2 ⟹ P_3', '¬P_3', 'P_4']
+[DEBUG] Parsing formula: '¬P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] q0: pred=TRUE (yes) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.91
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that isabella finished her project on time?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that isabella finished her project on time?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_2_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Isabella finished her project on time
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_2_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 18 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.05 C:0.00 N:0.95
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+ Total of 9 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'isabella', 'finished', 'project', 'time']
+  [Antonym Detection] Word 'finished' has antonyms: ['begin', 'unfinished']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: isabella finishes her project on time.
+    Consequent: isabella receives a bonus from her company.
+    Antecedent overlap: 0.80
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Isabella works hard on her project...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8143 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Isabella works hard on her project...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Isabella works hard on her project...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2 ⟹ P_3', '¬P_3', 'P_4']
+[DEBUG] Parsing formula: 'P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_1
+      nli_confidence: 1.00
+      sbert_confidence: 0.81
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[3/20] Sample 3 (propositional_logic_modus_tollens_3): 29 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_3_weighted.json
+#################### 
+FUNCTION: translate_query : Does this infer that mason didn't leave his job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that mason didn't leave his job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_3_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Mason didn't leave his job.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_3_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 27 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'mason', 'leave', 'job']
+  [Antonym Detection] Word 'leave' has antonyms: ['enter', 'disinherit', 'arrive']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_4 ⟹ P_2
+    Antecedent: mason receives his regular paycheck.
+    Consequent: mason receives a salary.
+    Antecedent overlap: 0.40
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Mason decides to leave his job...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8663 (NLI score: 0.9920)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_3
+    -> Verbal: Mason has a job...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.01)
+    → Got formula: P_3 (score: 0.02)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Mason decides to leave his job...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.99)
+
+[Adaptive Voting] Vote results: {'~P_1': 2, 'P_3': 1}
+[Adaptive Voting] Winner: ~P_1 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ ¬P_2', 'P_2', 'P_4', 'P_4 ⟹ P_2']
+[DEBUG] Parsing formula: '¬P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] q0: pred=TRUE (yes) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.99
+      sbert_confidence: 0.87
+      voting: TRIGGERED (conf=0.67, counts={'~P_1': 2, 'P_3': 1})
+#################### 
+FUNCTION: translate_query : Does this infer that mason left his job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that mason left his job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_3_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that mason left his job
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_3_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 31 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+ Total of 9 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'mason', 'left', 'job']
+  [Antonym Detection] Word 'left' has antonyms: ['center', 'enter', 'disinherit', 'right', 'arrive']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_4 ⟹ P_2
+    Antecedent: mason receives his regular paycheck.
+    Consequent: mason receives a salary.
+    Antecedent overlap: 0.40
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Mason has a job...
+    -> Score: 0.97 (Ent: 0.98, Con: 0.01)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8161 (NLI score: 0.9733)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.97
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Mason has a job...
+    -> Score: 0.97 (Ent: 0.98, Con: 0.01)
+    → Got formula: ¬P_3 (score: 0.97)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Mason has a job...
+    -> Score: 0.97 (Ent: 0.98, Con: 0.01)
+    → Got formula: ¬P_3 (score: 0.97)
+
+[Adaptive Voting] Vote results: {'~P_3': 3}
+[Adaptive Voting] Winner: ~P_3 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ ¬P_2', 'P_2', 'P_4', 'P_4 ⟹ P_2']
+[DEBUG] Parsing formula: '¬P_3'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: ¬P_3
+      nli_confidence: 0.97
+      sbert_confidence: 0.82
+      voting: TRIGGERED (conf=1.00, counts={'~P_3': 3})
+  Sample accuracy: 2/2 = 100.00%
+  Logify: 0.00s (cached: True)
+
+[4/20] Sample 4 (propositional_logic_modus_tollens_4): 42 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_4_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that jack didn't win the lottery?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that jack didn't win the lottery?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_4_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Jack didn't win the lottery.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_4_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 18 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.06 C:0.00 N:0.94
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+ Total of 14 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'win', 'lottery']
+  [Antonym Detection] Word 'win' has antonyms: ['losings', 'lose', 'fall-back', 'fail']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: jack wins the lottery.
+    Consequent: jack buys a house.
+    Antecedent overlap: 0.67
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jack wins the lottery...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8593 (NLI score: 0.0019)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jack wins the lottery...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jack wins the lottery...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3']
+[DEBUG] Parsing formula: '¬P_2'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that jack won the lottery?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that jack won the lottery?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_4_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Jack won the lottery
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_4_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 10 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.42 C:0.00 N:0.58
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'won', 'lottery']
+  [Antonym Detection] Word 'won' has antonyms: ['lost', 'fail', 'lose', 'fall-back']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: jack wins the lottery.
+    Consequent: jack buys a house.
+    Antecedent overlap: 0.67
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Jack dreams of winning the lottery...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7942 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_1
+    -> Verbal: Jack dreams of winning the lottery...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_1
+    -> Verbal: Jack dreams of winning the lottery...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_3']
+[DEBUG] Parsing formula: 'P_1'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_1
+      nli_confidence: 1.00
+      sbert_confidence: 0.79
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[5/20] Sample 5 (propositional_logic_modus_tollens_5): 31 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_5_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that sophia doesn't have the highest score in the test?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that sophia doesn't have the highest score in the test?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_5_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Sophia doesn't have the highest score in the test
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_5_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 3 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 46 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 1 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 1 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 5 retrievals
+Within translate_query_single, we finished retrieved with 3 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'have', 'highest', 'score', 'test']
+  [Antonym Detection] Word 'have' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'highest' has antonyms: ['low']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_1 ⟹ P_2
+    Antecedent: sophia has the highest score in the test.
+    Consequent: sophia is awarded a medal.
+    Antecedent overlap: 0.83
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Sophia has the highest score in the ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9377 (NLI score: 0.0008)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Sophia has the highest score in the ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Sophia has the highest score in the ...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ P_2']
+[DEBUG] Parsing formula: '¬P_1'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.00
+      sbert_confidence: 0.94
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that sophia has the highest score in the test?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that sophia has the highest score in the test?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_5_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Sophia has the highest score in the test.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_5_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 3 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 52 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 3 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 3 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 3 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 3 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 3 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 3 after filtering (0 neutral removed)
+
+ Total of 9 retrievals
+Within translate_query_single, we finished retrieved with 3 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'sophia', 'has', 'highest', 'score', 'test']
+  [Antonym Detection] Word 'has' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'highest' has antonyms: ['low']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_1 ⟹ P_2
+    Antecedent: sophia has the highest score in the test.
+    Consequent: sophia is awarded a medal.
+    Antecedent overlap: 1.00
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Sophia has the highest score in the test...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9291 (NLI score: 0.0141)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Sophia has the highest score in the test...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: P_1 (score: 0.01)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Sophia has the highest score in the test...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: P_1 (score: 0.01)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ P_2']
+[DEBUG] Parsing formula: 'P_1'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_1
+      nli_confidence: 0.01
+      sbert_confidence: 0.93
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[6/20] Sample 6 (propositional_logic_modus_tollens_6): 56 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_6_weighted.json
+#################### 
+FUNCTION: translate_query : Does this infer that james didn't forget to wear a sweater?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that james didn't forget to wear a sweater?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_6_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that James didn't forget to wear a sweater.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_6_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 10 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 29 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_5 - E:0.25 C:0.00 N:0.75
+  Stage 2 (NLI): 7 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+ Total of 23 retrievals
+Within translate_query_single, we finished retrieved with 10 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'forget', 'wear', 'sweater']
+  [Antonym Detection] Word 'forget' has antonyms: ['remember', 'mind']
+  [Antonym Detection] Word 'wear' has antonyms: ['refresh']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that James forgets to wear a sweater...
+    -> Score: 0.19 (Ent: 0.21, Con: 0.02)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9180 (NLI score: 0.1881)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.19
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that James forgets to wear a sweater...
+    -> Score: 0.19 (Ent: 0.21, Con: 0.02)
+    → Got formula: ¬P_3 (score: 0.19)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that James forgets to wear a sweater...
+    -> Score: 0.19 (Ent: 0.21, Con: 0.02)
+    → Got formula: ¬P_3 (score: 0.19)
+
+[Adaptive Voting] Vote results: {'~P_3': 3}
+[Adaptive Voting] Winner: ~P_3 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_10', 'P_9', 'P_7', 'P_8', '¬P_4', '(P_3 ⟹ ¬P_5)']
+[DEBUG] Parsing formula: '¬P_3'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_3
+      nli_confidence: 0.19
+      sbert_confidence: 0.92
+      voting: TRIGGERED (conf=1.00, counts={'~P_3': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that james forgot to wear a sweater?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that james forgot to wear a sweater?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_6_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that James forgot to wear a sweater.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_6_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 10 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 34 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_2 - E:0.02 C:0.00 N:0.98
+  Stage 2 (NLI): 6 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 6 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=10
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 6 after filtering (2 neutral removed)
+
+ Total of 18 retrievals
+Within translate_query_single, we finished retrieved with 10 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'forgot', 'wear', 'sweater']
+  [Antonym Detection] Word 'forgot' has antonyms: ['remember', 'mind']
+  [Antonym Detection] Word 'wear' has antonyms: ['refresh']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1 ⟹ ¬P_5
+    -> Verbal: if James is forgetful, then it is not the case that James we...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8637 (NLI score: 0.9944)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: ¬P_5
+    -> Verbal: it is not the case that James wears a sweater...
+    -> Score: 0.93 (Ent: 0.95, Con: 0.02)
+    → Got formula: ¬P_5 (score: 0.93)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: ¬P_5
+    -> Verbal: it is not the case that James wears a sweater...
+    -> Score: 0.93 (Ent: 0.95, Con: 0.02)
+    → Got formula: ¬P_5 (score: 0.93)
+
+[Adaptive Voting] Vote results: {'P_1=>~P_5': 1, '~P_5': 2}
+[Adaptive Voting] Winner: ~P_5 (2/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_10', 'P_9', 'P_7', 'P_8', '¬P_4', '(P_3 ⟹ ¬P_5)']
+[DEBUG] Parsing formula: '¬P_5'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: ¬P_5
+      nli_confidence: 0.93
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=0.67, counts={'P_1=>~P_5': 1, '~P_5': 2})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[7/20] Sample 7 (propositional_logic_modus_tollens_7): 41 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_7_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that isabella didn't eat a sandwich for lunch?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that isabella didn't eat a sandwich for lunch?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_7_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Isabella didn't eat a sandwich for lunch.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_7_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 3 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 20 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 3 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'isabella', 'eat', 'sandwich', 'lunch']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Isabella ate a sandwich for lunch...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8570 (NLI score: 0.9921)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Isabella ate a sandwich for lunch...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.99)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Isabella ate a sandwich for lunch...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.99)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2', 'P_3', 'P_1 ⟹ ¬P_2']
+[DEBUG] Parsing formula: '¬P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] q0: pred=TRUE (yes) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.99
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that isabella ate a sandwich for lunch?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that isabella ate a sandwich for lunch?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_7_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Isabella ate a sandwich for lunch
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_7_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 3 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 14 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=3
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+ Total of 3 retrievals
+Within translate_query_single, we finished retrieved with 3 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'isabella', 'ate', 'sandwich', 'lunch']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_3
+    -> Verbal: Isabella took a bite of a sandwich...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8462 (NLI score: 0.9808)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+  Cand 0: P_3
+    -> Verbal: Isabella took a bite of a sandwich...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+    → Got formula: P_3 (score: 0.98)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-1 SBERT propositions (from 1 retrieved)
+  Cand 0: P_3
+    -> Verbal: Isabella took a bite of a sandwich...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+    → Got formula: P_3 (score: 0.98)
+
+[Adaptive Voting] Vote results: {'P_3': 3}
+[Adaptive Voting] Winner: P_3 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2', 'P_3', 'P_1 ⟹ ¬P_2']
+[DEBUG] Parsing formula: 'P_3'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_3
+      nli_confidence: 0.98
+      sbert_confidence: 0.85
+      voting: TRIGGERED (conf=1.00, counts={'P_3': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[8/20] Sample 8 (propositional_logic_modus_tollens_8): 62 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_8_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that daniel didn't forget to take his umbrella?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that daniel didn't forget to take his umbrella?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_8_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Daniel didn't forget to take his umbrella.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_8_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 9 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 77 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_9 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 6 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 7 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_9 - E:0.03 C:0.00 N:0.97
+  Stage 2 (NLI): 6 after filtering (1 neutral removed)
+
+ Total of 19 retrievals
+Within translate_query_single, we finished retrieved with 9 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'forget', 'take', 'umbrella']
+  [Antonym Detection] Word 'forget' has antonyms: ['remember', 'mind']
+  [Antonym Detection] Word 'take' has antonyms: ['give', 'abstain', 'obviate', 'disclaim', 'refuse']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Daniel forgot to take his umbrella...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9031 (NLI score: 0.0030)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Daniel forgot to take his umbrella...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Daniel forgot to take his umbrella...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_6', '(P_2 ∧ P_4) ⟹ P_5', 'P_7', 'P_8', 'P_7 ⟹ ¬P_5', 'P_5 ⟹ ¬P_7', 'P_2 ⟹ ¬P_9']
+[DEBUG] Parsing formula: '¬P_2'
+  [x] q0: pred=FALSE (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that daniel forgot to take his umbrella?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that daniel forgot to take his umbrella?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_8_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Daniel forgot to take his umbrella.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_8_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 9 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 69 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 5 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 5 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=9
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 5 after filtering (2 neutral removed)
+
+ Total of 15 retrievals
+Within translate_query_single, we finished retrieved with 9 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'forgot', 'take', 'umbrella']
+  [Antonym Detection] Word 'forgot' has antonyms: ['remember', 'mind']
+  [Antonym Detection] Word 'take' has antonyms: ['give', 'abstain', 'obviate', 'disclaim', 'refuse']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_9
+    -> Verbal: it is not the case that Daniel has his umbrella...
+    -> Score: 0.00 (Ent: 0.01, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8321 (NLI score: 0.0050)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_9
+    -> Verbal: it is not the case that Daniel has his umbrella...
+    -> Score: 0.00 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_9 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_9
+    -> Verbal: it is not the case that Daniel has his umbrella...
+    -> Score: 0.00 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_9 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_9': 3}
+[Adaptive Voting] Winner: ~P_9 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_6', '(P_2 ∧ P_4) ⟹ P_5', 'P_7', 'P_8', 'P_7 ⟹ ¬P_5', 'P_5 ⟹ ¬P_7', 'P_2 ⟹ ¬P_9']
+[DEBUG] Parsing formula: '¬P_9'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: ¬P_9
+      nli_confidence: 0.00
+      sbert_confidence: 0.83
+      voting: TRIGGERED (conf=1.00, counts={'~P_9': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[9/20] Sample 9 (propositional_logic_modus_tollens_9): 25 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_9_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that theodore doesn't have a pet dog?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that theodore doesn't have a pet dog?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_9_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Theodore doesn't have a pet dog
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_9_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 2 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 54 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 2 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'theodore', 'have', 'pet', 'dog']
+  [Antonym Detection] Word 'have' has antonyms: ['lack', 'abstain', 'refuse']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_1 ⟹ P_2
+    Antecedent: theodore has a pet dog.
+    Consequent: theodore takes his dog out for a walk.
+    Antecedent overlap: 0.75
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Theodore has a pet dog...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9077 (NLI score: 0.0148)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Theodore has a pet dog...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.01)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Theodore has a pet dog...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.01)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ P_2', '¬P_2']
+[DEBUG] Parsing formula: '¬P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] q0: pred=TRUE (yes) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.01
+      sbert_confidence: 0.91
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that theodore has a pet dog?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that theodore has a pet dog?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_9_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Theodore has a pet dog
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_9_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 2 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 54 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 0 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.02 C:0.00 N:0.98
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 0 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 0 after filtering (2 neutral removed)
+
+ Total of 0 retrievals
+Nothing retrieved
+  [+] q1: pred=NOT MENTIONED (no) gt=no
+      formula: NONE
+      nli_confidence: -1.00
+  Sample accuracy: 2/2 = 100.00%
+  Logify: 0.00s (cached: True)
+
+[10/20] Sample 10 (propositional_logic_modus_tollens_10): 23 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_10_weighted.json
+#################### 
+FUNCTION: translate_query : Does this infer that elijah doesn't have a new job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that elijah doesn't have a new job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_10_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Elijah doesn't have a new job
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_10_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 37 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'have', 'new', 'job']
+  [Antonym Detection] Word 'have' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'new' has antonyms: ['old', 'worn']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_1 ⟹ P_2
+    Antecedent: elijah has a new job.
+    Consequent: elijah will get a raise.
+    Antecedent overlap: 0.75
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Elijah has a new job...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9415 (NLI score: 0.0079)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Elijah has a new job...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.01)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Elijah has a new job...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.01)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ P_2', '¬P_3', 'P_4']
+[DEBUG] Parsing formula: '¬P_1'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.01
+      sbert_confidence: 0.94
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that elijah has a new job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that elijah has a new job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_10_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Elijah has a new job
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_10_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 40 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.02 C:0.00 N:0.98
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.05 C:0.00 N:0.95
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (1 neutral removed)
+
+ Total of 9 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'has', 'new', 'job']
+  [Antonym Detection] Word 'has' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'new' has antonyms: ['old', 'worn']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_1 ⟹ P_2
+    Antecedent: elijah has a new job.
+    Consequent: elijah will get a raise.
+    Antecedent overlap: 1.00
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_2
+    -> Verbal: Elijah will get a raise...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7471 (NLI score: 0.9976)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_2
+    -> Verbal: Elijah will get a raise...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_2 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_2
+    -> Verbal: Elijah will get a raise...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_2 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_2': 3}
+[Adaptive Voting] Winner: P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1 ⟹ P_2', '¬P_3', 'P_4']
+[DEBUG] Parsing formula: 'P_2'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_2
+      nli_confidence: 1.00
+      sbert_confidence: 0.75
+      voting: TRIGGERED (conf=1.00, counts={'P_2': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[11/20] Sample 11 (propositional_logic_modus_tollens_11): 38 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_11_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that benjamin isn't going to the beach?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that benjamin isn't going to the beach?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_11_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Benjamin isn't going to the beach
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_11_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 58 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+ Total of 15 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'benjamin', 'going', 'beach']
+  [Antonym Detection] Word 'going' has antonyms: ['stay-in-place', 'be-born', 'stop', 'malfunction', 'come']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Benjamin is going to the beach...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9035 (NLI score: 0.0188)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.02
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Benjamin is going to the beach...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+    → Got formula: ¬P_3 (score: 0.02)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Benjamin is going to the beach...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+    → Got formula: ¬P_3 (score: 0.02)
+
+[Adaptive Voting] Vote results: {'~P_3': 3}
+[Adaptive Voting] Winner: ~P_3 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_5', '¬P_4', 'P_1']
+[DEBUG] Parsing formula: '¬P_3'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_3
+      nli_confidence: 0.02
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'~P_3': 3})
+#################### 
+FUNCTION: translate_query : Does this infer that benjamin is going to the beach?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that benjamin is going to the beach?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_11_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Benjamin is going to the beach.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_11_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 51 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 2 after filtering (3 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+ Total of 8 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'benjamin', 'going', 'beach']
+  [Antonym Detection] Word 'going' has antonyms: ['stay-in-place', 'be-born', 'stop', 'malfunction', 'come']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Benjamin eagerly anticipates his trip to the beach for weeks...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8192 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Benjamin eagerly anticipates his trip to the beach for weeks...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_1
+    -> Verbal: Benjamin eagerly anticipates his trip to the beach for weeks...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_1 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_5', '¬P_4', 'P_1']
+[DEBUG] Parsing formula: 'P_1'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_1
+      nli_confidence: 1.00
+      sbert_confidence: 0.82
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[12/20] Sample 12 (propositional_logic_modus_tollens_12): 46 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_12_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that olivia didn't plant a tree?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that olivia didn't plant a tree?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_12_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Olivia didn't plant a tree
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_12_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 18 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+ Total of 13 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'plant', 'tree']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_4 ⟹ P_5
+    Antecedent: olivia plants a tree.
+    Consequent: olivia takes care of the tree.
+    Antecedent overlap: 0.67
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_4
+    -> Verbal: it is not the case that Olivia plants a tree...
+    -> Score: 0.91 (Ent: 0.91, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8974 (NLI score: 0.9056)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.91
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_4
+    -> Verbal: it is not the case that Olivia plants a tree...
+    -> Score: 0.91 (Ent: 0.91, Con: 0.00)
+    → Got formula: ¬P_4 (score: 0.91)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_4
+    -> Verbal: it is not the case that Olivia plants a tree...
+    -> Score: 0.91 (Ent: 0.91, Con: 0.00)
+    → Got formula: ¬P_4 (score: 0.91)
+
+[Adaptive Voting] Vote results: {'~P_4': 3}
+[Adaptive Voting] Winner: ~P_4 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4 ⟹ P_5']
+[DEBUG] Parsing formula: '¬P_4'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_4
+      nli_confidence: 0.91
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'~P_4': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that olivia planted a tree?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that olivia planted a tree?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_12_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Olivia planted a tree
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_12_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 19 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_4 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_4 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_4 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 4 after filtering (1 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'planted', 'tree']
+  [Antonym Detection] Word 'planted' has antonyms: ['unplanted']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 1 non-negated implications
+  [Implication Contradiction] Checking: P_4 ⟹ P_5
+    Antecedent: olivia plants a tree.
+    Consequent: olivia takes care of the tree.
+    Antecedent overlap: 0.67
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_2
+    -> Verbal: Olivia has the ability to plant beautiful trees...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8104 (NLI score: 0.9878)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.99
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_2
+    -> Verbal: Olivia has the ability to plant beautiful trees...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: P_2 (score: 0.99)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_2
+    -> Verbal: Olivia has the ability to plant beautiful trees...
+    -> Score: 0.99 (Ent: 0.99, Con: 0.00)
+    → Got formula: P_2 (score: 0.99)
+
+[Adaptive Voting] Vote results: {'P_2': 3}
+[Adaptive Voting] Winner: P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4 ⟹ P_5']
+[DEBUG] Parsing formula: 'P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_2
+      nli_confidence: 0.99
+      sbert_confidence: 0.81
+      voting: TRIGGERED (conf=1.00, counts={'P_2': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[13/20] Sample 13 (propositional_logic_modus_tollens_13): 34 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_13_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that jackson didn't eat a slice of pizza?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that jackson didn't eat a slice of pizza?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_13_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Jackson didn't eat a slice of pizza.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_13_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 6 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 23 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 6 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 6 after filtering (0 neutral removed)
+
+ Total of 16 retrievals
+Within translate_query_single, we finished retrieved with 6 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'eat', 'slice', 'pizza']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jackson ate the slice of pizza...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8632 (NLI score: 0.0012)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jackson ate the slice of pizza...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Jackson ate the slice of pizza...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_4']
+[DEBUG] Parsing formula: '¬P_2'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that jackson ate a slice of pizza?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that jackson ate a slice of pizza?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_13_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Jackson ate a slice of pizza.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_13_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 6 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 26 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 6 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_4 - E:0.02 C:0.00 N:0.98
+  Stage 2 (NLI): 3 after filtering (3 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 6 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 4 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=6
+              
+  Stage 1 (SBERT): 6 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_4 - E:0.08 C:0.00 N:0.92
+  Stage 2 (NLI): 3 after filtering (3 neutral removed)
+
+ Total of 10 retrievals
+Within translate_query_single, we finished retrieved with 6 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'ate', 'slice', 'pizza']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Jackson believed that eating the slice of pizza causes him t...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8120 (NLI score: 0.9996)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_4
+    -> Verbal: Jackson believed that eating the slice of pizza causes him t...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: P_4
+    -> Verbal: Jackson believed that eating the slice of pizza causes him t...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_4']
+[DEBUG] Parsing formula: 'P_4'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_4
+      nli_confidence: 1.00
+      sbert_confidence: 0.81
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[14/20] Sample 14 (propositional_logic_modus_tollens_14): 64 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_14_weighted.json
+#################### 
+FUNCTION: translate_query : Does this infer that scarlett didn't find a rare book?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this infer that scarlett didn't find a rare book?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_14_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This infers that Scarlett didn't find a rare book
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_14_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 7 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 35 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 7 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 7 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 7 after filtering (0 neutral removed)
+
+ Total of 21 retrievals
+Within translate_query_single, we finished retrieved with 7 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['infers', 'find', 'rare', 'book']
+  [Antonym Detection] Word 'find' has antonyms: ['lose']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Scarlett finds a rare book...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9405 (NLI score: 0.0028)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Scarlett finds a rare book...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_3 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-7 SBERT propositions (from 7 retrieved)
+  Cand 0: ¬P_3
+    -> Verbal: it is not the case that Scarlett finds a rare book...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_3 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_3': 3}
+[Adaptive Voting] Winner: ~P_3 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['¬P_7']
+[DEBUG] Parsing formula: '¬P_3'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_3
+      nli_confidence: 0.00
+      sbert_confidence: 0.94
+      voting: TRIGGERED (conf=1.00, counts={'~P_3': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that scarlett found a rare book?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that scarlett found a rare book?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_14_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that scarlett found a rare book
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_14_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 7 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 49 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 6 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 6 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=7
+              
+  Stage 1 (SBERT): 7 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_3 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_5 - E:0.41 C:0.00 N:0.59
+    Filtered out (neutral): P_4 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 4 after filtering (3 neutral removed)
+
+ Total of 16 retrievals
+Within translate_query_single, we finished retrieved with 7 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'found', 'rare', 'book']
+  [Antonym Detection] Word 'found' has antonyms: ['abolish', 'lost', 'lose']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_6
+    -> Verbal: Scarlett found a book one day...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9031 (NLI score: 0.0213)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.02
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: P_6
+    -> Verbal: Scarlett found a book one day...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+    → Got formula: P_6 (score: 0.02)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-6 SBERT propositions (from 6 retrieved)
+  Cand 0: P_6
+    -> Verbal: Scarlett found a book one day...
+    -> Score: 0.02 (Ent: 0.02, Con: 0.00)
+    → Got formula: P_6 (score: 0.02)
+
+[Adaptive Voting] Vote results: {'P_6': 3}
+[Adaptive Voting] Winner: P_6 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['¬P_7']
+[DEBUG] Parsing formula: 'P_6'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_6
+      nli_confidence: 0.02
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'P_6': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[15/20] Sample 15 (propositional_logic_modus_tollens_15): 49 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_15_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that henry didn't forget his wallet?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that henry didn't forget his wallet?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_15_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Henry didn't forget his wallet.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_15_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 13 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'forget', 'wallet']
+  [Antonym Detection] Word 'forget' has antonyms: ['remember', 'mind']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 2 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_5
+    Antecedent: henry forgot his wallet.
+    Consequent: henry was unable to buy lunch.
+    Antecedent overlap: 0.75
+  [Implication Contradiction] Checking: P_3 ⟹ P_3
+    Antecedent: henry was supposed to buy lunch.
+    Consequent: henry was supposed to buy lunch.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Henry forgot his wallet...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.9107 (NLI score: 0.0043)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Henry forgot his wallet...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Henry forgot his wallet...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_2 ⟹ P_5', '¬(P_4 ∧ P_5)', 'P_3 ⟹ P_3']
+[DEBUG] Parsing formula: '¬P_2'
+[DEBUG] HARD constraints UNSAT.
+  [x] q0: pred=FALSE (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.91
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that henry forgot his wallet?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that henry forgot his wallet?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_15_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Henry forgot his wallet
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_15_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 14 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 2 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 2 after filtering (2 neutral removed)
+
+ Total of 7 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'forgot', 'wallet']
+  [Antonym Detection] Word 'forgot' has antonyms: ['remember', 'mind']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 2 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_5
+    Antecedent: henry forgot his wallet.
+    Consequent: henry was unable to buy lunch.
+    Antecedent overlap: 1.00
+  [Implication Contradiction] Checking: P_3 ⟹ P_3
+    Antecedent: henry was supposed to buy lunch.
+    Consequent: henry was supposed to buy lunch.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_5
+    -> Verbal: Henry was unable to buy lunch...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.6062 (NLI score: 0.9998)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_5
+    -> Verbal: Henry was unable to buy lunch...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_5
+    -> Verbal: Henry was unable to buy lunch...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_5': 3}
+[Adaptive Voting] Winner: P_5 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_2', 'P_3', 'P_4', 'P_2 ⟹ P_5', '¬(P_4 ∧ P_5)', 'P_3 ⟹ P_3']
+[DEBUG] Parsing formula: 'P_5'
+[DEBUG] HARD constraints UNSAT.
+  [+] q1: pred=FALSE (no) gt=no
+      formula: P_5
+      nli_confidence: 1.00
+      sbert_confidence: 0.61
+      voting: TRIGGERED (conf=1.00, counts={'P_5': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[16/20] Sample 16 (propositional_logic_modus_tollens_16): 18 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_16_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that scarlett isn't late for work?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that scarlett isn't late for work?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_16_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Scarlett isn't late for work.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_16_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 2 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 12 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 2 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'late', 'work']
+  [Antonym Detection] Word 'late' has antonyms: ['middle', 'early']
+  [Antonym Detection] Word 'work' has antonyms: ['malfunction', 'idle']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Scarlett is late for work today...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8992 (NLI score: 0.9827)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.98
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Scarlett is late for work today...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.98)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: ¬P_1
+    -> Verbal: it is not the case that Scarlett is late for work today...
+    -> Score: 0.98 (Ent: 0.98, Con: 0.00)
+    → Got formula: ¬P_1 (score: 0.98)
+
+[Adaptive Voting] Vote results: {'~P_1': 3}
+[Adaptive Voting] Winner: ~P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['¬P_2']
+[DEBUG] Parsing formula: '¬P_1'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_1
+      nli_confidence: 0.98
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'~P_1': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that scarlett is late for work?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that scarlett is late for work?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_16_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Scarlett is late for work.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_16_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 2 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 13 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 1 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=2
+              
+  Stage 1 (SBERT): 2 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 2 after filtering (0 neutral removed)
+
+ Total of 4 retrievals
+Within translate_query_single, we finished retrieved with 2 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'late', 'work']
+  [Antonym Detection] Word 'late' has antonyms: ['middle', 'early']
+  [Antonym Detection] Word 'work' has antonyms: ['malfunction', 'idle']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_1
+    -> Verbal: Scarlett is late for work today...
+    -> Score: 0.97 (Ent: 0.97, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8958 (NLI score: 0.9743)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.97
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: P_1
+    -> Verbal: Scarlett is late for work today...
+    -> Score: 0.97 (Ent: 0.97, Con: 0.00)
+    → Got formula: P_1 (score: 0.97)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: P_1
+    -> Verbal: Scarlett is late for work today...
+    -> Score: 0.97 (Ent: 0.97, Con: 0.00)
+    → Got formula: P_1 (score: 0.97)
+
+[Adaptive Voting] Vote results: {'P_1': 3}
+[Adaptive Voting] Winner: P_1 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['¬P_2']
+[DEBUG] Parsing formula: 'P_1'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_1
+      nli_confidence: 0.97
+      sbert_confidence: 0.90
+      voting: TRIGGERED (conf=1.00, counts={'P_1': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[17/20] Sample 17 (propositional_logic_modus_tollens_17): 25 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_17_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that alexander isn't walking in the park?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that alexander isn't walking in the park?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_17_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Alexander isn't walking in the park.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_17_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 15 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 4 after filtering (0 neutral removed)
+
+ Total of 12 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'alexander', 'walking', 'park']
+  [Antonym Detection] Word 'walking' has antonyms: ['ride']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 3 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: alexander takes a walk in the park.
+    Consequent: alexander gets tired soon.
+    Antecedent overlap: 0.60
+  [Implication Contradiction] Checking: P_3 ⟹ P_3
+    Antecedent: alexander gets tired soon.
+    Consequent: alexander gets tired soon.
+  [Implication Contradiction] Checking: P_4 ⟹ P_4
+    Antecedent: alexander is aware that taking a walk in the park tires him out soon.
+    Consequent: alexander is aware that taking a walk in the park tires him out soon.
+    Antecedent overlap: 0.36
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Alexander takes a walk in the park...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8776 (NLI score: 0.0099)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.01
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Alexander takes a walk in the park...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.01)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-4 SBERT propositions (from 4 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Alexander takes a walk in the park...
+    -> Score: 0.01 (Ent: 0.01, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.01)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_4', 'P_2 ⟹ P_3', '¬P_3', 'P_3 ⟹ P_3', 'P_4 ⟹ P_4']
+[DEBUG] Parsing formula: '¬P_2'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [+] q0: pred=TRUE (yes) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.01
+      sbert_confidence: 0.88
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that alexander is walking in the park?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that alexander is walking in the park?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_17_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Alexander is walking in the park
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_17_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 4 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 13 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 2 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.02 C:0.00 N:0.98
+    Filtered out (neutral): P_1 - E:0.06 C:0.00 N:0.94
+  Stage 2 (NLI): 2 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=4
+              
+  Stage 1 (SBERT): 4 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 2 after filtering (2 neutral removed)
+
+ Total of 6 retrievals
+Within translate_query_single, we finished retrieved with 4 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'alexander', 'walking', 'park']
+  [Antonym Detection] Word 'walking' has antonyms: ['ride']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 3 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_3
+    Antecedent: alexander takes a walk in the park.
+    Consequent: alexander gets tired soon.
+    Antecedent overlap: 0.60
+  [Implication Contradiction] Checking: P_3 ⟹ P_3
+    Antecedent: alexander gets tired soon.
+    Consequent: alexander gets tired soon.
+  [Implication Contradiction] Checking: P_4 ⟹ P_4
+    Antecedent: alexander is aware that taking a walk in the park tires him out soon.
+    Consequent: alexander is aware that taking a walk in the park tires him out soon.
+    Antecedent overlap: 0.36
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Alexander is aware that taking a walk in the park tires him ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8601 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: P_4
+    -> Verbal: Alexander is aware that taking a walk in the park tires him ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-2 SBERT propositions (from 2 retrieved)
+  Cand 0: P_4
+    -> Verbal: Alexander is aware that taking a walk in the park tires him ...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_4', 'P_2 ⟹ P_3', '¬P_3', 'P_3 ⟹ P_3', 'P_4 ⟹ P_4']
+[DEBUG] Parsing formula: 'P_4'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_4
+      nli_confidence: 1.00
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[18/20] Sample 18 (propositional_logic_modus_tollens_18): 67 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_18_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that john doesn't have a good job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that john doesn't have a good job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_18_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that John doesn't have a good job
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_18_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 12 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 56 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 9 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 9 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 10 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 10 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 10 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 10 after filtering (0 neutral removed)
+
+ Total of 29 retrievals
+Within translate_query_single, we finished retrieved with 12 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'have', 'good', 'job']
+  [Antonym Detection] Word 'have' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'good' has antonyms: ['badness', 'evilness', 'evil', 'ill', 'bad']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that John has a good job...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8944 (NLI score: 0.0011)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that John has a good job...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-10 SBERT propositions (from 10 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that John has a good job...
+    -> Score: 0.00 (Ent: 0.00, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.00)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_4', 'P_5', 'P_6', 'P_10', 'P_11', 'P_12', '¬P_8']
+[DEBUG] Parsing formula: '¬P_2'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.00
+      sbert_confidence: 0.89
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this entail that john has a good job?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that john has a good job?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_18_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that John has a good job
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_18_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 12 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 55 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 10 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.16 C:0.00 N:0.84
+  Stage 2 (NLI): 9 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 10 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.26 C:0.00 N:0.74
+  Stage 2 (NLI): 9 after filtering (1 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=12
+              
+  Stage 1 (SBERT): 10 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.02 C:0.00 N:0.98
+  Stage 2 (NLI): 9 after filtering (1 neutral removed)
+
+ Total of 27 retrievals
+Within translate_query_single, we finished retrieved with 12 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'has', 'good', 'job']
+  [Antonym Detection] Word 'has' has antonyms: ['lack', 'abstain', 'refuse']
+  [Antonym Detection] Word 'good' has antonyms: ['badness', 'evilness', 'evil', 'ill', 'bad']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-9 SBERT propositions (from 9 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_5
+    -> Verbal: John believes that having a good job gives him financial sta...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.7489 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-9 SBERT propositions (from 9 retrieved)
+  Cand 0: P_5
+    -> Verbal: John believes that having a good job gives him financial sta...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-9 SBERT propositions (from 9 retrieved)
+  Cand 0: P_5
+    -> Verbal: John believes that having a good job gives him financial sta...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_5 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_5': 3}
+[Adaptive Voting] Winner: P_5 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_4', 'P_5', 'P_6', 'P_10', 'P_11', 'P_12', '¬P_8']
+[DEBUG] Parsing formula: 'P_5'
+[DEBUG] KB ∧ ¬Q is UNSAT; Q entailed by hard constraints.
+  [x] q1: pred=TRUE (yes) gt=no
+      formula: P_5
+      nli_confidence: 1.00
+      sbert_confidence: 0.75
+      voting: TRIGGERED (conf=1.00, counts={'P_5': 3})
+  Sample accuracy: 0/2 = 0.00%
+  Logify: 0.00s (cached: True)
+
+[19/20] Sample 19 (propositional_logic_modus_tollens_19): 41 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_19_weighted.json
+#################### 
+FUNCTION: translate_query : Does this imply that ethan isn't a chef?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that ethan isn't a chef?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_19_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Ethan isn't a chef
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_19_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 8 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 8 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+ Total of 24 retrievals
+Within translate_query_single, we finished retrieved with 8 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'chef']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 4 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_1
+    Antecedent: ethan's passion for cooking ignited at a young age.
+    Consequent: ethan has a passion for cooking.
+  [Implication Contradiction] Checking: P_4 ⟹ P_3
+    Antecedent: ethan's grandmother's treats are delectable.
+    Consequent: ethan's grandmother's treats exist.
+  [Implication Contradiction] Checking: P_5 ⟹ P_1
+    Antecedent: ethan's passion for cooking was fueled by his grandmother's treats.
+    Consequent: ethan has a passion for cooking.
+  [Implication Contradiction] Checking: P_5 ⟹ P_3
+    Antecedent: ethan's passion for cooking was fueled by his grandmother's treats.
+    Consequent: ethan's grandmother's treats exist.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8506 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_6': 3}
+[Adaptive Voting] Winner: P_6 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_1', 'P_4 ⟹ P_3', 'P_5 ⟹ P_1', 'P_5 ⟹ P_3', '¬P_8']
+[DEBUG] Parsing formula: 'P_6'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: P_6
+      nli_confidence: 1.00
+      sbert_confidence: 0.85
+      voting: TRIGGERED (conf=1.00, counts={'P_6': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that ethan is a chef?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that ethan is a chef?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_19_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Ethan is a chef.
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_19_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 8 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 8 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=8
+              
+  Stage 1 (SBERT): 8 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 8 after filtering (0 neutral removed)
+
+ Total of 24 retrievals
+Within translate_query_single, we finished retrieved with 8 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'chef']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 4 non-negated implications
+  [Implication Contradiction] Checking: P_2 ⟹ P_1
+    Antecedent: ethan's passion for cooking ignited at a young age.
+    Consequent: ethan has a passion for cooking.
+  [Implication Contradiction] Checking: P_4 ⟹ P_3
+    Antecedent: ethan's grandmother's treats are delectable.
+    Consequent: ethan's grandmother's treats exist.
+  [Implication Contradiction] Checking: P_5 ⟹ P_1
+    Antecedent: ethan's passion for cooking was fueled by his grandmother's treats.
+    Consequent: ethan has a passion for cooking.
+  [Implication Contradiction] Checking: P_5 ⟹ P_3
+    Antecedent: ethan's passion for cooking was fueled by his grandmother's treats.
+    Consequent: ethan's grandmother's treats exist.
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8634 (NLI score: 0.9999)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-8 SBERT propositions (from 8 retrieved)
+  Cand 0: P_6
+    -> Verbal: Ethan aspired to become a chef...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_6 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_6': 3}
+[Adaptive Voting] Winner: P_6 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_2 ⟹ P_1', 'P_4 ⟹ P_3', 'P_5 ⟹ P_1', 'P_5 ⟹ P_3', '¬P_8']
+[DEBUG] Parsing formula: 'P_6'
+  [+] q1: pred=UNCERTAIN (no) gt=no
+      formula: P_6
+      nli_confidence: 1.00
+      sbert_confidence: 0.86
+      voting: TRIGGERED (conf=1.00, counts={'P_6': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+[20/20] Sample 20 (propositional_logic_modus_tollens_20): 29 words, 2 questions
+    [CACHE HIT] /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_20_weighted.json
+#################### 
+FUNCTION: translate_query : Does this entail that lucas didn't skip breakfast?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this entail that lucas didn't skip breakfast?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_20_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This entails that Lucas didn't skip breakfast
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_20_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 16 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+  Stage 2 (NLI): 5 after filtering (0 neutral removed)
+
+ Total of 15 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['entails', 'skip', 'breakfast']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Lucas skipped breakfast one morning...
+    -> Score: 0.90 (Ent: 0.90, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.8762 (NLI score: 0.8976)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 0.90
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Lucas skipped breakfast one morning...
+    -> Score: 0.90 (Ent: 0.90, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.90)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-5 SBERT propositions (from 5 retrieved)
+  Cand 0: ¬P_2
+    -> Verbal: it is not the case that Lucas skipped breakfast one morning...
+    -> Score: 0.90 (Ent: 0.90, Con: 0.00)
+    → Got formula: ¬P_2 (score: 0.90)
+
+[Adaptive Voting] Vote results: {'~P_2': 3}
+[Adaptive Voting] Winner: ~P_2 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_5', '¬P_4']
+[DEBUG] Parsing formula: '¬P_2'
+  [x] q0: pred=UNCERTAIN (no) gt=yes
+      formula: ¬P_2
+      nli_confidence: 0.90
+      sbert_confidence: 0.88
+      voting: TRIGGERED (conf=1.00, counts={'~P_2': 3})
+#################### 
+FUNCTION: translate_query : Does this imply that lucas skipped breakfast?
+Multi-sentence hypothesis not detected
+
+
+          
+#FUNCTION: translate_query_single
+          
+PARAMETERS: query = Does this imply that lucas skipped breakfast?, 
+    json_path: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_20_weighted.json,
+    model: str = openai/gpt-5-nano,
+    temperature =0.1 
+    k = 10
+    sbert_model_name = all-MiniLM-L6-v2,
+    verbose = True
+          
+
+ Using Yes/No question. Checking...
+
+ #FUNCTION: convert_yes_no_to_statement
+  → Statement: This implies that Lucas skipped breakfast
+
+ 
+ Starting retrieval. Loading propositions from: /home/logify/article_logic_ai_2026/experiments/logicBench/cache/doc_propositional_logic_modus_tollens_20_weighted.json
+
+              
+#FUNCTION: retrieve_with_expanded_query. 
+              
+PARAMETERS: 5 chunks
+              
+
+#FUNCTION: expand_query_with_synonyms
+ Found 19 variants above 0.85 within expand_query_with_synonyms. Returning top 3.
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_2 - E:0.00 C:0.00 N:1.00
+    Filtered out (neutral): P_1 - E:0.00 C:0.00 N:1.00
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+              
+#FUNCTION: retrieve_top_k_propositions
+              
+PARAMETERS: k=10, minimal_similarity=0.5, 
+              enable_nli_filtering=True, num_chunks=5
+              
+  Stage 1 (SBERT): 5 candidates
+  Stage 2 (NLI): Filtering neutral propositions...
+    Filtered out (neutral): P_1 - E:0.01 C:0.00 N:0.99
+    Filtered out (neutral): P_2 - E:0.01 C:0.00 N:0.99
+  Stage 2 (NLI): 3 after filtering (2 neutral removed)
+
+ Total of 9 retrievals
+Within translate_query_single, we finished retrieved with 5 chunks
+
+Checking for modal opposites...
+
+Checking for antonym contradictions...
+  [Antonym Detection] Checking for antonym contradictions...
+  [Antonym Detection] Words to check: ['implies', 'skipped', 'breakfast']
+
+Checking for implication contradictions...
+  [Implication Contradiction] Checking for implication contradictions...
+  [Implication Contradiction] Found 0 non-negated implications
+
+Generating candidates via direct top-K retrieval...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+Step B & C: Verbalizing and Verifying with NLI...
+  Cand 0: P_4
+    -> Verbal: Lucas feels tired during the day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+
+#FUNCTION: compute_sbert_confidence
+  SBERT confidence: 0.5924 (NLI score: 0.9998)
+
+Adaptive Voting is on. Making 2 additional LLM calls. Confidence 1.00
+  [Voting] Additional call 1/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_4
+    -> Verbal: Lucas feels tired during the day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+  [Voting] Additional call 2/2...
+
+ #FUNCTION: generate_candidates_via_direct_retrieval
+  Using top-3 SBERT propositions (from 3 retrieved)
+  Cand 0: P_4
+    -> Verbal: Lucas feels tired during the day...
+    -> Score: 1.00 (Ent: 1.00, Con: 0.00)
+    → Got formula: P_4 (score: 1.00)
+
+[Adaptive Voting] Vote results: {'P_4': 3}
+[Adaptive Voting] Winner: P_4 (3/3 votes)
+[DEBUG] Hard constraints passed to encoder: ['P_1', 'P_3', 'P_5', '¬P_4']
+[DEBUG] Parsing formula: 'P_4'
+  [+] q1: pred=FALSE (no) gt=no
+      formula: P_4
+      nli_confidence: 1.00
+      sbert_confidence: 0.59
+      voting: TRIGGERED (conf=1.00, counts={'P_4': 3})
+  Sample accuracy: 1/2 = 50.00%
+  Logify: 0.00s (cached: True)
+
+============================================================
+EXPERIMENT COMPLETE
+============================================================
+Logic type: propositional_logic, Axiom: modus_tollens
+Samples processed: 20
+Questions evaluated: 40
+Correct predictions: 16
+Overall accuracy: 40.00%
+  - Yes accuracy: 5/20 = 25.00%
+  - No accuracy: 11/20 = 55.00%
+Total errors: 0
+Results saved to: /home/logify/article_logic_ai_2026/experiments/logicBench/results/20260401_012506_propositional_logic_modus_tollens_config_run4_openAI.json

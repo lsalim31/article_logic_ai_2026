@@ -1,0 +1,62 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Sophia has the highest score in the test.",
+      "evidence": "Sentence 0: \"Sophia has the highest score in the test\"; Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
+      "explanation": "This is an atomic, truth-evaluable state about Sophia's score; it is the antecedent and later referenced with negation, which is handled in constraints rather than in the proposition text."
+    },
+    {
+      "id": "P_2",
+      "translation": "Sophia is awarded a medal.",
+      "evidence": "Sentence 0: \"she will be awarded a medal\"",
+      "explanation": "This is an atomic, truth-evaluable event; it is the core consequent outcome mentioned in the conditional."
+    },
+    {
+      "id": "P_3",
+      "translation": "Sophia's performance is outstanding.",
+      "evidence": "Sentence 0: \"for her outstanding performance\"",
+      "explanation": "This is a simple property attribution to Sophia's performance; it appears as the stated basis for the medal award and can be referenced in implied constraints."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal...\"",
+      "reasoning": "This is explicitly stated as a conditional in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_1 ⟹ P_3",
+      "translation": "If Sophia has the highest score in the test, then her performance is outstanding.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
+      "reasoning": "The consequent mentions the medal as being for outstanding performance, suggesting outstanding performance would accompany the medal-award scenario, but the text primarily asserts the award; the performance attribution is slightly more interpretive."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Sophia is awarded a medal, then her performance is outstanding.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
+      "reasoning": "Common-sense and the phrasing 'for her outstanding performance' imply that receiving that medal entails outstanding performance, though such language can sometimes be rhetorical; hence less than 1.0."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_1",
+      "translation": "Sophia did not achieve the highest score in the test.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
+      "reasoning": "This is explicitly asserted as a fact (negation) in the text."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'achieve'",
+    "           Affirmative clause: 'However , unfortunately , Sophia did achieve the highest score in the test .'",
+    "           Matched to: P_1",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

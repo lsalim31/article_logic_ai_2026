@@ -13,6 +13,19 @@ Usage:
     python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --doc-id 1
     python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --limit 5
     python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --verbose
+    
+    
+/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run3_openAI_20260331_2250_data_constructed_march30.json_.json
+    
+    
+/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run6_openAI_20260401_0006_data_constructed_march30.json_.json
+    
+    
+    nohup python experiment_logicBench.py \
+  --api-key $OPENROUTER_API_KEY \
+  --logic-type propositional_logic \
+  --axiom modus_tollens \
+  --config profiles/config_run1_openAI.yaml  > output_run1_logicBench.txt 2>&1 &
 """
 
 import argparse
@@ -286,9 +299,8 @@ def logify_context(
     if verbose:
         print(f"    [WEIGHTS] Assigning weights...")
 
-    try:
-        
-                # Enrich logic structure
+    try:    
+        # Enrich logic structure
         enrich_logic_structure(
             logified_path=str(intermediate_path),
             source_path=str(temp_text_path),
@@ -296,7 +308,6 @@ def logify_context(
             verbose=verbose,
         )
 
-        
         assign_weights(
             pathfile=str(temp_text_path),
             json_path=str(intermediate_path),
