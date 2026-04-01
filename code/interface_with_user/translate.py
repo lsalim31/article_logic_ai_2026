@@ -296,6 +296,7 @@ def retrieve_top_k_propositions(
     k: int = SBERT_TOP_K, 
     minimal_similarity: float = 0.5, #SBERT_MIN_SIMILARITY
     enable_nli_filtering: bool = True, #ENABLE_NLI_FILTERING,
+    nli_entailment_threshold = 0.5, #NLI_ENTAILMENT_THRESHOLD
     verbose: bool = True
 ) -> List[Dict]:
     """
@@ -367,7 +368,7 @@ def retrieve_top_k_propositions(
             p_entailment = float(prob[2])
             
             # Keep if entails or contradicts (discard neutral)
-            if p_entailment >= NLI_ENTAILMENT_THRESHOLD or p_contradiction >= NLI_CONTRADICTION_THRESHOLD:
+            if p_entailment >=  nli_entailment_threshold  or p_contradiction >= nli_entailment_threshold:
                 chunk['nli_scores'] = {
                     'contradiction': p_contradiction,
                     'neutral': p_neutral,
