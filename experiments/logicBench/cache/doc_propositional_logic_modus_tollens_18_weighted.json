@@ -4,151 +4,151 @@
       "id": "P_1",
       "translation": "John is a hardworking individual.",
       "evidence": "Sentence 0: \"John was always a hardworking individual\"",
-      "explanation": "Single attributive claim about John; no logical connectives or conditions."
+      "explanation": "This is an atomic descriptive property of John with no internal logical structure."
     },
     {
       "id": "P_2",
       "translation": "John desires financial stability.",
       "evidence": "Sentence 0: \"the financial stability he desired\"",
-      "explanation": "Atomic desire-state attribution to John."
+      "explanation": "This states a single desire/goal and does not decompose into simpler propositions."
     },
     {
       "id": "P_3",
-      "translation": "John believes that having a good job would give him financial stability.",
-      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "explanation": "Atomic belief-state attribution; the embedded content is kept inside the belief report (no explicit logical connectives in the clause)."
+      "translation": "John has a good job.",
+      "evidence": "Sentence 0: \"having a good job\"; Sentence 1: \"if he had a good job\"",
+      "explanation": "This is a single state-of-affairs about John; it is needed as an antecedent for the conditionals described in the text."
     },
     {
       "id": "P_4",
-      "translation": "John has a good job.",
-      "evidence": "Sentence 0: \"having a good job\" (discussed as a condition he considers)",
-      "explanation": "Atomic state that is referenced as relevant in the text; needed as an antecedent for condition-like constraints."
+      "translation": "John has financial stability.",
+      "evidence": "Sentence 0: \"financial stability\"",
+      "explanation": "This is a single state-of-affairs used as the outcome in the job→stability relationship."
     },
     {
       "id": "P_5",
-      "translation": "John has financial stability.",
-      "evidence": "Sentence 0: \"financial stability\" (discussed as an outcome he wants from a good job)",
-      "explanation": "Atomic state; needed as a consequent for condition-like constraints."
+      "translation": "John has the means to invest in stocks.",
+      "evidence": "Sentence 1: \"he would have the means to invest in stocks\"",
+      "explanation": "This is a single capability/resource claim (means) without connectives."
     },
     {
       "id": "P_6",
-      "translation": "John has the means to invest in stocks.",
-      "evidence": "Sentence 1: \"he would have the means to invest in stocks\"",
-      "explanation": "Atomic possession/ability-resource claim (means); used as a prerequisite in related constraints."
+      "translation": "John invests in stocks.",
+      "evidence": "Sentence 1: \"invest in stocks\"; Sentence 2: \"invest in stocks\"",
+      "explanation": "This is an atomic action/state; negation about it is handled in constraints, not in the primitive proposition."
     },
     {
       "id": "P_7",
-      "translation": "John invests in stocks.",
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
-      "explanation": "Positive investment action as an atomic proposition; the text provides its negation, which will be represented as a constraint."
+      "translation": "John believes that having a good job would give him financial stability.",
+      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
+      "explanation": "This is an atomic mental-state report (belief) as stated by the narrator."
     },
     {
       "id": "P_8",
-      "translation": "John believes that investing in stocks is a smart financial decision.",
-      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
-      "explanation": "Atomic belief-state attribution about the evaluation of stock investing."
+      "translation": "John is convinced that having a good job would give him the means to invest in stocks.",
+      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
+      "explanation": "This is an atomic mental-state report (being convinced) about a relation; the conditional content is represented via separate propositions and constraints."
     },
     {
       "id": "P_9",
-      "translation": "John is dedicated.",
-      "evidence": "Sentence 2: \"Despite his dedication\"",
-      "explanation": "Atomic trait attribution."
+      "translation": "John believes that investing in stocks would be a smart financial decision.",
+      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
+      "explanation": "This is an atomic belief attribution about the quality of investing in stocks."
     },
     {
       "id": "P_10",
-      "translation": "John makes efforts.",
-      "evidence": "Sentence 2: \"and efforts\"",
-      "explanation": "Atomic activity/behavioral attribution."
+      "translation": "John is dedicated.",
+      "evidence": "Sentence 2: \"Despite his dedication\"",
+      "explanation": "This is a single trait/aspect of John, presented without logical connectives."
     },
     {
       "id": "P_11",
-      "translation": "John is convinced that having a good job would give him the means to invest in stocks.",
-      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
-      "explanation": "Atomic conviction-state attribution; the conditional content is paraphrased without using conditional markers in the proposition text."
+      "translation": "John makes efforts.",
+      "evidence": "Sentence 2: \"and efforts\"",
+      "explanation": "This is an atomic claim that John exerts effort; it is separated from dedication because the text lists them distinctly."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999253749847412,
-      "combined=(llm)*(nli)": 0.9999253749847412,
+      "nli_entailment": 0.9999247789382935,
+      "combined=(llm)*(nli)": 0.9999247789382935,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1",
-      "translation": "John is a hardworking individual.",
-      "evidence": "Sentence 0: \"John was always a hardworking individual\"",
-      "reasoning": "Direct assertion about John; expressed as an unqualified (\"always\") characterization.",
+      "translation": "John was a hardworking individual.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is asserted directly by the narrator.",
       "list nli": [
         [
-          2.0628622223739512e-05,
-          5.399328438215889e-05,
-          0.9999253749847412
+          1.948294448084198e-05,
+          5.578203854383901e-05,
+          0.9999247789382935
         ],
         [
-          1.7604388631298207e-05,
-          6.473770918091759e-05,
-          0.9999176263809204
+          2.126658546330873e-05,
+          5.711830090149306e-05,
+          0.9999215602874756
         ],
         [
-          1.294023240916431e-05,
-          7.900680066086352e-05,
-          0.9999080896377563
+          2.0923365809721872e-05,
+          5.941964263911359e-05,
+          0.9999196529388428
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998087286949158,
-      "combined=(llm)*(nli)": 0.9998087286949158,
+      "nli_entailment": 0.9998677968978882,
+      "combined=(llm)*(nli)": 0.9998677968978882,
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_2",
-      "translation": "John desires financial stability.",
-      "evidence": "Sentence 0: \"the financial stability he desired\"",
-      "reasoning": "Directly stated desire.",
+      "translation": "John desired financial stability.",
+      "evidence": "Sentence 0",
+      "reasoning": "The phrase \"the financial stability he desired\" directly entails this.",
       "list nli": [
         [
-          5.3895905693934765e-06,
-          0.0001858649920905009,
-          0.9998087286949158
+          8.301990419568028e-06,
+          0.0001238276599906385,
+          0.9998677968978882
         ],
         [
-          6.0180886976013426e-06,
-          0.00024324045807588845,
-          0.9997507929801941
+          9.53310609475011e-06,
+          0.00013494155427906662,
+          0.9998555183410645
         ],
         [
-          7.394457952614175e-06,
-          0.0002657809527590871,
-          0.9997268319129944
+          6.722296802763594e-06,
+          0.0001437168539268896,
+          0.9998495578765869
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999251365661621,
-      "combined=(llm)*(nli)": 0.9999251365661621,
+      "nli_entailment": 0.9999157190322876,
+      "combined=(llm)*(nli)": 0.9999157190322876,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "John believes that having a good job would give him financial stability.",
-      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "reasoning": "Explicit belief report.",
+      "formula": "P_7",
+      "translation": "John believed a good job would give him financial stability.",
+      "evidence": "Sentence 0",
+      "reasoning": "This belief is explicitly attributed to John.",
       "list nli": [
         [
-          1.7294207282247953e-05,
-          5.756258906330913e-05,
-          0.9999251365661621
+          1.1774768609029707e-05,
+          7.250990893226117e-05,
+          0.9999157190322876
         ],
         [
-          7.545373591710813e-06,
-          0.00011193623504368588,
-          0.9998805522918701
+          1.336715831712354e-05,
+          7.82655188231729e-05,
+          0.9999083280563354
         ],
         [
-          6.873382517369464e-06,
-          0.000134844274725765,
-          0.9998582601547241
+          1.1829405593744013e-05,
+          9.409917402081192e-05,
+          0.9998940229415894
         ]
       ]
     },
@@ -159,214 +159,243 @@
       "hardness_constant": 0.9,
       "id": "C_4",
       "formula": "P_8",
-      "translation": "John believes that investing in stocks is a smart financial decision.",
-      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
-      "reasoning": "Explicit belief report.",
+      "translation": "John was convinced a good job would give him the means to invest in stocks.",
+      "evidence": "Sentence 1",
+      "reasoning": "This conviction is explicitly attributed to John.",
       "list nli": [
         [
-          2.803467032208573e-05,
-          4.776796413352713e-05,
+          1.5529922166024335e-05,
+          6.032490637153387e-05,
           0.9999241828918457
         ],
         [
-          2.3280956156668253e-05,
-          7.155532512115315e-05,
-          0.9999051094055176
+          2.4264743842650205e-05,
+          5.6182369007728994e-05,
+          0.9999195337295532
         ],
         [
-          1.2723846339213196e-05,
-          9.493459947407246e-05,
-          0.9998923540115356
+          5.463114575832151e-05,
+          5.050946128903888e-05,
+          0.9998948574066162
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999263286590576,
-      "combined=(llm)*(nli)": 0.9999263286590576,
+      "nli_entailment": 0.9999216794967651,
+      "combined=(llm)*(nli)": 0.9999216794967651,
       "hardness_constant": 0.9,
       "id": "C_5",
-      "formula": "P_11",
-      "translation": "John is convinced that having a good job would give him the means to invest in stocks.",
-      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
-      "reasoning": "Explicit conviction report.",
+      "formula": "P_9",
+      "translation": "John believed investing in stocks would be a smart financial decision.",
+      "evidence": "Sentence 1",
+      "reasoning": "This belief is explicitly stated.",
       "list nli": [
         [
-          1.936542321345769e-05,
-          5.4292406275635585e-05,
-          0.9999263286590576
+          2.1400725017883815e-05,
+          5.690696707461029e-05,
+          0.9999216794967651
         ],
         [
-          1.9026729205506854e-05,
-          6.566095544258133e-05,
-          0.999915361404419
+          1.4052026926947292e-05,
+          9.09341179067269e-05,
+          0.9998949766159058
         ],
         [
-          1.9696975869010203e-05,
-          8.76591875567101e-05,
-          0.9998925924301147
+          9.879219760478009e-06,
+          9.626398968975991e-05,
+          0.9998939037322998
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998177886009216,
-      "combined=(llm)*(nli)": 0.9998177886009216,
+      "nli_entailment": 0.9996212720870972,
+      "combined=(llm)*(nli)": 0.9996212720870972,
       "hardness_constant": 0.9,
       "id": "C_6",
-      "formula": "P_9",
-      "translation": "John is dedicated.",
-      "evidence": "Sentence 2: \"Despite his dedication\"",
-      "reasoning": "The concessive framing presupposes his dedication as true.",
+      "formula": "¬P_6",
+      "translation": "John couldn't invest in stocks.",
+      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
+      "reasoning": "The text directly states inability to invest; modeled as negation of the positive primitive P_6.",
       "list nli": [
         [
-          3.906226629624143e-05,
-          0.00014315746375359595,
-          0.9998177886009216
+          0.00028657837538048625,
+          9.212894656229764e-05,
+          0.9996212720870972
         ],
         [
-          0.0002867533185053617,
-          7.482049113605171e-05,
-          0.9996384382247925
+          0.0003464094188529998,
+          4.953875395585783e-05,
+          0.9996040463447571
         ],
         [
-          3.3187505323439837e-05,
-          0.0007607167935930192,
-          0.9992061257362366
+          0.00038360487087629735,
+          0.0004499347705859691,
+          0.9991664886474609
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997785687446594,
-      "combined=(llm)*(nli)": 0.9997785687446594,
+      "nli_entailment": 0.9996777772903442,
+      "combined=(llm)*(nli)": 0.9996777772903442,
       "hardness_constant": 0.9,
       "id": "C_7",
       "formula": "P_10",
-      "translation": "John makes efforts.",
-      "evidence": "Sentence 2: \"and efforts\"",
-      "reasoning": "The concessive framing presupposes his efforts as true.",
+      "translation": "John had dedication.",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted as a circumstance in the narrative.",
       "list nli": [
         [
-          2.1465495592565276e-05,
-          0.00020000706717837602,
-          0.9997785687446594
+          0.0002008987357839942,
+          0.00012129541573813185,
+          0.9996777772903442
         ],
         [
-          0.00018597197777125984,
-          0.000370036403182894,
-          0.9994439482688904
+          0.000491501297801733,
+          0.00037232885370031,
+          0.9991361498832703
         ],
         [
-          7.253359945025295e-05,
-          0.0009024753817357123,
-          0.9990249872207642
+          4.295094186090864e-05,
+          0.0025587144773453474,
+          0.9973983764648438
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997630715370178,
-      "combined=(llm)*(nli)": 0.9997630715370178,
+      "nli_entailment": 0.9998428821563721,
+      "combined=(llm)*(nli)": 0.9998428821563721,
       "hardness_constant": 0.9,
       "id": "C_8",
-      "formula": "¬P_7",
-      "translation": "John could not invest in stocks.",
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
-      "reasoning": "Directly stated inability/outcome; treated as certain in the narrative.",
+      "formula": "P_11",
+      "translation": "John made efforts.",
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted alongside dedication.",
       "list nli": [
         [
-          0.00017571955686435103,
-          6.121963087935e-05,
-          0.9997630715370178
+          9.766306902747601e-06,
+          0.0001472854637540877,
+          0.9998428821563721
         ],
         [
-          0.00019663215789478272,
-          7.221148553071544e-05,
-          0.9997311234474182
+          8.205517951864749e-05,
+          0.0001747433125274256,
+          0.9997431635856628
         ],
         [
-          0.00028190374723635614,
-          0.0003954561543650925,
-          0.9993226528167725
+          2.193464752053842e-05,
+          0.0003168680123053491,
+          0.9996612071990967
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.75,
-      "nli_entailment": 0.9998902082443237,
-      "combined=(llm)*(nli)": 0.7499176561832428,
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9998767375946045,
+      "combined=(llm)*(nli)": 0.6999137163162231,
       "hardness_constant": 0.9,
       "id": "C_9",
-      "formula": "(P_4 ⟹ P_5)",
-      "translation": "Having a good job would give John financial stability (as he believed).",
-      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "reasoning": "This is presented as John's belief rather than an objective guarantee, so it is encoded as a soft world-level implication.",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "Having a good job would give John financial stability.",
+      "evidence": "Sentence 0",
+      "reasoning": "The text presents this as John's belief rather than a fact about the world; treated as a soft constraint capturing the intended causal expectation.",
       "list nli": [
         [
-          2.7840771508635953e-05,
-          8.199723379220814e-05,
-          0.9998902082443237
+          6.79309741826728e-05,
+          5.5342639825539663e-05,
+          0.9998767375946045
         ],
         [
-          8.130419701046776e-06,
-          0.00018822739366441965,
-          0.9998037219047546
+          9.420774404134136e-06,
+          0.0001418331085005775,
+          0.9998487234115601
         ],
         [
-          1.580693970026914e-05,
-          0.00022838542645331472,
-          0.9997557997703552
+          1.159063231170876e-05,
+          0.00022187005379237235,
+          0.9997665286064148
         ]
       ],
-      "weight": 0.7499176561832428
+      "weight": 0.6999137163162231
     },
     {
-      "llm-weight": 0.8,
-      "nli_entailment": 0.9998635053634644,
-      "combined=(llm)*(nli)": 0.7998908042907715,
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9999200105667114,
+      "combined=(llm)*(nli)": 0.6999440073966979,
       "hardness_constant": 0.9,
       "id": "C_10",
-      "formula": "(P_4 ⟹ P_6)",
-      "translation": "Having a good job would give John the means to invest in stocks (as he was convinced).",
-      "evidence": "Sentence 1: \"if he had a good job, he would have the means to invest in stocks\"",
-      "reasoning": "Strongly endorsed by John (\"convinced\"), but still framed as his expectation rather than a stated fact about the world.",
+      "formula": "P_3 ⟹ P_5",
+      "translation": "Having a good job would give John the means to invest in stocks.",
+      "evidence": "Sentence 1",
+      "reasoning": "This is stated as John's conviction about what would follow from a good job, not as an objective guarantee; modeled softly.",
       "list nli": [
         [
-          2.4835788281052373e-05,
-          0.00011160815483890474,
-          0.9998635053634644
+          1.3082015357213095e-05,
+          6.686602864647284e-05,
+          0.9999200105667114
         ],
         [
-          1.2799777323380113e-05,
-          0.00013019231846556067,
-          0.9998569488525391
+          1.0078457307827193e-05,
+          7.824622298358008e-05,
+          0.9999116659164429
         ],
         [
-          1.1762148460547905e-05,
-          0.00018459412967786193,
-          0.9998037219047546
+          1.7883488908410072e-05,
+          8.379398059332743e-05,
+          0.9998983144760132
         ]
       ],
-      "weight": 0.7998908042907715
+      "weight": 0.6999440073966979
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9995391368865967,
+      "combined=(llm)*(nli)": 0.599723482131958,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "P_5 ⟹ P_6",
+      "translation": "Having the means to invest in stocks would lead John to invest in stocks.",
+      "evidence": "Sentence 1 (means) + Sentence 2 (no investing)",
+      "reasoning": "Common-sense enabling relation: means typically allow investing, but the narrative allows other blockers; therefore not forced.",
+      "list nli": [
+        [
+          4.262011862010695e-05,
+          0.0004182948905508965,
+          0.9995391368865967
+        ],
+        [
+          9.014082024805248e-06,
+          0.0005977770779281855,
+          0.9993932247161865
+        ],
+        [
+          5.852657704963349e-05,
+          0.0008858146611601114,
+          0.9990556836128235
+        ]
+      ],
+      "weight": 0.599723482131958
     },
     {
       "llm-weight": 0.8,
-      "nli_entailment": 0.9982500672340393,
-      "combined=(llm)*(nli)": 0.7986000537872315,
+      "nli_entailment": 0.999298095703125,
+      "combined=(llm)*(nli)": 0.7994384765625,
       "hardness_constant": 0.9,
-      "id": "C_11",
-      "formula": "(P_7 ⟹ P_6)",
+      "id": "C_12",
+      "formula": "P_6 ⟹ P_5",
       "translation": "If John invests in stocks, then John has the means to invest in stocks.",
-      "evidence": "Sentence 1: \"means to invest in stocks\" (means presented as what enables investing)",
-      "reasoning": "Common-sense enabling relation: investing generally requires having the means; not stated as a strict law, so kept soft.",
+      "evidence": "Sentence 1 (means to invest in stocks)",
+      "reasoning": "Investing normally presupposes having sufficient means; this is a strong commonsense implication.",
       "list nli": [
         [
-          0.0001883907098090276,
-          0.0015614920994266868,
-          0.9982500672340393
+          0.00011092404020018876,
+          0.0005909146275371313,
+          0.999298095703125
         ],
         [
           0.0007657684618607163,
@@ -379,65 +408,94 @@
           0.9910974502563477
         ]
       ],
-      "weight": 0.7986000537872315
+      "weight": 0.7994384765625
     },
     {
       "llm-weight": 0.6,
-      "nli_entailment": 0.9896727800369263,
-      "combined=(llm)*(nli)": 0.5938036680221558,
+      "nli_entailment": 0.9997164607048035,
+      "combined=(llm)*(nli)": 0.5998298764228821,
       "hardness_constant": 0.9,
-      "id": "C_12",
-      "formula": "(P_1 ⟹ (P_9 ∧ P_10))",
-      "translation": "Hardworkingness tends to go with dedication and effort.",
-      "evidence": "Sentence 0: \"hardworking\"; Sentence 2: \"dedication and efforts\"",
-      "reasoning": "Plausible semantic relation (hardworking implies dedication/effort) consistent with the narrative, but not explicitly asserted as a rule.",
+      "id": "C_13",
+      "formula": "P_1 ⟹ P_10",
+      "translation": "If John is hardworking, then John is dedicated.",
+      "evidence": "Sentence 0 (hardworking) + Sentence 2 (dedication)",
+      "reasoning": "Hardworkingness commonly implies dedication, but the text does not explicitly equate them; modeled as a moderate-strength commonsense link.",
       "list nli": [
         [
-          0.00015980270109139383,
-          0.010167437605559826,
-          0.9896727800369263
+          5.255599899101071e-05,
+          0.00023101737315300852,
+          0.9997164607048035
         ],
         [
-          0.00023440939548891038,
-          0.014810900203883648,
-          0.9849547147750854
+          1.4518186617351603e-05,
+          0.0002747714170254767,
+          0.999710738658905
         ],
         [
-          0.0003358683316037059,
-          0.017355721443891525,
-          0.9823083877563477
+          0.00031323940493166447,
+          0.00010559734073467553,
+          0.9995811581611633
         ]
       ],
-      "weight": 0.5938036680221558
+      "weight": 0.5998298764228821
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9998080134391785,
+      "combined=(llm)*(nli)": 0.5998848080635071,
+      "hardness_constant": 0.9,
+      "id": "C_14",
+      "formula": "P_10 ⟹ P_11",
+      "translation": "If John is dedicated, then John makes efforts.",
+      "evidence": "Sentence 2 (\"dedication and efforts\")",
+      "reasoning": "Dedication commonly manifests as effort; the text lists both, suggesting a close connection but not strict identity.",
+      "list nli": [
+        [
+          3.5676388506544754e-05,
+          0.00015637246542610228,
+          0.9998080134391785
+        ],
+        [
+          6.547809607582167e-05,
+          0.00021398816897999495,
+          0.9997205138206482
+        ],
+        [
+          0.00023855979088693857,
+          0.00012726390559691936,
+          0.9996341466903687
+        ]
+      ],
+      "weight": 0.5998848080635071
     },
     {
       "llm-weight": 0.55,
-      "nli_entailment": 0.9996827840805054,
-      "combined=(llm)*(nli)": 0.549825531244278,
+      "nli_entailment": 0.9915680289268494,
+      "combined=(llm)*(nli)": 0.5453624159097672,
       "hardness_constant": 0.9,
-      "id": "C_13",
-      "formula": "(¬P_7 ⟹ ¬P_6)",
-      "translation": "John's inability to invest suggests John lacks the means to invest.",
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"; Sentence 1: \"means to invest\"",
-      "reasoning": "One likely explanation for being unable to invest is lacking means, but other obstacles are possible; therefore low-to-moderate weight.",
+      "id": "C_15",
+      "formula": "¬P_6 ⟹ ¬P_5",
+      "translation": "If John does not invest in stocks, then John lacks the means to invest in stocks.",
+      "evidence": "Sentence 1 (means) + Sentence 2 (couldn't invest)",
+      "reasoning": "The narrative outcome (no investing) is consistent with lacking means, but other explanations are possible; thus only a weak-to-moderate abductive constraint.",
       "list nli": [
         [
-          5.282748679746874e-05,
-          0.00026444392278790474,
-          0.9996827840805054
+          0.007938003167510033,
+          0.0004940020735375583,
+          0.9915680289268494
         ],
         [
-          0.00033950406941585243,
-          0.00045542605221271515,
-          0.9992050528526306
+          0.02938983216881752,
+          0.0005140663706697524,
+          0.9700960516929626
         ],
         [
-          0.0003710978489834815,
-          0.0012182058999314904,
-          0.998410701751709
+          0.9853257536888123,
+          0.0008079287363216281,
+          0.013866421766579151
         ]
       ],
-      "weight": 0.549825531244278
+      "weight": 0.5453624159097672
     }
   ]
 }

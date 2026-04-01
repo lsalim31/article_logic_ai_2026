@@ -2,60 +2,30 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella has been working hard on her project.",
+      "translation": "Isabella works hard on her project.",
       "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
-      "explanation": "This is an atomic action/state attribution to Isabella with a single predicate (working hard) and a single object (her project), with no logical connectives."
+      "explanation": "This is a single, truth-evaluable activity attribution to Isabella, with no logical connectives or conditions inside it."
     },
     {
       "id": "P_2",
       "translation": "Isabella finishes her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
-      "explanation": "This is the antecedent event described in the conditional; it is a simple event claim that can serve as a propositional atom."
+      "explanation": "This is an atomic event/outcome description; the surrounding conditional is handled as a separate constraint."
     },
     {
       "id": "P_3",
       "translation": "Isabella receives a bonus from her company.",
       "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
-      "explanation": "This is a single outcome/event (receiving a bonus) with a specified source (her company) and no connectives; negation will be represented in constraints rather than inside the proposition."
+      "explanation": "This is a single, truth-evaluable outcome with a specific recipient and source, expressed without negation or connectives."
     },
     {
       "id": "P_4",
       "translation": "Isabella hopes to receive a bonus.",
       "evidence": "Sentence 1: \"as she had hoped\"",
-      "explanation": "This is an atomic mental-state attribution (hopes) toward a single outcome; it is not itself a logical connective."
+      "explanation": "This is an atomic mental-state claim (hope) that is truth-evaluable and not itself a compound statement."
     }
   ],
   "hard_constraints": [
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9999202489852905,
-      "combined=(llm)*(nli)": 0.949924236536026,
-      "hardness_constant": 0.9,
-      "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company.",
-      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
-      "reasoning": "The text explicitly states this conditional as something Isabella 'knew', strongly suggesting it as a governing rule/policy in the narrative. It is not contradicted by later text because the antecedent (finishing on time) may be false.",
-      "list nli": [
-        [
-          1.605988472874742e-05,
-          6.366586603689939e-05,
-          0.9999202489852905
-        ],
-        [
-          2.3946495275595225e-05,
-          8.491153857903555e-05,
-          0.9998911619186401
-        ],
-        [
-          5.970616257400252e-06,
-          0.00017961009871214628,
-          0.9998144507408142
-        ]
-      ]
-    }
-  ],
-  "soft_constraints": [
     {
       "llm-weight": 0.95,
       "nli_entailment": 0.9988279938697815,
@@ -65,7 +35,7 @@
       "formula": "¬P_3",
       "translation": "Isabella does not receive a bonus from her company.",
       "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
-      "reasoning": "The narrative asserts (via Isabella's realization) that the bonus will not be received. This is presented as a concluded outcome, so it is very strong, though technically filtered through her realization rather than an omniscient statement.",
+      "reasoning": "This is an explicit statement of non-receipt, framed as a realization. It is very strongly implied, with slight room for uncertainty because it is reported as her realization about the future rather than a completed outcome.",
       "list nli": [
         [
           0.00013960716023575515,
@@ -73,14 +43,74 @@
           0.9988279938697815
         ],
         [
+          0.0024783669505268335,
+          5.140523353475146e-05,
+          0.9974702596664429
+        ],
+        [
           0.003433278063312173,
           0.00010293506784364581,
           0.9964638352394104
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9998937845230103,
+      "combined=(llm)*(nli)": 0.8499097168445587,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finishes her project on time, Isabella receives a bonus from her company.",
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "The text presents this as what Isabella 'knew', strongly suggesting the conditional link, but it could reflect her belief/policy expectation rather than an absolute law, so weight is high but not 1.0.",
+      "list nli": [
+        [
+          1.185790006275056e-05,
+          9.437920380150899e-05,
+          0.9998937845230103
         ],
         [
-          0.0048317681066691875,
-          6.0507671150844544e-05,
-          0.9951077699661255
+          1.7557362298248336e-05,
+          9.703659452497959e-05,
+          0.9998854398727417
+        ],
+        [
+          6.663044587185141e-06,
+          0.00015751404862385243,
+          0.9998358488082886
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998438358306885,
+      "combined=(llm)*(nli)": 0.8998594522476197,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase directly indicates she had that hope; it is straightforward but somewhat indirect, so it is weighted slightly below certainty.",
+      "list nli": [
+        [
+          1.0013432984123938e-05,
+          0.00014616086264140904,
+          0.9998438358306885
+        ],
+        [
+          8.802689080766868e-06,
+          0.00016095351020339876,
+          0.9998302459716797
+        ],
+        [
+          0.030331283807754517,
+          0.00020855298498645425,
+          0.9694601893424988
         ]
       ],
       "weight": 0.5999542951583862
