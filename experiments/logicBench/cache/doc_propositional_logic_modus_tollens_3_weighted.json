@@ -3,48 +3,48 @@
     {
       "id": "P_1",
       "translation": "Mason decides to leave his job.",
-      "evidence": "Sentence 0: \"If Mason decides to leave his job, ...\"",
-      "explanation": "This is an atomic decision-state attributed to Mason; it is not a logical connective and cannot be further decomposed without adding structure not present in the text."
+      "evidence": "Sentence 0: \"If Mason decides to leave his job\"",
+      "explanation": "This is an atomic decision-state attribution about Mason; it contains no logical connective and can be evaluated as true or false."
     },
     {
       "id": "P_2",
-      "translation": "Mason receives his salary.",
+      "translation": "Mason receives a salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "explanation": "This is a simple, truth-evaluable predicate about Mason receiving salary; the text provides it as a direct assertion."
+      "explanation": "This is an atomic receiving relation (Mason receiving salary) and is not itself composed of smaller truth-evaluable parts in the given text."
     },
     {
       "id": "P_3",
       "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "explanation": "This is a distinct atomic statement about receiving a regular paycheck; it is asserted directly and contains no explicit logical operators."
+      "explanation": "This is an atomic event/state description (receiving a regular paycheck) without embedded connectives."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9967864751815796,
-      "combined=(llm)*(nli)": 0.9967864751815796,
+      "nli_entailment": 0.9962707757949829,
+      "combined=(llm)*(nli)": 0.9962707757949829,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If Mason decides to leave his job, then Mason does not receive any salary.",
+      "formula": "(P_1 ⟹ ¬P_2)",
+      "translation": "Mason deciding to leave his job implies Mason does not receive any salary.",
       "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
-      "reasoning": "The conditional is stated explicitly and unqualified; its strength is maximal in the text.",
+      "reasoning": "This is stated directly as a conditional consequence; the wording is unqualified (\"will not\"), so it is treated as strict.",
       "list nli": [
         [
-          0.001275948598049581,
-          0.001937638153322041,
-          0.9967864751815796
+          0.0036010893527418375,
+          0.00012808713654521853,
+          0.9962707757949829
         ],
         [
-          0.007159623317420483,
-          0.00016455035074613988,
-          0.9926758408546448
+          0.9999529123306274,
+          7.58091709940345e-06,
+          3.9431492041330785e-05
         ],
         [
-          0.019000904634594917,
-          0.00021146699145901948,
-          0.9807876348495483
+          0.9999548196792603,
+          7.784427907608915e-06,
+          3.744830610230565e-05
         ]
       ]
     },
@@ -57,7 +57,7 @@
       "formula": "P_2",
       "translation": "Mason receives his salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "reasoning": "This is presented as a factual assertion ('still receives'), not a possibility or speculation.",
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging.",
       "list nli": [
         [
           0.00047994524356909096,
@@ -65,9 +65,9 @@
           0.999376118183136
         ],
         [
-          4.450523556442931e-05,
-          0.9966824650764465,
-          0.0032730204984545708
+          0.00011160985741298646,
+          0.9908211827278137,
+          0.009067202918231487
         ],
         [
           0.0001290925283683464,
@@ -85,7 +85,7 @@
       "formula": "P_3",
       "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "reasoning": "The sentence asserts the event as happening; there is no hedging language.",
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging.",
       "list nli": [
         [
           0.0012668088311329484,
@@ -93,9 +93,9 @@
           0.9985747337341309
         ],
         [
-          5.753552250098437e-05,
-          0.004290121607482433,
-          0.9956523776054382
+          2.8437165383365937e-05,
+          0.00617412431165576,
+          0.9937973618507385
         ],
         [
           0.00031084517831914127,
@@ -103,37 +103,35 @@
           0.002944374457001686
         ]
       ]
-    }
-  ],
-  "soft_constraints": [
+    },
     {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.9995631575584412,
-      "combined=(llm)*(nli)": 0.8996068418025971,
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9930070638656616,
+      "combined=(llm)*(nli)": 0.9433567106723785,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "P_3 ⟹ P_2",
-      "translation": "If Mason receives his regular paycheck, then Mason receives his salary.",
-      "evidence": "Sentence 1-2: \"Mason still receives his salary. He finds himself receiving his regular paycheck.\"",
-      "reasoning": "A regular paycheck is strongly (though not strictly logically) indicative of receiving salary; the text also juxtaposes the two as describing the same situation.",
+      "formula": "(P_3 ⟹ P_2)",
+      "translation": "Mason receiving his regular paycheck implies Mason receives a salary.",
+      "evidence": "Sentence 1: \"receives his salary\"; Sentence 2: \"receiving his regular paycheck\"",
+      "reasoning": "A regular paycheck is commonly a form of salary payment; the text also juxtaposes these as aligned descriptions, so the implication is strongly suggested though slightly reliant on common-sense equivalence.",
       "list nli": [
         [
-          5.467652044899296e-06,
-          0.0004313918179832399,
-          0.9995631575584412
+          2.2547534172190353e-05,
+          0.006970388814806938,
+          0.9930070638656616
         ],
         [
-          0.0004424102953635156,
-          0.0009299754747189581,
-          0.9986276626586914
+          0.0002277450985275209,
+          0.9774833917617798,
+          0.022288965061306953
         ],
         [
-          0.837329089641571,
-          0.03693292662501335,
-          0.1257379800081253
+          0.0001376691070618108,
+          0.9945236444473267,
+          0.005338705610483885
         ]
-      ],
-      "weight": 0.8996068418025971
+      ]
     }
-  ]
+  ],
+  "soft_constraints": []
 }

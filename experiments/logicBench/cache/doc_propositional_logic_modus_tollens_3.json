@@ -3,30 +3,30 @@
     {
       "id": "P_1",
       "translation": "Mason decides to leave his job.",
-      "evidence": "Sentence 0: \"If Mason decides to leave his job, ...\"",
-      "explanation": "This is an atomic decision-state attributed to Mason; it is not a logical connective and cannot be further decomposed without adding structure not present in the text."
+      "evidence": "Sentence 0: \"If Mason decides to leave his job\"",
+      "explanation": "This is an atomic decision-state attribution about Mason; it contains no logical connective and can be evaluated as true or false."
     },
     {
       "id": "P_2",
-      "translation": "Mason receives his salary.",
+      "translation": "Mason receives a salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "explanation": "This is a simple, truth-evaluable predicate about Mason receiving salary; the text provides it as a direct assertion."
+      "explanation": "This is an atomic receiving relation (Mason receiving salary) and is not itself composed of smaller truth-evaluable parts in the given text."
     },
     {
       "id": "P_3",
       "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "explanation": "This is a distinct atomic statement about receiving a regular paycheck; it is asserted directly and contains no explicit logical operators."
+      "explanation": "This is an atomic event/state description (receiving a regular paycheck) without embedded connectives."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If Mason decides to leave his job, then Mason does not receive any salary.",
+      "formula": "(P_1 ⟹ ¬P_2)",
+      "translation": "Mason deciding to leave his job implies Mason does not receive any salary.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
-      "reasoning": "The conditional is stated explicitly and unqualified; its strength is maximal in the text."
+      "reasoning": "This is stated directly as a conditional consequence; the wording is unqualified (\"will not\"), so it is treated as strict."
     },
     {
       "id": "C_2",
@@ -34,7 +34,7 @@
       "translation": "Mason receives his salary.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "reasoning": "This is presented as a factual assertion ('still receives'), not a possibility or speculation."
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging."
     },
     {
       "id": "C_3",
@@ -42,15 +42,15 @@
       "translation": "Mason receives his regular paycheck.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "reasoning": "The sentence asserts the event as happening; there is no hedging language."
+      "reasoning": "This is asserted as an actual fact in the narrative, with no hedging."
     },
     {
       "id": "C_4",
-      "formula": "P_3 ⟹ P_2",
-      "translation": "If Mason receives his regular paycheck, then Mason receives his salary.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1-2: \"Mason still receives his salary. He finds himself receiving his regular paycheck.\"",
-      "reasoning": "A regular paycheck is strongly (though not strictly logically) indicative of receiving salary; the text also juxtaposes the two as describing the same situation."
+      "formula": "(P_3 ⟹ P_2)",
+      "translation": "Mason receiving his regular paycheck implies Mason receives a salary.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"receives his salary\"; Sentence 2: \"receiving his regular paycheck\"",
+      "reasoning": "A regular paycheck is commonly a form of salary payment; the text also juxtaposes these as aligned descriptions, so the implication is strongly suggested though slightly reliant on common-sense equivalence."
     }
   ],
   "_enrichment_log": [
@@ -61,11 +61,11 @@
     "[Auxiliary] Found 0 auxiliary propositions",
     {
       "prop_id": "P_2",
-      "translation": "Mason receives his salary.",
+      "translation": "Mason receives a salary.",
       "positive_constraint": "C_2",
       "negative_constraint": "C_5",
-      "nli_score_positive": 0.9939748644828796,
-      "nli_score_negative": 0.04765990003943443,
+      "nli_score_positive": 0.9933556318283081,
+      "nli_score_negative": 0.036663077771663666,
       "decision": "keep positive",
       "removed": "C_5"
     }

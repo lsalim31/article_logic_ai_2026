@@ -4,49 +4,93 @@
       "id": "P_1",
       "translation": "Olivia is known for her green thumb.",
       "evidence": "Sentence 0: \"Olivia had always been known for her green thumb.\"",
-      "explanation": "This is a single descriptive property attribution about Olivia, with no logical connective or conditional structure to split further."
+      "explanation": "This is an attribution about Olivia's reputation and contains no internal logical connective that must be split."
     },
     {
       "id": "P_2",
-      "translation": "Olivia prides herself on her ability to plant trees.",
-      "evidence": "Sentence 1: \"She prided herself on her ability to plant ... trees.\"",
-      "explanation": "This is an atomic attitude claim (prides herself) about a single ability (plant trees); it can be evaluated as true/false as stated."
+      "translation": "Olivia prides herself on her ability to plant beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is a single pride/attitude claim; it is made atomic by isolating the 'plant' part from the coordinated phrase in the text."
     },
     {
       "id": "P_3",
-      "translation": "Olivia prides herself on her ability to care for trees.",
-      "evidence": "Sentence 1: \"She prided herself on her ability to ... care for ... trees.\"",
-      "explanation": "This is another atomic attitude claim about a distinct ability (care for trees). It is separated from planting to avoid embedding a conjunction."
+      "translation": "Olivia prides herself on her ability to care for beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is a single pride/attitude claim; it is made atomic by isolating the 'care' part from the coordinated phrase in the text."
     },
     {
       "id": "P_4",
-      "translation": "Olivia plants a tree.",
+      "translation": "Olivia planted a tree.",
       "evidence": "Sentence 2: \"if Olivia planted a tree\"",
-      "explanation": "This is an atomic event statement used as the antecedent of a conditional rule; it must be represented as a standalone proposition to express the rule."
+      "explanation": "This is the antecedent clause of a conditional; it is a simple declarative that can be true or false."
     },
     {
       "id": "P_5",
       "translation": "Olivia takes care of the tree.",
-      "evidence": "Sentence 2: \"then she would undoubtedly take care of it\"",
-      "explanation": "This is an atomic action statement (taking care of the tree) used as the consequent of a conditional and also referenced later; it must be kept non-negated."
+      "evidence": "Sentence 2: \"then she would undoubtedly take care of it\"; Sentence 3: \"she won't take care of it.\"",
+      "explanation": "This is the positive core action statement; the text’s negation is handled as a separate logical constraint rather than building negation into the primitive."
+    },
+    {
+      "id": "P_6",
+      "translation": "Olivia has the ability to plant beautiful trees.",
+      "evidence": "Sentence 1: \"her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an ability claim extracted as a simple declarative, separated from other coordinated content."
+    },
+    {
+      "id": "P_7",
+      "translation": "Olivia has the ability to care for beautiful trees.",
+      "evidence": "Sentence 1: \"her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an ability claim extracted as a simple declarative, separated from other coordinated content."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_4 ⟹ P_5",
-      "translation": "If Olivia plants a tree, then Olivia takes care of it.",
+      "translation": "According to the rule, Olivia planting a tree implies Olivia takes care of it.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"if Olivia planted a tree, then she would undoubtedly take care of it.\"",
-      "reasoning": "This is stated explicitly as a rule, and the word \"undoubtedly\" signals maximal strength/necessity for the implication."
+      "evidence": "Sentence 2: \"According to the rule, if Olivia planted a tree, then she would undoubtedly take care of it.\"",
+      "reasoning": "The statement is explicitly presented as a rule, and \"undoubtedly\" indicates maximal strength."
     },
     {
       "id": "C_2",
       "formula": "¬P_5",
-      "translation": "Olivia does not take care of the tree.",
+      "translation": "Olivia will not take care of it.",
       "llm_weight": 1.0,
       "evidence": "Sentence 3: \"However, she won't take care of it.\"",
-      "reasoning": "The text directly asserts the negation of taking care, with no hedging, so it is treated as certain."
+      "reasoning": "This is a direct assertion with no hedging, so it is treated as certain."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_6",
+      "translation": "If Olivia prides herself on her ability to plant beautiful trees, then she has the ability to plant beautiful trees.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant...\"",
+      "reasoning": "Pride in an ability strongly suggests possession of that ability, though it is an inference from the attitude report rather than a direct 'has ability' assertion."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_7",
+      "translation": "If Olivia prides herself on her ability to care for beautiful trees, then she has the ability to care for beautiful trees.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"She prided herself on her ability to ... care for beautiful trees.\"",
+      "reasoning": "Same rationale as C_3: it is strongly implied but still inferential."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_1 ⟹ P_6",
+      "translation": "If Olivia is known for her green thumb, then she has the ability to plant beautiful trees.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0: \"known for her green thumb\"",
+      "reasoning": "A 'green thumb' commonly implies skill at growing/planting, but this is a commonsense inference rather than an explicit logical rule."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_1 ⟹ P_7",
+      "translation": "If Olivia is known for her green thumb, then she has the ability to care for beautiful trees.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0: \"known for her green thumb\"",
+      "reasoning": "A 'green thumb' commonly implies skill at caring for plants/trees; again, this is plausible but not explicitly stated."
     }
   ],
   "_enrichment_log": [

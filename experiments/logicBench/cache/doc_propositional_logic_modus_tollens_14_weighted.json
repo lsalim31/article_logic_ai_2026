@@ -4,105 +4,71 @@
       "id": "P_1",
       "translation": "Scarlett is an avid book collector.",
       "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
-      "explanation": "This is a single attributive fact about Scarlett and contains no logical connective or condition."
+      "explanation": "This is a single descriptive fact about Scarlett and contains no logical connectives or negation."
     },
     {
       "id": "P_2",
       "translation": "Scarlett has a cherished book collection.",
       "evidence": "Sentence 0: \"her cherished collection\"",
-      "explanation": "This is an existence/possession claim about Scarlett’s collection and is not decomposable into simpler propositional parts."
+      "explanation": "This is an atomic possession/state claim and does not decompose into smaller propositions without adding structure not explicit in the text."
     },
     {
       "id": "P_3",
-      "translation": "Scarlett dreams of finding a rare book to add to her collection.",
-      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
-      "explanation": "This is one mental-state claim (dreaming of a specific outcome) and does not itself assert any conditional or conjunction."
+      "translation": "Scarlett dreamt of finding a rare book.",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book\"",
+      "explanation": "This is a single mental-state claim; the frequency cue \"always\" is omitted per instructions, leaving an atomic proposition."
     },
     {
       "id": "P_4",
-      "translation": "Scarlett stumbles upon a rare book.",
+      "translation": "Scarlett stumbled upon a rare book.",
       "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
-      "explanation": "This is an atomic event description (stumbling upon a rare book) extracted from within a conditional."
+      "explanation": "This is an atomic event description extracted from the conditional antecedent."
     },
     {
       "id": "P_5",
-      "translation": "Scarlett decides to keep a rare book.",
+      "translation": "Scarlett decided to keep the book in her collection.",
       "evidence": "Sentence 1: \"she would immediately decide to keep it\"",
-      "explanation": "This is an atomic decision-state (deciding to keep) with no explicit negation or connective."
+      "explanation": "This is an atomic decision/action statement; negation is handled only in constraints, not inside the primitive proposition."
     },
     {
       "id": "P_6",
-      "translation": "Scarlett makes a rare book part of her literary treasures.",
+      "translation": "Scarlett made the book part of her literary treasures.",
       "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
-      "explanation": "This is a single action/state claim (making it part of her treasures) that does not require further logical decomposition."
+      "explanation": "This is a single action/result claim and is not itself a logical combination of smaller propositions."
     },
     {
       "id": "P_7",
-      "translation": "Scarlett finds a book one day.",
+      "translation": "Scarlett found a book one day.",
       "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "explanation": "This is an atomic event claim about finding a book."
-    },
-    {
-      "id": "P_8",
-      "translation": "Scarlett decides to keep the found book in her collection.",
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "explanation": "The text states a negated decision; this primitive is the corresponding non-negated decision so that negation can be expressed only in constraints."
+      "explanation": "This is an atomic event claim. The temporal phrase \"one day\" does not introduce a logical connective."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997242093086243,
-      "combined=(llm)*(nli)": 0.9997242093086243,
+      "nli_entailment": 0.9998001456260681,
+      "combined=(llm)*(nli)": 0.9998001456260681,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "¬P_8",
-      "translation": "Scarlett does not decide to keep the found book in her collection.",
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "reasoning": "This is explicitly and unambiguously asserted in the text.",
+      "id": "C_2",
+      "formula": "P_7",
+      "translation": "Scarlett found a book one day.",
+      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
+      "reasoning": "This is directly asserted as a narrative fact.",
       "list nli": [
         [
-          3.406103132874705e-05,
-          0.00024168891832232475,
-          0.9997242093086243
+          8.143190643750131e-05,
+          0.00011846327834064141,
+          0.9998001456260681
         ],
         [
-          0.0002050101029453799,
-          0.0006687003187835217,
-          0.9991262555122375
+          0.00010009441029978916,
+          0.962978720664978,
+          0.03692115098237991
         ],
         [
-          0.9865497946739197,
-          0.000838064297568053,
-          0.012612194754183292
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9814497232437134,
-      "combined=(llm)*(nli)": 0.9814497232437134,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_7 ⟹ ¬P_8",
-      "translation": "If Scarlett finds a book one day, then Scarlett does not decide to keep it in her collection.",
-      "evidence": "Sentence 2: \"Scarlett found a book, but she decided not to keep it in her collection\"",
-      "reasoning": "Within the described episode, the finding of the book and the decision not to keep it are linked as co-occurring facts about that same event.",
-      "list nli": [
-        [
-          0.015074923634529114,
-          0.0034752800129354,
-          0.9814497232437134
-        ],
-        [
-          0.9589933156967163,
-          0.00947914645075798,
-          0.031527549028396606
-        ],
-        [
-          0.9991907477378845,
-          0.00015266789705492556,
-          0.0006566079682670534
+          8.098029502434656e-05,
+          0.9692386984825134,
+          0.03068029321730137
         ]
       ]
     }
@@ -138,62 +104,62 @@
       "weight": 0.7963207721710206
     },
     {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.9998372793197632,
-      "combined=(llm)*(nli)": 0.8498616874217987,
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9991496801376343,
+      "combined=(llm)*(nli)": 0.9991496801376343,
       "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "P_4 ⟹ P_5",
-      "translation": "If Scarlett stumbles upon a rare book, then Scarlett decides to keep it.",
-      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it\"",
-      "reasoning": "This is explicitly presented as Scarlett’s belief about what she would do, not as a guaranteed law of behavior, so the implication is strong but not treated as absolutely certain.",
+      "id": "C_3",
+      "formula": "¬P_5",
+      "translation": "Scarlett did not decide to keep the book in her collection.",
+      "evidence": "Sentence 2: \"but she decided not to keep it in her collection.\"",
+      "reasoning": "This is explicitly stated; the negation is placed in the constraint (not in the primitive proposition) to follow the extraction rules.",
       "list nli": [
         [
-          2.503622272342909e-05,
-          0.00013769872020930052,
-          0.9998372793197632
+          5.7947952882386744e-05,
+          0.0007923395023681223,
+          0.9991496801376343
         ],
         [
-          8.638940926175565e-06,
-          0.0014316377928480506,
-          0.9985597729682922
+          0.00037446929491125047,
+          0.0009255179320462048,
+          0.9987000226974487
         ],
         [
-          1.2007583791273646e-05,
-          0.004344324581325054,
-          0.9956437349319458
+          0.008718389086425304,
+          0.9342073798179626,
+          0.057074226438999176
         ]
       ],
       "weight": 0.8498616874217987
     },
     {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.999841570854187,
-      "combined=(llm)*(nli)": 0.8498653352260589,
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9998449087142944,
+      "combined=(llm)*(nli)": 0.7998759269714356,
       "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_4 ⟹ P_6",
-      "translation": "If Scarlett stumbles upon a rare book, then Scarlett makes it part of her literary treasures.",
-      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\" and \"make it a part of her literary treasures\"",
-      "reasoning": "As with keeping it, this is stated under Scarlett’s belief/intent about a hypothetical rare-book discovery, so it is strongly suggested but not an unconditional fact.",
+      "id": "C_1",
+      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
+      "translation": "If Scarlett stumbled upon a rare book, she would decide to keep it and make it part of her literary treasures.",
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it and make it a part of her literary treasures.\"",
+      "reasoning": "The text frames this as Scarlett's belief about what she would do, not a guaranteed law of the world; thus the implication is supported but not treated as absolutely certain (weight < 1.0).",
       "list nli": [
         [
-          1.8890577848651446e-05,
-          0.00013950887660030276,
-          0.999841570854187
+          4.668963811127469e-05,
+          0.00010835527064045891,
+          0.9998449087142944
         ],
         [
-          0.0010656688828021288,
-          0.0002739497576840222,
-          0.9986603260040283
+          1.9537887055776082e-05,
+          0.00032278327853418887,
+          0.9996576309204102
         ],
         [
-          1.4393217497854494e-05,
-          0.0015373533824458718,
-          0.9984482526779175
+          8.99067072168691e-06,
+          0.0004805210046470165,
+          0.9995105266571045
         ]
       ],
-      "weight": 0.8498653352260589
+      "weight": 0.7998759269714356
     }
   ]
 }

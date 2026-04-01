@@ -4,172 +4,172 @@
       "id": "P_1",
       "translation": "Henry was notorious for forgetting his wallet.",
       "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
-      "explanation": "This is a single descriptive claim about Henry's reputation; it contains no logical connectives or conditions to split further."
+      "explanation": "This is a single descriptive claim about Henry's reputation/characterization, not a logical combination of smaller claims in the text."
     },
     {
       "id": "P_2",
-      "translation": "Henry forgot his wallet on that day.",
+      "translation": "Henry forgot his wallet on the day in question.",
       "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic event claim about a particular day; it is not a conjunction or conditional."
+      "explanation": "This is an atomic event claim (wallet-forgetting) tied to the specific day referenced by the story."
     },
     {
       "id": "P_3",
-      "translation": "Henry was supposed to buy lunch on that day.",
+      "translation": "Henry was supposed to buy lunch on the day in question.",
       "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic normative/obligation-style claim (what he was supposed to do) and does not contain connectives or negation."
+      "explanation": "This is an atomic normative/plan claim about that day; it does not require internal logical connectives."
     },
     {
       "id": "P_4",
-      "translation": "Henry was able to buy lunch on that day.",
+      "translation": "Henry is able to buy lunch on the day in question.",
       "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "explanation": "This is an atomic ability claim; it does not include negation or logical connectives."
+      "explanation": "This is an atomic ability/outcome claim about buying lunch on that day."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.99989914894104,
-      "combined=(llm)*(nli)": 0.99989914894104,
+      "nli_entailment": 0.9999179840087891,
+      "combined=(llm)*(nli)": 0.9999179840087891,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_2 ⟹ ¬P_4",
-      "translation": "If Henry forgot his wallet, then he would not be able to buy lunch.",
-      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
-      "reasoning": "The sentence explicitly states a rule as a strict conditional, so the implication is treated as mandatory.",
+      "formula": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as a fact in the narrative.",
       "list nli": [
         [
-          2.005673013627529e-05,
-          8.07715259725228e-05,
-          0.99989914894104
+          2.077133467537351e-05,
+          6.125482468632981e-05,
+          0.9999179840087891
         ],
         [
-          8.222423639381304e-05,
-          2.95862446364481e-05,
-          0.9998881816864014
+          0.00012700309162028134,
+          2.6428691853652708e-05,
+          0.9998465776443481
         ],
         [
-          1.4904882846167311e-05,
-          0.00011742876813514158,
-          0.9998676776885986
+          0.0008923994610086083,
+          2.6719646484707482e-05,
+          0.9990808963775635
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9979881048202515,
-      "combined=(llm)*(nli)": 0.9979881048202515,
+      "nli_entailment": 0.9980620741844177,
+      "combined=(llm)*(nli)": 0.9980620741844177,
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_2",
-      "translation": "Henry forgot his wallet on that day.",
-      "evidence": "Sentence 1: \"The one day he forgot his wallet...\"",
-      "reasoning": "The text directly asserts that he forgot his wallet on that day.",
+      "translation": "Henry forgot his wallet on the day in question.",
+      "evidence": "Sentence 1",
+      "reasoning": "The text explicitly states that there was a day when he forgot his wallet, and the rest of the story is about that day.",
       "list nli": [
         [
-          2.208340993092861e-05,
-          0.0019898407626897097,
-          0.9979881048202515
+          0.0019018515013158321,
+          3.6048055335413665e-05,
+          0.9980620741844177
         ],
         [
-          0.007691007573157549,
-          0.00010581808601273224,
-          0.9922032356262207
+          5.55142541998066e-05,
+          0.1855158656835556,
+          0.8144285678863525
         ],
         [
-          0.978752851486206,
-          0.00021909279166720808,
-          0.021028006449341774
+          0.9790343642234802,
+          0.00019147327111568302,
+          0.02077415958046913
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998914003372192,
-      "combined=(llm)*(nli)": 0.9998914003372192,
+      "nli_entailment": 0.9999125003814697,
+      "combined=(llm)*(nli)": 0.9999125003814697,
       "hardness_constant": 0.9,
       "id": "C_3",
       "formula": "P_3",
-      "translation": "Henry was supposed to buy lunch on that day.",
-      "evidence": "Sentence 1: \"...he was supposed to buy lunch.\"",
-      "reasoning": "The text directly asserts the obligation/expectation.",
+      "translation": "Henry was supposed to buy lunch on the day in question.",
+      "evidence": "Sentence 1",
+      "reasoning": "This is explicitly asserted about the same referenced day.",
       "list nli": [
         [
-          7.298908894881606e-05,
-          3.5617420508060604e-05,
-          0.9998914003372192
+          5.92625692661386e-05,
+          2.8283118808758445e-05,
+          0.9999125003814697
         ],
         [
-          0.00020268226217012852,
-          2.1376086806412786e-05,
-          0.9997759461402893
+          5.7804998505162075e-05,
+          3.201016806997359e-05,
+          0.9999102354049683
         ],
         [
-          0.0014491063775494695,
-          0.9546092748641968,
-          0.043941617012023926
+          0.0003875883121509105,
+          0.9911078214645386,
+          0.008504650555551052
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9995211362838745,
-      "combined=(llm)*(nli)": 0.9995211362838745,
+      "nli_entailment": 0.9999228715896606,
+      "combined=(llm)*(nli)": 0.9999228715896606,
       "hardness_constant": 0.9,
       "id": "C_4",
-      "formula": "P_4",
-      "translation": "Henry was able to buy lunch on that day.",
-      "evidence": "Sentence 3: \"...he was still able to buy lunch.\"",
-      "reasoning": "The text explicitly states that he was able to buy lunch, emphasizing this as surprising but factual in the narrative.",
+      "formula": "(P_2 ⟹ P_3)",
+      "translation": "On the day Henry forgot his wallet, he was supposed to buy lunch.",
+      "evidence": "Sentence 1",
+      "reasoning": "Sentence 1 links the wallet-forgetting day to the obligation/plan to buy lunch, which is naturally captured as an implication from the described day-condition.",
       "list nli": [
         [
-          0.00029300444293767214,
-          0.0001858744362834841,
-          0.9995211362838745
+          4.007053576060571e-05,
+          3.700733941514045e-05,
+          0.9999228715896606
         ],
         [
-          0.0071828956715762615,
-          7.79437250457704e-05,
-          0.9927391409873962
+          8.851895108819008e-05,
+          2.335149110876955e-05,
+          0.9998880624771118
         ],
         [
-          0.8181758522987366,
-          0.0017931075999513268,
-          0.18003107607364655
+          2.30590612773085e-05,
+          0.00011194452963536605,
+          0.999864935874939
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999146461486816,
-      "combined=(llm)*(nli)": 0.9999146461486816,
+      "nli_entailment": 0.9994227886199951,
+      "combined=(llm)*(nli)": 0.9994227886199951,
       "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_2 ∧ P_4",
-      "translation": "Henry forgot his wallet and he was able to buy lunch on that day.",
-      "evidence": "Sentences 1 and 3: \"The one day he forgot his wallet...\" and \"...he was still able to buy lunch.\"",
-      "reasoning": "The narrative asserts both facts as simultaneously true (highlighting the surprise against the stated rule), so their conjunction is strongly supported.",
+      "id": "C_6",
+      "formula": "P_4",
+      "translation": "Henry was able to buy lunch on the day in question.",
+      "evidence": "Sentence 3",
+      "reasoning": "This is explicitly asserted as the surprising outcome.",
       "list nli": [
         [
-          2.2477091988548636e-05,
-          6.289870361797512e-05,
-          0.9999146461486816
+          0.00042283363291062415,
+          0.00015440570132341236,
+          0.9994227886199951
         ],
         [
-          9.4841823738534e-05,
-          2.6364996301708743e-05,
-          0.9998787641525269
+          0.0006476903799921274,
+          2.2106911274022423e-05,
+          0.9993302822113037
         ],
         [
-          9.928795407176949e-06,
-          0.0001687298936303705,
-          0.9998213648796082
+          0.9824997186660767,
+          0.0007309196516871452,
+          0.016769327223300934
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9558451771736145,
-      "combined=(llm)*(nli)": 0.9558451771736145,
+      "nli_entailment": 0.9754747748374939,
+      "combined=(llm)*(nli)": 0.9754747748374939,
       "hardness_constant": 0.9,
       "id": "C_6",
       "formula": "P_3 ⟹ P_3",
@@ -178,14 +178,14 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
       "list nli": [
         [
-          0.004791855812072754,
-          0.03936304152011871,
-          0.9558451771736145
+          0.0037858064752072096,
+          0.02073938585817814,
+          0.9754747748374939
         ],
         [
-          0.005734139122068882,
-          0.07971911877393723,
-          0.9145467877388
+          0.00668989447876811,
+          0.04313421994447708,
+          0.9501758813858032
         ],
         [
           0.009883461520075798,
@@ -195,5 +195,35 @@
       ]
     }
   ],
-  "soft_constraints": []
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998605251312256,
+      "combined=(llm)*(nli)": 0.899874472618103,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "(P_2 ⟹ ¬P_4)",
+      "translation": "According to the rule, Henry's forgetting his wallet implies he is not able to buy lunch.",
+      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
+      "reasoning": "The rule is stated strongly, but the narrative immediately reports an outcome that violates it; modeling it as a strong but defeasible constraint captures that tension.",
+      "list nli": [
+        [
+          0.00011331254063406959,
+          2.6131865524803288e-05,
+          0.9998605251312256
+        ],
+        [
+          9.5228104328271e-05,
+          4.696860196418129e-05,
+          0.9998577833175659
+        ],
+        [
+          0.0011774646118283272,
+          7.131410529837012e-05,
+          0.998751163482666
+        ]
+      ],
+      "weight": 0.899874472618103
+    }
+  ]
 }

@@ -2,39 +2,61 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Benjamin has been eagerly anticipating his trip to the beach for weeks.",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks.",
       "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
-      "explanation": "This is a single descriptive claim about Benjamin’s ongoing anticipation of a specific trip; it contains no logical connectives or embedded conditions."
+      "explanation": "This is a single descriptive claim about Benjamin's mental state over a time period, with no embedded logical connective."
     },
     {
       "id": "P_2",
-      "translation": "Benjamin is going to the beach.",
-      "evidence": "Sentence 1: \"If he is going to the beach, then he will go swimming.\"",
-      "explanation": "This is an atomic event/state claim used as the antecedent of a conditional in the text; it is stated without connectives in this primitive form."
+      "translation": "Benjamin had a trip to the beach.",
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach\"",
+      "explanation": "This captures the existence of the referenced trip as an atomic situation; it does not include conditionals or connectives."
     },
     {
       "id": "P_3",
+      "translation": "Benjamin goes to the beach.",
+      "evidence": "Sentence 1: \"If he is going to the beach\"",
+      "explanation": "This is the antecedent event referenced by the quoted conditional; it is an atomic, truth-evaluable clause."
+    },
+    {
+      "id": "P_4",
       "translation": "Benjamin goes swimming.",
-      "evidence": "Sentence 1: \"then he will go swimming\"; and later \"he didn't end up going swimming\"",
-      "explanation": "This is an atomic action claim; negation is handled in constraints rather than inside the primitive proposition."
+      "evidence": "Sentence 1: \"then he will go swimming\"; Sentence 2: \"he didn't end up going swimming\"",
+      "explanation": "This is the core action discussed in both the quoted rule and the later outcome, expressible as a single atomic clause."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "¬P_3",
-      "translation": "Benjamin did not end up going swimming.",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"However, he didn't end up going swimming after all.\"",
-      "reasoning": "This is stated directly as a factual outcome in the narrative, so it is treated as certain."
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a plain narrative fact."
     },
     {
       "id": "C_2",
-      "formula": "P_2 ⟹ P_3",
+      "formula": "P_2",
+      "translation": "Benjamin had a trip to the beach.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "The text refers to \"his trip to the beach\" as an existing planned trip; this is directly asserted."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3 ⟹ P_4",
       "translation": "If Benjamin is going to the beach, then Benjamin will go swimming.",
-      "llm_weight": 0.8,
+      "llm_weight": 0.65,
       "evidence": "Sentence 1: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
-      "reasoning": "The conditional is explicitly given but is attributed to Benjamin’s friends (reported speech), so it is strong but not treated as an absolute law of the world."
+      "reasoning": "This implication is presented as something Benjamin's friends said, not as an objective law; it is plausible guidance/prediction but not guaranteed by the narrator."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Benjamin did not end up going swimming.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"However, he didn't end up going swimming after all.\"",
+      "reasoning": "This is explicitly stated as the final outcome."
     }
   ],
   "_enrichment_log": [

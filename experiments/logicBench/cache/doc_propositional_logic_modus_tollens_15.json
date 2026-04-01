@@ -4,70 +4,78 @@
       "id": "P_1",
       "translation": "Henry was notorious for forgetting his wallet.",
       "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
-      "explanation": "This is a single descriptive claim about Henry's reputation; it contains no logical connectives or conditions to split further."
+      "explanation": "This is a single descriptive claim about Henry's reputation/characterization, not a logical combination of smaller claims in the text."
     },
     {
       "id": "P_2",
-      "translation": "Henry forgot his wallet on that day.",
+      "translation": "Henry forgot his wallet on the day in question.",
       "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic event claim about a particular day; it is not a conjunction or conditional."
+      "explanation": "This is an atomic event claim (wallet-forgetting) tied to the specific day referenced by the story."
     },
     {
       "id": "P_3",
-      "translation": "Henry was supposed to buy lunch on that day.",
+      "translation": "Henry was supposed to buy lunch on the day in question.",
       "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic normative/obligation-style claim (what he was supposed to do) and does not contain connectives or negation."
+      "explanation": "This is an atomic normative/plan claim about that day; it does not require internal logical connectives."
     },
     {
       "id": "P_4",
-      "translation": "Henry was able to buy lunch on that day.",
+      "translation": "Henry is able to buy lunch on the day in question.",
       "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "explanation": "This is an atomic ability claim; it does not include negation or logical connectives."
+      "explanation": "This is an atomic ability/outcome claim about buying lunch on that day."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ ¬P_4",
-      "translation": "If Henry forgot his wallet, then he would not be able to buy lunch.",
+      "formula": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
-      "reasoning": "The sentence explicitly states a rule as a strict conditional, so the implication is treated as mandatory."
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as a fact in the narrative."
     },
     {
       "id": "C_2",
       "formula": "P_2",
-      "translation": "Henry forgot his wallet on that day.",
+      "translation": "Henry forgot his wallet on the day in question.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"The one day he forgot his wallet...\"",
-      "reasoning": "The text directly asserts that he forgot his wallet on that day."
+      "evidence": "Sentence 1",
+      "reasoning": "The text explicitly states that there was a day when he forgot his wallet, and the rest of the story is about that day."
     },
     {
       "id": "C_3",
       "formula": "P_3",
-      "translation": "Henry was supposed to buy lunch on that day.",
+      "translation": "Henry was supposed to buy lunch on the day in question.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"...he was supposed to buy lunch.\"",
-      "reasoning": "The text directly asserts the obligation/expectation."
+      "evidence": "Sentence 1",
+      "reasoning": "This is explicitly asserted about the same referenced day."
     },
     {
       "id": "C_4",
-      "formula": "P_4",
-      "translation": "Henry was able to buy lunch on that day.",
+      "formula": "(P_2 ⟹ P_3)",
+      "translation": "On the day Henry forgot his wallet, he was supposed to buy lunch.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 3: \"...he was still able to buy lunch.\"",
-      "reasoning": "The text explicitly states that he was able to buy lunch, emphasizing this as surprising but factual in the narrative."
+      "evidence": "Sentence 1",
+      "reasoning": "Sentence 1 links the wallet-forgetting day to the obligation/plan to buy lunch, which is naturally captured as an implication from the described day-condition."
     },
     {
       "id": "C_5",
-      "formula": "P_2 ∧ P_4",
-      "translation": "Henry forgot his wallet and he was able to buy lunch on that day.",
-      "llm_weight": 1.0,
-      "evidence": "Sentences 1 and 3: \"The one day he forgot his wallet...\" and \"...he was still able to buy lunch.\"",
-      "reasoning": "The narrative asserts both facts as simultaneously true (highlighting the surprise against the stated rule), so their conjunction is strongly supported."
+      "formula": "(P_2 ⟹ ¬P_4)",
+      "translation": "According to the rule, Henry's forgetting his wallet implies he is not able to buy lunch.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
+      "reasoning": "The rule is stated strongly, but the narrative immediately reports an outcome that violates it; modeling it as a strong but defeasible constraint captures that tension."
     },
     {
       "id": "C_6",
+      "formula": "P_4",
+      "translation": "Henry was able to buy lunch on the day in question.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "This is explicitly asserted as the surprising outcome."
+    },
+    {
+      "id": "C_7",
       "formula": "P_3 ⟹ P_3",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -76,8 +84,8 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_3: 'Henry was supposed to buy lunch on that day.' has modal 'supposed'",
-    "        Base text: 'Henry was to buy lunch on that day.'",
+    "[Modal] P_3: 'Henry was supposed to buy lunch on the day in question.' has modal 'supposed'",
+    "        Base text: 'Henry was to buy lunch on the day in question.'",
     "        Found existing base: P_3",
     "        Added constraint: P_3 ⟹ P_3 @1.0",
     "[Negation] Sentence 2: Found negation of 'be'",
@@ -87,11 +95,11 @@
     "[Auxiliary] Found 0 auxiliary propositions",
     {
       "prop_id": "P_2",
-      "translation": "Henry forgot his wallet on that day.",
+      "translation": "Henry forgot his wallet on the day in question.",
       "positive_constraint": "C_2",
-      "negative_constraint": "C_7",
-      "nli_score_positive": 0.12065117806196213,
-      "nli_score_negative": 0.009911551140248775,
+      "negative_constraint": "C_8",
+      "nli_score_positive": 0.16899065673351288,
+      "nli_score_negative": 0.015275392681360245,
       "decision": "keep positive",
       "removed": "C_7"
     }

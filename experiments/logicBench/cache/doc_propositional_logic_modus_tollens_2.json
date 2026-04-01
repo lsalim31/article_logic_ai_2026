@@ -2,21 +2,21 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella was working hard on her project.",
+      "translation": "Isabella works hard on her project.",
       "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
-      "explanation": "This is an atomic descriptive claim about Isabella's effort level on the project, with no logical connectives."
+      "explanation": "This is a single, truth-evaluable activity attribution to Isabella, with no logical connectives or conditions inside it."
     },
     {
       "id": "P_2",
       "translation": "Isabella finished her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
-      "explanation": "This is a single, truth-evaluable event description (finishing on time) used as the antecedent of a conditional."
+      "explanation": "This is an atomic event/outcome description; the surrounding conditional is handled as a separate constraint."
     },
     {
       "id": "P_3",
       "translation": "Isabella receives a bonus from her company.",
       "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
-      "explanation": "This is an atomic outcome statement (receiving a bonus) without any connectives."
+      "explanation": "This is a single, truth-evaluable outcome with a specific recipient and source, expressed without negation or connectives."
     },
     {
       "id": "P_4",
@@ -28,7 +28,7 @@
       "id": "P_5",
       "translation": "Isabella hoped to receive a bonus from her company.",
       "evidence": "Sentence 1: \"as she had hoped\"",
-      "explanation": "This is an atomic mental-state claim (hope) about receiving a bonus, stated without logical connectives."
+      "explanation": "This is an atomic mental-state claim (hope) that is truth-evaluable and not itself a compound statement."
     }
   ],
   "constraints": [
@@ -43,10 +43,10 @@
     {
       "id": "C_2",
       "formula": "P_2 ⟹ P_3",
-      "translation": "Finishing the project on time would result in Isabella receiving a bonus from her company.",
-      "llm_weight": 0.9,
+      "translation": "If Isabella finishes her project on time, Isabella receives a bonus from her company.",
+      "llm_weight": 0.85,
       "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
-      "reasoning": "Stated as something Isabella knew; it strongly suggests a rule/guarantee, but is presented via her knowledge rather than an explicit company policy statement."
+      "reasoning": "The text presents this as what Isabella 'knew', strongly suggesting the conditional link, but it could reflect her belief/policy expectation rather than an absolute law, so weight is high but not 1.0."
     },
     {
       "id": "C_3",
@@ -62,31 +62,31 @@
       "translation": "Isabella would be receiving no bonus.",
       "llm_weight": 0.95,
       "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
-      "reasoning": "Narration frames it as Isabella’s realization; typically treated as highly reliable in-story, though in principle realizations could be mistaken."
+      "reasoning": "This is an explicit statement of non-receipt, framed as a realization. It is very strongly implied, with slight room for uncertainty because it is reported as her realization about the future rather than a completed outcome."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase directly indicates she had that hope; it is straightforward but somewhat indirect, so it is weighted slightly below certainty."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Isabella works hard on her project, Isabella finishes her project on time.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"Isabella had been working hard on her project\" together with the focus on finishing on time",
+      "reasoning": "The narrative links her hard work with the goal of finishing on time, but it does not explicitly state that hard work guarantees on-time completion, so this is a weaker, commonsense-leaning implication."
     },
     {
       "id": "C_5",
-      "formula": "P_4 ⟹ ¬P_3",
-      "translation": "If Isabella receives no bonus, then Isabella does not receive a bonus.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1 (semantic relationship between \"no bonus\" and \"a bonus\")",
-      "reasoning": "\"Receiving no bonus\" and \"receiving a bonus\" are logically incompatible by meaning."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_3 ⟹ ¬P_4",
-      "translation": "If Isabella receives a bonus, then Isabella does not receive no bonus.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0-1 (semantic relationship between bonus vs no bonus)",
-      "reasoning": "Mutual exclusivity follows from the meanings of the propositions."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_4 ⟹ ¬P_2",
-      "translation": "If Isabella receives no bonus, then Isabella did not finish her project on time.",
-      "llm_weight": 0.6,
-      "evidence": "Sentence 0-1: conditional bonus promise + later no bonus",
-      "reasoning": "Given the strong implication that on-time completion would yield a bonus (Sentence 0) and the later claim of no bonus (Sentence 1), a plausible explanation is that she did not finish on time; however, the text does not explicitly state she missed the deadline, and alternative explanations (policy change, exception) are possible."
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Isabella receives a bonus from her company, Isabella finishes her project on time.",
+      "llm_weight": 0.55,
+      "evidence": "Sentence 0: the bonus is described in connection with finishing on time",
+      "reasoning": "The text associates the bonus with on-time completion; however, it does not say this is the only route to a bonus, so the reverse implication is only weakly suggested."
     }
   ],
   "_enrichment_log": [
