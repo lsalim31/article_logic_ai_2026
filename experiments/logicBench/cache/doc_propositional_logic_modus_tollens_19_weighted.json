@@ -2,158 +2,261 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Ethan's passion for cooking ignited at a young age.",
-      "evidence": "Sentence 0: \"Ethan's passion for cooking ignited at a young age, fueled by his grandmother's delectable treats.\"",
-      "explanation": "This is a single event/state claim about when Ethan's passion began, with no internal logical connectives."
+      "translation": "Ethan has a passion for cooking.",
+      "evidence": "Sentence 0: \"Ethan's passion for cooking ignited...\"",
+      "explanation": "This is an atomic state attribution about Ethan; it is truth-evaluable and not a logical combination of smaller claims."
     },
     {
       "id": "P_2",
-      "translation": "Ethan's passion for cooking was fueled by his grandmother's delectable treats.",
-      "evidence": "Sentence 0: \"...fueled by his grandmother's delectable treats.\"",
-      "explanation": "This asserts one relation (fueled-by) between Ethan's passion and his grandmother's treats; it is truth-evaluable and atomic."
+      "translation": "Ethan's passion for cooking ignited at a young age.",
+      "evidence": "Sentence 0: \"Ethan's passion for cooking ignited at a young age\"",
+      "explanation": "This is a single event/time claim about the onset of Ethan's passion; it contains no logical connectives."
     },
     {
       "id": "P_3",
-      "translation": "Ethan aspired to become a chef.",
-      "evidence": "Sentence 1: \"He aspired to become a chef...\"",
-      "explanation": "This is a single attitude/goal statement and does not break into smaller propositional parts in this task."
+      "translation": "Ethan's grandmother has treats.",
+      "evidence": "Sentence 0: \"his grandmother's ... treats\"",
+      "explanation": "The possessive construction asserts existence/possession of treats; this is a minimal truth-evaluable proposition."
     },
     {
       "id": "P_4",
-      "translation": "Ethan pursued this path.",
-      "evidence": "Sentence 1: \"...if he pursued this path...\"",
-      "explanation": "Although mentioned inside a conditional, the clause itself is an atomic, declarative proposition once extracted."
+      "translation": "Ethan's grandmother's treats are delectable.",
+      "evidence": "Sentence 0: \"his grandmother's delectable treats\"",
+      "explanation": "This is an atomic property attribution (delectable) to the treats."
     },
     {
       "id": "P_5",
-      "translation": "Ethan made a delicious cake.",
-      "evidence": "Sentence 1: \"...he would make a delicious cake.\"; Sentence 2: \"...he won't make a delicious cake.\"",
-      "explanation": "This is the core outcome claim (making a delicious cake). Negation/modality is handled in constraints, not inside the primitive proposition."
+      "translation": "Ethan's grandmother's treats fueled Ethan's passion for cooking.",
+      "evidence": "Sentence 0: \"fueled by his grandmother's delectable treats\"",
+      "explanation": "This is a single causal/explanatory relation between the treats and Ethan's passion; it is not a logical connective."
     },
     {
       "id": "P_6",
-      "translation": "Ethan's grandmother made delectable treats.",
-      "evidence": "Sentence 0: \"...his grandmother's delectable treats.\"",
-      "explanation": "This captures the implied existence/source of the treats as an atomic proposition used for downstream constraints."
+      "translation": "Ethan aspired to become a chef.",
+      "evidence": "Sentence 1: \"He aspired to become a chef\"",
+      "explanation": "This is an atomic desire/goal attribution about Ethan."
+    },
+    {
+      "id": "P_7",
+      "translation": "Ethan pursued the path of becoming a chef.",
+      "evidence": "Sentence 1: \"if he pursued this path\"",
+      "explanation": "This is the antecedent clause extracted as an atomic action claim; the conditionality is represented in constraints instead."
+    },
+    {
+      "id": "P_8",
+      "translation": "Ethan makes a delicious cake.",
+      "evidence": "Sentence 1: \"he would make a delicious cake\"",
+      "explanation": "This is the consequent clause extracted as an atomic outcome claim; negation/conditionality is handled via constraints."
+    },
+    {
+      "id": "P_9",
+      "translation": "Ethan believed that pursuing the path of becoming a chef would result in making a delicious cake.",
+      "evidence": "Sentence 1: \"believing that if he pursued this path, he would make a delicious cake\"",
+      "explanation": "This is an atomic belief-ascription about a specific causal/conditional content, expressed without explicit logical connectives like 'if' in the proposition text."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9984702467918396,
-      "combined=(llm)*(nli)": 0.9984702467918396,
+      "nli_entailment": 0.9998480081558228,
+      "combined=(llm)*(nli)": 0.9998480081558228,
       "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "¬P_5",
-      "translation": "Ethan did not make a delicious cake.",
-      "evidence": "Sentence 2: \"However, he won't make a delicious cake.\"",
-      "reasoning": "This is stated directly by the narrator as a contrastive fact, so it is treated as certain.",
+      "id": "C_1",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Ethan's passion for cooking ignited at a young age, then Ethan has a passion for cooking.",
+      "evidence": "Sentence 0",
+      "reasoning": "Having a passion that ignited entails having that passion; this is a direct semantic entailment from the phrasing.",
       "list nli": [
         [
-          0.0001677546970313415,
-          0.0013619496021419764,
-          0.9984702467918396
+          3.185451714671217e-05,
+          0.00012015167158097029,
+          0.9998480081558228
         ],
         [
-          0.014574507251381874,
-          0.0023926012217998505,
-          0.9830328822135925
+          4.571520184981637e-05,
+          0.0003046397469006479,
+          0.9996496438980103
         ],
         [
-          0.9695098996162415,
-          0.0005183286848478019,
-          0.02997175231575966
+          0.0001267661718884483,
+          0.0009929700754582882,
+          0.9988802075386047
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.7,
-      "nli_entailment": 0.9998712539672852,
-      "combined=(llm)*(nli)": 0.6999098777770996,
+      "llm-weight": 0.95,
+      "nli_entailment": 0.999881386756897,
+      "combined=(llm)*(nli)": 0.9498873174190521,
       "hardness_constant": 0.9,
-      "id": "C_1",
-      "formula": "P_4 ⟹ P_5",
-      "translation": "If Ethan pursued this path, Ethan made a delicious cake.",
-      "evidence": "Sentence 1: \"...believing that if he pursued this path, he would make a delicious cake.\"",
-      "reasoning": "The implication is presented as Ethan's belief rather than an asserted fact about the world, so it is a moderately strong but not certain constraint.",
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_1",
+      "translation": "If Ethan's grandmother's treats fueled Ethan's passion for cooking, then Ethan has a passion for cooking.",
+      "evidence": "Sentence 0",
+      "reasoning": "Something fueling a passion presupposes the passion exists; this is strongly implied by ordinary meaning.",
       "list nli": [
         [
-          8.348064147867262e-05,
-          4.5213269913801923e-05,
-          0.9998712539672852
+          2.4806286091916263e-05,
+          9.373883221996948e-05,
+          0.999881386756897
         ],
         [
-          0.00010597615619190037,
-          0.00021295553597155958,
-          0.9996811151504517
+          5.3532319725491107e-05,
+          8.84616092662327e-05,
+          0.999858021736145
         ],
         [
-          0.00016435074212495238,
-          0.00020856797345913947,
-          0.9996271133422852
+          9.550982213113457e-05,
+          8.534274820704013e-05,
+          0.9998192191123962
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9946958422660828,
+      "combined=(llm)*(nli)": 0.9946958422660828,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "If Ethan's grandmother's treats are delectable, then Ethan's grandmother has treats.",
+      "evidence": "Sentence 0",
+      "reasoning": "Predicating 'delectable' of the treats presupposes the treats exist (and thus are had/possessed by the grandmother).",
+      "list nli": [
+        [
+          0.001384016708470881,
+          0.003920168150216341,
+          0.9946958422660828
+        ],
+        [
+          0.013904843479394913,
+          0.010066152550280094,
+          0.9760289788246155
+        ],
+        [
+          0.07378558814525604,
+          0.8201670050621033,
+          0.10604739189147949
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9993069171905518,
+      "combined=(llm)*(nli)": 0.9993069171905518,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "¬P_8",
+      "translation": "Ethan does not make a delicious cake.",
+      "evidence": "Sentence 2: \"However, he won't make a delicious cake.\"",
+      "reasoning": "This is explicitly stated in the text with strong commitment ('won't').",
+      "list nli": [
+        [
+          0.0004937962512485683,
+          0.00019930111011490226,
+          0.9993069171905518
+        ],
+        [
+          0.0008026371942833066,
+          0.0003771769115701318,
+          0.9988201260566711
+        ],
+        [
+          0.0029432023875415325,
+          0.00044545053970068693,
+          0.9966112971305847
         ]
       ],
       "weight": 0.6999098777770996
     },
     {
-      "llm-weight": 0.6,
-      "nli_entailment": 0.9999116659164429,
-      "combined=(llm)*(nli)": 0.5999469995498657,
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998120665550232,
+      "combined=(llm)*(nli)": 0.8998308598995209,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_3 ⟹ P_4",
-      "translation": "Ethan's aspiration to become a chef implies Ethan pursued this path.",
-      "evidence": "Sentence 1: \"He aspired to become a chef, believing that if he pursued this path...\"",
-      "reasoning": "Aspiring suggests an intention toward the related path, but the text does not explicitly say he actually pursued it, so the link is uncertain.",
+      "formula": "P_5 ⟹ P_3",
+      "translation": "If the treats fueled Ethan's passion, then Ethan's grandmother has treats.",
+      "evidence": "Sentence 0",
+      "reasoning": "The fueling relation refers to the grandmother's treats as participants, which strongly suggests their existence.",
       "list nli": [
         [
-          2.6439638531883247e-05,
-          6.184433732414618e-05,
-          0.9999116659164429
+          9.362904529552907e-05,
+          9.435610263608396e-05,
+          0.9998120665550232
         ],
         [
-          4.209326652926393e-05,
-          5.0689937779679894e-05,
-          0.9999072551727295
+          0.00017691076209302992,
+          0.000998584902845323,
+          0.9988245368003845
         ],
         [
-          1.5654990420443937e-05,
-          0.00015114618872758,
-          0.9998332262039185
+          0.0011531721102073789,
+          0.00013827635848429054,
+          0.9987086057662964
         ]
       ],
-      "weight": 0.5999469995498657
+      "weight": 0.8998308598995209
     },
     {
       "llm-weight": 0.9,
-      "nli_entailment": 0.9978055357933044,
-      "combined=(llm)*(nli)": 0.898024982213974,
+      "nli_entailment": 0.996199905872345,
+      "combined=(llm)*(nli)": 0.8965799152851105,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_2 ⟹ P_6",
-      "translation": "Ethan's passion being fueled by his grandmother's delectable treats implies Ethan's grandmother made delectable treats.",
-      "evidence": "Sentence 0: \"...fueled by his grandmother's delectable treats.\"",
-      "reasoning": "If her treats fueled his passion, it strongly implies such treats existed and were made by the grandmother; the 'made' detail is slightly inferential.",
+      "id": "C_5",
+      "formula": "P_6 ⟹ P_9",
+      "translation": "If Ethan aspired to become a chef, then Ethan held the belief about cake resulting from pursuing that path.",
+      "evidence": "Sentence 1",
+      "reasoning": "The sentence links the aspiration with the belief ('aspired..., believing that...'), strongly suggesting the belief accompanies the aspiration, though aspiration does not logically require it in all worlds.",
       "list nli": [
         [
-          8.377304766327143e-05,
-          0.0021107280626893044,
-          0.9978055357933044
+          0.0035636131651699543,
+          0.00023643876193091273,
+          0.996199905872345
         ],
         [
-          0.000263017020188272,
-          0.008554610423743725,
-          0.9911823272705078
+          0.00471749622374773,
+          0.0011548628099262714,
+          0.994127631187439
         ],
         [
-          0.0001744362380122766,
-          0.9804173707962036,
-          0.0194080900400877
+          0.002628729911521077,
+          0.003390572965145111,
+          0.9939807653427124
         ]
       ],
-      "weight": 0.898024982213974
+      "weight": 0.8965799152851105
+    },
+    {
+      "llm-weight": 0.4,
+      "nli_entailment": 0.9998103976249695,
+      "combined=(llm)*(nli)": 0.3999241590499878,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "If Ethan pursued the path of becoming a chef, then Ethan makes a delicious cake.",
+      "evidence": "Sentence 1",
+      "reasoning": "This conditional is presented as Ethan's belief rather than asserted fact; thus it is only weakly supported as an actual-world implication.",
+      "list nli": [
+        [
+          0.00014226102211978287,
+          4.7314242692664266e-05,
+          0.9998103976249695
+        ],
+        [
+          3.4307937312405556e-05,
+          0.0003944765485357493,
+          0.9995712637901306
+        ],
+        [
+          0.0004965695552527905,
+          7.193013880169019e-05,
+          0.9994314312934875
+        ]
+      ],
+      "weight": 0.3999241590499878
     }
   ]
 }

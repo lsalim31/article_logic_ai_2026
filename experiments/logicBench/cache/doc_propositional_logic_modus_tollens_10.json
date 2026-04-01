@@ -3,46 +3,68 @@
     {
       "id": "P_1",
       "translation": "Elijah has a new job.",
-      "evidence": "Sentence 0: \"If Elijah has a new job\"",
-      "explanation": "This is an atomic, truth-evaluable state about Elijah having a new job, with no logical connectives."
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "explanation": "This is an atomic state about Elijah having a new job; it contains no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Elijah will get a raise.",
-      "evidence": "Sentence 0: \"then he will get a raise\"",
-      "explanation": "This is an atomic, truth-evaluable future-event claim with no explicit logical connectives."
+      "translation": "Elijah gets a raise.",
+      "evidence": "Sentence 0: \"...then he will get a raise.\"",
+      "explanation": "This is an atomic event/outcome; it does not embed any further conditions or connectives."
     },
     {
       "id": "P_3",
       "translation": "Elijah receives the raise he had anticipated.",
-      "evidence": "Sentence 1: \"the raise he had anticipated\"",
-      "explanation": "This is an atomic statement about whether the particular anticipated raise is received; the source text negates it, so the positive form is used as a primitive proposition."
+      "evidence": "Sentence 1: \"...he would not be receiving the raise he had anticipated.\"",
+      "explanation": "This is the positive (non-negated) atomic proposition corresponding to the negated statement in the text."
+    },
+    {
+      "id": "P_4",
+      "translation": "Elijah anticipated a raise.",
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\"",
+      "explanation": "This is an atomic mental-state claim presupposed by the definite description \"the raise he had anticipated.\""
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Elijah has a new job, then he will get a raise.",
+      "translation": "If Elijah has a new job, he gets a raise.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
-      "reasoning": "This is stated explicitly as a conditional in the text."
+      "reasoning": "This conditional is stated explicitly."
     },
     {
       "id": "C_2",
       "formula": "¬P_3",
       "translation": "Elijah does not receive the raise he had anticipated.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated.\"",
-      "reasoning": "\"Would not\" expresses a strong commitment that the anticipated raise is not received (with some residual uncertainty due to modal/future framing)."
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"...he would not be receiving the raise he had anticipated.\"",
+      "reasoning": "This is asserted directly (the modality \"would\" is treated as part of the statement’s force here rather than a separate condition)."
     },
     {
       "id": "C_3",
-      "formula": "P_2 ⟹ ¬P_3",
-      "translation": "Even if Elijah gets a raise, it is not the raise he had anticipated.",
-      "llm_weight": 0.75,
-      "evidence": "Sentence 1 (contrast marker): \"However, he would not be receiving the raise he had anticipated.\"",
-      "reasoning": "The \"However\" contrast strongly suggests the raise mentioned is not the anticipated one; the text does not state this implication in fully explicit logical form, so the weight is moderately high rather than 1.0."
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Elijah receives the raise he had anticipated, then Elijah gets a raise.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\" (the anticipated thing is a raise)",
+      "reasoning": "By common-sense semantics, receiving a particular raise entails getting a raise; this is strongly implied by the noun phrase."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Elijah receives the raise he had anticipated, then Elijah anticipated a raise.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"...the raise he had anticipated.\"",
+      "reasoning": "Receiving 'the raise he had anticipated' presupposes that he did anticipate a raise; this is a strong semantic implication."
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_3 ⟹ P_4",
+      "translation": "If Elijah does not receive the raise he had anticipated, then Elijah anticipated a raise.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1: \"...would not be receiving the raise he had anticipated.\"",
+      "reasoning": "Even under negation, the definite description 'the raise he had anticipated' typically carries a presupposition that he anticipated such a raise, though presuppositions can be weaker than explicit assertions."
     }
   ],
   "_enrichment_log": [

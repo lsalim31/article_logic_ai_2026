@@ -4,76 +4,62 @@
       "id": "P_1",
       "translation": "Alexander decided to go for a walk in the park.",
       "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
-      "explanation": "This is an atomic event/mental-state claim (a decision) with a specific action target; it contains no logical connectives or negation."
+      "explanation": "This is an atomic attitude/action-intention statement (a decision) and is not presented as a logical combination of smaller clauses in the text."
     },
     {
       "id": "P_2",
-      "translation": "Alexander is fully aware that the walk tires him out soon.",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
       "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
-      "explanation": "This is an atomic awareness/knowledge-ascription statement; it is not itself a logical connective in the surface form."
+      "explanation": "This is an atomic mental-state attribution (awareness) as stated; its internal content is not expressed with explicit logical connectives that must be separately represented inside this proposition."
     },
     {
       "id": "P_3",
       "translation": "The walk tires Alexander out soon.",
       "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "explanation": "This is the embedded content of the awareness clause expressed as a simple declarative proposition (with modal removed)."
+      "explanation": "This is a simple, truth-evaluable event/property claim (the walk leads to Alexander being tired soon) with no explicit logical connectives."
     },
     {
       "id": "P_4",
       "translation": "Alexander gets tired soon.",
-      "evidence": "Sentence 1: \"he won't get tired soon\"",
-      "explanation": "This is the positive core proposition corresponding to the negated statement in the text; negation is handled in constraints."
-    },
-    {
-      "id": "P_5",
-      "translation": "Alexander intends to go for a walk in the park.",
-      "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
-      "explanation": "This is a simple, standalone mental-state proposition commonly entailed by a decision, needed to represent implied intent without adding connectives."
+      "evidence": "Sentence 1: \"he won't get tired soon\" (negated in text)",
+      "explanation": "The text discusses whether Alexander gets tired soon; to avoid a negated primitive proposition, the positive core claim is represented atomically here."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1 ⟹ P_5",
-      "translation": "If Alexander decided to go for a walk in the park, then Alexander intends to go for a walk in the park.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0",
-      "reasoning": "A decision to perform an action typically implies an intention to perform it; this is a strong pragmatic inference from the phrasing \"decided to go\"."
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Alexander is fully aware that the walk would soon tire him out, then the walk tires Alexander out soon.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "reasoning": "The text explicitly attributes Alexander's awareness of the walk-soon-tires-him content, but awareness does not strictly guarantee the content is true (it could be a mistaken belief), so the implication is strong but not absolute."
     },
     {
       "id": "C_2",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Alexander is fully aware that the walk tires him out soon, then the walk tires Alexander out soon.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0",
-      "reasoning": "The text attributes awareness of the embedded claim, which suggests the embedded proposition, but awareness/belief does not guarantee truth; thus a moderate weight."
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If the walk tires Alexander out soon, then Alexander gets tired soon.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"it would soon tire him out\"",
+      "reasoning": "By the meaning of 'tire him out soon', it very strongly entails that Alexander becomes tired soon; this is a near-definitional/common-sense entailment."
     },
     {
       "id": "C_3",
-      "formula": "P_3 ⟹ P_4",
-      "translation": "If the walk tires Alexander out soon, then Alexander gets tired soon.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0",
-      "reasoning": "Common-sense semantic implication: being tired out soon from the walk entails getting tired soon."
-    },
-    {
-      "id": "C_4",
       "formula": "¬P_4",
       "translation": "Alexander will not get tired soon.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"However, he won't get tired soon.\"",
-      "reasoning": "This is stated directly and unqualified (aside from discourse marker \"However\"), so it is treated as a hard constraint."
+      "reasoning": "This is directly and explicitly asserted in the text; it is presented as a firm claim."
     },
     {
-      "id": "C_5",
+      "id": "C_4",
       "formula": "P_2",
-      "translation": "Alexander is fully aware that the walk tires him out soon.",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
     },
     {
-      "id": "C_6",
+      "id": "C_5",
       "formula": "P_2 ⟹ P_2",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -81,12 +67,20 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_7",
+      "id": "C_6",
       "formula": "P_3",
       "translation": "The walk tires Alexander out soon.",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "Original modal statement is asserted with certainty"
+    },
+    {
+      "id": "C_7",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
       "id": "C_8",
@@ -95,19 +89,11 @@
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_10",
-      "formula": "P_4 ⟹ P_4",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_2: 'Alexander is fully aware that the walk tires him out soon.' has modal 'soon'",
-    "        Base text: 'Alexander is fully aware that the walk tires him out.'",
+    "[Modal] P_2: 'Alexander is fully aware that the walk would soon tire him out.' has modal 'soon'",
+    "        Base text: 'Alexander is fully aware that the walk would tire him out.'",
     "        Found existing base: P_2",
     "[Modal] P_3: 'The walk tires Alexander out soon.' has modal 'soon'",
     "        Base text: 'The walk tires Alexander out.'",
@@ -131,12 +117,12 @@
     {
       "prop_id": "P_4",
       "translation": "Alexander gets tired soon.",
-      "positive_constraint": "C_9",
-      "negative_constraint": "C_4",
+      "positive_constraint": "C_8",
+      "negative_constraint": "C_3",
       "nli_score_positive": 0.015619287267327309,
       "nli_score_negative": 0.8624991178512573,
       "decision": "keep negative",
-      "removed": "C_9"
+      "removed": "C_8"
     }
   ]
 }

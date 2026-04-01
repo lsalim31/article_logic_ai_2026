@@ -4,36 +4,36 @@
       "id": "P_1",
       "translation": "Theodore has a pet dog.",
       "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
-      "explanation": "This is an atomic possession claim (having a pet dog) and does not contain logical connectives or negation."
+      "explanation": "This is a single, truth-evaluable state about Theodore possessing a pet dog, with no logical connectives or negation inside it."
     },
     {
       "id": "P_2",
       "translation": "Theodore takes his dog out for a walk.",
       "evidence": "Sentence 0: \"...he will take it out for a walk.\"",
-      "explanation": "This is an atomic action claim (taking the dog out for a walk) and does not contain logical connectives or negation."
+      "explanation": "This is an atomic action statement. The text also discusses its negation, but the primitive proposition itself is kept positive (no negation) per the guidelines."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9913458228111267,
-      "combined=(llm)*(nli)": 0.9913458228111267,
+      "nli_entailment": 0.9836629629135132,
+      "combined=(llm)*(nli)": 0.9836629629135132,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Theodore has a pet dog, he takes it out for a walk.",
+      "translation": "If Theodore has a pet dog, then Theodore takes his dog out for a walk.",
       "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
-      "reasoning": "This is an explicit conditional stated in the text.",
+      "reasoning": "This is explicitly stated as a conditional with \"will,\" indicating a strong/definitive implication in the text.",
       "list nli": [
         [
-          0.0022546169348061085,
-          0.006399477366358042,
-          0.9913458228111267
+          0.0047077760100364685,
+          0.011629221960902214,
+          0.9836629629135132
         ],
         [
-          0.00011198382708244026,
-          0.9749405384063721,
-          0.024947350844740868
+          7.773482502670959e-05,
+          0.9887480735778809,
+          0.011174103245139122
         ]
       ]
     },
@@ -46,7 +46,7 @@
       "formula": "¬P_2",
       "translation": "Theodore does not take his dog out for a walk.",
       "evidence": "Sentence 1: \"However, he would not take his dog out for a walk.\"",
-      "reasoning": "This is an explicit negation of the walking action; the discourse marker \"However\" signals contrast with the prior conditional.",
+      "reasoning": "The sentence directly asserts the negation of P_2. Despite the modal \"would,\" the phrasing is presented as a firm contrast (“However”), so the intended reading is a definite negated claim.",
       "list nli": [
         [
           0.0010537969646975398,
@@ -70,8 +70,8 @@
       "id": "C_3",
       "formula": "P_2 ⟹ P_1",
       "translation": "If Theodore takes his dog out for a walk, then Theodore has a pet dog.",
-      "evidence": "Sentence 0: \"...take it out for a walk.\" / Sentence 1: \"...his dog...\"",
-      "reasoning": "Common-sense implication: performing the action of taking \"his dog\" for a walk presupposes he has a dog (modeled here as having a pet dog). This is strongly but not perfectly guaranteed by the wording.",
+      "evidence": "Sentence 0: \"...take it out for a walk.\"; Sentence 1: \"...take his dog out for a walk.\"",
+      "reasoning": "Common-sense presupposition: taking \"his dog\" for a walk strongly implies Theodore has a dog. This is not an explicit logical claim in the text, so it is weighted slightly below 1.0.",
       "list nli": [
         [
           3.880880103679374e-05,
@@ -95,7 +95,7 @@
       "formula": "P_1",
       "translation": "Theodore has a pet dog.",
       "evidence": "Sentence 1: \"...his dog...\"",
-      "reasoning": "The possessive phrase \"his dog\" pragmatically suggests Theodore has a dog, but it is not an explicit direct assertion in a standalone declarative sentence, so it is treated as a weaker (presuppositional) constraint.",
+      "reasoning": "The phrase \"his dog\" conversationally presupposes Theodore has a dog, but the overall passage also frames dog-ownership conditionally in Sentence 0, so this is supported but not certain.",
       "list nli": [
         [
           0.0005587199702858925,

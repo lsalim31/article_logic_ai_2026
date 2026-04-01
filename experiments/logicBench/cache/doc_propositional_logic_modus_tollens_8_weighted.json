@@ -4,49 +4,55 @@
       "id": "P_1",
       "translation": "Daniel woke up on a gloomy morning.",
       "evidence": "Sentence 0: \"Daniel woke up on a gloomy morning\"",
-      "explanation": "This is a single event description with a specific subject and time context, and it contains no logical connective or negation."
+      "explanation": "This is a single event description with an attributive modifier and contains no explicit logical connective or condition."
     },
     {
       "id": "P_2",
       "translation": "Daniel forgot to take his umbrella.",
       "evidence": "Sentence 0: \"he had forgotten to take his umbrella\"",
-      "explanation": "This is an atomic memory/state fact about Daniel, not decomposable into smaller propositional parts without introducing connectives."
+      "explanation": "This is an atomic, truth-evaluable claim about Daniel’s action/omission."
     },
     {
       "id": "P_3",
-      "translation": "Daniel remembered a rule about forgetting his umbrella.",
-      "evidence": "Sentence 1: \"Remembering the rule\"",
-      "explanation": "This captures the mental act of remembering a rule; the conditional content of the rule is handled as a separate logical constraint."
+      "translation": "Daniel realized that he had forgotten to take his umbrella.",
+      "evidence": "Sentence 0: \"realized that he had forgotten to take his umbrella\"",
+      "explanation": "This is an atomic mental-state proposition (realization) that is not itself a logical connective."
     },
     {
       "id": "P_4",
-      "translation": "Daniel felt a sense of worry.",
-      "evidence": "Sentence 1: \"Daniel felt a sense of worry\"",
-      "explanation": "This is a single emotional state attribution, expressed as a standalone declarative clause."
+      "translation": "Daniel gets wet in the rain.",
+      "evidence": "Sentence 0: \"he would get wet in the rain\"",
+      "explanation": "This is the consequent event described in the stated rule; it is expressed as a simple declarative clause (no negation)."
     },
     {
       "id": "P_5",
-      "translation": "Daniel stayed dry.",
-      "evidence": "Sentence 2: \"Daniel managed to stay dry\"",
-      "explanation": "This is an atomic outcome/state (dryness) and does not include negation or connectives."
+      "translation": "Daniel felt a sense of worry.",
+      "evidence": "Sentence 0: \"Daniel felt a sense of worry\"",
+      "explanation": "This is an atomic emotional-state proposition."
     },
     {
       "id": "P_6",
-      "translation": "Daniel got wet in the rain.",
-      "evidence": "Sentence 1: \"he would get wet in the rain\"; Sentence 2: \"getting wet in the rain\"",
-      "explanation": "This is an atomic event/outcome proposition; any denial of it is represented via constraints using negation."
+      "translation": "Daniel stayed dry.",
+      "evidence": "Sentence 1: \"Daniel managed to stay dry\"",
+      "explanation": "This is an atomic outcome statement and does not contain logical connectives or negation."
     },
     {
       "id": "P_7",
-      "translation": "Daniel faced the consequences of getting wet in the rain.",
-      "evidence": "Sentence 2: \"face the consequences of getting wet in the rain\"",
-      "explanation": "This is a single outcome statement; the text asserts its negation, which is captured by a negated constraint rather than negating the proposition text."
+      "translation": "Daniel was relieved.",
+      "evidence": "Sentence 1: \"was relieved\"",
+      "explanation": "This is an atomic emotional-state proposition."
     },
     {
       "id": "P_8",
-      "translation": "Daniel felt relieved.",
-      "evidence": "Sentence 2: \"was relieved\"",
-      "explanation": "This is a single emotional state attribution and is atomic."
+      "translation": "Daniel faced the consequences of getting wet in the rain.",
+      "evidence": "Sentence 1: \"face the consequences of getting wet in the rain\"",
+      "explanation": "This is an atomic proposition about facing consequences (stated in the text under negation, but represented here without negation as required)."
+    },
+    {
+      "id": "P_9",
+      "translation": "Daniel remembered the rule about forgetting his umbrella.",
+      "evidence": "Sentence 0: \"Remembering the rule\"",
+      "explanation": "This is an atomic mental action (remembering) needed to support the stated causal narrative around worry."
     }
   ],
   "hard_constraints": [
@@ -77,7 +83,9 @@
           0.9997429251670837
         ]
       ]
-    },
+    }
+  ],
+  "soft_constraints": [
     {
       "llm-weight": 1.0,
       "nli_entailment": 0.9999209642410278,
@@ -100,106 +108,138 @@
           0.999911904335022
         ],
         [
-          1.1280982107564341e-05,
-          8.32672230899334e-05,
-          0.9999054670333862
+          1.3921016943641007e-05,
+          0.0003609729465097189,
+          0.9996250867843628
         ]
-      ]
+      ],
+      "weight": 0.8499285638332367
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999227523803711,
-      "combined=(llm)*(nli)": 0.9999227523803711,
+      "nli_entailment": 0.9999294281005859,
+      "combined=(llm)*(nli)": 0.9999294281005859,
       "hardness_constant": 0.9,
       "id": "C_3",
       "formula": "P_3",
-      "translation": "Daniel remembered a rule about forgetting his umbrella.",
-      "evidence": "Sentence 1",
-      "reasoning": "The text explicitly states he was remembering the rule.",
+      "translation": "Daniel realized he had forgotten his umbrella.",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as narrative fact.",
       "list nli": [
         [
-          1.5498917491640896e-05,
-          6.173224392114207e-05,
-          0.9999227523803711
+          1.549551780044567e-05,
+          5.50329168618191e-05,
+          0.9999294281005859
         ],
         [
-          5.001642421120778e-05,
-          5.01030299346894e-05,
-          0.9998998641967773
+          2.375580879743211e-05,
+          4.809824167750776e-05,
+          0.9999281167984009
         ],
         [
-          0.0001248134212801233,
-          7.380449824267998e-05,
-          0.9998014569282532
+          3.572795321815647e-05,
+          4.048055416205898e-05,
+          0.999923825263977
+        ]
+      ],
+      "weight": 0.8998284995555877
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999171495437622,
+      "combined=(llm)*(nli)": 0.9999171495437622,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_9",
+      "translation": "Daniel remembered the rule about forgetting his umbrella.",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as narrative fact.",
+      "list nli": [
+        [
+          1.736920967232436e-05,
+          6.546100485138595e-05,
+          0.9999171495437622
+        ],
+        [
+          5.270755718811415e-05,
+          4.632999480236322e-05,
+          0.9999009370803833
+        ],
+        [
+          9.218198101734743e-05,
+          9.637803304940462e-05,
+          0.9998114705085754
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997326731681824,
-      "combined=(llm)*(nli)": 0.9997326731681824,
+      "nli_entailment": 0.9994944334030151,
+      "combined=(llm)*(nli)": 0.9994944334030151,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_4",
+      "id": "C_5",
+      "formula": "P_5",
       "translation": "Daniel felt worry.",
-      "evidence": "Sentence 1",
+      "evidence": "Sentence 0",
       "reasoning": "Directly asserted as narrative fact.",
       "list nli": [
         [
-          6.52939997962676e-05,
-          0.00020201508596073836,
-          0.9997326731681824
-        ],
-        [
-          2.970791501866188e-05,
-          0.0007319062715396285,
-          0.9992383718490601
+          2.502701863704715e-05,
+          0.00048048209282569587,
+          0.9994944334030151
         ],
         [
           1.9775188775383867e-05,
           0.000759187329094857,
           0.9992209672927856
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9970502853393555,
-      "combined=(llm)*(nli)": 0.9970502853393555,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_5",
-      "translation": "Daniel stayed dry.",
-      "evidence": "Sentence 2",
-      "reasoning": "Directly asserted outcome: he managed to stay dry.",
-      "list nli": [
-        [
-          0.0027860335540026426,
-          0.0001636181550566107,
-          0.9970502853393555
         ],
         [
-          0.02599875070154667,
-          0.0031304885633289814,
-          0.9708707928657532
-        ],
-        [
-          0.7154249548912048,
-          0.0017316214507445693,
-          0.2828434407711029
+          6.83522921463009e-06,
+          0.000802733819000423,
+          0.9991903901100159
         ]
-      ]
+      ],
+      "weight": 0.899930477142334
     },
     {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9997723698616028,
-      "combined=(llm)*(nli)": 0.9997723698616028,
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9999123811721802,
+      "combined=(llm)*(nli)": 0.7999299049377442,
       "hardness_constant": 0.9,
       "id": "C_6",
-      "formula": "P_8",
-      "translation": "Daniel felt relieved.",
-      "evidence": "Sentence 2",
-      "reasoning": "Directly asserted emotional reaction: he was relieved.",
+      "formula": "P_6",
+      "translation": "Daniel stayed dry.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted as narrative fact (\"managed to stay dry\").",
+      "list nli": [
+        [
+          2.4963190298876725e-05,
+          6.262711394811049e-05,
+          0.9999123811721802
+        ],
+        [
+          0.005715579725801945,
+          0.0029765237122774124,
+          0.9913079142570496
+        ],
+        [
+          0.9959195852279663,
+          0.00023015534679871053,
+          0.0038501389790326357
+        ]
+      ],
+      "weight": 0.7999299049377442
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9986696243286133,
+      "combined=(llm)*(nli)": 0.7989356994628907,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Daniel was relieved.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted as narrative fact.",
       "list nli": [
         [
           6.0313504945952445e-05,
@@ -207,83 +247,85 @@
           0.9997723698616028
         ],
         [
-          0.0001921655930345878,
-          5.9091187722515315e-05,
-          0.9997487664222717
+          0.00010880616900976747,
+          0.0002499988186173141,
+          0.9996411800384521
         ],
         [
-          0.00010728063352871686,
-          0.0001483149389969185,
-          0.9997443556785583
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9997530579566956,
-      "combined=(llm)*(nli)": 0.9497654050588608,
-      "hardness_constant": 0.9,
-      "id": "C_7",
-      "formula": "¬P_6",
-      "translation": "Daniel did not get wet in the rain.",
-      "evidence": "Sentence 2: \"managed to stay dry\"",
-      "reasoning": "Staying dry strongly implies not getting wet; treated as near-certain but derived rather than explicitly stated as 'not wet'.",
-      "list nli": [
-        [
-          2.0894614863209426e-05,
-          0.00022600471857003868,
-          0.9997530579566956
-        ],
-        [
-          0.0004795229760929942,
-          0.00024360792303923517,
-          0.9992769360542297
-        ],
-        [
-          4.314547368267085e-06,
-          0.0019503355724737048,
-          0.9980453252792358
+          0.0003011928638443351,
+          0.00017785212548915297,
+          0.999521017074585
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997871518135071,
-      "combined=(llm)*(nli)": 0.9997871518135071,
+      "nli_entailment": 0.9983092546463013,
+      "combined=(llm)*(nli)": 0.9983092546463013,
       "hardness_constant": 0.9,
       "id": "C_8",
-      "formula": "¬P_7",
-      "translation": "Daniel did not face the consequences of getting wet in the rain.",
-      "evidence": "Sentence 2: \"he didn't have to face the consequences of getting wet in the rain\"",
-      "reasoning": "This negation is explicitly stated.",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "Daniel’s realizing he forgot his umbrella implies he forgot his umbrella.",
+      "evidence": "Sentence 0",
+      "reasoning": "Realizing that he forgot presupposes the forgetting occurred, as stated in the same clause.",
       "list nli": [
         [
-          1.3105449397698976e-05,
-          0.00019974708266090602,
-          0.9997871518135071
+          0.0004034876183141023,
+          0.0012873145751655102,
+          0.9983092546463013
         ],
         [
-          5.094834341434762e-05,
-          0.0007320716977119446,
-          0.9992169141769409
+          0.00024475192185491323,
+          0.001769108115695417,
+          0.9979860782623291
         ],
         [
-          0.005992572754621506,
-          0.0005881593679077923,
-          0.9934192299842834
+          0.0014442563988268375,
+          0.0015425297897309065,
+          0.9970132112503052
         ]
       ]
     },
     {
       "llm-weight": 1.0,
+      "nli_entailment": 0.9998857975006104,
+      "combined=(llm)*(nli)": 0.9998857975006104,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Daniel forgot his umbrella, he would get wet in the rain.",
+      "evidence": "Sentence 0: \"the rule that if he forgot his umbrella, he would get wet in the rain\"",
+      "reasoning": "The text explicitly reports this as a rule; the conditional is stated unqualified.",
+      "list nli": [
+        [
+          2.4706316253286786e-05,
+          8.945505396695808e-05,
+          0.9998857975006104
+        ],
+        [
+          6.165791273815557e-05,
+          0.00011217912106076255,
+          0.9998261332511902
+        ],
+        [
+          5.101661827211501e-06,
+          0.00017679310985840857,
+          0.9998181462287903
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.95,
       "nli_entailment": 0.9997019171714783,
-      "combined=(llm)*(nli)": 0.9997019171714783,
+      "combined=(llm)*(nli)": 0.9497168213129044,
       "hardness_constant": 0.9,
       "id": "C_11",
-      "formula": "(P_5 ⟹ ¬P_6)",
+      "formula": "P_6 ⟹ ¬P_4",
       "translation": "If Daniel stayed dry, then Daniel did not get wet in the rain.",
-      "evidence": "Sentence 2: \"managed to stay dry\"",
-      "reasoning": "By commonsense meaning, 'stayed dry' and 'got wet' are incompatible.",
+      "evidence": "Sentence 1: \"managed to stay dry\" contrasted with \"getting wet in the rain\"",
+      "reasoning": "Staying dry and getting wet are near-contradictory outcomes in ordinary usage; the text’s contrast supports this strongly.",
       "list nli": [
         [
           1.0812193977471907e-05,
@@ -291,27 +333,28 @@
           0.9997019171714783
         ],
         [
-          4.329728471930139e-05,
-          0.001249211491085589,
-          0.9987075328826904
+          8.582959708292037e-05,
+          0.0022601543460041285,
+          0.9976540207862854
         ],
         [
-          0.0036606821231544018,
-          0.004227651748806238,
-          0.9921116828918457
+          0.0029624984599649906,
+          0.003397530410438776,
+          0.9936400055885315
         ]
-      ]
+      ],
+      "weight": 0.897327983379364
     },
     {
-      "llm-weight": 1.0,
+      "llm-weight": 0.95,
       "nli_entailment": 0.9987766146659851,
-      "combined=(llm)*(nli)": 0.9987766146659851,
+      "combined=(llm)*(nli)": 0.9488377839326858,
       "hardness_constant": 0.9,
       "id": "C_12",
-      "formula": "(P_6 ⟹ ¬P_5)",
+      "formula": "P_4 ⟹ ¬P_6",
       "translation": "If Daniel got wet in the rain, then Daniel did not stay dry.",
-      "evidence": "Sentence 2 (dryness vs. wetness contrast)",
-      "reasoning": "Wetness and staying dry are mutually exclusive states.",
+      "evidence": "Sentence 1 (contrast between staying dry and getting wet)",
+      "reasoning": "Common-sense mutual exclusivity between being wet and staying dry.",
       "list nli": [
         [
           3.7659454392269254e-05,
@@ -319,92 +362,120 @@
           0.9987766146659851
         ],
         [
-          0.00024080935691017658,
-          0.00234814896248281,
-          0.9974110722541809
+          0.00024347970611415803,
+          0.002229583915323019,
+          0.9975269436836243
         ],
         [
-          0.009763732552528381,
-          0.00714324414730072,
-          0.9830930233001709
-        ]
-      ]
-    }
-  ],
-  "soft_constraints": [
-    {
-      "llm-weight": 0.7,
-      "nli_entailment": 0.9999288320541382,
-      "combined=(llm)*(nli)": 0.6999501824378966,
-      "hardness_constant": 0.9,
-      "id": "C_9",
-      "formula": "(P_2 ⟹ P_6)",
-      "translation": "Forgetting the umbrella leads to getting wet in the rain.",
-      "evidence": "Sentence 1: \"the rule that if he forgot his umbrella, he would get wet in the rain\"",
-      "reasoning": "Presented as a remembered 'rule', but the narrative outcome (he stayed dry) indicates an exception in this case, so the implication is not treated as certain.",
-      "list nli": [
-        [
-          1.7286984075326473e-05,
-          5.383700772654265e-05,
-          0.9999288320541382
-        ],
-        [
-          2.2893638742971234e-05,
-          4.9678608775138855e-05,
-          0.9999274015426636
-        ],
-        [
-          5.353103915695101e-05,
-          8.279426401713863e-05,
-          0.9998636245727539
+          0.0033979376312345266,
+          0.018268465995788574,
+          0.978333592414856
         ]
       ],
-      "weight": 0.6999501824378966
+      "weight": 0.8498623967170715
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9997928738594055,
+      "combined=(llm)*(nli)": 0.9498032301664352,
+      "hardness_constant": 0.9,
+      "id": "C_13",
+      "formula": "¬P_8",
+      "translation": "Daniel did not face the consequences of getting wet in the rain.",
+      "evidence": "Sentence 1: \"he didn't have to face the consequences\"",
+      "reasoning": "Explicitly negated in the text; treated as highly reliable narrative fact.",
+      "list nli": [
+        [
+          1.4086749615671579e-05,
+          0.00019305851310491562,
+          0.9997928738594055
+        ],
+        [
+          5.094834341434762e-05,
+          0.0007320716977119446,
+          0.9992169141769409
+        ],
+        [
+          0.0051382193341851234,
+          0.001577900256961584,
+          0.9932838678359985
+        ]
+      ],
+      "weight": 0.849808844923973
     },
     {
       "llm-weight": 0.9,
-      "nli_entailment": 0.999883770942688,
-      "combined=(llm)*(nli)": 0.8998953938484192,
+      "nli_entailment": 0.9999268054962158,
+      "combined=(llm)*(nli)": 0.8999341249465943,
       "hardness_constant": 0.9,
       "id": "C_10",
-      "formula": "((P_2 ∧ P_3) ⟹ P_4)",
-      "translation": "Daniel's forgetting the umbrella together with remembering the rule leads to worry.",
-      "evidence": "Sentence 1",
-      "reasoning": "The worry is described in the context of remembering the rule after realizing he forgot the umbrella, suggesting a strong causal link.",
+      "formula": "(P_2 ∧ P_9) ⟹ P_5",
+      "translation": "Forgetting his umbrella together with remembering the rule led Daniel to worry.",
+      "evidence": "Sentence 0: \"Remembering the rule ... Daniel felt a sense of worry\"",
+      "reasoning": "The narrative strongly links remembering the rule (in the context of having forgotten the umbrella) to the worry, but it is presented as an explanatory connection rather than a formal law.",
       "list nli": [
         [
-          7.86304080975242e-05,
-          3.764282155316323e-05,
-          0.999883770942688
+          2.3602442524861544e-05,
+          4.95970671181567e-05,
+          0.9999268054962158
         ],
         [
-          0.00010331285739084706,
-          3.875104448525235e-05,
-          0.9998579025268555
+          2.8117998226662166e-05,
+          7.156166975619271e-05,
+          0.9999003410339355
         ],
         [
-          0.0002428961597615853,
-          4.854366125073284e-05,
-          0.9997085928916931
+          0.000168809259776026,
+          2.9784927392029203e-05,
+          0.9998014569282532
         ]
       ],
-      "weight": 0.8998953938484192
+      "weight": 0.8999341249465943
     },
     {
       "llm-weight": 0.8,
-      "nli_entailment": 0.9992021918296814,
-      "combined=(llm)*(nli)": 0.7993617534637452,
+      "nli_entailment": 0.999915599822998,
+      "combined=(llm)*(nli)": 0.7999324798583984,
       "hardness_constant": 0.9,
-      "id": "C_13",
-      "formula": "(P_6 ⟹ P_7)",
-      "translation": "Getting wet in the rain leads to facing consequences of getting wet in the rain.",
-      "evidence": "Sentence 2: \"the consequences of getting wet in the rain\"",
-      "reasoning": "The text frames 'consequences' as attached to 'getting wet in the rain', suggesting a typical implication, though not logically necessary in all worlds.",
+      "id": "C_14",
+      "formula": "P_7 ⟹ ¬P_8",
+      "translation": "Daniel’s relief implies he did not face the consequences of getting wet in the rain.",
+      "evidence": "Sentence 1: \"was relieved that he didn't have to face the consequences\"",
+      "reasoning": "The relief is explicitly tied to not facing the consequences, but relief could in principle have multiple causes; thus less than 1.0.",
       "list nli": [
         [
-          0.0001667247706791386,
-          0.0006310719763860106,
-          0.9992021918296814
+          1.768478614394553e-05,
+          6.674321775790304e-05,
+          0.999915599822998
+        ],
+        [
+          2.537793989176862e-05,
+          6.194173329276964e-05,
+          0.9999126195907593
+        ],
+        [
+          8.838745998218656e-06,
+          0.0003293688641861081,
+          0.9996618032455444
+        ]
+      ],
+      "weight": 0.7999324798583984
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9989092350006104,
+      "combined=(llm)*(nli)": 0.6992364645004272,
+      "hardness_constant": 0.9,
+      "id": "C_15",
+      "formula": "P_4 ⟹ P_8",
+      "translation": "Getting wet in the rain leads to facing consequences of getting wet in the rain.",
+      "evidence": "Sentence 1: \"consequences of getting wet in the rain\"",
+      "reasoning": "The phrase suggests consequences are associated with getting wet, but it is not stated as a strict universal rule; modeled as a plausible implication.",
+      "list nli": [
+        [
+          0.00033968189381994307,
+          0.0007511263247579336,
+          0.9989092350006104
         ],
         [
           0.00030110395164228976,
@@ -417,65 +488,7 @@
           0.9979938268661499
         ]
       ],
-      "weight": 0.7993617534637452
-    },
-    {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.9998694658279419,
-      "combined=(llm)*(nli)": 0.8498890459537506,
-      "hardness_constant": 0.9,
-      "id": "C_14",
-      "formula": "(P_5 ⟹ P_8)",
-      "translation": "Staying dry leads to relief.",
-      "evidence": "Sentence 2: \"managed to stay dry and was relieved\"",
-      "reasoning": "Relief is presented immediately after staying dry; strong but could also be mediated by avoiding consequences.",
-      "list nli": [
-        [
-          2.4400062102358788e-05,
-          0.00010617610678309575,
-          0.9998694658279419
-        ],
-        [
-          3.2711021049181e-05,
-          0.00012617013999260962,
-          0.9998410940170288
-        ],
-        [
-          0.0004661644634325057,
-          0.0007702119182795286,
-          0.9987636804580688
-        ]
-      ],
-      "weight": 0.8498890459537506
-    },
-    {
-      "llm-weight": 0.8,
-      "nli_entailment": 0.9999146461486816,
-      "combined=(llm)*(nli)": 0.7999317169189454,
-      "hardness_constant": 0.9,
-      "id": "C_15",
-      "formula": "(¬P_7 ⟹ P_8)",
-      "translation": "Not facing the consequences of getting wet in the rain leads to relief.",
-      "evidence": "Sentence 2: \"was relieved that he didn't have to face the consequences\"",
-      "reasoning": "The text explicitly links relief to not having to face those consequences; modeled as a strong implication.",
-      "list nli": [
-        [
-          1.946844713529572e-05,
-          6.589118856936693e-05,
-          0.9999146461486816
-        ],
-        [
-          2.4543065592297353e-05,
-          7.785813795635477e-05,
-          0.9998975992202759
-        ],
-        [
-          7.704422750975937e-05,
-          0.00013144980766810477,
-          0.9997915625572205
-        ]
-      ],
-      "weight": 0.7999317169189454
+      "weight": 0.6992364645004272
     }
   ]
 }

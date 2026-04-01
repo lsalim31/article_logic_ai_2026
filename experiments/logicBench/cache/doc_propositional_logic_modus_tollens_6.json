@@ -2,86 +2,171 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "James is forgetful.",
+      "translation": "James is forgetful",
       "evidence": "Sentence 0: \"James had always been forgetful\"",
-      "explanation": "This is a simple attribute-ascription to James and contains no logical connectives or conditions."
+      "explanation": "This is a simple property attribution about James with no internal logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "James forgets to wear a sweater.",
+      "translation": "James forgets to wear a sweater",
       "evidence": "Sentence 1: \"If he forgets to wear a sweater\"",
-      "explanation": "This is an atomic event description (forgetting to wear a sweater) and is used as the antecedent of a conditional."
+      "explanation": "This is an atomic event description used as the antecedent of a conditional; it is not itself a logical connective."
     },
     {
       "id": "P_3",
-      "translation": "James catches a cold.",
-      "evidence": "Sentence 1: \"then he will catch a cold\"",
-      "explanation": "This is a single outcome statement that can be true or false; it is not itself a connective."
+      "translation": "James wears a sweater",
+      "evidence": "Sentence 0: \"wearing a sweater\"",
+      "explanation": "This is the positive, non-negated counterpart needed to express relations involving forgetting to wear a sweater without putting negation inside a primitive proposition."
     },
     {
       "id": "P_4",
-      "translation": "The temperature is dropping.",
-      "evidence": "Sentence 2: \"the dropping temperature\"",
-      "explanation": "This is an atomic state-of-the-world claim and does not embed further logical structure."
+      "translation": "James catches a cold",
+      "evidence": "Sentence 1: \"he will catch a cold\"",
+      "explanation": "This is an atomic outcome/event statement; negation is handled only in constraints."
     },
     {
       "id": "P_5",
-      "translation": "James is oblivious to the dropping temperature.",
+      "translation": "James's mother repeatedly told James a warning about forgetting to wear a sweater",
+      "evidence": "Sentence 1: \"His mother had repeatedly told him\"",
+      "explanation": "This is an atomic communicative act claim (a reporting statement) without embedded logical operators."
+    },
+    {
+      "id": "P_6",
+      "translation": "James went about his activities throughout the day",
+      "evidence": "Sentence 2: \"Throughout the day, he went about his activities\"",
+      "explanation": "This is a single event description; the temporal framing does not introduce a logical connective."
+    },
+    {
+      "id": "P_7",
+      "translation": "The temperature was dropping",
+      "evidence": "Sentence 2: \"the dropping temperature\"",
+      "explanation": "This is an atomic environmental condition statement."
+    },
+    {
+      "id": "P_8",
+      "translation": "James was oblivious to the dropping temperature",
       "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
-      "explanation": "This is a single mental-state relation between James and the temperature change, stated without connectives."
+      "explanation": "This is a single mental-state attribution; it does not contain explicit logical connectives."
+    },
+    {
+      "id": "P_9",
+      "translation": "James returned home hours later",
+      "evidence": "Sentence 3: \"Hours later, he returned home\"",
+      "explanation": "This is an atomic event statement."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "James had always been forgetful.",
+      "translation": "James had always been forgetful",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "The text directly asserts James's forgetfulness as a standing trait (\"had always been\")."
+      "reasoning": "Directly asserted as a background trait of James."
     },
     {
       "id": "C_2",
-      "formula": "P_4",
-      "translation": "The temperature was dropping.",
+      "formula": "P_5",
+      "translation": "James's mother repeatedly told him a warning about forgetting to wear a sweater",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "The dropping temperature is presented as a factual background condition."
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted that the mother repeatedly issued the warning."
     },
     {
       "id": "C_3",
-      "formula": "P_5",
-      "translation": "James was oblivious to the dropping temperature.",
+      "formula": "P_6",
+      "translation": "He went about his activities throughout the day",
       "llm_weight": 1.0,
       "evidence": "Sentence 2",
-      "reasoning": "The sentence explicitly states his obliviousness."
+      "reasoning": "Directly asserted event description."
     },
     {
       "id": "C_4",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If James forgets to wear a sweater, then James catches a cold.",
-      "llm_weight": 0.75,
-      "evidence": "Sentence 1: \"If he forgets to wear a sweater, then he will catch a cold.\"",
-      "reasoning": "This is presented as the mother's repeated warning (a strong claimed rule), but it is not asserted as a guaranteed law of nature, so the weight is less than 1.0."
+      "formula": "P_7",
+      "translation": "The temperature was dropping",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted environmental condition."
     },
     {
       "id": "C_5",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "James's forgetfulness tends to manifest as forgetting to wear a sweater.",
-      "llm_weight": 0.6,
-      "evidence": "Sentence 0: \"forgetful, especially when it came to wearing a sweater\"",
-      "reasoning": "\"Especially\" suggests a tendency/association rather than a strict implication that every instance of forgetfulness entails forgetting a sweater."
+      "formula": "P_8",
+      "translation": "He was oblivious to the dropping temperature",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "Directly asserted mental-state description."
     },
     {
       "id": "C_6",
-      "formula": "¬P_3",
-      "translation": "James did not catch a cold.",
+      "formula": "P_9",
+      "translation": "Hours later, he returned home",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3",
+      "reasoning": "Directly asserted event description."
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_4",
+      "translation": "James did not catch a cold",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3: \"James didn't catch a cold\"",
+      "reasoning": "Explicit negated outcome in the text; represented as negation of the positive primitive P_4."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "Forgetting to wear a sweater implies catching a cold (as warned by his mother)",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 1: \"If he forgets to wear a sweater, then he will catch a cold.\"",
+      "reasoning": "This conditional is presented as the mother's repeated warning; the narrative later shows an outcome inconsistent with the warning being universally reliable, so it is treated as a moderately supported rule rather than a certain law."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "James being forgetful makes it likely that he forgets to wear a sweater",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0: \"forgetful, especially when it came to wearing a sweater\"",
+      "reasoning": "“Especially when it came to” suggests a tendency linking general forgetfulness to forgetting to wear a sweater, but it does not state he forgot on the specific day described."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_2 ⟹ ¬P_3",
+      "translation": "Forgetting to wear a sweater implies not wearing a sweater",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"forgets to wear a sweater\"",
+      "reasoning": "By the meaning of “forgets to wear,” the default consequence is that the sweater is not worn; represented as a strong semantic implication."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_3 ⟹ ¬P_2",
+      "translation": "Wearing a sweater implies not forgetting to wear a sweater",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0-1: mentions of \"wearing a sweater\" and \"forgets to wear a sweater\"",
+      "reasoning": "In ordinary interpretation, successfully wearing the sweater conflicts with having forgotten to wear it; still slightly less than certain because one could forget initially and later put it on."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_8 ⟹ P_7",
+      "translation": "Being oblivious to the dropping temperature presupposes that the temperature was dropping",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "reasoning": "The phrase “oblivious to the dropping temperature” generally entails that the temperature drop is occurring, though the text also asserts P_7 directly."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_5 ⟹ P_5",
+      "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Sentence 3: \"James didn't catch a cold.\"",
-      "reasoning": "The text directly states the negation of catching a cold."
+      "reasoning": "This is directly stated by the narrator as a fact of the story."
     }
   ],
   "_enrichment_log": [
+    "[Modal] P_5: 'James's mother repeatedly told James a warning about forgetting to wear a sweater' has modal 'repeatedly'",
+    "        Base text: 'James 's mother told James a warning about forgetting to wear a sweater'",
+    "        Found existing base: P_5",
+    "        Added constraint: P_5 ⟹ P_5 @1.0",
+    "[Opposite] P_5: 'repeatedly' has antonyms ['seldom', 'rarely']",
     "[Negation] Sentence 3: Found negation of 'catch'",
     "           Affirmative clause: 'James did catch a cold .'",
     "           Matched to: P_3",

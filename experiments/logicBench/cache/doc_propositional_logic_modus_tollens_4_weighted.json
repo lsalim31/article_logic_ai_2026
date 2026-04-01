@@ -2,61 +2,61 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Jack dreamed of winning the lottery.",
+      "translation": "Jack dreams of winning the lottery",
       "evidence": "Sentence 0: \"Jack had always dreamed of winning the lottery\"",
-      "explanation": "This is an atomic, truth-evaluable statement about Jack's enduring desire; it contains no logical connectives or negation."
+      "explanation": "This is an atomic mental-state claim about Jack; it is truth-evaluable and contains no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Jack envisioned buying a beautiful house.",
+      "translation": "Jack envisioned a future where he would be able to buy a beautiful house.",
       "evidence": "Sentence 0: \"envisioning a future where he would be able to buy a beautiful house\"",
-      "explanation": "This is an atomic statement about Jack's mental envisioning; it does not require splitting into smaller logical parts for the task."
+      "explanation": "This is a single reported envisioning content; it is not a logical combination of smaller propositions in the text."
     },
     {
       "id": "P_3",
       "translation": "Jack won the lottery.",
       "evidence": "Sentence 1: \"If Jack had won the lottery\"",
-      "explanation": "Although presented hypothetically, the clause denotes a single atomic proposition that can serve as the antecedent of a constraint."
+      "explanation": "This is the antecedent event mentioned in a conditional; it must be represented as its own atomic proposition."
     },
     {
       "id": "P_4",
       "translation": "Jack bought a house.",
       "evidence": "Sentence 1: \"he would have bought a house\"",
-      "explanation": "This is a single event/proposition (buying a house) and is used as the consequent of the conditional; it contains no connectives or negation."
+      "explanation": "This is the consequent event mentioned in a conditional; it must be represented as its own atomic proposition."
     },
     {
       "id": "P_5",
-      "translation": "Jack is purchasing a house for now.",
+      "translation": "Jack purchases a house for now.",
       "evidence": "Sentence 2: \"he won't be purchasing any house for now\"",
-      "explanation": "The text uses negation, so the positive form is extracted as an atomic proposition; the negation is represented in constraints."
+      "explanation": "The text asserts a present/near-term purchasing status. Negation is handled in constraints, so the primitive is kept positive."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.999821126461029,
-      "combined=(llm)*(nli)": 0.999821126461029,
+      "nli_entailment": 0.9999196529388428,
+      "combined=(llm)*(nli)": 0.9999196529388428,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_3 ⟹ P_4",
-      "translation": "If Jack won the lottery, then Jack bought a house.",
+      "translation": "Jack winning the lottery would lead to Jack buying a house.",
       "evidence": "Sentence 1: \"If Jack had won the lottery, he would have bought a house.\"",
-      "reasoning": "This is an explicit conditional stated directly in the text.",
+      "reasoning": "The conditional relation is stated directly and unqualified.",
       "list nli": [
         [
-          8.108326437650248e-05,
-          9.785340807866305e-05,
-          0.999821126461029
+          3.6065928725292906e-05,
+          4.4321463064989075e-05,
+          0.9999196529388428
         ],
         [
-          0.000191162180271931,
-          2.9091195756336674e-05,
-          0.9997797608375549
+          2.1618616301566362e-05,
+          6.511232641059905e-05,
+          0.999913215637207
         ],
         [
-          0.00015941643505357206,
-          6.265811680350453e-05,
-          0.9997779726982117
+          6.7242028308101e-05,
+          5.668327503371984e-05,
+          0.9998760223388672
         ]
       ]
     },
@@ -69,24 +69,84 @@
       "formula": "¬P_5",
       "translation": "Jack is not purchasing any house for now.",
       "evidence": "Sentence 2: \"But he won't be purchasing any house for now.\"",
-      "reasoning": "This is an explicit negated claim about the current period ('for now'), expressed unequivocally.",
+      "reasoning": "This is explicitly asserted in the text.",
       "list nli": [
         [
-          0.0011576988035812974,
-          0.0030638573225587606,
+          0.001157697755843401,
+          0.0030638440512120724,
           0.9957784414291382
         ],
         [
-          0.002601867774501443,
-          0.029145127162337303,
-          0.9682530164718628
+          0.00035595850204117596,
+          0.9711357951164246,
+          0.028508257120847702
         ],
         [
           0.9970068335533142,
-          0.0009163207141682506,
-          0.0020768260583281517
+          0.0009163232753053308,
+          0.0020768309477716684
         ]
       ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 0.9764386415481567,
+      "combined=(llm)*(nli)": 0.7323289811611176,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "¬P_3",
+      "translation": "Jack did not win the lottery.",
+      "evidence": "Sentence 1-2: counterfactual \"If Jack had won...\" plus \"But he won't be purchasing any house for now.\"",
+      "reasoning": "The phrasing \"If Jack had won\" is a past counterfactual that commonly implies the antecedent is false; the subsequent contrast about not purchasing now further supports that he likely did not win, but it is not stated outright.",
+      "list nli": [
+        [
+          0.022429484874010086,
+          0.0011318835895508528,
+          0.9764386415481567
+        ],
+        [
+          0.005463671870529652,
+          0.9569621682167053,
+          0.037574123591184616
+        ],
+        [
+          0.9743834137916565,
+          0.0019011254189535975,
+          0.023715492337942123
+        ]
+      ],
+      "weight": 0.7323289811611176
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.027823258191347122,
+      "combined=(llm)*(nli)": 0.01669395491480827,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Jack did not buy a house.",
+      "evidence": "Sentence 1-2: \"If Jack had won the lottery, he would have bought a house. But he won't be purchasing any house for now.\"",
+      "reasoning": "Given the counterfactual plus the current non-purchasing status, the intended narrative suggests he has not bought a house, but the text does not explicitly deny past purchase, so this is weaker than C_3.",
+      "list nli": [
+        [
+          0.005518017336726189,
+          0.9666587114334106,
+          0.027823258191347122
+        ],
+        [
+          0.9982839226722717,
+          0.0006605546805076301,
+          0.001055465778335929
+        ],
+        [
+          0.999086856842041,
+          0.0003102504415437579,
+          0.0006028960342518985
+        ]
+      ],
+      "weight": 0.01669395491480827
     }
   ],
   "soft_constraints": []

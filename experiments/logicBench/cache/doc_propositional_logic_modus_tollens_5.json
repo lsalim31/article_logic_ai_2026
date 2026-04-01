@@ -3,46 +3,54 @@
     {
       "id": "P_1",
       "translation": "Sophia has the highest score in the test.",
-      "evidence": "Sentence 0: \"If Sophia has the highest score in the test\"",
-      "explanation": "This is an atomic, truth-evaluable statement about Sophia's test score status."
+      "evidence": "Sentence 0: \"Sophia has the highest score in the test\"",
+      "explanation": "This is an atomic, truth-evaluable claim about Sophia’s test result."
     },
     {
       "id": "P_2",
       "translation": "Sophia is awarded a medal.",
-      "evidence": "Sentence 0: \"then she will be awarded a medal\"",
-      "explanation": "This is a single event/state claim (receiving a medal) that can be true or false without further logical structure."
+      "evidence": "Sentence 0: \"she will be awarded a medal\"",
+      "explanation": "This is an atomic, truth-evaluable event/state about Sophia receiving a medal."
     },
     {
       "id": "P_3",
-      "translation": "Sophia's performance is outstanding.",
+      "translation": "Sophia has an outstanding performance.",
       "evidence": "Sentence 0: \"for her outstanding performance\"",
-      "explanation": "This is an atomic evaluative claim about Sophia's performance; it appears as a standalone descriptive clause in the text."
+      "explanation": "This is an atomic, truth-evaluable claim attributing outstanding performance to Sophia."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Sophia has the highest score in the test, then Sophia is awarded a medal.",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
-      "reasoning": "This is stated directly as a conditional in the text."
+      "reasoning": "This is stated explicitly as a conditional in the text."
     },
     {
       "id": "C_2",
       "formula": "¬P_1",
-      "translation": "Sophia does not have the highest score in the test.",
+      "translation": "Sophia did not achieve the highest score in the test",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "reasoning": "This is explicitly asserted as a factual negation."
+      "reasoning": "This is stated explicitly and unqualified."
     },
     {
       "id": "C_3",
       "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then Sophia's performance is outstanding.",
-      "llm_weight": 0.7,
+      "translation": "Sophia’s being awarded a medal implies Sophia has an outstanding performance.",
+      "llm_weight": 0.8,
       "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
-      "reasoning": "The phrase \"for her outstanding performance\" strongly suggests the medal is given on the basis of outstanding performance, but it is embedded in a hypothetical consequent rather than asserted outright as a general rule, so the implication is treated as defeasible."
+      "reasoning": "The medal is described as being for her outstanding performance, which strongly suggests that if she is awarded the medal, she has an outstanding performance; however, the phrasing is explanatory and not a strict logical definition."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_1 ⟹ ¬P_2",
+      "translation": "Sophia’s not having the highest score implies Sophia is not awarded a medal.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 0-1: conditional in Sentence 0 plus \"However... Sophia didn't achieve the highest score\" in Sentence 1",
+      "reasoning": "The discourse contrast (setting up the condition and then stating it fails) pragmatically invites the conclusion that the medal will not be awarded, but this is not logically entailed because other reasons for a medal are not ruled out."
     }
   ],
   "_enrichment_log": [

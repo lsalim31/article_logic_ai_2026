@@ -4,65 +4,81 @@
       "id": "P_1",
       "translation": "Isabella decided to have a sandwich for her lunch.",
       "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"",
-      "explanation": "This is an atomic mental-action statement (a decision) with a specific content; it contains no logical connective."
+      "explanation": "This is an atomic mental-action statement about Isabella's decision, expressed as a simple declarative clause."
     },
     {
       "id": "P_2",
-      "translation": "Isabella took a bite of the sandwich.",
-      "evidence": "Sentence 1: \"As she took a bite\"",
-      "explanation": "This is a single concrete action/event description without embedded conditionals or connectives."
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 0: \"...have a sandwich for her lunch.\"; Sentence 1: \"As she took a bite...\"",
+      "explanation": "This is an atomic event statement (eating a sandwich at lunch) used as the antecedent of the stated rule; it is not itself a connective."
     },
     {
       "id": "P_3",
-      "translation": "Isabella felt completely satisfied.",
-      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"",
-      "explanation": "This is an atomic experiential state; it is not expressed as a negation or compound."
+      "translation": "Isabella took a bite of the sandwich.",
+      "evidence": "Sentence 1: \"As she took a bite...\"",
+      "explanation": "This is a simple, truth-evaluable action description and does not decompose into smaller logical parts."
     },
     {
       "id": "P_4",
-      "translation": "Isabella ate a sandwich for lunch.",
-      "evidence": "Sentence 2: \"if Isabella ate a sandwich for lunch\"",
-      "explanation": "This is an atomic eating-event claim (positive form) that can serve as the antecedent of the stated rule."
+      "translation": "Isabella felt completely satisfied.",
+      "evidence": "Sentence 1: \"...feel completely satisfied.\"",
+      "explanation": "This is an atomic psychological-state claim stated directly in the text."
     },
     {
       "id": "P_5",
       "translation": "Isabella's satisfaction was surprising.",
-      "evidence": "Sentence 2: \"This was surprising\"",
-      "explanation": "This is a simple evaluative claim about the situation; it is not itself conditional or a logical combination."
+      "evidence": "Sentence 2: \"This was surprising...\"",
+      "explanation": "This is an atomic evaluative claim about the situation; it is expressed as a simple declarative clause."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_4 ⟹ ¬P_3",
-      "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
-      "reasoning": "The text explicitly reports the content of a rule in this conditional form; it is stated directly and unqualified."
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Isabella decided to have a sandwich for lunch, then Isabella ate a sandwich for lunch.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0",
+      "reasoning": "A decision to have a sandwich for lunch usually leads to actually eating it, and the later context supports follow-through, but deciding does not logically guarantee eating."
     },
     {
       "id": "C_2",
-      "formula": "P_2 ⟹ P_4",
+      "formula": "P_3 ⟹ P_2",
       "translation": "If Isabella took a bite of the sandwich, then Isabella ate a sandwich for lunch.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 1: \"As she took a bite\" (with Sentence 0 context about a sandwich for lunch)",
-      "reasoning": "Taking a bite of the lunch sandwich strongly implies she ate a sandwich for lunch, though the text does not explicitly restate 'for lunch' at the bite moment."
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1",
+      "reasoning": "Taking a bite strongly implies she is eating the sandwich (at least to some extent), though the text does not explicitly restate the full 'for lunch' frame in the same sentence."
     },
     {
       "id": "C_3",
-      "formula": "P_1 ⟹ P_4",
-      "translation": "If Isabella decided to have a sandwich for her lunch, then Isabella ate a sandwich for lunch.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"",
-      "reasoning": "A decision to have a sandwich for lunch often leads to actually eating it, but decisions can fail to be carried out; the later 'bite' supports it, but the implication from the decision alone is not certain."
+      "formula": "P_4",
+      "translation": "Isabella felt completely satisfied.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "The narration states this directly ('couldn't help but feel completely satisfied'), presenting it as a definite fact."
     },
     {
       "id": "C_4",
-      "formula": "(P_3 ∧ P_4) ⟹ P_5",
-      "translation": "If Isabella felt completely satisfied and Isabella ate a sandwich for lunch, then Isabella's satisfaction was surprising.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 2: \"This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
-      "reasoning": "The text links the surprise to the coexistence of satisfaction with the lunch-sandwich scenario that the rule covers; the exact trigger is narratively clear but not formalized as a strict logical law."
+      "formula": "P_2",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0-1",
+      "reasoning": "Sentence 0 sets the lunch plan and Sentence 1 describes biting into it, making it highly likely she did eat the sandwich for lunch, though the text's most explicit phrasing is about deciding/having rather than a completed eating event."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_2 ⟹ ¬P_4",
+      "translation": "If Isabella ate a sandwich for lunch, then Isabella did not feel satisfied.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"...the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "The text explicitly reports a rule in conditional form; the rule itself is presented without hedging."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_2 ∧ P_4) ⟹ P_5",
+      "translation": "If Isabella ate a sandwich for lunch and Isabella felt completely satisfied, then Isabella's satisfaction was surprising.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2",
+      "reasoning": "The text says the satisfaction was surprising specifically because the rule connects sandwich-lunch eating with not being satisfied, so the combination of eating the sandwich and feeling satisfied motivates the surprise."
     }
   ],
   "_enrichment_log": [

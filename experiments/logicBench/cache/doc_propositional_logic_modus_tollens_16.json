@@ -3,40 +3,32 @@
     {
       "id": "P_1",
       "translation": "Scarlett is late for work today",
-      "evidence": "Sentence 0: \"If Scarlett is late for work\"; Sentence 1 provides the time anchor \"Today\"",
-      "explanation": "This is an atomic state/event attribution about Scarlett (late for work) with a time qualifier; it contains no logical connective or negation."
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\" (time made explicit by Sentence 1 \"Today\")",
+      "explanation": "This is an atomic state about Scarlett (late for work) at the relevant time (today), with no connectives or negation."
     },
     {
       "id": "P_2",
       "translation": "Scarlett receives a warning today",
-      "evidence": "Sentence 0: \"she will receive a warning\"; Sentence 1: \"Today, Scarlett did not receive a warning\"",
-      "explanation": "This is an atomic event attribution (receives a warning) with a time qualifier; it contains no logical connective or negation."
+      "evidence": "Sentence 0: \"she will receive a warning.\"; Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "explanation": "This is an atomic event about whether Scarlett receives a warning today; it contains no connectives or negation."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Scarlett is late for work, she will receive a warning",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
-      "reasoning": "The sentence explicitly states this conditional as a rule/policy with no hedging."
+      "translation": "If Scarlett is late for work, she will receive a warning (applied to today’s case).",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0 (\"If Scarlett is late for work, she will receive a warning.\") with contextual anchoring from Sentence 1 (\"Today ...\")",
+      "reasoning": "The conditional is explicitly stated, but the text does not explicitly say the policy is about today; mapping it to today is strongly suggested by the immediate follow-up about today."
     },
     {
       "id": "C_2",
       "formula": "¬P_2",
-      "translation": "Scarlett did not receive a warning today",
+      "translation": "Today, Scarlett did not receive a warning.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
-      "reasoning": "This is directly asserted as a factual observation."
-    },
-    {
-      "id": "C_3",
-      "formula": "¬P_2 ⟹ ¬P_1",
-      "translation": "If Scarlett did not receive a warning today, then Scarlett was not late for work today",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0 (rule about lateness implying a warning) together with Sentence 1 (no warning today)",
-      "reasoning": "From the stated rule, the narrative strongly invites a modus-tollens inference to conclude she was not late; this relies on treating the rule as reliably applicable to today's case, so it is slightly less than absolutely certain."
+      "reasoning": "This is directly asserted in the text with no hedging or modality."
     }
   ],
   "_enrichment_log": [
