@@ -1,0 +1,76 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella works hard on her project.",
+      "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
+      "explanation": "This is a single, truth-evaluable claim about Isabella's effort on the project, with no embedded logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finishes her project on time.",
+      "evidence": "Sentence 0: \"if she finished it on time\"",
+      "explanation": "This is an atomic event statement. Although it appears inside a conditional in the text, the clause itself is a standalone proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company.",
+      "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
+      "explanation": "This is a single outcome claim (receiving a bonus) with a specified source, and it contains no connectives or negation."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "explanation": "This is an atomic mental-state claim about Isabella's hope, expressed without conditions or logical connectives."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella works hard on her project.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
+      "reasoning": "This is stated directly as a narrative fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finishes the project on time, then Isabella receives a bonus from her company.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "The text explicitly presents this as the condition-understood link between finishing on time and receiving the bonus."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_3",
+      "translation": "Isabella does not receive a bonus from her company.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
+      "reasoning": "The narrative reports Isabella's realization that she will not receive the bonus; within the story this strongly functions as a factual outcome."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase indicates she had the hope/expectation of receiving a bonus."
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_3 ⟹ ¬P_2",
+      "translation": "If Isabella does not receive a bonus, then Isabella does not finish her project on time.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"if she finished it on time, she would receive a bonus\"; Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "reasoning": "A plausible inference is that failing to get the bonus suggests she did not meet the on-time condition, but this is not logically entailed (the company could fail to pay the bonus despite on-time completion), so it is weighted as uncertain."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'receiving'",
+    "           Affirmative clause: 'that she would be receiving a bonus as she had hoped'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}
