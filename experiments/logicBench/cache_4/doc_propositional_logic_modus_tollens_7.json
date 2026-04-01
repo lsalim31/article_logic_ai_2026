@@ -1,0 +1,73 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"; Sentence 2: \"if Isabella ate a sandwich for lunch\"",
+      "explanation": "This is an atomic, truth-evaluable event/state (what Isabella ate for lunch) and is referenced directly by the stated rule."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella felt satisfied.",
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"; Sentence 2: \"she would not feel satisfied\"",
+      "explanation": "This is an atomic psychological state. Negation is handled only in constraints (¬P_2), not inside the primitive proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella took a bite of a sandwich.",
+      "evidence": "Sentence 1: \"As she took a bite\" (context from Sentence 0 mentions the sandwich).",
+      "explanation": "This is an atomic action; the object is supplied by the immediate discourse context (the sandwich mentioned in the prior sentence)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"decided to have a sandwich for her lunch\"; Sentence 1: \"took a bite\"",
+      "reasoning": "The text strongly suggests she actually had/ate the sandwich (decision + taking a bite), but the verb \"decided\" alone does not strictly entail completion; thus slightly below 1.0."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Isabella felt completely satisfied.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"",
+      "reasoning": "This is stated as an experienced feeling, presented as a fact in the narrative."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Isabella took a bite (of the sandwich).",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"As she took a bite\"",
+      "reasoning": "Directly asserted event in the narrative."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_1 ⟹ ¬P_2",
+      "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "This conditional is explicitly presented as a rule; the text treats it as holding (even though the situation is surprising due to apparent violation)."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_1",
+      "translation": "If Isabella took a bite of a sandwich, then Isabella ate a sandwich for lunch.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 1: \"took a bite\" with sandwich context from Sentence 0 (lunch sandwich).",
+      "reasoning": "Common-sense discourse inference: biting the sandwich strongly suggests she is eating the lunch sandwich, but it is not logically guaranteed that the bite was at lunch or that it completed 'ate for lunch'; hence a moderate weight."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'help'",
+    "           Affirmative clause: 'As she took a bite , she could help but feel completely satisfied .'",
+    "           No matching proposition found",
+    "[Negation] Sentence 2: Found negation of 'feel'",
+    "           Affirmative clause: 'that if Isabella ate a sandwich for lunch , she would feel satisfied'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

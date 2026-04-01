@@ -1,0 +1,54 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Sophia has the highest score in the test.",
+      "evidence": "Sentence 0: \"If Sophia has the highest score in the test\"",
+      "explanation": "This is an atomic, truth-evaluable claim about Sophia's score status; it contains no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Sophia is awarded a medal.",
+      "evidence": "Sentence 0: \"then she will be awarded a medal\"",
+      "explanation": "This is an atomic event/state (being awarded a medal) and does not include any connectives or negation."
+    },
+    {
+      "id": "P_3",
+      "translation": "Sophia has outstanding performance.",
+      "evidence": "Sentence 0: \"for her outstanding performance\"",
+      "explanation": "This is a simple descriptive claim about Sophia's performance; it is treated as atomic because the text provides no further internal logical structure."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Sophia has the highest score in the test, then Sophia is awarded a medal.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
+      "reasoning": "This is explicitly stated as a conditional in the text with no hedging language."
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_1",
+      "translation": "Sophia does not have the highest score in the test.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
+      "reasoning": "This is asserted directly and unambiguously."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Sophia is awarded a medal, then Sophia has outstanding performance.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
+      "reasoning": "The phrase indicates the medal is awarded on the basis of outstanding performance; this strongly suggests (though does not logically guarantee) that receiving the medal implies outstanding performance."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'achieve'",
+    "           Affirmative clause: 'However , unfortunately , Sophia did achieve the highest score in the test .'",
+    "           Matched to: P_1",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

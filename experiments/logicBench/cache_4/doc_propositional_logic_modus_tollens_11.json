@@ -1,0 +1,90 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Benjamin eagerly anticipates his trip to the beach for weeks",
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
+      "explanation": "This is a single truth-evaluable state about Benjamin with a temporal modifier; it contains no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Benjamin has a trip to the beach",
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach...\"",
+      "explanation": "Mentioning \"his trip to the beach\" presupposes the existence/planning of such a trip; this is an atomic declarative claim."
+    },
+    {
+      "id": "P_3",
+      "translation": "Benjamin is going to the beach",
+      "evidence": "Sentence 0: \"If he is going to the beach, then he will go swimming.\"",
+      "explanation": "This is an atomic event/state referenced as the antecedent of a conditional; it is extracted without the conditional structure."
+    },
+    {
+      "id": "P_4",
+      "translation": "Benjamin goes swimming",
+      "evidence": "Sentence 0: \"...then he will go swimming.\" / \"he didn't end up going swimming\"",
+      "explanation": "This is an atomic action/event; the text later negates it, but the primitive proposition itself is kept non-negated."
+    },
+    {
+      "id": "P_5",
+      "translation": "Benjamin's friends tell Benjamin the conditional statement about the beach and swimming",
+      "evidence": "Sentence 0: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
+      "explanation": "This is a single communicative act (the friends telling Benjamin something) and is not itself a logical connective claim."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_5",
+      "translation": "Benjamin's friends told him the stated conditional rule",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
+      "reasoning": "This is directly asserted as narrative fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Benjamin is going to the beach, then Benjamin goes swimming",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
+      "reasoning": "The conditional is presented as something his friends said, not as a guaranteed law of the story world; thus it is strongly suggested but not certain."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_4",
+      "translation": "Benjamin does not end up going swimming",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"However, he didn't end up going swimming after all.\"",
+      "reasoning": "This is explicitly stated and is not hedged."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_1",
+      "translation": "Benjamin eagerly anticipates his trip to the beach for weeks",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
+      "reasoning": "This is directly asserted as narrative fact."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_2",
+      "translation": "Benjamin has a trip to the beach",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"...anticipating his trip to the beach...\"",
+      "reasoning": "Referring to \"his trip\" strongly implies a planned/owned trip exists, though it does not strictly guarantee the trip occurs."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Benjamin anticipates his trip to the beach for weeks, then Benjamin has a trip to the beach",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
+      "reasoning": "Anticipating \"his trip\" presupposes the existence/planning of such a trip; this is a strong pragmatic implication."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'end'",
+    "           Affirmative clause: 'However , he did end up going swimming after all .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"; Sentence 2: \"if Isabella ate a sandwich for lunch\"",
+      "explanation": "This is an atomic, truth-evaluable event/state (what Isabella ate for lunch) and is referenced directly by the stated rule."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella felt satisfied.",
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"; Sentence 2: \"she would not feel satisfied\"",
+      "explanation": "This is an atomic psychological state. Negation is handled only in constraints (¬P_2), not inside the primitive proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella took a bite of a sandwich.",
+      "evidence": "Sentence 1: \"As she took a bite\" (context from Sentence 0 mentions the sandwich).",
+      "explanation": "This is an atomic action; the object is supplied by the immediate discourse context (the sandwich mentioned in the prior sentence)."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998403787612915,
+      "combined=(llm)*(nli)": 0.9998403787612915,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Isabella felt completely satisfied.",
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"",
+      "reasoning": "This is stated as an experienced feeling, presented as a fact in the narrative.",
+      "list nli": [
+        [
+          3.8782236515544355e-05,
+          0.00012079817679477856,
+          0.9998403787612915
+        ],
+        [
+          0.0007190477335825562,
+          0.0001638389949221164,
+          0.9991170763969421
+        ],
+        [
+          2.657097138580866e-05,
+          0.013738485984504223,
+          0.9862349629402161
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998384714126587,
+      "combined=(llm)*(nli)": 0.9998384714126587,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Isabella took a bite (of the sandwich).",
+      "evidence": "Sentence 1: \"As she took a bite\"",
+      "reasoning": "Directly asserted event in the narrative.",
+      "list nli": [
+        [
+          9.669605788076296e-05,
+          6.476969429058954e-05,
+          0.9998384714126587
+        ],
+        [
+          0.011107162572443485,
+          0.028108974918723106,
+          0.9607838988304138
+        ],
+        [
+          0.00012861778668593615,
+          0.9960038065910339,
+          0.003867616644129157
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9960160851478577,
+      "combined=(llm)*(nli)": 0.9960160851478577,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_1 ⟹ ¬P_2",
+      "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied.",
+      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "This conditional is explicitly presented as a rule; the text treats it as holding (even though the situation is surprising due to apparent violation).",
+      "list nli": [
+        [
+          0.003916154149919748,
+          6.775541260140017e-05,
+          0.9960160851478577
+        ],
+        [
+          0.575898289680481,
+          0.02157026343047619,
+          0.4025314450263977
+        ],
+        [
+          0.9993196725845337,
+          0.00016528021660633385,
+          0.0005151599762029946
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9996179342269897,
+      "combined=(llm)*(nli)": 0.8496752440929413,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 0: \"decided to have a sandwich for her lunch\"; Sentence 1: \"took a bite\"",
+      "reasoning": "The text strongly suggests she actually had/ate the sandwich (decision + taking a bite), but the verb \"decided\" alone does not strictly entail completion; thus slightly below 1.0.",
+      "list nli": [
+        [
+          0.00033744986285455525,
+          4.464244921109639e-05,
+          0.9996179342269897
+        ],
+        [
+          3.121140252915211e-05,
+          0.00038815612788312137,
+          0.9995806813240051
+        ],
+        [
+          0.00014659593580290675,
+          0.9977660179138184,
+          0.002087489701807499
+        ]
+      ],
+      "weight": 0.8496752440929413
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9980539083480835,
+      "combined=(llm)*(nli)": 0.6986377358436584,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_1",
+      "translation": "If Isabella took a bite of a sandwich, then Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 1: \"took a bite\" with sandwich context from Sentence 0 (lunch sandwich).",
+      "reasoning": "Common-sense discourse inference: biting the sandwich strongly suggests she is eating the lunch sandwich, but it is not logically guaranteed that the bite was at lunch or that it completed 'ate for lunch'; hence a moderate weight.",
+      "list nli": [
+        [
+          0.0017769383266568184,
+          0.0001691263314569369,
+          0.9980539083480835
+        ],
+        [
+          0.00010546459088800475,
+          0.0032499246299266815,
+          0.9966446161270142
+        ],
+        [
+          0.8330618739128113,
+          0.031140292063355446,
+          0.13579781353473663
+        ]
+      ],
+      "weight": 0.6986377358436584
+    }
+  ]
+}
