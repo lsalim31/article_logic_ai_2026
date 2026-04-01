@@ -4,89 +4,75 @@
       "id": "P_1",
       "translation": "Jackson decided to have a slice of pizza for dinner.",
       "evidence": "Sentence 0: \"Jackson decided to have a slice of pizza for dinner.\"",
-      "explanation": "This is an atomic mental-action statement (a decision) and contains no logical connectives or negation to split further."
+      "explanation": "This is an atomic mental-action claim (a single decision event) with no embedded logical connectives."
     },
     {
       "id": "P_2",
       "translation": "Jackson ate the slice of pizza.",
       "evidence": "Sentence 1: \"if he ate the slice of pizza\"",
-      "explanation": "This is a simple event clause referenced in the conditional; it is a single predicate (ate) with a single object."
+      "explanation": "This is a simple event statement; although mentioned inside a conditional, the eating itself is an atomic proposition useful for representing the conditional relation."
     },
     {
       "id": "P_3",
-      "translation": "Jackson felt satisfied afterwards.",
-      "evidence": "Sentence 1: \"he wouldn't feel satisfied afterwards\"",
-      "explanation": "This is a single state description (felt satisfied afterwards) that can be negated in constraints but is itself not negated here."
+      "translation": "Jackson felt completely satisfied afterwards.",
+      "evidence": "Sentence 2: \"he actually felt completely satisfied.\"",
+      "explanation": "This is a direct report of an internal state, expressed as a single declarative clause."
     },
     {
       "id": "P_4",
-      "translation": "Jackson felt completely satisfied.",
-      "evidence": "Sentence 2: \"he actually felt completely satisfied\"",
-      "explanation": "This is a single state description; the intensifier \"completely\" is part of the same atomic predicate."
-    },
-    {
-      "id": "P_5",
-      "translation": "Jackson was surprised.",
-      "evidence": "Sentence 2: \"to his surprise\"",
-      "explanation": "This is a single affective state attribution and does not require decomposition."
+      "translation": "Jackson felt dissatisfied afterwards.",
+      "evidence": "Sentence 1: \"he wouldn't feel satisfied afterwards\" (rendered positively as \"felt dissatisfied afterwards\")",
+      "explanation": "The text gives an expected negative satisfaction outcome; 'dissatisfied' captures that outcome as an atomic, non-negated proposition."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ ¬P_3",
-      "translation": "If Jackson ate the slice of pizza, then Jackson would not feel satisfied afterwards.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 1: \"He knew that if he ate the slice of pizza, he wouldn't feel satisfied afterwards.\"",
-      "reasoning": "The text explicitly states Jackson's strong expectation/knowledge of this conditional, but later events contradict it, so it is treated as a highly implied belief-based rule rather than an absolute fact about the world."
+      "formula": "P_1",
+      "translation": "Jackson decided to have a slice of pizza for dinner.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a plain factual claim in the narrative."
     },
     {
       "id": "C_2",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "If Jackson felt completely satisfied, then Jackson felt satisfied afterwards.",
+      "formula": "P_3",
+      "translation": "Jackson actually felt completely satisfied afterwards.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"he actually felt completely satisfied\" (and the earlier contrast with \"feel satisfied afterwards\")",
-      "reasoning": "By meaning, \"completely satisfied\" entails \"satisfied\"; this is a common-sense semantic implication."
+      "evidence": "Sentence 2",
+      "reasoning": "This is asserted directly ('actually') as what happened."
     },
     {
       "id": "C_3",
-      "formula": "P_4",
-      "translation": "Jackson felt completely satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"he actually felt completely satisfied\"",
-      "reasoning": "This is asserted as what actually happened."
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Jackson ate the slice of pizza, Jackson would feel dissatisfied afterwards.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1: \"if he ate the slice of pizza, he wouldn't feel satisfied afterwards\"",
+      "reasoning": "The conditional is presented as something Jackson 'knew', but the later reported satisfaction suggests the rule did not hold in fact, so this is modeled as a strong but defeasible constraint rather than absolute."
     },
     {
       "id": "C_4",
-      "formula": "P_5",
-      "translation": "Jackson was surprised.",
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "Jackson feeling dissatisfied afterwards is incompatible with Jackson feeling completely satisfied afterwards.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 2: \"to his surprise\"",
-      "reasoning": "The phrase directly attributes surprise; it is slightly less than 1.0 only because it is an idiomatic aside, though still strongly asserted."
+      "evidence": "Sentence 1 (dissatisfied outcome) and Sentence 2 (completely satisfied outcome)",
+      "reasoning": "By common-sense semantics, being dissatisfied afterwards and being completely satisfied afterwards are mutually exclusive states."
     },
     {
       "id": "C_5",
-      "formula": "P_4 ⟹ P_5",
-      "translation": "If Jackson felt completely satisfied, then Jackson was surprised.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 2: \"to his surprise, he actually felt completely satisfied\"",
-      "reasoning": "The wording indicates that the complete satisfaction is what prompted the surprise; this is strongly suggested but could be read as merely co-occurring in the discourse."
+      "formula": "P_3 ⟹ ¬P_4",
+      "translation": "Jackson feeling completely satisfied afterwards is incompatible with Jackson feeling dissatisfied afterwards.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2 (completely satisfied) and Sentence 1 (dissatisfied outcome)",
+      "reasoning": "Same semantic exclusivity as C_4, stated in the reverse direction for completeness in propositional form."
     },
     {
       "id": "C_6",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Jackson decided to have a slice of pizza for dinner, then Jackson ate the slice of pizza.",
+      "translation": "Jackson deciding to have a slice of pizza for dinner suggests Jackson ate the slice of pizza.",
       "llm_weight": 0.6,
-      "evidence": "Sentence 0: \"decided to have a slice of pizza for dinner\"; Sentence 2: satisfaction reported afterwards",
-      "reasoning": "A decision does not logically guarantee the action, but in this narrative context (followed by 'afterwards' satisfaction) it is moderately implied that he followed through and ate it."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_3",
-      "translation": "Jackson felt satisfied afterwards.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"he actually felt completely satisfied\" (and semantic entailment to satisfaction)",
-      "reasoning": "Given the asserted complete satisfaction and the entailment (C_2), the text supports that he was satisfied afterwards."
+      "evidence": "Sentence 0 (decision) with contextual support from Sentence 2 (reaction to outcome)",
+      "reasoning": "A decision to have a food item for dinner often leads to eating it, and the 'to his surprise' outcome is most naturally read as occurring after eating; however, the text never explicitly states he ate it."
     }
   ],
   "_enrichment_log": [

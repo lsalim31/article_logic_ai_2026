@@ -4,84 +4,92 @@
       "id": "P_1",
       "translation": "Henry was notorious for forgetting his wallet.",
       "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
-      "explanation": "This is a single descriptive claim about Henry's reputation; it contains no logical connectives or conditions to split further."
+      "explanation": "This is a single descriptive claim about Henry's reputation/habit, expressed as one declarative clause without logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Henry forgot his wallet.",
-      "evidence": "Sentence 1: \"The one day he forgot his wallet\"",
-      "explanation": "This is an atomic event/state assertion about Henry forgetting his wallet; it is not a connective or conditional."
+      "translation": "Henry forgot his wallet on that day.",
+      "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic event claim (forgetting his wallet on the referenced day) and contains no embedded logical operators."
     },
     {
       "id": "P_3",
-      "translation": "Henry was supposed to buy lunch.",
-      "evidence": "Sentence 1: \"he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic deontic/expectation statement presented as a single clause without internal logical structure."
+      "translation": "Henry was supposed to buy lunch on that day.",
+      "evidence": "Sentence 1: \"...he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic deontic/expectation statement about Henry's plan/obligation on the referenced day."
     },
     {
       "id": "P_4",
-      "translation": "Henry was able to buy lunch.",
-      "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "explanation": "This is an atomic ability claim; it is not itself a negation or composed of smaller propositions."
+      "translation": "Henry was able to buy lunch on that day.",
+      "evidence": "Sentence 3: \"...he was still able to buy lunch.\"",
+      "explanation": "This is an atomic ability/outcome claim for the referenced day; the negated counterpart is represented via ¬P_4 in constraints."
     },
     {
       "id": "P_5",
       "translation": "Everyone was surprised.",
-      "evidence": "Sentence 3: \"to everyone's surprise\"",
-      "explanation": "This is a single emotional-reaction claim and does not decompose into simpler truth-evaluable parts without adding unstated structure."
+      "evidence": "Sentence 3: \"However, to everyone's surprise, ...\"",
+      "explanation": "This is an atomic mental-state/social-reaction claim stated directly."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2",
-      "translation": "Henry forgot his wallet.",
+      "formula": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"The one day he forgot his wallet\"",
-      "reasoning": "The text directly asserts that Henry forgot his wallet on the relevant day."
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a direct narrative fact."
     },
     {
       "id": "C_2",
-      "formula": "P_3",
-      "translation": "Henry was supposed to buy lunch.",
+      "formula": "P_2",
+      "translation": "On the relevant day, Henry forgot his wallet.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he was supposed to buy lunch.\"",
-      "reasoning": "The text explicitly states this obligation/expectation."
+      "evidence": "Sentence 1",
+      "reasoning": "The story explicitly identifies a day on which he forgot his wallet."
     },
     {
       "id": "C_3",
-      "formula": "P_2 ⟹ ¬P_4",
-      "translation": "According to the rule, if Henry forgot his wallet then Henry was not able to buy lunch.",
+      "formula": "P_3",
+      "translation": "On that same day, Henry was supposed to buy lunch.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
-      "reasoning": "This is presented as a rule in the story, stated in an explicit if-then form, so it strongly implies the conditional."
+      "evidence": "Sentence 1",
+      "reasoning": "The text directly states he was supposed to buy lunch on that day."
     },
     {
       "id": "C_4",
       "formula": "P_4",
-      "translation": "Henry was able to buy lunch.",
+      "translation": "On that day, Henry was able to buy lunch.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "reasoning": "The narration asserts the ability claim as a surprising fact."
+      "evidence": "Sentence 3",
+      "reasoning": "The text directly asserts the outcome that he was still able to buy lunch."
     },
     {
       "id": "C_5",
       "formula": "P_5",
       "translation": "Everyone was surprised.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 3: \"to everyone's surprise\"",
-      "reasoning": "The phrase directly attributes surprise to everyone."
+      "evidence": "Sentence 3",
+      "reasoning": "The phrase \"to everyone's surprise\" directly signals this reaction."
     },
     {
       "id": "C_6",
-      "formula": "(P_2 ∧ P_4) ⟹ P_5",
-      "translation": "Henry forgetting his wallet while still being able to buy lunch led to everyone being surprised.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 3: \"However, to everyone's surprise, he was still able to buy lunch.\" (in context of Sentence 2's rule)",
-      "reasoning": "The discourse marker \"However\" plus \"to everyone's surprise\" suggests the surprise is caused by the unexpected co-occurrence of forgetting the wallet and still being able to buy lunch, though the causal structure is implied rather than formally stated."
+      "formula": "P_2 ⟹ ¬P_4",
+      "translation": "According to the rule, Henry forgetting his wallet implies Henry being unable to buy lunch.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
+      "reasoning": "This is presented explicitly as a rule; the conditional structure maps directly to implication with full strength."
     },
     {
       "id": "C_7",
+      "formula": "(P_2 ∧ P_4) ⟹ P_5",
+      "translation": "Henry forgetting his wallet and still being able to buy lunch implies that everyone was surprised.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 2-3 (rule sets expectation of inability; outcome contradicts it) and Sentence 3 (\"to everyone's surprise\")",
+      "reasoning": "The surprise is motivated by the juxtaposition of the rule-based expectation (¬P_4 given P_2) and the stated outcome (P_4). The causal link from the unusual combination to surprise is strongly suggested but still an interpretive step, so it is weighted slightly below 1.0."
+    },
+    {
+      "id": "C_8",
       "formula": "P_3 ⟹ P_3",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -90,8 +98,8 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_3: 'Henry was supposed to buy lunch.' has modal 'supposed'",
-    "        Base text: 'Henry was to buy lunch.'",
+    "[Modal] P_3: 'Henry was supposed to buy lunch on that day.' has modal 'supposed'",
+    "        Base text: 'Henry was to buy lunch on that day.'",
     "        Found existing base: P_3",
     "        Added constraint: P_3 ⟹ P_3 @1.0",
     "[Negation] Sentence 2: Found negation of 'be'",
@@ -101,13 +109,13 @@
     "[Auxiliary] Found 0 auxiliary propositions",
     {
       "prop_id": "P_2",
-      "translation": "Henry forgot his wallet.",
-      "positive_constraint": "C_1",
-      "negative_constraint": "C_8",
-      "nli_score_positive": 0.09841730445623398,
-      "nli_score_negative": 0.00978093408048153,
+      "translation": "Henry forgot his wallet on that day.",
+      "positive_constraint": "C_2",
+      "negative_constraint": "C_9",
+      "nli_score_positive": 0.12065117806196213,
+      "nli_score_negative": 0.009911551140248775,
       "decision": "keep positive",
-      "removed": "C_8"
+      "removed": "C_9"
     }
   ]
 }

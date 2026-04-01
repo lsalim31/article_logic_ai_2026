@@ -4,194 +4,222 @@
       "id": "P_1",
       "translation": "Henry was notorious for forgetting his wallet.",
       "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
-      "explanation": "This is a single descriptive claim about Henry's reputation; it contains no logical connectives or conditions to split further."
+      "explanation": "This is a single descriptive claim about Henry's reputation/habit, expressed as one declarative clause without logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Henry forgot his wallet.",
-      "evidence": "Sentence 1: \"The one day he forgot his wallet\"",
-      "explanation": "This is an atomic event/state assertion about Henry forgetting his wallet; it is not a connective or conditional."
+      "translation": "Henry forgot his wallet on that day.",
+      "evidence": "Sentence 1: \"The one day he forgot his wallet, he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic event claim (forgetting his wallet on the referenced day) and contains no embedded logical operators."
     },
     {
       "id": "P_3",
-      "translation": "Henry was supposed to buy lunch.",
-      "evidence": "Sentence 1: \"he was supposed to buy lunch.\"",
-      "explanation": "This is an atomic deontic/expectation statement presented as a single clause without internal logical structure."
+      "translation": "Henry was supposed to buy lunch on that day.",
+      "evidence": "Sentence 1: \"...he was supposed to buy lunch.\"",
+      "explanation": "This is an atomic deontic/expectation statement about Henry's plan/obligation on the referenced day."
     },
     {
       "id": "P_4",
-      "translation": "Henry was able to buy lunch.",
-      "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "explanation": "This is an atomic ability claim; it is not itself a negation or composed of smaller propositions."
+      "translation": "Henry was able to buy lunch on that day.",
+      "evidence": "Sentence 3: \"...he was still able to buy lunch.\"",
+      "explanation": "This is an atomic ability/outcome claim for the referenced day; the negated counterpart is represented via ¬P_4 in constraints."
     },
     {
       "id": "P_5",
       "translation": "Everyone was surprised.",
-      "evidence": "Sentence 3: \"to everyone's surprise\"",
-      "explanation": "This is a single emotional-reaction claim and does not decompose into simpler truth-evaluable parts without adding unstated structure."
+      "evidence": "Sentence 3: \"However, to everyone's surprise, ...\"",
+      "explanation": "This is an atomic mental-state/social-reaction claim stated directly."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9984291195869446,
-      "combined=(llm)*(nli)": 0.9984291195869446,
+      "nli_entailment": 0.9999196529388428,
+      "combined=(llm)*(nli)": 0.9999196529388428,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_2",
-      "translation": "Henry forgot his wallet.",
-      "evidence": "Sentence 1: \"The one day he forgot his wallet\"",
-      "reasoning": "The text directly asserts that Henry forgot his wallet on the relevant day.",
+      "formula": "P_1",
+      "translation": "Henry was notorious for forgetting his wallet.",
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a direct narrative fact.",
       "list nli": [
         [
-          0.0012920269509777427,
-          0.00027885896270163357,
-          0.9984291195869446
+          2.1803776689921506e-05,
+          5.850244633620605e-05,
+          0.9999196529388428
         ],
         [
-          0.002709884662181139,
-          6.495134584838524e-05,
-          0.9972251653671265
+          0.00018366937001701444,
+          2.6371151761850342e-05,
+          0.9997900128364563
         ],
         [
-          0.993148148059845,
-          0.0002688951790332794,
-          0.006583021022379398
+          0.00016668321040924639,
+          7.188961171777919e-05,
+          0.9997614026069641
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998835325241089,
-      "combined=(llm)*(nli)": 0.9998835325241089,
+      "nli_entailment": 0.9998078942298889,
+      "combined=(llm)*(nli)": 0.9998078942298889,
       "hardness_constant": 0.9,
       "id": "C_2",
-      "formula": "P_3",
-      "translation": "Henry was supposed to buy lunch.",
-      "evidence": "Sentence 1: \"he was supposed to buy lunch.\"",
-      "reasoning": "The text explicitly states this obligation/expectation.",
+      "formula": "P_2",
+      "translation": "On the relevant day, Henry forgot his wallet.",
+      "evidence": "Sentence 1",
+      "reasoning": "The story explicitly identifies a day on which he forgot his wallet.",
       "list nli": [
         [
-          7.345229823840782e-05,
-          4.30205327575095e-05,
-          0.9998835325241089
+          0.00011221753811696544,
+          7.994526822585613e-05,
+          0.9998078942298889
         ],
         [
-          7.030743290670216e-05,
-          6.478103750851005e-05,
-          0.999864935874939
+          0.0019767621997743845,
+          0.00013188656885176897,
+          0.997891366481781
         ],
         [
-          0.008015130646526814,
-          0.0017537123057991266,
-          0.9902312159538269
+          0.9751051068305969,
+          0.0005338634946383536,
+          0.024360956624150276
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.999900221824646,
-      "combined=(llm)*(nli)": 0.999900221824646,
+      "nli_entailment": 0.999914288520813,
+      "combined=(llm)*(nli)": 0.999914288520813,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_2 ⟹ ¬P_4",
-      "translation": "According to the rule, if Henry forgot his wallet then Henry was not able to buy lunch.",
-      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
-      "reasoning": "This is presented as a rule in the story, stated in an explicit if-then form, so it strongly implies the conditional.",
+      "formula": "P_3",
+      "translation": "On that same day, Henry was supposed to buy lunch.",
+      "evidence": "Sentence 1",
+      "reasoning": "The text directly states he was supposed to buy lunch on that day.",
       "list nli": [
         [
-          3.682572059915401e-05,
-          6.298825610429049e-05,
-          0.999900221824646
+          5.7303499488625675e-05,
+          2.8433049010345712e-05,
+          0.999914288520813
         ],
         [
-          0.00010997962817782536,
-          3.129873221041635e-05,
-          0.9998587369918823
+          0.000171857958775945,
+          1.6829004380269907e-05,
+          0.9998113512992859
         ],
         [
-          6.624334491789341e-05,
-          0.0001666981406742707,
-          0.999767005443573
+          0.00021871623175684363,
+          0.0001607945596333593,
+          0.9996204376220703
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9994891881942749,
-      "combined=(llm)*(nli)": 0.9994891881942749,
+      "nli_entailment": 0.9969947338104248,
+      "combined=(llm)*(nli)": 0.9969947338104248,
       "hardness_constant": 0.9,
       "id": "C_4",
       "formula": "P_4",
-      "translation": "Henry was able to buy lunch.",
-      "evidence": "Sentence 3: \"he was still able to buy lunch.\"",
-      "reasoning": "The narration asserts the ability claim as a surprising fact.",
+      "translation": "On that day, Henry was able to buy lunch.",
+      "evidence": "Sentence 3",
+      "reasoning": "The text directly asserts the outcome that he was still able to buy lunch.",
       "list nli": [
         [
-          0.0003721909015439451,
-          0.00013861454499419779,
-          0.9994891881942749
+          0.0014700695173814893,
+          0.001535141607746482,
+          0.9969947338104248
         ],
         [
-          0.21000394225120544,
-          0.08116630464792252,
-          0.7088297605514526
+          0.004424652084708214,
+          4.276564868632704e-05,
+          0.9955325126647949
         ],
         [
-          0.30949264764785767,
-          0.0007877321331761777,
-          0.6897196173667908
+          0.07338975369930267,
+          0.02073541283607483,
+          0.9058749079704285
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998528957366943,
-      "combined=(llm)*(nli)": 0.9998528957366943,
+      "nli_entailment": 0.9998917579650879,
+      "combined=(llm)*(nli)": 0.9998917579650879,
       "hardness_constant": 0.9,
       "id": "C_5",
       "formula": "P_5",
       "translation": "Everyone was surprised.",
-      "evidence": "Sentence 3: \"to everyone's surprise\"",
-      "reasoning": "The phrase directly attributes surprise to everyone.",
+      "evidence": "Sentence 3",
+      "reasoning": "The phrase \"to everyone's surprise\" directly signals this reaction.",
       "list nli": [
         [
-          6.722540274495259e-05,
-          7.988515426404774e-05,
-          0.9998528957366943
+          3.172094511683099e-05,
+          7.647011807421222e-05,
+          0.9998917579650879
         ],
         [
-          2.392332135059405e-05,
-          0.00013553485041484237,
-          0.999840497970581
+          1.8456403267919086e-05,
+          0.00011730010010069236,
+          0.9998642206192017
         ],
         [
-          1.6399271771661006e-05,
-          0.0001851969282142818,
-          0.9997984766960144
+          9.504476474830881e-05,
+          6.204300007084385e-05,
+          0.9998428821563721
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9885199666023254,
-      "combined=(llm)*(nli)": 0.9885199666023254,
+      "nli_entailment": 0.9998218417167664,
+      "combined=(llm)*(nli)": 0.9998218417167664,
       "hardness_constant": 0.9,
-      "id": "C_7",
+      "id": "C_6",
+      "formula": "P_2 ⟹ ¬P_4",
+      "translation": "According to the rule, Henry forgetting his wallet implies Henry being unable to buy lunch.",
+      "evidence": "Sentence 2: \"According to the rule, if Henry forgot his wallet, then he would not be able to buy lunch.\"",
+      "reasoning": "This is presented explicitly as a rule; the conditional structure maps directly to implication with full strength.",
+      "list nli": [
+        [
+          8.068136230576783e-05,
+          9.751679317560047e-05,
+          0.9998218417167664
+        ],
+        [
+          0.00016673820209689438,
+          3.3065382012864575e-05,
+          0.9998002648353577
+        ],
+        [
+          0.00036885368172079325,
+          7.74639192968607e-05,
+          0.9995536208152771
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9558451771736145,
+      "combined=(llm)*(nli)": 0.9558451771736145,
+      "hardness_constant": 0.9,
+      "id": "C_8",
       "formula": "P_3 ⟹ P_3",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "evidence": "Auto-generated",
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
       "list nli": [
         [
-          0.0013549956493079662,
-          0.010125012136995792,
-          0.9885199666023254
+          0.004791855812072754,
+          0.03936304152011871,
+          0.9558451771736145
         ],
         [
-          0.004461216274648905,
-          0.043512213975191116,
-          0.9520266056060791
+          0.005734139122068882,
+          0.07971911877393723,
+          0.9145467877388
         ],
         [
           0.014224397949874401,
@@ -203,33 +231,33 @@
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.8,
-      "nli_entailment": 0.9999115467071533,
-      "combined=(llm)*(nli)": 0.7999292373657227,
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9998611211776733,
+      "combined=(llm)*(nli)": 0.8498819530010223,
       "hardness_constant": 0.9,
-      "id": "C_6",
+      "id": "C_7",
       "formula": "(P_2 ∧ P_4) ⟹ P_5",
-      "translation": "Henry forgetting his wallet while still being able to buy lunch led to everyone being surprised.",
-      "evidence": "Sentence 3: \"However, to everyone's surprise, he was still able to buy lunch.\" (in context of Sentence 2's rule)",
-      "reasoning": "The discourse marker \"However\" plus \"to everyone's surprise\" suggests the surprise is caused by the unexpected co-occurrence of forgetting the wallet and still being able to buy lunch, though the causal structure is implied rather than formally stated.",
+      "translation": "Henry forgetting his wallet and still being able to buy lunch implies that everyone was surprised.",
+      "evidence": "Sentence 2-3 (rule sets expectation of inability; outcome contradicts it) and Sentence 3 (\"to everyone's surprise\")",
+      "reasoning": "The surprise is motivated by the juxtaposition of the rule-based expectation (¬P_4 given P_2) and the stated outcome (P_4). The causal link from the unusual combination to surprise is strongly suggested but still an interpretive step, so it is weighted slightly below 1.0.",
       "list nli": [
         [
-          4.890941272606142e-05,
-          3.9545058825751767e-05,
-          0.9999115467071533
+          2.461800249875523e-05,
+          0.00011418357462389395,
+          0.9998611211776733
         ],
         [
-          1.761283965606708e-05,
-          9.121475886786357e-05,
-          0.9998911619186401
+          0.0001343240583082661,
+          0.00011726872617146,
+          0.9997484087944031
         ],
         [
-          7.622755219927058e-05,
-          7.332584937103093e-05,
-          0.9998503923416138
+          2.4483248125761747e-05,
+          0.0005668550729751587,
+          0.9994087219238281
         ]
       ],
-      "weight": 0.7999292373657227
+      "weight": 0.8498819530010223
     }
   ]
 }

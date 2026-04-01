@@ -2,55 +2,71 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Mason decides to leave his job",
-      "evidence": "Sentence 0: \"If Mason decides to leave his job\"",
-      "explanation": "This is an atomic decision/state attributed to Mason; it is used as the antecedent of a conditional and contains no logical connective."
+      "translation": "Mason decides to leave his job.",
+      "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
+      "explanation": "This is an atomic mental-action predicate about Mason; it is used as the antecedent of a conditional and contains no logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Mason receives a salary",
+      "translation": "Mason receives a salary.",
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "explanation": "This is a simple, truth-evaluable statement about receiving salary; it cannot be decomposed without adding logical structure."
+      "explanation": "This is a single truth-evaluable event/state; the text also mentions the negated form ('will not receive any salary') which can be represented as ¬P_2 in constraints."
     },
     {
       "id": "P_3",
-      "translation": "Mason receives his regular paycheck",
+      "translation": "Mason receives his regular paycheck.",
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "explanation": "This is a specific event/state (receiving the regular paycheck) and is not itself a logical combination of smaller propositions."
+      "explanation": "This is a specific truth-evaluable receiving event; it is distinct from the more general 'receives a salary' but closely related."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If Mason decides to leave his job, Mason does not receive any salary",
+      "translation": "If Mason decides to leave his job, then Mason does not receive a salary.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\"",
-      "reasoning": "This is stated as a direct conditional rule in the text; the negation applies to salary receipt, represented as ¬P_2."
+      "reasoning": "This is stated explicitly as a conditional with a definite outcome ('will not'), so it is treated as a hard rule."
     },
     {
       "id": "C_2",
       "formula": "P_2",
-      "translation": "Mason receives his salary",
+      "translation": "Mason receives his salary.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Mason still receives his salary.\"",
-      "reasoning": "The text asserts salary receipt as a fact (\"still receives\"), despite being surprising; there is no hedging."
+      "reasoning": "This is asserted directly (the discourse marker 'However' emphasizes it), so it should hold."
     },
     {
       "id": "C_3",
       "formula": "P_3",
-      "translation": "Mason receives his regular paycheck",
+      "translation": "Mason receives his regular paycheck.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2: \"He finds himself receiving his regular paycheck.\"",
-      "reasoning": "The sentence presents the paycheck receipt as an occurring situation (no modality like 'might' or 'could')."
+      "reasoning": "This is asserted directly as a factual observation."
     },
     {
       "id": "C_4",
       "formula": "P_3 ⟹ P_2",
-      "translation": "If Mason receives his regular paycheck, then Mason receives a salary",
+      "translation": "Receiving his regular paycheck implies receiving a salary.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 2: \"receiving his regular paycheck\"; Sentence 1: \"receives his salary\"",
-      "reasoning": "Common-sense/semantic implication: a 'regular paycheck' typically constitutes receiving salary. The text supports this linkage (paycheck discussed immediately after salary), but it is not explicitly defined as identical, so weight is high but < 1.0."
+      "evidence": "Sentence 1: \"Mason still receives his salary.\" Sentence 2: \"...receiving his regular paycheck.\"",
+      "reasoning": "In ordinary usage, a regular paycheck is a concrete instance of salary payment; the text also juxtaposes 'salary' and 'regular paycheck' as describing the same ongoing compensation."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Receiving a salary implies receiving his regular paycheck.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1: \"Mason still receives his salary.\" Sentence 2: \"...receiving his regular paycheck.\"",
+      "reasoning": "The text suggests Mason's salary is realized as his regular paycheck, but 'salary' could in principle be paid in other ways; thus a weaker implication than C_4."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_2 ⟹ ¬P_1",
+      "translation": "If Mason receives a salary, then Mason does not decide to leave his job.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"If Mason decides to leave his job, he will not receive any salary.\" Sentence 1: \"Mason still receives his salary.\"",
+      "reasoning": "This is a defeasible commonsense inference from the stated rule and the asserted salary receipt (reasoning by typical causal interpretation), but it is not logically entailed by the material conditional, so it is given moderate uncertainty."
     }
   ],
   "_enrichment_log": [
@@ -61,13 +77,13 @@
     "[Auxiliary] Found 0 auxiliary propositions",
     {
       "prop_id": "P_2",
-      "translation": "Mason receives a salary",
+      "translation": "Mason receives a salary.",
       "positive_constraint": "C_2",
-      "negative_constraint": "C_5",
-      "nli_score_positive": 0.9912115931510925,
-      "nli_score_negative": 0.019953381270170212,
+      "negative_constraint": "C_7",
+      "nli_score_positive": 0.9933556318283081,
+      "nli_score_negative": 0.036663077771663666,
       "decision": "keep positive",
-      "removed": "C_5"
+      "removed": "C_7"
     }
   ]
 }

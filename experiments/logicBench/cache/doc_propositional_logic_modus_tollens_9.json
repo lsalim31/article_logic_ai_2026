@@ -3,54 +3,48 @@
     {
       "id": "P_1",
       "translation": "Theodore has a pet dog.",
-      "evidence": "Sentence 0: \"If Theodore has a pet dog\"",
-      "explanation": "This is an atomic possession claim (subject + has + object) with no logical connectives once isolated from the conditional."
+      "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
+      "explanation": "This is an atomic possession claim (having a pet dog) and does not contain logical connectives or negation."
     },
     {
       "id": "P_2",
       "translation": "Theodore takes his dog out for a walk.",
-      "evidence": "Sentence 0: \"he will take it out for a walk\"",
-      "explanation": "This is a single action/event claim; the pronoun \"it\" refers to the dog in context, and the clause is truth-evaluable on its own."
-    },
-    {
-      "id": "P_3",
-      "translation": "Theodore has a dog.",
-      "evidence": "Sentence 1: \"his dog\"",
-      "explanation": "The phrase \"his dog\" presupposes ownership/possession of a dog; this is a standalone truth-evaluable proposition."
+      "evidence": "Sentence 0: \"...he will take it out for a walk.\"",
+      "explanation": "This is an atomic action claim (taking the dog out for a walk) and does not contain logical connectives or negation."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Theodore has a pet dog, Theodore takes his dog out for a walk.",
+      "translation": "If Theodore has a pet dog, he takes it out for a walk.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
-      "reasoning": "This is stated as a direct conditional commitment in the text."
+      "reasoning": "This is an explicit conditional stated in the text."
     },
     {
       "id": "C_2",
       "formula": "¬P_2",
       "translation": "Theodore does not take his dog out for a walk.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he would not take his dog out for a walk.\"",
-      "reasoning": "The text explicitly asserts the negation of the walking action (strong, unhedged)."
+      "evidence": "Sentence 1: \"However, he would not take his dog out for a walk.\"",
+      "reasoning": "This is an explicit negation of the walking action; the discourse marker \"However\" signals contrast with the prior conditional."
     },
     {
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "Theodore has a dog.",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Theodore takes his dog out for a walk, then Theodore has a pet dog.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"his dog\"",
-      "reasoning": "Use of the possessive \"his dog\" strongly implies Theodore has a dog, though it is a presupposition rather than a direct 'has' statement."
+      "evidence": "Sentence 0: \"...take it out for a walk.\" / Sentence 1: \"...his dog...\"",
+      "reasoning": "Common-sense implication: performing the action of taking \"his dog\" for a walk presupposes he has a dog (modeled here as having a pet dog). This is strongly but not perfectly guaranteed by the wording."
     },
     {
       "id": "C_4",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If Theodore has a pet dog, Theodore has a dog.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"pet dog\"",
-      "reasoning": "By meaning, having a pet dog entails having a dog (a pet dog is a kind of dog)."
+      "formula": "P_1",
+      "translation": "Theodore has a pet dog.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 1: \"...his dog...\"",
+      "reasoning": "The possessive phrase \"his dog\" pragmatically suggests Theodore has a dog, but it is not an explicit direct assertion in a standalone declarative sentence, so it is treated as a weaker (presuppositional) constraint."
     }
   ],
   "_enrichment_log": [

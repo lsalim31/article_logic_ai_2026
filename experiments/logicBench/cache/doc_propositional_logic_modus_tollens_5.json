@@ -4,19 +4,19 @@
       "id": "P_1",
       "translation": "Sophia has the highest score in the test.",
       "evidence": "Sentence 0: \"If Sophia has the highest score in the test\"",
-      "explanation": "This is an atomic, truth-evaluable claim about Sophia's score status; it contains no logical connectives or negation."
+      "explanation": "This is an atomic, truth-evaluable statement about Sophia's test score status."
     },
     {
       "id": "P_2",
       "translation": "Sophia is awarded a medal.",
       "evidence": "Sentence 0: \"then she will be awarded a medal\"",
-      "explanation": "This is an atomic event/state (being awarded a medal) and does not include any connectives or negation."
+      "explanation": "This is a single event/state claim (receiving a medal) that can be true or false without further logical structure."
     },
     {
       "id": "P_3",
-      "translation": "Sophia has outstanding performance.",
+      "translation": "Sophia's performance is outstanding.",
       "evidence": "Sentence 0: \"for her outstanding performance\"",
-      "explanation": "This is a simple descriptive claim about Sophia's performance; it is treated as atomic because the text provides no further internal logical structure."
+      "explanation": "This is an atomic evaluative claim about Sophia's performance; it appears as a standalone descriptive clause in the text."
     }
   ],
   "constraints": [
@@ -26,39 +26,23 @@
       "translation": "If Sophia has the highest score in the test, then Sophia is awarded a medal.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
-      "reasoning": "This is explicitly stated as a conditional in the text with no hedging language."
+      "reasoning": "This is stated directly as a conditional in the text."
     },
     {
       "id": "C_2",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If Sophia has the highest score in the test, then her performance is outstanding.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
-      "reasoning": "The consequent mentions the medal as being for outstanding performance, suggesting outstanding performance would accompany the medal-award scenario, but the text primarily asserts the award; the performance attribution is slightly more interpretive."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then her performance is outstanding.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
-      "reasoning": "Common-sense and the phrasing 'for her outstanding performance' imply that receiving that medal entails outstanding performance, though such language can sometimes be rhetorical; hence less than 1.0."
-    },
-    {
-      "id": "C_4",
       "formula": "¬P_1",
       "translation": "Sophia does not have the highest score in the test.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "reasoning": "This is asserted directly and unambiguously."
+      "reasoning": "This is explicitly asserted as a factual negation."
     },
     {
       "id": "C_3",
       "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then Sophia has outstanding performance.",
-      "llm_weight": 0.85,
+      "translation": "If Sophia is awarded a medal, then Sophia's performance is outstanding.",
+      "llm_weight": 0.7,
       "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
-      "reasoning": "The phrase indicates the medal is awarded on the basis of outstanding performance; this strongly suggests (though does not logically guarantee) that receiving the medal implies outstanding performance."
+      "reasoning": "The phrase \"for her outstanding performance\" strongly suggests the medal is given on the basis of outstanding performance, but it is embedded in a hypothetical consequent rather than asserted outright as a general rule, so the implication is treated as defeasible."
     }
   ],
   "_enrichment_log": [

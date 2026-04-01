@@ -4,77 +4,121 @@
       "id": "P_1",
       "translation": "Scarlett is an avid book collector.",
       "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
-      "explanation": "This is a single predicate about Scarlett (being an avid book collector) with no logical connectives or conditions."
+      "explanation": "This is a single predication about Scarlett’s role/trait and contains no logical connective."
     },
     {
       "id": "P_2",
-      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection.",
-      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
-      "explanation": "This expresses one mental-state content (a dream/aspiration) and is not a logical combination of smaller propositions in the text."
+      "translation": "Scarlett has a cherished book collection.",
+      "evidence": "Sentence 0: \"her cherished collection\"",
+      "explanation": "This asserts the existence/possession of a collection; it is an atomic state."
     },
     {
       "id": "P_3",
-      "translation": "Scarlett stumbles upon a rare book.",
-      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
-      "explanation": "This is the antecedent event-clause used in a conditional; it is extracted as an atomic proposition without the conditional marker."
+      "translation": "Scarlett dreamt of finding a rare book.",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book\"",
+      "explanation": "This is an atomic mental-state report (dreamt of X)."
     },
     {
       "id": "P_4",
-      "translation": "Scarlett decides to keep the rare book.",
-      "evidence": "Sentence 1: \"she would ... decide to keep it\"",
-      "explanation": "This is one decision/action-intention about the rare book; it is an atomic consequent component of the conditional."
+      "translation": "A rare book is added to Scarlett's collection.",
+      "evidence": "Sentence 0: \"a rare book to add to her cherished collection\"",
+      "explanation": "This is a single event/state description; it does not include conditionals or connectives."
     },
     {
       "id": "P_5",
-      "translation": "Scarlett makes the rare book a part of her literary treasures.",
-      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
-      "explanation": "This is a single action/outcome clause about incorporating the rare book into her treasures; no connectives are inside it."
+      "translation": "Scarlett finds a book one day.",
+      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
+      "explanation": "This is an atomic event claim about Scarlett finding a book."
     },
     {
       "id": "P_6",
-      "translation": "Scarlett found a book one day.",
-      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "explanation": "This is a simple factual event statement asserted by the narrative."
+      "translation": "The book Scarlett found is rare.",
+      "evidence": "Sentence 1: \"such a rare book\" (in the scenario she \"stumbled upon\"), Sentence 2: \"Scarlett found a book\"",
+      "explanation": "This is a single property attribution about the found book’s rarity; the text does not explicitly assert it as fact, but it is needed to represent the conditional belief."
     },
     {
       "id": "P_7",
-      "translation": "Scarlett decides to keep the found book in her collection.",
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "explanation": "The text asserts the negation of this decision; the atomic positive form is used so negation can be expressed in constraints."
+      "translation": "Scarlett decides to keep the book she found in her collection.",
+      "evidence": "Sentence 1: \"she would immediately decide to keep it\", Sentence 2: \"she decided not to keep it in her collection\"",
+      "explanation": "This is an atomic decision/action-intention statement; negation is handled in constraints, not in the primitive."
+    },
+    {
+      "id": "P_8",
+      "translation": "The book Scarlett found is part of Scarlett's literary treasures.",
+      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
+      "explanation": "This is a single membership/status claim about the found book relative to her treasures."
+    },
+    {
+      "id": "P_9",
+      "translation": "The book Scarlett found is in Scarlett's collection.",
+      "evidence": "Sentence 1: \"keep it\" ... \"in her collection\", Sentence 2: \"keep it in her collection\"",
+      "explanation": "This is an atomic state about the book’s inclusion in the collection, separated from the decision to enable implications."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_3 ⟹ (P_4 ∧ P_5)",
-      "translation": "If Scarlett stumbles upon such a rare book, she decides to keep it and makes it part of her literary treasures.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would ... decide to keep it and make it a part of her literary treasures.\"",
-      "reasoning": "The conditional is stated as Scarlett's belief, strongly indicating the rule, but it is framed as a belief about what she would do rather than a universally guaranteed law of the world."
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is an avid book collector, then Scarlett has a cherished book collection.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"Scarlett, an avid book collector\"; \"her cherished collection\"",
+      "reasoning": "The text directly states both, and common sense supports that an avid collector has a collection; weight is high but not treated as a strict logical truth in all possible worlds."
     },
     {
       "id": "C_2",
-      "formula": "P_6",
-      "translation": "Scarlett found a book one day.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Scarlett dreamt of finding a rare book, then Scarlett has a cherished book collection.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"dreamt of finding a rare book to add to her cherished collection\"",
+      "reasoning": "Dreaming of adding a book to her collection strongly presupposes she has such a collection."
     },
     {
       "id": "C_3",
-      "formula": "¬P_7",
-      "translation": "Scarlett decided not to keep the found book in her collection.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "reasoning": "The text explicitly states the negation of the decision-to-keep."
+      "formula": "P_6 ⟹ (P_7 ∧ P_8)",
+      "translation": "If the book Scarlett found is rare, then Scarlett decides to keep it and it becomes part of her literary treasures.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it and make it a part of her literary treasures.\"",
+      "reasoning": "This is explicitly framed as Scarlett’s belief about what she would do, not an asserted law of nature; hence high but not absolute weight."
     },
     {
       "id": "C_4",
-      "formula": "P_5 ⟹ P_4",
-      "translation": "If Scarlett makes the rare book part of her literary treasures, then she decides to keep the rare book.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 1: \"decide to keep it and make it a part of her literary treasures\"",
-      "reasoning": "Common-sense/semantic entailment: integrating a book into one's literary treasures normally presupposes choosing to keep it. The text presents the two as coordinated outcomes, supporting this direction moderately."
+      "formula": "P_7 ⟹ P_9",
+      "translation": "If Scarlett decides to keep the book she found in her collection, then the book is in Scarlett's collection.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"decide to keep it\"; Sentence 2: \"keep it in her collection\"",
+      "reasoning": "Deciding to keep it in her collection strongly implies inclusion, though decision-to-state is not logically perfect in all contexts."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_9 ⟹ P_2",
+      "translation": "If the book Scarlett found is in Scarlett's collection, then Scarlett has a cherished book collection.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"her cherished collection\"; Sentences 1-2 discuss keeping a book \"in her collection\"",
+      "reasoning": "If a specific book is in her collection, then she has a collection; this is close to definitional."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_5",
+      "translation": "Scarlett finds a book one day.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
+      "reasoning": "This is directly asserted as a story event."
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_7",
+      "translation": "Scarlett does not decide to keep the book she found in her collection.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
+      "reasoning": "This is explicitly stated with negation."
+    },
+    {
+      "id": "C_8",
+      "formula": "¬P_7 ⟹ ¬P_9",
+      "translation": "If Scarlett does not decide to keep the book she found in her collection, then the book is not in Scarlett's collection.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
+      "reasoning": "In ordinary narrative intent, deciding not to keep it in the collection implies it does not end up in the collection; still defeasible (hence < 1.0)."
     }
   ],
   "_enrichment_log": [

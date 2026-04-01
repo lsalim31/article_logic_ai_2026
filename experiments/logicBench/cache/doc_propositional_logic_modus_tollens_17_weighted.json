@@ -4,143 +4,143 @@
       "id": "P_1",
       "translation": "Alexander decided to go for a walk in the park.",
       "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
-      "explanation": "This is an atomic decision/intent statement about Alexander; it does not decompose into simpler propositional parts without adding logical structure."
+      "explanation": "This is an atomic event/mental-state claim (a decision) with a specific action target; it contains no logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Alexander takes a walk in the park.",
-      "evidence": "Sentence 0: \"decided to go for a walk in the park\"",
-      "explanation": "This is a single event-level statement (the walk occurs). It is distinct from merely deciding to walk."
+      "translation": "Alexander is fully aware that the walk tires him out soon.",
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "explanation": "This is an atomic awareness/knowledge-ascription statement; it is not itself a logical connective in the surface form."
     },
     {
       "id": "P_3",
-      "translation": "Taking the walk soon tires Alexander out.",
+      "translation": "The walk tires Alexander out soon.",
       "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "explanation": "This is an atomic causal/effect statement about the walk producing tiredness soon; it is not a logical connective itself."
+      "explanation": "This is the embedded content of the awareness clause expressed as a simple declarative proposition (with modal removed)."
     },
     {
       "id": "P_4",
-      "translation": "Alexander is aware that taking the walk soon tires him out.",
-      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
-      "explanation": "This is an atomic mental-state attribution (awareness) with a specific content; it is not a negation or connective."
+      "translation": "Alexander gets tired soon.",
+      "evidence": "Sentence 1: \"he won't get tired soon\"",
+      "explanation": "This is the positive core proposition corresponding to the negated statement in the text; negation is handled in constraints."
     },
     {
       "id": "P_5",
-      "translation": "Alexander gets tired soon.",
-      "evidence": "Sentence 1: \"he won't get tired soon\"",
-      "explanation": "This is the positive base proposition corresponding to the text's negated claim; it is kept non-negated per the primitive proposition rules."
+      "translation": "Alexander intends to go for a walk in the park.",
+      "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
+      "explanation": "This is a simple, standalone mental-state proposition commonly entailed by a decision, needed to represent implied intent without adding connectives."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9999066591262817,
-      "combined=(llm)*(nli)": 0.9999066591262817,
+      "nli_entailment": 0.9954408407211304,
+      "combined=(llm)*(nli)": 0.9954408407211304,
       "hardness_constant": 0.9,
-      "id": "C_1",
-      "formula": "P_1",
-      "translation": "Alexander decided to go for a walk in the park.",
-      "evidence": "Sentence 0",
-      "reasoning": "This is stated directly as a main-clause fact.",
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Alexander will not get tired soon.",
+      "evidence": "Sentence 1: \"However, he won't get tired soon.\"",
+      "reasoning": "This is stated directly and unqualified (aside from discourse marker \"However\"), so it is treated as a hard constraint.",
       "list nli": [
         [
-          1.738881655910518e-05,
-          7.592914334964007e-05,
-          0.9999066591262817
+          0.004437635652720928,
+          0.00012145670916652307,
+          0.9954408407211304
         ],
         [
-          2.9168457331252284e-05,
-          6.782412674510852e-05,
-          0.9999029636383057
+          0.004594940692186356,
+          0.0003639868227764964,
+          0.9950410723686218
         ],
         [
-          0.0005756323807872832,
-          0.0010536606423556805,
-          0.9983707070350647
+          0.9997668862342834,
+          0.00010052535799331963,
+          0.00013268475595396012
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.999869704246521,
-      "combined=(llm)*(nli)": 0.999869704246521,
-      "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "P_4",
-      "translation": "Alexander is fully aware that taking the walk would soon tire him out.",
-      "evidence": "Sentence 0",
-      "reasoning": "This awareness claim is asserted explicitly (\"fully aware\").",
-      "list nli": [
-        [
-          8.159445133060217e-05,
-          4.863012509304099e-05,
-          0.999869704246521
-        ],
-        [
-          0.000342021492542699,
-          5.689658428309485e-05,
-          0.9996010661125183
-        ],
-        [
-          0.0002666755754034966,
-          0.0001717724371701479,
-          0.9995614886283875
-        ]
-      ]
-    },
-    {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9988969564437866,
-      "combined=(llm)*(nli)": 0.9489521086215973,
+      "nli_entailment": 0.999894380569458,
+      "combined=(llm)*(nli)": 0.999894380569458,
       "hardness_constant": 0.9,
       "id": "C_5",
-      "formula": "(P_2 ∧ P_3) ⟹ P_5",
-      "translation": "If Alexander takes the walk and the walk soon tires him out, then Alexander gets tired soon.",
-      "evidence": "Sentence 0: \"soon tire him out\"",
-      "reasoning": "Common-sense entailment: being tired out soon from the walk implies getting tired soon, assuming the walk occurs.",
+      "formula": "P_2",
+      "translation": "Alexander is fully aware that the walk tires him out soon.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
       "list nli": [
         [
-          0.0007470771088264883,
-          0.00035590940387919545,
-          0.9988969564437866
+          5.53929312445689e-05,
+          5.024126949138008e-05,
+          0.999894380569458
         ],
         [
-          0.001068144105374813,
-          0.001531587215140462,
-          0.9974002838134766
+          6.466900231316686e-05,
+          4.586002614814788e-05,
+          0.9998894929885864
         ],
         [
-          2.3405782485497184e-05,
-          0.0030886956956237555,
-          0.9968878626823425
+          3.992030906374566e-05,
+          7.113233004929498e-05,
+          0.9998888969421387
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9997559189796448,
-      "combined=(llm)*(nli)": 0.9997559189796448,
+      "nli_entailment": 0.9884262084960938,
+      "combined=(llm)*(nli)": 0.9884262084960938,
       "hardness_constant": 0.9,
-      "id": "C_7",
-      "formula": "¬P_5",
-      "translation": "Alexander does not get tired soon.",
-      "evidence": "Sentence 1: \"he won't get tired soon\"",
-      "reasoning": "This is stated directly and emphatically as a contrast (\"However\").",
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
       "list nli": [
         [
-          0.00013042756472714245,
-          0.00011361912766005844,
-          0.9997559189796448
+          0.0021262438967823982,
+          0.009447580203413963,
+          0.9884262084960938
         ],
         [
-          9.65721410466358e-05,
-          0.0021954106632620096,
-          0.9977079629898071
+          0.0039026986341923475,
+          0.012003760784864426,
+          0.9840935468673706
         ],
         [
-          0.9998486042022705,
-          5.9230813349131495e-05,
-          9.219200001098216e-05
+          0.021401459351181984,
+          0.05779207497835159,
+          0.9208065271377563
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999120235443115,
+      "combined=(llm)*(nli)": 0.9999120235443115,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_3",
+      "translation": "The walk tires Alexander out soon.",
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty",
+      "list nli": [
+        [
+          3.9645972719881684e-05,
+          4.8330126446671784e-05,
+          0.9999120235443115
+        ],
+        [
+          7.980050213518552e-06,
+          0.00014398344501387328,
+          0.9998480081558228
+        ],
+        [
+          5.434612830867991e-06,
+          0.0002592662931419909,
+          0.9997352957725525
         ]
       ]
     },
@@ -161,14 +161,14 @@
           0.9884262084960938
         ],
         [
-          0.00479072006419301,
-          0.01280299387872219,
-          0.9824062585830688
+          0.0039026986341923475,
+          0.012003760784864426,
+          0.9840935468673706
         ],
         [
-          0.021055685356259346,
-          0.10190675407648087,
-          0.877037525177002
+          0.021401459351181984,
+          0.05779207497835159,
+          0.9208065271377563
         ]
       ]
     },
@@ -177,7 +177,7 @@
       "nli_entailment": 0.9884262084960938,
       "combined=(llm)*(nli)": 0.9884262084960938,
       "hardness_constant": 0.9,
-      "id": "C_9",
+      "id": "C_10",
       "formula": "P_4 ⟹ P_4",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "evidence": "Auto-generated",
@@ -189,133 +189,105 @@
           0.9884262084960938
         ],
         [
-          0.00479072006419301,
-          0.01280299387872219,
-          0.9824062585830688
+          0.0039026986341923475,
+          0.012003760784864426,
+          0.9840935468673706
         ],
         [
-          0.021055685356259346,
-          0.10190675407648087,
-          0.877037525177002
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9884262084960938,
-      "combined=(llm)*(nli)": 0.9884262084960938,
-      "hardness_constant": 0.9,
-      "id": "C_11",
-      "formula": "P_5 ⟹ P_5",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
-      "list nli": [
-        [
-          0.0021262438967823982,
-          0.009447580203413963,
-          0.9884262084960938
-        ],
-        [
-          0.00479072006419301,
-          0.01280299387872219,
-          0.9824062585830688
-        ],
-        [
-          0.021055685356259346,
-          0.10190675407648087,
-          0.877037525177002
+          0.021401459351181984,
+          0.05779207497835159,
+          0.9208065271377563
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.9998695850372314,
-      "combined=(llm)*(nli)": 0.8498891472816467,
+      "llm-weight": 0.95,
+      "nli_entailment": 0.37420862913131714,
+      "combined=(llm)*(nli)": 0.35549819767475127,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_5",
+      "translation": "If Alexander decided to go for a walk in the park, then Alexander intends to go for a walk in the park.",
+      "evidence": "Sentence 0",
+      "reasoning": "A decision to perform an action typically implies an intention to perform it; this is a strong pragmatic inference from the phrasing \"decided to go\".",
+      "list nli": [
+        [
+          0.2967129647731781,
+          0.32907843589782715,
+          0.37420862913131714
+        ],
+        [
+          0.0036162615288048983,
+          0.71803879737854,
+          0.27834489941596985
+        ],
+        [
+          0.5074353814125061,
+          0.40209904313087463,
+          0.09046558290719986
+        ]
+      ],
+      "weight": 0.35549819767475127
+    },
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9997949004173279,
+      "combined=(llm)*(nli)": 0.6998564302921295,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Alexander is fully aware that the walk tires him out soon, then the walk tires Alexander out soon.",
+      "evidence": "Sentence 0",
+      "reasoning": "The text attributes awareness of the embedded claim, which suggests the embedded proposition, but awareness/belief does not guarantee truth; thus a moderate weight.",
+      "list nli": [
+        [
+          0.00011466824798844755,
+          9.043891623150557e-05,
+          0.9997949004173279
+        ],
+        [
+          0.00040423194877803326,
+          0.0005178762949071825,
+          0.9990779161453247
+        ],
+        [
+          0.0007656451780349016,
+          0.001803941442631185,
+          0.9974303841590881
+        ]
+      ],
+      "weight": 0.6998564302921295
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9996851682662964,
+      "combined=(llm)*(nli)": 0.8997166514396667,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "Taking the walk soon tires Alexander out.",
-      "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "reasoning": "The text presents this as what Alexander anticipates/knows about the near-future effect of the walk (using predictive/modal phrasing), so it is strongly suggested but not treated as absolutely certain.",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If the walk tires Alexander out soon, then Alexander gets tired soon.",
+      "evidence": "Sentence 0",
+      "reasoning": "Common-sense semantic implication: being tired out soon from the walk entails getting tired soon.",
       "list nli": [
         [
-          1.2732393770420458e-05,
-          0.00011768102558562532,
-          0.9998695850372314
+          0.0001056684777722694,
+          0.00020916989888064563,
+          0.9996851682662964
         ],
         [
-          1.6804440747364424e-05,
-          0.00018665319657884538,
-          0.9997965693473816
+          1.4816188013355713e-05,
+          0.0004991630557924509,
+          0.999485969543457
         ],
         [
-          4.49681010650238e-06,
-          0.00038047105772420764,
-          0.999614953994751
+          0.00041475691250525415,
+          0.0003592568973544985,
+          0.9992259740829468
         ]
       ],
-      "weight": 0.8498891472816467
-    },
-    {
-      "llm-weight": 0.85,
-      "nli_entailment": 0.9991149306297302,
-      "combined=(llm)*(nli)": 0.8492476910352706,
-      "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "Alexander's awareness that the walk soon tires him out supports that the walk soon tires him out.",
-      "evidence": "Sentence 0: \"aware that it would soon tire him out\"",
-      "reasoning": "‘Aware that’ is typically factive (it presupposes truth), but here it concerns a future outcome; weight is high but not 1.0.",
-      "list nli": [
-        [
-          8.668133523315191e-05,
-          0.0007983406540006399,
-          0.9991149306297302
-        ],
-        [
-          7.188360177678987e-05,
-          0.0008831877494230866,
-          0.9990449547767639
-        ],
-        [
-          0.00022800237638875842,
-          0.0013427077792584896,
-          0.9984292387962341
-        ]
-      ],
-      "weight": 0.8492476910352706
-    },
-    {
-      "llm-weight": 0.6,
-      "nli_entailment": 0.9993952512741089,
-      "combined=(llm)*(nli)": 0.5996371507644653,
-      "hardness_constant": 0.9,
-      "id": "C_6",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Alexander's deciding to go for a walk supports that he takes a walk in the park.",
-      "evidence": "Sentence 0: \"decided to go for a walk\"",
-      "reasoning": "A decision often leads to the action, but the text does not explicitly say he actually went.",
-      "list nli": [
-        [
-          0.00034594256430864334,
-          0.00025876917061395943,
-          0.9993952512741089
-        ],
-        [
-          0.00018587696831673384,
-          0.0016073203878477216,
-          0.9982068538665771
-        ],
-        [
-          0.004246931057423353,
-          0.0004648684698622674,
-          0.9952881336212158
-        ]
-      ],
-      "weight": 0.5996371507644653
+      "weight": 0.8997166514396667
     }
   ]
 }

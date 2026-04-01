@@ -2,79 +2,79 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "John is a hardworking individual.",
+      "translation": "John is hardworking.",
       "evidence": "Sentence 0: \"John was always a hardworking individual\"",
-      "explanation": "Single attributive claim about John; no logical connectives or conditions."
+      "explanation": "Single property attribution to John; no logical connective inside the clause."
     },
     {
       "id": "P_2",
       "translation": "John desires financial stability.",
       "evidence": "Sentence 0: \"the financial stability he desired\"",
-      "explanation": "Atomic desire-state attribution to John."
+      "explanation": "Atomic statement about John's desire; it is not a compound of smaller propositions."
     },
     {
       "id": "P_3",
-      "translation": "John believes that having a good job would give him financial stability.",
-      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "explanation": "Atomic belief-state attribution; the embedded content is kept inside the belief report (no explicit logical connectives in the clause)."
+      "translation": "John has a good job.",
+      "evidence": "Sentence 0: \"having a good job\"; Sentence 1: \"if he had a good job\"",
+      "explanation": "Atomic status about John; introduced as a condition in the text, so represented as a standalone proposition."
     },
     {
       "id": "P_4",
-      "translation": "John has a good job.",
-      "evidence": "Sentence 0: \"having a good job\" (discussed as a condition he considers)",
-      "explanation": "Atomic state that is referenced as relevant in the text; needed as an antecedent for condition-like constraints."
+      "translation": "John has financial stability.",
+      "evidence": "Sentence 0: \"financial stability\"",
+      "explanation": "Atomic state; referenced as an outcome of having a good job."
     },
     {
       "id": "P_5",
-      "translation": "John has financial stability.",
-      "evidence": "Sentence 0: \"financial stability\" (discussed as an outcome he wants from a good job)",
-      "explanation": "Atomic state; needed as a consequent for condition-like constraints."
+      "translation": "John has the means to invest in stocks.",
+      "evidence": "Sentence 1: \"he would have the means to invest in stocks\"",
+      "explanation": "Atomic capability/resource claim; used as the consequent of a conditional."
     },
     {
       "id": "P_6",
-      "translation": "John has the means to invest in stocks.",
-      "evidence": "Sentence 1: \"he would have the means to invest in stocks\"",
-      "explanation": "Atomic possession/ability-resource claim (means); used as a prerequisite in related constraints."
+      "translation": "John invests in stocks.",
+      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
+      "explanation": "Atomic action claim; the text discusses inability to perform this action, so the positive form is used here."
     },
     {
       "id": "P_7",
-      "translation": "John invests in stocks.",
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
-      "explanation": "Positive investment action as an atomic proposition; the text provides its negation, which will be represented as a constraint."
+      "translation": "John believes that having a good job gives him financial stability.",
+      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
+      "explanation": "Atomic mental-state report; treated as a single belief attribution rather than splitting into embedded logical structure."
     },
     {
       "id": "P_8",
-      "translation": "John believes that investing in stocks is a smart financial decision.",
-      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
-      "explanation": "Atomic belief-state attribution about the evaluation of stock investing."
+      "translation": "John is convinced that having a good job gives him the means to invest in stocks.",
+      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
+      "explanation": "Atomic mental-state report; the conditional content is handled separately in constraints."
     },
     {
       "id": "P_9",
-      "translation": "John is dedicated.",
-      "evidence": "Sentence 2: \"Despite his dedication\"",
-      "explanation": "Atomic trait attribution."
+      "translation": "John believes that investing in stocks is a smart financial decision.",
+      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
+      "explanation": "Atomic belief attribution about the quality of investing in stocks."
     },
     {
       "id": "P_10",
-      "translation": "John makes efforts.",
-      "evidence": "Sentence 2: \"and efforts\"",
-      "explanation": "Atomic activity/behavioral attribution."
+      "translation": "John is dedicated.",
+      "evidence": "Sentence 2: \"Despite his dedication\"",
+      "explanation": "Single property attribution to John."
     },
     {
       "id": "P_11",
-      "translation": "John is convinced that having a good job would give him the means to invest in stocks.",
-      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
-      "explanation": "Atomic conviction-state attribution; the conditional content is paraphrased without using conditional markers in the proposition text."
+      "translation": "John makes efforts.",
+      "evidence": "Sentence 2: \"and efforts\"",
+      "explanation": "Atomic claim about John exerting effort; separated from dedication due to the connective in the text."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "John is a hardworking individual.",
+      "translation": "John is (always) hardworking.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"John was always a hardworking individual\"",
-      "reasoning": "Direct assertion about John; expressed as an unqualified (\"always\") characterization."
+      "reasoning": "Stated directly as a characterizing fact; 'always' strengthens certainty."
     },
     {
       "id": "C_2",
@@ -82,95 +82,79 @@
       "translation": "John desires financial stability.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"the financial stability he desired\"",
-      "reasoning": "Directly stated desire."
+      "reasoning": "Explicitly asserted desire."
     },
     {
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "John believes that having a good job would give him financial stability.",
+      "formula": "P_7",
+      "translation": "John believes a good job would give him financial stability.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "reasoning": "Explicit belief report."
+      "reasoning": "Direct report of John's belief."
     },
     {
       "id": "C_4",
       "formula": "P_8",
-      "translation": "John believes that investing in stocks is a smart financial decision.",
+      "translation": "John is convinced a good job would give him the means to invest in stocks.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
-      "reasoning": "Explicit belief report."
+      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
+      "reasoning": "Direct report of a strong belief state ('convinced')."
     },
     {
       "id": "C_5",
-      "formula": "P_11",
-      "translation": "John is convinced that having a good job would give him the means to invest in stocks.",
+      "formula": "P_9",
+      "translation": "John believes investing in stocks would be a smart financial decision.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"He was convinced that if he had a good job, he would have the means to invest in stocks\"",
-      "reasoning": "Explicit conviction report."
+      "evidence": "Sentence 1: \"which he believed would be a smart financial decision\"",
+      "reasoning": "Directly asserted belief attribution."
     },
     {
       "id": "C_6",
-      "formula": "P_9",
+      "formula": "P_10",
       "translation": "John is dedicated.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2: \"Despite his dedication\"",
-      "reasoning": "The concessive framing presupposes his dedication as true."
+      "reasoning": "Presented as a given background fact in the concessive phrase."
     },
     {
       "id": "C_7",
-      "formula": "P_10",
+      "formula": "P_11",
       "translation": "John makes efforts.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"and efforts\"",
-      "reasoning": "The concessive framing presupposes his efforts as true."
+      "evidence": "Sentence 2: \"Despite his ... efforts\"",
+      "reasoning": "Presented as a given background fact in the concessive phrase."
     },
     {
       "id": "C_8",
-      "formula": "¬P_7",
-      "translation": "John could not invest in stocks.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
-      "reasoning": "Directly stated inability/outcome; treated as certain in the narrative."
+      "formula": "P_3 ⟹ P_4",
+      "translation": "Having a good job leads to John having financial stability.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
+      "reasoning": "The implication is presented as John's belief rather than as an objective fact, so it is encoded as a soft world-level constraint."
     },
     {
       "id": "C_9",
-      "formula": "(P_4 ⟹ P_5)",
-      "translation": "Having a good job would give John financial stability (as he believed).",
-      "llm_weight": 0.75,
-      "evidence": "Sentence 0: \"he believed that having a good job would give him the financial stability\"",
-      "reasoning": "This is presented as John's belief rather than an objective guarantee, so it is encoded as a soft world-level implication."
+      "formula": "P_3 ⟹ P_5",
+      "translation": "Having a good job leads to John having the means to invest in stocks.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 1: \"if he had a good job, he would have the means to invest in stocks\"",
+      "reasoning": "This conditional is explicitly stated but inside a belief report ('convinced'), so it is not fully entailed as a factual rule."
     },
     {
       "id": "C_10",
-      "formula": "(P_4 ⟹ P_6)",
-      "translation": "Having a good job would give John the means to invest in stocks (as he was convinced).",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 1: \"if he had a good job, he would have the means to invest in stocks\"",
-      "reasoning": "Strongly endorsed by John (\"convinced\"), but still framed as his expectation rather than a stated fact about the world."
+      "formula": "¬P_6",
+      "translation": "John cannot invest in stocks.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"he couldn't invest in stocks\"",
+      "reasoning": "Explicit statement of inability; represented as negation of the positive action proposition."
     },
     {
       "id": "C_11",
-      "formula": "(P_7 ⟹ P_6)",
-      "translation": "If John invests in stocks, then John has the means to invest in stocks.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 1: \"means to invest in stocks\" (means presented as what enables investing)",
-      "reasoning": "Common-sense enabling relation: investing generally requires having the means; not stated as a strict law, so kept soft."
-    },
-    {
-      "id": "C_12",
-      "formula": "(P_1 ⟹ (P_9 ∧ P_10))",
-      "translation": "Hardworkingness tends to go with dedication and effort.",
-      "llm_weight": 0.6,
-      "evidence": "Sentence 0: \"hardworking\"; Sentence 2: \"dedication and efforts\"",
-      "reasoning": "Plausible semantic relation (hardworking implies dedication/effort) consistent with the narrative, but not explicitly asserted as a rule."
-    },
-    {
-      "id": "C_13",
-      "formula": "(¬P_7 ⟹ ¬P_6)",
-      "translation": "John's inability to invest suggests John lacks the means to invest.",
+      "formula": "¬P_6 ⟹ ¬P_5",
+      "translation": "If John cannot invest in stocks, then John lacks the means to invest in stocks.",
       "llm_weight": 0.55,
-      "evidence": "Sentence 2: \"he couldn't invest in stocks\"; Sentence 1: \"means to invest\"",
-      "reasoning": "One likely explanation for being unable to invest is lacking means, but other obstacles are possible; therefore low-to-moderate weight."
+      "evidence": "Sentence 2: \"he couldn't invest in stocks\" (with earlier mention of \"means\" in Sentence 1)",
+      "reasoning": "Common-sense default: inability to invest often results from lacking means, but alternative blockers are possible, so the weight is only slightly above uncertain."
     }
   ],
   "_enrichment_log": [

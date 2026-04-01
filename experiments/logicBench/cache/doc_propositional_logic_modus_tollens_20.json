@@ -2,105 +2,63 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Lucas decided to skip breakfast one morning.",
+      "translation": "Lucas skipped breakfast one morning.",
       "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
-      "explanation": "This is a single decision event attributed to Lucas and is not a logical combination of smaller propositions."
+      "explanation": "This is an atomic action/event description (skipping breakfast) with a specific time reference, and it contains no logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Lucas skipped breakfast one morning.",
-      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\" (implies the intended action in context)",
-      "explanation": "This is an atomic action statement (skipping breakfast) with a specific time reference."
+      "translation": "Lucas feels tired during the day.",
+      "evidence": "Sentence 0: \"it would make him feel tired during the day\"; Sentence 1: \"he didn't feel tired at all\"",
+      "explanation": "This is a single predicate about Lucas's state (tiredness) and can be negated/entailed by constraints, but the proposition itself is not a negation or connective."
     },
     {
       "id": "P_3",
-      "translation": "Skipping breakfast makes Lucas feel tired during the day.",
-      "evidence": "Sentence 0: \"knowing that it would make him feel tired during the day\"",
-      "explanation": "This is an atomic causal-style claim expressed in the text; it is treated as one proposition rather than split into a conditional here (the conditional is represented in constraints)."
-    },
-    {
-      "id": "P_4",
-      "translation": "Lucas knew that skipping breakfast would make him feel tired during the day.",
-      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
-      "explanation": "This is a single mental-state attribution (knowledge) and cannot be broken down without introducing connectives."
-    },
-    {
-      "id": "P_5",
-      "translation": "Lucas felt tired during the day.",
-      "evidence": "Sentence 0: \"feel tired during the day\"; Sentence 1: \"he didn't feel tired at all\"",
-      "explanation": "This is a simple state predicate (tired during the day). Negation is handled at the constraint level."
-    },
-    {
-      "id": "P_6",
-      "translation": "Lucas was surprised.",
+      "translation": "Lucas is surprised.",
       "evidence": "Sentence 1: \"to his surprise\"",
-      "explanation": "This is an atomic emotional/attentional state attributed to Lucas."
+      "explanation": "This is an atomic mental-state attribution and does not explicitly encode any conditional or logical structure."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "Lucas decided to skip breakfast one morning.",
+      "translation": "Lucas skipped breakfast one morning.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is explicitly stated as a fact."
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "reasoning": "The text directly reports the skipping event; treating it as a fact is strongly supported."
     },
     {
       "id": "C_2",
-      "formula": "P_4",
-      "translation": "Lucas knew skipping breakfast would make him feel tired during the day.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is explicitly stated as a fact."
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Skipping breakfast would make Lucas feel tired during the day.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
+      "reasoning": "The sentence presents a strong expected/known causal link from skipping breakfast to tiredness, but the next sentence explicitly reports the opposite outcome, so this implication should be defeasible (less than 1.0)."
     },
     {
       "id": "C_3",
-      "formula": "P_6",
-      "translation": "Lucas was surprised.",
+      "formula": "¬P_2",
+      "translation": "Lucas did not feel tired at all.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "This is explicitly stated as a fact."
+      "evidence": "Sentence 1: \"he didn't feel tired at all\"",
+      "reasoning": "This is directly asserted as the actual outcome, with emphatic wording (\"at all\"), so it should hold with maximum strength."
     },
     {
       "id": "C_4",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Lucas's deciding to skip breakfast one morning implies he skipped breakfast one morning.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0-1 (decision followed by consequences described)",
-      "reasoning": "In context, the narrative proceeds as if the decision was carried out, but the text does not literally restate the action as completed."
+      "formula": "P_3",
+      "translation": "Lucas was surprised.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"to his surprise\"",
+      "reasoning": "The phrase explicitly attributes surprise to Lucas, so it is strongly supported."
     },
     {
       "id": "C_5",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "Lucas's knowledge supports that skipping breakfast makes him feel tired during the day.",
-      "llm_weight": 0.75,
-      "evidence": "Sentence 0",
-      "reasoning": "The text calls it \"knowing,\" which strongly suggests the causal generalization is endorsed, but the later outcome creates tension, so the causal link is not treated as absolutely certain."
-    },
-    {
-      "id": "C_6",
-      "formula": "(P_2 ∧ P_3) ⟹ P_5",
-      "translation": "If Lucas skipped breakfast and skipping breakfast makes him tired during the day, then Lucas felt tired during the day.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 0 (expected tiredness from skipping)",
-      "reasoning": "This is the natural instantiation of the causal expectation described in Sentence 0; it is strong but not absolute because Sentence 1 reports the opposite outcome."
-    },
-    {
-      "id": "C_7",
-      "formula": "¬P_5",
-      "translation": "Lucas did not feel tired during the day.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he didn't feel tired at all\"",
-      "reasoning": "This is directly asserted with explicit negation."
-    },
-    {
-      "id": "C_8",
-      "formula": "P_6 ⟹ ¬P_5",
-      "translation": "Lucas being surprised implies he did not feel tired during the day.",
+      "formula": "(P_1 ∧ ¬P_2) ⟹ P_3",
+      "translation": "Lucas's skipping breakfast and not feeling tired led to Lucas being surprised.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"to his surprise, he didn't feel tired at all\"",
-      "reasoning": "The surprise is explicitly linked to the not-tired outcome; the implication is very strong in this narrative framing."
+      "evidence": "Sentence 0-1: \"despite knowing ... feel tired\" + \"to his surprise, he didn't feel tired\"",
+      "reasoning": "The discourse structure indicates the surprise is explained by the combination of (skipping breakfast) and (not becoming tired despite expectations). This is strongly suggested, though still a pragmatic inference."
     }
   ],
   "_enrichment_log": [

@@ -2,165 +2,151 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella ate a sandwich for lunch.",
-      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"; Sentence 1: \"As she took a bite\"",
-      "explanation": "This is an atomic event/state description (a specific eating action at lunch) and contains no logical connectives or negation."
+      "translation": "Isabella decided to have a sandwich for her lunch.",
+      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"",
+      "explanation": "This is an atomic mental-action statement (a decision) with a specific content; it contains no logical connective."
     },
     {
       "id": "P_2",
-      "translation": "Isabella felt completely satisfied.",
-      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied\"",
-      "explanation": "This is a single psychological state attribution and cannot be broken into smaller propositional components without adding extra structure."
+      "translation": "Isabella took a bite of the sandwich.",
+      "evidence": "Sentence 1: \"As she took a bite\"",
+      "explanation": "This is a single concrete action/event description without embedded conditionals or connectives."
     },
     {
       "id": "P_3",
-      "translation": "Isabella took a bite of the sandwich.",
-      "evidence": "Sentence 1: \"As she took a bite\"",
-      "explanation": "This is a single concrete action and is atomic for propositionalization purposes."
+      "translation": "Isabella felt completely satisfied.",
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"",
+      "explanation": "This is an atomic experiential state; it is not expressed as a negation or compound."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 2: \"if Isabella ate a sandwich for lunch\"",
+      "explanation": "This is an atomic eating-event claim (positive form) that can serve as the antecedent of the stated rule."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella's satisfaction was surprising.",
+      "evidence": "Sentence 2: \"This was surprising\"",
+      "explanation": "This is a simple evaluative claim about the situation; it is not itself conditional or a logical combination."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9996993541717529,
-      "combined=(llm)*(nli)": 0.9996993541717529,
+      "nli_entailment": 0.9998694658279419,
+      "combined=(llm)*(nli)": 0.9998694658279419,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "Isabella ate a sandwich for lunch.",
-      "evidence": "Sentence 0: \"decided to have a sandwich for her lunch\"; Sentence 1: \"took a bite\"",
-      "reasoning": "The narrative presents the lunch choice and then immediately describes her biting it, strongly indicating she in fact ate the sandwich at lunch.",
-      "list nli": [
-        [
-          3.135629231110215e-05,
-          0.00026931456523016095,
-          0.9996993541717529
-        ],
-        [
-          0.000276019680313766,
-          4.301197986933403e-05,
-          0.9996809959411621
-        ],
-        [
-          0.00014659593580290675,
-          0.9977660179138184,
-          0.002087489701807499
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9998403787612915,
-      "combined=(llm)*(nli)": 0.9998403787612915,
-      "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "P_2",
-      "translation": "Isabella felt completely satisfied.",
-      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied\"",
-      "reasoning": "This is stated directly as her experienced feeling, with emphatic wording (\"couldn't help\" and \"completely\").",
-      "list nli": [
-        [
-          3.8782236515544355e-05,
-          0.00012079817679477856,
-          0.9998403787612915
-        ],
-        [
-          0.00045210166717879474,
-          0.00013662427954841405,
-          0.9994112253189087
-        ],
-        [
-          0.0003792697680182755,
-          0.9965354204177856,
-          0.003085311036556959
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9999024868011475,
-      "combined=(llm)*(nli)": 0.9999024868011475,
-      "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_3",
-      "translation": "Isabella took a bite of the sandwich.",
-      "evidence": "Sentence 1: \"As she took a bite\"",
-      "reasoning": "The action is explicitly described as occurring in the story.",
-      "list nli": [
-        [
-          5.9590060118352994e-05,
-          3.791525887208991e-05,
-          0.9999024868011475
-        ],
-        [
-          0.004247366450726986,
-          0.01284718792885542,
-          0.9829055070877075
-        ],
-        [
-          0.00023635735851712525,
-          0.9977391958236694,
-          0.002024434506893158
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9945226907730103,
-      "combined=(llm)*(nli)": 0.9945226907730103,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_1 ⟹ ¬P_2",
+      "formula": "P_4 ⟹ ¬P_3",
       "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied.",
-      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied\"",
-      "reasoning": "The text explicitly states this as a rule; the story highlights the resulting surprise, indicating the rule is intended to apply even though it conflicts with what happened.",
+      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "The text explicitly reports the content of a rule in this conditional form; it is stated directly and unqualified.",
       "list nli": [
         [
-          0.005402950569987297,
+          1.9790439182543196e-05,
+          0.00011072865163441747,
+          0.9998694658279419
+        ],
+        [
+          0.005402947776019573,
           7.431189442286268e-05,
           0.9945226907730103
         ],
         [
-          0.5328491926193237,
-          0.025973012670874596,
-          0.44117775559425354
-        ],
-        [
-          0.9993196725845337,
-          0.00016528021660633385,
-          0.0005151599762029946
+          0.5328400731086731,
+          0.02597331628203392,
+          0.4411866366863251
         ]
-      ],
-      "weight": 0.8496752440929413
+      ]
     },
     {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.9996646642684937,
-      "combined=(llm)*(nli)": 0.8996981978416443,
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9984325766563416,
+      "combined=(llm)*(nli)": 0.9485109478235244,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_3 ⟹ P_1",
-      "translation": "Taking a bite of the sandwich implies that Isabella ate a sandwich for lunch.",
-      "evidence": "Sentence 1: \"took a bite\" in the context of lunch sandwich from Sentence 0",
-      "reasoning": "By common-sense interpretation, biting the sandwich entails eating it (at least partially), and the context ties this bite to her lunch sandwich.",
+      "id": "C_2",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Isabella took a bite of the sandwich, then Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 1: \"As she took a bite\" (with Sentence 0 context about a sandwich for lunch)",
+      "reasoning": "Taking a bite of the lunch sandwich strongly implies she ate a sandwich for lunch, though the text does not explicitly restate 'for lunch' at the bite moment.",
       "list nli": [
         [
-          4.745347905554809e-05,
-          0.000287869741441682,
-          0.9996646642684937
+          0.0014308916870504618,
+          0.00013651417975779623,
+          0.9984325766563416
         ],
         [
-          0.0002414787741145119,
-          0.0010484018130227923,
-          0.9987101554870605
+          0.0002722562348935753,
+          0.0015228319680318236,
+          0.9982049465179443
         ],
         [
-          0.00013628507440444082,
-          0.0018197764875367284,
-          0.9980438947677612
+          7.733486563665792e-05,
+          0.0026858251076191664,
+          0.9972368478775024
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.995805025100708,
+      "combined=(llm)*(nli)": 0.6970635175704956,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_4",
+      "translation": "If Isabella decided to have a sandwich for her lunch, then Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"",
+      "reasoning": "A decision to have a sandwich for lunch often leads to actually eating it, but decisions can fail to be carried out; the later 'bite' supports it, but the implication from the decision alone is not certain.",
+      "list nli": [
+        [
+          0.0012067047646269202,
+          0.002988239983096719,
+          0.995805025100708
+        ],
+        [
+          0.0013835671124979854,
+          0.0633319541811943,
+          0.9352844953536987
+        ],
+        [
+          0.1542578935623169,
+          0.5376576781272888,
+          0.3080844283103943
         ]
       ],
-      "weight": 0.8996981978416443
+      "weight": 0.6970635175704956
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9998607635498047,
+      "combined=(llm)*(nli)": 0.849881649017334,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "(P_3 ∧ P_4) ⟹ P_5",
+      "translation": "If Isabella felt completely satisfied and Isabella ate a sandwich for lunch, then Isabella's satisfaction was surprising.",
+      "evidence": "Sentence 2: \"This was surprising since the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "The text links the surprise to the coexistence of satisfaction with the lunch-sandwich scenario that the rule covers; the exact trigger is narratively clear but not formalized as a strict logical law.",
+      "list nli": [
+        [
+          9.353151108371094e-05,
+          4.5664066419703886e-05,
+          0.9998607635498047
+        ],
+        [
+          0.00039027543971315026,
+          6.56356496619992e-05,
+          0.999544084072113
+        ],
+        [
+          0.0008352368022315204,
+          0.002392025198787451,
+          0.9967727065086365
+        ]
+      ],
+      "weight": 0.849881649017334
     }
   ]
 }

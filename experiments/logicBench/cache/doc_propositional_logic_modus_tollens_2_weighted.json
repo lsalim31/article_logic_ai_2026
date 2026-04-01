@@ -2,88 +2,304 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella has been working hard on her project.",
+      "translation": "Isabella works hard on her project.",
       "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
-      "explanation": "This is an atomic action/state attribution to Isabella with a single predicate (working hard) and a single object (her project), with no logical connectives."
+      "explanation": "This is an atomic, truth-evaluable claim about Isabella’s effort level on the project."
     },
     {
       "id": "P_2",
       "translation": "Isabella finishes her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
-      "explanation": "This is the antecedent event described in the conditional; it is a simple event claim that can serve as a propositional atom."
+      "explanation": "This is a single outcome about the project timeline; it is used as the antecedent of a conditional in the text."
     },
     {
       "id": "P_3",
-      "translation": "Isabella receives a bonus from her company.",
-      "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
-      "explanation": "This is a single outcome/event (receiving a bonus) with a specified source (her company) and no connectives; negation will be represented in constraints rather than inside the proposition."
+      "translation": "Isabella receives a bonus.",
+      "evidence": "Sentence 0: \"she would receive a bonus\"",
+      "explanation": "This is an atomic, truth-evaluable event (receiving a bonus) that is central to the passage."
     },
     {
       "id": "P_4",
+      "translation": "Isabella's company gives Isabella a bonus.",
+      "evidence": "Sentence 0: \"receive a bonus from her company\"",
+      "explanation": "This is a distinct atomic claim specifying the source/agent of the bonus."
+    },
+    {
+      "id": "P_5",
       "translation": "Isabella hopes to receive a bonus.",
       "evidence": "Sentence 1: \"as she had hoped\"",
-      "explanation": "This is an atomic mental-state attribution (hopes) toward a single outcome; it is not itself a logical connective."
+      "explanation": "This is an atomic statement about Isabella’s mental state (hope) regarding the bonus."
+    },
+    {
+      "id": "P_6",
+      "translation": "Isabella misses out on a bonus.",
+      "evidence": "Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "explanation": "This is an atomic positive-phrased proposition capturing the non-receipt outcome without explicit negation in the proposition text."
+    },
+    {
+      "id": "P_7",
+      "translation": "Isabella realizes she will miss out on a bonus.",
+      "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
+      "explanation": "This is an atomic statement about Isabella’s realization; it cannot be decomposed without introducing negation into primitives."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9999202489852905,
-      "combined=(llm)*(nli)": 0.949924236536026,
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999245405197144,
+      "combined=(llm)*(nli)": 0.9999245405197144,
       "hardness_constant": 0.9,
       "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company.",
-      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
-      "reasoning": "The text explicitly states this conditional as something Isabella 'knew', strongly suggesting it as a governing rule/policy in the narrative. It is not contradicted by later text because the antecedent (finishing on time) may be false.",
+      "formula": "P_1",
+      "translation": "Isabella had been working hard on her project.",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as a narrative fact.",
       "list nli": [
         [
-          1.605988472874742e-05,
-          6.366586603689939e-05,
-          0.9999202489852905
+          1.2348002201179042e-05,
+          6.307130388449878e-05,
+          0.9999245405197144
         ],
         [
-          2.3946495275595225e-05,
-          8.491153857903555e-05,
-          0.9998911619186401
+          1.0048031981568784e-05,
+          8.235862333094701e-05,
+          0.9999076128005981
         ],
         [
-          5.970616257400252e-06,
-          0.00017961009871214628,
-          0.9998144507408142
+          7.3303917815792374e-06,
+          8.994366362458095e-05,
+          0.9999027252197266
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999094009399414,
+      "combined=(llm)*(nli)": 0.9999094009399414,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_5",
+      "translation": "Isabella hoped for a bonus.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly implied by the phrase \"as she had hoped\".",
+      "list nli": [
+        [
+          4.592203549691476e-05,
+          4.4628472096519545e-05,
+          0.9999094009399414
+        ],
+        [
+          1.6379312000935897e-05,
+          0.00010405502689536661,
+          0.9998795986175537
+        ],
+        [
+          1.1582119441300165e-05,
+          0.00011359450581949204,
+          0.9998748302459717
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9997177720069885,
+      "combined=(llm)*(nli)": 0.9997177720069885,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_7",
+      "translation": "Isabella realized she would miss out on a bonus.",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted by \"Isabella realized that...\".",
+      "list nli": [
+        [
+          0.0002531509380787611,
+          2.90478092210833e-05,
+          0.9997177720069885
+        ],
+        [
+          0.0002890113682951778,
+          2.996501098095905e-05,
+          0.9996809959411621
+        ],
+        [
+          0.00010380490857642144,
+          0.0003412358637433499,
+          0.9995549321174622
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9943694472312927,
+      "combined=(llm)*(nli)": 0.944650974869728,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_7 ⟹ P_6",
+      "translation": "If Isabella realizes she will miss out on a bonus, then she will miss out on a bonus.",
+      "evidence": "Sentence 1",
+      "reasoning": "The realization is explicitly about the outcome that she will not receive a bonus; treating the realized content as highly reliable.",
+      "list nli": [
+        [
+          0.002594518940895796,
+          0.0030360701493918896,
+          0.9943694472312927
+        ],
+        [
+          0.0020930166356265545,
+          0.010572533123195171,
+          0.9873344898223877
+        ],
+        [
+          0.9198527336120605,
+          0.0013335755793377757,
+          0.0788135901093483
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.996942937374115,
+      "combined=(llm)*(nli)": 0.996942937374115,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_6 ⟹ ¬P_3",
+      "translation": "If Isabella misses out on a bonus, then Isabella does not receive a bonus.",
+      "evidence": "Sentence 1",
+      "reasoning": "\"Misses out on a bonus\" is intended to mean non-receipt; this is essentially definitional here.",
+      "list nli": [
+        [
+          0.0022543922532349825,
+          0.0008026172872632742,
+          0.996942937374115
+        ],
+        [
+          0.0007551888702437282,
+          0.005073118954896927,
+          0.994171679019928
+        ],
+        [
+          0.013773017562925816,
+          0.001827795640565455,
+          0.9843991994857788
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9830326437950134,
+      "combined=(llm)*(nli)": 0.9830326437950134,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "¬P_3",
+      "translation": "Isabella would not be receiving a bonus.",
+      "evidence": "Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "reasoning": "Stated explicitly; this is the main contrast with her earlier expectation.",
+      "list nli": [
+        [
+          0.015169061720371246,
+          0.001798303215764463,
+          0.9830326437950134
+        ],
+        [
+          0.03797289356589317,
+          0.000767021905630827,
+          0.9612600803375244
+        ],
+        [
+          0.0381753034889698,
+          0.023425506427884102,
+          0.9383992552757263
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9988279938697815,
-      "combined=(llm)*(nli)": 0.9488865941762924,
+      "llm-weight": 0.75,
+      "nli_entailment": 0.999891996383667,
+      "combined=(llm)*(nli)": 0.7499189972877502,
       "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "¬P_3",
-      "translation": "Isabella does not receive a bonus from her company.",
-      "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
-      "reasoning": "The narrative asserts (via Isabella's realization) that the bonus will not be received. This is presented as a concluded outcome, so it is very strong, though technically filtered through her realization rather than an omniscient statement.",
+      "id": "C_7",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Isabella finishes her project on time, then her company gives her a bonus.",
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "Presented as Isabella’s understanding/expectation of a policy; later text indicates the bonus does not occur, so this is treated as a somewhat uncertain rule rather than a guaranteed fact.",
       "list nli": [
         [
-          0.00013960716023575515,
-          0.0010324242757633328,
-          0.9988279938697815
+          1.425470327376388e-05,
+          9.368038445245475e-05,
+          0.999891996383667
         ],
         [
-          0.003433278063312173,
-          0.00010293506784364581,
-          0.9964638352394104
+          5.8133558923145756e-05,
+          5.716709711123258e-05,
+          0.9998847246170044
         ],
         [
-          0.0048317681066691875,
-          6.0507671150844544e-05,
-          0.9951077699661255
+          2.5893794372677803e-05,
+          9.143615898210555e-05,
+          0.999882698059082
         ]
       ],
-      "weight": 0.5999542951583862
+      "weight": 0.7499189972877502
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.999572217464447,
+      "combined=(llm)*(nli)": 0.8996149957180023,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_4 ⟹ P_3",
+      "translation": "If Isabella's company gives Isabella a bonus, then Isabella receives a bonus.",
+      "evidence": "Sentence 0: \"receive a bonus from her company\"",
+      "reasoning": "Common-sense linkage between giving and receiving in this context; small uncertainty allowed for edge cases (e.g., promised but not received).",
+      "list nli": [
+        [
+          1.5991658074199222e-05,
+          0.0004118293581996113,
+          0.999572217464447
+        ],
+        [
+          0.0002067319437628612,
+          0.00079663738142699,
+          0.9989966750144958
+        ],
+        [
+          7.352283319050912e-06,
+          0.0011118166148662567,
+          0.9988808035850525
+        ]
+      ],
+      "weight": 0.8996149957180023
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9997859597206116,
+      "combined=(llm)*(nli)": 0.8998073637485504,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Isabella receives a bonus, then Isabella's company gives Isabella a bonus.",
+      "evidence": "Sentence 0: \"receive a bonus from her company\"",
+      "reasoning": "The text specifies the company as the source of the bonus, so receiving (in this story) strongly suggests the company gave it.",
+      "list nli": [
+        [
+          0.00013495607709046453,
+          7.90965132182464e-05,
+          0.9997859597206116
+        ],
+        [
+          0.0007543248939327896,
+          0.000542911933735013,
+          0.9987027645111084
+        ],
+        [
+          0.00041756901191547513,
+          0.0016093446174636483,
+          0.9979730248451233
+        ]
+      ],
+      "weight": 0.8998073637485504
     }
   ]
 }
