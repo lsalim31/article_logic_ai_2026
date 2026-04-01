@@ -1,0 +1,98 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Olivia is known for her green thumb.",
+      "evidence": "Sentence 0: \"Olivia had always been known for her green thumb.\"",
+      "explanation": "This is a single descriptive claim about Olivia's reputation and contains no logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "Olivia has the ability to plant beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an atomic ability statement; the original coordinated phrase is split to keep propositions free of connectives."
+    },
+    {
+      "id": "P_3",
+      "translation": "Olivia has the ability to take care of beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This is an atomic ability statement; it is separated from the planting ability to avoid an embedded conjunction."
+    },
+    {
+      "id": "P_4",
+      "translation": "Olivia plants a tree.",
+      "evidence": "Sentence 2: \"if Olivia planted a tree\"",
+      "explanation": "This is the atomic antecedent event used by the stated rule; it has no connectives or negation."
+    },
+    {
+      "id": "P_5",
+      "translation": "Olivia takes care of the tree.",
+      "evidence": "Sentence 2: \"then she would undoubtedly take care of it\"",
+      "explanation": "This is the atomic consequent action in the rule; it is stated without negation (negation is handled in constraints)."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Olivia is known for her green thumb.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted as a background fact (\"had always been known\")."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Olivia has the ability to plant beautiful trees.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "The text states she prided herself on this ability, strongly implying she has it."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Olivia has the ability to take care of beautiful trees.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "The text states she prided herself on this ability, strongly implying she has it."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "According to the rule, planting a tree implies Olivia takes care of it.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"According to the rule, if Olivia planted a tree, then she would undoubtedly take care of it.\"",
+      "reasoning": "This is an explicit rule stated with maximal strength (\"undoubtedly\"), so it is treated as a hard implication."
+    },
+    {
+      "id": "C_5",
+      "formula": "¬P_5",
+      "translation": "Olivia does not take care of the tree.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 3: \"However, she won't take care of it.\"",
+      "reasoning": "This is explicitly asserted; it directly contradicts the rule's consequent if the antecedent holds."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_4",
+      "translation": "Olivia plants a tree (implied by the use of \"it\" and the contrastive \"However\").",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 3 in context with Sentence 2",
+      "reasoning": "The pronoun \"it\" most naturally refers to the tree mentioned in the prior rule, and \"However\" suggests a concrete violation scenario; still, planting is not explicitly asserted as a standalone fact."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_1 ⟹ P_3",
+      "translation": "Being known for a green thumb tends to imply having the ability to take care of trees.",
+      "llm_weight": 0.7,
+      "evidence": "Sentence 0 in context with Sentence 1",
+      "reasoning": "This is a common-sense bridging inference consistent with the narrative framing, but it is not stated as a formal rule."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 3: Found negation of 'take'",
+    "           Affirmative clause: 'However , she wo take care of it .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

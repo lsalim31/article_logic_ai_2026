@@ -1,0 +1,136 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is an avid book collector.",
+      "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
+      "explanation": "This is a simple categorical assertion about Scarlett with no logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection.",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
+      "explanation": "This is an atomic statement of Scarlett's long-standing dream; it is not a logical combination of smaller propositions."
+    },
+    {
+      "id": "P_3",
+      "translation": "Scarlett finds a rare book.",
+      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
+      "explanation": "This captures the antecedent event described (stumbling upon/finding a rare book) as an atomic proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "Scarlett decides to keep the rare book.",
+      "evidence": "Sentence 1: \"she would immediately decide to keep it\"",
+      "explanation": "This is a single decision/action claim (keeping the rare book) without embedded logical structure."
+    },
+    {
+      "id": "P_5",
+      "translation": "Scarlett makes the rare book part of her literary treasures.",
+      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
+      "explanation": "This is a single action/outcome claim about the rare book, stated without connectives."
+    },
+    {
+      "id": "P_6",
+      "translation": "Scarlett found a book one day.",
+      "evidence": "Sentence 2: \"However, one day Scarlett found a book\"",
+      "explanation": "This is an atomic event statement about Scarlett finding a (not-necessarily-rare) book."
+    },
+    {
+      "id": "P_7",
+      "translation": "Scarlett decides to keep the book she found that day in her collection.",
+      "evidence": "Sentence 2: \"but she decided not to keep it in her collection\"",
+      "explanation": "To obey the no-negation rule for primitive propositions, this is stated positively; the text provides evidence for its negation."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9993935823440552,
+      "combined=(llm)*(nli)": 0.9993935823440552,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "¬P_7",
+      "translation": "Scarlett does not decide to keep the book she found that day in her collection.",
+      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
+      "reasoning": "This is explicitly stated as a factual event in the narrative, leaving no uncertainty.",
+      "list nli": [
+        [
+          0.00016597894136793911,
+          0.00044038071064278483,
+          0.9993935823440552
+        ],
+        [
+          0.0004162242403253913,
+          0.0015434138476848602,
+          0.9980403780937195
+        ],
+        [
+          0.009871704503893852,
+          0.00033808956504799426,
+          0.9897902607917786
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998563528060913,
+      "combined=(llm)*(nli)": 0.8998707175254822,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_3 ⟹ (P_4 ∧ P_5)",
+      "translation": "If Scarlett finds a rare book, then she decides to keep it and make it part of her literary treasures.",
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it and make it a part of her literary treasures.\"",
+      "reasoning": "The text frames this as Scarlett's belief about what she would do, which strongly suggests the implication, but it is presented as a belief rather than an unconditional fact.",
+      "list nli": [
+        [
+          8.59854026202811e-06,
+          0.00013497666805051267,
+          0.9998563528060913
+        ],
+        [
+          4.107817221665755e-05,
+          0.00011422330135246739,
+          0.9998446702957153
+        ],
+        [
+          9.671354746387806e-06,
+          0.00023384398082271218,
+          0.9997565150260925
+        ]
+      ],
+      "weight": 0.8998707175254822
+    },
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9998857975006104,
+      "combined=(llm)*(nli)": 0.7999086380004883,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_4",
+      "translation": "If Scarlett makes the rare book part of her literary treasures, then she decides to keep the rare book.",
+      "evidence": "Sentence 1: \"decide to keep it and make it a part of her literary treasures\"",
+      "reasoning": "Common-sense semantics: making a book part of one's treasures presupposes keeping it. The text also conjoins the two actions as paired outcomes of the same scenario.",
+      "list nli": [
+        [
+          2.8306623789831065e-05,
+          8.590822835685685e-05,
+          0.9998857975006104
+        ],
+        [
+          1.2711781891994178e-05,
+          0.00010802005272125825,
+          0.9998792409896851
+        ],
+        [
+          0.0001064476600731723,
+          8.663298649480566e-05,
+          0.9998069405555725
+        ]
+      ],
+      "weight": 0.7999086380004883
+    }
+  ]
+}

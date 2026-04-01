@@ -1,0 +1,170 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Daniel woke up on a gloomy morning.",
+      "evidence": "Sentence 0: \"Daniel woke up on a gloomy morning\"",
+      "explanation": "A single event description with a subject and predicate; no logical connective or condition inside it."
+    },
+    {
+      "id": "P_2",
+      "translation": "Daniel forgot to take his umbrella.",
+      "evidence": "Sentence 0: \"he had forgotten to take his umbrella\"",
+      "explanation": "Atomic mental/action state; the text asserts this directly without embedding additional logical structure."
+    },
+    {
+      "id": "P_3",
+      "translation": "Daniel realized he forgot to take his umbrella.",
+      "evidence": "Sentence 0: \"realized that he had forgotten to take his umbrella\"",
+      "explanation": "A single cognitive event; it is not a connective of smaller propositions in the surface form."
+    },
+    {
+      "id": "P_4",
+      "translation": "It rains.",
+      "evidence": "Sentence 1: \"get wet in the rain\"",
+      "explanation": "A simple weather-state proposition, used as a component for the stated rule about rain."
+    },
+    {
+      "id": "P_5",
+      "translation": "Daniel gets wet in the rain.",
+      "evidence": "Sentence 1: \"he would get wet in the rain\"",
+      "explanation": "A single outcome clause; it can be evaluated as true/false as a whole."
+    },
+    {
+      "id": "P_6",
+      "translation": "Daniel felt a sense of worry.",
+      "evidence": "Sentence 1: \"Daniel felt a sense of worry\"",
+      "explanation": "Atomic emotional state explicitly asserted."
+    },
+    {
+      "id": "P_7",
+      "translation": "Daniel stayed dry.",
+      "evidence": "Sentence 2: \"Daniel managed to stay dry\"",
+      "explanation": "A single outcome clause asserted directly; no explicit logical connectives inside."
+    },
+    {
+      "id": "P_8",
+      "translation": "Daniel was relieved.",
+      "evidence": "Sentence 2: \"was relieved\"",
+      "explanation": "Atomic emotional state explicitly asserted."
+    },
+    {
+      "id": "P_9",
+      "translation": "Daniel has his umbrella.",
+      "evidence": "Sentence 0: \"forgotten to take his umbrella\"",
+      "explanation": "A simple possession-state proposition introduced to capture the implied consequence of forgetting to take the umbrella."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Daniel woke up on a gloomy morning.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a plain narrative fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Daniel forgot to take his umbrella.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This is directly asserted by the text."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "Daniel realized he forgot to take his umbrella.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "This realization is explicitly described."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "Daniel's realization that he forgot the umbrella implies he forgot the umbrella.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0",
+      "reasoning": "The realization is about the forgetting; in typical narrative semantics, realizing X strongly supports X being true, though it is not strictly logically necessary in all possible worlds."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_6",
+      "translation": "Daniel felt a sense of worry.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "The worry is explicitly stated."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_2 ∧ P_4) ⟹ P_5",
+      "translation": "Forgetting the umbrella together with rain leads to getting wet in the rain.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"the rule that if he forgot his umbrella, he would get wet in the rain\"",
+      "reasoning": "The text presents this as a remembered 'rule'. The consequent is explicitly tied to rain, so rain is modeled as an additional condition."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_7",
+      "translation": "Daniel stayed dry.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "This is explicitly asserted as what happened."
+    },
+    {
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "Daniel was relieved.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2",
+      "reasoning": "This is explicitly asserted."
+    },
+    {
+      "id": "C_9",
+      "formula": "P_7 ⟹ ¬P_5",
+      "translation": "Staying dry implies not getting wet in the rain.",
+      "llm_weight": 0.98,
+      "evidence": "Sentence 2: \"managed to stay dry\"",
+      "reasoning": "By common-sense meaning, 'stay dry' is (nearly) incompatible with 'get wet'."
+    },
+    {
+      "id": "C_10",
+      "formula": "P_5 ⟹ ¬P_7",
+      "translation": "Getting wet in the rain implies not staying dry.",
+      "llm_weight": 0.98,
+      "evidence": "Sentences 1-2 (wet vs. dry contrast)",
+      "reasoning": "Wetness and dryness are opposites in this context."
+    },
+    {
+      "id": "C_11",
+      "formula": "P_2 ⟹ ¬P_9",
+      "translation": "Forgetting to take the umbrella implies not having the umbrella.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 0: \"forgotten to take his umbrella\"",
+      "reasoning": "Forgetting to take an item strongly implies one does not have it afterward, though edge-cases exist."
+    },
+    {
+      "id": "C_12",
+      "formula": "P_7 ⟹ P_8",
+      "translation": "Staying dry implies being relieved.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2: \"managed to stay dry and was relieved\"",
+      "reasoning": "The text narratively links the relief to the staying dry."
+    },
+    {
+      "id": "C_13",
+      "formula": "P_2 ⟹ P_6",
+      "translation": "Forgetting the umbrella implies feeling worry.",
+      "llm_weight": 0.7,
+      "evidence": "Sentences 0-1 (forgetting umbrella; then worry after recalling the rule)",
+      "reasoning": "The worry is motivated by forgetting plus recalling the rule; forgetting alone is a strong but not sufficient cause, so the implication is weighted less than 1."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'have'",
+    "           Affirmative clause: 'that he did have to face the consequences of getting wet in the rain'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

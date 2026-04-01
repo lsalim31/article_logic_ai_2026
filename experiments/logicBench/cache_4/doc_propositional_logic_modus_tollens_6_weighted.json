@@ -1,0 +1,408 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "James is forgetful.",
+      "evidence": "Sentence 0: \"James had always been forgetful\"",
+      "explanation": "This is a single property attribution to James, with no internal logical structure to split."
+    },
+    {
+      "id": "P_2",
+      "translation": "James is forgetful about wearing a sweater.",
+      "evidence": "Sentence 0: \"especially when it came to wearing a sweater\"",
+      "explanation": "This is a single trait-ascription (domain-specific forgetfulness) and contains no connective to decompose."
+    },
+    {
+      "id": "P_3",
+      "translation": "James forgets to wear a sweater.",
+      "evidence": "Sentence 1 (quoted): \"If he forgets to wear a sweater\"",
+      "explanation": "This is the antecedent event mentioned in the mother's conditional; it is an atomic event description."
+    },
+    {
+      "id": "P_4",
+      "translation": "James catches a cold.",
+      "evidence": "Sentence 1 (quoted): \"he will catch a cold\"",
+      "explanation": "This is an atomic outcome/event claim; negation in the story is handled as a constraint."
+    },
+    {
+      "id": "P_5",
+      "translation": "James wears a sweater.",
+      "evidence": "Sentence 0: \"wearing a sweater\"",
+      "explanation": "This is a simple action/state description needed to capture implications of 'forgets to wear a sweater'."
+    },
+    {
+      "id": "P_6",
+      "translation": "The temperature drops.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "explanation": "This is an atomic environmental change statement; it is referenced by 'dropping temperature'."
+    },
+    {
+      "id": "P_7",
+      "translation": "James is oblivious to the dropping temperature.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "explanation": "This is a single mental-state attribution to James, not a conjunction of separate clauses."
+    },
+    {
+      "id": "P_8",
+      "translation": "James returns home.",
+      "evidence": "Sentence 3: \"he returned home\"",
+      "explanation": "This is a single event claim with no internal logical operators."
+    },
+    {
+      "id": "P_9",
+      "translation": "James goes about his activities.",
+      "evidence": "Sentence 2: \"he went about his activities\"",
+      "explanation": "This is an atomic activity description; time-span nuances are not represented in propositional form."
+    },
+    {
+      "id": "P_10",
+      "translation": "James's mother told James a warning.",
+      "evidence": "Sentence 1: \"His mother had repeatedly told him\"",
+      "explanation": "This is a single communicative act claim; the detailed conditional content is represented separately as a constraint."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998897314071655,
+      "combined=(llm)*(nli)": 0.9998897314071655,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "James is forgetful.",
+      "evidence": "Sentence 0: \"James had always been forgetful\"",
+      "reasoning": "The narrative directly asserts this as background characterization.",
+      "list nli": [
+        [
+          2.9876578992116265e-05,
+          8.043845446081832e-05,
+          0.9998897314071655
+        ],
+        [
+          0.00038894423050805926,
+          9.543821215629578e-05,
+          0.9995156526565552
+        ],
+        [
+          0.003337433096021414,
+          0.00020212845993228257,
+          0.996460497379303
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999141693115234,
+      "combined=(llm)*(nli)": 0.9999141693115234,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "James is forgetful about wearing a sweater.",
+      "evidence": "Sentence 0: \"especially when it came to wearing a sweater\"",
+      "reasoning": "The text explicitly states this specific area of forgetfulness.",
+      "list nli": [
+        [
+          1.8013159206020646e-05,
+          6.779591785743833e-05,
+          0.9999141693115234
+        ],
+        [
+          2.322014915989712e-05,
+          7.573417678941041e-05,
+          0.9999010562896729
+        ],
+        [
+          6.448554631788284e-05,
+          4.008369432995096e-05,
+          0.999895453453064
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9999325275421143,
+      "combined=(llm)*(nli)": 0.9999325275421143,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_10",
+      "translation": "James's mother told James a warning.",
+      "evidence": "Sentence 1: \"His mother had repeatedly told him\"",
+      "reasoning": "This is stated as a fact about what his mother did.",
+      "list nli": [
+        [
+          3.438218482187949e-05,
+          3.3138421713374555e-05,
+          0.9999325275421143
+        ],
+        [
+          1.8113216356141493e-05,
+          5.0300332077313215e-05,
+          0.9999315738677979
+        ],
+        [
+          1.5369134416687302e-05,
+          8.425602572970092e-05,
+          0.9999003410339355
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9995778203010559,
+      "combined=(llm)*(nli)": 0.9995778203010559,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_9",
+      "translation": "James goes about his activities.",
+      "evidence": "Sentence 2: \"he went about his activities\"",
+      "reasoning": "This is a direct narration of what he did during the day.",
+      "list nli": [
+        [
+          0.00036480813287198544,
+          5.739686457673088e-05,
+          0.9995778203010559
+        ],
+        [
+          0.0010441475315019488,
+          0.0035349340178072453,
+          0.9954208731651306
+        ],
+        [
+          4.5722223148914054e-05,
+          0.006956730503588915,
+          0.9929975271224976
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999903678894043,
+      "combined=(llm)*(nli)": 0.999903678894043,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7",
+      "translation": "James is oblivious to the dropping temperature.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "reasoning": "This is explicitly stated.",
+      "list nli": [
+        [
+          4.276495747035369e-05,
+          5.358277485356666e-05,
+          0.999903678894043
+        ],
+        [
+          4.949193316861056e-05,
+          6.376393139362335e-05,
+          0.9998867511749268
+        ],
+        [
+          0.0004785237251780927,
+          3.616365574998781e-05,
+          0.9994852542877197
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9992756247520447,
+      "combined=(llm)*(nli)": 0.9992756247520447,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_8",
+      "translation": "James returns home.",
+      "evidence": "Sentence 3: \"he returned home\"",
+      "reasoning": "This is directly asserted as an event that occurred.",
+      "list nli": [
+        [
+          0.0004685116291511804,
+          0.00025584938703104854,
+          0.9992756247520447
+        ],
+        [
+          0.0025406910572201014,
+          0.000173333115526475,
+          0.9972859621047974
+        ],
+        [
+          0.0023499666713178158,
+          0.0005980485584586859,
+          0.9970519542694092
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9996541738510132,
+      "combined=(llm)*(nli)": 0.9996541738510132,
+      "hardness_constant": 0.9,
+      "id": "C_9",
+      "formula": "¬P_4",
+      "translation": "James does not catch a cold.",
+      "evidence": "Sentence 3: \"James didn't catch a cold.\"",
+      "reasoning": "This is explicitly stated as the outcome.",
+      "list nli": [
+        [
+          3.196692341589369e-05,
+          0.0003138606552965939,
+          0.9996541738510132
+        ],
+        [
+          0.00011018337681889534,
+          0.0006613023579120636,
+          0.9992284774780273
+        ],
+        [
+          0.0025644097477197647,
+          0.000443402910605073,
+          0.9969922304153442
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9998438358306885,
+      "combined=(llm)*(nli)": 0.9998438358306885,
+      "hardness_constant": 0.9,
+      "id": "C_10",
+      "formula": "(P_3 ⟹ ¬P_5)",
+      "translation": "Forgetting to wear a sweater results in not wearing a sweater.",
+      "evidence": "Sentence 1 (quoted): \"forgets to wear a sweater\"",
+      "reasoning": "By the ordinary meaning of 'forget to wear X', the action of wearing X does not occur.",
+      "list nli": [
+        [
+          2.5599329092074186e-05,
+          0.00013052239955868572,
+          0.9998438358306885
+        ],
+        [
+          0.00011570462811505422,
+          0.00028998899506404996,
+          0.9995942711830139
+        ],
+        [
+          1.5746645658509806e-05,
+          0.0004565310664474964,
+          0.9995276927947998
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 0.9999289512634277,
+      "combined=(llm)*(nli)": 0.7499467134475708,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "(P_3 ⟹ P_4)",
+      "translation": "Forgetting to wear a sweater leads to catching a cold.",
+      "evidence": "Sentence 1 (quoted): \"If he forgets to wear a sweater, then he will catch a cold.\"",
+      "reasoning": "This is presented as the mother's repeated warning, not as a guaranteed law of nature; the later outcome also suggests it may fail in this instance.",
+      "list nli": [
+        [
+          2.505808515707031e-05,
+          4.601222826750018e-05,
+          0.9999289512634277
+        ],
+        [
+          1.5858317055972293e-05,
+          9.064238838618621e-05,
+          0.9998935461044312
+        ],
+        [
+          8.760028140386567e-05,
+          6.83772232150659e-05,
+          0.999843955039978
+        ]
+      ],
+      "weight": 0.7499467134475708
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9981535077095032,
+      "combined=(llm)*(nli)": 0.8983381569385529,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_6",
+      "translation": "The temperature drops.",
+      "evidence": "Sentence 2: \"the dropping temperature\"",
+      "reasoning": "The phrasing presupposes that the temperature was in fact dropping, though it is embedded in a descriptive phrase.",
+      "list nli": [
+        [
+          6.095063508837484e-05,
+          0.0017854701727628708,
+          0.9981535077095032
+        ],
+        [
+          0.0032215798273682594,
+          0.0008412163588218391,
+          0.9959372282028198
+        ],
+        [
+          0.0035661396104842424,
+          0.001496599754318595,
+          0.9949373006820679
+        ]
+      ],
+      "weight": 0.8983381569385529
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998581409454346,
+      "combined=(llm)*(nli)": 0.8998723268508911,
+      "hardness_constant": 0.9,
+      "id": "C_11",
+      "formula": "(P_7 ⟹ P_6)",
+      "translation": "Obliviousness is directed at an actually dropping temperature.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "reasoning": "The complement 'the dropping temperature' typically entails the temperature is dropping; this is a strong presupposition.",
+      "list nli": [
+        [
+          3.517743243719451e-05,
+          0.00010668229515431449,
+          0.9998581409454346
+        ],
+        [
+          2.4421718990197405e-05,
+          0.0003710159508045763,
+          0.9996046423912048
+        ],
+        [
+          0.001961951842531562,
+          2.18603054236155e-05,
+          0.9980161190032959
+        ]
+      ],
+      "weight": 0.8998723268508911
+    },
+    {
+      "llm-weight": 0.6,
+      "nli_entailment": 0.9997393488883972,
+      "combined=(llm)*(nli)": 0.5998436093330383,
+      "hardness_constant": 0.9,
+      "id": "C_12",
+      "formula": "(P_2 ⟹ P_3)",
+      "translation": "Forgetfulness about wearing a sweater makes forgetting to wear a sweater more likely.",
+      "evidence": "Sentence 0: \"especially when it came to wearing a sweater\"",
+      "reasoning": "The text expresses a tendency/character trait rather than a guaranteed occurrence on the described day, so this is modeled as a weak implication.",
+      "list nli": [
+        [
+          6.474727706518024e-05,
+          0.00019589388102758676,
+          0.9997393488883972
+        ],
+        [
+          0.00035428174305707216,
+          9.38700104597956e-05,
+          0.9995518326759338
+        ],
+        [
+          0.0005344611126929522,
+          0.0003870726504828781,
+          0.9990783929824829
+        ]
+      ],
+      "weight": 0.5998436093330383
+    }
+  ]
+}

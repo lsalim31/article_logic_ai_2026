@@ -1,0 +1,56 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Theodore has a pet dog.",
+      "evidence": "Sentence 0: \"If Theodore has a pet dog\"",
+      "explanation": "This is an atomic possession statement (no logical connectives or negation) and serves as the antecedent condition referenced in the text."
+    },
+    {
+      "id": "P_2",
+      "translation": "Theodore takes his dog out for a walk.",
+      "evidence": "Sentence 0: \"he will take it out for a walk\"",
+      "explanation": "This is an atomic action statement (no logical connectives or negation). The text’s second sentence negates this action, so the positive form is kept as the primitive."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Theodore has a pet dog, Theodore takes his dog out for a walk.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
+      "reasoning": "This is stated directly as a conditional; the text presents it as a firm rule/prediction."
+    },
+    {
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Theodore does not take his dog out for a walk.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"he would not take his dog out for a walk.\"",
+      "reasoning": "The sentence explicitly states the negation of the walking action; despite the modal wording, it is presented as a clear contrast ('However') to the prior claim."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Theodore takes his dog out for a walk, then Theodore has a pet dog.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"take it out\" (referring to the dog); Sentence 1: \"his dog\"",
+      "reasoning": "Common-sense presupposition: taking his dog for a walk implies he has a dog. The text’s pronouns ('it', 'his dog') support this, but it is not stated as an explicit logical rule, so the weight is < 1."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_1",
+      "translation": "Theodore has a pet dog.",
+      "llm_weight": 0.75,
+      "evidence": "Sentence 1: \"his dog\"",
+      "reasoning": "The phrase 'his dog' typically presupposes that Theodore has a dog, but the text does not explicitly assert ownership as a standalone fact (it appears first in an 'if' clause). This is therefore included as a plausible implied fact with moderate-high weight."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'take'",
+    "           Affirmative clause: 'However , he would take his dog out for a walk .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}
