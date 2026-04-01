@@ -1,0 +1,89 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "evidence": "Sentence 0: \"Liam had finished his work early for the day\"",
+      "explanation": "This is a simple, truth-evaluable event description with a specific subject and predicate, and it contains no logical connective or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Liam ordered pizza for dinner on the particular day",
+      "evidence": "Sentence 0: \"he would typically have ordered pizza for dinner\"; Sentence 1: \"on this particular day\"",
+      "explanation": "This is an atomic action statement about a specific dinner on a specific day; any habitual/typical aspect is handled as a weighted constraint rather than inside the proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Liam decided against ordering pizza on the particular day",
+      "evidence": "Sentence 1: \"on this particular day, he decided against ordering pizza\"",
+      "explanation": "This is an atomic mental-decision/action-description and does not use explicit logical negation; consequences of deciding against are represented in constraints."
+    },
+    {
+      "id": "P_4",
+      "translation": "Liam chose something else for dinner on the particular day",
+      "evidence": "Sentence 1: \"and opted for something else instead\"",
+      "explanation": "This is an atomic choice statement; the exclusivity implied by \"instead\" is captured via constraints rather than embedded connectives."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Stated as a factual event in the text."
+    },
+    {
+      "id": "C_2",
+      "formula": "(P_1 ⟹ P_2)",
+      "translation": "Finishing work early would typically lead Liam to order pizza for dinner",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0: \"which meant that he would typically have ordered pizza for dinner\"",
+      "reasoning": "The phrase \"would typically\" indicates a strong tendency but not a strict rule, so the implication is weighted below certainty."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "On the particular day, Liam decided against ordering pizza",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted in the text as what happened on that day."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "On the particular day, Liam opted for something else for dinner",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted in the text as what happened on that day."
+    },
+    {
+      "id": "C_5",
+      "formula": "(P_3 ⟹ ¬P_2)",
+      "translation": "If Liam decided against ordering pizza on the particular day, then he did not order pizza for dinner that day",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"decided against ordering pizza\"",
+      "reasoning": "Deciding against ordering is very strong evidence he did not place the pizza order, though (in principle) someone could decide and then reverse later; the text intent strongly supports the negation."
+    },
+    {
+      "id": "C_6",
+      "formula": "(P_4 ⟹ ¬P_2)",
+      "translation": "If Liam chose something else for dinner on the particular day, then he did not order pizza for dinner that day",
+      "llm_weight": 0.97,
+      "evidence": "Sentence 1: \"opted for something else instead\"",
+      "reasoning": "The word \"instead\" strongly implies the alternative replaced pizza for that dinner, making pizza that day very unlikely."
+    },
+    {
+      "id": "C_7",
+      "formula": "(P_3 ⟹ P_4)",
+      "translation": "On the particular day, Liam's decision against pizza went along with choosing something else",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"decided against ordering pizza and opted for something else instead\"",
+      "reasoning": "The text presents these as linked actions in the same decision context; while logically one could decide against pizza without selecting an alternative, the narrative suggests the alternative choice followed."
+    }
+  ],
+  "_enrichment_log": [
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}
