@@ -1,0 +1,229 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Alexander decided to go for a walk in the park.",
+      "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
+      "explanation": "This is an atomic decision statement about Alexander; it does not contain logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Alexander takes a walk in the park.",
+      "evidence": "Sentence 0: \"to go for a walk in the park\"",
+      "explanation": "This is the atomic event/action referenced by the text; it is separated from 'decided' so it can be used in implications."
+    },
+    {
+      "id": "P_3",
+      "translation": "Alexander gets tired soon.",
+      "evidence": "Sentence 0: \"it would soon tire him out\"; Sentence 1: \"he won't get tired soon\"",
+      "explanation": "This is a single truth-evaluable outcome. Negation is handled only in constraints, not inside the primitive proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "Alexander is aware that taking a walk in the park tires him out soon.",
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "explanation": "This is an atomic mental-state attribution (awareness) in the text; the embedded content is kept as part of the awareness claim rather than introducing connectives."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9983707070350647,
+      "combined=(llm)*(nli)": 0.9983707070350647,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Alexander decided to go for a walk in the park.",
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as a main-clause fact.",
+      "list nli": [
+        [
+          0.0005756368045695126,
+          0.0010536646004766226,
+          0.9983707070350647
+        ],
+        [
+          0.00089129718253389,
+          0.006028027273714542,
+          0.9930806756019592
+        ],
+        [
+          2.342893640161492e-05,
+          0.9934055805206299,
+          0.006570892874151468
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999904990196228,
+      "combined=(llm)*(nli)": 0.999904990196228,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_4",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
+      "evidence": "Sentence 0",
+      "reasoning": "Explicitly asserted ('fully aware') with no hedging.",
+      "list nli": [
+        [
+          4.6143573854351416e-05,
+          4.880049164057709e-05,
+          0.999904990196228
+        ],
+        [
+          0.0002707672247197479,
+          4.622197593562305e-05,
+          0.9996830224990845
+        ],
+        [
+          0.00017268588999286294,
+          0.00017098391253966838,
+          0.9996563196182251
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9998914003372192,
+      "combined=(llm)*(nli)": 0.9498968303203582,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Taking the walk leads to Alexander getting tired soon.",
+      "evidence": "Sentence 0: \"it would soon tire him out\"",
+      "reasoning": "The phrasing presents a strong expected consequence of the walk; encoded as a near-certain implication rather than an unconditional fact because it is framed as what would happen given the walk.",
+      "list nli": [
+        [
+          1.6453528587589972e-05,
+          9.215569298248738e-05,
+          0.9998914003372192
+        ],
+        [
+          1.2484048966143746e-05,
+          0.00011853450268972665,
+          0.9998689889907837
+        ],
+        [
+          1.9686696759890765e-05,
+          0.00017675514391157776,
+          0.9998036026954651
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9957717061042786,
+      "combined=(llm)*(nli)": 0.9957717061042786,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "¬P_3",
+      "translation": "Alexander will not get tired soon.",
+      "evidence": "Sentence 1: \"he won't get tired soon\"",
+      "reasoning": "Direct explicit negation; treated as fully enforced.",
+      "list nli": [
+        [
+          0.0017994531663134694,
+          0.002428785664960742,
+          0.9957717061042786
+        ],
+        [
+          0.004594940692186356,
+          0.0003639868227764964,
+          0.9950410723686218
+        ],
+        [
+          0.9996734857559204,
+          0.0001341461465926841,
+          0.0001923812087625265
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9884262084960938,
+      "combined=(llm)*(nli)": 0.9884262084960938,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_3 ⟹ P_3",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0021262438967823982,
+          0.009447580203413963,
+          0.9884262084960938
+        ],
+        [
+          0.016795003786683083,
+          0.12838976085186005,
+          0.8548152446746826
+        ],
+        [
+          0.018280433490872383,
+          0.1333017200231552,
+          0.8484178781509399
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9884262084960938,
+      "combined=(llm)*(nli)": 0.9884262084960938,
+      "hardness_constant": 0.9,
+      "id": "C_8",
+      "formula": "P_4 ⟹ P_4",
+      "translation": "If base event occurs, the modal pattern is satisfied",
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
+      "list nli": [
+        [
+          0.0021262438967823982,
+          0.009447580203413963,
+          0.9884262084960938
+        ],
+        [
+          0.016795003786683083,
+          0.12838976085186005,
+          0.8548152446746826
+        ],
+        [
+          0.018280433490872383,
+          0.1333017200231552,
+          0.8484178781509399
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.7,
+      "nli_entailment": 0.9959744811058044,
+      "combined=(llm)*(nli)": 0.697182136774063,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Alexander's decision makes it likely that he takes the walk in the park.",
+      "evidence": "Sentence 0: \"decided to go for a walk in the park\"",
+      "reasoning": "Deciding to do an action typically (but not always) leads to doing it; the text does not explicitly say he actually went, so this is a soft/common-sense constraint.",
+      "list nli": [
+        [
+          0.0014967782190069556,
+          0.002528797136619687,
+          0.9959744811058044
+        ],
+        [
+          0.0032027552369982004,
+          0.0008881308604031801,
+          0.9959090948104858
+        ],
+        [
+          7.669765182072297e-05,
+          0.008500035852193832,
+          0.9914233088493347
+        ]
+      ],
+      "weight": 0.697182136774063
+    }
+  ]
+}

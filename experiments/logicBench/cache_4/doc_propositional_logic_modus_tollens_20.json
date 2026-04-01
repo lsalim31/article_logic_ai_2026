@@ -1,0 +1,98 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Lucas decided to skip breakfast one morning.",
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "explanation": "This is an atomic event report about Lucas's decision; it contains no logical connectives or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Lucas skipped breakfast one morning.",
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "explanation": "This is the atomic action corresponding to skipping breakfast; the text implies it, but it is still a single, truth-evaluable clause."
+    },
+    {
+      "id": "P_3",
+      "translation": "Lucas expects to feel tired during the day.",
+      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
+      "explanation": "This captures Lucas's expectation/anticipation as a single mental-state proposition, avoiding embedding an implication inside the proposition text."
+    },
+    {
+      "id": "P_4",
+      "translation": "Lucas feels tired during the day.",
+      "evidence": "Sentence 0: \"feel tired during the day\"",
+      "explanation": "This is an atomic state description (tired during the day) that can be asserted or denied by constraints."
+    },
+    {
+      "id": "P_5",
+      "translation": "Lucas is surprised.",
+      "evidence": "Sentence 1: \"to his surprise\"",
+      "explanation": "This is an atomic emotional-state claim stated explicitly in the text."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Lucas decided to skip breakfast one morning.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "reasoning": "This is stated directly as a fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_3",
+      "translation": "Lucas expected to feel tired during the day.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
+      "reasoning": "The phrase 'knowing that it would make him feel tired' strongly entails an expectation of tiredness."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_5",
+      "translation": "Lucas was surprised.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"to his surprise\"",
+      "reasoning": "Surprise is explicitly asserted."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_4",
+      "translation": "Lucas did not feel tired during the day.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"he didn't feel tired at all\"",
+      "reasoning": "The text directly states the negation of tiredness ('didn't feel tired at all'), so this must hold."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Lucas's deciding to skip breakfast led to Lucas skipping breakfast that morning.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"; Sentence 1: \"However, to his surprise, he didn't feel tired at all.\"",
+      "reasoning": "A decision does not logically guarantee the action, but the narrative continuation about the consequence (tiredness) strongly suggests he did skip."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "Skipping breakfast would make Lucas feel tired during the day.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 0: \"knowing that it would make him feel tired during the day\"",
+      "reasoning": "The text attributes a strong expected causal link between skipping breakfast and being tired; however, the later outcome contradicts it in this instance, so it is modeled as a strong but defeasible rule."
+    },
+    {
+      "id": "C_7",
+      "formula": "(P_3 ∧ ¬P_4) ⟹ P_5",
+      "translation": "If Lucas expected to feel tired but did not feel tired, then Lucas was surprised.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0: \"knowing that it would make him feel tired\"; Sentence 1: \"to his surprise, he didn't feel tired at all\"",
+      "reasoning": "The discourse cue 'to his surprise' is naturally explained by a mismatch between expectation (tired) and outcome (not tired), though surprise could in principle have other causes."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 1: Found negation of 'feel'",
+    "           Affirmative clause: 'However , to his surprise , he did feel tired at all .'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

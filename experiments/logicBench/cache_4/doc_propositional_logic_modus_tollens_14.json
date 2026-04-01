@@ -1,0 +1,78 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Scarlett is an avid book collector.",
+      "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
+      "explanation": "This is a simple categorical assertion about Scarlett with no logical connectives or conditions."
+    },
+    {
+      "id": "P_2",
+      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection.",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
+      "explanation": "This is an atomic statement of Scarlett's long-standing dream; it is not a logical combination of smaller propositions."
+    },
+    {
+      "id": "P_3",
+      "translation": "Scarlett finds a rare book.",
+      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
+      "explanation": "This captures the antecedent event described (stumbling upon/finding a rare book) as an atomic proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "Scarlett decides to keep the rare book.",
+      "evidence": "Sentence 1: \"she would immediately decide to keep it\"",
+      "explanation": "This is a single decision/action claim (keeping the rare book) without embedded logical structure."
+    },
+    {
+      "id": "P_5",
+      "translation": "Scarlett makes the rare book part of her literary treasures.",
+      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
+      "explanation": "This is a single action/outcome claim about the rare book, stated without connectives."
+    },
+    {
+      "id": "P_6",
+      "translation": "Scarlett found a book one day.",
+      "evidence": "Sentence 2: \"However, one day Scarlett found a book\"",
+      "explanation": "This is an atomic event statement about Scarlett finding a (not-necessarily-rare) book."
+    },
+    {
+      "id": "P_7",
+      "translation": "Scarlett decides to keep the book she found that day in her collection.",
+      "evidence": "Sentence 2: \"but she decided not to keep it in her collection\"",
+      "explanation": "To obey the no-negation rule for primitive propositions, this is stated positively; the text provides evidence for its negation."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C_1",
+      "formula": "P_3 ⟹ (P_4 ∧ P_5)",
+      "translation": "If Scarlett finds a rare book, then she decides to keep it and make it part of her literary treasures.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it and make it a part of her literary treasures.\"",
+      "reasoning": "The text frames this as Scarlett's belief about what she would do, which strongly suggests the implication, but it is presented as a belief rather than an unconditional fact."
+    },
+    {
+      "id": "C_2",
+      "formula": "P_5 ⟹ P_4",
+      "translation": "If Scarlett makes the rare book part of her literary treasures, then she decides to keep the rare book.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 1: \"decide to keep it and make it a part of her literary treasures\"",
+      "reasoning": "Common-sense semantics: making a book part of one's treasures presupposes keeping it. The text also conjoins the two actions as paired outcomes of the same scenario."
+    },
+    {
+      "id": "C_3",
+      "formula": "¬P_7",
+      "translation": "Scarlett does not decide to keep the book she found that day in her collection.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
+      "reasoning": "This is explicitly stated as a factual event in the narrative, leaving no uncertainty."
+    }
+  ],
+  "_enrichment_log": [
+    "[Negation] Sentence 2: Found negation of 'keep'",
+    "           Affirmative clause: 'to keep it in her collection'",
+    "           No matching proposition found",
+    "[Auxiliary] Found 0 auxiliary propositions"
+  ]
+}

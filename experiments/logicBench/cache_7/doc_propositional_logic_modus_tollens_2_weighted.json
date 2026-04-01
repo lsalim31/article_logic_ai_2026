@@ -1,0 +1,87 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Isabella has been working hard on her project.",
+      "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
+      "explanation": "This is an atomic action/state attribution to Isabella with a single predicate (working hard) and a single object (her project), with no logical connectives."
+    },
+    {
+      "id": "P_2",
+      "translation": "Isabella finishes her project on time.",
+      "evidence": "Sentence 0: \"if she finished it on time\"",
+      "explanation": "This is the antecedent event described in the conditional; it is a simple event claim that can serve as a propositional atom."
+    },
+    {
+      "id": "P_3",
+      "translation": "Isabella receives a bonus from her company.",
+      "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
+      "explanation": "This is a single outcome/event (receiving a bonus) with a specified source (her company) and no connectives; negation will be represented in constraints rather than inside the proposition."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "explanation": "This is an atomic mental-state attribution (hopes) toward a single outcome; it is not itself a logical connective."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9999202489852905,
+      "combined=(llm)*(nli)": 0.949924236536026,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company.",
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "The text explicitly states this conditional as something Isabella 'knew', strongly suggesting it as a governing rule/policy in the narrative. It is not contradicted by later text because the antecedent (finishing on time) may be false.",
+      "list nli": [
+        [
+          1.605988472874742e-05,
+          6.366586603689939e-05,
+          0.9999202489852905
+        ],
+        [
+          2.3946495275595225e-05,
+          8.491153857903555e-05,
+          0.9998911619186401
+        ],
+        [
+          5.970616257400252e-06,
+          0.00017961009871214628,
+          0.9998144507408142
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9988279938697815,
+      "combined=(llm)*(nli)": 0.9488865941762924,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_3",
+      "translation": "Isabella does not receive a bonus from her company.",
+      "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
+      "reasoning": "The narrative asserts (via Isabella's realization) that the bonus will not be received. This is presented as a concluded outcome, so it is very strong, though technically filtered through her realization rather than an omniscient statement.",
+      "list nli": [
+        [
+          0.00013960716023575515,
+          0.0010324242757633328,
+          0.9988279938697815
+        ],
+        [
+          0.003433278063312173,
+          0.00010293506784364581,
+          0.9964638352394104
+        ],
+        [
+          0.0048317681066691875,
+          6.0507671150844544e-05,
+          0.9951077699661255
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": []
+}

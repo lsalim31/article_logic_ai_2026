@@ -1,0 +1,230 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "evidence": "Sentence 0: \"Liam had finished his work early for the day\"",
+      "explanation": "This is a simple, truth-evaluable event description with a specific subject and predicate, and it contains no logical connective or negation."
+    },
+    {
+      "id": "P_2",
+      "translation": "Liam ordered pizza for dinner on the particular day",
+      "evidence": "Sentence 0: \"he would typically have ordered pizza for dinner\"; Sentence 1: \"on this particular day\"",
+      "explanation": "This is an atomic action statement about a specific dinner on a specific day; any habitual/typical aspect is handled as a weighted constraint rather than inside the proposition."
+    },
+    {
+      "id": "P_3",
+      "translation": "Liam decided against ordering pizza on the particular day",
+      "evidence": "Sentence 1: \"on this particular day, he decided against ordering pizza\"",
+      "explanation": "This is an atomic mental-decision/action-description and does not use explicit logical negation; consequences of deciding against are represented in constraints."
+    },
+    {
+      "id": "P_4",
+      "translation": "Liam chose something else for dinner on the particular day",
+      "evidence": "Sentence 1: \"and opted for something else instead\"",
+      "explanation": "This is an atomic choice statement; the exclusivity implied by \"instead\" is captured via constraints rather than embedded connectives."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9981560111045837,
+      "combined=(llm)*(nli)": 0.9981560111045837,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1",
+      "translation": "Liam finished his work early for the day",
+      "evidence": "Sentence 0",
+      "reasoning": "Stated as a factual event in the text.",
+      "list nli": [
+        [
+          0.0017181946896016598,
+          0.00012582400813698769,
+          0.9981560111045837
+        ],
+        [
+          0.9775758981704712,
+          0.00010688104521250352,
+          0.022317271679639816
+        ],
+        [
+          0.0001351454557152465,
+          0.9978877902030945,
+          0.001977031584829092
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9990398287773132,
+      "combined=(llm)*(nli)": 0.9990398287773132,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_3",
+      "translation": "On the particular day, Liam decided against ordering pizza",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted in the text as what happened on that day.",
+      "list nli": [
+        [
+          8.101398634607904e-06,
+          0.0009520797757431865,
+          0.9990398287773132
+        ],
+        [
+          0.027839787304401398,
+          0.0010813797125592828,
+          0.9710788130760193
+        ],
+        [
+          4.212203930364922e-05,
+          0.9990880489349365,
+          0.000869833689648658
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9950790405273438,
+      "combined=(llm)*(nli)": 0.9950790405273438,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "On the particular day, Liam opted for something else for dinner",
+      "evidence": "Sentence 1",
+      "reasoning": "Directly asserted in the text as what happened on that day.",
+      "list nli": [
+        [
+          0.0038955998606979847,
+          0.00102534971665591,
+          0.9950790405273438
+        ],
+        [
+          1.1252461263211444e-05,
+          0.98567134141922,
+          0.01431745570152998
+        ],
+        [
+          0.9978389143943787,
+          0.000561583146918565,
+          0.0015995724825188518
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9989575147628784,
+      "combined=(llm)*(nli)": 0.9490096390247345,
+      "hardness_constant": 0.9,
+      "id": "C_5",
+      "formula": "(P_3 ⟹ ¬P_2)",
+      "translation": "If Liam decided against ordering pizza on the particular day, then he did not order pizza for dinner that day",
+      "evidence": "Sentence 1: \"decided against ordering pizza\"",
+      "reasoning": "Deciding against ordering is very strong evidence he did not place the pizza order, though (in principle) someone could decide and then reverse later; the text intent strongly supports the negation.",
+      "list nli": [
+        [
+          9.196755127049983e-05,
+          0.0009504944318905473,
+          0.9989575147628784
+        ],
+        [
+          0.0010662698186933994,
+          0.018144600093364716,
+          0.9807891249656677
+        ],
+        [
+          0.9849156141281128,
+          0.00018457797705195844,
+          0.014899847097694874
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.97,
+      "nli_entailment": 0.9997671246528625,
+      "combined=(llm)*(nli)": 0.9697741109132767,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "(P_4 ⟹ ¬P_2)",
+      "translation": "If Liam chose something else for dinner on the particular day, then he did not order pizza for dinner that day",
+      "evidence": "Sentence 1: \"opted for something else instead\"",
+      "reasoning": "The word \"instead\" strongly implies the alternative replaced pizza for that dinner, making pizza that day very unlikely.",
+      "list nli": [
+        [
+          4.910615461994894e-05,
+          0.00018377519154455513,
+          0.9997671246528625
+        ],
+        [
+          3.7458419683389366e-05,
+          0.0003086732467636466,
+          0.9996538162231445
+        ],
+        [
+          0.034250468015670776,
+          0.0007055517635308206,
+          0.9650439620018005
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9998276233673096,
+      "combined=(llm)*(nli)": 0.7998620986938477,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "(P_1 ⟹ P_2)",
+      "translation": "Finishing work early would typically lead Liam to order pizza for dinner",
+      "evidence": "Sentence 0: \"which meant that he would typically have ordered pizza for dinner\"",
+      "reasoning": "The phrase \"would typically\" indicates a strong tendency but not a strict rule, so the implication is weighted below certainty.",
+      "list nli": [
+        [
+          5.5554504797328264e-05,
+          0.00011678894225042313,
+          0.9998276233673096
+        ],
+        [
+          1.6927686374401674e-05,
+          0.000169133665622212,
+          0.999813973903656
+        ],
+        [
+          1.808680644899141e-05,
+          0.00018365983851253986,
+          0.9997982382774353
+        ]
+      ],
+      "weight": 0.7998620986938477
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9998942613601685,
+      "combined=(llm)*(nli)": 0.8999048352241517,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "(P_3 ⟹ P_4)",
+      "translation": "On the particular day, Liam's decision against pizza went along with choosing something else",
+      "evidence": "Sentence 1: \"decided against ordering pizza and opted for something else instead\"",
+      "reasoning": "The text presents these as linked actions in the same decision context; while logically one could decide against pizza without selecting an alternative, the narrative suggests the alternative choice followed.",
+      "list nli": [
+        [
+          3.8777296140324324e-05,
+          6.698767538182437e-05,
+          0.9998942613601685
+        ],
+        [
+          1.0928237315965816e-05,
+          0.00014599079440813512,
+          0.9998430013656616
+        ],
+        [
+          0.007168997079133987,
+          0.0015114325797185302,
+          0.9913195967674255
+        ]
+      ],
+      "weight": 0.8999048352241517
+    }
+  ]
+}

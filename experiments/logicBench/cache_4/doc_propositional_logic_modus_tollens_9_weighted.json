@@ -1,0 +1,114 @@
+{
+  "primitive_props": [
+    {
+      "id": "P_1",
+      "translation": "Theodore has a pet dog.",
+      "evidence": "Sentence 0: \"If Theodore has a pet dog\"",
+      "explanation": "This is an atomic possession statement (no logical connectives or negation) and serves as the antecedent condition referenced in the text."
+    },
+    {
+      "id": "P_2",
+      "translation": "Theodore takes his dog out for a walk.",
+      "evidence": "Sentence 0: \"he will take it out for a walk\"",
+      "explanation": "This is an atomic action statement (no logical connectives or negation). The text’s second sentence negates this action, so the positive form is kept as the primitive."
+    }
+  ],
+  "hard_constraints": [
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9880308508872986,
+      "combined=(llm)*(nli)": 0.9880308508872986,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Theodore has a pet dog, Theodore takes his dog out for a walk.",
+      "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
+      "reasoning": "This is stated directly as a conditional; the text presents it as a firm rule/prediction.",
+      "list nli": [
+        [
+          0.0037880020681768656,
+          0.008181132376194,
+          0.9880308508872986
+        ],
+        [
+          0.00011718841415131465,
+          0.9761186838150024,
+          0.023764118552207947
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.9985760450363159,
+      "combined=(llm)*(nli)": 0.9985760450363159,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "¬P_2",
+      "translation": "Theodore does not take his dog out for a walk.",
+      "evidence": "Sentence 1: \"he would not take his dog out for a walk.\"",
+      "reasoning": "The sentence explicitly states the negation of the walking action; despite the modal wording, it is presented as a clear contrast ('However') to the prior claim.",
+      "list nli": [
+        [
+          0.0010537969646975398,
+          0.00037019458250142634,
+          0.9985760450363159
+        ],
+        [
+          0.9999572038650513,
+          1.059580608853139e-05,
+          3.213996751583181e-05
+        ]
+      ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9991331696510315,
+      "combined=(llm)*(nli)": 0.8492631942033767,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_1",
+      "translation": "If Theodore takes his dog out for a walk, then Theodore has a pet dog.",
+      "evidence": "Sentence 0: \"take it out\" (referring to the dog); Sentence 1: \"his dog\"",
+      "reasoning": "Common-sense presupposition: taking his dog for a walk implies he has a dog. The text’s pronouns ('it', 'his dog') support this, but it is not stated as an explicit logical rule, so the weight is < 1.",
+      "list nli": [
+        [
+          3.880880103679374e-05,
+          0.0008281006594188511,
+          0.9991331696510315
+        ],
+        [
+          0.0023608070332556963,
+          0.9461700320243835,
+          0.051469139754772186
+        ]
+      ],
+      "weight": 0.8492631942033767
+    },
+    {
+      "llm-weight": 0.75,
+      "nli_entailment": 0.004383129067718983,
+      "combined=(llm)*(nli)": 0.003287346800789237,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_1",
+      "translation": "Theodore has a pet dog.",
+      "evidence": "Sentence 1: \"his dog\"",
+      "reasoning": "The phrase 'his dog' typically presupposes that Theodore has a dog, but the text does not explicitly assert ownership as a standalone fact (it appears first in an 'if' clause). This is therefore included as a plausible implied fact with moderate-high weight.",
+      "list nli": [
+        [
+          0.0005587199702858925,
+          0.9950581789016724,
+          0.004383129067718983
+        ],
+        [
+          2.1310321244527586e-05,
+          0.9977346658706665,
+          0.0022440722677856684
+        ]
+      ],
+      "weight": 0.003287346800789237
+    }
+  ]
+}
