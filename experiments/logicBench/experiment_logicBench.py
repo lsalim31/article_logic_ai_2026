@@ -15,11 +15,17 @@ Usage:
     python experiment_logicBench.py --api-key $OPENROUTER_API_KEY --verbose
     
     
+/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run3_openAI_20260331_2250_data_constructed_march30.json_.json
+    
+    
+/home/logify/article_logic_ai_2026/experiments/claude_constructed/results/config_run6_openAI_20260401_0006_data_constructed_march30.json_.json
+    
+    
     nohup python experiment_logicBench.py \
   --api-key $OPENROUTER_API_KEY \
   --logic-type propositional_logic \
   --axiom modus_tollens \
-  --config profiles/config_run1_openAI.yaml  > output_run7_logicBench.txt 2>&1 &
+  --config profiles/config_run1_openAI.yaml  > output_run1_logicBench.txt 2>&1 &
 """
 
 import argparse
