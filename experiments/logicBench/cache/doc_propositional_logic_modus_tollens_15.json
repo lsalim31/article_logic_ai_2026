@@ -2,7 +2,7 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Henry was notorious for forgetting his wallet.",
+      "translation": "Henry was notorious for forgetting his wallet",
       "evidence": "Sentence 0: \"Henry was notorious for forgetting his wallet.\"",
       "explanation": "This is a single descriptive claim about Henry's reputation/characterization, not a logical combination of smaller claims in the text."
     },
@@ -76,6 +76,14 @@
     },
     {
       "id": "C_7",
+      "formula": "(P_2 ∧ P_4) ⟹ P_5",
+      "translation": "Henry forgetting his wallet and still being able to buy lunch implies that everyone was surprised.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 2-3 (rule sets expectation of inability; outcome contradicts it) and Sentence 3 (\"to everyone's surprise\")",
+      "reasoning": "The surprise is motivated by the juxtaposition of the rule-based expectation (¬P_4 given P_2) and the stated outcome (P_4). The causal link from the unusual combination to surprise is strongly suggested but still an interpretive step, so it is weighted slightly below 1.0."
+    },
+    {
+      "id": "C_8",
       "formula": "P_3 ⟹ P_3",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
@@ -101,7 +109,7 @@
       "nli_score_positive": 0.16899065673351288,
       "nli_score_negative": 0.015275392681360245,
       "decision": "keep positive",
-      "removed": "C_8"
+      "removed": "C_7"
     }
   ]
 }

@@ -8,7 +8,7 @@
     },
     {
       "id": "P_2",
-      "translation": "Isabella finishes her project on time.",
+      "translation": "Isabella finished her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
       "explanation": "This is an atomic event/outcome description; the surrounding conditional is handled as a separate constraint."
     },
@@ -20,7 +20,13 @@
     },
     {
       "id": "P_4",
-      "translation": "Isabella hopes to receive a bonus.",
+      "translation": "Isabella receives no bonus from her company.",
+      "evidence": "Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "explanation": "This is an atomic negative-outcome claim phrased without the connective word \"not\"; it captures the text’s claim that she gets zero bonus."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella hoped to receive a bonus from her company.",
       "evidence": "Sentence 1: \"as she had hoped\"",
       "explanation": "This is an atomic mental-state claim (hope) that is truth-evaluable and not itself a compound statement."
     }
@@ -28,6 +34,14 @@
   "constraints": [
     {
       "id": "C_1",
+      "formula": "P_1",
+      "translation": "Isabella was working hard on her project.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as a narrative fact."
+    },
+    {
+      "id": "C_2",
       "formula": "P_2 ⟹ P_3",
       "translation": "If Isabella finishes her project on time, Isabella receives a bonus from her company.",
       "llm_weight": 0.85,
@@ -35,9 +49,17 @@
       "reasoning": "The text presents this as what Isabella 'knew', strongly suggesting the conditional link, but it could reflect her belief/policy expectation rather than an absolute law, so weight is high but not 1.0."
     },
     {
-      "id": "C_2",
-      "formula": "¬P_3",
-      "translation": "Isabella does not receive a bonus from her company.",
+      "id": "C_3",
+      "formula": "P_5",
+      "translation": "Isabella hoped to receive a bonus.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase presupposes that she had that hope."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Isabella would be receiving no bonus.",
       "llm_weight": 0.95,
       "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
       "reasoning": "This is an explicit statement of non-receipt, framed as a realization. It is very strongly implied, with slight room for uncertainty because it is reported as her realization about the future rather than a completed outcome."

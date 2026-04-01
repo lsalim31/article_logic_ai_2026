@@ -2,7 +2,7 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Scarlett is an avid book collector.",
+      "translation": "Scarlett is an avid book collector",
       "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
       "explanation": "This is a single descriptive fact about Scarlett and contains no logical connectives or negation."
     },
@@ -71,6 +71,37 @@
           0.03068029321730137
         ]
       ]
+    }
+  ],
+  "soft_constraints": [
+    {
+      "llm-weight": 0.8,
+      "nli_entailment": 0.9954009652137756,
+      "combined=(llm)*(nli)": 0.7963207721710206,
+      "hardness_constant": 0.9,
+      "id": "C_1",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is a book collector, then Scarlett has a book collection.",
+      "evidence": "Sentence 0: \"an avid book collector\" and \"her cherished collection\"",
+      "reasoning": "The text directly describes her as a book collector and also mentions her collection; it is strongly implied (common-sense link) that being a book collector entails having a collection, though the entailment is not a strict definitional truth in all imaginable cases.",
+      "list nli": [
+        [
+          0.0006496389978565276,
+          0.00394947687163949,
+          0.9954009652137756
+        ],
+        [
+          0.0007882597856223583,
+          0.006364902947098017,
+          0.9928469061851501
+        ],
+        [
+          0.0003415603132452816,
+          0.00763409910723567,
+          0.992024302482605
+        ]
+      ],
+      "weight": 0.7963207721710206
     },
     {
       "llm-weight": 1.0,
@@ -98,10 +129,9 @@
           0.9342073798179626,
           0.057074226438999176
         ]
-      ]
-    }
-  ],
-  "soft_constraints": [
+      ],
+      "weight": 0.8498616874217987
+    },
     {
       "llm-weight": 0.8,
       "nli_entailment": 0.9998449087142944,
