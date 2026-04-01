@@ -4,65 +4,65 @@
       "id": "P_1",
       "translation": "Jack dreamed of winning the lottery.",
       "evidence": "Sentence 0: \"Jack had always dreamed of winning the lottery\"",
-      "explanation": "This is an atomic mental-state report about Jack (no logical connectives or conditions)."
+      "explanation": "This is an atomic statement about Jack's mental state (having a dream) and does not contain logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Jack won the lottery.",
+      "translation": "Jack wins the lottery.",
       "evidence": "Sentence 1: \"If Jack had won the lottery\"",
-      "explanation": "This is the antecedent event mentioned by the conditional; it is a single, truth-evaluable clause."
+      "explanation": "This is the atomic event referenced in the antecedent of a conditional; it is included without the conditional framing."
     },
     {
       "id": "P_3",
-      "translation": "Jack bought a house.",
-      "evidence": "Sentence 1: \"he would have bought a house\"",
-      "explanation": "This is the consequent event of the conditional; it is a single, truth-evaluable clause."
+      "translation": "Jack envisioned a future where he buys a beautiful house.",
+      "evidence": "Sentence 0: \"envisioning a future where he would be able to buy a beautiful house\"",
+      "explanation": "This is an atomic statement about what Jack envisioned; it avoids the modal phrasing by capturing the envisioning content as a single declarative clause."
     },
     {
       "id": "P_4",
-      "translation": "Jack purchases a house for now.",
-      "evidence": "Sentence 2: \"he won't be purchasing any house for now\"",
-      "explanation": "The text asserts a negation about purchasing; the primitive is kept affirmative to satisfy the 'no negated statements' requirement."
+      "translation": "Jack bought a house.",
+      "evidence": "Sentence 1: \"he would have bought a house\"",
+      "explanation": "This is the atomic purchase outcome referenced in the consequent of the conditional; it is stated without conditional/modal wording."
     },
     {
       "id": "P_5",
-      "translation": "In Jack's envisioned future, Jack is able to buy a beautiful house.",
-      "evidence": "Sentence 0: \"envisioning a future where he would be able to buy a beautiful house\"",
-      "explanation": "This captures the content of the envisioning as a single proposition (no explicit logical connectives)."
+      "translation": "Jack purchases a house for now.",
+      "evidence": "Sentence 2: \"he won't be purchasing any house for now\"",
+      "explanation": "This is an atomic present-time purchasing statement; the text asserts its negation, which will be represented in constraints."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "Jack's winning the lottery implies Jack buys a house.",
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If Jack wins the lottery, then Jack bought a house.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"If Jack had won the lottery, he would have bought a house.\"",
-      "reasoning": "This is stated as a direct conditional in the text."
+      "reasoning": "The sentence explicitly states a counterfactual dependency from winning the lottery to buying a house; as a stated conditional relation, the implication is strongly intended."
     },
     {
       "id": "C_2",
-      "formula": "¬P_4",
-      "translation": "Jack does not purchase any house for now.",
+      "formula": "¬P_5",
+      "translation": "Jack does not purchase a house for now.",
       "llm_weight": 1.0,
       "evidence": "Sentence 2: \"But he won't be purchasing any house for now.\"",
-      "reasoning": "This is explicitly asserted with strong negation (\"won't\") and a current-time qualifier (\"for now\")."
+      "reasoning": "This is a direct, unqualified claim about the current situation ('for now'), so it is treated as certain."
     },
     {
       "id": "C_3",
-      "formula": "¬P_2",
-      "translation": "Jack did not win the lottery.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 1: counterfactual framing \"If Jack had won the lottery\" (with \"would have bought\"), plus Sentence 2: \"he won't be purchasing any house for now.\"",
-      "reasoning": "The subjunctive/counterfactual construction strongly suggests the antecedent is contrary to fact, though it is not stated outright; the later statement about not purchasing a house now further supports (but does not logically force) this inference."
+      "formula": "P_1",
+      "translation": "Jack dreamed of winning the lottery.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Jack had always dreamed of winning the lottery\"",
+      "reasoning": "The text asserts this as a factual background statement about Jack."
     },
     {
       "id": "C_4",
-      "formula": "P_2 ⟹ P_5",
-      "translation": "If Jack wins the lottery, then in his envisioned future he is able to buy a beautiful house.",
-      "llm_weight": 0.65,
-      "evidence": "Sentence 0: \"dreamed of winning the lottery... able to buy a beautiful house\"",
-      "reasoning": "The text links the lottery dream with the envisioned ability to buy a beautiful house, but it does not explicitly state this as a formal conditional, so the implication is treated as moderate-strength."
+      "formula": "P_3",
+      "translation": "Jack envisioned a future where he buys a beautiful house.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"envisioning a future where he would be able to buy a beautiful house\"",
+      "reasoning": "The text states this as part of what Jack did (envisioned), not as a mere possibility; thus it is treated as certain."
     }
   ],
   "_enrichment_log": [

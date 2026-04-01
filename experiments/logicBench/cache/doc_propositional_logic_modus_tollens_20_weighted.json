@@ -4,93 +4,81 @@
       "id": "P_1",
       "translation": "Lucas decided to skip breakfast one morning.",
       "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
-      "explanation": "This is a single decision event attributed to Lucas and is not a logical combination of smaller propositions."
+      "explanation": "This is an atomic mental-action statement (a decision) and contains no logical connectives or negation."
     },
     {
       "id": "P_2",
       "translation": "Lucas skipped breakfast one morning.",
-      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\" (implies the intended action in context)",
-      "explanation": "This is an atomic action statement (skipping breakfast) with a specific time reference."
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\" (implies the skipping event)",
+      "explanation": "This is an atomic event claim about Lucas's behavior; it is separated from the decision to allow reasoning about whether the decision was carried out."
     },
     {
       "id": "P_3",
-      "translation": "Skipping breakfast makes Lucas feel tired during the day.",
-      "evidence": "Sentence 0: \"knowing that it would make him feel tired during the day\"",
-      "explanation": "This is an atomic causal-style claim expressed in the text; it is treated as one proposition rather than split into a conditional here (the conditional is represented in constraints)."
+      "translation": "Lucas feels tired during the day.",
+      "evidence": "Sentence 0: \"it would make him feel tired during the day\" (tiredness is introduced here)",
+      "explanation": "This is a simple state description; negation is handled only in constraints, not inside the primitive proposition."
     },
     {
       "id": "P_4",
-      "translation": "Lucas knew that skipping breakfast would make him feel tired during the day.",
-      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
-      "explanation": "This is a single mental-state attribution (knowledge) and cannot be broken down without introducing connectives."
-    },
-    {
-      "id": "P_5",
-      "translation": "Lucas felt tired during the day.",
-      "evidence": "Sentence 0: \"feel tired during the day\"; Sentence 1: \"he didn't feel tired at all\"",
-      "explanation": "This is a simple state predicate (tired during the day). Negation is handled at the constraint level."
-    },
-    {
-      "id": "P_6",
-      "translation": "Lucas was surprised.",
+      "translation": "Lucas is surprised.",
       "evidence": "Sentence 1: \"to his surprise\"",
-      "explanation": "This is an atomic emotional/attentional state attributed to Lucas."
+      "explanation": "This is an atomic psychological-state claim explicitly asserted by the text."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9967584013938904,
-      "combined=(llm)*(nli)": 0.9967584013938904,
+      "nli_entailment": 0.9991687536239624,
+      "combined=(llm)*(nli)": 0.9991687536239624,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1",
       "translation": "Lucas decided to skip breakfast one morning.",
-      "evidence": "Sentence 0",
-      "reasoning": "This is explicitly stated as a fact.",
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "reasoning": "This is directly stated.",
       "list nli": [
         [
-          0.0004287762276362628,
-          0.0028128887061029673,
-          0.9967584013938904
+          0.0007876334129832685,
+          4.361664832686074e-05,
+          0.9991687536239624
         ],
         [
-          0.04283621162176132,
-          0.0002771828440017998,
-          0.9568866491317749
+          2.431464963592589e-05,
+          0.9981878399848938,
+          0.001787927350960672
         ],
         [
-          2.7907557523576543e-05,
-          0.7229502201080322,
-          0.2770218253135681
+          0.00010064720117952675,
+          0.9985311031341553,
+          0.0013682047137990594
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998893737792969,
-      "combined=(llm)*(nli)": 0.9998893737792969,
+      "nli_entailment": 0.9998202919960022,
+      "combined=(llm)*(nli)": 0.9998202919960022,
       "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "P_4",
-      "translation": "Lucas knew skipping breakfast would make him feel tired during the day.",
-      "evidence": "Sentence 0",
-      "reasoning": "This is explicitly stated as a fact.",
+      "id": "C_5",
+      "formula": "¬P_3",
+      "translation": "Lucas did not feel tired at all.",
+      "evidence": "Sentence 1: \"he didn't feel tired at all\"",
+      "reasoning": "This is directly and explicitly stated.",
       "list nli": [
         [
-          7.342528260778636e-05,
-          3.7230533052934334e-05,
-          0.9998893737792969
+          0.0001192943163914606,
+          6.04004344495479e-05,
+          0.9998202919960022
         ],
         [
-          0.00016925239469856024,
-          3.785542867262848e-05,
-          0.9997928738594055
+          0.0002098057302646339,
+          4.6268989535747096e-05,
+          0.9997438788414001
         ],
         [
-          0.000773598556406796,
-          0.0022208956070244312,
-          0.9970055222511292
+          0.999690055847168,
+          1.3406619473244064e-05,
+          0.00029659661231562495
         ]
       ]
     },
@@ -99,174 +87,145 @@
       "nli_entailment": 0.9997372031211853,
       "combined=(llm)*(nli)": 0.9997372031211853,
       "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_6",
+      "id": "C_6",
+      "formula": "P_4",
       "translation": "Lucas was surprised.",
-      "evidence": "Sentence 1",
-      "reasoning": "This is explicitly stated as a fact.",
+      "evidence": "Sentence 1: \"to his surprise\"",
+      "reasoning": "This is explicitly asserted by the text.",
       "list nli": [
         [
-          0.00011110970808658749,
-          0.00015162814815994352,
+          0.00011110928608104587,
+          0.00015162800264079124,
           0.9997372031211853
         ],
         [
-          0.0003330059698782861,
-          0.00014401230146177113,
-          0.9995230436325073
+          0.0006326409638859332,
+          8.550912752980366e-05,
+          0.9992818236351013
         ],
         [
-          0.0006326379370875657,
-          8.550896018277854e-05,
-          0.9992818236351013
+          0.3354727029800415,
+          0.008632726967334747,
+          0.6558945775032043
         ]
       ]
     },
     {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9996515512466431,
-      "combined=(llm)*(nli)": 0.9996515512466431,
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9994407296180725,
+      "combined=(llm)*(nli)": 0.9494686931371689,
       "hardness_constant": 0.9,
       "id": "C_7",
-      "formula": "¬P_5",
-      "translation": "Lucas did not feel tired during the day.",
-      "evidence": "Sentence 1: \"he didn't feel tired at all\"",
-      "reasoning": "This is directly asserted with explicit negation.",
+      "formula": "(P_2 ∧ ¬P_3) ⟹ P_4",
+      "translation": "If Lucas skipped breakfast and did not feel tired, then Lucas is surprised.",
+      "evidence": "Sentence 1 (surprise) + Sentence 0 (skip breakfast context): \"to his surprise\"; \"skip breakfast\"",
+      "reasoning": "The discourse indicates his surprise is caused by the unexpected absence of tiredness after skipping breakfast, making this implication very strongly supported.",
       "list nli": [
         [
-          0.0002788578858599067,
-          6.958946323720738e-05,
-          0.9996515512466431
+          0.0004934873431921005,
+          6.572068377863616e-05,
+          0.9994407296180725
         ],
         [
-          0.0004327313508838415,
-          0.00014617711713071913,
-          0.9994211196899414
+          0.0003749622846953571,
+          0.00032654241658747196,
+          0.9992984533309937
         ],
         [
-          0.9511832594871521,
-          0.00229060766287148,
-          0.04652608931064606
+          0.0007321846205741167,
+          0.0005727739189751446,
+          0.9986950755119324
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.9987510442733765,
-      "combined=(llm)*(nli)": 0.8988759398460389,
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9998656511306763,
+      "combined=(llm)*(nli)": 0.8498858034610748,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Lucas's deciding to skip breakfast one morning implies he skipped breakfast one morning.",
-      "evidence": "Sentence 0-1 (decision followed by consequences described)",
-      "reasoning": "In context, the narrative proceeds as if the decision was carried out, but the text does not literally restate the action as completed.",
+      "id": "C_2",
+      "formula": "P_2",
+      "translation": "Lucas skipped breakfast one morning.",
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "reasoning": "Deciding to skip breakfast strongly suggests he followed through, but the text does not explicitly say he actually skipped, so this is slightly uncertain.",
       "list nli": [
         [
-          0.00022829088266007602,
-          0.001020675292238593,
-          0.9987510442733765
+          8.498552779201418e-05,
+          4.934649041388184e-05,
+          0.9998656511306763
         ],
         [
-          0.00014564843149855733,
-          0.004075518809258938,
-          0.9957787990570068
+          0.10699988156557083,
+          0.0009142661583609879,
+          0.8920858502388
         ],
         [
-          0.002595379250124097,
-          0.5642248392105103,
-          0.4331797659397125
+          0.00021846231538802385,
+          0.9974843263626099,
+          0.002297152066603303
         ]
       ],
-      "weight": 0.8988759398460389
+      "weight": 0.8498858034610748
     },
     {
       "llm-weight": 0.75,
-      "nli_entailment": 0.9998728036880493,
-      "combined=(llm)*(nli)": 0.749904602766037,
+      "nli_entailment": 0.9945723414421082,
+      "combined=(llm)*(nli)": 0.7459292560815811,
       "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "Lucas's knowledge supports that skipping breakfast makes him feel tired during the day.",
-      "evidence": "Sentence 0",
-      "reasoning": "The text calls it \"knowing,\" which strongly suggests the causal generalization is endorsed, but the later outcome creates tension, so the causal link is not treated as absolutely certain.",
+      "id": "C_3",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Lucas's decision to skip breakfast implies he skipped breakfast.",
+      "evidence": "Sentence 0: \"Lucas decided to skip breakfast one morning\"",
+      "reasoning": "A decision often leads to the corresponding action, but not always; the text does not explicitly confirm execution.",
       "list nli": [
         [
-          7.272842049133033e-05,
-          5.445460192277096e-05,
-          0.9998728036880493
+          6.021671651978977e-05,
+          0.0053673977963626385,
+          0.9945723414421082
         ],
         [
-          0.00013080358621664345,
-          0.00026310450630262494,
-          0.9996060729026794
+          8.741586498217657e-05,
+          0.94797682762146,
+          0.05193575099110603
         ],
         [
-          0.0013019551988691092,
-          0.00016534184396732599,
-          0.9985326528549194
+          0.0012451746733859181,
+          0.9751586318016052,
+          0.023596201092004776
         ]
       ],
-      "weight": 0.749904602766037
+      "weight": 0.7459292560815811
     },
     {
       "llm-weight": 0.8,
-      "nli_entailment": 0.9998651742935181,
-      "combined=(llm)*(nli)": 0.7998921394348145,
+      "nli_entailment": 0.9998389482498169,
+      "combined=(llm)*(nli)": 0.7998711585998536,
       "hardness_constant": 0.9,
-      "id": "C_6",
-      "formula": "(P_2 ∧ P_3) ⟹ P_5",
-      "translation": "If Lucas skipped breakfast and skipping breakfast makes him tired during the day, then Lucas felt tired during the day.",
-      "evidence": "Sentence 0 (expected tiredness from skipping)",
-      "reasoning": "This is the natural instantiation of the causal expectation described in Sentence 0; it is strong but not absolute because Sentence 1 reports the opposite outcome.",
+      "id": "C_4",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Skipping breakfast would make Lucas feel tired during the day.",
+      "evidence": "Sentence 0: \"despite knowing that it would make him feel tired during the day\"",
+      "reasoning": "The phrasing presents a strong expectation/assumed causal link from skipping breakfast to daytime tiredness, but the next sentence presents an exception, so the implication is not treated as certain.",
       "list nli": [
         [
-          1.6268299077637494e-05,
-          0.00011853394971694797,
-          0.9998651742935181
+          8.439818338956684e-05,
+          7.665306475246325e-05,
+          0.9998389482498169
         ],
         [
-          0.0012770052999258041,
-          0.003506567794829607,
-          0.9952164888381958
+          4.143164187553339e-05,
+          0.0001490430731792003,
+          0.9998095631599426
         ],
         [
-          0.0014360857894644141,
-          0.010195933282375336,
-          0.9883679747581482
+          0.00018854242807719857,
+          4.7369394451379776e-05,
+          0.9997641444206238
         ]
       ],
-      "weight": 0.7998921394348145
-    },
-    {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.9992207288742065,
-      "combined=(llm)*(nli)": 0.8992986559867859,
-      "hardness_constant": 0.9,
-      "id": "C_8",
-      "formula": "P_6 ⟹ ¬P_5",
-      "translation": "Lucas being surprised implies he did not feel tired during the day.",
-      "evidence": "Sentence 1: \"to his surprise, he didn't feel tired at all\"",
-      "reasoning": "The surprise is explicitly linked to the not-tired outcome; the implication is very strong in this narrative framing.",
-      "list nli": [
-        [
-          0.0006356953526847064,
-          0.00014358646876644343,
-          0.9992207288742065
-        ],
-        [
-          0.0008029768359847367,
-          0.00016855268040671945,
-          0.9990284442901611
-        ],
-        [
-          0.0010473711881786585,
-          0.00024905483587644994,
-          0.9987035989761353
-        ]
-      ],
-      "weight": 0.8992986559867859
+      "weight": 0.7998711585998536
     }
   ]
 }

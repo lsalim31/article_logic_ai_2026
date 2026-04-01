@@ -2,41 +2,49 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Scarlett is late for work today.",
-      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\" (context linked to \"Today\" in Sentence 1)",
-      "explanation": "This is an atomic state about Scarlett’s punctuality for work; it contains no logical connectives or negation."
+      "translation": "Scarlett is late for work today",
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "explanation": "This is an atomic, truth-evaluable event/state (being late for work) with an explicit subject and predicate; it can be used as the antecedent of the stated conditional."
     },
     {
       "id": "P_2",
-      "translation": "Scarlett receives a warning today.",
+      "translation": "Scarlett receives a warning today",
       "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
-      "explanation": "This is an atomic event/state about Scarlett receiving a warning on a specific day; it contains no logical connectives or negation."
+      "explanation": "This is an atomic, truth-evaluable event (receiving a warning) with a specific time reference; negation is handled at the constraint level rather than inside the proposition."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Scarlett is late for work, she will receive a warning.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 0",
-      "reasoning": "The text explicitly states a conditional from being late for work to receiving a warning. The only uncertainty is whether the conditional is meant specifically for 'today' (Sentence 1) versus a general policy; discourse suggests today-relevance, so high but not perfect weight."
+      "translation": "Scarlett being late for work today implies Scarlett receives a warning today",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"",
+      "reasoning": "The text states this conditional in a strict, rule-like form (“will receive”), supporting a hard implication."
     },
     {
       "id": "C_2",
       "formula": "¬P_2",
-      "translation": "Scarlett did not receive a warning today.",
+      "translation": "Scarlett does not receive a warning today",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "This is directly asserted as a factual statement about today, so it must hold."
+      "evidence": "Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "reasoning": "This is an explicit assertion about today, so it is treated as certain."
     },
     {
       "id": "C_3",
       "formula": "¬P_2 ⟹ ¬P_1",
-      "translation": "If Scarlett does not receive a warning today, then she is not late for work today.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0-1 (combined)",
-      "reasoning": "Given the stated rule (late implies warning) and the fact of no warning today, modus tollens would yield not-late today—if the rule is intended to apply to today and warnings are reliably issued when lateness occurs. The text invites this inference, but real-world exceptions (e.g., warning not issued despite lateness) motivate a lower weight."
+      "translation": "Scarlett not receiving a warning today implies Scarlett is not late for work today",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"If Scarlett is late for work, she will receive a warning.\"; Sentence 1: \"Today, Scarlett did not receive a warning.\"",
+      "reasoning": "Under standard reasoning (modus tollens) from the stated rule plus the no-warning fact, one can infer she was not late. Weight is slightly below 1.0 to allow for real-world exceptions (e.g., enforcement failure) not discussed in the text."
+    },
+    {
+      "id": "C_4",
+      "formula": "¬P_1",
+      "translation": "Scarlett is not late for work today",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0 and Sentence 1 jointly",
+      "reasoning": "This is the direct consequence suggested by combining the conditional (C_1) with the stated lack of warning (C_2); the same slight real-world-exception uncertainty as in C_3 applies."
     }
   ],
   "_enrichment_log": [

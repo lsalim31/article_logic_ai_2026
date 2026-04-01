@@ -4,231 +4,162 @@
       "id": "P_1",
       "translation": "James is forgetful.",
       "evidence": "Sentence 0: \"James had always been forgetful\"",
-      "explanation": "This is a simple property attribution to James and does not contain any logical connective or condition to split further."
+      "explanation": "This is an atomic property-ascription about James, with no internal logical structure to split."
     },
     {
       "id": "P_2",
       "translation": "James forgets to wear a sweater.",
-      "evidence": "Sentence 0: \"especially when it came to wearing a sweater\"; Sentence 1: \"If he forgets to wear a sweater\"",
-      "explanation": "This is an atomic event description (forgetting-to-wear) with a single subject and action; it is used as an antecedent elsewhere but is not itself a connective."
+      "evidence": "Sentence 0: \"especially when it came to wearing a sweater\"",
+      "explanation": "This captures the specific forgetfulness topic (wearing a sweater) as a single truth-evaluable clause, without embedding conditionals."
     },
     {
       "id": "P_3",
-      "translation": "James wears a sweater.",
-      "evidence": "Sentence 0: \"wearing a sweater\" (topic of his forgetfulness)",
-      "explanation": "This is the positive base action state that underlies the 'forget to wear' discussion; it is stated as a simple declarative clause without negation."
+      "translation": "James's mother warns James about catching a cold.",
+      "evidence": "Sentence 1: \"His mother had repeatedly told him, 'If he forgets to wear a sweater, then he will catch a cold.'\"",
+      "explanation": "This is an atomic communication act (a warning) separated from the conditional content, which will be represented as a constraint."
     },
     {
       "id": "P_4",
       "translation": "James catches a cold.",
-      "evidence": "Sentence 1: \"he will catch a cold\"; Sentence 3: \"James didn't catch a cold\" (mentions catching a cold)",
-      "explanation": "This is a single outcome event (catching a cold) and can be used in constraints and negated in constraints; the primitive itself is non-negated."
+      "evidence": "Sentence 1: \"he will catch a cold\"; Sentence 3: \"James didn't catch a cold.\"",
+      "explanation": "This is the non-negated base event/state needed so that later negation can be represented as a logical constraint."
     },
     {
       "id": "P_5",
-      "translation": "James's mother repeatedly told James a message.",
-      "evidence": "Sentence 1: \"His mother had repeatedly told him\"",
-      "explanation": "This is a single communication event (with repetition as part of the predicate) and contains no embedded logical structure that must be represented with connectives."
+      "translation": "The temperature drops.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "explanation": "This is a single environmental state-change claim, expressible as an atomic proposition."
     },
     {
       "id": "P_6",
-      "translation": "The temperature is dropping.",
+      "translation": "James is oblivious to the dropping temperature.",
       "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
-      "explanation": "This is an atomic state/process assertion about temperature and does not require decomposition."
+      "explanation": "This is an atomic mental-state attribution about James (obliviousness) with a specific object."
     },
     {
       "id": "P_7",
-      "translation": "James went about his activities throughout the day.",
-      "evidence": "Sentence 2: \"Throughout the day, he went about his activities\"",
-      "explanation": "This is a single activity description with a temporal modifier; it is not a logical combination of smaller propositions."
-    },
-    {
-      "id": "P_8",
-      "translation": "James is oblivious to the dropping temperature.",
-      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
-      "explanation": "This is a single mental-state attribution tied to a described situation; it is not itself a connective."
-    },
-    {
-      "id": "P_9",
-      "translation": "James returned home hours later.",
-      "evidence": "Sentence 3: \"Hours later, he returned home\"",
-      "explanation": "This is a single event description (returning home) with a temporal modifier and no logical structure to split."
+      "translation": "James returns home.",
+      "evidence": "Sentence 3: \"he returned home\"",
+      "explanation": "This is a single event description without connectives."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9990962743759155,
-      "combined=(llm)*(nli)": 0.9491414606571197,
+      "llm-weight": 1,
+      "nli_entailment": 0.9992284774780273,
+      "combined=(llm)*(nli)": 0.9992284774780273,
       "hardness_constant": 0.9,
       "id": "C_3",
-      "formula": "P_8 ⟹ P_6",
-      "translation": "If James is oblivious to the dropping temperature, then the temperature is dropping.",
-      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
-      "reasoning": "Being oblivious 'to the dropping temperature' presupposes that the temperature is in fact dropping; this is an entailment-like relationship from the phrasing.",
-      "list nli": [
-        [
-          0.0008151007350534201,
-          8.86702910065651e-05,
-          0.9990962743759155
-        ],
-        [
-          0.0007170059252530336,
-          0.001683696056716144,
-          0.9975993037223816
-        ],
-        [
-          0.0007928494014777243,
-          0.011600008234381676,
-          0.9876071810722351
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9996541738510132,
-      "combined=(llm)*(nli)": 0.9996541738510132,
-      "hardness_constant": 0.9,
-      "id": "C_4",
       "formula": "¬P_4",
       "translation": "James does not catch a cold.",
       "evidence": "Sentence 3: \"but James didn't catch a cold.\"",
-      "reasoning": "This is a direct narrative assertion about the outcome, presented as fact.",
+      "reasoning": "This is directly and unambiguously asserted as an outcome in the narrative.",
       "list nli": [
         [
-          3.196692341589369e-05,
-          0.0003138606552965939,
-          0.9996541738510132
+          0.00011018337681889534,
+          0.0006613023579120636,
+          0.9992284774780273
         ],
         [
-          0.003218660596758127,
-          0.017005106434226036,
-          0.9797762632369995
+          0.0025644097477197647,
+          0.000443402910605073,
+          0.9969922304153442
         ],
         [
-          0.00016503858205396682,
-          0.028095107525587082,
-          0.9717398285865784
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9998964071273804,
-      "combined=(llm)*(nli)": 0.9998964071273804,
-      "hardness_constant": 0.9,
-      "id": "C_5",
-      "formula": "P_5",
-      "translation": "James's mother repeatedly told James a message.",
-      "evidence": "Auto-generated",
-      "reasoning": "Original modal statement is asserted with certainty",
-      "list nli": [
-        [
-          2.6482892280910164e-05,
-          7.708787597948685e-05,
-          0.9998964071273804
-        ],
-        [
-          0.00011749722034437582,
-          2.6205123504041694e-05,
-          0.9998562335968018
-        ],
-        [
-          0.000199263944523409,
-          1.953309401869774e-05,
-          0.9997811913490295
+          0.003343590535223484,
+          8.252956467913464e-05,
+          0.9965739250183105
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9911301136016846,
-      "combined=(llm)*(nli)": 0.9911301136016846,
-      "hardness_constant": 0.9,
-      "id": "C_6",
-      "formula": "P_5 ⟹ P_5",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim",
-      "list nli": [
-        [
-          0.0015234046149998903,
-          0.007346529513597488,
-          0.9911301136016846
-        ],
-        [
-          0.002402286743745208,
-          0.016597433015704155,
-          0.9810003042221069
-        ],
-        [
-          0.0037813587114214897,
-          0.017818208783864975,
-          0.978400468826294
-        ]
-      ]
-    }
-  ],
-  "soft_constraints": [
-    {
-      "llm-weight": 0.7,
-      "nli_entailment": 0.999819815158844,
-      "combined=(llm)*(nli)": 0.6998738706111908,
+      "llm-weight": 0.75,
+      "nli_entailment": 0.9999245405197144,
+      "combined=(llm)*(nli)": 0.7499434053897858,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "James being forgetful supports that he forgets to wear a sweater.",
+      "translation": "James's forgetfulness especially concerns wearing a sweater.",
       "evidence": "Sentence 0: \"James had always been forgetful, especially when it came to wearing a sweater.\"",
-      "reasoning": "The phrase 'especially when it came to wearing a sweater' suggests a tendency/association rather than a strict rule, so the implication is supported but not certain.",
+      "reasoning": "The phrase \"especially when it came to\" strongly suggests a tendency connection from general forgetfulness to sweater-related forgetting, but it is still a tendency claim rather than a strict law.",
       "list nli": [
         [
-          7.17661896487698e-05,
-          0.00010845603537745774,
-          0.999819815158844
+          4.4142696424387395e-05,
+          3.13016826112289e-05,
+          0.9999245405197144
         ],
         [
-          0.00020484314882196486,
-          0.0001191719202324748,
-          0.999675989151001
+          3.620229836087674e-05,
+          4.5747889089398086e-05,
+          0.9999179840087891
         ],
         [
-          0.00030803002300672233,
-          1.8490900401957333e-05,
-          0.9996734857559204
+          4.757747956318781e-05,
+          4.045028981636278e-05,
+          0.9999120235443115
         ]
       ],
-      "weight": 0.6998738706111908
+      "weight": 0.7499434053897858
     },
     {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.9999289512634277,
-      "combined=(llm)*(nli)": 0.8999360561370849,
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9999057054519653,
+      "combined=(llm)*(nli)": 0.8499198496341706,
       "hardness_constant": 0.9,
       "id": "C_2",
       "formula": "P_2 ⟹ P_4",
-      "translation": "Forgetting to wear a sweater leads to catching a cold.",
+      "translation": "Forgetting to wear a sweater leads to catching a cold (as warned by his mother).",
       "evidence": "Sentence 1: \"If he forgets to wear a sweater, then he will catch a cold.\"",
-      "reasoning": "This is explicitly stated as a conditional by the mother; it is strong textual evidence for the rule, but it is reported speech (a warning/belief) rather than a guaranteed law, so weight is high but not absolute.",
+      "reasoning": "The conditional is explicitly stated, but it is presented as the mother's warning rather than a guaranteed fact of the world, so it is treated as a strong but defeasible rule.",
       "list nli": [
         [
-          2.505808515707031e-05,
-          4.601222826750018e-05,
-          0.9999289512634277
+          1.2792201232514344e-05,
+          8.147444896167144e-05,
+          0.9999057054519653
         ],
         [
-          8.760028140386567e-05,
-          6.83772232150659e-05,
-          0.999843955039978
+          2.301642598467879e-05,
+          8.595030521973968e-05,
+          0.9998910427093506
         ],
         [
-          1.455011351936264e-05,
-          0.00014656367420684546,
-          0.9998388290405273
+          1.1483116395538673e-05,
+          0.00012385785521473736,
+          0.9998646974563599
         ]
       ],
-      "weight": 0.8999360561370849
+      "weight": 0.8499198496341706
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9997708201408386,
+      "combined=(llm)*(nli)": 0.8997937381267548,
+      "hardness_constant": 0.9,
+      "id": "C_4",
+      "formula": "P_6 ⟹ P_5",
+      "translation": "If James is oblivious to the dropping temperature, then the temperature drops.",
+      "evidence": "Sentence 2: \"oblivious to the dropping temperature\"",
+      "reasoning": "Being oblivious to a dropping temperature presupposes that the temperature is in fact dropping; this is a strong semantic entailment.",
+      "list nli": [
+        [
+          0.00017464850679971278,
+          5.454384154290892e-05,
+          0.9997708201408386
+        ],
+        [
+          0.0027944680768996477,
+          0.0017517086816951632,
+          0.9954538345336914
+        ],
+        [
+          0.000718665833119303,
+          0.007789005991071463,
+          0.9914923310279846
+        ]
+      ],
+      "weight": 0.8997937381267548
     }
   ]
 }

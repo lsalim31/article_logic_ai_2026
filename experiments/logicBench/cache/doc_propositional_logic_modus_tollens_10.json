@@ -2,61 +2,77 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Elijah has a new job",
-      "evidence": "Sentence 0: \"If Elijah has a new job\"",
-      "explanation": "This is an atomic state attribution about Elijah (having a new job) with no logical connectives or negation."
+      "translation": "Elijah has a new job.",
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "explanation": "This is an atomic, truth-evaluable state about Elijah having a new job; it contains no logical connectives or negation."
     },
     {
       "id": "P_2",
-      "translation": "Elijah will get a raise",
-      "evidence": "Sentence 0: \"then he will get a raise\"",
-      "explanation": "This is an atomic future-directed claim (getting a raise) and is not itself a connective."
+      "translation": "Elijah will get a raise.",
+      "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
+      "explanation": "This is an atomic future-tense claim about Elijah getting a raise; it is used as the consequent of a conditional but is itself not a connective."
     },
     {
       "id": "P_3",
-      "translation": "Elijah is receiving the raise he had anticipated",
-      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated\"",
-      "explanation": "This is the positive form of the negated claim in the text, expressed as a simple declarative clause without negation or connectives."
+      "translation": "Elijah will be receiving the raise he had anticipated.",
+      "evidence": "Sentence 1: \"However, he would not be receiving the raise he had anticipated.\"",
+      "explanation": "This is the positive (non-negated) atomic proposition corresponding to the text’s negated statement; the negation is handled at the constraint level."
     },
     {
       "id": "P_4",
-      "translation": "Elijah had anticipated a raise",
+      "translation": "Elijah had anticipated a raise.",
       "evidence": "Sentence 1: \"the raise he had anticipated\"",
-      "explanation": "The noun phrase presupposes that Elijah anticipated a raise; this is a separate atomic proposition needed to capture that presupposed content."
+      "explanation": "This is an atomic presupposed fact: referring to 'the raise he had anticipated' implies Elijah anticipated a raise."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Elijah has a new job, then Elijah will get a raise",
+      "translation": "If Elijah has a new job, then he will get a raise.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0: \"If Elijah has a new job, then he will get a raise.\"",
-      "reasoning": "This is stated explicitly as a conditional in the text."
+      "reasoning": "This conditional is stated explicitly."
     },
     {
       "id": "C_2",
       "formula": "¬P_3",
-      "translation": "Elijah is not receiving the raise he had anticipated",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"he would not be receiving the raise he had anticipated.\"",
-      "reasoning": "The text directly asserts non-receipt; the modal \"would\" introduces slight uncertainty about whether it is a projected/conditional scenario, so the weight is high but not maximal."
+      "translation": "He would not be receiving the raise he had anticipated.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"However, he would not be receiving the raise he had anticipated.\"",
+      "reasoning": "The text strongly asserts the negation; the slightly-less-than-1 weight reflects the modal 'would' but the intent is clearly that he does not receive the anticipated raise."
     },
     {
       "id": "C_3",
-      "formula": "P_3 ⟹ P_2",
-      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah will get a raise",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 1: \"the raise he had anticipated\" (in context of receiving a raise)",
-      "reasoning": "By common-sense semantics, receiving a (particular) raise entails getting a raise; this is an implied relationship rather than explicitly stated."
+      "formula": "P_2 ⟹ ¬P_3",
+      "translation": "Even though he will get a raise, it is not the raise he had anticipated.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0-1: \"he will get a raise. However, he would not be receiving the raise he had anticipated.\"",
+      "reasoning": "The discourse marker 'However' links the two ideas: getting a raise contrasts with not receiving the anticipated raise, suggesting the raise (if obtained) is different from the anticipated one."
     },
     {
       "id": "C_4",
-      "formula": "P_3 ⟹ P_4",
-      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah had anticipated a raise",
+      "formula": "P_4",
+      "translation": "Elijah had anticipated a raise.",
       "llm_weight": 0.95,
       "evidence": "Sentence 1: \"the raise he had anticipated\"",
-      "reasoning": "The description \"the raise he had anticipated\" strongly implies Elijah anticipated a raise; conditioning on P_3 makes this presupposition link explicit."
+      "reasoning": "This is strongly implied by the definite description; it is a presupposition of the phrase used."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If Elijah is receiving the raise he had anticipated, then he had anticipated a raise.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"the raise he had anticipated\"",
+      "reasoning": "By meaning, receiving 'the raise he had anticipated' entails that he anticipated a raise."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Elijah is receiving the raise he had anticipated, then Elijah will get a raise.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"receiving the raise\"",
+      "reasoning": "Common-sense semantic entailment: receiving a raise implies getting a raise."
     }
   ],
   "_enrichment_log": [

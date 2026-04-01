@@ -2,49 +2,83 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Sophia has the highest score in the test.",
+      "translation": "Sophia has the highest score in the test",
       "evidence": "Sentence 0: \"If Sophia has the highest score in the test\"",
-      "explanation": "This is an atomic, truth-evaluable claim about Sophia's score status; it contains no logical connectives or negation."
+      "explanation": "This is an atomic, truth-evaluable claim about Sophia’s score status in the test; it contains no logical connectives once taken alone."
     },
     {
       "id": "P_2",
-      "translation": "Sophia is awarded a medal.",
+      "translation": "Sophia is awarded a medal",
       "evidence": "Sentence 0: \"then she will be awarded a medal\"",
-      "explanation": "This is an atomic event/state (being awarded a medal) and does not include any connectives or negation."
+      "explanation": "This is a single event/outcome claim (being awarded a medal) and does not require internal logical decomposition."
     },
     {
       "id": "P_3",
-      "translation": "Sophia has outstanding performance.",
-      "evidence": "Sentence 0: \"for her outstanding performance\"",
-      "explanation": "This is a simple descriptive claim about Sophia's performance; it is treated as atomic because the text provides no further internal logical structure."
+      "translation": "The medal is for Sophia's outstanding performance",
+      "evidence": "Sentence 0: \"a medal for her outstanding performance\"",
+      "explanation": "This is an atomic relational claim about what the medal is for, expressible as a simple declarative clause."
+    },
+    {
+      "id": "P_4",
+      "translation": "Sophia has an outstanding performance",
+      "evidence": "Sentence 0: \"her outstanding performance\"",
+      "explanation": "This is an atomic property attribution (outstanding performance) that can stand alone as a truth-evaluable clause."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.999885082244873,
-      "combined=(llm)*(nli)": 0.999885082244873,
+      "nli_entailment": 0.9998408555984497,
+      "combined=(llm)*(nli)": 0.9998408555984497,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Sophia has the highest score in the test, then Sophia is awarded a medal.",
-      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
-      "reasoning": "This is explicitly stated as a conditional in the text with no hedging language.",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal",
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated as a direct conditional in the text.",
       "list nli": [
         [
-          1.1426011042203754e-05,
-          0.00010342973109800369,
-          0.999885082244873
+          1.1628519132500514e-05,
+          0.0001474313176004216,
+          0.9998408555984497
         ],
         [
-          1.5996954971342348e-05,
-          0.0001130834425566718,
-          0.9998708963394165
+          0.00014860417286399752,
+          7.856231968617067e-05,
+          0.999772846698761
         ],
         [
-          0.0003495864220894873,
-          5.978580884402618e-05,
-          0.9995906949043274
+          5.1570013965829276e-06,
+          0.00023664554464630783,
+          0.9997581839561462
+        ]
+      ]
+    },
+    {
+      "llm-weight": 1.0,
+      "nli_entailment": 0.999169111251831,
+      "combined=(llm)*(nli)": 0.999169111251831,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Sophia is awarded a medal (as described), the medal is for her outstanding performance",
+      "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
+      "reasoning": "The phrase \"a medal for her outstanding performance\" specifies the purpose/grounding of the medal in that described awarding outcome.",
+      "list nli": [
+        [
+          3.152118733851239e-05,
+          0.0007993584731593728,
+          0.999169111251831
+        ],
+        [
+          7.448855467373505e-05,
+          0.9778347611427307,
+          0.02209067903459072
+        ],
+        [
+          5.9142286772839725e-05,
+          0.983870267868042,
+          0.016070572659373283
         ]
       ]
     }
@@ -52,61 +86,61 @@
   "soft_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.007001060526818037,
-      "combined=(llm)*(nli)": 0.007001060526818037,
+      "nli_entailment": 0.005124937742948532,
+      "combined=(llm)*(nli)": 0.005124937742948532,
       "hardness_constant": 0.9,
-      "id": "C_4",
+      "id": "C_2",
       "formula": "¬P_1",
-      "translation": "Sophia does not have the highest score in the test.",
+      "translation": "Sophia did not achieve the highest score in the test",
       "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "reasoning": "This is asserted directly and unambiguously.",
+      "reasoning": "This is explicitly asserted (despite discourse markers like \"However, unfortunately\").",
       "list nli": [
         [
-          0.9925427436828613,
-          0.0004562681424431503,
-          0.007001060526818037
+          0.9945099353790283,
+          0.0003651206206995994,
+          0.005124937742948532
         ],
         [
-          0.9989223480224609,
-          0.00046195287723094225,
-          0.0006157606840133667
+          0.9993695616722107,
+          9.747073636390269e-05,
+          0.0005330494022928178
         ],
         [
-          0.9994239807128906,
-          8.98432481335476e-05,
-          0.0004862650530412793
+          0.9994294047355652,
+          7.943584932945669e-05,
+          0.0004910650313831866
         ]
       ],
-      "weight": 0.007001060526818037
+      "weight": 0.005124937742948532
     },
     {
       "llm-weight": 0.85,
-      "nli_entailment": 0.9998990297317505,
-      "combined=(llm)*(nli)": 0.8499141752719879,
+      "nli_entailment": 0.9997215867042542,
+      "combined=(llm)*(nli)": 0.849763348698616,
       "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then Sophia has outstanding performance.",
-      "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
-      "reasoning": "The phrase indicates the medal is awarded on the basis of outstanding performance; this strongly suggests (though does not logically guarantee) that receiving the medal implies outstanding performance.",
+      "id": "C_4",
+      "formula": "P_3 ⟹ P_4",
+      "translation": "If the medal is for Sophia's outstanding performance, then Sophia has an outstanding performance",
+      "evidence": "Sentence 0",
+      "reasoning": "Common-sense entailment: awarding/assigning a medal for someone’s outstanding performance typically presupposes that the person’s performance is outstanding, but it could be merely stated as a justification within a hypothetical scenario, so a small uncertainty remains.",
       "list nli": [
         [
-          2.9003300369367935e-05,
-          7.190122414613143e-05,
-          0.9998990297317505
+          9.14584961719811e-05,
+          0.0001869019033620134,
+          0.9997215867042542
         ],
         [
-          0.0006068415241315961,
-          0.0007646565791219473,
-          0.9986284971237183
+          9.838139703788329e-06,
+          0.0005645464989356697,
+          0.9994256496429443
         ],
         [
-          0.006725257728248835,
-          0.002938725519925356,
-          0.9903360605239868
+          0.00011694442218868062,
+          0.003176156198605895,
+          0.9967069029808044
         ]
       ],
-      "weight": 0.8499141752719879
+      "weight": 0.849763348698616
     }
   ]
 }

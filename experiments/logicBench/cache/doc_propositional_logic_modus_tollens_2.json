@@ -2,45 +2,91 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella has been working hard on her project.",
+      "translation": "Isabella was working hard on her project.",
       "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
-      "explanation": "This is an atomic action/state attribution to Isabella with a single predicate (working hard) and a single object (her project), with no logical connectives."
+      "explanation": "This is an atomic descriptive claim about Isabella's effort level on the project, with no logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Isabella finishes her project on time.",
+      "translation": "Isabella finished her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
-      "explanation": "This is the antecedent event described in the conditional; it is a simple event claim that can serve as a propositional atom."
+      "explanation": "This is a single, truth-evaluable event description (finishing on time) used as the antecedent of a conditional."
     },
     {
       "id": "P_3",
       "translation": "Isabella receives a bonus from her company.",
       "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
-      "explanation": "This is a single outcome/event (receiving a bonus) with a specified source (her company) and no connectives; negation will be represented in constraints rather than inside the proposition."
+      "explanation": "This is an atomic outcome statement (receiving a bonus) without any connectives."
     },
     {
       "id": "P_4",
-      "translation": "Isabella hopes to receive a bonus.",
+      "translation": "Isabella receives no bonus from her company.",
+      "evidence": "Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "explanation": "This is an atomic negative-outcome claim phrased without the connective word \"not\"; it captures the text’s claim that she gets zero bonus."
+    },
+    {
+      "id": "P_5",
+      "translation": "Isabella hoped to receive a bonus from her company.",
       "evidence": "Sentence 1: \"as she had hoped\"",
-      "explanation": "This is an atomic mental-state attribution (hopes) toward a single outcome; it is not itself a logical connective."
+      "explanation": "This is an atomic mental-state claim (hope) about receiving a bonus, stated without logical connectives."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
-      "reasoning": "The text explicitly states this conditional as something Isabella 'knew', strongly suggesting it as a governing rule/policy in the narrative. It is not contradicted by later text because the antecedent (finishing on time) may be false."
+      "formula": "P_1",
+      "translation": "Isabella was working hard on her project.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0",
+      "reasoning": "Directly asserted as a narrative fact."
     },
     {
       "id": "C_2",
-      "formula": "¬P_3",
-      "translation": "Isabella does not receive a bonus from her company.",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Finishing the project on time would result in Isabella receiving a bonus from her company.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "Stated as something Isabella knew; it strongly suggests a rule/guarantee, but is presented via her knowledge rather than an explicit company policy statement."
+    },
+    {
+      "id": "C_3",
+      "formula": "P_5",
+      "translation": "Isabella hoped to receive a bonus.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase presupposes that she had that hope."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Isabella would be receiving no bonus.",
       "llm_weight": 0.95,
       "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
-      "reasoning": "The narrative asserts (via Isabella's realization) that the bonus will not be received. This is presented as a concluded outcome, so it is very strong, though technically filtered through her realization rather than an omniscient statement."
+      "reasoning": "Narration frames it as Isabella’s realization; typically treated as highly reliable in-story, though in principle realizations could be mistaken."
+    },
+    {
+      "id": "C_5",
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "If Isabella receives no bonus, then Isabella does not receive a bonus.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1 (semantic relationship between \"no bonus\" and \"a bonus\")",
+      "reasoning": "\"Receiving no bonus\" and \"receiving a bonus\" are logically incompatible by meaning."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_3 ⟹ ¬P_4",
+      "translation": "If Isabella receives a bonus, then Isabella does not receive no bonus.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0-1 (semantic relationship between bonus vs no bonus)",
+      "reasoning": "Mutual exclusivity follows from the meanings of the propositions."
+    },
+    {
+      "id": "C_7",
+      "formula": "P_4 ⟹ ¬P_2",
+      "translation": "If Isabella receives no bonus, then Isabella did not finish her project on time.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0-1: conditional bonus promise + later no bonus",
+      "reasoning": "Given the strong implication that on-time completion would yield a bonus (Sentence 0) and the later claim of no bonus (Sentence 1), a plausible explanation is that she did not finish on time; however, the text does not explicitly state she missed the deadline, and alternative explanations (policy change, exception) are possible."
     }
   ],
   "_enrichment_log": [

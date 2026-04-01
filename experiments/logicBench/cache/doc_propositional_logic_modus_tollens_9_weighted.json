@@ -4,47 +4,36 @@
       "id": "P_1",
       "translation": "Theodore has a pet dog.",
       "evidence": "Sentence 0: \"If Theodore has a pet dog\"",
-      "explanation": "This is an atomic possession claim (subject + has + object) with no logical connectives once isolated from the conditional."
+      "explanation": "This is an atomic possession claim; it has no internal logical connectives and serves as the antecedent of the conditional."
     },
     {
       "id": "P_2",
       "translation": "Theodore takes his dog out for a walk.",
       "evidence": "Sentence 0: \"he will take it out for a walk\"",
-      "explanation": "This is a single action/event claim; the pronoun \"it\" refers to the dog in context, and the clause is truth-evaluable on its own."
-    },
-    {
-      "id": "P_3",
-      "translation": "Theodore has a dog.",
-      "evidence": "Sentence 1: \"his dog\"",
-      "explanation": "The phrase \"his dog\" presupposes ownership/possession of a dog; this is a standalone truth-evaluable proposition."
+      "explanation": "This is an atomic action claim. The negation in Sentence 1 is handled as a separate constraint (¬P_2), not as a separate primitive proposition."
     }
   ],
   "hard_constraints": [
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9880308508872986,
-      "combined=(llm)*(nli)": 0.9880308508872986,
+      "nli_entailment": 0.981103777885437,
+      "combined=(llm)*(nli)": 0.981103777885437,
       "hardness_constant": 0.9,
       "id": "C_1",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Theodore has a pet dog, Theodore takes his dog out for a walk.",
+      "translation": "If Theodore has a pet dog, then he takes it out for a walk.",
       "evidence": "Sentence 0: \"If Theodore has a pet dog, he will take it out for a walk.\"",
-      "reasoning": "This is stated as a direct conditional commitment in the text.",
+      "reasoning": "This is stated as a direct conditional in the text. The pronoun \"it\" refers to the pet dog, so the consequent is represented by P_2.",
       "list nli": [
         [
-          0.00378801254555583,
-          0.008181174285709858,
-          0.9880308508872986
+          0.005500908475369215,
+          0.01339527778327465,
+          0.981103777885437
         ],
         [
-          0.0033191009424626827,
-          0.02117917872965336,
-          0.9755017757415771
-        ],
-        [
-          0.00011718853056663647,
-          0.9761186838150024,
-          0.023764168843626976
+          8.334809535881504e-05,
+          0.9872086644172668,
+          0.012708024121820927
         ]
       ]
     },
@@ -56,84 +45,21 @@
       "id": "C_2",
       "formula": "¬P_2",
       "translation": "Theodore does not take his dog out for a walk.",
-      "evidence": "Sentence 1: \"he would not take his dog out for a walk.\"",
-      "reasoning": "The text explicitly asserts the negation of the walking action (strong, unhedged).",
+      "evidence": "Sentence 1: \"However, he would not take his dog out for a walk.\"",
+      "reasoning": "This is an explicit negation ('would not') presented as a contrasting fact ('However'), so it is treated as a firm constraint.",
       "list nli": [
         [
-          0.0010537949856370687,
-          0.0003701936802826822,
+          0.0010537969646975398,
+          0.00037019458250142634,
           0.9985760450363159
         ],
         [
-          0.0011695011053234339,
-          0.0004982230020686984,
-          0.9983323216438293
-        ],
-        [
           0.9999572038650513,
-          1.059581609297311e-05,
-          3.2140029361471534e-05
-        ]
-      ]
-    },
-    {
-      "llm-weight": 1.0,
-      "nli_entailment": 0.9768487811088562,
-      "combined=(llm)*(nli)": 0.9768487811088562,
-      "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If Theodore has a pet dog, Theodore has a dog.",
-      "evidence": "Sentence 0: \"pet dog\"",
-      "reasoning": "By meaning, having a pet dog entails having a dog (a pet dog is a kind of dog).",
-      "list nli": [
-        [
-          0.011923928745090961,
-          0.011227253824472427,
-          0.9768487811088562
-        ],
-        [
-          0.0007511905860155821,
-          0.03968653455376625,
-          0.9595623016357422
-        ],
-        [
-          0.014116987586021423,
-          0.9175785779953003,
-          0.06830445677042007
+          1.059580608853139e-05,
+          3.213996751583181e-05
         ]
       ]
     }
   ],
-  "soft_constraints": [
-    {
-      "llm-weight": 0.9,
-      "nli_entailment": 0.0024331065360456705,
-      "combined=(llm)*(nli)": 0.0021897958824411037,
-      "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "P_3",
-      "translation": "Theodore has a dog.",
-      "evidence": "Sentence 1: \"his dog\"",
-      "reasoning": "Use of the possessive \"his dog\" strongly implies Theodore has a dog, though it is a presupposition rather than a direct 'has' statement.",
-      "list nli": [
-        [
-          2.8371174266794696e-05,
-          0.9975384473800659,
-          0.0024331065360456705
-        ],
-        [
-          2.9365763111854903e-05,
-          0.9986554384231567,
-          0.0013151116436347365
-        ],
-        [
-          5.43264250154607e-05,
-          0.9986577033996582,
-          0.0012880273861810565
-        ]
-      ],
-      "weight": 0.0021897958824411037
-    }
-  ]
+  "soft_constraints": []
 }

@@ -4,89 +4,83 @@
       "id": "P_1",
       "translation": "Alexander decided to go for a walk in the park.",
       "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
-      "explanation": "This is an atomic decision/intent statement about Alexander; it does not decompose into simpler propositional parts without adding logical structure."
+      "explanation": "This is an atomic decision event attributed to Alexander; it is not a logical connective of smaller propositions in the text."
     },
     {
       "id": "P_2",
-      "translation": "Alexander takes a walk in the park.",
-      "evidence": "Sentence 0: \"decided to go for a walk in the park\"",
-      "explanation": "This is a single event-level statement (the walk occurs). It is distinct from merely deciding to walk."
+      "translation": "The walk tires Alexander out soon.",
+      "evidence": "Sentence 0: \"it would soon tire him out\"",
+      "explanation": "This is a single predication about the walk causing Alexander to tire out soon (no explicit logical connectives)."
     },
     {
       "id": "P_3",
-      "translation": "Taking the walk soon tires Alexander out.",
-      "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "explanation": "This is an atomic causal/effect statement about the walk producing tiredness soon; it is not a logical connective itself."
+      "translation": "Alexander is fully aware that the walk tires him out soon.",
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "explanation": "This is an atomic mental-state attribution (awareness) with a propositional content; it is not expressed as a conditional or conjunction in the text."
     },
     {
       "id": "P_4",
-      "translation": "Alexander is aware that taking the walk soon tires him out.",
-      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
-      "explanation": "This is an atomic mental-state attribution (awareness) with a specific content; it is not a negation or connective."
-    },
-    {
-      "id": "P_5",
       "translation": "Alexander gets tired soon.",
       "evidence": "Sentence 1: \"he won't get tired soon\"",
-      "explanation": "This is the positive base proposition corresponding to the text's negated claim; it is kept non-negated per the primitive proposition rules."
+      "explanation": "The text asserts a negation of this claim; this positive form is kept primitive so negation can be represented as a constraint."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "Alexander decided to go for a walk in the park.",
+      "formula": "P_3",
+      "translation": "Alexander is fully aware that the walk would soon tire him out.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is stated directly as a main-clause fact."
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "reasoning": "This is explicitly stated without hedging about the awareness itself."
     },
     {
       "id": "C_2",
-      "formula": "P_4",
-      "translation": "Alexander is fully aware that taking the walk would soon tire him out.",
+      "formula": "P_1",
+      "translation": "Alexander decided to go for a walk in the park.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This awareness claim is asserted explicitly (\"fully aware\")."
+      "evidence": "Sentence 0: \"Alexander decided to go for a walk in the park\"",
+      "reasoning": "This is directly asserted."
     },
     {
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "Taking the walk soon tires Alexander out.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 0: \"it would soon tire him out\"",
-      "reasoning": "The text presents this as what Alexander anticipates/knows about the near-future effect of the walk (using predictive/modal phrasing), so it is strongly suggested but not treated as absolutely certain."
+      "formula": "¬P_4",
+      "translation": "Alexander will not get tired soon.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"he won't get tired soon\"",
+      "reasoning": "This is explicitly stated; the 'However' indicates contrast with the earlier expectation."
     },
     {
       "id": "C_4",
-      "formula": "P_4 ⟹ P_3",
-      "translation": "Alexander's awareness that the walk soon tires him out supports that the walk soon tires him out.",
-      "llm_weight": 0.85,
-      "evidence": "Sentence 0: \"aware that it would soon tire him out\"",
-      "reasoning": "‘Aware that’ is typically factive (it presupposes truth), but here it concerns a future outcome; weight is high but not 1.0."
+      "formula": "P_2 ⟹ P_4",
+      "translation": "If the walk tires Alexander out soon, then Alexander gets tired soon.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"tire him out\"; Sentence 1: \"get tired\"",
+      "reasoning": "\"Tire him out\" commonly entails \"get tired\"; the adverb \"soon\" aligns in both phrases, making this implication strong but still common-sense rather than explicitly stated."
     },
     {
       "id": "C_5",
-      "formula": "(P_2 ∧ P_3) ⟹ P_5",
-      "translation": "If Alexander takes the walk and the walk soon tires him out, then Alexander gets tired soon.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0: \"soon tire him out\"",
-      "reasoning": "Common-sense entailment: being tired out soon from the walk implies getting tired soon, assuming the walk occurs."
+      "formula": "P_3 ⟹ P_2",
+      "translation": "If Alexander is fully aware that the walk tires him out soon, then the walk tires Alexander out soon.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: \"fully aware that it would soon tire him out\"",
+      "reasoning": "Awareness often presupposes truth of its content, but the text uses a future/expectational framing (\"would\"), and the next sentence explicitly contrasts with getting tired soon; so this presupposition is weakened."
     },
     {
       "id": "C_6",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Alexander's deciding to go for a walk supports that he takes a walk in the park.",
-      "llm_weight": 0.6,
-      "evidence": "Sentence 0: \"decided to go for a walk\"",
-      "reasoning": "A decision often leads to the action, but the text does not explicitly say he actually went."
+      "formula": "P_2",
+      "translation": "The walk tires Alexander out soon.",
+      "llm_weight": 1.0,
+      "evidence": "Auto-generated",
+      "reasoning": "Original modal statement is asserted with certainty"
     },
     {
       "id": "C_7",
-      "formula": "¬P_5",
-      "translation": "Alexander does not get tired soon.",
+      "formula": "P_2 ⟹ P_2",
+      "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he won't get tired soon\"",
-      "reasoning": "This is stated directly and emphatically as a contrast (\"However\")."
+      "evidence": "Auto-generated",
+      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
       "id": "C_8",
@@ -97,16 +91,8 @@
       "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
     },
     {
-      "id": "C_8",
+      "id": "C_10",
       "formula": "P_4 ⟹ P_4",
-      "translation": "If base event occurs, the modal pattern is satisfied",
-      "llm_weight": 1.0,
-      "evidence": "Auto-generated",
-      "reasoning": "If base event occurs, it is logically consistent with the modal pattern claim"
-    },
-    {
-      "id": "C_11",
-      "formula": "P_5 ⟹ P_5",
       "translation": "If base event occurs, the modal pattern is satisfied",
       "llm_weight": 1.0,
       "evidence": "Auto-generated",
@@ -114,35 +100,36 @@
     }
   ],
   "_enrichment_log": [
-    "[Modal] P_3: 'Taking the walk soon tires Alexander out.' has modal 'soon'",
-    "        Base text: 'Taking the walk tires Alexander out.'",
+    "[Modal] P_2: 'The walk tires Alexander out soon.' has modal 'soon'",
+    "        Base text: 'The walk tires Alexander out.'",
+    "        Found existing base: P_2",
+    "[Modal] P_3: 'Alexander is fully aware that the walk tires him out soon.' has modal 'soon'",
+    "        Base text: 'Alexander is fully aware that the walk tires him out.'",
     "        Found existing base: P_3",
-    "[Modal] P_4: 'Alexander is aware that taking the walk soon tires him out.' has modal 'soon'",
-    "        Base text: 'Alexander is aware that taking the walk tires him out.'",
-    "        Found existing base: P_4",
-    "[Modal] P_5: 'Alexander gets tired soon.' has modal 'soon'",
+    "[Modal] P_4: 'Alexander gets tired soon.' has modal 'soon'",
     "        Base text: 'Alexander gets tired.'",
-    "        Found existing base: P_5",
+    "        Found existing base: P_4",
+    "        Added constraint: P_2 @1.0",
+    "        Added constraint: P_2 ⟹ P_2 @1.0",
     "        Added constraint: P_3 ⟹ P_3 @1.0",
+    "        Added constraint: P_4 @1.0",
     "        Added constraint: P_4 ⟹ P_4 @1.0",
-    "        Added constraint: P_5 @1.0",
-    "        Added constraint: P_5 ⟹ P_5 @1.0",
+    "[Opposite] P_2: 'soon' has antonyms ['never']",
     "[Opposite] P_3: 'soon' has antonyms ['never']",
     "[Opposite] P_4: 'soon' has antonyms ['never']",
-    "[Opposite] P_5: 'soon' has antonyms ['never']",
     "[Negation] Sentence 1: Found negation of 'get'",
     "           Affirmative clause: 'However , he wo get tired soon .'",
     "           No matching proposition found",
     "[Auxiliary] Found 0 auxiliary propositions",
     {
-      "prop_id": "P_5",
+      "prop_id": "P_4",
       "translation": "Alexander gets tired soon.",
-      "positive_constraint": "C_10",
-      "negative_constraint": "C_7",
+      "positive_constraint": "C_9",
+      "negative_constraint": "C_3",
       "nli_score_positive": 0.015619287267327309,
       "nli_score_negative": 0.8624991178512573,
       "decision": "keep negative",
-      "removed": "C_10"
+      "removed": "C_9"
     }
   ]
 }

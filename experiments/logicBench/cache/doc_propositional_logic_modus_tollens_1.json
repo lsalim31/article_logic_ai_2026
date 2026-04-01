@@ -2,63 +2,93 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Liam finished his work early for the day",
+      "translation": "Liam finished his work early for the day.",
       "evidence": "Sentence 0: \"Liam had finished his work early for the day\"",
-      "explanation": "This is a single, truth-evaluable event description and does not contain logical connectives or negation."
+      "explanation": "This is a single event/state attribution about Liam and does not contain logical connectives or conditions."
     },
     {
       "id": "P_2",
-      "translation": "Liam ordered pizza for dinner on that day",
+      "translation": "Liam ordered pizza for dinner.",
       "evidence": "Sentence 0: \"he would typically have ordered pizza for dinner\"; Sentence 1: \"he decided against ordering pizza\"",
-      "explanation": "This is an atomic action statement; the text discusses whether this action occurs, so it should be represented as a single propositional variable that can be affirmed or negated by constraints."
+      "explanation": "This is an atomic action claim (ordering pizza for dinner) that can be independently true or false."
     },
     {
       "id": "P_3",
-      "translation": "Liam opted for something else for dinner on that day",
-      "evidence": "Sentence 1: \"opted for something else instead\"",
-      "explanation": "This is a single, truth-evaluable choice/action statement without embedded connectives or negation."
+      "translation": "Liam decided against ordering pizza.",
+      "evidence": "Sentence 1: \"he decided against ordering pizza\"",
+      "explanation": "This is a single mental-action statement and is not itself a negated proposition in logical form; the negation is part of the verb phrase ('decided against')."
+    },
+    {
+      "id": "P_4",
+      "translation": "Liam chose something else for dinner.",
+      "evidence": "Sentence 1: \"and opted for something else instead\"",
+      "explanation": "This is an atomic choice/action statement (choosing a non-pizza option) without explicit logical connectives."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "Liam finished his work early for the day",
+      "translation": "Liam finished his work early for the day.",
       "llm_weight": 1.0,
       "evidence": "Sentence 0",
-      "reasoning": "This is stated as a factual background event."
+      "reasoning": "This is stated as a factual event in the narrative."
     },
     {
       "id": "C_2",
       "formula": "P_3",
-      "translation": "On this particular day, Liam opted for something else instead",
+      "translation": "Liam decided against ordering pizza.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1",
-      "reasoning": "This is explicitly asserted as what happened that day."
+      "reasoning": "This is explicitly asserted as what Liam did on the particular day."
     },
     {
       "id": "C_3",
-      "formula": "¬P_2",
-      "translation": "On this particular day, Liam did not order pizza for dinner",
+      "formula": "P_4",
+      "translation": "Liam opted for something else for dinner.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he decided against ordering pizza\"",
-      "reasoning": "\"Decided against ordering pizza\" directly indicates that ordering pizza did not occur on that day."
+      "evidence": "Sentence 1",
+      "reasoning": "This is explicitly asserted as what Liam chose instead."
     },
     {
       "id": "C_4",
       "formula": "P_1 ⟹ P_2",
-      "translation": "If Liam finished his work early for the day, then he would order pizza for dinner (typically)",
-      "llm_weight": 0.7,
+      "translation": "Finishing work early meant he would typically have ordered pizza for dinner.",
+      "llm_weight": 0.75,
       "evidence": "Sentence 0: \"which meant that he would typically have ordered pizza for dinner\"",
-      "reasoning": "The word \"typically\" signals a defeasible tendency rather than a strict rule, so the implication is given a soft weight. The following sentence provides an exception."
+      "reasoning": "The word 'typically' indicates a habitual tendency rather than a strict rule, so the implication is treated as a strong-but-defeasible constraint."
     },
     {
       "id": "C_5",
       "formula": "P_3 ⟹ ¬P_2",
-      "translation": "If Liam opted for something else for dinner, then Liam did not order pizza for dinner",
+      "translation": "Deciding against ordering pizza implies he did not order pizza.",
+      "llm_weight": 0.98,
+      "evidence": "Sentence 1: \"he decided against ordering pizza\"",
+      "reasoning": "In ordinary interpretation, deciding against an action strongly suggests the action did not occur, though in rare cases one might still order later; hence slightly below 1.0."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_4 ⟹ ¬P_2",
+      "translation": "Choosing something else instead implies he did not order pizza for dinner.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: \"opted for something else instead\"",
+      "reasoning": "The phrase 'instead' signals exclusivity with pizza for dinner, but it is not logically impossible that he also ordered pizza (e.g., multiple items), so this is very strong but not absolute."
+    },
+    {
+      "id": "C_7",
+      "formula": "¬P_2",
+      "translation": "On this particular day, he did not order pizza for dinner.",
+      "llm_weight": 0.97,
+      "evidence": "Sentence 1: \"However, on this particular day, he decided against ordering pizza\"",
+      "reasoning": "The narrative contrast ('However') and explicit decision against ordering pizza strongly indicate pizza was not ordered that day."
+    },
+    {
+      "id": "C_8",
+      "formula": "¬(P_2 ∧ P_4)",
+      "translation": "He did not both order pizza for dinner and choose something else for dinner.",
       "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"opted for something else instead\" (in the context of not ordering pizza)",
-      "reasoning": "Choosing \"something else instead\" strongly suggests mutual exclusivity with ordering pizza, but in principle one could still order pizza and also have something else, so this is slightly below certainty."
+      "evidence": "Sentence 1: \"opted for something else instead\" (implicates exclusivity)",
+      "reasoning": "Common-sense reading of 'something else instead' suggests mutual exclusivity between pizza for dinner and the alternative choice, but edge cases (ordering multiple dishes) keep this below 1.0."
     }
   ],
   "_enrichment_log": [

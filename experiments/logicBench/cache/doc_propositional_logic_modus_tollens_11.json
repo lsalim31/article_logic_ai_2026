@@ -2,61 +2,39 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Benjamin eagerly anticipated his trip to the beach for weeks",
+      "translation": "Benjamin has been eagerly anticipating his trip to the beach for weeks.",
       "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
-      "explanation": "This is a single, truth-evaluable claim about Benjamin's mental state over a time period, and it contains no logical connectives or negation to decompose."
+      "explanation": "This is a single descriptive claim about Benjamin’s ongoing anticipation of a specific trip; it contains no logical connectives or embedded conditions."
     },
     {
       "id": "P_2",
-      "translation": "Benjamin is going to the beach",
+      "translation": "Benjamin is going to the beach.",
       "evidence": "Sentence 1: \"If he is going to the beach, then he will go swimming.\"",
-      "explanation": "This is an atomic event/state mentioned as the antecedent of a conditional; it must be represented separately to encode the conditional."
+      "explanation": "This is an atomic event/state claim used as the antecedent of a conditional in the text; it is stated without connectives in this primitive form."
     },
     {
       "id": "P_3",
-      "translation": "Benjamin goes swimming",
-      "evidence": "Sentence 1: \"If he is going to the beach, then he will go swimming.\"",
-      "explanation": "This is an atomic event mentioned as the consequent of a conditional; it must be represented separately from the conditional relation."
-    },
-    {
-      "id": "P_4",
-      "translation": "Benjamin's friends told Benjamin a rule about his beach trip",
-      "evidence": "Sentence 1: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
-      "explanation": "This is a standalone reporting statement ('friends told him ...') that is truth-evaluable and does not require internal logical structure for this task."
+      "translation": "Benjamin goes swimming.",
+      "evidence": "Sentence 1: \"then he will go swimming\"; and later \"he didn't end up going swimming\"",
+      "explanation": "This is an atomic action claim; negation is handled in constraints rather than inside the primitive proposition."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "Benjamin's friends stated that going to the beach implies going swimming",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"If he is going to the beach, then he will go swimming.\"",
-      "reasoning": "The text directly quotes this conditional as what his friends told him. It is strongly supported as a reported rule/prediction, but it is still only attributed to the friends rather than asserted as an unquestionable law of the world, so the weight is slightly below 1.0."
+      "formula": "¬P_3",
+      "translation": "Benjamin did not end up going swimming.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: \"However, he didn't end up going swimming after all.\"",
+      "reasoning": "This is stated directly as a factual outcome in the narrative, so it is treated as certain."
     },
     {
       "id": "C_2",
-      "formula": "¬P_3",
-      "translation": "Benjamin did not end up going swimming",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"However, he didn't end up going swimming after all.\"",
-      "reasoning": "This is stated unambiguously by the narrator; it is presented as a definite outcome."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "Anticipating the beach trip suggests Benjamin is going to the beach",
-      "llm_weight": 0.55,
-      "evidence": "Sentence 0: \"Benjamin had been eagerly anticipating his trip to the beach for weeks.\"",
-      "reasoning": "Eager anticipation of a specific upcoming trip typically indicates the trip will occur, but plans can change; the text does not explicitly say he actually went."
-    },
-    {
-      "id": "C_4",
-      "formula": "((P_2 ⟹ P_3) ∧ ¬P_3) ⟹ ¬P_2",
-      "translation": "Given the stated rule, not swimming suggests Benjamin was not going to the beach",
-      "llm_weight": 0.6,
-      "evidence": "Sentence 1: the conditional about beach implying swimming; Sentence 2: \"he didn't end up going swimming\"",
-      "reasoning": "This is a defeasible inference (modus tollens) that would be valid if the friends' rule is taken as reliable. Because the rule is only attributed to friends and could be wrong or not applicable, the induced conclusion is only moderately supported."
+      "formula": "P_2 ⟹ P_3",
+      "translation": "If Benjamin is going to the beach, then Benjamin will go swimming.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 1: \"His friends had told him, 'If he is going to the beach, then he will go swimming.'\"",
+      "reasoning": "The conditional is explicitly given but is attributed to Benjamin’s friends (reported speech), so it is strong but not treated as an absolute law of the world."
     }
   ],
   "_enrichment_log": [

@@ -4,169 +4,107 @@
       "id": "P_1",
       "translation": "Daniel woke up on a gloomy morning.",
       "evidence": "Sentence 0: \"Daniel woke up on a gloomy morning\"",
-      "explanation": "This is a single event claim with a specific subject and circumstance; it contains no logical connective or conditional structure."
+      "explanation": "This is an atomic event description about Daniel waking up with a specified time/context."
     },
     {
       "id": "P_2",
       "translation": "Daniel forgot to take his umbrella.",
-      "evidence": "Sentence 0: \"he had forgotten to take his umbrella\"",
-      "explanation": "This is an atomic mental-state/action-omission claim; it is not a negation statement and does not contain an explicit connective."
+      "evidence": "Sentence 0: \"realized that he had forgotten to take his umbrella\"",
+      "explanation": "This is a single truth-evaluable fact about forgetting an action, with a specific object."
     },
     {
       "id": "P_3",
-      "translation": "Daniel took his umbrella.",
-      "evidence": "Sentence 0: \"forgotten to take his umbrella\" (introduces the relevant action 'take his umbrella')",
-      "explanation": "This is the positive-action counterpart needed to represent the implied incompatibility with forgetting to take it, without using negation inside the proposition."
+      "translation": "Daniel remembered a rule about forgetting his umbrella.",
+      "evidence": "Sentence 1: \"Remembering the rule that if he forgot his umbrella\"",
+      "explanation": "This is atomic because it asserts the mental action of remembering a specific rule."
     },
     {
       "id": "P_4",
-      "translation": "Daniel remembers a rule about forgetting his umbrella.",
-      "evidence": "Sentence 1: \"Remembering the rule\"",
-      "explanation": "This is an atomic cognitive-state claim; the internal content of the rule is represented separately as a constraint."
+      "translation": "Daniel gets wet in the rain.",
+      "evidence": "Sentence 1: \"he would get wet in the rain\"",
+      "explanation": "This is an atomic outcome statement (getting wet) in a described situation (in the rain)."
     },
     {
       "id": "P_5",
-      "translation": "Daniel gets wet in the rain.",
-      "evidence": "Sentence 1: \"he would get wet in the rain\"",
-      "explanation": "This is a single outcome claim; it is the consequent of a conditional in the text, but the proposition itself contains no conditional words."
+      "translation": "Daniel felt a sense of worry.",
+      "evidence": "Sentence 1: \"Daniel felt a sense of worry\"",
+      "explanation": "This is an atomic emotional-state attribution."
     },
     {
       "id": "P_6",
-      "translation": "Daniel feels worry.",
-      "evidence": "Sentence 1: \"Daniel felt a sense of worry\"",
-      "explanation": "This is an atomic emotional-state claim."
+      "translation": "Daniel stayed dry.",
+      "evidence": "Sentence 2: \"Daniel managed to stay dry\"",
+      "explanation": "This is an atomic state/outcome claim about Daniel."
     },
     {
       "id": "P_7",
-      "translation": "Daniel stays dry.",
-      "evidence": "Sentence 2: \"Daniel managed to stay dry\"",
-      "explanation": "This is an atomic outcome/state claim."
+      "translation": "Daniel felt relieved.",
+      "evidence": "Sentence 2: \"and was relieved\"",
+      "explanation": "This is an atomic emotional-state attribution."
     },
     {
       "id": "P_8",
-      "translation": "Daniel feels relieved.",
-      "evidence": "Sentence 2: \"was relieved\"",
-      "explanation": "This is an atomic emotional-state claim."
-    },
-    {
-      "id": "P_9",
-      "translation": "Daniel has to face the consequences of getting wet in the rain.",
+      "translation": "Daniel faces the consequences of getting wet in the rain.",
       "evidence": "Sentence 2: \"face the consequences of getting wet in the rain\"",
-      "explanation": "This is a single obligation/experience claim; it is phrased positively to avoid embedding negation in the primitive proposition."
+      "explanation": "This is an atomic claim about Daniel facing a particular set of consequences (treated as a single proposition)."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "Daniel woke up on a gloomy morning.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_2 ⟹ P_4",
+      "translation": "Forgetting the umbrella implies getting wet in the rain.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1: \"the rule that if he forgot his umbrella, he would get wet in the rain\"",
+      "reasoning": "The text explicitly states a remembered rule linking forgetting the umbrella to getting wet; as an in-story rule it is strongly suggested but not guaranteed to match what actually occurs."
     },
     {
       "id": "C_2",
-      "formula": "P_2",
-      "translation": "Daniel forgot to take his umbrella.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "(P_3 ∧ P_2) ⟹ P_5",
+      "translation": "Remembering the rule and forgetting the umbrella implies worry.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 1: \"Remembering the rule ... Daniel felt a sense of worry.\"",
+      "reasoning": "The narrative presents Daniel's worry as arising from remembering the rule in the context of his forgetting the umbrella, so the implication is strong."
     },
     {
       "id": "C_3",
-      "formula": "P_4",
-      "translation": "Daniel remembers a rule about forgetting his umbrella.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_6 ⟹ ¬P_4",
+      "translation": "Staying dry implies not getting wet in the rain.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 2: \"Daniel managed to stay dry\"",
+      "reasoning": "Being dry is very strong evidence against having gotten wet; treated as near-certain given ordinary meaning."
     },
     {
       "id": "C_4",
-      "formula": "P_6",
-      "translation": "Daniel felt worry.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_7 ⟹ ¬P_8",
+      "translation": "Daniel's relief implies he does not face the consequences of getting wet in the rain.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 2: \"was relieved that he didn't have to face the consequences of getting wet in the rain\"",
+      "reasoning": "The relief is explicitly characterized as relief about not facing those consequences, strongly supporting the negation of P_8."
     },
     {
       "id": "C_5",
-      "formula": "P_7",
-      "translation": "Daniel stayed dry.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_6 ⟹ ¬P_8",
+      "translation": "Staying dry implies not facing the consequences of getting wet in the rain.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 2: \"managed to stay dry\" and \"didn't have to face the consequences of getting wet in the rain\"",
+      "reasoning": "The text links the dry outcome with avoiding the consequences tied to getting wet; this is strongly implied but not a strict logical necessity in all imaginable worlds."
     },
     {
       "id": "C_6",
-      "formula": "P_8",
-      "translation": "Daniel was relieved.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2",
-      "reasoning": "This is directly asserted as a narrative fact."
+      "formula": "P_4 ⟹ P_8",
+      "translation": "Getting wet in the rain implies facing the consequences of getting wet in the rain.",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 2: \"the consequences of getting wet in the rain\"",
+      "reasoning": "The phrase suggests that consequences are attached to the event of getting wet; it is a plausible intended relation though not spelled out as a strict rule."
     },
     {
       "id": "C_7",
-      "formula": "¬P_9",
-      "translation": "Daniel did not have to face the consequences of getting wet in the rain.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"he didn't have to face the consequences\"",
-      "reasoning": "This is explicitly stated (negated) in the text."
-    },
-    {
-      "id": "C_8",
-      "formula": "P_2 ⟹ ¬P_3",
-      "translation": "Forgetting to take his umbrella implies he did not take his umbrella.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"forgotten to take his umbrella\"",
-      "reasoning": "By the semantics of 'forgot to take X', the taking did not occur."
-    },
-    {
-      "id": "C_9",
-      "formula": "(P_4 ∧ P_2) ⟹ P_6",
-      "translation": "Remembering the rule and having forgotten the umbrella led Daniel to feel worry.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "The sentence presents worry as arising from remembering the rule in the context of having forgotten the umbrella."
-    },
-    {
-      "id": "C_10",
-      "formula": "P_4 ⟹ (P_2 ⟹ P_5)",
-      "translation": "The remembered rule states that forgetting the umbrella implies getting wet in the rain.",
+      "formula": "P_6 ⟹ P_7",
+      "translation": "Staying dry implies relief.",
       "llm_weight": 0.85,
-      "evidence": "Sentence 1: \"the rule that if he forgot his umbrella, he would get wet in the rain\"",
-      "reasoning": "The text clearly presents this conditional as a 'rule', but the later outcome (staying dry) suggests it may be defeasible or not always realized, so the implication is not treated as absolutely reliable."
-    },
-    {
-      "id": "C_11",
-      "formula": "P_7 ⟹ ¬P_5",
-      "translation": "Staying dry implies not getting wet in the rain.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 2: \"managed to stay dry\" (contrasts with \"get wet\")",
-      "reasoning": "Dryness and getting wet are strongly incompatible states in ordinary usage; treated as near-certain."
-    },
-    {
-      "id": "C_12",
-      "formula": "P_7 ⟹ P_8",
-      "translation": "Staying dry implies Daniel felt relieved.",
-      "llm_weight": 0.9,
       "evidence": "Sentence 2: \"managed to stay dry and was relieved\"",
-      "reasoning": "The text conjoins the two outcomes; relief is strongly suggested to result from staying dry, though relief could also be caused by the avoided consequences more generally."
-    },
-    {
-      "id": "C_13",
-      "formula": "P_8 ⟹ ¬P_9",
-      "translation": "Daniel's relief implies he did not have to face the consequences of getting wet in the rain.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"was relieved that he didn't have to face the consequences\"",
-      "reasoning": "The text explicitly ties the relief to not facing the consequences."
-    },
-    {
-      "id": "C_14",
-      "formula": "P_5 ⟹ P_9",
-      "translation": "Getting wet in the rain implies facing the consequences of getting wet in the rain.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 2: \"consequences of getting wet in the rain\"",
-      "reasoning": "The phrase presupposes that getting wet has consequences; while one could get wet without notable consequences, the intended meaning is that wetness brings consequences."
+      "reasoning": "The narrative sequencing suggests relief follows from the successful outcome of staying dry; strong but not strictly necessary in all cases."
     }
   ],
   "_enrichment_log": [
