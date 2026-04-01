@@ -4,97 +4,49 @@
       "id": "P_1",
       "translation": "Olivia is known for her green thumb.",
       "evidence": "Sentence 0: \"Olivia had always been known for her green thumb.\"",
-      "explanation": "This is an atomic property attribution about Olivia; it contains no logical connectives or conditions."
+      "explanation": "This is an atomic attribution about Olivia's reputation; it is truth-evaluable and contains no logical connectives or negation."
     },
     {
       "id": "P_2",
       "translation": "Olivia has the ability to plant trees.",
-      "evidence": "Sentence 1: \"She prided herself on her ability to plant ... trees.\"",
-      "explanation": "This is a single capability claim (ability to plant trees) and can be evaluated as true/false without needing further logical decomposition."
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This extracts one atomic component of the stated ability; the original contains a conjunction that must be split."
     },
     {
       "id": "P_3",
-      "translation": "Olivia has the ability to take care of trees.",
-      "evidence": "Sentence 1: \"She prided herself on her ability to ... care for beautiful trees.\"",
-      "explanation": "This is a single capability claim (ability to care for trees) and is atomic in the propositional-logic sense."
+      "translation": "Olivia has the ability to care for beautiful trees.",
+      "evidence": "Sentence 1: \"She prided herself on her ability to plant and care for beautiful trees.\"",
+      "explanation": "This extracts the other atomic component of the stated ability; the original contains a conjunction that must be split."
     },
     {
       "id": "P_4",
-      "translation": "Olivia plants a tree.",
-      "evidence": "Sentence 2: \"if Olivia planted a tree\"",
-      "explanation": "This is the antecedent event used in the rule; it must be represented as an atomic proposition to express the conditional."
+      "translation": "Olivia planted a tree.",
+      "evidence": "Sentence 2: \"if Olivia planted a tree, then she would undoubtedly take care of it.\"",
+      "explanation": "This is the antecedent event referenced by the stated rule; it is needed as a standalone atom to express the conditional."
     },
     {
       "id": "P_5",
-      "translation": "Olivia takes care of the tree.",
-      "evidence": "Sentence 2: \"then she would undoubtedly take care of it.\"; Sentence 3: \"she won't take care of it.\"",
-      "explanation": "This is the consequent action referenced by both the rule and the later denial; it is atomic and connectives-free."
+      "translation": "Olivia takes care of the tree she planted.",
+      "evidence": "Sentence 2: \"then she would undoubtedly take care of it.\"",
+      "explanation": "This is the consequent action referenced by the stated rule; it is an atomic action statement (no negation)."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "Olivia is known for her green thumb.",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Olivia planted a tree, then Olivia takes care of it.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "Stated as background fact in the narrative (the word 'always' adds emphasis but does not reduce commitment)."
+      "evidence": "Sentence 2: \"According to the rule, if Olivia planted a tree, then she would undoubtedly take care of it.\"",
+      "reasoning": "The text explicitly states a rule and strengthens it with \"undoubtedly\", indicating a firm implication."
     },
     {
       "id": "C_2",
-      "formula": "P_2",
-      "translation": "Olivia has the ability to plant trees.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Directly asserted as something she prides herself on; the text presents this as a characterization of her competence."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_3",
-      "translation": "Olivia has the ability to take care of trees.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "Directly asserted as part of her stated ability to care for trees."
-    },
-    {
-      "id": "C_4",
-      "formula": "P_4 ⟹ P_5",
-      "translation": "According to the rule, planting a tree implies taking care of it.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"According to the rule, if Olivia planted a tree, then she would undoubtedly take care of it.\"",
-      "reasoning": "The conditional is explicitly given as a rule, and 'undoubtedly' signals maximal strength."
-    },
-    {
-      "id": "C_5",
       "formula": "¬P_5",
-      "translation": "Olivia does not take care of the tree.",
+      "translation": "Olivia does not take care of the tree she planted.",
       "llm_weight": 1.0,
       "evidence": "Sentence 3: \"However, she won't take care of it.\"",
-      "reasoning": "This is an explicit negation in the text ('won't'), so it is treated as certain."
-    },
-    {
-      "id": "C_6",
-      "formula": "P_4 ⟹ P_2",
-      "translation": "If Olivia plants a tree, then Olivia has the ability to plant trees.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1 (ability to plant) and Sentence 2 (planting as an action)",
-      "reasoning": "Common-sense implication: successfully performing the action of planting a tree typically presupposes having the ability to plant trees; not logically necessary in all edge cases, hence < 1.0."
-    },
-    {
-      "id": "C_7",
-      "formula": "P_5 ⟹ P_3",
-      "translation": "If Olivia takes care of the tree, then Olivia has the ability to take care of trees.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1 (ability to care) and Sentence 2/3 (taking care of it)",
-      "reasoning": "Common-sense implication: taking care of a tree typically presupposes the ability to care for trees; not strictly guaranteed in all conceivable cases."
-    },
-    {
-      "id": "C_8",
-      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
-      "translation": "Being known for a green thumb implies having the ability to plant and care for trees.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0 (green thumb) and Sentence 1 (ability to plant/care)",
-      "reasoning": "'Green thumb' is commonly used to indicate gardening skill, which suggests (but does not strictly entail) both planting and caring abilities; the text supports this association but it remains an interpretive, idiom-based inference."
+      "reasoning": "This is stated directly as a factual exception/contrast, so it is treated as certain."
     }
   ],
   "_enrichment_log": [

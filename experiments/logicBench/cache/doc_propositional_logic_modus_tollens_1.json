@@ -2,63 +2,69 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Liam finished his work early for the day",
-      "evidence": "Sentence 0: \"Liam had finished his work early for the day\"",
-      "explanation": "This is a single, truth-evaluable event description and does not contain logical connectives or negation."
+      "translation": "Liam finished his work early for the day.",
+      "evidence": "Sentence 0: 'Liam had finished his work early for the day'",
+      "explanation": "This is a simple past-tense factual claim about Liam's work completion time, with no embedded logical connectives."
     },
     {
       "id": "P_2",
-      "translation": "Liam ordered pizza for dinner on that day",
-      "evidence": "Sentence 0: \"he would typically have ordered pizza for dinner\"; Sentence 1: \"he decided against ordering pizza\"",
-      "explanation": "This is an atomic action statement; the text discusses whether this action occurs, so it should be represented as a single propositional variable that can be affirmed or negated by constraints."
+      "translation": "Liam orders pizza for dinner.",
+      "evidence": "Sentence 0: 'he would typically have ordered pizza for dinner'",
+      "explanation": "This captures the base action ('orders pizza for dinner') as an atomic proposition; typicality is handled as a weighted constraint rather than inside the proposition."
     },
     {
       "id": "P_3",
-      "translation": "Liam opted for something else for dinner on that day",
-      "evidence": "Sentence 1: \"opted for something else instead\"",
-      "explanation": "This is a single, truth-evaluable choice/action statement without embedded connectives or negation."
+      "translation": "Liam orders pizza for dinner on this particular day.",
+      "evidence": "Sentence 1: 'on this particular day, he decided against ordering pizza'",
+      "explanation": "This is an atomic, day-specific version of the pizza-ordering action; negation is represented only in constraints, not in the proposition text."
+    },
+    {
+      "id": "P_4",
+      "translation": "Liam orders something else for dinner on this particular day.",
+      "evidence": "Sentence 1: 'opted for something else instead'",
+      "explanation": "This is a single, truth-evaluable claim about Liam's dinner choice on the particular day, without connectives."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1",
-      "translation": "Liam finished his work early for the day",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 0",
-      "reasoning": "This is stated as a factual background event."
+      "formula": "P_1 ⟹ P_2",
+      "translation": "Finishing work early implies Liam orders pizza for dinner (as a typical tendency).",
+      "llm_weight": 0.8,
+      "evidence": "Sentence 0: 'which meant that he would typically have ordered pizza for dinner'",
+      "reasoning": "The word 'typically' indicates a strong but defeasible tendency, not an absolute rule."
     },
     {
       "id": "C_2",
-      "formula": "P_3",
-      "translation": "On this particular day, Liam opted for something else instead",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 1",
-      "reasoning": "This is explicitly asserted as what happened that day."
+      "formula": "P_1 ⟹ P_3",
+      "translation": "Finishing work early implies Liam orders pizza for dinner on that day (as a typical expectation).",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0: 'he would typically have ordered pizza for dinner'",
+      "reasoning": "The text frames pizza as the expected choice for that day given the condition, but it is explicitly overridden by the following sentence, so the weight is lowered."
     },
     {
       "id": "C_3",
-      "formula": "¬P_2",
-      "translation": "On this particular day, Liam did not order pizza for dinner",
+      "formula": "¬P_3",
+      "translation": "Liam does not order pizza for dinner on this particular day.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"he decided against ordering pizza\"",
-      "reasoning": "\"Decided against ordering pizza\" directly indicates that ordering pizza did not occur on that day."
+      "evidence": "Sentence 1: 'he decided against ordering pizza'",
+      "reasoning": "This is stated directly and unambiguously for the particular day."
     },
     {
       "id": "C_4",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "If Liam finished his work early for the day, then he would order pizza for dinner (typically)",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0: \"which meant that he would typically have ordered pizza for dinner\"",
-      "reasoning": "The word \"typically\" signals a defeasible tendency rather than a strict rule, so the implication is given a soft weight. The following sentence provides an exception."
+      "formula": "P_4",
+      "translation": "Liam orders something else for dinner on this particular day.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 1: 'opted for something else instead'",
+      "reasoning": "This is directly asserted as what he chose on that day."
     },
     {
       "id": "C_5",
-      "formula": "P_3 ⟹ ¬P_2",
-      "translation": "If Liam opted for something else for dinner, then Liam did not order pizza for dinner",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"opted for something else instead\" (in the context of not ordering pizza)",
-      "reasoning": "Choosing \"something else instead\" strongly suggests mutual exclusivity with ordering pizza, but in principle one could still order pizza and also have something else, so this is slightly below certainty."
+      "formula": "P_4 ⟹ ¬P_3",
+      "translation": "Ordering something else for dinner on the particular day implies not ordering pizza that day.",
+      "llm_weight": 0.95,
+      "evidence": "Sentence 1: 'something else instead'",
+      "reasoning": "The phrase 'instead' strongly suggests mutual exclusivity between 'something else' and pizza for that dinner, though it is theoretically possible to order multiple items."
     }
   ],
   "_enrichment_log": [

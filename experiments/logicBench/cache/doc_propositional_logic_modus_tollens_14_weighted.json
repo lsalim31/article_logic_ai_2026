@@ -2,162 +2,255 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Scarlett is an avid book collector.",
+      "translation": "Scarlett is an avid book collector",
       "evidence": "Sentence 0: \"Scarlett, an avid book collector\"",
-      "explanation": "This is a single predicate about Scarlett (being an avid book collector) with no logical connectives or conditions."
+      "explanation": "This is a single attributive claim about Scarlett and does not contain logical connectives or conditionals."
     },
     {
       "id": "P_2",
-      "translation": "Scarlett dreamt of finding a rare book to add to her cherished collection.",
-      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
-      "explanation": "This expresses one mental-state content (a dream/aspiration) and is not a logical combination of smaller propositions in the text."
+      "translation": "Scarlett has a cherished book collection",
+      "evidence": "Sentence 0: \"her cherished collection\"",
+      "explanation": "This is an atomic possession/ownership-style fact implied by the phrase describing her collection."
     },
     {
       "id": "P_3",
-      "translation": "Scarlett stumbles upon a rare book.",
-      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
-      "explanation": "This is the antecedent event-clause used in a conditional; it is extracted as an atomic proposition without the conditional marker."
+      "translation": "Scarlett dreams of finding a rare book to add to her collection",
+      "evidence": "Sentence 0: \"had always dreamt of finding a rare book to add to her cherished collection\"",
+      "explanation": "This is a single mental-state predicate (dreaming of a particular outcome) and is not itself a logical combination of smaller truth-evaluable clauses in the text."
     },
     {
       "id": "P_4",
-      "translation": "Scarlett decides to keep the rare book.",
-      "evidence": "Sentence 1: \"she would ... decide to keep it\"",
-      "explanation": "This is one decision/action-intention about the rare book; it is an atomic consequent component of the conditional."
+      "translation": "Scarlett stumbles upon a rare book",
+      "evidence": "Sentence 1: \"if she ever stumbled upon such a rare book\"",
+      "explanation": "This is an event description used as an antecedent in a conditional; extracted here as a standalone atomic proposition."
     },
     {
       "id": "P_5",
-      "translation": "Scarlett makes the rare book a part of her literary treasures.",
-      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
-      "explanation": "This is a single action/outcome clause about incorporating the rare book into her treasures; no connectives are inside it."
+      "translation": "Scarlett decides to keep the rare book",
+      "evidence": "Sentence 1: \"she would immediately decide to keep it\"",
+      "explanation": "This is an atomic decision/intention statement; it contains no connectives once separated from the conditional."
     },
     {
       "id": "P_6",
-      "translation": "Scarlett found a book one day.",
-      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "explanation": "This is a simple factual event statement asserted by the narrative."
+      "translation": "Scarlett makes the rare book a part of her literary treasures",
+      "evidence": "Sentence 1: \"make it a part of her literary treasures\"",
+      "explanation": "This is a single action/outcome predicate; it is not a connective of finer propositions."
     },
     {
       "id": "P_7",
-      "translation": "Scarlett decides to keep the found book in her collection.",
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "explanation": "The text asserts the negation of this decision; the atomic positive form is used so negation can be expressed in constraints."
+      "translation": "Scarlett finds a book",
+      "evidence": "Sentence 2: \"one day Scarlett found a book\"",
+      "explanation": "This is an atomic event claim about finding a book."
+    },
+    {
+      "id": "P_8",
+      "translation": "Scarlett keeps the found book in her collection",
+      "evidence": "Sentence 2: \"keep it in her collection\"",
+      "explanation": "This is a simple action/state claim (keeping the book in the collection). Negation is handled at the constraint level."
     }
   ],
   "hard_constraints": [
     {
-      "llm-weight": 0.95,
-      "nli_entailment": 0.9998064637184143,
-      "combined=(llm)*(nli)": 0.9498161405324935,
-      "hardness_constant": 0.9,
-      "id": "C_1",
-      "formula": "P_3 ⟹ (P_4 ∧ P_5)",
-      "translation": "If Scarlett stumbles upon such a rare book, she decides to keep it and makes it part of her literary treasures.",
-      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would ... decide to keep it and make it a part of her literary treasures.\"",
-      "reasoning": "The conditional is stated as Scarlett's belief, strongly indicating the rule, but it is framed as a belief about what she would do rather than a universally guaranteed law of the world.",
-      "list nli": [
-        [
-          9.612151188775897e-06,
-          0.00018398092652205378,
-          0.9998064637184143
-        ],
-        [
-          6.288928852882236e-05,
-          0.0001320124138146639,
-          0.9998051524162292
-        ],
-        [
-          7.616093625983922e-06,
-          0.00037762601277790964,
-          0.9996147155761719
-        ]
-      ]
-    },
-    {
       "llm-weight": 1.0,
-      "nli_entailment": 0.999879002571106,
-      "combined=(llm)*(nli)": 0.999879002571106,
+      "nli_entailment": 0.9918753504753113,
+      "combined=(llm)*(nli)": 0.9918753504753113,
       "hardness_constant": 0.9,
-      "id": "C_2",
-      "formula": "P_6",
-      "translation": "Scarlett found a book one day.",
+      "id": "C_4",
+      "formula": "P_7",
+      "translation": "Scarlett found a book",
       "evidence": "Sentence 2: \"one day Scarlett found a book\"",
-      "reasoning": "This is directly asserted as a narrative fact.",
+      "reasoning": "This is asserted as a narrative fact.",
       "list nli": [
         [
-          4.393531708046794e-05,
-          7.704766176175326e-05,
-          0.999879002571106
+          1.2868549674749374e-05,
+          0.008111772127449512,
+          0.9918753504753113
         ],
         [
-          3.1646086426917464e-05,
-          0.9623236656188965,
-          0.03764469921588898
+          3.410975477891043e-05,
+          0.18202120065689087,
+          0.8179447054862976
         ],
         [
-          0.00010009441029978916,
-          0.962978720664978,
-          0.03692115098237991
+          0.9890106320381165,
+          0.0005839398363605142,
+          0.010405480861663818
         ]
       ]
     },
     {
       "llm-weight": 1.0,
-      "nli_entailment": 0.9998273849487305,
-      "combined=(llm)*(nli)": 0.9998273849487305,
+      "nli_entailment": 0.9987524747848511,
+      "combined=(llm)*(nli)": 0.9987524747848511,
       "hardness_constant": 0.9,
-      "id": "C_3",
-      "formula": "¬P_7",
-      "translation": "Scarlett decided not to keep the found book in her collection.",
-      "evidence": "Sentence 2: \"she decided not to keep it in her collection\"",
-      "reasoning": "The text explicitly states the negation of the decision-to-keep.",
+      "id": "C_5",
+      "formula": "¬P_8",
+      "translation": "Scarlett did not keep the found book in her collection",
+      "evidence": "Sentence 2: \"but she decided not to keep it in her collection\"",
+      "reasoning": "The text explicitly states a decision not to keep it in her collection; in context this strongly indicates the 'keeping in her collection' proposition is false.",
       "list nli": [
         [
-          3.307384758954868e-05,
-          0.00013948691776022315,
-          0.9998273849487305
+          0.0004074588941875845,
+          0.0008400346268899739,
+          0.9987524747848511
         ],
         [
-          4.847350646741688e-05,
-          0.00028718740213662386,
-          0.999664306640625
+          0.027576344087719917,
+          0.004668759182095528,
+          0.9677549004554749
         ],
         [
-          0.004960780497640371,
-          0.0003980651672463864,
-          0.9946411848068237
+          0.09136665612459183,
+          0.0019750292412936687,
+          0.9066583514213562
+        ]
+      ]
+    },
+    {
+      "llm-weight": 0.95,
+      "nli_entailment": 0.9991511106491089,
+      "combined=(llm)*(nli)": 0.9491935551166534,
+      "hardness_constant": 0.9,
+      "id": "C_7",
+      "formula": "P_1 ⟹ P_2",
+      "translation": "If Scarlett is an avid book collector, she has a book collection",
+      "evidence": "Sentence 0: \"Scarlett, an avid book collector\" and \"her cherished collection\"",
+      "reasoning": "Being a book collector strongly implies having a collection, and the text also directly mentions her collection; this is effectively certain from the combined phrasing.",
+      "list nli": [
+        [
+          0.00019429673557169735,
+          0.0006546286749653518,
+          0.9991511106491089
+        ],
+        [
+          0.0003121631743852049,
+          0.0005564819439314306,
+          0.9991313815116882
+        ],
+        [
+          0.0002488155150786042,
+          0.0012352976482361555,
+          0.9985159039497375
         ]
       ]
     }
   ],
   "soft_constraints": [
     {
-      "llm-weight": 0.7,
-      "nli_entailment": 0.9998792409896851,
-      "combined=(llm)*(nli)": 0.6999154686927795,
+      "llm-weight": 0.85,
+      "nli_entailment": 0.999137282371521,
+      "combined=(llm)*(nli)": 0.8492666900157928,
       "hardness_constant": 0.9,
-      "id": "C_4",
-      "formula": "P_5 ⟹ P_4",
-      "translation": "If Scarlett makes the rare book part of her literary treasures, then she decides to keep the rare book.",
-      "evidence": "Sentence 1: \"decide to keep it and make it a part of her literary treasures\"",
-      "reasoning": "Common-sense/semantic entailment: integrating a book into one's literary treasures normally presupposes choosing to keep it. The text presents the two as coordinated outcomes, supporting this direction moderately.",
+      "id": "C_1",
+      "formula": "P_4 ⟹ P_5",
+      "translation": "If Scarlett stumbles upon a rare book, she decides to keep it",
+      "evidence": "Sentence 1: \"She believed that if she ever stumbled upon such a rare book, she would immediately decide to keep it\"",
+      "reasoning": "The conditional is presented as Scarlett's belief rather than an objective law, so it is strongly suggested but not absolutely guaranteed as a fact about the world.",
       "list nli": [
         [
-          1.2711781891994178e-05,
-          0.00010802005272125825,
-          0.9998792409896851
+          2.801918344630394e-05,
+          0.0008346284739673138,
+          0.999137282371521
         ],
         [
-          4.9468093493487686e-05,
-          7.254161755554378e-05,
-          0.9998779296875
+          0.00037347408942878246,
+          0.0006152361165732145,
+          0.9990112781524658
         ],
         [
-          0.0001064476600731723,
-          8.663298649480566e-05,
-          0.9998069405555725
+          6.787689017073717e-06,
+          0.001196867786347866,
+          0.9987963438034058
         ]
       ],
-      "weight": 0.6999154686927795
+      "weight": 0.8492666900157928
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9995986819267273,
+      "combined=(llm)*(nli)": 0.8496588796377181,
+      "hardness_constant": 0.9,
+      "id": "C_2",
+      "formula": "P_4 ⟹ P_6",
+      "translation": "If Scarlett stumbles upon a rare book, she makes it part of her literary treasures",
+      "evidence": "Sentence 1: \"...and make it a part of her literary treasures\"",
+      "reasoning": "Same belief-based conditional as C_1; strong but not certain as an objective rule.",
+      "list nli": [
+        [
+          2.4990082238218747e-05,
+          0.0003763253625947982,
+          0.9995986819267273
+        ],
+        [
+          5.1189897931180894e-05,
+          0.0005090309423394501,
+          0.9994397759437561
+        ],
+        [
+          2.387699714745395e-05,
+          0.0006185250240378082,
+          0.9993576407432556
+        ]
+      ],
+      "weight": 0.8496588796377181
+    },
+    {
+      "llm-weight": 0.85,
+      "nli_entailment": 0.9997391104698181,
+      "combined=(llm)*(nli)": 0.8497782438993454,
+      "hardness_constant": 0.9,
+      "id": "C_3",
+      "formula": "P_4 ⟹ (P_5 ∧ P_6)",
+      "translation": "If Scarlett stumbles upon a rare book, she decides to keep it and makes it part of her literary treasures",
+      "evidence": "Sentence 1: \"...she would immediately decide to keep it and make it a part of her literary treasures\"",
+      "reasoning": "This captures the full structure of the believed conditional; it is redundant with C_1 and C_2 logically but included to preserve the explicit joint consequence expressed in the sentence.",
+      "list nli": [
+        [
+          9.355353540740907e-06,
+          0.0002515367523301393,
+          0.9997391104698181
+        ],
+        [
+          0.00021913836826570332,
+          0.00037117081228643656,
+          0.9994096755981445
+        ],
+        [
+          3.82124817406293e-05,
+          0.000768548808991909,
+          0.9991932511329651
+        ]
+      ],
+      "weight": 0.8497782438993454
+    },
+    {
+      "llm-weight": 0.9,
+      "nli_entailment": 0.9978135824203491,
+      "combined=(llm)*(nli)": 0.8980322241783142,
+      "hardness_constant": 0.9,
+      "id": "C_6",
+      "formula": "P_7 ⟹ ¬P_8",
+      "translation": "Given that Scarlett found a book that day, that book was not kept in her collection",
+      "evidence": "Sentence 2: \"Scarlett found a book, but she decided not to keep it in her collection\"",
+      "reasoning": "The 'it' refers to the book she found, so the non-keeping applies to that found book; pronoun resolution is highly likely but not logically forced in all imaginable readings.",
+      "list nli": [
+        [
+          9.14927659323439e-05,
+          0.0020949505269527435,
+          0.9978135824203491
+        ],
+        [
+          0.006740595679730177,
+          0.09202542901039124,
+          0.9012339115142822
+        ],
+        [
+          0.8473771214485168,
+          0.002385625382885337,
+          0.1502372920513153
+        ]
+      ],
+      "weight": 0.8980322241783142
     }
   ]
 }

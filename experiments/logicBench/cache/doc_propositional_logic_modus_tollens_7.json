@@ -2,63 +2,77 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella ate a sandwich for lunch.",
-      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"; Sentence 1: \"As she took a bite\"",
-      "explanation": "This is an atomic event/state description (a specific eating action at lunch) and contains no logical connectives or negation."
+      "translation": "Isabella decided to have a sandwich for her lunch.",
+      "evidence": "Sentence 0: \"Isabella decided to have a sandwich for her lunch.\"",
+      "explanation": "This is an atomic mental-action statement about Isabella’s decision; it contains no logical connectives or embedded conditions."
     },
     {
       "id": "P_2",
-      "translation": "Isabella felt completely satisfied.",
-      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied\"",
-      "explanation": "This is a single psychological state attribution and cannot be broken into smaller propositional components without adding extra structure."
+      "translation": "Isabella took a bite of a sandwich.",
+      "evidence": "Sentence 1: \"As she took a bite\" (in the context of having a sandwich for lunch).",
+      "explanation": "This is an atomic event description (taking a bite) and can be evaluated as true/false without further logical decomposition."
     },
     {
       "id": "P_3",
-      "translation": "Isabella took a bite of the sandwich.",
-      "evidence": "Sentence 1: \"As she took a bite\"",
-      "explanation": "This is a single concrete action and is atomic for propositionalization purposes."
+      "translation": "Isabella ate a sandwich for lunch.",
+      "evidence": "Sentence 2: \"if Isabella ate a sandwich for lunch\" (and the narrative context in Sentences 0–1).",
+      "explanation": "This is a single, truth-evaluable eating event tied to lunch. The text discusses this condition and the surrounding narrative strongly suggests it occurred, but the proposition itself is atomic."
+    },
+    {
+      "id": "P_4",
+      "translation": "Isabella felt completely satisfied.",
+      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied.\"",
+      "explanation": "This is an atomic psychological-state claim and does not require splitting into smaller propositions."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
       "formula": "P_1",
-      "translation": "Isabella ate a sandwich for lunch.",
+      "translation": "Isabella decided to have a sandwich for her lunch.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"decided to have a sandwich for her lunch\"; Sentence 1: \"took a bite\"",
-      "reasoning": "The narrative presents the lunch choice and then immediately describes her biting it, strongly indicating she in fact ate the sandwich at lunch."
+      "evidence": "Sentence 0",
+      "reasoning": "This is stated directly as a narrative fact."
     },
     {
       "id": "C_2",
       "formula": "P_2",
-      "translation": "Isabella felt completely satisfied.",
+      "translation": "Isabella took a bite.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"she couldn't help but feel completely satisfied\"",
-      "reasoning": "This is stated directly as her experienced feeling, with emphatic wording (\"couldn't help\" and \"completely\")."
+      "evidence": "Sentence 1",
+      "reasoning": "This is stated directly as a narrative fact."
     },
     {
       "id": "C_3",
-      "formula": "P_3",
-      "translation": "Isabella took a bite of the sandwich.",
+      "formula": "P_4",
+      "translation": "Isabella felt completely satisfied.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 1: \"As she took a bite\"",
-      "reasoning": "The action is explicitly described as occurring in the story."
+      "evidence": "Sentence 1",
+      "reasoning": "This is stated directly as a narrative fact."
     },
     {
       "id": "C_4",
-      "formula": "P_3 ⟹ P_1",
-      "translation": "Taking a bite of the sandwich implies that Isabella ate a sandwich for lunch.",
-      "llm_weight": 0.9,
-      "evidence": "Sentence 1: \"took a bite\" in the context of lunch sandwich from Sentence 0",
-      "reasoning": "By common-sense interpretation, biting the sandwich entails eating it (at least partially), and the context ties this bite to her lunch sandwich."
+      "formula": "P_3 ⟹ ¬P_4",
+      "translation": "If Isabella ate a sandwich for lunch, Isabella would not feel satisfied.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied.\"",
+      "reasoning": "The text explicitly reports a rule with this conditional content; it is presented as definite."
     },
     {
       "id": "C_5",
-      "formula": "P_1 ⟹ ¬P_2",
-      "translation": "If Isabella ate a sandwich for lunch, then Isabella would not feel satisfied.",
-      "llm_weight": 1.0,
-      "evidence": "Sentence 2: \"the rule stated that if Isabella ate a sandwich for lunch, she would not feel satisfied\"",
-      "reasoning": "The text explicitly states this as a rule; the story highlights the resulting surprise, indicating the rule is intended to apply even though it conflicts with what happened."
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Taking a bite of a sandwich implies eating a sandwich for lunch.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1 (bite) with Sentence 0 (lunch sandwich context)",
+      "reasoning": "Common-sense implication: taking a bite of a sandwich in the described lunch scenario strongly suggests she is eating a sandwich for lunch, though it is not stated verbatim."
+    },
+    {
+      "id": "C_6",
+      "formula": "P_1 ⟹ P_3",
+      "translation": "Deciding to have a sandwich for lunch implies eating a sandwich for lunch.",
+      "llm_weight": 0.6,
+      "evidence": "Sentence 0 (decision) with continuation into Sentence 1 (eating action)",
+      "reasoning": "A decision to have a sandwich for lunch often leads to actually eating it, and the next sentence describes a bite, but the decision alone does not guarantee consumption; hence a moderate weight."
     }
   ],
   "_enrichment_log": [

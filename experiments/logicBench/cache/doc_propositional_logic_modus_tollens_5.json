@@ -2,63 +2,47 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Sophia has the highest score in the test.",
-      "evidence": "Sentence 0: \"If Sophia has the highest score in the test\"",
-      "explanation": "This is an atomic, truth-evaluable claim about Sophia's score status; it contains no logical connectives or negation."
+      "translation": "Sophia achieves the highest score in the test.",
+      "evidence": "Sentence 0: \"Sophia has the highest score in the test\"; Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
+      "explanation": "This is an atomic, truth-evaluable claim about Sophia's test result, and it is used as the antecedent/target of negation in the text."
     },
     {
       "id": "P_2",
       "translation": "Sophia is awarded a medal.",
-      "evidence": "Sentence 0: \"then she will be awarded a medal\"",
-      "explanation": "This is an atomic event/state (being awarded a medal) and does not include any connectives or negation."
+      "evidence": "Sentence 0: \"she will be awarded a medal\"",
+      "explanation": "This is a single event/state assertion (receiving a medal) and does not contain logical connectives or conditions."
     },
     {
       "id": "P_3",
       "translation": "Sophia has outstanding performance.",
       "evidence": "Sentence 0: \"for her outstanding performance\"",
-      "explanation": "This is a simple descriptive claim about Sophia's performance; it is treated as atomic because the text provides no further internal logical structure."
+      "explanation": "This is a simple descriptive claim about Sophia's performance; it is referenced as the stated basis for the medal and is separable from the medal-award event."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_1 ⟹ P_2",
-      "translation": "If Sophia has the highest score in the test, then Sophia is awarded a medal.",
+      "formula": "P_1 ⟹ (P_2 ∧ P_3)",
+      "translation": "If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance.",
       "llm_weight": 1.0,
-      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal\"",
-      "reasoning": "This is explicitly stated as a conditional in the text with no hedging language."
+      "evidence": "Sentence 0: \"If Sophia has the highest score in the test, then she will be awarded a medal for her outstanding performance.\"",
+      "reasoning": "This is stated as an explicit conditional in the text; the consequent linguistically bundles both being awarded a medal and the medal being for outstanding performance."
     },
     {
       "id": "C_2",
-      "formula": "P_1 ⟹ P_3",
-      "translation": "If Sophia has the highest score in the test, then her performance is outstanding.",
-      "llm_weight": 0.7,
-      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
-      "reasoning": "The consequent mentions the medal as being for outstanding performance, suggesting outstanding performance would accompany the medal-award scenario, but the text primarily asserts the award; the performance attribution is slightly more interpretive."
-    },
-    {
-      "id": "C_3",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then her performance is outstanding.",
-      "llm_weight": 0.8,
-      "evidence": "Sentence 0: \"...awarded a medal for her outstanding performance.\"",
-      "reasoning": "Common-sense and the phrasing 'for her outstanding performance' imply that receiving that medal entails outstanding performance, though such language can sometimes be rhetorical; hence less than 1.0."
-    },
-    {
-      "id": "C_4",
       "formula": "¬P_1",
-      "translation": "Sophia does not have the highest score in the test.",
+      "translation": "Sophia did not achieve the highest score in the test.",
       "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Sophia didn't achieve the highest score in the test.\"",
-      "reasoning": "This is asserted directly and unambiguously."
+      "reasoning": "This is directly asserted as a fact (no hedging), so it is treated as certain."
     },
     {
       "id": "C_3",
       "formula": "P_2 ⟹ P_3",
-      "translation": "If Sophia is awarded a medal, then Sophia has outstanding performance.",
-      "llm_weight": 0.85,
+      "translation": "If Sophia is awarded a medal (as described), then Sophia has outstanding performance.",
+      "llm_weight": 0.8,
       "evidence": "Sentence 0: \"awarded a medal for her outstanding performance\"",
-      "reasoning": "The phrase indicates the medal is awarded on the basis of outstanding performance; this strongly suggests (though does not logically guarantee) that receiving the medal implies outstanding performance."
+      "reasoning": "The phrase \"a medal for her outstanding performance\" suggests the medal award is grounded in outstanding performance; this implication is strong but could be treated as slightly defeasible in natural language, so weight is < 1."
     }
   ],
   "_enrichment_log": [

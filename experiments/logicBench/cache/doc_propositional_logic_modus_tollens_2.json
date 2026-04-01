@@ -2,45 +2,61 @@
   "primitive_props": [
     {
       "id": "P_1",
-      "translation": "Isabella has been working hard on her project.",
+      "translation": "Isabella works hard on her project.",
       "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
-      "explanation": "This is an atomic action/state attribution to Isabella with a single predicate (working hard) and a single object (her project), with no logical connectives."
+      "explanation": "This is an atomic action/state attribution about Isabella and her project, with no embedded logical structure."
     },
     {
       "id": "P_2",
       "translation": "Isabella finishes her project on time.",
       "evidence": "Sentence 0: \"if she finished it on time\"",
-      "explanation": "This is the antecedent event described in the conditional; it is a simple event claim that can serve as a propositional atom."
+      "explanation": "This is an atomic event description; the conditional context is handled as a separate logical constraint."
     },
     {
       "id": "P_3",
       "translation": "Isabella receives a bonus from her company.",
-      "evidence": "Sentence 0: \"she would receive a bonus from her company\"",
-      "explanation": "This is a single outcome/event (receiving a bonus) with a specified source (her company) and no connectives; negation will be represented in constraints rather than inside the proposition."
+      "evidence": "Sentence 0: \"she would receive a bonus from her company\"; Sentence 1: \"she wouldn't be receiving a bonus\"",
+      "explanation": "This is a single truth-evaluable outcome; the text also provides its negation, which will be represented via constraints (¬P_3) rather than a separate negative primitive."
     },
     {
       "id": "P_4",
       "translation": "Isabella hopes to receive a bonus.",
       "evidence": "Sentence 1: \"as she had hoped\"",
-      "explanation": "This is an atomic mental-state attribution (hopes) toward a single outcome; it is not itself a logical connective."
+      "explanation": "This is an atomic mental-state report (a hope) and does not decompose into smaller propositional connectives."
     }
   ],
   "constraints": [
     {
       "id": "C_1",
-      "formula": "P_2 ⟹ P_3",
-      "translation": "If Isabella finishes her project on time, then Isabella receives a bonus from her company.",
-      "llm_weight": 0.95,
-      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
-      "reasoning": "The text explicitly states this conditional as something Isabella 'knew', strongly suggesting it as a governing rule/policy in the narrative. It is not contradicted by later text because the antecedent (finishing on time) may be false."
+      "formula": "P_1",
+      "translation": "Isabella works hard on her project.",
+      "llm_weight": 1.0,
+      "evidence": "Sentence 0: \"Isabella had been working hard on her project\"",
+      "reasoning": "Directly asserted as a narrative fact."
     },
     {
       "id": "C_2",
+      "formula": "P_2 ⟹ P_3",
+      "translation": "Finishing the project on time implies receiving a bonus from her company.",
+      "llm_weight": 0.9,
+      "evidence": "Sentence 0: \"knowing that if she finished it on time, she would receive a bonus from her company\"",
+      "reasoning": "Presented as what Isabella took to be true (a policy/expectation). The story later notes she does not receive a bonus, so this implication is treated as strongly suggested but not absolutely guaranteed in the world."
+    },
+    {
+      "id": "C_3",
       "formula": "¬P_3",
       "translation": "Isabella does not receive a bonus from her company.",
-      "llm_weight": 0.95,
+      "llm_weight": 1.0,
       "evidence": "Sentence 1: \"Isabella realized that she wouldn't be receiving a bonus\"",
-      "reasoning": "The narrative asserts (via Isabella's realization) that the bonus will not be received. This is presented as a concluded outcome, so it is very strong, though technically filtered through her realization rather than an omniscient statement."
+      "reasoning": "Explicitly stated outcome (via realization) that she will not be receiving a bonus."
+    },
+    {
+      "id": "C_4",
+      "formula": "P_4",
+      "translation": "Isabella hopes to receive a bonus.",
+      "llm_weight": 0.85,
+      "evidence": "Sentence 1: \"as she had hoped\"",
+      "reasoning": "The phrase indicates she had that hope/expectation, but it is a brief aside rather than a detailed assertion; still fairly strong."
     }
   ],
   "_enrichment_log": [
